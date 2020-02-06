@@ -31,7 +31,7 @@
 		<ant dir="../" target="print"/>
 	</target>
 
-	<target name="pdf" description="Generates a PDF version of the report by converting the .jrprint file using the iText version 2.1.7.">
+	<target name="pdf" description="Generates a PDF version of the report by converting the .jrprint file using the iText OpenPDF">
 		<ant dir="../" target="pdf"/>
 	</target>
 
