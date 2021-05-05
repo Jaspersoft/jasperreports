@@ -344,7 +344,7 @@ public class JRPdfExporterTagHelper
 			PdfName pdfNameALL = new PdfName("All");
 			root.mapRole(pdfNameALL, PdfName.SECT);
 			root.mapRole(PdfName.IMAGE, PdfName.FIGURE);
-			root.mapRole(PdfName.TEXT, PdfName.TEXT);
+			root.mapRole(PdfName.TEXT, PdfName.SPAN);
 			allTag = new PdfStructureElement(root, pdfNameALL);
 			if(pdfWriter.getPDFXConformance() == PdfWriter.PDFA1A)
 			{
