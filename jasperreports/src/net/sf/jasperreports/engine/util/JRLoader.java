@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -42,7 +43,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
@@ -51,9 +58,6 @@ import net.sf.jasperreports.engine.JRVirtualizationHelper;
 import net.sf.jasperreports.engine.JRVirtualizer;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -205,7 +209,7 @@ public final class JRLoader
 
 		try
 		{
-			is = url.openStream();
+			is = retrieveStreamFromUrl(url);
 			ois = new ContextClassLoaderObjectInputStream(jasperReportsContext, is);
 			obj = ois.readObject();
 		}
@@ -251,6 +255,36 @@ public final class JRLoader
 		}
 
 		return obj;
+	}
+
+	private static InputStream retrieveStreamFromUrl(final URL url) throws IOException {
+		InputStream resultStream = null;
+
+		resultStream = retrieveStreamViaBasicAuthentication(url);
+		if (resultStream == null)
+			resultStream = retrieveStreamViaDefault(url);
+
+		return resultStream;
+	}
+
+	private static InputStream retrieveStreamViaDefault(final URL url) throws IOException {
+		return url.openStream();
+	}
+
+	private static InputStream retrieveStreamViaBasicAuthentication(final URL url) throws IOException {
+		// validate format of url
+		Pattern pattern = Pattern.compile("https?:\\/\\/(\\S+:\\S+)@(?:www\\.|(?!www)[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]\\.[^\\s]{2,})$");
+		Matcher match = pattern.matcher(url.toString());
+
+		if (!match.matches()) return null;
+
+		String userNamePassword = match.group(1);
+		String authEncString = Base64.encode(userNamePassword.getBytes());
+		URLConnection connection = null;
+
+		connection = url.openConnection();
+		connection.setRequestProperty("Authorization", "Basic " + authEncString);
+		return connection.getInputStream();
 	}
 
 
