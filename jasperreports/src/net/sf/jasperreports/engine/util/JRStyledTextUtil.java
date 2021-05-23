@@ -400,6 +400,8 @@ public class JRStyledTextUtil
 			{
 				codePoint = textChar;
 			}
+			
+			boolean stopSearching = false;
 
 			for (ListIterator<Face> fontIt = validFonts.listIterator(); fontIt.hasNext();)
 			{
@@ -407,8 +409,15 @@ public class JRStyledTextUtil
 				
 				if (!face.supports(codePoint))
 				{
+					if (lastValid != null) {
+						stopSearching = true;
+						break;
+					}
 					fontIt.remove();
 				}
+			}
+			if (stopSearching) {
+				break;
 			}
 			
 			if (validFonts.isEmpty())
