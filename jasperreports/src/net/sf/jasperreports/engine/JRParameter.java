@@ -262,6 +262,11 @@ public interface JRParameter extends JRPropertiesHolder, JRCloneable
 	 */
 	public static final String REPORT_FORMAT_FACTORY = "REPORT_FORMAT_FACTORY";
 
+	/**
+	 * An option allowing the remainder of a vertically-filled report's detail section to be filled with blank rows of
+	 * data when the main data set is exhausted.
+	 */
+	public static final String REPORT_FILL_DETAIL_WITH_BLANK_ROWS = "REPORT_FILL_DETAIL_WITH_BLANK_ROWS";
 	
 	/**
 	 * This built-in flag parameter specifies whether to ignore pagination.

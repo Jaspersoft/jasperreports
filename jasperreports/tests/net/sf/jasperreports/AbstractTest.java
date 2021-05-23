@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
@@ -47,6 +48,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -115,8 +117,11 @@ public abstract class AbstractTest
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put(JRParameter.REPORT_LOCALE, Locale.US);
 		params.put(JRParameter.REPORT_TIME_ZONE, TimeZone.getTimeZone("GMT"));
+		params.putAll(additionalReportParams());
 		params.put(TEST, this);
 		
+		JRDataSource dataSource = createDataSource();
+
 		log.debug("Running report " + jrxmlFileName);
 		
 		try
@@ -124,7 +129,14 @@ public abstract class AbstractTest
 			JasperReport report = compileReport(jrxmlFileName);
 			if (report != null)
 			{
-				JasperPrint print = fillManager.fill(report, params);
+				JasperPrint print;
+				if (dataSource == null)
+				{
+					print = fillManager.fill(report, params);
+				} else
+				{
+					print = fillManager.fill(report, params, dataSource);
+				}
 				
 				assert !print.getPages().isEmpty();
 				
@@ -170,6 +182,14 @@ public abstract class AbstractTest
 
 			assert errorDigest.equals(referenceErrorDigest);
 		}
+	}
+
+	protected Map<String, Object> additionalReportParams() {
+		return new HashMap<>();
+	}
+
+	protected JRDataSource createDataSource() {
+		return null;
 	}
 
 	protected JasperReportsContext getJasperReportsContext()

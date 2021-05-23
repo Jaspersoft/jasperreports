@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.engine.fill;
 
+import java.util.Map;
+
 import org.apache.commons.javaflow.api.continuable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,7 +32,9 @@ import org.apache.commons.logging.LogFactory;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRGroup;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.type.FooterPositionEnum;
@@ -49,6 +53,16 @@ public class JRVerticalFiller extends JRBaseFiller
 	
 	protected boolean hasDetailOnPage;
 	
+
+	// Whether we are configured to fill the detail section with blank rows of data.
+	// Is configured to not fill by default.
+	private boolean fillDetailWithBlankRows = false;
+
+	// Flag to indicate whether we've reached the end of our main data set.
+	private boolean isEndOfMainDataset = false;
+
+	// Flag to indicate when we're writing the detail section.
+	private boolean writingDetailSection = false;
 
 	/**
 	 *
@@ -90,6 +104,26 @@ public class JRVerticalFiller extends JRBaseFiller
 		return hasDetailOnPage;
 	}
 
+	@Override
+	protected void setParameters(Map<String, Object> parameterValues) throws JRException
+	{
+	  super.setParameters(parameterValues);
+
+	  setFillDetailWithBlankRows(parameterValues);
+	}
+
+	protected void setFillDetailWithBlankRows(Map<String,Object> parameterValues)
+	{
+		Object value = parameterValues.getOrDefault(JRParameter.REPORT_FILL_DETAIL_WITH_BLANK_ROWS, Boolean.FALSE);
+		if (value instanceof String)
+		{
+			fillDetailWithBlankRows = Boolean.parseBoolean((String)value);
+		} else if (value instanceof Boolean)
+		{
+			fillDetailWithBlankRows = ((Boolean)value).booleanValue();
+		}
+	}
+
 
 	@Override
 	protected void setPageHeight(int pageHeight)
@@ -107,6 +141,15 @@ public class JRVerticalFiller extends JRBaseFiller
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public JasperPrint fill(Map<String, Object> parameterValues) throws JRException
+	{
+		isEndOfMainDataset = false;
+		return super.fill(parameterValues);
+	}
 
 	@Override
 	@continuable
@@ -241,7 +284,42 @@ public class JRVerticalFiller extends JRBaseFiller
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected boolean next() throws JRException {
+		if (super.next()) {
+			return true;
+		}
+		if (fillDetailWithBlankRows) {
+			// If we have no more data in our main data set and we are configured to fill will blank rows,
+			// move the cursor forward until we have reached the end of the current page's detail section.
+			isEndOfMainDataset = true;
+			return !endOfPageDetail();
+		}
+		return false;
+	}
 
+	private boolean endOfPageDetail() {
+		JRFillBand[] detailBands = detailSection.getFillBands();
+		for (int i = 0; i < detailBands.length; i++) {
+			JRFillBand detailBand = detailBands[i];
+			if (detailBand.isToPrint() && (detailBand.getBreakHeight() > columnFooterOffsetY - offsetY)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected boolean evaluateElementToBlank() {
+		return isEndOfMainDataset && writingDetailSection;
+	}
+	
 	/**
 	 *
 	 */
@@ -765,6 +843,8 @@ public class JRVerticalFiller extends JRBaseFiller
 	@continuable
 	private void fillDetail() throws JRException
 	{
+		writingDetailSection = true;
+
 		if (log.isDebugEnabled() && !detailSection.isEmpty())
 		{
 			log.debug("Fill " + fillerId + ": detail at " + offsetY);
@@ -876,6 +956,7 @@ public class JRVerticalFiller extends JRBaseFiller
 
 		isNewPage = false;
 		isNewColumn = false;
+		writingDetailSection = false;
 	}
 
 
