@@ -7385,6 +7385,7 @@ property.
     <element ref="jr:startDateExpression" minOccurs="0" maxOccurs="1"/>
     <element ref="jr:endDateExpression" minOccurs="0" maxOccurs="1"/>
     <element ref="jr:percentExpression" minOccurs="0" maxOccurs="1"/>
+    <element ref="jr:labelExpression" minOccurs="0" maxOccurs="1"/>
    </sequence>
   </complexType>
  </element>
@@ -7408,6 +7409,14 @@ property.
  <element name="percentExpression">
   <annotation>
    <documentation>Specifies the expression used to determine the percent in a <elem>ganttSeries</elem>.</documentation>
+  </annotation>
+  <complexType mixed="true">
+  </complexType>
+ </element>
+
+ <element name="labelExpression">
+  <annotation>
+   <documentation>Defines a label in a <elem>pieDataset</elem> or <elem>ganttSeries</elem>.</documentation>
   </annotation>
   <complexType mixed="true">
   </complexType>

@@ -662,10 +662,11 @@
 
 <!ELEMENT ganttChart (chart, ganttDataset, barPlot)>
 <!ELEMENT ganttDataset (dataset?, ganttSeries*)>
-<!ELEMENT ganttSeries (seriesExpression?, taskExpression, subtaskExpression, startDateExpression?, endDateExpression?, percentExpression?)>
+<!ELEMENT ganttSeries (seriesExpression?, taskExpression, subtaskExpression, startDateExpression?, endDateExpression?, percentExpression?, labelExpression?)>
 <!ELEMENT taskExpression (#PCDATA)>
 <!ELEMENT subtaskExpression (#PCDATA)>
 <!ELEMENT percentExpression (#PCDATA)>
+<!ELEMENT labelExpression (#PCDATA)>
 
 <!ELEMENT crosstab (reportElement, crosstabParameter*, parametersMapExpression?, crosstabDataset?, crosstabHeaderCell?, rowGroup*, columnGroup*, measure*, crosstabCell*, whenNoDataCell?)>
 <!ATTLIST crosstab
