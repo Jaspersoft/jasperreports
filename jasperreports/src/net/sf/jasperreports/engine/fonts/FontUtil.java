@@ -60,6 +60,7 @@ public final class FontUtil
 
 	private JasperReportsContext jasperReportsContext;
 
+	private Map<FontInfoKey, FontInfo> fontInfoMap = new HashMap<>();
 
 	/**
 	 *
@@ -174,6 +175,25 @@ public final class FontUtil
 		return attributes;
 	}
 
+	private FontInfo lookupFontInfoCache(String name, boolean ignoreCase, Locale locale) {
+		if (ignoreCase) {
+			// cache not implemented yet for ignoreCase=true
+			return null;
+		}
+		
+		FontInfoKey fontInfoKey = new FontInfoKey(name, locale);
+		return this.fontInfoMap.get(fontInfoKey);
+	}
+
+	private void putIntoFontInfoCache(String name, boolean ignoreCase, Locale locale, FontInfo fontInfo) {
+		if (ignoreCase) {
+			// cache not implemented yet for ignoreCase=true
+			return;
+		}
+
+		FontInfoKey fontInfoKey = new FontInfoKey(name, locale);
+		fontInfoMap.put(fontInfoKey, fontInfo);
+	}
 
 	/**
 	 * Returns font information containing the font family, font face and font style.
@@ -185,9 +205,14 @@ public final class FontUtil
 	 */
 	public FontInfo getFontInfo(String name, boolean ignoreCase, Locale locale)
 	{
-		FontInfo awtFamilyMatchFontInfo = null;
+		// lookup cache entry
+		FontInfo fontInfo = lookupFontInfoCache(name, ignoreCase, locale);
+		if (fontInfo != null) {
+			return fontInfo;
+		}
 
-		//FIXMEFONT do some cache
+		FontInfo awtFamilyMatchFontInfo = null;
+		
 		List<FontFamily> families = jasperReportsContext.getExtensions(FontFamily.class);
 		for (Iterator<FontFamily> itf = families.iterator(); itf.hasNext();)
 		{
@@ -196,7 +221,9 @@ public final class FontUtil
 			{
 				if (equals(name, family.getName(), ignoreCase))
 				{
-					return new FontInfo(family, null, Font.PLAIN);
+					fontInfo = new FontInfo(family, null, Font.PLAIN);
+					putIntoFontInfoCache(name, ignoreCase, locale, fontInfo);
+					return fontInfo;
 				}
 				
 				FontFace face = family.getNormalFace();
@@ -204,7 +231,9 @@ public final class FontUtil
 				{
 					if (equals(name, face.getName(), ignoreCase))
 					{
-						return new FontInfo(family, face, Font.PLAIN);
+						fontInfo = new FontInfo(family, face, Font.PLAIN);
+						putIntoFontInfoCache(name, ignoreCase, locale, fontInfo);
+						return fontInfo;
 					}
 					else if (
 						awtFamilyMatchFontInfo == null
@@ -221,7 +250,9 @@ public final class FontUtil
 				{
 					if (equals(name, face.getName(), ignoreCase))
 					{
-						return new FontInfo(family, face, Font.BOLD);
+						fontInfo = new FontInfo(family, face, Font.BOLD);
+						putIntoFontInfoCache(name, ignoreCase, locale, fontInfo);
+						return fontInfo;
 					}
 					else if (
 						awtFamilyMatchFontInfo == null
@@ -238,7 +269,9 @@ public final class FontUtil
 				{
 					if (equals(name, face.getName(), ignoreCase))
 					{
-						return new FontInfo(family, face, Font.ITALIC);
+						fontInfo = new FontInfo(family, face, Font.ITALIC);
+						putIntoFontInfoCache(name, ignoreCase, locale, fontInfo);
+						return fontInfo;
 					}
 					else if (
 						awtFamilyMatchFontInfo == null
@@ -255,7 +288,9 @@ public final class FontUtil
 				{
 					if (equals(name, face.getName(), ignoreCase))
 					{
-						return new FontInfo(family, face, Font.BOLD | Font.ITALIC);
+						fontInfo = new FontInfo(family, face, Font.BOLD | Font.ITALIC);
+						putIntoFontInfoCache(name, ignoreCase, locale, fontInfo);
+						return fontInfo;
 					}
 					else if (
 						awtFamilyMatchFontInfo == null
@@ -300,6 +335,7 @@ public final class FontUtil
 	 * @return a font info object
 	 * @deprecated Replaced by {@link #getFontInfo(String, boolean, Locale)}.
 	 */
+	@Deprecated
 	public FontInfo getFontInfoIgnoreCase(String name, Locale locale)
 	{
 		return getFontInfo(name, true, locale);
@@ -380,7 +416,6 @@ public final class FontUtil
 	
 	public String getExportFontFamily(String name, Locale locale, String exporterKey)
 	{
-		//FIXMEFONT do some cache
 		FontInfo fontInfo = getFontInfo(name, locale);
 		if (fontInfo != null)
 		{
@@ -451,6 +486,7 @@ public final class FontUtil
 	/**
 	 * @deprecated Replaced by {@link #getAwtFontFromBundles(String, int, float, Locale, boolean)}.
 	 */
+	@Deprecated
 	public Font getAwtFontFromBundles(String name, int style, int size, Locale locale, boolean ignoreMissingFont)
 	{
 		return getAwtFontFromBundles(name, style, (float)size, locale, ignoreMissingFont);
