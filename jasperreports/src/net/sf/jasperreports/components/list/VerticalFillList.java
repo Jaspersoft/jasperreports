@@ -24,6 +24,8 @@
 package net.sf.jasperreports.components.list;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRPropertiesMap;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.component.FillPrepareResult;
 import net.sf.jasperreports.engine.fill.JRFillCloneFactory;
@@ -64,6 +66,17 @@ public class VerticalFillList extends BaseFillList
 	@Override
 	public FillPrepareResult prepare(int availableHeight)
 	{
+		int rowsToFill = 0;
+		try
+		{
+			JRPropertiesMap propMap = fillContext.getComponentElement().getPropertiesMap();
+			JRPropertiesUtil util = JRPropertiesUtil.getInstance(fillContext.getFiller().getJasperReportsContext());
+			rowsToFill = util.getIntegerProperty(propMap, ListComponent.PROPERTY_ROWS_TO_FILL, 0);
+		}
+		catch (NumberFormatException e)
+		{
+		}
+
 		createPrintFrame();
 		try
 		{
@@ -109,6 +122,12 @@ public class VerticalFillList extends BaseFillList
 				
 				listContents.evaluateContents();
 				overflow = fillContents(availableHeight);
+				counter++;
+			}
+			while(!overflow && counter < rowsToFill)
+			{
+				overflow = fillContents(availableHeight);
+				counter++;
 			}
 
 			if (overflow)

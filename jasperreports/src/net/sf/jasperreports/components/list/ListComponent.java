@@ -27,6 +27,7 @@ import net.sf.jasperreports.crosstabs.JRCrosstab;
 import net.sf.jasperreports.engine.DatasetRunHolder;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRDatasetRun;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRVisitable;
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.type.PrintOrderEnum;
@@ -101,5 +102,7 @@ public interface ListComponent extends Component, JRCloneable, JRVisitable, Data
 	 * @see JRCrosstab#setIgnoreWidth(Boolean)
 	 */
 	public Boolean getIgnoreWidth();
+
+	public static final String PROPERTY_ROWS_TO_FILL = JRPropertiesUtil.PROPERTY_PREFIX + "components.list.rows.to.fill";
 
 }

@@ -314,6 +314,13 @@ public interface JRParameter extends JRPropertiesHolder, JRCloneable
 	public static final String FILTER = "FILTER";
 
 	/**
+	 * A <tt>int</tt> of number of rows to fill report/list/table. Empty row insertion will stop when there is a page break.
+	 * That is, specifying a number larger that the number of rows that can fit in the page will fill rows till the end of
+	 * page.
+	 */
+	public static final String ROWS_TO_FILL = "ROWS_TO_FILL";
+
+	/**
 	 *
 	 */
 	public String getName();

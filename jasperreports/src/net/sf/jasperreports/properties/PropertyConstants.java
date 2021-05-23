@@ -50,6 +50,8 @@ public interface PropertyConstants
 	
 	String CATEGORY_MAP = PREFIX_CATEGORY + "map";
 	
+	String CATEGORY_LIST = PREFIX_CATEGORY + "list";
+
 	String CATEGORY_TABLE = PREFIX_CATEGORY + "table";
 	
 	String CATEGORY_CHART_THEME = PREFIX_CATEGORY + "chart.theme";

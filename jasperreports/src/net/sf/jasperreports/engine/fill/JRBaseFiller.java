@@ -72,6 +72,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.base.JRBasePrintPage;
 import net.sf.jasperreports.engine.base.JRVirtualPrintPage;
+import net.sf.jasperreports.engine.fill.JRTemplatePrintFrame;
 import net.sf.jasperreports.engine.type.BandTypeEnum;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.type.OrientationEnum;
@@ -259,6 +260,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	protected boolean isReorderBandElements;
 	
 	protected int usedPageHeight = 0;
+
+	protected boolean fillingEmptyRows = false;
 
 	/**
 	 *
@@ -550,10 +553,16 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	 */
 	protected abstract void setPageHeight(int pageHeight);
 
-
 	@Override
 	@continuable
 	public JasperPrint fill(Map<String,Object> parameterValues) throws JRException
+	{
+		return fill(parameterValues, 0);
+	}
+
+	@Override
+	@continuable
+	public JasperPrint fill(Map<String,Object> parameterValues, int rowsToFill) throws JRException
 	{
 		if (parameterValues == null)
 		{
@@ -619,7 +628,7 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			mainDataset.start();
 
 			/*   */
-			fillReport();
+			fillReport(rowsToFill);
 			
 			mainDataset.evaluateProperties(PropertyEvaluationTimeEnum.REPORT);
 			
@@ -984,6 +993,9 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	@continuable
 	protected abstract void fillReport() throws JRException;
 
+	@continuable
+	protected abstract void fillReport(int rowsToFill) throws JRException;
+
 	@Override
 	protected void ignorePaginationSet(Map<String, Object> parameterValues)
 	{
@@ -1321,6 +1333,10 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 				element.setX(element.getX() + offsetX);
 				element.setY(element.getY() + offsetY);
 				elements.add(element);
+				if (fillingEmptyRows)
+				{
+					setRowCellToEmpty(element);
+				}
 			}
 			Collections.sort(elements, new JRYXComparator());//FIXME make singleton comparator; same for older comparator
 			for (JRPrintElement element : elements)
@@ -1338,6 +1354,10 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 				element.setY(element.getY() + offsetY);
 				printPage.addElement(element);
 				recordUsedWidth(element);
+				if (fillingEmptyRows)
+				{
+					setRowCellToEmpty(element);
+				}
 			}
 		}
 		
@@ -1348,6 +1368,21 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		}
 	}
 	
+	private void setRowCellToEmpty(JRPrintElement element) {
+		if (element instanceof JRTemplatePrintText)
+		{
+			((JRTemplatePrintText)element).setText("");
+		}
+		else if (element instanceof JRTemplatePrintFrame)
+		{
+			List<JRPrintElement> list = ((JRTemplatePrintFrame)element).getElements();
+			for (JRPrintElement item : list)
+			{
+				setRowCellToEmpty(item);
+			}
+		}
+	}
+
 	protected void recordUsedWidth(JRPrintElement element)
 	{
 		recordUsedPageWidth(element.getX() + element.getWidth() + rightMargin);

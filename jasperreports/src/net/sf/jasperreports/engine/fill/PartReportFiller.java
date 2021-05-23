@@ -158,6 +158,12 @@ public class PartReportFiller extends BaseReportFiller
 	@Override
 	public JasperPrint fill(Map<String, Object> parameterValues) throws JRException
 	{
+		return fill(parameterValues, 0);
+	}
+
+	@Override
+	public JasperPrint fill(Map<String, Object> parameterValues, int rowsToFill) throws JRException
+	{
 		//FIXMEBOOK copied from JRBaseFiller
 		if (parameterValues == null)
 		{

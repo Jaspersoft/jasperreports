@@ -104,10 +104,16 @@ public class JRHorizontalFiller extends JRBaseFiller
 		}
 	}
 
-
 	@Override
 	@continuable
 	protected synchronized void fillReport() throws JRException
+	{
+		fillReport(0);
+	}
+
+	@Override
+	@continuable
+	protected synchronized void fillReport(int rowsToFill) throws JRException
 	{
 		setLastPageFooter(false);
 

@@ -62,6 +62,7 @@ public abstract class BaseFillList extends BaseFillComponent implements JRFillCl
 	protected JRTemplatePrintFrame printFrame;
 	protected boolean filling;
 	protected boolean fillStarted;
+	protected int counter;
 	
 	public BaseFillList(ListComponent component, JRFillObjectFactory factory) throws JRException
 	{
@@ -111,6 +112,7 @@ public abstract class BaseFillList extends BaseFillComponent implements JRFillCl
 		
 		filling = false;
 		fillStarted = false;
+		counter = 0;
 		
 		datasetRun.evaluate(evaluation);
 	}

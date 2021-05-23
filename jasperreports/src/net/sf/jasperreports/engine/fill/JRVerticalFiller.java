@@ -30,6 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRGroup;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -107,10 +108,16 @@ public class JRVerticalFiller extends JRBaseFiller
 		}
 	}
 
-
 	@Override
 	@continuable
 	protected synchronized void fillReport() throws JRException
+	{
+		fillReport(0);
+	}
+
+	@Override
+	@continuable
+	protected synchronized void fillReport(int rowsToFill) throws JRException
 	{
 		setLastPageFooter(false);
 
@@ -122,6 +129,16 @@ public class JRVerticalFiller extends JRBaseFiller
 			{
 				fillReportContent();
 			}
+			if (rowsToFill > 0)
+			{
+				int curRow = (Integer)getVariable("PAGE_COUNT").getValue();
+				fillingEmptyRows = true;
+				for (int row = 0; row < (rowsToFill - curRow); row++)
+				{
+					fillReportContent();
+				}
+			}
+			fillingEmptyRows = false;
 
 			fillReportEnd();
 		}
@@ -788,6 +805,10 @@ public class JRVerticalFiller extends JRBaseFiller
 					detailBand.getBreakHeight() > columnFooterOffsetY - offsetY
 					)
 				{
+					if (fillingEmptyRows)
+					{
+						return;
+					}
 					fillColumnBreak(
 						isCrtRecordOnColumn ? JRExpression.EVALUATION_DEFAULT : JRExpression.EVALUATION_OLD,
 						JRExpression.EVALUATION_DEFAULT

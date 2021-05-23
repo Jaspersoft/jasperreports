@@ -41,6 +41,8 @@ import org.apache.commons.logging.LogFactory;
 
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
+import net.sf.jasperreports.components.table.fill.TableReport;
+import net.sf.jasperreports.components.table.fill.TableSubreport;
 import net.sf.jasperreports.data.cache.DataCacheHandler;
 import net.sf.jasperreports.engine.CommonReturnValue;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -128,6 +130,8 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 
 	private Map<JasperReport,JREvaluator> loadedEvaluators;
 	
+	private int rowsToFill = 0;
+
 	/**
 	 * Values to be copied from the subreport.
 	 */
@@ -191,6 +195,20 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 			PROPERTY_SUBREPORT_GENERATE_RECTANGLE, subreport, filler.getJasperReport()); // property expression does not work, 
 			// but even if we would call filler.getMainDataset(), it would be too early as it is null here for subreport elements placed in group bands
 		this.dynamicGenerateRectangle = hasDynamicProperty(PROPERTY_SUBREPORT_GENERATE_RECTANGLE);
+
+		if (subreport instanceof TableSubreport)
+		{
+			String strRowsToFill = ((TableSubreport)subreport).getPropertiesMap().getProperty(TableReport.PROPERTY_ROWS_TO_FILL);
+			if (strRowsToFill != null) {
+				try
+				{
+					rowsToFill = Integer.parseInt(strRowsToFill);
+				}
+				catch(NumberFormatException e)
+				{
+				}
+			}
+		}
 	}
 
 	protected JRFillSubreport(JRFillSubreport subreport, JRFillCloneFactory factory)
@@ -823,15 +841,15 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 	{
 		if (getConnectionExpression() != null)
 		{
-			subreportFiller.fill(parameterValues, connection);
+			subreportFiller.fill(parameterValues, connection, rowsToFill);
 		}
 		else if (getDataSourceExpression() != null)
 		{
-			subreportFiller.fill(parameterValues, dataSource);
+			subreportFiller.fill(parameterValues, dataSource, rowsToFill);
 		}
 		else
 		{
-			subreportFiller.fill(parameterValues);
+			subreportFiller.fill(parameterValues, rowsToFill);
 		}
 	}
 	

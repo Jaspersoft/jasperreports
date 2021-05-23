@@ -91,6 +91,21 @@ public final class JRFiller
 	public static final String PROPERTY_DEFAULT_TIMEZONE = JRPropertiesUtil.PROPERTY_PREFIX + "default.timezone";
 
 	/**
+	 * Number of rows to fill the report/list/table rows with.
+	 * It will stop filling rows if there is a page break. That is, to fill to the end of the report, specify a large value.
+	 * 
+	 * @see JRParameter#ROWS_TO_FILL
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_FILL,
+			valueType = Locale.class,
+			defaultValue = "0",
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_6_8_0
+			)
+	public static final String PROPERTY_ROWS_TO_FILL = JRPropertiesUtil.PROPERTY_PREFIX + "rows.to.fill";
+
+	/**
 	 *
 	 */
 	public static JasperPrint fill(
@@ -142,8 +157,15 @@ public final class JRFiller
 		JRDataSource dataSource
 		) throws JRException
 	{
+		int rowsToFill = 0;
+		try
+		{
+			rowsToFill = JRPropertiesUtil.getInstance(jasperReportsContext).getIntegerProperty(jasperReport, JRFiller.PROPERTY_ROWS_TO_FILL, 0);
+		}
+		catch (NumberFormatException e) {
+		}
 		return fill(jasperReportsContext, SimpleJasperReportSource.from(jasperReport),
-				parameters, dataSource);
+				parameters, dataSource, rowsToFill);
 	}
 	
 	public static JasperPrint fill(
@@ -153,13 +175,25 @@ public final class JRFiller
 		JRDataSource dataSource
 		) throws JRException
 	{
+		return fill(jasperReportsContext, reportSource,
+				parameters, dataSource, 0);
+	}
+
+	public static JasperPrint fill(
+		JasperReportsContext jasperReportsContext,
+		JasperReportSource reportSource,
+		Map<String,Object> parameters,
+		JRDataSource dataSource,
+		int rowsToFill
+		) throws JRException
+	{
 		ReportFiller filler = createReportFiller(jasperReportsContext, reportSource);
 		
 		JasperPrint jasperPrint = null;
 		
 		try
 		{
-			jasperPrint = filler.fill(parameters, dataSource);
+			jasperPrint = filler.fill(parameters, dataSource, rowsToFill);
 		}
 		catch(JRFillInterruptedException e)
 		{
