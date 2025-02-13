@@ -26,7 +26,6 @@ package net.sf.jasperreports.j2ee.hibernate;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.hibernate.type.Type;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -159,7 +158,7 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		else
 		{
 			@SuppressWarnings("deprecation")
-			int firstNestedIdx = fieldMapping.indexOf(PropertyUtils.NESTED_DELIM);
+			int firstNestedIdx = fieldMapping.indexOf(".");
 
 			if (firstNestedIdx >= 0 && aliasesMap.containsKey(fieldMapping.substring(0, firstNestedIdx)))
 			{
@@ -188,7 +187,7 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		if (fieldIdx == null)
 		{
 			@SuppressWarnings("deprecation")
-			int firstNestedIdx = fieldMapping.indexOf(PropertyUtils.NESTED_DELIM);
+			int firstNestedIdx = fieldMapping.indexOf(".");
 			
 			if (firstNestedIdx < 0)
 			{
