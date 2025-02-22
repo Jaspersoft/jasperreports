@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.commons.beanutils.locale.LocaleConvertUtilsBean;
+import org.apache.commons.beanutils2.locale.LocaleConvertUtilsBean;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
