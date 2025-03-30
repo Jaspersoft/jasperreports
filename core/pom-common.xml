@@ -181,8 +181,8 @@
 			<optional>false</optional>
 		</dependency>
 		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-beanutils2</artifactId>
 			<version>${commons-beanutils.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
