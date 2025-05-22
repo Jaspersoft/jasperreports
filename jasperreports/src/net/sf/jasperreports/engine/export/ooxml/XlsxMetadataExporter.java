@@ -1776,7 +1776,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		String textFormula = useCurrentData ? null : getFormula(text);
 		if (textFormula != null)
 		{
-			sheetHelper.write("<f>" + textFormula + "</f>\n");
+			sheetHelper.write("<f>" + JRStringUtil.xmlEncode(textFormula) + "</f>\n");
 		}
 
 		if(!Boolean.TRUE.equals(configuration.isIgnoreAnchors()))

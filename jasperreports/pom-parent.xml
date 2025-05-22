@@ -77,7 +77,7 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<revision>hotfix-6.21.0-JRL-2012-SNAPSHOT</revision>
+		<revision>hotfix-6.21.0-JS-75825-SNAPSHOT</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skipInstall>true</skipInstall>
 		<skipDeploy>true</skipDeploy>
