@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sf.jasperreports</groupId>
   <artifactId>jasperreports</artifactId>
-  <version>master-SNAPSHOT</version>
+  <version>hotfix-6.21.0-JS-75825-SNAPSHOT</version>
   <name>JasperReports Library</name>
   <description>Free Java Reporting Library</description>
   <url>http://jasperreports.sourceforge.net</url>
