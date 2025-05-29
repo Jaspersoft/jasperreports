@@ -8,7 +8,7 @@
 		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.17.1" conf="test->*"/>
 		<dependency org="com.github.librepdf" name="openpdf" rev="1.3.30.jaspersoft.3" conf="test->*"/>
 		<dependency org="com.zaxxer" name="SparseBitSet" rev="1.2" conf="test->*"/>
-		<dependency org="commons-beanutils" name="commons-beanutils" rev="1.9.4" conf="test->*"/>
+		<dependency org="commons-beanutils" name="commons-beanutils" rev="1.11.0" conf="test->*"/>
 		<dependency org="commons-codec" name="commons-codec" rev="1.15" conf="test->*"/>
 		<dependency org="commons-collections" name="commons-collections" rev="3.2.2" conf="test->*"/>
 		<dependency org="commons-digester" name="commons-digester" rev="2.1" conf="test->*"/>
