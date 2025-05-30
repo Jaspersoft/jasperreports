@@ -11,7 +11,7 @@
 		<dependency org="eigenbase" name="eigenbase-resgen" rev="1.3.0.11873" conf="test->*"/>
 		<dependency org="eigenbase" name="eigenbase-xom" rev="1.3.0.11999" conf="test->*"/>
 		<dependency org="org.hsqldb" name="hsqldb" rev="2.7.1" conf="test->*"/>
-		<dependency org="org.apache.logging.log4j" name="log4j-1.2-api" rev="2.17.1" conf="test->*"/>
+		<dependency org="org.apache.logging.log4j" name="log4j-1.2-api" rev="2.24.3" conf="test->*"/>
 		<dependency org="xalan" name="xalan" rev="2.7.3" conf="test->*"/>
 		<dependency org="xalan" name="serializer" rev="2.7.3" conf="test->*"/>
 		<dependency org="org.postgresql" name="postgresql" rev="42.6.0" conf="test->*"/>

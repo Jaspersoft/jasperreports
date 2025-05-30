@@ -5,8 +5,9 @@ JasperReports Library Change Log
 JasperReports 6.21.5 (2025-06-xx)
 ---------------------------------------------
 
-- various dependencies upgrades including: Spring 6.2.3, Apache Batik 1.16,
-Apache Commons Collections 4.5.0 and Apache POI 5.4.1 
+- various dependencies upgrades including: Spring 6.2.3, Apache Batik 1.18,
+Apache Commons Codec 1.18.0, Apache Commons IO 2.18.0, Apache Commons Logging 1.3.5,
+Apache Log4J 2.24.3, Apache Commons Collections 4.5.0 and Apache POI 5.4.1; 
 
 - minor bug fixes and improvements;
 
