@@ -3,8 +3,8 @@
 	<description>Helps build the JasperReports distribution files.</description>
 
 	<property name="organization" value="Cloud Software Group, Inc."/>
-	<property name="version" value="6.21.4"/>
-	<property name="scm-tag" value="6.21.4"/>
+	<property name="version" value="6.21.5"/>
+	<property name="scm-tag" value="6.21.5"/>
 
 	<path id="project-classpath">
 		<path refid="project-lib"/>
