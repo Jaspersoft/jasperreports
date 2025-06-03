@@ -1543,7 +1543,13 @@ public class JRHorizontalFiller extends JRBaseFiller
 			else
 			{
 				// do nothing about groupFooterPositionElementRange because the following fillColumnFooter will do
+				// it will be either the one in fillPageBreak or the following
 				
+				if (offsetY > lastPageColumnFooterOffsetY)
+				{
+					fillPageBreak(false, JRExpression.EVALUATION_DEFAULT, JRExpression.EVALUATION_DEFAULT, false);
+				}
+
 				setLastPageFooter(true);
 
 				fillColumnFooters(JRExpression.EVALUATION_DEFAULT);
