@@ -475,8 +475,6 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 				}
 			}
 		}
-		/*
-		*/
 	}
 	
 	@Override

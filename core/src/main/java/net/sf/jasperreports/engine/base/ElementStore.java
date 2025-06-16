@@ -35,7 +35,10 @@ public interface ElementStore extends VirtualizablePageElements
 {
 	int size();
 	
-	int deepSize();
+	default int deepSize()
+	{
+		throw new UnsupportedOperationException();
+	}
 
 	JRPrintElement get(int index);
 
