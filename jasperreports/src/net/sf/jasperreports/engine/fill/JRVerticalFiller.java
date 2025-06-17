@@ -1528,9 +1528,18 @@ public class JRVerticalFiller extends JRBaseFiller
 			}
 			else
 			{
-				//SummaryReport.9 test
-				
 				// do nothing about groupFooterPositionElementRange because the following fillColumnFooter will do
+				// it will be either the one in fillPageBreak or the following
+				
+				if (offsetY > lastPageColumnFooterOffsetY)
+				{
+					//SummaryReport.22 test
+					fillPageBreak(false, JRExpression.EVALUATION_DEFAULT, JRExpression.EVALUATION_DEFAULT, false);
+				}
+				else
+				{
+					//SummaryReport.9 test
+				}
 				
 				setLastPageFooter(true);
 
