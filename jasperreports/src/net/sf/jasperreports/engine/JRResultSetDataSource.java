@@ -419,6 +419,17 @@ public class JRResultSetDataSource implements JRDataSource
 							supportsTypedGetObjectMethod = false;
 							objValue = resultSet.getObject(columnIndex);
 						}
+						catch (SQLException e)
+						{
+							// although implemented by the driver, the getObject(int, Class) might still fail for some other reason,
+							// so we fallback to getObject(int), but it does not mean we are not going to try it again next time
+							if (log.isDebugEnabled())
+							{
+								log.debug("ResultSet.getObject(int, Class) method call failed.", e);
+							}
+							
+							objValue = resultSet.getObject(columnIndex);
+						}
 					}
 					else
 					{
