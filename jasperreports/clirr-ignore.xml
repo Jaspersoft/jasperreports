@@ -1,22 +1,54 @@
 <differences>
 	<difference>
-		<className>net/sf/jasperreports/engine/export/ooxml/DocxDocumentHelper</className>
-		<differenceType>7004</differenceType>
-		<method>*exportHeader()</method>
+		<className>net/sf/jasperreports/engine/export/JRPdfExporter</className>
+		<differenceType>7006</differenceType>
+		<method>*setHyperlinkInfo(net.sf.jasperreports.export.pdf.PdfChunk, net.sf.jasperreports.engine.JRPrintHyperlink)</method>
+		<to>boolean</to>
 	</difference>
 	<difference>
-		<className>net/sf/jasperreports/engine/export/ooxml/DocxDocumentHelper</className>
-		<differenceType>7004</differenceType>
-		<method>*exportSection(net.sf.jasperreports.engine.PrintPageFormat, net.sf.jasperreports.engine.export.JRGridLayout, boolean)</method>
+		<className>net/sf/jasperreports/engine/export/JRPdfExporter</className>
+		<differenceType>7006</differenceType>
+		<method>*setReferenceHyperlink(net.sf.jasperreports.export.pdf.PdfChunk, net.sf.jasperreports.engine.JRPrintHyperlink, java.lang.String)</method>
+		<to>boolean</to>
 	</difference>
 	<difference>
-		<className>net/sf/jasperreports/engine/export/ooxml/JRDocxExporter</className>
-		<differenceType>6001</differenceType>
-		<field>nature</field>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/export/DocxReportConfiguration</className>
+		<className>net/sf/jasperreports/export/JsonExporterOutput</className>
 		<differenceType>7012</differenceType>
-		<method>*isBackgroundAsHeader()</method>
+		<method>*getInternalResourceHandler()</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/export/XlsReportConfiguration</className>
+		<differenceType>7012</differenceType>
+		<method>*getSingleSheetName()</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/components/table/BaseColumn</className>
+		<differenceType>7012</differenceType>
+		<method>*getWeight()</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/components/table/TableComponent</className>
+		<differenceType>7012</differenceType>
+		<method>*getHorizontalPosition()</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/components/table/TableComponent</className>
+		<differenceType>7012</differenceType>
+		<method>*shrinkWidth()</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/components/table/fill/FillColumn</className>
+		<differenceType>7004</differenceType>
+		<method>*FillColumn(*)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/engine/export/ooxml/DocxTableHelper</className>
+		<differenceType>7002</differenceType>
+		<method>*export*Cell*(*)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/engine/export/SimplePdfTextRenderer</className>
+		<differenceType>6001</differenceType>
+		<field>legacyTextMeasuringFix</field>
 	</difference>
 </differences>
