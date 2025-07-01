@@ -40,8 +40,8 @@
 		<dependency org="jaxen" name="jaxen" rev="1.2.0"/>
 		<dependency org="mondrian" name="mondrian" rev="3.1.1.12687"/>
 		<dependency org="net.sf.barcode4j" name="barcode4j" rev="2.1"/>
-		<dependency org="net.sf.jasperreports" name="jasperreports-annotation-processors" rev="6.21.5-SNAPSHOT" conf="annotations->*"/>
-		<dependency org="net.sf.jasperreports" name="jasperreports-metadata" rev="6.21.5-SNAPSHOT" conf="compile,annotations->*"/>
+		<dependency org="net.sf.jasperreports" name="jasperreports-annotation-processors" rev="6.21.5" conf="annotations->*"/>
+		<dependency org="net.sf.jasperreports" name="jasperreports-metadata" rev="6.21.5" conf="compile,annotations->*"/>
 		<dependency org="net.sourceforge.barbecue" name="barbecue" rev="1.5-beta1"/>
 		<dependency org="net.tascalate" name="net.tascalate.asmx" rev="9.3.0" conf="javaflow->*"/>
 		<dependency org="net.tascalate" name="net.tascalate.asmx.analysis" rev="9.3.0" conf="javaflow->*"/>

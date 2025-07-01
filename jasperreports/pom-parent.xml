@@ -77,7 +77,7 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<revision>6.21.5-SNAPSHOT</revision>
+		<revision>6.21.5</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skipInstall>true</skipInstall>
 		<skipDeploy>true</skipDeploy>
