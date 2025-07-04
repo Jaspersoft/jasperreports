@@ -191,6 +191,24 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>net.nicoulaj.maven.plugins</groupId>
+				<artifactId>checksum-maven-plugin</artifactId>
+				<version>1.11</version>
+				<configuration>
+					<fileSets>
+						<fileSet>
+							<directory>${basedir}/target</directory>
+							<includes>
+								<include>*</include>
+							</includes>
+							<excludes>
+								<include>*.asc</include>
+							</excludes>
+						</fileSet>
+					</fileSets>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.sonatype.central</groupId>
 				<artifactId>central-publishing-maven-plugin</artifactId>
 				<version>0.8.0</version>
