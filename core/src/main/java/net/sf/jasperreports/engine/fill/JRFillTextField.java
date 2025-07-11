@@ -1013,6 +1013,10 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 			{
 				pattern = ((DecimalFormat) format).toPattern();
 			}
+			else if (format instanceof com.ibm.icu.text.DecimalFormat)
+			{
+				pattern = ((com.ibm.icu.text.DecimalFormat) format).toPattern();
+			}
 		}
 		else
 		{
