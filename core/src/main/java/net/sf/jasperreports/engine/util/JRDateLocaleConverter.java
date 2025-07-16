@@ -26,10 +26,11 @@ package net.sf.jasperreports.engine.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.beanutils2.locale.converters.DateLocaleConverter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -46,7 +47,7 @@ import org.apache.commons.logging.LogFactory;
  * @author szaharia
  */
 
-public class JRDateLocaleConverter extends DateLocaleConverter 
+public class JRDateLocaleConverter extends DateLocaleConverter<Date> 
 {
 
 	private static Log log = LogFactory.getLog(DateLocaleConverter.class);
@@ -60,18 +61,18 @@ public class JRDateLocaleConverter extends DateLocaleConverter
 	 */
 	public JRDateLocaleConverter(TimeZone timeZone) 
 	{
-		super();
+		super(null, null, null, false, false, false);
 
 		this.timeZone = timeZone;
 	}
 
 	@Override
-	protected Object parse(Object value, String pattern) throws ParseException 
+	protected Date parse(Object value, String pattern) throws ParseException 
 	{
 		SimpleDateFormat formatter = getFormatter(pattern, locale);
 		if (pattern != null)
 		{
-			if (locPattern) {
+			if (localizedPattern) {
 				formatter.applyLocalizedPattern(pattern);
 			}
 			else {
@@ -87,7 +88,7 @@ public class JRDateLocaleConverter extends DateLocaleConverter
 	private SimpleDateFormat getFormatter(String pattern, Locale locale) 
 	{
 		if(pattern == null) {
-			pattern = locPattern ? 
+			pattern = localizedPattern ? 
 				new SimpleDateFormat().toLocalizedPattern() : new SimpleDateFormat().toPattern();
 			log.warn("Null pattern was provided, defaulting to: " + pattern);
 		}

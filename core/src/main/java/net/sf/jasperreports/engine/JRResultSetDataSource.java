@@ -467,9 +467,9 @@ public class JRResultSetDataSource implements JRDataSource
 		{
 			objValue = null;
 		} 
-		if (log.isDebugEnabled())
+		if (log.isTraceEnabled())
 		{
-			log.debug("date field " + field.getName()
+			log.trace("date field " + field.getName()
 					+ " is " + (objValue == null ? "null"
 							: (objValue + " (" + objValue.getTime() + ")")));
 		}
@@ -486,9 +486,9 @@ public class JRResultSetDataSource implements JRDataSource
 		{
 			objValue = null;
 		}
-		if (log.isDebugEnabled())
+		if (log.isTraceEnabled())
 		{
-			log.debug("timestamp field " + field.getName()
+			log.trace("timestamp field " + field.getName()
 					+ " is " + (objValue == null ? "null"
 							: (objValue + " (" + objValue.getTime() + ")")));
 		}
@@ -505,9 +505,9 @@ public class JRResultSetDataSource implements JRDataSource
 		{
 			objValue = null;
 		}
-		if (log.isDebugEnabled())
+		if (log.isTraceEnabled())
 		{
-			log.debug("time field " + field.getName()
+			log.trace("time field " + field.getName()
 					+ " is " + (objValue == null ? "null"
 							: (objValue + " (" + objValue.getTime() + ")")));
 		}
