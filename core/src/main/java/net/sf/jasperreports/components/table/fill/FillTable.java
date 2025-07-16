@@ -354,28 +354,30 @@ public class FillTable extends SubreportFillComponent
 			&& deltaWidth > 0
 			)
 		{
+			float floatWidthSum = 0;
+			int intWidthSum = 0;
+			
 			for (FillColumn fillColumn : fillColumns)
 			{
 				int colWidthBeforeWeigthResize = fillColumn.getWidth();
 				
-				resizeWeightedColumn(fillColumn, deltaWidth, totalWeight);
+				if (fillColumn.getWeight() > 0)
+				{
+					float floatWidth = (float)deltaWidth * fillColumn.getWeight() / totalWeight;
+					floatWidthSum += floatWidth;
+					int intWidth = Math.round(floatWidthSum) - intWidthSum;
+					intWidthSum += intWidth;
+					fillColumn.setWidth(
+						fillColumn.getWidth()
+						+ intWidth
+						);
+				}
 
 				resizeWeightedColumns(fillColumn.getSubcolumns(), fillColumn.getWidth() - colWidthBeforeWeigthResize, fillColumn.getSubColsTotalWeight());
 			}
 		}
 	}
 
-	private static void resizeWeightedColumn(FillColumn fillColumn, int deltaWidth, int totalWeight)
-	{
-		if (fillColumn.getWeight() > 0)
-		{
-			fillColumn.setWidth(
-				fillColumn.getWidth()
-				+ (int)((float)deltaWidth * fillColumn.getWeight() / totalWeight)
-				);
-		}
-	}
-	
 	@Override
 	public ComponentFillSubreportFactory getFillSubreportFactory()
 	{
