@@ -26,7 +26,6 @@ package net.sf.jasperreports.j2ee.hibernate;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.hibernate.type.Type;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -47,6 +46,8 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 	public static final String EXCEPTION_MESSAGE_KEY_NO_FIELD_ALIAS = "data.hibernate.no.field.alias";
 	public static final String EXCEPTION_MESSAGE_KEY_NO_FIELD_READER = "data.hibernate.no.field.reader";
 	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_RETURN_ALIAS = "data.hibernate.unknown.return.alias";
+	
+	public static final char NESTED_DELIM = '.';
 	
 	private final JRAbstractBeanDataSource.PropertyNameProvider propertyNameProvider;
 	private final Map<String, FieldReader> fieldReaders;
@@ -158,8 +159,7 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		}
 		else
 		{
-			@SuppressWarnings("deprecation")
-			int firstNestedIdx = fieldMapping.indexOf(PropertyUtils.NESTED_DELIM);
+			int firstNestedIdx = fieldMapping.indexOf(NESTED_DELIM);
 
 			if (firstNestedIdx >= 0 && aliasesMap.containsKey(fieldMapping.substring(0, firstNestedIdx)))
 			{
@@ -187,8 +187,7 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		Integer fieldIdx = aliasesMap.get(fieldMapping);
 		if (fieldIdx == null)
 		{
-			@SuppressWarnings("deprecation")
-			int firstNestedIdx = fieldMapping.indexOf(PropertyUtils.NESTED_DELIM);
+			int firstNestedIdx = fieldMapping.indexOf(NESTED_DELIM);
 			
 			if (firstNestedIdx < 0)
 			{

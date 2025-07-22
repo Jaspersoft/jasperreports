@@ -5,6 +5,12 @@ JasperReports Library Change Log
 JasperReports 7.0.3 (2025-05-02)
 ---------------------------------------------
 
+- minor bug fixes and improvements;
+
+
+
+
+
 JasperReports 7.0.2 (2025-03-10)
 ---------------------------------------------
 
@@ -61,13 +67,6 @@ better third party Maven dependency management of these artifacts;
 - upgraded JFreeChart to version 1.5.4 which no longer has support for 3D charts. Reports having 
 Pie 3D, Bar 3D and Stacked Bar 3D charts would continue to work, but will be rendered as 2D, 
 all their 3D effects being ignored; 
-=======
-JasperReports 6.21.4 (2024-10-17)
----------------------------------------------
-
-- various dependencies upgrades including: Jackson 2.17.1, RequireJS 2.3.7, Apache POI 5.3.0 
-and Apache Xalan 2.7.3; 
->>>>>>> origin/develop2:jasperreports/changes.txt
 
 - minor bug fixes and improvements;
 

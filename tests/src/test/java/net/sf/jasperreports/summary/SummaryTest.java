@@ -35,6 +35,6 @@ public class SummaryTest extends AbstractXmlTest
 	@DataProvider
 	public Object[][] testArgs()
 	{
-		return runReportArgs("net/sf/jasperreports/summary", "SummaryReport", 21);
+		return runReportArgs("net/sf/jasperreports/summary", "SummaryReport", 22);
 	}
 }

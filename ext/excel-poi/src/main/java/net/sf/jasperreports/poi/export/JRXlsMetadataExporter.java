@@ -613,7 +613,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	
 	protected void adjustColumnWidth(String columnName, int columnWidth, Boolean columnAutofit) 
 	{
-		if (Boolean.TRUE.equals(columnAutofit)) 
+		if (Boolean.TRUE.equals(columnAutofit))
 		{
 			columnWidths.put(columnName, Integer.MAX_VALUE);
 		} 
