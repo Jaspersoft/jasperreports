@@ -59,6 +59,8 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 	
 	protected final boolean widthStretchEnabled;
 	
+	private final boolean overflowOnStretch;
+	
 	/**
 	 * Element container used for filling.
 	 */
@@ -79,6 +81,7 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 	 */
 	private Map<JRStyle,JRTemplateElement> topBottomTemplateFrames;
 	
+	private int currentAvailableHeight;
 	private boolean fillTopBorder;
 	private boolean fillBottomBorder;
 	
@@ -98,6 +101,7 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 		lineBox = frame.getLineBox().clone(this);
 		borderSplitType = initBorderSplitType(filler, frame);
 		widthStretchEnabled = initWidthStretchEnabled(filler, frame);
+		overflowOnStretch = initOverflowOnStretch(filler, frame);
 		
 		frameContainer = new JRFillFrameElements(factory);
 		
@@ -117,6 +121,7 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 		lineBox = frame.getLineBox().clone(this);
 		borderSplitType = frame.borderSplitType;
 		widthStretchEnabled = frame.widthStretchEnabled;
+		overflowOnStretch = frame.overflowOnStretch;
 		
 		frameContainer = new JRFillFrameElements(frame.frameContainer, factory);
 		
@@ -146,6 +151,13 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 				PROPERTY_FRAME_WIDTH_STRETCH_DISABLED, false, 
 				frame, filler.getJasperReport());
 		return !stretchDisabled;
+	}
+	
+	private boolean initOverflowOnStretch(JRBaseFiller filler, JRFrame frame)
+	{
+		boolean overflowOnStretch = filler.getPropertiesUtil().getBooleanProperty(
+				PROPERTY_OVERFLOW_ON_STRETCH, false, frame);
+		return overflowOnStretch;
 	}
 
 	@Override
@@ -227,6 +239,8 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 	{
 		super.prepare(availableHeight, isOverflow, isOverflowAllowed);
 
+		this.currentAvailableHeight = availableHeight;
+		
 		if (!isToPrint())
 		{
 			return false;
@@ -308,6 +322,16 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 		int topPadding = getLineBox().getTopPadding();
 		int bottomPadding = getLineBox().getBottomPadding();		
 		frameContainer.setStretchHeight(stretchHeight + frameContainer.getFirstY() - topPadding - bottomPadding);
+		
+		if (overflowOnStretch
+				&& stretchHeight == this.currentAvailableHeight 
+				&& fillContainerContext != null && fillContainerContext.isCurrentOverflow()
+				&& !frameContainer.isCurrentOverflow())
+		{
+			frameContainer.willOverflowWithWhiteSpace = true;
+			filling = true;
+			fillBottomBorder = drawBotomBorderOnSplit();
+		}
 	}
 	
 	

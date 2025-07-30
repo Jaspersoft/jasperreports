@@ -89,6 +89,10 @@ public interface JRFrame extends JRElement, JRElementGroup, JRBoxContainer
 	String PROPERTY_FRAME_WIDTH_STRETCH_DISABLED = 
 			JRPropertiesUtil.PROPERTY_PREFIX + "legacy.frame.width.stretch.disabled";
 	
+	//TODO document
+	String PROPERTY_OVERFLOW_ON_STRETCH = 
+			JRPropertiesUtil.PROPERTY_PREFIX + "frame.overflow.on.stretch";
+	
 	/**
 	 * Determines how should the frames borders behave when the frame splits on two pages.
 	 * 

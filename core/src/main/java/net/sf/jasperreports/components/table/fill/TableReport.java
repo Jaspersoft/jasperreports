@@ -63,6 +63,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRExpressionChunk;
 import net.sf.jasperreports.engine.JRField;
+import net.sf.jasperreports.engine.JRFrame;
 import net.sf.jasperreports.engine.JRGroup;
 import net.sf.jasperreports.engine.JROrigin;
 import net.sf.jasperreports.engine.JRParameter;
@@ -1850,6 +1851,8 @@ public class TableReport implements JRReport
 			propertiesMap.setBaseProperties(headerHtmlBaseProperties.get(columnHashCode));
 		}
 		// not transferring cell properties to the frame/element for now
+		
+		frame.getPropertiesMap().setProperty(JRFrame.PROPERTY_OVERFLOW_ON_STRETCH, Boolean.TRUE.toString());
 		
 		for (Iterator<JRChild> it = cell.getChildren().iterator(); it.hasNext();)
 		{
