@@ -277,6 +277,10 @@ public interface JRTextField extends JRTextElement, JREvaluation, JRAnchor, JRHy
 			sinceVersion = PropertyConstants.VERSION_6_0_0
 			)
 	public static final String PROPERTY_PATTERN_NUMBER = JRPropertiesUtil.PROPERTY_PREFIX + "text.pattern.number";
+	
+	//TODO document
+	String PROPERTY_EMPTY_OVERFLOW_ON_STRETCH = 
+			JRPropertiesUtil.PROPERTY_PREFIX + "text.empty.overflow.on.stretch";
 		
 	/**
 	 * Gets the text adjust type.

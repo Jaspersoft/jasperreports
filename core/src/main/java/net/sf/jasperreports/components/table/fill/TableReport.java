@@ -1963,6 +1963,11 @@ public class TableReport implements JRReport
 			propertiesMap.setBaseProperties(headerHtmlBaseProperties.get(columnHashCode));
 		}
 		
+		if (cellElement instanceof JRTextField)
+		{
+			cellElement.getPropertiesMap().setProperty(JRTextField.PROPERTY_EMPTY_OVERFLOW_ON_STRETCH, Boolean.TRUE.toString());
+		}
+		
 		return cellElement;
 	}
 
