@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TimeZone;
 
 import net.sf.jasperreports.annotations.properties.Property;
@@ -52,6 +54,7 @@ import net.sf.jasperreports.engine.export.data.TextValue;
 import net.sf.jasperreports.engine.fonts.FontUtil;
 import net.sf.jasperreports.engine.util.DefaultFormatFactory;
 import net.sf.jasperreports.engine.util.FormatFactory;
+import net.sf.jasperreports.engine.util.FormatUtils;
 import net.sf.jasperreports.engine.util.JRClassLoader;
 import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRStyledText;
@@ -935,13 +938,27 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 			}
 			else
 			{
-				NumberFormat numberFormat = getNumberFormat(getTextFormatFactoryClass(text), pattern, getTextLocale(text));
-				
 				Number value = null;
-				if (textStr != null && textStr.length() > 0)
+				Locale textLocale = getTextLocale(text);
+
+				Optional<Format> icuFormat = FormatUtils.getIcu4jNumberFormat(pattern, textLocale);
+				if (icuFormat.isPresent())
 				{
-					value = numberFormat.parse(textStr);
+					if (textStr.length() > 0)
+					{
+						value = ((com.ibm.icu.text.NumberFormat)icuFormat.get()).parse(textStr);
+					}
 				}
+				else
+				{
+					NumberFormat numberFormat = getNumberFormat(getTextFormatFactoryClass(text), pattern, textLocale);
+
+					if (textStr.length() > 0)
+					{
+						value = numberFormat.parse(textStr);
+					}
+				}
+
 				textValue = new NumberTextValue(textStr, value, text.getPattern());
 			}
 			return textValue;

@@ -90,6 +90,7 @@ public class UnicodeApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperFillManager.fillReportToFile("target/reports/UnicodeReport.jasper", null, new JREmptyDataSource());
+		JasperFillManager.fillReportToFile("build/reports/NumberFormatReport.jasper", null, new JREmptyDataSource());
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
@@ -101,6 +102,7 @@ public class UnicodeApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/UnicodeReport.jrprint", true);
+		JasperPrintManager.printReport("build/reports/NumberFormatReport.jrprint", true);
 		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
@@ -112,6 +114,7 @@ public class UnicodeApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/UnicodeReport.jrprint");
+		JasperExportManager.exportReportToPdfFile("build/reports/NumberFormatReport.jrprint");
 		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	

@@ -31,6 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.sf.jasperreports.engine.JRRuntimeException;
 
 
@@ -39,6 +42,8 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class DefaultFormatFactory implements FormatFactory
 {
+	private static final Log log = LogFactory.getLog(DefaultFormatFactory.class);
+
 	public static final String EXCEPTION_MESSAGE_KEY_FACTORY_INSTANCE_ERROR = "util.format.factory.instance.error";
 	public static final String EXCEPTION_MESSAGE_KEY_FACTORY_LOADING_ERROR = "util.format.factory.loading.error";
 
@@ -228,6 +233,10 @@ public class DefaultFormatFactory implements FormatFactory
 				
 				if (format instanceof DecimalFormat)
 				{
+					if (log.isDebugEnabled())
+					{
+						log.debug("Applying pattern to DecimalFormat: " + pattern);
+					}
 					((DecimalFormat) format).applyPattern(pattern);
 				}
 			}

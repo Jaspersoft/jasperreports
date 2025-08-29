@@ -82,6 +82,7 @@ import net.sf.jasperreports.engine.type.RunDirectionEnum;
 import net.sf.jasperreports.engine.type.SectionTypeEnum;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.engine.type.WhenResourceMissingTypeEnum;
+import net.sf.jasperreports.engine.util.FormatUtils;
 import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRStyledTextParser;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -1137,7 +1138,14 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		Format format = numberFormatCache.get(key);
 		if (format == null)
 		{
-			format = getFormatFactory().createNumberFormat(pattern, lc);
+			format = FormatUtils.getIcu4jNumberFormat(pattern, lc).orElseGet(
+					() -> getFormatFactory().createNumberFormat(pattern, lc));
+
+			if (log.isDebugEnabled())
+			{
+				log.debug("format is of type: " + format.getClass().getName());
+			}
+
 			if (format != null)
 			{
 				numberFormatCache.put(key, format);
