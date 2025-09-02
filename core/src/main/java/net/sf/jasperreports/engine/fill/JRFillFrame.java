@@ -156,7 +156,7 @@ public class JRFillFrame extends JRFillElement implements JRFrame
 	private boolean initOverflowOnStretch(JRBaseFiller filler, JRFrame frame)
 	{
 		boolean overflowOnStretch = filler.getPropertiesUtil().getBooleanProperty(
-				PROPERTY_OVERFLOW_ON_STRETCH, false, frame);
+				PROPERTY_OVERFLOW_ON_STRETCH, false, frame, filler.getJasperReport());
 		return overflowOnStretch;
 	}
 

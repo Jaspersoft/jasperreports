@@ -89,7 +89,13 @@ public interface JRFrame extends JRElement, JRElementGroup, JRBoxContainer
 	String PROPERTY_FRAME_WIDTH_STRETCH_DISABLED = 
 			JRPropertiesUtil.PROPERTY_PREFIX + "legacy.frame.width.stretch.disabled";
 	
-	//TODO document
+	@Property(
+			category = PropertyConstants.CATEGORY_FILL,
+			defaultValue = "false",
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.FRAME},
+			sinceVersion = PropertyConstants.VERSION_7_0_4,
+			valueType = Boolean.class
+			)
 	String PROPERTY_OVERFLOW_ON_STRETCH = 
 			JRPropertiesUtil.PROPERTY_PREFIX + "frame.overflow.on.stretch";
 	
