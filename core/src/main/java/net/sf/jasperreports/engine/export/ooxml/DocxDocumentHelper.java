@@ -27,7 +27,6 @@ import java.io.Writer;
 
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintPageFormat;
-import net.sf.jasperreports.engine.export.Cut;
 import net.sf.jasperreports.engine.export.CutsInfo;
 import net.sf.jasperreports.engine.export.JRGridLayout;
 import net.sf.jasperreports.engine.export.LengthUtil;
@@ -74,50 +73,71 @@ public class DocxDocumentHelper extends BaseHelper
 	/**
 	 *
 	 */
-	public void exportSection(PrintPageFormat pageFormat, JRGridLayout pageGridLayout, int headerIndex, boolean lastPage)
+	public void exportSection(PrintPageFormat pageFormat, JRGridLayout pageGridLayout, boolean isSizePageToContent, int headerIndex, boolean lastPage)
 	{
+		CutsInfo xCuts = pageGridLayout.getXCuts();
+		CutsInfo yCuts = pageGridLayout.getYCuts();
+		
+		int leftMargin = 0;
+		int rightMargin = 0;
+		int topMargin = 0;
+		int bottomMargin = 0;
+		int pageWidth = 0;
+		int pageHeight = 0;
+
+		if (isSizePageToContent)
+		{
+			leftMargin = pageFormat.getLeftMargin();
+			rightMargin = pageFormat.getRightMargin();
+			pageWidth =
+				Math.max(
+					pageFormat.getPageWidth(), 
+					Math.max(leftMargin, xCuts.getCutOffset(0)) + xCuts.getTotalLength() + rightMargin
+					);
+
+			topMargin = pageFormat.getTopMargin();
+			bottomMargin = pageFormat.getBottomMargin();
+			pageHeight =
+				Math.max(
+					pageFormat.getPageHeight(), 
+					Math.max(topMargin, yCuts.getCutOffset(0)) + yCuts.getTotalLength() + bottomMargin
+					);
+		}
+		else
+		{
+			leftMargin = Math.min(xCuts.getCutOffset(0), pageFormat.getLeftMargin());
+			leftMargin = leftMargin < 0 ? 0 : leftMargin;
+			rightMargin = Math.min(pageFormat.getPageWidth() - xCuts.getCutOffset(xCuts.size() - 1), pageFormat.getRightMargin());
+			rightMargin = rightMargin < 0 ? 0 : rightMargin;
+			pageWidth = pageFormat.getPageWidth();
+
+			topMargin = Math.min(yCuts.getCutOffset(0), pageFormat.getTopMargin());
+			topMargin = topMargin < 0 ? 0 : topMargin;
+			bottomMargin = Math.min(pageFormat.getPageHeight() - yCuts.getCutOffset(yCuts.size() - 1), pageFormat.getBottomMargin());
+			bottomMargin = bottomMargin < 0 ? 0 : bottomMargin;
+			pageHeight = pageFormat.getPageHeight();
+		}
+		
 		if (!lastPage)
 		{
 			write("    <w:p>\n");
 			write("    <w:pPr>\n");
 		}
 		write("  <w:sectPr>\n");
-		write("   <w:headerReference w:type=\"default\" r:id=\"header" + headerIndex + "\"/>\n");
-		write("   <w:type w:val=\"continuous\"/>\n");
-		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageFormat.getPageWidth()) + "\" w:h=\"" + LengthUtil.twip(pageFormat.getPageHeight()) + "\"");
+		if (headerIndex > 0) // headers are being created
+		{
+			write("   <w:headerReference w:type=\"default\" r:id=\"header" + headerIndex + "\"/>\n");
+			write("   <w:type w:val=\"continuous\"/>\n");
+		}
+		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageWidth) + "\" w:h=\"" + LengthUtil.twip(pageHeight) + "\"");
 		write(" w:orient=\"" + (pageFormat.getOrientation() == OrientationEnum.LANDSCAPE ? "landscape" : "portrait") + "\"");
 		
-		if(OoxmlUtils.getSuitablePaperSize(pageFormat) == PaperSizeEnum.UNDEFINED)
+		if (OoxmlUtils.getSuitablePaperSize(pageWidth, pageHeight) == PaperSizeEnum.UNDEFINED)
 		{
 			// unique identifier for the paper size
-			write(" w:code=\""+ (1000 + pageFormat.getPageWidth() + pageFormat.getPageHeight()) +"\"");
+			write(" w:code=\""+ (1000 + pageWidth + pageHeight) +"\"");
 		}
 		write("/>\n");
-		
-		CutsInfo xCuts = pageGridLayout.getXCuts();
-		
-		Cut leftCut = xCuts.getCut(0);
-		int gridLeftPadding = leftCut.isCutNotEmpty() ? 0 : pageGridLayout.getColumnWidth(0);
-		int leftMargin = Math.min(gridLeftPadding, pageFormat.getLeftMargin());
-
-		Cut rightCut = xCuts.getCut(xCuts.size() - 2);
-		int gridRightPadding = rightCut.isCutNotEmpty() ? 0 : pageGridLayout.getColumnWidth(xCuts.size() - 2);
-		int rightMargin = Math.min(gridRightPadding, pageFormat.getRightMargin());
-
-		CutsInfo yCuts = pageGridLayout.getYCuts();
-		
-		int topMargin = pageFormat.getTopMargin();
-		if (yCuts.size() > 1)
-		{
-			Cut topCut = yCuts.getCut(0);
-			int gridTopPadding = topCut.isCutNotEmpty() ? 0 : pageGridLayout.getRowHeight(0);
-			topMargin = Math.min(gridTopPadding, pageFormat.getTopMargin());
-		}
-
-		//last y cut is from bottom element, not page height
-		int gridBottomPadding = pageFormat.getPageHeight() - yCuts.getLastCutOffset();
-		int bottomMargin = LengthUtil.twip(Math.min(gridBottomPadding, pageFormat.getBottomMargin())) - DEFAULT_LINE_PITCH;
-		bottomMargin = bottomMargin < 0 ? 0 : bottomMargin;
 
 		write("   <w:pgMar w:top=\""
 				+ LengthUtil.twip(topMargin)
@@ -137,6 +157,7 @@ public class DocxDocumentHelper extends BaseHelper
 			write("    </w:p>\n");
 		}
 	}
+
 	/**
 	 *
 	 */
