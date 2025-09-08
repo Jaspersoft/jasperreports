@@ -6006,4 +6006,14 @@ temporary font files, usually named <code>+~JF*</code>.
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.frame.overflow.on.stretch -->
+
+  <configProperty name="net.sf.jasperreports.frame.overflow.on.stretch">
+    <description>
+Property that determines whether frame elements will continue on the next page when stretched
+to the bottom of the current page due to stretching of other elements or the container.
+    </description>
+  </configProperty>
+
+
 </configReference>
