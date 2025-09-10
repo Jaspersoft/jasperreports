@@ -98,32 +98,19 @@ public class DocxTableHelper extends BaseHelper
 		write("    <w:tblLayout w:type=\"fixed\"/>\n");
 		write("   </w:tblPr>\n");
 		write("   <w:tblGrid>\n");
-		int leftColumnWidth = xCuts.getCutOffset(1) - xCuts.getCutOffset(0);
-		if(frameIndex == null)
+		int firstCutOffset = xCuts.getCutOffset(0);
+		if (frameIndex == null && firstCutOffset > pageFormat.getLeftMargin())
 		{
-			leftColumnWidth -= Math.min(leftColumnWidth, pageFormat.getLeftMargin());
-			write("    <w:gridCol w:w=\"" + (leftColumnWidth == 0 ? 1 : LengthUtil.twip(leftColumnWidth)) + "\"/>\n");
+			write("    <w:gridCol w:w=\"" + LengthUtil.twip(firstCutOffset - pageFormat.getLeftMargin()) + "\"/>\n");
 		}
-		else
-		{
-			write("    <w:gridCol w:w=\"" + LengthUtil.twip(leftColumnWidth) + "\"/>\n");
-		}
-		for(int col = 2; col < xCuts.size() - 1; col++)
+		for (int col = 1; col < xCuts.size(); col++)
 		{
 			write("    <w:gridCol w:w=\"" + LengthUtil.twip(xCuts.getCutOffset(col) - xCuts.getCutOffset(col - 1)) + "\"/>\n");
 		}
-		if(xCuts.size() > 1)
+		int lastColumnOffset = xCuts.getCutOffset(xCuts.size() - 1);
+		if (frameIndex == null && lastColumnOffset < pageFormat.getPageWidth() - pageFormat.getRightMargin())
 		{
-			int rightColumnWidth = xCuts.getCutOffset(xCuts.size() - 1) - xCuts.getCutOffset(xCuts.size() - 2);
-			if(frameIndex == null)
-			{
-				rightColumnWidth -= Math.min(rightColumnWidth, pageFormat.getRightMargin());
-				write("    <w:gridCol w:w=\"" + (rightColumnWidth == 0 ? 1 : LengthUtil.twip(rightColumnWidth)) + "\"/>\n");
-			}
-			else
-			{
-				write("    <w:gridCol w:w=\"" + LengthUtil.twip(rightColumnWidth) + "\"/>\n");
-			}
+			write("    <w:gridCol w:w=\"" + LengthUtil.twip(pageFormat.getPageWidth() - pageFormat.getRightMargin() - lastColumnOffset) + "\"/>\n");
 		}
 		write("   </w:tblGrid>\n");
 	}
