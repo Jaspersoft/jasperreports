@@ -278,7 +278,13 @@ public interface JRTextField extends JRTextElement, JREvaluation, JRAnchor, JRHy
 			)
 	public static final String PROPERTY_PATTERN_NUMBER = JRPropertiesUtil.PROPERTY_PREFIX + "text.pattern.number";
 	
-	//TODO document
+	@Property(
+			category = PropertyConstants.CATEGORY_FILL,
+			defaultValue = "false",
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.TEXT_ELEMENT},
+			sinceVersion = PropertyConstants.VERSION_7_0_4,
+			valueType = Boolean.class
+			)
 	String PROPERTY_EMPTY_OVERFLOW_ON_STRETCH = 
 			JRPropertiesUtil.PROPERTY_PREFIX + "text.empty.overflow.on.stretch";
 		
