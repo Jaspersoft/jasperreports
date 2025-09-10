@@ -3191,6 +3191,15 @@ The property itself defaults to <code>false</code>.
   </configProperty>
   
   
+  <!-- net.sf.jasperreports.export.docx.size.page.to.content -->
+  
+  <configProperty name="net.sf.jasperreports.export.docx.size.page.to.content">
+    <description>
+Property which specifies if the size of each page should be increased to accommodate its content.
+    </description>
+  </configProperty>
+  
+  
   <!-- net.sf.jasperreports.export.flash.element.allow.script.access -->
 
   <configProperty name="net.sf.jasperreports.export.flash.element.allow.script.access">

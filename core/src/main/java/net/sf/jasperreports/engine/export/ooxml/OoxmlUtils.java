@@ -41,10 +41,19 @@ public final class OoxmlUtils
 
 	public static PaperSizeEnum getSuitablePaperSize(PrintPageFormat pageFormat)
 	{
-		if (pageFormat != null && pageFormat.getPageWidth() != 0 && pageFormat.getPageHeight() != 0)
+		if (pageFormat != null)
 		{
-			long mmPageWidth = Math.round(((double)pageFormat.getPageWidth() / 72d) * 25.4);
-			long mmPageHeight = Math.round(((double)pageFormat.getPageHeight() / 72d) * 25.4);
+			return getSuitablePaperSize(pageFormat.getPageWidth(), pageFormat.getPageHeight());
+		}
+		return PaperSizeEnum.UNDEFINED;
+	}
+	
+	public static PaperSizeEnum getSuitablePaperSize(int pageWidth, int pageHeight)
+	{
+		if (pageWidth != 0 && pageHeight != 0)
+		{
+			long mmPageWidth = Math.round((pageWidth / 72d) * 25.4);
+			long mmPageHeight = Math.round((pageHeight / 72d) * 25.4);
 
 			for (PaperSizeEnum paperSize : PaperSizeEnum.values())
 			{

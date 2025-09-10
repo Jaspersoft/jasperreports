@@ -89,4 +89,10 @@ public class JRDocxExporterNature extends JROfficeOpenXmlExporterNature
 		return deepGrid;
 	}
 
+	@Override
+	public boolean isIgnorePageMargins()
+	{
+		return true;
+	}
+	
 }

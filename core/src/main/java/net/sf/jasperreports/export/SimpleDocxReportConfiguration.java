@@ -34,6 +34,7 @@ public class SimpleDocxReportConfiguration extends SimpleReportExportConfigurati
 	private Boolean isIgnoreHyperlink;
 	private Boolean isNewLineAsParagraph;
 	private Boolean isBackgroundAsHeader;
+	private Boolean isSizePageToContent;
 
 	
 	/**
@@ -111,5 +112,19 @@ public class SimpleDocxReportConfiguration extends SimpleReportExportConfigurati
 	public void setBackgroundAsHeader(Boolean isBackgroundAsHeader)
 	{
 		this.isBackgroundAsHeader = isBackgroundAsHeader;
+	}
+	
+	@Override
+	public Boolean isSizePageToContent()
+	{
+		return isSizePageToContent;
+	}
+	
+	/**
+	 * 
+	 */
+	public void setSizePageToContent(Boolean isSizePageToContent)
+	{
+		this.isSizePageToContent = isSizePageToContent;
 	}
 }
