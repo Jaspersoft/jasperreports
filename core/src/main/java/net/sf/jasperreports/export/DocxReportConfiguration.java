@@ -114,6 +114,18 @@ public interface DocxReportConfiguration extends ReportExportConfiguration
 	public static final String PROPERTY_BACKGROUND_AS_HEADER = JRDocxExporter.DOCX_EXPORTER_PROPERTIES_PREFIX + "background.as.header";
 
 	/**
+	 * Property which specifies a default for the {@link #isSizePageToContent()} export configuration flag.
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_7_0_4,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_SIZE_PAGE_TO_CONTENT = JRDocxExporter.DOCX_EXPORTER_PROPERTIES_PREFIX + "size.page.to.content";
+
+	/**
 	 * Indicates whether {@link JRPrintFrame frames} are to be exported as nested tables.
 	 * <p>
 	 * If set to <code>false</code>, the frame contents will be integrated into the master/page table.
@@ -169,4 +181,14 @@ public interface DocxReportConfiguration extends ReportExportConfiguration
 		booleanDefault=true
 		)
 	public Boolean isBackgroundAsHeader();
+	
+	/**
+	 * Flag which specifies if the size of each page should be increased to accommodate its content.
+	 * @see #PROPERTY_SIZE_PAGE_TO_CONTENT
+	 */
+	@ExporterProperty(
+		value=PROPERTY_SIZE_PAGE_TO_CONTENT, 
+		booleanDefault=false
+		)
+	public Boolean isSizePageToContent();
 }

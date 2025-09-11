@@ -462,6 +462,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 			ExporterInputItem item = items.get(reportIndex);
 
 			setCurrentExporterInputItem(item);
+			
+			boolean isSizePageToContent = getCurrentItemConfiguration().isSizePageToContent();
 
 			bookmarkIndex = 0;
 			emptyPageState = false;
@@ -486,11 +488,30 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 
 						page = pages.get(pageIndex);
 
-						
 						exportPage(page);
+						
+						if (isSizePageToContent)
+						{
+							docHelper.exportSection(
+								pageFormat, 
+								pageGridLayout,
+								true, //isSizePageToContent
+								headerIndex, 
+								reportIndex == items.size() - 1 && pageIndex == endPageIndex
+								);
+						}
 					}
-					
-					docHelper.exportSection(pageFormat, pageGridLayout, headerIndex, reportIndex == items.size() - 1);
+
+					if (!isSizePageToContent)
+					{
+						docHelper.exportSection(
+							pageFormat, 
+							pageGridLayout,
+							false, //!isSizePageToContent
+							headerIndex, 
+							reportIndex == items.size() - 1
+							);
+					}
 				}
 			}
 		}
@@ -550,20 +571,20 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	protected void exportHeader(JRPrintPage page) throws JRException
 	{
 		DocxReportConfiguration configuration = getCurrentItemConfiguration();
-
-		headerIndex++;
-		ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
-		headerWriter = headerEntry.getWriter();
-
-		headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
-		headerHelper.exportHeader(pageFormat);
-
-		ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
-		headerRelsHelper = new DocxHeaderRelsHelper(jasperReportsContext, headerRelsEntry.getWriter());
-		headerRelsHelper.exportHeader();
 		
 		if (configuration.isBackgroundAsHeader())
 		{
+			headerIndex++;
+			ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
+			headerWriter = headerEntry.getWriter();
+
+			headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
+			headerHelper.exportHeader(pageFormat);
+
+			ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
+			headerRelsHelper = new DocxHeaderRelsHelper(jasperReportsContext, headerRelsEntry.getWriter());
+			headerRelsHelper.exportHeader();
+			
 			headerRunHelper = new DocxRunHelper(jasperReportsContext, headerWriter, docxFontHelper);
 			
 			pageAnchor = null;
@@ -585,16 +606,16 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 					);
 
 			exportGrid(backgrounGridLayout, null);
+			
+			relsHelper.exportHeader(headerIndex);
+			ctHelper.exportHeader(headerIndex);
+
+			headerHelper.exportFooter();
+			headerHelper.close();
+
+			headerRelsHelper.exportFooter();
+			headerRelsHelper.close();
 		}
-		
-		relsHelper.exportHeader(headerIndex);
-		ctHelper.exportHeader(headerIndex);
-
-		headerHelper.exportFooter();
-		headerHelper.close();
-
-		headerRelsHelper.exportFooter();
-		headerRelsHelper.close();
 	}
 
 
@@ -639,7 +660,6 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	 */
 	protected void exportGrid(JRGridLayout gridLayout, JRPrintElementIndex frameIndex) throws JRException
 	{
-		
 		CutsInfo xCuts = gridLayout.getXCuts();
 		Grid grid = gridLayout.getGrid();
 		DocxTableHelper tableHelper = null;
@@ -741,16 +761,19 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 			tableHelper.setRowMaxTopPadding(maxTopPadding);
 
 			int rowHeight = gridLayout.getRowHeight(row) - maxBottomPadding;
-			if (row == 0 && frameIndex == null)
-			{
-				rowHeight -= Math.min(rowHeight, pageFormat.getTopMargin());
-			}
 
 			tableHelper.exportRowHeader(
 				rowHeight,
 				allowRowResize
 				);
 
+			int firstCutOffset = xCuts.getCutOffset(0);
+			if (frameIndex == null && firstCutOffset > pageFormat.getLeftMargin())
+			{
+				tableHelper.exportEmptyCell(null, 1, startPage, bookmarkIndex, pageAnchor);
+				startPage = false;
+			}
+			
 			for(int col = 0; col < rowSize; col++)
 			{
 				JRExporterGridCell gridCell = gridRow.get(col);
@@ -833,6 +856,12 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 //			{
 //				//writeEmptyCell(tableHelper, null, emptyCellColSpan, emptyCellWidth, rowHeight);
 //			}
+			
+			int lastColumnOffset = xCuts.getCutOffset(xCuts.size() - 1);
+			if (frameIndex == null && lastColumnOffset < pageFormat.getPageWidth() - pageFormat.getRightMargin())
+			{
+				tableHelper.exportEmptyCell(null, 1, startPage, bookmarkIndex, pageAnchor);
+			}
 
 			tableHelper.exportRowFooter();
 		}
@@ -1040,7 +1069,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 
 		AttributedCharacterIterator iterator = styledText.getAttributedString().getIterator();
 
-		while (runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
+		while(runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
 		{
 			Map<Attribute,Object> attributes = iterator.getAttributes();
 

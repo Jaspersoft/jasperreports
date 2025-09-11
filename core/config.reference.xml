@@ -3191,6 +3191,15 @@ The property itself defaults to <code>false</code>.
   </configProperty>
   
   
+  <!-- net.sf.jasperreports.export.docx.size.page.to.content -->
+  
+  <configProperty name="net.sf.jasperreports.export.docx.size.page.to.content">
+    <description>
+Property which specifies if the size of each page should be increased to accommodate its content.
+    </description>
+  </configProperty>
+  
+  
   <!-- net.sf.jasperreports.export.flash.element.allow.script.access -->
 
   <configProperty name="net.sf.jasperreports.export.flash.element.allow.script.access">
@@ -6012,6 +6021,18 @@ temporary font files, usually named <code>+~JF*</code>.
     <description>
 Property that determines whether frame elements will continue on the next page when stretched
 to the bottom of the current page due to stretching of other elements or the container.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.text.empty.overflow.on.stretch -->
+
+  <configProperty name="net.sf.jasperreports.text.empty.overflow.on.stretch">
+    <description>
+Property that determines whether text field elements will continue on the next page when stretched
+to the bottom of the current page due to stretching of other elements or the container.
+<br/>
+Text elements will continue on the next page as empty texts, rendering the border and the background.
     </description>
   </configProperty>
 

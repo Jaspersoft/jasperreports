@@ -64,6 +64,8 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 
 	protected final Map<Pair<JRStyle, TextFormat>, JRTemplateElement> textTemplates;
 
+	private final Map<JRStyle, JRTemplateText> emptyOverflowTemplates;
+
 	/**
 	 *
 	 */
@@ -99,6 +101,13 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 	//FIXME keep these in the filler/context
 	private Map<String, TimeZone> generalPatternTimeZones = new HashMap<>();
 
+	private final boolean overflowOnStretch;
+
+	private int currentAvailableHeight;
+	private boolean currentOverflow;
+	private boolean emptyOverflow;
+	private boolean fillEmptyOverflow;
+
 	/**
 	 *
 	 */
@@ -111,7 +120,9 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 		super(filler, textField, factory);
 		
 		this.textTemplates = new HashMap<>();
+		this.emptyOverflowTemplates = new HashMap<>();
 		this.localizedProperties = new HashMap<>();
+		this.overflowOnStretch = initOverflowOnStretch(filler, textField);
 	}
 
 	
@@ -120,7 +131,16 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 		super(textField, factory);
 
 		this.textTemplates = textField.textTemplates;
+		this.emptyOverflowTemplates = textField.emptyOverflowTemplates;
 		this.localizedProperties = textField.localizedProperties;
+		this.overflowOnStretch = textField.overflowOnStretch;
+	}
+	
+	private boolean initOverflowOnStretch(JRBaseFiller filler, JRTextField textField)
+	{
+		boolean overflowOnStretch = filler.getPropertiesUtil().getBooleanProperty(
+				PROPERTY_EMPTY_OVERFLOW_ON_STRETCH, false, textField);
+		return overflowOnStretch;
 	}
 
 
@@ -561,6 +581,7 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 		String crtRawText = getRawText();
 		String newRawText = processMarkupText(String.valueOf(strValue));
 
+		emptyOverflow = false;
 		setRawText(newRawText);
 		resetTextChunk();
 
@@ -651,9 +672,12 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 		boolean willOverflow = false;
 
 		super.prepare(availableHeight, isOverflow, isOverflowAllowed);
+		
+		this.currentAvailableHeight = availableHeight;
 
 		if (!isToPrint())
 		{
+			this.currentOverflow = willOverflow;
 			return willOverflow;
 		}
 
@@ -691,6 +715,12 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 							resetTextChunk();
 
 							isReprinted = true;
+						}
+						else if (emptyOverflow)
+						{
+							//reprinting with empty text
+							setEmptyText();
+							fillEmptyOverflow = true;
 						}
 						else
 						{
@@ -852,13 +882,47 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 		setToPrint(isToPrint);
 		setReprinted(isReprinted);
 
+		this.currentOverflow = willOverflow;
 		return willOverflow;
 	}
 
+	protected void setEmptyText()
+	{
+		setRawText("");
+		resetTextChunk();
+	}
+
+	@Override
+	protected void setStretchHeight(int stretchHeight)
+	{
+		super.setStretchHeight(stretchHeight);
+		
+		if (overflowOnStretch && stretchHeight == this.currentAvailableHeight 
+				&& fillContainerContext != null && fillContainerContext.isCurrentOverflow()
+				&& !currentOverflow
+				&& isEvaluateNow())
+		{
+			emptyOverflow = true;
+		}
+	}
+	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		
+		fillEmptyOverflow = false;
+	}
 
 	@Override
 	public JRPrintElement fill() throws JRException
 	{
+		if (fillEmptyOverflow)
+		{
+			JRTemplatePrintText text = fillEmptyOverflowText();
+			return text;
+		}
+		
 		EvaluationTimeEnum evaluationTime = getEvaluationTime();
 		
 		JRTemplatePrintText text;
@@ -903,6 +967,63 @@ public class JRFillTextField extends JRFillTextElement implements JRTextField
 		}
 
 		return text;
+	}
+
+	protected JRTemplatePrintText fillEmptyOverflowText()
+	{
+		JRTemplateText template = getEmptyOverflowTemplate();
+		JRTemplatePrintText text = new JRTemplatePrintText(template, printElementOriginator);
+		text.setUUID(getUUID());
+		text.setX(getX());
+		text.setY(getRelativeY());
+		text.setWidth(getWidth());
+		text.setHeight(getStretchHeight());
+		transferProperties(text);
+		text.setText("");
+		return text;
+	}
+
+	protected JRTemplateText getEmptyOverflowTemplate()
+	{
+		JRTemplateText template = null;
+		JRStyle style = null;
+		
+		if (providerStyle == null)
+		{
+			// no style provider has been used so we can use cache template per style below
+			style = getStyle();
+			template = emptyOverflowTemplates.get(style);
+		}
+		
+		if (template == null)
+		{
+			template = createEmptyOverflowTemplate();
+			transferProperties(template);
+			
+			if (toPopulateTemplateStyle())
+			{
+				template.populateStyle();
+			}
+			
+			// deduplicate to previously created identical objects
+			template = filler.fillContext.deduplicate(template);
+			
+			if (providerStyle == null)
+			{
+				emptyOverflowTemplates.put(style, template);
+			}
+		}
+		return template;
+		
+	}
+
+	protected JRTemplateText createEmptyOverflowTemplate()
+	{
+		JRTemplateText template = new JRTemplateText(getElementOrigin(), 
+					filler.getJasperPrint().getDefaultStyleProvider());
+		template.setTextElement(this);
+		template.copyLineBox(getPrintLineBox());
+		return template;
 	}
 
 
