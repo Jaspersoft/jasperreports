@@ -62,7 +62,7 @@ public class DatasetSortUtil
 			category = PropertyConstants.CATEGORY_FILL,
 			defaultValue = "true",
 			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.FIELD},
-			sinceVersion = PropertyConstants.VERSION_6_21_6,
+			sinceVersion = PropertyConstants.VERSION_7_0_4,
 			valueType = Boolean.class
 			)
 	public static final String PROPERTY_USE_COLLATOR = JRPropertiesUtil.PROPERTY_PREFIX + "sorting.use.collator";
