@@ -5987,6 +5987,18 @@ The property is only effective when the <code>net.sf.jasperreports.text.save.lin
 The property assumes that the same font is used during report fill and for PDF exporting, therefore using font extensions for texts is recommended.
     </description>
   </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.sorting.use.collator -->
+
+  <configProperty name="net.sf.jasperreports.sorting.use.collator">
+    <description>
+Property that determines whether a <code>java.text.Collator</code> is used to sort <code>java.lang.String</code> values.
+<br/>
+The property is set to <code>true</code> by default.  When set to <code>false</code>, <code>java.lang.String</code> values
+are sorted according to the Unicode lexicographic order.
+    </description>
+  </configProperty>
 
 
   <!-- net.sf.jasperreports.svg.allow.external.resources -->

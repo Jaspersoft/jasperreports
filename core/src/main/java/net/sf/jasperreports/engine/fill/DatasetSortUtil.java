@@ -32,9 +32,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRScriptletException;
 import net.sf.jasperreports.engine.JRSortField;
@@ -44,6 +47,7 @@ import net.sf.jasperreports.engine.fill.DatasetSortInfo.RecordField;
 import net.sf.jasperreports.engine.fill.DatasetSortInfo.SortFieldInfo;
 import net.sf.jasperreports.engine.fill.SortedDataSource.SortRecord;
 import net.sf.jasperreports.engine.type.SortFieldTypeEnum;
+import net.sf.jasperreports.properties.PropertyConstants;
 
 
 /**
@@ -54,6 +58,14 @@ public class DatasetSortUtil
 	public static final String EXCEPTION_MESSAGE_KEY_SORT_FIELD_NOT_FOUND = "fill.dataset.sort.field.not.found";
 	public static final String EXCEPTION_MESSAGE_KEY_SORT_VARIABLE_NOT_FOUND = "fill.dataset.sort.variable.not.found";
 
+	@Property(
+			category = PropertyConstants.CATEGORY_FILL,
+			defaultValue = "true",
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.FIELD},
+			sinceVersion = PropertyConstants.VERSION_7_0_4,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_USE_COLLATOR = JRPropertiesUtil.PROPERTY_PREFIX + "sorting.use.collator";
 
 	/**
 	 * Returns all current sort field criteria, including the dynamic ones provided as report parameter.
@@ -173,7 +185,7 @@ public class DatasetSortUtil
 				JRSortField sortField = sortFields[i];
 
 				String sortFieldName = sortField.getName();
-				boolean collatorFlag;
+				boolean collatorFlag = false;
 				int recordIndex;
 				if (sortField.getType() == SortFieldTypeEnum.VARIABLE)
 				{
@@ -187,7 +199,11 @@ public class DatasetSortUtil
 					}
 					
 					recordIndex = sortInfo.addRecordVariable(variable.getName());
-					collatorFlag = String.class.getName().equals(variable.getValueClassName());
+					if (String.class.getName().equals(variable.getValueClassName()))
+					{
+						collatorFlag = dataset.getPropertiesUtil().getBooleanProperty(
+								PROPERTY_USE_COLLATOR, true, dataset);
+					}
 				}
 				else
 				{
@@ -201,7 +217,11 @@ public class DatasetSortUtil
 					}
 					
 					recordIndex = fieldIndexMap.get(sortField.getName());
-					collatorFlag = String.class.getName().equals(field.getValueClassName());
+					if (String.class.getName().equals(field.getValueClassName()))
+					{
+						collatorFlag = dataset.getPropertiesUtil().getBooleanProperty(
+								PROPERTY_USE_COLLATOR, true, field, dataset);
+					}
 				}
 
 				sortInfo.addSortField(sortField, recordIndex, collatorFlag);

@@ -23,7 +23,6 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<maven.deploy.skip>true</maven.deploy.skip>
 		<maven.test.skip>false</maven.test.skip>
-		<enforcer.skip>true</enforcer.skip>
 	</properties>
 	<dependencies>
 		<dependency>

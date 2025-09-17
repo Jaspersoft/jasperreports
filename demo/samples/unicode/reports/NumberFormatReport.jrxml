@@ -1,52 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 9.0.1.final using JasperReports Library version 6.21.4-SNAPSHOT-e93d238a59c2a08c1539f483e432db70272d5352  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NumberFormatReport" whenNoDataType="AllSectionsNoDetail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="9df06543-a919-4db2-9dcd-ed4c8a66dec7">
-	<title>
-		<band height="540">
-			<textField pattern="#,##,###.00">
-				<reportElement x="0" y="10" width="200" height="60" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[123456789.899]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="210" y="10" width="340" height="60" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e"/>
-				<text><![CDATA[Number 123456789.899 formatted with variable grouping pattern: #,##,###.00]]></text>
-			</staticText>
-			<textField pattern="#,##,###,####.##">
-				<reportElement x="0" y="70" width="200" height="60" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[1212123456789.12]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="210" y="70" width="340" height="60" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e"/>
-				<text><![CDATA[Number 1212123456789.12 formatted with variable grouping pattern: #,##,###,####.##]]></text>
-			</staticText>
-			<textField pattern="#,###,##,#.##">
-				<reportElement x="0" y="130" width="200" height="60" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[1212123456789.12]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="210" y="130" width="340" height="60" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e"/>
-				<text><![CDATA[Number 1212123456789.12 formatted with variable grouping pattern: #,###,##,#.##]]></text>
-			</staticText>
-			<textField pattern="#,##,###.###">
-				<reportElement x="0" y="190" width="200" height="60" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb"/>
-				<textElement>
-					<font fontName="DejaVu Sans" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new BigDecimal("121314153456789.12345")]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="210" y="190" width="340" height="60" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e"/>
-				<text><![CDATA[Number BigDecimal("121314153456789.12345") formatted with variable grouping pattern: #,##,###.###]]></text>
-			</staticText>
-		</band>
+<jasperReport name="NumberFormatReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="9df06543-a919-4db2-9dcd-ed4c8a66dec7">
+	<title height="540">
+		<element kind="textField" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb" x="0" y="10" width="200" height="60" fontName="DejaVu Sans" fontSize="14.0" pattern="#,##,###.00">
+			<expression><![CDATA[123456789.899]]></expression>
+		</element>
+		<element kind="staticText" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e" x="210" y="10" width="340" height="60">
+			<text><![CDATA[Number 123456789.899 formatted with variable grouping pattern: #,##,###.00]]></text>
+		</element>
+		<element kind="textField" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb" x="0" y="70" width="200" height="60" fontName="DejaVu Sans" fontSize="14.0" pattern="#,##,###,####.##">
+			<expression><![CDATA[1212123456789.12]]></expression>
+		</element>
+		<element kind="staticText" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e" x="210" y="70" width="340" height="60">
+			<text><![CDATA[Number 1212123456789.12 formatted with variable grouping pattern: #,##,###,####.##]]></text>
+		</element>
+		<element kind="textField" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb" x="0" y="130" width="200" height="60" fontName="DejaVu Sans" fontSize="14.0" pattern="#,###,##,#.##">
+			<expression><![CDATA[1212123456789.12]]></expression>
+		</element>
+		<element kind="staticText" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e" x="210" y="130" width="340" height="60">
+			<text><![CDATA[Number 1212123456789.12 formatted with variable grouping pattern: #,###,##,#.##]]></text>
+		</element>
+		<element kind="textField" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb" x="0" y="190" width="200" height="60" fontName="DejaVu Sans" fontSize="14.0" pattern="#,##,###.###">
+			<expression><![CDATA[new BigDecimal("121314153456789.12345")]]></expression>
+		</element>
+		<element kind="staticText" uuid="5b997b20-895a-48e1-8168-95b5d9c8a08e" x="210" y="190" width="340" height="60">
+			<text><![CDATA[Number BigDecimal("121314153456789.12345") formatted with variable grouping pattern: #,##,###.###]]></text>
+		</element>
 	</title>
 </jasperReport>

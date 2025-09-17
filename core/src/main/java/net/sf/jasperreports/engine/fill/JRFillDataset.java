@@ -323,6 +323,10 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		return filler;
 	}
 
+	public JRPropertiesUtil getPropertiesUtil()
+	{
+		return propertiesUtil;
+	}
 
 	private void setParameters(JRDataset dataset, JRFillObjectFactory factory)
 	{

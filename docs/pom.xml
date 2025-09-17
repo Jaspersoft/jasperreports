@@ -212,7 +212,6 @@
 								<argument>site</argument>
 								<argument>-f</argument>
 								<argument>pom-javadoc.xml</argument>
-								<argument>-Denforcer.skip</argument>
 								<argument>-Dmaven.buildNumber.doCheck=false</argument>
 							</arguments>
 							<workingDirectory>${project.basedir}</workingDirectory>
@@ -246,7 +245,6 @@
 							<arguments>
 								<argument>compile</argument>
 								<argument>exec:java</argument>
-								<argument>-Denforcer.skip</argument>
 								<argument>-Dmaven.buildNumber.doCheck=false</argument>
 							</arguments>
 							<workingDirectory>${project.basedir}/../demo/samples/functions</workingDirectory>
