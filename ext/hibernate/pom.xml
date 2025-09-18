@@ -26,13 +26,6 @@
 			<optional>false</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-beanutils2</artifactId>
-			<version>${commons-beanutils2.version}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-data-adapters</artifactId>
 			<version>${revision}</version>
