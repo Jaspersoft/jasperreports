@@ -217,10 +217,9 @@ public class HorizontalFillList extends BaseFillList
 							log.debug("Filling new cell at column " 
 									+ columnIndex);
 						}
-						
-						listContents.evaluateContents();
 					}
 
+					listContents.evaluateContents();
 					listContents.prepare(contentsAvailableHeight);
 					overflow = listContents.willOverflow();
 					
