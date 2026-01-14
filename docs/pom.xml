@@ -163,8 +163,16 @@
 							<file>${project.build.directory}/docs/sample.reference/README.html</file>
 							<outputFile>${project.build.directory}/docs/sample.reference/README.html</outputFile>
 							<regex>false</regex>
-							<token>../../</token>
-							<value>../</value>
+							<replacements>
+								<replacement>
+									<token>../../</token>
+									<value>../</value>
+								</replacement>
+								<replacement>
+									<token>@version</token>
+									<value>${revision}</value>
+								</replacement>
+							</replacements>
 						</configuration>
 					</execution>
 					<execution>

@@ -3,7 +3,7 @@
 This document lists all the major features of the JasperReports library, as shown in the samples shipped with the project's source code package.
 
 - [Download All Sample Source Files](https://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%20/jasperreports--project.zip/download)
-- [Browse Sample Source Files on Git](https://github.com/Jaspersoft/jasperreports/tree/release-7.0.0/demo/samples/antupdate)
+- [Browse Sample Source Files on Git](https://github.com/Jaspersoft/jasperreports/tree/release-7.0.0/demo/samples)
 
 ## General
 - [Updating Multiple Report Template Files Using the Ant Build Tool](./antupdate/README.md#antupdate)
