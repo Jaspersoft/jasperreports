@@ -40,6 +40,7 @@ import net.sf.jasperreports.crosstabs.JRCellContents;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintFrame;
 import net.sf.jasperreports.engine.JRPrintImage;
+import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.export.PdfConstants;
 import net.sf.jasperreports.engine.util.StyledTextListWriter;
 import net.sf.jasperreports.export.AccessibilityUtil;
@@ -519,22 +520,27 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 		}
 	}
 
-	protected void startText(boolean isHyperlink)
+	protected void startText(JRPrintText textElement)
 	{
 		if (isTagged)
 		{
-//			PdfStructureElement parentTag = tableCellTag == null ? (tableHeaderTag == null ? allTag : tableHeaderTag): tableCellTag;
-//			PdfStructureElement textTag = new PdfStructureElement(parentTag, PdfName.TEXT);
-			pdfStructure.beginTag(tagStack.peek(), isHyperlink ? "Link" : "Text");
+			PdfStructureEntry textEntry = pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link");
+            if (textElement.hasProperties() && textElement.getPropertiesMap().containsProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE))
+            {
+            	textEntry.putString("Lang", textElement.getPropertiesMap().getProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE));
+            }
 		}
 	}
 
-	protected void startText(String text, boolean isHyperlink)
+	protected void startText(JRPrintText textElement, String text)
 	{
 		if (isTagged)
 		{
-			pdfStructure.beginTag(tagStack.peek(), isHyperlink ? "Link" : "Text", 
-					text);
+			PdfStructureEntry textEntry = pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link", text);
+			if (textElement.hasProperties() && textElement.getPropertiesMap().containsProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE))
+            {
+            	textEntry.putString("Lang", textElement.getPropertiesMap().getProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE));
+            }
 		}
 	}
 

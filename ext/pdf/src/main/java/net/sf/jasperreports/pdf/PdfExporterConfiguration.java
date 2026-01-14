@@ -233,7 +233,7 @@ public interface PdfExporterConfiguration extends ExporterConfiguration
 	 */
 	@Property(
 			category = PropertyConstants.CATEGORY_EXPORT,
-			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.ELEMENT},
 			sinceVersion = PropertyConstants.VERSION_3_1_2
 			)
 	public static final String PROPERTY_TAG_LANGUAGE = JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.tag.language";

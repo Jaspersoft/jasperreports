@@ -131,7 +131,7 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 		String paragraphText
 		)
 	{
-		tagHelper.startText(text.getLinkType() != null);
+		tagHelper.startText(text);
 
 		if (bulletChunk != null)
 		{

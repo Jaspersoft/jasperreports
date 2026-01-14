@@ -160,11 +160,11 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	 {
 		if (addActualText())
 		{
-			tagHelper.startText(paragraphText, text.getLinkType() != null);
+			tagHelper.startText(text, paragraphText);
 		}
 		else
 		{
-			tagHelper.startText(text.getLinkType() != null);
+			tagHelper.startText(text);
 		}
 		
 		super.renderParagraph(allParagraphs, paragraphStart, paragraphText);

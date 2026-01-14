@@ -137,7 +137,8 @@
 			</band>
 			<band height="20">
 				<element kind="textField" uuid="b9123f2b-c55b-4c3e-a307-cda5fd32f3ee" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Sans_Normal">
-					<expression><![CDATA["A banana is an elongated, edible fruit produced by several kinds of large herbaceous flowering plants in the genus Musa."]]></expression>
+					<expression><![CDATA["(In French) La banane est un fruit allongé et comestible produit par plusieurs espèces de grandes plantes herbacées à fleurs du genre Musa."]]></expression>
+					<property name="net.sf.jasperreports.export.pdf.tag.language" value="FR"/>
 				</element>
 			</band>
 			<band height="20">
