@@ -192,7 +192,7 @@
 			<band height="30"/>
 			<band height="20">
 				<element kind="textField" uuid="48c45474-ff24-4cb8-b1b0-456c2ea0a8de" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
-					<expression><![CDATA["This is a crosstab without a header cell at its the top left corner."]]></expression>
+					<expression><![CDATA["This is a crosstab without a header cell at its top left corner."]]></expression>
 				</element>
 			</band>
 			<band height="50">
@@ -294,7 +294,7 @@
 			</band>
 			<band height="20">
 				<element kind="textField" uuid="a98a7704-439e-45ee-af84-a3cfb2b4ab17" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
-					<expression><![CDATA["This is a crosstab having a header cell at its the top left corner."]]></expression>
+					<expression><![CDATA["This is a crosstab having a header cell at its top left corner."]]></expression>
 				</element>
 			</band>
 			<band height="50">
