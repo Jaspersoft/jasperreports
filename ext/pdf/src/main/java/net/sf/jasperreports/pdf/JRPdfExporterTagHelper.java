@@ -277,6 +277,12 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 			sinceVersion = PropertyConstants.VERSION_6_2_0
 			)
 	public static final String PROPERTY_TAG_H6 = JRPdfExporter.PDF_EXPORTER_PROPERTIES_PREFIX + "tag.h6";
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			scopes = {PropertyScope.ELEMENT},
+			sinceVersion = PropertyConstants.VERSION_7_0_6
+			)
+	public static final String PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT = JRPdfExporter.PDF_EXPORTER_PROPERTIES_PREFIX + "tag.attribute.ActualText";
 	
 	protected JRPdfExporter exporter;
 
@@ -522,24 +528,28 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 
 	protected void startText(JRPrintText textElement)
 	{
-		if (isTagged)
-		{
-			PdfStructureEntry textEntry = pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link");
-            if (textElement.hasProperties() && textElement.getPropertiesMap().containsProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE))
-            {
-            	textEntry.putString("Lang", textElement.getPropertiesMap().getProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE));
-            }
-		}
+		startText(textElement, null);
 	}
 
 	protected void startText(JRPrintText textElement, String text)
 	{
 		if (isTagged)
 		{
-			PdfStructureEntry textEntry = pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link", text);
-			if (textElement.hasProperties() && textElement.getPropertiesMap().containsProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE))
+			PdfStructureEntry textEntry =
+				text == null
+				? pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link")
+				: pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link", text);
+
+			if (textElement.hasProperties())
             {
-            	textEntry.putString("Lang", textElement.getPropertiesMap().getProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE));
+                if (textElement.getPropertiesMap().containsProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE))
+                {
+                	textEntry.putString("Lang", textElement.getPropertiesMap().getProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE));
+                }
+                if (textElement.getPropertiesMap().containsProperty(PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT))
+                {
+                	textEntry.putString("ActualText", textElement.getPropertiesMap().getProperty(PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT));
+                }
             }
 		}
 	}

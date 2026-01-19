@@ -688,6 +688,15 @@ Its value is used as default for the
   </configProperty>
   
   
+  <!-- net.sf.jasperreports.export.pdf.tag.attribute.ActualText -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.attribute.ActualText">
+    <description>
+Property that specifies the actual text that the screen reader should read for the current element.
+    </description>
+  </configProperty>
+  
+  
   <!-- net.sf.jasperreports.export.pdf.tagged -->
   
   <configProperty name="net.sf.jasperreports.export.pdf.tagged">

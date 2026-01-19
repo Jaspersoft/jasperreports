@@ -145,6 +145,7 @@
 				<element kind="textField" uuid="9ef7cebf-7244-41a0-af98-844412fd0333" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1">
 					<expression><![CDATA["Vegetables"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h1"/>
+					<property name="net.sf.jasperreports.export.pdf.tag.attribute.ActualText" value="We are now describing vegetables"/>
 				</element>
 			</band>
 			<band height="20">
