@@ -531,24 +531,27 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 		startText(textElement, null);
 	}
 
-	protected void startText(JRPrintText textElement, String text)
+	protected void startText(JRPrintText textElement, String actualText)
 	{
 		if (isTagged)
 		{
+			if (textElement.hasProperties() && textElement.getPropertiesMap().containsProperty(PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT))
+            {
+				//FIXME the actual text repeats for each paragraph in multi-paragraph text elements, which is not good;
+				// the actual text should be an attribute of the paragraph in styled text
+				actualText = textElement.getPropertiesMap().getProperty(PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT);
+            }
+			
 			PdfStructureEntry textEntry =
-				text == null
+				actualText == null
 				? pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link")
-				: pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link", text);
+				: pdfStructure.beginTag(tagStack.peek(), textElement.getLinkType() == null ? "Text" : "Link", actualText);
 
 			if (textElement.hasProperties())
             {
                 if (textElement.getPropertiesMap().containsProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE))
                 {
                 	textEntry.putString("Lang", textElement.getPropertiesMap().getProperty(PdfExporterConfiguration.PROPERTY_TAG_LANGUAGE));
-                }
-                if (textElement.getPropertiesMap().containsProperty(PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT))
-                {
-                	textEntry.putString("ActualText", textElement.getPropertiesMap().getProperty(PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT));
                 }
             }
 		}
