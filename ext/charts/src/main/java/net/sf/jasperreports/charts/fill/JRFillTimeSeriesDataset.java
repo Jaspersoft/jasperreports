@@ -198,7 +198,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 
 	@Override
 	public TimePeriodEnum getTimePeriod() {
-		return ((JRTimeSeriesDataset)parent).getTimePeriod();
+		return TimePeriodEnum.getValueOrDefault(((JRTimeSeriesDataset)parent).getTimePeriod());
 	}
 
 	@Override

@@ -24,6 +24,7 @@
 package net.sf.jasperreports.charts.type;
 
 import net.sf.jasperreports.engine.type.EnumUtil;
+import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.type.NamedEnum;
 
 
@@ -104,6 +105,14 @@ public enum TimePeriodEnum implements NamedEnum
 			return MILLISECOND;
 		}
 		return EnumUtil.getEnumByName(values(), name);
+	}
+	
+	/**
+	 *
+	 */
+	public static TimePeriodEnum getValueOrDefault(TimePeriodEnum value)
+	{
+		return value == null ? DAY : value;
 	}
 	
 	@Override
