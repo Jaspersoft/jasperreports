@@ -477,9 +477,15 @@ public class JRDesignDataset extends JRBaseDataset
 	}
 
 	
-	protected void setScriptlets(List<JRScriptlet> scriptlets)
+	protected void setScriptlets(List<JRScriptlet> scriptlets) throws JRException
 	{
-		this.scriptletsList = scriptlets;
+		if (scriptlets != null)
+		{
+			for (JRScriptlet scriptlet : scriptlets)
+			{
+				addScriptlet(scriptlet);
+			}
+		}
 	}
 
 	

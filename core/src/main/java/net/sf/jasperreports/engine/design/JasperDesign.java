@@ -843,7 +843,7 @@ public class JasperDesign extends JRBaseReport
 
 
 	@JsonSetter
-	private void setScriptlets(List<JRScriptlet> scriptlets)
+	private void setScriptlets(List<JRScriptlet> scriptlets) throws JRException
 	{
 		mainDesignDataset.setScriptlets(scriptlets);
 	}
