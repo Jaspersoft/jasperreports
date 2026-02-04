@@ -25,6 +25,10 @@ package net.sf.jasperreports.json.export;
 
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
+import net.sf.jasperreports.json.export.schema.JsonSchema;
+import net.sf.jasperreports.json.export.schema.NodeTypeEnum;
+import net.sf.jasperreports.json.export.schema.SchemaNode;
 import net.sf.jasperreports.repo.RepositoryUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,18 +61,19 @@ public class JsonMetadataSchemaFileTest {
 						StandardCharsets.UTF_8.name()
 				);
 
-		JsonMetadataExporter metadataExporter = new JsonMetadataExporter();
+		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
+		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
 
 		boolean isValid;
 		try {
-			metadataExporter.validateSchema(scanner.useDelimiter("\\A").next());
+			jsonSchema.validateSchema(scanner.useDelimiter("\\A").next());
 
 			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, JsonMetadataExporter.SchemaNode> entry : metadataExporter.getPathToObjectNode().entrySet()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToObjectNode().entrySet()) {
 					log.debug("pathToObjectNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 				}
 
-				for (Map.Entry<String, JsonMetadataExporter.SchemaNode> entry : metadataExporter.getPathToValueNode().entrySet()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToValueNode().entrySet()) {
 					log.debug("pathToValueNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 				}
 			}
@@ -83,16 +88,16 @@ public class JsonMetadataSchemaFileTest {
 		}
 
         assert isValid;
-		assert metadataExporter.getPathToObjectNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".city");
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".city").getType().equals(JsonMetadataExporter.NodeTypeEnum.OBJECT);
+		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".city");
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".city").getType().equals(NodeTypeEnum.OBJECT);
 
-		assert metadataExporter.getPathToObjectNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products");
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(JsonMetadataExporter.NodeTypeEnum.ARRAY);
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 4;
+		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products");
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 4;
 
-		assert metadataExporter.getPathToObjectNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers");
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(JsonMetadataExporter.NodeTypeEnum.ARRAY);
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
+		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers");
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
 	}
 
 	@Test
@@ -103,11 +108,11 @@ public class JsonMetadataSchemaFileTest {
 						StandardCharsets.UTF_8.name()
 				);
 
-		JsonMetadataExporter metadataExporter = new JsonMetadataExporter();
+		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
 
 		boolean isValid = true;
 		try {
-			metadataExporter.validateSchema(scanner.useDelimiter("\\A").next());
+			jsonProcessor.getJsonSchema().validateSchema(scanner.useDelimiter("\\A").next());
 		} catch (JRException e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());

@@ -25,7 +25,10 @@ package net.sf.jasperreports.json.export;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.sf.jasperreports.export.SimpleWriterExporterOutput;
+import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
+import net.sf.jasperreports.json.export.schema.JsonSchema;
+import net.sf.jasperreports.json.export.schema.NodeTypeEnum;
+import net.sf.jasperreports.json.export.schema.SchemaNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.Test;
@@ -43,65 +46,66 @@ public class JsonMetadataDynamicSchemaTest {
 
     @Test
     public void validateSchema() {
-		JsonMetadataExporter metadataExporter = new JsonMetadataExporter();
+		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
+		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products.id");
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products.name");
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products.price");
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers.name");
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers.address");
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers.address.street");
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.id");
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.price");
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name");
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.address");
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.address.street");
 
 		if (log.isDebugEnabled()) {
-			for (Map.Entry<String, JsonMetadataExporter.SchemaNode> entry : metadataExporter.getPathToObjectNode().entrySet()) {
+			for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToObjectNode().entrySet()) {
 				log.debug("pathToObjectNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 			}
 
-			for (Map.Entry<String, JsonMetadataExporter.SchemaNode> entry : metadataExporter.getPathToValueNode().entrySet()) {
+			for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToValueNode().entrySet()) {
 				log.debug("pathToValueNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 			}
 		}
 
-		assert metadataExporter.getPathToObjectNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products");
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(JsonMetadataExporter.NodeTypeEnum.ARRAY);
-		assert metadataExporter.getPathToValueNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products.name");
-		assert metadataExporter.getPathToValueNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products.name").getType().equals(JsonMetadataExporter.NodeTypeEnum.ARRAY);
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 3;
+		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products");
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToValueNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
+		assert jsonSchema.getPathToValueNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 3;
 
-		assert metadataExporter.getPathToObjectNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers");
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(JsonMetadataExporter.NodeTypeEnum.ARRAY);
-		assert metadataExporter.getPathToValueNode().containsKey(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers.name");
-		assert metadataExporter.getPathToValueNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers.name").getType().equals(JsonMetadataExporter.NodeTypeEnum.ARRAY);
-		assert metadataExporter.getPathToObjectNode().get(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
+		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers");
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToValueNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name");
+		assert jsonSchema.getPathToValueNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
 	}
 
 	@Test
 	public void buildJSON() throws IOException {
-		JsonMetadataExporter metadataExporter = new JsonMetadataExporter();
+		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
+		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
 
 		StringWriter sw = new StringWriter();
-		metadataExporter.setExporterOutput(new SimpleWriterExporterOutput(sw));
-		metadataExporter.ensureWriter();
+		jsonProcessor.setWriter(sw);
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.e");
-		metadataExporter.processElement("value_1", JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.e", true);
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.e");
+		jsonProcessor.processElement("value_1", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.e", true);
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.f");
-		metadataExporter.processElement( "value_2", JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.f", false);
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.f");
+		jsonProcessor.processElement( "value_2", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.f", false);
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h");
-		metadataExporter.processElement("value_3", JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h", false);
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h");
+		jsonProcessor.processElement("value_3", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h", false);
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.i");
-		metadataExporter.processElement("value_4", JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.i", true);
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.i");
+		jsonProcessor.processElement("value_4", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.i", true);
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h");
-		metadataExporter.processElement("value_5", JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h", false);
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h");
+		jsonProcessor.processElement("value_5", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h", false);
 
-		metadataExporter.prepareSchema(JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.j.k");
-		metadataExporter.processElement("value_6", JsonMetadataExporter.JSON_SCHEMA_ROOT_NAME + ".a.j.k", false);
+		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.j.k");
+		jsonProcessor.processElement("value_6", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.j.k", false);
 
-		metadataExporter.closeOpenNodes();
+		jsonProcessor.closeOpenNodes();
 
 		// Construct same mapper that is used to read the JSON schema
 		ObjectMapper mapper = new ObjectMapper();
