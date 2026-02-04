@@ -156,7 +156,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			)
 	public static final String JSON_EXPORTER_STRING_PROPERTIES_PREFIX = JSON_EXPORTER_PROPERTIES_PREFIX + "string.";
 
-	private static final String JSON_SCHEMA_ROOT_NAME = "___root";
+	public static final String JSON_SCHEMA_ROOT_NAME = "___root";
 
 	protected final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
 
@@ -367,6 +367,10 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			getExporterOutput().close();
 			resetExportContext();//FIXMEEXPORT check if using same finally is correct; everywhere
 		}
+	}
+
+	public void ensureWriter() {
+		writer = getExporterOutput().getWriter();
 	}
 
 	@Override
@@ -586,7 +590,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		}
 	}
 
-	private void prepareSchema(String absolutePath) {
+	public void prepareSchema(String absolutePath) {
 		if (!pathToValueNode.containsKey(absolutePath)) {
 			String valueProperty = absolutePath.substring(absolutePath.lastIndexOf(".") + 1);
 			String[] objectPathSegments = absolutePath.substring(0, absolutePath.lastIndexOf(".")).split("\\.");
@@ -679,7 +683,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		return value;
 	}
 
-	private void processElement(Object value, String absolutePath, boolean repeatValue) throws IOException 
+	public void processElement(Object value, String absolutePath, boolean repeatValue) throws IOException
 	{
 		if (openedSchemaNodes.size() == 0) {
 			// initialize the json for the first time
@@ -963,7 +967,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		}
 	}
 
-	private void closeOpenNodes() throws IOException {
+	public void closeOpenNodes() throws IOException {
 		if (openedSchemaNodes.size() == 0) {
 			return;
 		}
@@ -1095,6 +1099,14 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		return styledText;
 	}
 
+	public Map<String, SchemaNode> getPathToValueNode() {
+		return pathToValueNode;
+	}
+
+	public Map<String, SchemaNode> getPathToObjectNode() {
+		return pathToObjectNode;
+	}
+
 	protected class ExporterContext extends BaseExporterContext implements JsonExporterContext
 	{
 		@Override
@@ -1105,7 +1117,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 	}
 
 
-	private class SchemaNode {
+	public static class SchemaNode {
 		private int level;
 		private String name;
 		private NodeTypeEnum type;
@@ -1203,7 +1215,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		}
 	}
 
-	private class SchemaNodeMember {
+	public static class SchemaNodeMember {
 
 		private boolean repeatValue;
 		private Object previousValue;
@@ -1235,7 +1247,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 
 	}
 
-	private enum NodeTypeEnum implements NamedEnum
+	public enum NodeTypeEnum implements NamedEnum
 	{
 		/**
 		 *
