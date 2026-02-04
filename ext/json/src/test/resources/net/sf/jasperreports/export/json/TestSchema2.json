@@ -1,0 +1,14 @@
+{
+	_type: 'array',
+	_children: {
+		_type: 'array',
+		_children: {
+			_type: 'array',
+			Id: 'value',
+			Name: 'value',
+			Quantity: 'value',
+			Price: 'value'
+			}
+		}
+	}
+}
