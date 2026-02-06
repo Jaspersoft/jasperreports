@@ -38,6 +38,7 @@ import java.util.Map;
 import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileResource;
@@ -386,34 +387,32 @@ public class JRAntCompileTask extends JRBaseAntTask
 		{
 			boolean isError = false;
 		
-			System.out.println("Compiling " + files.size() + " report design files.");
+			log("Compiling " + files.size() + " report design files.");
 
 			for (Iterator<String> it = files.iterator(); it.hasNext();)
 			{
 				String srcFileName = it.next();
 				String destFileName = reportFilesMap.get(srcFileName);
 				File destFileParent = new File(destFileName).getParentFile();
-				if(!destFileParent.exists())
+				if (!destFileParent.exists())
 				{
 					destFileParent.mkdirs();
 				}
 
 				try
 				{
-					System.out.print("File : " + srcFileName + " ... ");
 					JasperCompileManager.getInstance(jasperReportsContext).compileToFile(srcFileName, destFileName);
-					System.out.println("OK.");
+					log("File : " + srcFileName);
 				}
-				catch(JRException e)
+				catch (Exception e) // for some reason, jackson jrxml parsing was made to throw runtime exception
 				{
-					System.out.println("FAILED.");
-					System.out.println("Error compiling report design : " + srcFileName);
-					e.printStackTrace(System.out);
+					log("Error compiling report design : " + srcFileName);
+					log(e, Project.MSG_ERR);
 					isError = true;
 				}
 			}
 		
-			if(isError)
+			if (isError)
 			{
 				throw new BuildException("Errors were encountered when compiling report designs.");
 			}

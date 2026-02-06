@@ -34,6 +34,7 @@ import java.util.Map;
 import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileResource;
@@ -314,14 +315,14 @@ public class JRAntApiWriteTask extends JRBaseAntTask
 		{
 			boolean isError = false;
 		
-			System.out.println("Processing " + files.size() + " report design files.");
+			log("Processing " + files.size() + " report design files.");
 
 			for (Iterator<String> it = files.iterator(); it.hasNext();)
 			{
 				String srcFileName = it.next();
 				String destFileName = reportFilesMap.get(srcFileName);
 				File destFileParent = new File(destFileName).getParentFile();
-				if(!destFileParent.exists())
+				if (!destFileParent.exists())
 				{
 					destFileParent.mkdirs();
 				}
@@ -335,8 +336,6 @@ public class JRAntApiWriteTask extends JRBaseAntTask
 				
 				try
 				{
-					System.out.print("File : " + srcFileName + " ... ");
-
 					JRReport report = null;
 
 					if ("jrxml".equalsIgnoreCase(srcFileExtension))
@@ -361,18 +360,17 @@ public class JRAntApiWriteTask extends JRBaseAntTask
 					
 					new JRApiWriter(jasperReportsContext).write(report, destFileName);
 					
-					System.out.println("OK.");
+					log("File : " + srcFileName);
 				}
-				catch(JRException e)
+				catch (JRException e)
 				{
-					System.out.println("FAILED.");
-					System.out.println("Error generating API report design : " + srcFileName);
-					e.printStackTrace(System.out);
+					log("Error generating API report design : " + srcFileName);
+					log(e, Project.MSG_ERR);
 					isError = true;
 				}
 			}
 		
-			if(isError)
+			if (isError)
 			{
 				throw new BuildException("Errors were encountered when generating API report designs.");
 			}
@@ -391,39 +389,36 @@ public class JRAntApiWriteTask extends JRBaseAntTask
 		{
 			boolean isError = false;
 		
-			System.out.println("Running " + files.size() + " API report design files.");
+			log("Running " + files.size() + " API report design files.");
 
 			for (Iterator<String> it = files.iterator(); it.hasNext();)
 			{
 				String srcFileName = it.next();
 				String destFileName = reportFilesMap.get(srcFileName);
 				File destFileParent = new File(destFileName).getParentFile();
-				if(!destFileParent.exists())
+				if (!destFileParent.exists())
 				{
 					destFileParent.mkdirs();
 				}
 
 				try
 				{
-					System.out.print("File : " + srcFileName + " ... ");
-
 					Class<?> reportCreatorClass = JRClassLoader.loadClassFromFile(null, new File(srcFileName));
 					ReportCreator reportCreator = (ReportCreator)reportCreatorClass.getDeclaredConstructor().newInstance();
 					JasperDesign jasperDesign = reportCreator.create();
 					new JRXmlWriter(jasperReportsContext).write(jasperDesign, destFileName, "UTF-8");
 
-					System.out.println("OK.");
+					log("File : " + srcFileName);
 				}
 				catch (JRException | IOException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e)
 				{
-					System.out.println("FAILED.");
-					System.out.println("Error running API report design class : " + srcFileName);
-					e.printStackTrace(System.out);
+					log("Error running API report design class : " + srcFileName);
+					log(e, Project.MSG_ERR);
 					isError = true;
 				}
 			}
 		
-			if(isError)
+			if (isError)
 			{
 				throw new BuildException("Errors were encountered when running API report designs classes.");
 			}

@@ -3,6 +3,10 @@
 	<description>Shows how multiple JRXML files can be compiled in batch mode using ANT.</description>
 
 	<path id="sample-classpath">
+		<!-- should only be used for local testing -->
+		<!--
+		<pathelement location="../../../ext/ant/target/classes"/>
+		-->
 		<path refid="sample-lib"/>
 		<pathelement location="./build/classes"/>
 		<pathelement location="../../common-samples/classes"/>

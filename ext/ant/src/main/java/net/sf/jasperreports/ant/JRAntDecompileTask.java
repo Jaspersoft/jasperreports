@@ -32,6 +32,7 @@ import java.util.Map;
 import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileResource;
@@ -279,38 +280,35 @@ public class JRAntDecompileTask extends JRBaseAntTask
 		{
 			boolean isError = false;
 		
-			System.out.println("Decompiling " + files.size() + " report design files.");
+			log("Decompiling " + files.size() + " report design files.");
 
 			for (Iterator<String> it = files.iterator(); it.hasNext();)
 			{
 				String srcFileName = it.next();
 				String destFileName = reportFilesMap.get(srcFileName);
 				File destFileParent = new File(destFileName).getParentFile();
-				if(!destFileParent.exists())
+				if (!destFileParent.exists())
 				{
 					destFileParent.mkdirs();
 				}
 
 				try
 				{
-					System.out.print("File : " + srcFileName + " ... ");
-
 					JasperReport jasperReport = (JasperReport)JRLoader.loadObjectFromFile(srcFileName);
 					
 					new JRXmlWriter(jasperReportsContext).write(jasperReport, destFileName, "UTF-8");
 					
-					System.out.println("OK.");
+					log("File : " + srcFileName);
 				}
-				catch(JRException e)
+				catch (JRException e)
 				{
-					System.out.println("FAILED.");
-					System.out.println("Error decompiling report design : " + srcFileName);
-					e.printStackTrace(System.out);
+					log("Error decompiling report design : " + srcFileName);
+					log(e, Project.MSG_ERR);
 					isError = true;
 				}
 			}
 		
-			if(isError)
+			if (isError)
 			{
 				throw new BuildException("Errors were encountered when decompiling report designs.");
 			}

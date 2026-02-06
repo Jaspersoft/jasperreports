@@ -34,6 +34,7 @@ import java.util.Map;
 import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileResource;
@@ -316,7 +317,7 @@ public class JRAntUpdateTask extends JRBaseAntTask
 		{
 			boolean isError = false;
 		
-			System.out.println("Updating " + files.size() + " report design files.");
+			log("Updating " + files.size() + " report design files.");
 
 			String srcFileName = null;
 			String destFileName = null;
@@ -327,15 +328,13 @@ public class JRAntUpdateTask extends JRBaseAntTask
 				srcFileName = it.next();
 				destFileName = reportFilesMap.get(srcFileName);
 				destFileParent = new File(destFileName).getParentFile();
-				if(!destFileParent.exists())
+				if (!destFileParent.exists())
 				{
 					destFileParent.mkdirs();
 				}
 
 				try
 				{
-					System.out.print("File : " + srcFileName + " ... ");
-
 					JasperDesign jasperDesign = JRXmlLoader.load(srcFileName);
 					
 					if (updaters != null)
@@ -352,18 +351,17 @@ public class JRAntUpdateTask extends JRBaseAntTask
 					
 					new JRXmlWriter(jasperReportsContext).write(jasperDesign, destFileName, "UTF-8");
 					
-					System.out.println("OK.");
+					log("File : " + srcFileName);
 				}
-				catch(JRException e)
+				catch (JRException e)
 				{
-					System.out.println("FAILED.");
-					System.out.println("Error updating report design : " + srcFileName);
-					e.printStackTrace(System.out);
+					log("Error updating report design : " + srcFileName);
+					log(e, Project.MSG_ERR);
 					isError = true;
 				}
 			}
 		
-			if(isError)
+			if (isError)
 			{
 				throw new BuildException("Errors were encountered when updating report designs.");
 			}
