@@ -91,7 +91,7 @@ public class ClassicRadioCheck extends ClassicPdfField implements PdfRadioCheck
 		PdfFormField radioGroup = pdfProducer.getRadioGroup(radioCheckField);
 		try
 		{
-			radioGroup.addKid(radioCheckField.getRadioField());
+			radioGroup.addKid(radioCheckField.getKidField());
 		}
 		catch (DocumentException e)
 		{
