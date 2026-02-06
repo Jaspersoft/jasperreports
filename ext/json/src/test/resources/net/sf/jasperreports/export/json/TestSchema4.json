@@ -1,0 +1,11 @@
+{
+  products: {
+    _type: 'array',
+    _children: {
+      details: {
+        id: 'value',
+        name: 'value'
+      }
+    }
+  }
+}

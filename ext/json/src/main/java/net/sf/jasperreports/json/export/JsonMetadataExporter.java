@@ -32,12 +32,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
-import net.sf.jasperreports.json.export.schema.JsonSchema;
-import net.sf.jasperreports.json.export.schema.SchemaNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -264,7 +261,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 					)
 				{
 					String jsonSchema = scanner.useDelimiter("\\A").next();
-					jsonProcessor.getJsonSchema().validateSchema(jsonSchema);
+					jsonProcessor.getJsonSchema().initialize(jsonSchema);
 				}
 			} else {
 				if (log.isWarnEnabled()) {
@@ -290,16 +287,6 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 				}
 
 				jsonProcessor.closeOpenNodes();
-			}
-
-			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry: jsonProcessor.getJsonSchema().getPathToValueNode().entrySet()) {
-					log.debug("pathToValueNode: path: " + entry.getKey() + "; node: " + entry.getValue());
-				}
-
-				for (Map.Entry<String, SchemaNode> entry: jsonProcessor.getJsonSchema().getPathToObjectNode().entrySet()) {
-					log.debug("pathToObjectNode: path: " + entry.getKey() + "; node: " + entry.getValue());
-				}
 			}
 		}
 
@@ -350,99 +337,90 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		}
 	}
 
-	protected void exportElement(JRPrintElement element) throws IOException 
+	protected void exportElement(JRPrintElement element) throws IOException
 	{
 		JRPropertiesMap propMap = element.getPropertiesMap();
 
 		List<PropertySuffix> properties = JRPropertiesUtil.getProperties(element, JSON_EXPORTER_PROPERTIES_PREFIX);
-		
+
 		for (PropertySuffix property : properties)
 		{
-			String propertyPath = null;
+			String propertyPath;
+			Object value;
+			boolean legacyPathProperty;
 			boolean repeatValue = false;
-			Object value = null;
-			boolean legacyPathProperty = false;
-			
+
 			String propertyName = property.getKey();
-			
+
 			if (propertyName.equals(JSON_EXPORTER_PATH_PROPERTY))
 			{
 				legacyPathProperty = true;
 				propertyPath = property.getValue();
 				repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_VALUE_PROPERTY, false);
+				value = null;
 			}
-			else if (propertyName.startsWith(JSON_EXPORTER_STRING_PROPERTIES_PREFIX))
+			else
 			{
-				propertyPath = propertyName.substring(JSON_EXPORTER_STRING_PROPERTIES_PREFIX.length());
-				repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
-				value = property.getValue();
-			}
-			else if (propertyName.startsWith(JSON_EXPORTER_NUMBER_PROPERTIES_PREFIX))
-			{
-				propertyPath = propertyName.substring(JSON_EXPORTER_NUMBER_PROPERTIES_PREFIX.length());
-				repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
-				value = Double.parseDouble(property.getValue());
-			}
-			else if (propertyName.startsWith(JSON_EXPORTER_DATE_PROPERTIES_PREFIX))
-			{
-				propertyPath = propertyName.substring(JSON_EXPORTER_DATE_PROPERTIES_PREFIX.length());
-				repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
-				try
+				legacyPathProperty = false;
+				if (propertyName.startsWith(JSON_EXPORTER_STRING_PROPERTIES_PREFIX))
 				{
-					value = isoDateFormat.parse(property.getValue());
+					propertyPath = propertyName.substring(JSON_EXPORTER_STRING_PROPERTIES_PREFIX.length());
+					repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
+					value = property.getValue();
 				}
-				catch (ParseException e)
+				else if (propertyName.startsWith(JSON_EXPORTER_NUMBER_PROPERTIES_PREFIX))
 				{
-					throw new JRRuntimeException(e);
+					propertyPath = propertyName.substring(JSON_EXPORTER_NUMBER_PROPERTIES_PREFIX.length());
+					repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
+					value = Double.parseDouble(property.getValue());
 				}
-			}
-			else if (propertyName.startsWith(JSON_EXPORTER_BOOLEAN_PROPERTIES_PREFIX))
-			{
-				propertyPath = propertyName.substring(JSON_EXPORTER_BOOLEAN_PROPERTIES_PREFIX.length());
-				repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
-				value = Boolean.parseBoolean(property.getValue());
-			}
-
-			if (propertyPath != null && propertyPath.length() > 0) 
-			{
-				String absolutePath = JsonSchema.JSON_SCHEMA_ROOT_NAME + "." + propertyPath;
-
-				// we have a mapped node for this path
-				if (jsonProcessor.getJsonSchema().isInitialized())
+				else if (propertyName.startsWith(JSON_EXPORTER_DATE_PROPERTIES_PREFIX))
 				{
-					if (jsonProcessor.getJsonSchema().getPathToValueNode().containsKey(absolutePath))
+					propertyPath = propertyName.substring(JSON_EXPORTER_DATE_PROPERTIES_PREFIX.length());
+					repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
+					try
 					{
-						if (log.isDebugEnabled()) {
-							log.debug("found element with path: " + propertyPath);
-						}
-						
-						if (legacyPathProperty)
-						{
-							value = getValue(element); 
-						}
-						
-						jsonProcessor.processElement(value, absolutePath, repeatValue);
+						value = isoDateFormat.parse(property.getValue());
 					}
-				}
-				else 
-				{
-					jsonProcessor.getJsonSchema().prepareSchema(absolutePath);
-					if (log.isDebugEnabled()) {
-						log.debug("found element with path: " + propertyPath);
-					}
-
-					if (legacyPathProperty)
+					catch (ParseException e)
 					{
-						value = getValue(element); 
+						throw new JRRuntimeException(e);
 					}
-					
-					jsonProcessor.processElement(value, absolutePath, repeatValue);
 				}
+				else if (propertyName.startsWith(JSON_EXPORTER_BOOLEAN_PROPERTIES_PREFIX))
+				{
+					propertyPath = propertyName.substring(JSON_EXPORTER_BOOLEAN_PROPERTIES_PREFIX.length());
+					repeatValue = getPropertiesUtil().getBooleanProperty(propMap, JSON_EXPORTER_REPEAT_PROPERTIES_PREFIX + propertyPath, false);
+					value = Boolean.parseBoolean(property.getValue());
+				}
+				else
+				{
+					propertyPath = null;
+					value = null;
+				}
+			}
+
+			if (propertyPath != null && !propertyPath.isEmpty())
+			{
+				jsonProcessor.processElement(
+						() -> {
+							if (log.isDebugEnabled())
+							{
+								log.debug("found element with propertyPath: " + propertyPath);
+							}
+
+							if (legacyPathProperty)
+							{
+								return getValue(element);
+							}
+
+							return value;
+						}, propertyPath, repeatValue);
 			}
 		}
 	}
 
-	private Object getValue(JRPrintElement element) throws IOException
+	private Object getValue(JRPrintElement element)
 	{
 		Object value;
 		final String textStr;

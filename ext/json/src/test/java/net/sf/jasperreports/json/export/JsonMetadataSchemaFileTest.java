@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.json.export;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
@@ -35,6 +37,8 @@ import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Scanner;
@@ -47,10 +51,17 @@ public class JsonMetadataSchemaFileTest {
 	private static final Log log = LogFactory.getLog(JsonMetadataSchemaFileTest.class);
 
     private RepositoryUtil repoUtil;
+	private ObjectMapper objectMapper;
 
     @BeforeClass
-    public void readJson() {
+    public void setUp () {
 		repoUtil = RepositoryUtil.getInstance(DefaultJasperReportsContext.getInstance());
+
+		// Construct the same mapper that is used to read the JSON schema
+		objectMapper = new ObjectMapper();
+		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+		objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
     }
 
     @Test
@@ -66,15 +77,11 @@ public class JsonMetadataSchemaFileTest {
 
 		boolean isValid;
 		try {
-			jsonSchema.validateSchema(scanner.useDelimiter("\\A").next());
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
 			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToObjectNode().entrySet()) {
-					log.debug("pathToObjectNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
-				}
-
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToValueNode().entrySet()) {
-					log.debug("pathToValueNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+					log.debug("pathToSchemaNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 				}
 			}
 
@@ -88,16 +95,16 @@ public class JsonMetadataSchemaFileTest {
 		}
 
         assert isValid;
-		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".city");
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".city").getType().equals(NodeTypeEnum.OBJECT);
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".city");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".city").getType().equals(NodeTypeEnum.OBJECT);
 
-		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products");
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(NodeTypeEnum.ARRAY);
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 4;
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 4;
 
-		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers");
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(NodeTypeEnum.ARRAY);
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
 	}
 
 	@Test
@@ -108,11 +115,11 @@ public class JsonMetadataSchemaFileTest {
 						StandardCharsets.UTF_8.name()
 				);
 
-		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
+		JsonSchema jsonSchema = new JsonSchema();
 
 		boolean isValid = true;
 		try {
-			jsonProcessor.getJsonSchema().validateSchema(scanner.useDelimiter("\\A").next());
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 		} catch (JRException e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
@@ -122,6 +129,96 @@ public class JsonMetadataSchemaFileTest {
 		}
 
 		assert !isValid;
+	}
+
+	@Test
+	public void validateJsonForSchema_3() throws JRException, IOException {
+		Scanner scanner =
+				new Scanner(
+						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/json/TestSchema3.json"),
+						StandardCharsets.UTF_8.name()
+				);
+
+		JsonSchema jsonSchema = new JsonSchema();
+
+		boolean isValid = true;
+		try {
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+
+			if (log.isDebugEnabled()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
+				}
+			}
+
+			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
+			StringWriter sw = new StringWriter();
+			jsonProcessor.setWriter(sw);
+
+			jsonProcessor.processElement(() -> "1", "product.id", false);
+			jsonProcessor.processElement(() -> "2", "product.id", false);
+			jsonProcessor.closeOpenNodes();
+
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
+	@Test
+	public void validateJsonForSchema_4() throws JRException, IOException {
+		Scanner scanner =
+				new Scanner(
+						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/json/TestSchema4.json"),
+						StandardCharsets.UTF_8.name()
+				);
+
+		JsonSchema jsonSchema = new JsonSchema();
+
+		boolean isValid = true;
+		try {
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+
+			if (log.isDebugEnabled()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
+				}
+			}
+
+			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
+			StringWriter sw = new StringWriter();
+			jsonProcessor.setWriter(sw);
+
+			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
+			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
+			jsonProcessor.processElement(() -> "id_2", "products.details.id", false);
+			jsonProcessor.closeOpenNodes();
+
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage(), e);
+			}
+
+			isValid = false;
+		}
+
+		assert isValid;
 	}
 
 }

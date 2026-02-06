@@ -28,31 +28,41 @@ import java.util.List;
 
 public class SchemaNode {
 	private int level;
-	private String name;
-	private NodeTypeEnum type;
 	private String path;
+	private String parentPath;
+	private NodeTypeEnum type;
+	private String key;
 	private List<SchemaNodeMember> members;
 	private List<String> memberNames;
 
-	public SchemaNode(int _level, String _name, NodeTypeEnum _type, String _path) {
-		level = _level;
-		name = _name;
-		type = _type;
-		path = _path;
+	public SchemaNode(int level, String path, String parentPath, NodeTypeEnum type, String key) {
+		this.level = level;
+		this.path = path;
+		this.parentPath = parentPath;
+		this.type = type;
+		this.key = key;
 		members = new ArrayList<>();
 		memberNames = new ArrayList<>();
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public NodeTypeEnum getType() {
-		return type;
+	public int getLevel() {
+		return level;
 	}
 
 	public String getPath() {
 		return path;
+	}
+
+	public String getParentPath() {
+		return parentPath;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public NodeTypeEnum getType() {
+		return type;
 	}
 
 	public void addMember(String memberName) {
@@ -66,6 +76,10 @@ public class SchemaNode {
 
 	public boolean isArray() {
 		return NodeTypeEnum.ARRAY.equals(type);
+	}
+
+	public boolean isValue() {
+		return NodeTypeEnum.VALUE.equals(type);
 	}
 
 	public int indexOfMember(String memberName) {
@@ -94,15 +108,16 @@ public class SchemaNode {
 		boolean isArray = NodeTypeEnum.ARRAY.equals(type);
 
 		out.append("level: ").append(level).append(", ");
-		out.append("name: \"").append(name).append("\", ");
-		out.append("type: \"").append(type.getName()).append("\", ");
-		out.append("path: \"").append(path).append("\", ");
+		out.append("path: ").append(path).append(", ");
+		out.append("parentPath: ").append(parentPath).append(", ");
+		out.append("type: ").append(type.getName()).append(", ");
+		out.append("key: ").append(key).append(", ");
 		out.append("members: [");
 		if (isArray) {
 			out.append("{");
 		}
 		for (int i=0, ln = members.size(); i < ln; i++) {
-			out.append("\"").append(members.get(i).getName()).append("\"");
+			out.append(members.get(i).getName());
 			if (i < ln-1) {
 				out.append(", ");
 			}
@@ -116,18 +131,24 @@ public class SchemaNode {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (!(obj instanceof SchemaNode)) {
+			return false;
+		}
+
 		return this.level == ((SchemaNode)obj).level
-				&& this.name.equals(((SchemaNode)obj).name)
+				&& this.path.equals(((SchemaNode)obj).path)
+				&& this.parentPath.equals(((SchemaNode)obj).parentPath)
 				&& this.type.equals(((SchemaNode)obj).type)
-				&& this.path.equals(((SchemaNode)obj).path);
+				&& this.key.equals(((SchemaNode)obj).key);
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = level !=0 ? level : 41;
-		hash = hash * 41 + name.hashCode();
-		hash = hash * 41 + type.hashCode();
 		hash = hash * 41 + path.hashCode();
+		hash = hash * 41 + parentPath.hashCode();
+		hash = hash * 41 + type.hashCode();
+		hash = hash * 41 + key.hashCode();
 		return hash;
 	}
 }

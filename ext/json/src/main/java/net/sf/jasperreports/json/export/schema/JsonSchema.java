@@ -42,14 +42,21 @@ public class JsonSchema {
 	protected static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_SEMANTIC = EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT + ".semantic";
 	protected static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_ARRAY_FOUND = EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT + ".array.found";
 
+	private static final String TYPE_KEY = "_type";
+	private static final String CHILDREN_KEY = "_children";
+	private static final String[] OBJECT_NODE_RESERVED_KEYS = new String[] { TYPE_KEY }; // FIXME: Use these reserved keys objects
+	private static final String[] ARRAY_NODE_RESERVED_KEYS = new String[] { TYPE_KEY, CHILDREN_KEY };
 	public static final String JSON_SCHEMA_ROOT_NAME = "___root";
 
-	private final Map<String, SchemaNode> pathToValueNode = new HashMap<>();
-	private final Map<String, SchemaNode> pathToObjectNode = new HashMap<>();
+	private final Map<String, SchemaNode> pathToSchemaNodeMap = new LinkedHashMap<>();
+	private final Set<String> invalidSchemaPaths = new HashSet<>();
 
 	private boolean isInitialized = false;
 
-	public void validateSchema(String jsonSchema) throws JRException {
+	public JsonSchema() {
+	}
+
+	public void initialize(String jsonSchema) throws JRException {
 		ObjectMapper mapper = new ObjectMapper();
 
 		// relax the JSON rules
@@ -60,7 +67,7 @@ public class JsonSchema {
 		try {
 			JsonNode root = mapper.readTree(jsonSchema);
 			if (root.isObject()) {
-				if (!isValid((ObjectNode) root, JSON_SCHEMA_ROOT_NAME, "", null)) {
+				if (!isValid((ObjectNode) root, JSON_SCHEMA_ROOT_NAME, JSON_SCHEMA_ROOT_NAME, null)) {
 					throw
 							new JRException(
 									EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_SEMANTIC,
@@ -85,14 +92,24 @@ public class JsonSchema {
 		}
 	}
 
-	private boolean isValid(ObjectNode objectNode, String objectName, String currentPath, SchemaNode parent) {
+	private String getPaddedPrefix(String jsonPath) {
+		int segmentCount = jsonPath.split("\\.").length - 1;
+		return String.format(">>>%" + (segmentCount == 0 ? 1 : segmentCount * 4) + "s", "");
+	}
+
+	private boolean isValid(ObjectNode objectNode, String currentSchemaPath, String realJsonPath, SchemaNode parent) {
+		if (log.isDebugEnabled()) {
+			log.debug(getPaddedPrefix(realJsonPath) + "validating real JSON path: " + realJsonPath);
+			log.debug(getPaddedPrefix(realJsonPath) + "objectNode: " + objectNode);
+		}
+
 		String nodeTypeValue = null;
-		JsonNode typeNode = objectNode.path("_type");
+		JsonNode typeNode = objectNode.path(TYPE_KEY);
 
 		if (typeNode.isMissingNode()) {
 			nodeTypeValue = "object";
 		} else if (!typeNode.isTextual()) {
-			return false;
+			return false; // FIXME: log reason why it's invalid
 		}
 
 		if (nodeTypeValue == null) {
@@ -101,118 +118,164 @@ public class JsonSchema {
 
 		NodeTypeEnum nodeType = NodeTypeEnum.getByName(nodeTypeValue);
 
-		// enforce type "object" or "array" with "_children"
-		if (!(NodeTypeEnum.OBJECT.equals(nodeType) || (NodeTypeEnum.ARRAY.equals(nodeType) && objectNode.has("_children")))) {
-			return false;
-		}
-
-		// enforce "_children" of type Object when typeNode is "array"
-		if (NodeTypeEnum.ARRAY.equals(nodeType) && !objectNode.path("_children").isObject()) {
-			return false;
+		// enforce type "object" or "array" with "_children" of type Object
+		if (!(
+				NodeTypeEnum.OBJECT.equals(nodeType) || (
+						NodeTypeEnum.ARRAY.equals(nodeType) &&
+								objectNode.has(CHILDREN_KEY) &&
+								objectNode.path(CHILDREN_KEY).isObject()
+				)
+		)) {
+			return false; // FIXME: log reason why it's invalid
 		}
 
 		boolean result = true;
-		String availablePath = currentPath;
 		SchemaNode schemaNode;
 
-		availablePath = availablePath.length() > 0 ? (availablePath.endsWith(".") ? availablePath : availablePath + ".") + objectName : objectName;
-
-		// _children properties are passed to the parent array
 		if (parent != null) {
 			schemaNode = parent;
 		} else {
-
-			int level;
-
-			if (JSON_SCHEMA_ROOT_NAME.equals(objectName)) {
-				level = 0;
-			} else if (availablePath.length() > 0 && availablePath.indexOf(".") > 0) {
-				level = availablePath.split("\\.").length - 1;
-			} else {
-				level = 1;
+			int level = currentSchemaPath.split("\\.").length;
+			if (log.isDebugEnabled()) {
+				log.debug(getPaddedPrefix(realJsonPath) + "creating node of type: " + nodeType + " for schema path: " + currentSchemaPath);
 			}
 
-			schemaNode = new SchemaNode(level, objectName, nodeType, currentPath.endsWith(".") ? currentPath.substring(0, currentPath.length() - 2) : currentPath);
-			pathToObjectNode.put(availablePath, schemaNode);
+			String parentPath = null;
+			String currentKey = currentSchemaPath;
+			if (level > 1) {
+				parentPath = currentSchemaPath.substring(0, currentSchemaPath.lastIndexOf("."));
+				currentKey = currentSchemaPath.substring(currentSchemaPath.lastIndexOf(".") + 1);
+			}
+
+			schemaNode = new SchemaNode(level - 1, currentSchemaPath, parentPath, nodeType, currentKey);
+			pathToSchemaNodeMap.put(currentSchemaPath, schemaNode);
 		}
 
-		Iterator<String> it = objectNode.fieldNames();
-		while (it.hasNext()) {
-			String field = it.next();
-			JsonNode node = objectNode.path(field);
-			String localPath = availablePath;
+		if (NodeTypeEnum.OBJECT.equals(nodeType)) {
+			Iterator<String> it = objectNode.fieldNames();
+			while (it.hasNext()) {
+				String field = it.next();
 
-			if (!field.startsWith("_")) {
-				schemaNode.addMember(field);
-				if (node.isTextual() && node.asText().equals("value")) {
-					localPath = localPath.length() > 0 ? (localPath.endsWith(".") ? localPath : localPath + ".") + field : field;
-					pathToValueNode.put(localPath, schemaNode);
-				} else if ((node.isObject() && !isValid((ObjectNode) node, field, availablePath, null)) || !node.isObject()) {
-					result = false;
-					break;
+				if (log.isDebugEnabled()) {
+					log.debug(getPaddedPrefix(realJsonPath) + "found field: " + field);
 				}
-			} else if (field.equals("_children") && !isValid((ObjectNode) node, "", availablePath, schemaNode)) {
-				result = false;
-				break;
+
+				// For object nodes consider only fields that don't start with _ // FIXME: consider allowing fields that start with _ and are different from _type and other internal reserved words
+				if (!field.startsWith("_")) {
+					JsonNode node = objectNode.path(field);
+					String localPath = currentSchemaPath + "." + field;
+
+					schemaNode.addMember(field);
+					if (node.isTextual() && node.asText().equals("value")) {
+						if (log.isDebugEnabled()) {
+							log.debug(getPaddedPrefix(realJsonPath) + "adding value node for schema path: " + localPath);
+						}
+						pathToSchemaNodeMap.put(localPath, new SchemaNode(schemaNode.getLevel() + 1, localPath, currentSchemaPath, NodeTypeEnum.VALUE, field));
+					} else if (node.isObject()) {
+						if (log.isDebugEnabled()) {
+							log.debug(getPaddedPrefix(realJsonPath) + "validating object node on real path: " + realJsonPath + "." + field);
+						}
+						if (!isValid((ObjectNode) node, localPath, realJsonPath + "." + field, null)) {
+							result = false;
+							break;
+						}
+					} else {
+						result = false;
+						break;
+					}
+				}
 			}
 		}
 
-		if (log.isDebugEnabled()) {
-			log.debug("object is valid: " + objectNode);
-			log.debug("objectName: " + objectName);
-			log.debug("currentPath: " + currentPath);
+		// For array nodes process only the _children field which has already been validated
+		if (NodeTypeEnum.ARRAY.equals(nodeType)) {
+			if (log.isDebugEnabled()) {
+				log.debug(getPaddedPrefix(realJsonPath) + "stepping into real path: " + realJsonPath + "." + CHILDREN_KEY);
+			}
+
+			if (!isValid((ObjectNode) objectNode.path(CHILDREN_KEY),
+					currentSchemaPath, realJsonPath + "." + CHILDREN_KEY, schemaNode)) {
+				result = false;
+			}
 		}
 
 		return result;
 	}
 
-	public void prepareSchema(String absolutePath) {
-		if (!pathToValueNode.containsKey(absolutePath)) {
-			String valueProperty = absolutePath.substring(absolutePath.lastIndexOf(".") + 1);
-			String[] objectPathSegments = absolutePath.substring(0, absolutePath.lastIndexOf(".")).split("\\.");
-			SchemaNode node = null;
+	public void addPathToSchema(String absoluteValuePath) {
+		if (isInitialized ||
+				pathToSchemaNodeMap.containsKey(absoluteValuePath) ||
+				invalidSchemaPaths.contains(absoluteValuePath)) {
+			// nothing to do
+			return;
+		}
 
-			for (int i = 0; i < objectPathSegments.length; i++) {
-				StringBuilder objectPath = new StringBuilder(objectPathSegments[0]);
-				for (int j = 1; j <= i; j++) {
-					objectPath.append(".").append(objectPathSegments[j]);
+		if (log.isDebugEnabled()) {
+			log.debug("Preparing schema for value node: " + absoluteValuePath);
+		}
+
+		String[] pathSegments = absoluteValuePath.split("\\.");
+		SchemaNode previousNode = null;
+		for (int i = 0; i < pathSegments.length; i++) {
+			if (previousNode != null && previousNode.isValue()) {
+				if (log.isWarnEnabled()) {
+					log.warn("Stepping into a value node - " + previousNode.getKey() + " -  is not allowed. " +
+							"Further keys will be dropped!");
+				}
+				invalidSchemaPaths.add(absoluteValuePath);
+				break; // FIXME: should we just continue or throw an exception here?
+			}
+
+			StringBuilder sb = new StringBuilder(pathSegments[0]);
+			for (int j = 1; j <= i; j++) {
+				sb.append(".").append(pathSegments[j]);
+			}
+
+			String schemaPath = sb.toString();
+			SchemaNode currenNode;
+			if (!pathToSchemaNodeMap.containsKey(schemaPath)) {
+				if (log.isDebugEnabled()) {
+					log.debug("\t>>> Adding schema node for object path: " + schemaPath);
 				}
 
-				if (!pathToObjectNode.containsKey(objectPath.toString())) {
-					String schemaNodePath = "";
+				// last segment points to value node
+				NodeTypeEnum schemaNodeType = (i == pathSegments.length -1) ? NodeTypeEnum.VALUE : NodeTypeEnum.ARRAY;
 
-					for (int k = 0; k < i; k++) {
-						schemaNodePath += schemaNodePath.length() > 0 ? "." + objectPathSegments[k] : objectPathSegments[k];
+				String parentPath = null;
+				if (i > 0) {
+					parentPath = schemaPath.substring(0, schemaPath.lastIndexOf("."));
+				}
+
+				currenNode = new SchemaNode(i, schemaPath, parentPath, schemaNodeType, pathSegments[i]);
+				pathToSchemaNodeMap.put(schemaPath, currenNode);
+			} else {
+				currenNode = pathToSchemaNodeMap.get(schemaPath);
+			}
+
+			// try to add members by looking ahead inside the pathSegments
+			if (i < pathSegments.length - 1) {
+				// Value nodes cannot have further members
+				if (!currenNode.isValue()) {
+					String member = pathSegments[i + 1];
+					if (currenNode.getMember(member) == null) {
+						if (log.isDebugEnabled()) {
+							log.debug("\t\t>>> Adding member: " + member + " to path: " + schemaPath);
+						}
+						currenNode.addMember(member);
 					}
-
-					node = new SchemaNode(i, objectPathSegments[i], NodeTypeEnum.ARRAY, schemaNodePath);
-
-
-					pathToObjectNode.put(objectPath.toString(), node);
-				} else {
-					node = pathToObjectNode.get(objectPath.toString());
-				}
-
-				if (i < objectPathSegments.length - 1 && node.getMember(objectPathSegments[i+1]) == null) {
-					node.addMember(objectPathSegments[i+1]);
 				}
 			}
 
-			node.addMember(valueProperty);
-			pathToValueNode.put(absolutePath, node);
+			previousNode = currenNode;
 		}
 	}
 
-	public boolean isInitialized() {
-		return isInitialized;
+	public SchemaNode getSchemaNode(String path) {
+		return pathToSchemaNodeMap.get(path);
 	}
 
-	public Map<String, SchemaNode> getPathToValueNode() {
-		return pathToValueNode;
-	}
-
-	public Map<String, SchemaNode> getPathToObjectNode() {
-		return pathToObjectNode;
+	public Map<String, SchemaNode> getPathToSchemaNodeMap() {
+		return pathToSchemaNodeMap;
 	}
 
 }

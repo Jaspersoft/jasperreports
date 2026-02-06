@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.*;
+import java.util.function.Supplier;
 
 public class JsonMetadataProcessor {
 	private static final Log log = LogFactory.getLog(JsonMetadataProcessor.class);
@@ -39,12 +40,10 @@ public class JsonMetadataProcessor {
 	private final JsonSchema jsonSchema;
 	private Writer writer;
 	private boolean escapeMembers;
-	protected final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
+	private final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
 
-	private final Map<SchemaNode, ArrayList<String>> visitedMembers = new HashMap<>();
+	private final Map<String, ArrayList<String>> pathToVisitedMembers = new HashMap<>();
 	private final ArrayList<SchemaNode> openedSchemaNodes = new ArrayList<>();
-
-	private String previousPath;
 
 	public JsonMetadataProcessor() {
 		this.jsonSchema = new JsonSchema();
@@ -66,393 +65,261 @@ public class JsonMetadataProcessor {
 		this.escapeMembers = escapeMembers;
 	}
 
-	public void processElement(Object value, String absolutePath, boolean repeatValue) throws IOException {
-		if (openedSchemaNodes.size() == 0) {
-			// initialize the json for the first time
-			initJson(absolutePath, value, repeatValue);
-		} else {
-			String valueProperty = absolutePath.substring(absolutePath.lastIndexOf(".") + 1);
+	public void processElement(Supplier<Object> valueSupplier, String valuePath, boolean repeatValue) throws IOException {
+		// convert valuePath to absolute valuePath for internal reference
+		String absoluteValuePath = JsonSchema.JSON_SCHEMA_ROOT_NAME + "." + valuePath;
 
-			String[] curSegments = absolutePath.substring(0, absolutePath.lastIndexOf(".")).split("\\.");
-			String[] prevSegments = previousPath.substring(0, previousPath.lastIndexOf(".")).split("\\.");
-
-			int ln = Math.min(curSegments.length, prevSegments.length);
-			int lastCommonIndex = -1;
-
-			for (int i = 0; i < ln; i++) {
-				if (curSegments[i].equals(prevSegments[i])) {
-					lastCommonIndex = i;
-				} else {
-					break;
-				}
-			}
-
-			int commonSegmentsNo = lastCommonIndex + 1;
-
-			// compared to previous path, we have different path with common segments
-			if (commonSegmentsNo < prevSegments.length) {
-				if (log.isDebugEnabled()) {
-					log.debug("\tgot different path with common segments");
-				}
-
-				// close the extra path segments of the previous path
-				closeExtraPathSegments(prevSegments, lastCommonIndex);
-
-				// open new path segments for the current path
-				openPathSegments(curSegments, lastCommonIndex + 1);
-			}
-			// we have a longer path that extends previous path
-			else if (commonSegmentsNo == prevSegments.length && curSegments.length > prevSegments.length) {
-				if (log.isDebugEnabled()) {
-					log.debug("\tgot longer path than previous one");
-				}
-
-				// open new paths
-				openPathSegments(curSegments, lastCommonIndex + 1);
-			}
-
-			SchemaNode currentNode = jsonSchema.getPathToValueNode().get(absolutePath);
-
-			if (log.isDebugEnabled()) {
-				log.debug("\tcurrent node is: " + currentNode.getType().getName());
-			}
-
-			if (currentNode.isArray()) {
-				writePathProperty(currentNode, valueProperty, value, repeatValue);
-			}
-			// just write the value for property, no repeat
-			else {
-				writePathProperty(currentNode, valueProperty, value, false);
-			}
-		}
-
-		previousPath = absolutePath;
-	}
-
-	private void writePathProperty(SchemaNode node, String valueProperty, Object value, boolean repeatValue) throws IOException {
 		if (log.isDebugEnabled()) {
-			log.debug("\twriting property: " + valueProperty);
-		}
-		ArrayList<String> vizMembers = visitedMembers.get(node);
-		String lastProp = null;
-		int lastPropIdx = -1;
-		int valPropIdx = node.indexOfMember(valueProperty);
-
-		if (vizMembers != null && vizMembers.size() > 0) {
-			lastProp = vizMembers.get(vizMembers.size() - 1);
-			lastPropIdx = node.indexOfMember(lastProp);
-		} else {
-			vizMembers = new ArrayList<>();
-			visitedMembers.put(node, vizMembers);
+			log.debug("processElement absoluteValuePath: " + absoluteValuePath);
 		}
 
-		boolean foundPreviousRepeated = false;
+		// try to add valuePath to schema; it may not be added
+		jsonSchema.addPathToSchema(absoluteValuePath);
 
-		// if property of the same object
-		if (lastProp == null || valPropIdx > lastPropIdx) {
+		// current valuePath must point to a SchemaNode with type Value
+		SchemaNode valueNode = jsonSchema.getSchemaNode(absoluteValuePath);
+		if (valueNode == null || !valueNode.isValue()) {
+			if (log.isWarnEnabled()) {
+				if (valueNode == null) {
+					log.warn("\tNo schema node for path: " + valuePath + ". Skipping!");
+				} else {
+					log.warn("\tSupplied path does not point to a value node: " + valuePath + ". Skipping!");
+				}
+			}
+
+			// nothing to do
+			return; // FIXME: should we just continue or throw an exception here?
+		}
+
+		Object value = valueSupplier.get();
+
+		List<SchemaNode> toClose = new ArrayList<>();
+		List<SchemaNode> toOpen = new ArrayList<>();
+
+		// always add the top most value node to the toOpen list
+		toOpen.add(valueNode);
+
+		// this absoluteValuePath points to a Value node; we'll start from its parent
+		String currentPath = valueNode.getParentPath();
+		if (log.isDebugEnabled()) {
+			log.debug("\tStart process from parentPath: "  + currentPath);
+		}
+		while (currentPath != null) {
+			SchemaNode currentNode = jsonSchema.getSchemaNode(currentPath);
+			if (openedSchemaNodes.contains(currentNode)) {
+				int level = currentNode.getLevel();
+
+				// mark for closing all opened nodes after our currentNode
+				if (openedSchemaNodes.size() > level + 1) {
+					for (int i = level + 1; i < openedSchemaNodes.size(); i++) {
+						toClose.add(openedSchemaNodes.get(i));
+					}
+				}
+
+				// we're done
+				break;
+			}
+
+			// the currentNode is not opened yet; mark it for opening
+			toOpen.add(currentNode);
+
+			// go up the parent path
+			currentPath = currentNode.getParentPath();
+		}
+
+		// start closing from the deepest node
+		Collections.reverse(toClose);
+		for (SchemaNode node2close: toClose) {
 			if (log.isDebugEnabled()) {
-				log.debug("\tgot property of the same object");
+				log.debug("\tclosing node: " + node2close.getPath());
 			}
 
-			// check for repeated values, if any, before writing current
-			if (lastProp != null) {
-				foundPreviousRepeated = writeReapeatedValues(node, lastPropIdx + 1, valPropIdx);
-			} else {
-				foundPreviousRepeated = writeReapeatedValues(node, 0, valPropIdx);
-			}
+			closeNode(node2close);
 
-			if (foundPreviousRepeated || vizMembers.size() > 0) {
-				writer.write(",\n");
-			}
-
-			writeEscaped(node, valueProperty, value, repeatValue);
-
-			// mark visited property for current node
-			visitedMembers.get(node).add(valueProperty);
+			openedSchemaNodes.remove(node2close);
 		}
-		// create new object
-		else {
+
+		// start opening from the top most node
+		Collections.reverse(toOpen);
+		for (SchemaNode node2open: toOpen) {
 			if (log.isDebugEnabled()) {
-				log.debug("\tgot property of a new object");
-			}
-			// before closing current object, write the repeated values, if any, from last accessed property until the end is reached
-			writeReapeatedValues(node, lastPropIdx + 1, node.getMembers().size());
-
-			// close existing object
-			writer.write("},\n{");
-
-			// check for repeated values, if any, before writing current
-			foundPreviousRepeated = writeReapeatedValues(node, 0, valPropIdx);
-
-			if (foundPreviousRepeated) {
-				writer.write(",");
+				log.debug("\topening node: " + node2open.getPath());
 			}
 
-			writeEscaped(node, valueProperty, value, repeatValue);
+			openNode(node2open, value);
 
-			// mark visited property for current node
-			visitedMembers.get(node).clear();
-			visitedMembers.get(node).add(valueProperty);
+			openedSchemaNodes.add(node2open);
 		}
+
+		if (log.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder("Opened nodes: [ ");
+			for (SchemaNode openedNode : openedSchemaNodes) {
+				sb.append(openedNode.getPath()).append(", ");
+			}
+			sb.append("]");
+
+			log.debug(sb.toString());
+		}
+
+		// set repeat/previous value for parent node's current key member
+		SchemaNode parent = jsonSchema.getSchemaNode(valueNode.getParentPath());
+		SchemaNodeMember member = parent.getMember(valueNode.getKey());
+		member.setRepeatValue(repeatValue);
+		member.setPreviousValue(value);
 	}
 
-	private boolean writeReapeatedValues(SchemaNode node, int from, int to) throws IOException {
-		return writeReapeatedValues(node, from, to, true);
-	}
+	private void openNode(SchemaNode node, Object value) throws IOException {
+		// try to write previous repeated values for keys of parent nodes
+		String currentKey = node.getKey();
+		String parentPath = node.getParentPath();
+		if (parentPath != null) {
+			if (pathToVisitedMembers.containsKey(parentPath)) {
+				SchemaNode parent = jsonSchema.getSchemaNode(parentPath);
+				int currentKeyIndex = parent.indexOfMember(currentKey);
 
-	private boolean writeReapeatedValues(SchemaNode node, int from, int to, boolean startWithComma) throws IOException {
-		boolean found = false;
-		SchemaNodeMember member;
+				List<String> visitedMembers = pathToVisitedMembers.get(parentPath);
+				String lastVisited = visitedMembers.get(visitedMembers.size() - 1);
+				int lastVisitedIndex = parent.indexOfMember(lastVisited);
 
-		for (int i = from; i < to; i++) {
-			member = node.getMember(i);
-			if (member.isRepeatValue() && member.getPreviousValue() != null) {
-				found = true;
-				if (i != 0 && startWithComma) {
+				// we'll be adding to the same object
+				if (currentKeyIndex > lastVisitedIndex) {
 					writer.write(",");
 				}
-				if (escapeMembers) {
-					writer.write("\"" + member.getName() + "\":");
-				} else {
-					writer.write(member.getName() + ":");
-				}
+				// we'll be adding to a new object
+				else {
+					// only for a parent array it makes sense to open a new object
+					if (!parent.isArray()) {
+						return; // FIXME: should we just continue or throw an exception here?
+					}
 
-				writeValue(member.getPreviousValue());
+					writer.write("\n");
+					writer.write(getSpaceIndexedString(parent.getLevel()) + "}, {");
 
-				if (log.isDebugEnabled()) {
-					log.debug("\t\twriting repeated value for member: " + member.getName());
+					// try to find repeated values up until current index
+					for (int i = 0; i < currentKeyIndex; i++) {
+						SchemaNodeMember schemaMember = parent.getMember(i);
+						if (schemaMember.isRepeatValue()) {
+							String paddedKey = getSpaceIndexedKey(schemaMember.getName(), node.getLevel(), escapeMembers);
+							writer.write("\n");
+							writer.write(paddedKey + ": ");
+							writeValue(schemaMember.getPreviousValue());
+							writer.write(",");
+						}
+					}
+
 				}
 			}
 		}
 
-		return found;
-	}
+		// for the root schema node do not write the key as there should not be one
+		if (!node.getKey().equals(JsonSchema.JSON_SCHEMA_ROOT_NAME)) {
+			String paddedKey = getSpaceIndexedKey(node.getKey(), node.getLevel(), escapeMembers);
+			writer.write("\n");
+			writer.write(paddedKey + ": ");
+		}
 
-	private void writeEscaped(SchemaNode node, String valueProperty, Object value, boolean repeatValue) throws IOException {
-		// write current value
-		if (escapeMembers) {
-			writer.write("\"" + valueProperty + "\":");
+		if (node.isArray()) {
+			writer.write("[{");
+		} else if (node.isObject()){
+			writer.write("{");
+		} else { // isValue
+			writeValue(value);
+		}
+
+		// mark visited for current node's parent
+		ArrayList<String> visitedMembers;
+		if (pathToVisitedMembers.containsKey(parentPath)) {
+			visitedMembers = pathToVisitedMembers.get(parentPath);
 		} else {
-			writer.write(valueProperty + ":");
+			visitedMembers = new ArrayList<>();
+			pathToVisitedMembers.put(parentPath, visitedMembers);
 		}
-
-		writeValue(value);
-
-		// mark repeated value
-		if (repeatValue) {
-			SchemaNodeMember nodeMember = node.getMember(valueProperty);
-			nodeMember.setRepeatValue(true);
-			nodeMember.setPreviousValue(value);
-		}
+		visitedMembers.add(currentKey);
 	}
 
-	private void closeExtraPathSegments(String[] prevSegments, int lastCommonIndex) throws IOException {
-		for (int i = prevSegments.length - 1; i > lastCommonIndex; i--) {
-			StringBuilder sb = new StringBuilder(prevSegments[0]);
-			for (int j=1; j <= i; j++) {
-				sb.append(".").append(prevSegments[j]);
-			}
+	private void closeNode(SchemaNode node) throws IOException {
+		if (!node.isValue()) {
+			if (pathToVisitedMembers.containsKey(node.getPath())) {
+				List<String> visitedMembers = pathToVisitedMembers.get(node.getPath());
+				String lastVisited = visitedMembers.get(visitedMembers.size() - 1);
+				int lastVisitedIndex = node.indexOfMember(lastVisited);
+				int allMembersSize = node.getMembers().size();
 
-			SchemaNode toClose = jsonSchema.getPathToObjectNode().get(sb.toString());
+				// if last visited member is not the last node member
+				if (lastVisitedIndex < allMembersSize - 1) {
+					// try to find the remaining repeated values
+					List<SchemaNodeMember> membersToRepeat = new ArrayList<>();
+					for (int i = lastVisitedIndex + 1; i < allMembersSize; i++) {
+						SchemaNodeMember schemaMember = node.getMember(i);
+						if (schemaMember.isRepeatValue()) {
+							membersToRepeat.add(schemaMember);
+						}
+					}
 
-			if (openedSchemaNodes.get(openedSchemaNodes.size() - 1).equals(toClose)) {
-				openedSchemaNodes.remove(openedSchemaNodes.size() - 1);
-			} else if (log.isWarnEnabled()) {
-				log.warn("unexpected");
-			}
+					if (!membersToRepeat.isEmpty()) {
+						writer.write(",");
 
-			// write previous repeated before closing
-			if (toClose.isArray()) {
-				List<String> vizMembers = visitedMembers.get(toClose);
-				String lastProp = vizMembers.get(vizMembers.size() - 1);
-				int lastPropIdx = toClose.indexOfMember(lastProp);
-				writeReapeatedValues(toClose, lastPropIdx + 1, toClose.getMembers().size());
+						for (int i = 0; i < membersToRepeat.size(); i++) {
+							SchemaNodeMember memberToRepeat = membersToRepeat.get(i);
 
-				// clear visited member cache for closed node
-				vizMembers.clear();
-			}
-
-			if (toClose.isObject()) {
-				writer.write("}\n");
-			} else {
-				writer.write("}]\n");
-			}
-
-			if (log.isDebugEnabled()) {
-				log.debug("\t\tclosing " + toClose.getType().getName() + " path: " + sb.toString());
+							SchemaNode memberSchema = jsonSchema.getSchemaNode(node.getPath() + "." + memberToRepeat.getName());
+							String paddedKey = getSpaceIndexedKey(memberToRepeat.getName(), memberSchema.getLevel(), escapeMembers);
+							writer.write("\n");
+							writer.write(paddedKey + ": ");
+							writeValue(memberToRepeat.getPreviousValue());
+							if (i < membersToRepeat.size() - 1) {
+								writer.write(",");
+							}
+						}
+					}
+				}
 			}
 		}
-	}
 
-	private void openPathSegments(String[] pathSegments, int from) throws IOException {
-		for (int i = from; i < pathSegments.length; i++) {
-			StringBuilder sb = new StringBuilder(pathSegments[0]);
-			StringBuilder parentPath = new StringBuilder(pathSegments[0]);
-			for (int j=1; j <= i; j++) {
-				sb.append(".").append(pathSegments[j]);
-				if (j < i) {
-					parentPath.append(".").append(pathSegments[j]);
-				}
-			}
+		if (node.isArray()) {
+			writer.write("\n");
+			writer.write(getSpaceIndexedString(node.getLevel()) + "}]");
+		} else if (node.isObject()){
+			writer.write("\n");
+			writer.write(getSpaceIndexedString(node.getLevel()) + "}");
+		}
 
-			SchemaNode parent = jsonSchema.getPathToObjectNode().get(parentPath.toString());
-			String currentProperty = pathSegments[i];
-			boolean foundPreviousRepeated = false;
-
-			ArrayList<String> vizMembers = visitedMembers.get(parent);
-			String lastVisitedProp = null;
-			int lastVisitedPropIdx = -1;
-			int currentPropIdx = parent.indexOfMember(currentProperty);
-
-			if (vizMembers != null && vizMembers.size() > 0) {
-				lastVisitedProp = vizMembers.get(vizMembers.size() - 1);
-				lastVisitedPropIdx = parent.indexOfMember(lastVisitedProp);
-			}
-
-			// before opening new path, check if previous has repeated values to be written
-			if (parent.isArray()) {
-				if (lastVisitedProp != null) {
-					foundPreviousRepeated = writeReapeatedValues(parent, lastVisitedPropIdx + 1, currentPropIdx, false);
-				} else {
-					vizMembers = new ArrayList<>();
-					visitedMembers.put(parent, vizMembers);
-				}
-
-				vizMembers.add(currentProperty);
-			}
-
-			if (foundPreviousRepeated ||
-					// got another property of the same object
-					(lastVisitedPropIdx != -1 && currentPropIdx > lastVisitedPropIdx)) {
-				writer.write(",");
-			}
-
-			if (escapeMembers) {
-				writer.write("\"" + currentProperty + "\":");
-			} else {
-				writer.write(currentProperty + ":");
-			}
-
-			SchemaNode toOpen = jsonSchema.getPathToObjectNode().get(sb.toString());
-
-			openedSchemaNodes.add(toOpen);
-
-			if (toOpen.isObject()) {
-				writer.write("{");
-			} else {
-				writer.write("[{");
-			}
-
-			if (log.isDebugEnabled()) {
-				log.debug("\t\topening " + toOpen.getType().getName() + " path: " + sb.toString());
-			}
+		if (!node.isValue()) {
+			pathToVisitedMembers.remove(node.getPath());
 		}
 	}
 
 	public void closeOpenNodes() throws IOException {
-		if (openedSchemaNodes.size() == 0) {
-			return;
+		Collections.reverse(openedSchemaNodes);
+		for (SchemaNode openedNode : openedSchemaNodes) {
+			closeNode(openedNode);
 		}
 
-		SchemaNode toClose;
-		for (int i = openedSchemaNodes.size() - 1; i >= 0; i--) {
-			toClose = openedSchemaNodes.get(i);
-			if (toClose.isArray()) {
-				// write previous repeated before closing
-				List<String> vizMembers = visitedMembers.get(toClose);
-
-				String lastProp = vizMembers.get(vizMembers.size() - 1);
-				int lastPropIdx = toClose.indexOfMember(lastProp);
-				writeReapeatedValues(toClose, lastPropIdx + 1, toClose.getMembers().size());
-
-				// clear visited member cache for closed node
-				vizMembers.clear();
-
-				writer.write("}]");
-			} else {
-				writer.write("}");
-			}
-
-			if (log.isDebugEnabled()) {
-				log.debug("closing " + toClose.getType().getName() + " path: " + (toClose.getPath().length() > 0 ? toClose.getPath() + "." : "") + toClose.getName());
-			}
-		}
+		// last line break after all nodes have been closed
+		writer.write("\n");
 	}
 
-	private void initJson(String firstPath, Object firstValue, boolean repeatValue) throws IOException {
-		if (log.isDebugEnabled()) {
-			log.debug("Initializing JSON with first absolute path: " + firstPath);
-		}
-		String[] segments = firstPath.split("\\.");
-
-		String currentPath = "";
-		SchemaNode schemaNode = null;
-		int i;
-
-		for (i=0; i < segments.length - 1; i++) {
-			currentPath = currentPath.length() > 0 ? currentPath + "." + segments[i] : segments[i];
-			schemaNode = jsonSchema.getPathToObjectNode().get(currentPath);
-
-			openedSchemaNodes.add(schemaNode);
-
-			if (i == 0) { // got root node
-				if (schemaNode.isObject()) {
-					writer.write("{");
-				} else {
-					writer.write("[{");
-				}
-			} else {
-				String parentPath = currentPath.substring(0, currentPath.lastIndexOf("."));
-				SchemaNode parent = jsonSchema.getPathToObjectNode().get(parentPath);
-				String currentProperty = segments[i];
-
-				ArrayList<String> vizMembers = new ArrayList<>();
-				vizMembers.add(currentProperty);
-				visitedMembers.put(parent, vizMembers);
-
-				if (schemaNode.isObject()) {
-					if (escapeMembers) {
-						writer.write("\"" + currentProperty + "\": {");
-					} else {
-						writer.write(currentProperty + ": {");
-					}
-				} else {
-					if (escapeMembers) {
-						writer.write("\"" + currentProperty + "\": [{");
-					} else {
-						writer.write(currentProperty + ": [{");
-					}
-				}
-			}
+	private StringBuilder getSpaceIndexedString(int level) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < level * 4; i++) {
+			sb.append(" ");
 		}
 
-		if (escapeMembers) {
-			writer.write("\"" + segments[i] + "\": ");
-		} else {
-			writer.write(segments[i] + ": ");
-		}
-		writeValue(firstValue);
+		return sb;
+	}
 
-		// mark repeated value
-		if (schemaNode != null && repeatValue) {
-			SchemaNodeMember nodeMember = schemaNode.getMember(segments[i]);
-			nodeMember.setRepeatValue(true);
-			nodeMember.setPreviousValue(firstValue);
-		}
+	private String getSpaceIndexedKey(String key, int level, boolean escapeMembers) {
+		StringBuilder sb = getSpaceIndexedString(level);
+		if (escapeMembers) sb.append("\"");
+		sb.append(key); // FIXME: should we also escape the key string?
+		if (escapeMembers) sb.append("\"");
 
-		// mark visited property for current node
-		ArrayList<String> members = new ArrayList<>();
-		members.add(segments[i]);
-		visitedMembers.put(schemaNode, members);
+		return sb.toString();
 	}
 
 	private void writeValue(Object value)throws IOException {
 		if (value != null) {
-			if (
-					value instanceof Number
-							|| value instanceof Boolean
-			)
-			{
+			if (value instanceof Number || value instanceof Boolean) {
 				writer.write(value.toString());
 			} else if (value instanceof Date) {
 				writer.write("\"");

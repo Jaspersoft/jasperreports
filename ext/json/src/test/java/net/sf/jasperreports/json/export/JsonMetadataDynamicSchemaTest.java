@@ -31,6 +31,7 @@ import net.sf.jasperreports.json.export.schema.NodeTypeEnum;
 import net.sf.jasperreports.json.export.schema.SchemaNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -43,75 +44,63 @@ import java.util.Map;
 public class JsonMetadataDynamicSchemaTest {
 
 	private static final Log log = LogFactory.getLog(JsonMetadataDynamicSchemaTest.class);
+	private ObjectMapper objectMapper;
+
+	@BeforeClass
+	public void setUp() {
+		// Construct the same mapper that is used to read the JSON schema
+		objectMapper = new ObjectMapper();
+		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+		objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+	}
 
     @Test
     public void validateSchema() {
 		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
 		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
 
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.id");
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.price");
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name");
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.address");
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.address.street");
+		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.id");
+		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
+		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.price");
+		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name");
+		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.address");
+		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.address.street");
 
 		if (log.isDebugEnabled()) {
-			for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToObjectNode().entrySet()) {
-				log.debug("pathToObjectNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
-			}
-
-			for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToValueNode().entrySet()) {
-				log.debug("pathToValueNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
+			for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+				log.debug("pathToSchemaNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 			}
 		}
 
-		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products");
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(NodeTypeEnum.ARRAY);
-		assert jsonSchema.getPathToValueNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
-		assert jsonSchema.getPathToValueNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name").getType().equals(NodeTypeEnum.ARRAY);
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 3;
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name").getType().equals(NodeTypeEnum.VALUE);
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products").getMembers().size() == 3;
 
-		assert jsonSchema.getPathToObjectNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers");
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(NodeTypeEnum.ARRAY);
-		assert jsonSchema.getPathToValueNode().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name");
-		assert jsonSchema.getPathToValueNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name").getType().equals(NodeTypeEnum.ARRAY);
-		assert jsonSchema.getPathToObjectNode().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getType().equals(NodeTypeEnum.ARRAY);
+		assert jsonSchema.getPathToSchemaNodeMap().containsKey(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name");
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers.name").getType().equals(NodeTypeEnum.VALUE);
+		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
 	}
 
 	@Test
-	public void buildJSON() throws IOException {
+	public void buildJSON_1() throws IOException {
 		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
-		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
 
 		StringWriter sw = new StringWriter();
 		jsonProcessor.setWriter(sw);
 
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.e");
-		jsonProcessor.processElement("value_1", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.e", true);
-
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.f");
-		jsonProcessor.processElement( "value_2", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.f", false);
-
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h");
-		jsonProcessor.processElement("value_3", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h", false);
-
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.i");
-		jsonProcessor.processElement("value_4", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.i", true);
-
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h");
-		jsonProcessor.processElement("value_5", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.b.c.d.g.h", false);
-
-		jsonSchema.prepareSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.j.k");
-		jsonProcessor.processElement("value_6", JsonSchema.JSON_SCHEMA_ROOT_NAME + ".a.j.k", false);
+		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", true);
+		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", false);
+		jsonProcessor.processElement(() -> "value_3", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_4", "a.b.c.d.i", true);
+		jsonProcessor.processElement(() -> "value_5", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_6", "a.j.k", false);
 
 		jsonProcessor.closeOpenNodes();
-
-		// Construct same mapper that is used to read the JSON schema
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-		mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
 
 		boolean isValid;
 		try {
@@ -119,7 +108,77 @@ public class JsonMetadataDynamicSchemaTest {
 			if (log.isDebugEnabled()) {
 				log.debug("The generated JSON:\n" + sw);
 			}
-			mapper.readTree(generatedJson);
+			objectMapper.readTree(generatedJson);
+			isValid = true;
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
+	@Test
+	public void buildJSON_2() throws IOException {
+		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
+
+		StringWriter sw = new StringWriter();
+		jsonProcessor.setWriter(sw);
+
+		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", false);
+		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", true);
+		jsonProcessor.processElement(() -> "value_3", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_4", "a.b.c.d.i", false);
+		jsonProcessor.processElement(() -> "value_5", "a.b.c.d.j", true);
+		jsonProcessor.processElement(() -> "value_6", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_7", "a.k.l", false);
+
+		jsonProcessor.closeOpenNodes();
+
+		boolean isValid;
+		try {
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
+			isValid = true;
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
+	@Test
+	public void buildJSON_3() throws IOException {
+		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
+
+		StringWriter sw = new StringWriter();
+		jsonProcessor.setWriter(sw);
+
+		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", true);
+		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", false);
+		jsonProcessor.processElement(() -> "value_3", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_4", "a.b.c.d.i", true);
+		jsonProcessor.processElement(() -> "value_5", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_6", "a.j.k", false);
+		jsonProcessor.processElement(() -> "value_7", "a.b.c.d.e", true);
+
+		jsonProcessor.closeOpenNodes();
+
+		boolean isValid;
+		try {
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
 			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
