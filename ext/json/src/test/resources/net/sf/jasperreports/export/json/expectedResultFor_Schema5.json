@@ -1,0 +1,20 @@
+{
+  products: [{
+    details: {
+      id: "id_1",
+      name: "name_1"
+    },
+    orderId: "order_id_1"
+  }, {
+    orderId: "order_id_2"
+  }, {
+    orderId: "order_id_3"
+  }, {
+    details: {
+      id: "id_2"
+    },
+    orderId: "order_id_4"
+  }, {
+    orderId: "order_id_5"
+  }]
+}

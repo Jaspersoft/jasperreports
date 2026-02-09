@@ -35,10 +35,12 @@ import net.sf.jasperreports.repo.RepositoryUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Scanner;
@@ -52,6 +54,7 @@ public class JsonMetadataSchemaFileTest {
 
     private RepositoryUtil repoUtil;
 	private ObjectMapper objectMapper;
+	private String expectedJsonOutput;
 
     @BeforeClass
     public void setUp () {
@@ -131,6 +134,19 @@ public class JsonMetadataSchemaFileTest {
 		assert !isValid;
 	}
 
+	@BeforeMethod
+	public void expectedResult(Method method) throws JRException {
+		String methodName = method.getName();
+		String pathPrefix = "net/sf/jasperreports/export/json/expectedResultFor_Schema";
+		String methodPrefix = "validateJsonForSchema_";
+		if (methodName.startsWith(methodPrefix)) {
+			String filePath = pathPrefix + methodName.substring(methodPrefix.length())+ ".json";
+			Scanner scanner = new Scanner(repoUtil.getInputStreamFromLocation(filePath), StandardCharsets.UTF_8.name());
+
+			expectedJsonOutput = scanner.useDelimiter("\\A").next();
+		}
+	}
+
 	@Test
 	public void validateJsonForSchema_3() throws JRException, IOException {
 		Scanner scanner =
@@ -140,8 +156,6 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
-
-		boolean isValid = true;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -161,18 +175,17 @@ public class JsonMetadataSchemaFileTest {
 
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
-
-			isValid = false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
@@ -184,8 +197,6 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
-
-		boolean isValid = true;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -206,18 +217,17 @@ public class JsonMetadataSchemaFileTest {
 
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
-
-			isValid = false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
@@ -229,8 +239,6 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
-
-		boolean isValid = true;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -256,18 +264,17 @@ public class JsonMetadataSchemaFileTest {
 
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
-
-			isValid = false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
@@ -279,8 +286,6 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
-
-		boolean isValid = true;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -306,18 +311,17 @@ public class JsonMetadataSchemaFileTest {
 
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
-
-			isValid = false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
@@ -329,8 +333,6 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
-
-		boolean isValid = true;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -357,18 +359,16 @@ public class JsonMetadataSchemaFileTest {
 
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
-
-			isValid = false;
 		}
-
-		assert isValid;
 	}
-
 }

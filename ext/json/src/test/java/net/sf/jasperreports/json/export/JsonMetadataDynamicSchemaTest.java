@@ -25,18 +25,25 @@ package net.sf.jasperreports.json.export;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
 import net.sf.jasperreports.json.export.schema.JsonSchema;
 import net.sf.jasperreports.json.export.schema.NodeTypeEnum;
 import net.sf.jasperreports.json.export.schema.SchemaNode;
+import net.sf.jasperreports.repo.RepositoryUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
@@ -44,10 +51,15 @@ import java.util.Map;
 public class JsonMetadataDynamicSchemaTest {
 
 	private static final Log log = LogFactory.getLog(JsonMetadataDynamicSchemaTest.class);
+
+	private RepositoryUtil repoUtil;
 	private ObjectMapper objectMapper;
+	private String expectedJsonOutput;
 
 	@BeforeClass
 	public void setUp() {
+		repoUtil = RepositoryUtil.getInstance(DefaultJasperReportsContext.getInstance());
+
 		// Construct the same mapper that is used to read the JSON schema
 		objectMapper = new ObjectMapper();
 		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
@@ -86,6 +98,19 @@ public class JsonMetadataDynamicSchemaTest {
 		assert jsonSchema.getPathToSchemaNodeMap().get(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".customers").getMembers().size() == 2;
 	}
 
+	@BeforeMethod
+	public void expectedResult(Method method) throws JRException {
+		String methodName = method.getName();
+		String pathPrefix = "net/sf/jasperreports/export/json/expectedResultFor_";
+		String methodPrefix = "buildJSON_";
+		if (methodName.startsWith(methodPrefix)) {
+			String filePath = pathPrefix + methodName + ".json";
+			Scanner scanner = new Scanner(repoUtil.getInputStreamFromLocation(filePath), StandardCharsets.UTF_8.name());
+
+			expectedJsonOutput = scanner.useDelimiter("\\A").next();
+		}
+	}
+
 	@Test
 	public void buildJSON_1() throws IOException {
 		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
@@ -101,23 +126,20 @@ public class JsonMetadataDynamicSchemaTest {
 		jsonProcessor.processElement(() -> "value_6", "a.j.k", false);
 
 		jsonProcessor.closeOpenNodes();
-
-		boolean isValid;
 		try {
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
-			isValid = true;
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
-			isValid = false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
@@ -136,23 +158,20 @@ public class JsonMetadataDynamicSchemaTest {
 		jsonProcessor.processElement(() -> "value_7", "a.k.l", false);
 
 		jsonProcessor.closeOpenNodes();
-
-		boolean isValid;
 		try {
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
-			isValid = true;
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
-			isValid = false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
@@ -171,23 +190,19 @@ public class JsonMetadataDynamicSchemaTest {
 		jsonProcessor.processElement(() -> "value_7", "a.b.c.d.e", true);
 
 		jsonProcessor.closeOpenNodes();
-
-		boolean isValid;
 		try {
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
-				log.debug("The generated JSON:\n" + sw);
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
 			}
-			objectMapper.readTree(generatedJson);
-			isValid = true;
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
-			isValid = false;
 		}
-
-		assert isValid;
 	}
-
 }
