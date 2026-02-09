@@ -88,7 +88,7 @@ public class JsonMetadataSchemaFileTest {
 			isValid = true;
 		} catch (JRException e) {
 			if (log.isErrorEnabled()) {
-				log.error(e.getMessage());
+				log.error(e.getMessage(), e);
 			}
 
 			isValid = false;
@@ -124,7 +124,7 @@ public class JsonMetadataSchemaFileTest {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
-			
+
 			isValid = false;
 		}
 
@@ -165,9 +165,8 @@ public class JsonMetadataSchemaFileTest {
 			}
 			objectMapper.readTree(generatedJson);
 		} catch (Exception e) {
-			e.printStackTrace();
 			if (log.isErrorEnabled()) {
-				log.error(e.getMessage());
+				log.error(e.getMessage(), e);
 			}
 
 			isValid = false;
@@ -203,6 +202,157 @@ public class JsonMetadataSchemaFileTest {
 			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
 			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
 			jsonProcessor.processElement(() -> "id_2", "products.details.id", false);
+			jsonProcessor.closeOpenNodes();
+
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage(), e);
+			}
+
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
+	@Test
+	public void validateJsonForSchema_5() throws JRException, IOException {
+		Scanner scanner =
+				new Scanner(
+						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/json/TestSchema5.json"),
+						StandardCharsets.UTF_8.name()
+				);
+
+		JsonSchema jsonSchema = new JsonSchema();
+
+		boolean isValid = true;
+		try {
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+
+			if (log.isDebugEnabled()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
+				}
+			}
+
+			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
+			StringWriter sw = new StringWriter();
+			jsonProcessor.setWriter(sw);
+
+			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
+			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
+			jsonProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+			jsonProcessor.processElement(() -> "id_2", "products.details.id", false);
+			jsonProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_5", "products.orderId", false);
+			jsonProcessor.closeOpenNodes();
+
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage(), e);
+			}
+
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
+	@Test
+	public void validateJsonForSchema_6() throws JRException, IOException {
+		Scanner scanner =
+				new Scanner(
+						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/json/TestSchema6.json"),
+						StandardCharsets.UTF_8.name()
+				);
+
+		JsonSchema jsonSchema = new JsonSchema();
+
+		boolean isValid = true;
+		try {
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+
+			if (log.isDebugEnabled()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
+				}
+			}
+
+			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
+			StringWriter sw = new StringWriter();
+			jsonProcessor.setWriter(sw);
+
+			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
+			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
+			jsonProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+			jsonProcessor.processElement(() -> "id_2", "products.details.id", false);
+			jsonProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_5", "products.orderId", false);
+			jsonProcessor.closeOpenNodes();
+
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + sw);
+			}
+			objectMapper.readTree(generatedJson);
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage(), e);
+			}
+
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
+	@Test
+	public void validateJsonForSchema_7() throws JRException, IOException {
+		Scanner scanner =
+				new Scanner(
+						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/json/TestSchema7.json"),
+						StandardCharsets.UTF_8.name()
+				);
+
+		JsonSchema jsonSchema = new JsonSchema();
+
+		boolean isValid = true;
+		try {
+			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+
+			if (log.isDebugEnabled()) {
+				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
+				}
+			}
+
+			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
+			jsonProcessor.setEscapeMembers(true);
+			StringWriter sw = new StringWriter();
+			jsonProcessor.setWriter(sw);
+
+			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
+			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
+			jsonProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+			jsonProcessor.processElement(() -> "id_2", "products.details.id", false);
+			jsonProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+			jsonProcessor.processElement(() -> "order_id_5", "products.orderId", false);
 			jsonProcessor.closeOpenNodes();
 
 			String generatedJson = sw.toString();

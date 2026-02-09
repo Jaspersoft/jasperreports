@@ -126,7 +126,10 @@ public class JsonSchema {
 								objectNode.path(CHILDREN_KEY).isObject()
 				)
 		)) {
-			return false; // FIXME: log reason why it's invalid
+			if (log.isErrorEnabled()) {
+				log.error("Key _type could be either missing or 'object' or 'array' with '_children': {}");
+			}
+			return false;
 		}
 
 		boolean result = true;

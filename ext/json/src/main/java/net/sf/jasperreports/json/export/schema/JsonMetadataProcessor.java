@@ -99,32 +99,50 @@ public class JsonMetadataProcessor {
 		// always add the top most value node to the toOpen list
 		toOpen.add(valueNode);
 
-		// this absoluteValuePath points to a Value node; we'll start from its parent
-		String currentPath = valueNode.getParentPath();
+		SchemaNode currentNode = valueNode;
+		String parentPath = currentNode.getParentPath();
 		if (log.isDebugEnabled()) {
-			log.debug("\tStart process from parentPath: "  + currentPath);
+			log.debug("\tStart processing from parentPath: "  + parentPath);
 		}
-		while (currentPath != null) {
-			SchemaNode currentNode = jsonSchema.getSchemaNode(currentPath);
-			if (openedSchemaNodes.contains(currentNode)) {
-				int level = currentNode.getLevel();
 
-				// mark for closing all opened nodes after our currentNode
-				if (openedSchemaNodes.size() > level + 1) {
-					for (int i = level + 1; i < openedSchemaNodes.size(); i++) {
-						toClose.add(openedSchemaNodes.get(i));
+		boolean isSafeToWriteCurrentValue = true;
+		while (parentPath != null) {
+			SchemaNode parentNode = jsonSchema.getSchemaNode(parentPath);
+			if (openedSchemaNodes.contains(parentNode)) {
+				// when it's not safe to open a new object for a non-array parent try to find a better parent instead of
+				// dropping the current value for valuePath
+				if (isSafeToWriteKeyToNode(currentNode.getKey(), parentNode)) {
+					int level = parentNode.getLevel();
+
+					// mark for closing all opened nodes after our parentNode
+					if (openedSchemaNodes.size() > level + 1) {
+						for (int i = level + 1; i < openedSchemaNodes.size(); i++) {
+							toClose.add(openedSchemaNodes.get(i));
+						}
 					}
-				}
 
-				// we're done
-				break;
+					isSafeToWriteCurrentValue = true;
+
+					// we're done searching
+					break;
+				} else {
+					isSafeToWriteCurrentValue = false;
+				}
 			}
 
-			// the currentNode is not opened yet; mark it for opening
-			toOpen.add(currentNode);
+			// the parentNode is not opened yet; mark it for opening
+			toOpen.add(parentNode);
 
-			// go up the parent path
-			currentPath = currentNode.getParentPath();
+			currentNode = parentNode;
+			parentPath = currentNode.getParentPath();
+		}
+
+		if (!isSafeToWriteCurrentValue) {
+			if (log.isWarnEnabled()) {
+				log.warn("Not safe to write value for path: " + valuePath + ". Skipping!");
+			}
+			// no point continuing
+			return;
 		}
 
 		// start closing from the deepest node
@@ -168,6 +186,26 @@ public class JsonMetadataProcessor {
 		member.setPreviousValue(value);
 	}
 
+	private boolean isSafeToWriteKeyToNode(String key, SchemaNode node) {
+		List<String> visitedMembers = pathToVisitedMembers.get(node.getPath());
+		if (visitedMembers != null) {
+			int keyIndex = node.indexOfMember(key);
+			String lastVisited = visitedMembers.get(visitedMembers.size() - 1);
+			int lastVisitedIndex = node.indexOfMember(lastVisited);
+
+			// we are trying to write to same object
+			if (keyIndex > lastVisitedIndex) {
+				return true;
+			}
+			// we should be opening a new object only if node is of type Array
+			else {
+				return node.isArray();
+			}
+		}
+
+		return true;
+	}
+
 	private void openNode(SchemaNode node, Object value) throws IOException {
 		// try to write previous repeated values for keys of parent nodes
 		String currentKey = node.getKey();
@@ -199,7 +237,7 @@ public class JsonMetadataProcessor {
 					for (int i = 0; i < currentKeyIndex; i++) {
 						SchemaNodeMember schemaMember = parent.getMember(i);
 						if (schemaMember.isRepeatValue()) {
-							String paddedKey = getSpaceIndexedKey(schemaMember.getName(), node.getLevel(), escapeMembers);
+							String paddedKey = getSpaceIndexedKey(schemaMember.getName(), node.getLevel());
 							writer.write("\n");
 							writer.write(paddedKey + ": ");
 							writeValue(schemaMember.getPreviousValue());
@@ -213,7 +251,7 @@ public class JsonMetadataProcessor {
 
 		// for the root schema node do not write the key as there should not be one
 		if (!node.getKey().equals(JsonSchema.JSON_SCHEMA_ROOT_NAME)) {
-			String paddedKey = getSpaceIndexedKey(node.getKey(), node.getLevel(), escapeMembers);
+			String paddedKey = getSpaceIndexedKey(node.getKey(), node.getLevel());
 			writer.write("\n");
 			writer.write(paddedKey + ": ");
 		}
@@ -263,7 +301,7 @@ public class JsonMetadataProcessor {
 							SchemaNodeMember memberToRepeat = membersToRepeat.get(i);
 
 							SchemaNode memberSchema = jsonSchema.getSchemaNode(node.getPath() + "." + memberToRepeat.getName());
-							String paddedKey = getSpaceIndexedKey(memberToRepeat.getName(), memberSchema.getLevel(), escapeMembers);
+							String paddedKey = getSpaceIndexedKey(memberToRepeat.getName(), memberSchema.getLevel());
 							writer.write("\n");
 							writer.write(paddedKey + ": ");
 							writeValue(memberToRepeat.getPreviousValue());
@@ -308,7 +346,7 @@ public class JsonMetadataProcessor {
 		return sb;
 	}
 
-	private String getSpaceIndexedKey(String key, int level, boolean escapeMembers) {
+	private String getSpaceIndexedKey(String key, int level) {
 		StringBuilder sb = getSpaceIndexedString(level);
 		if (escapeMembers) sb.append("\"");
 		sb.append(key); // FIXME: should we also escape the key string?
