@@ -204,6 +204,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 		ensureOutput();
 
 		writer = getExporterOutput().getWriter();
+		jsonProcessor.setWriter(writer);
 
 		try
 		{
