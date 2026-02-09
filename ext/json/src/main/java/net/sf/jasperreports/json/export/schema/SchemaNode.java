@@ -131,24 +131,29 @@ public class SchemaNode {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
 		if (!(obj instanceof SchemaNode)) {
 			return false;
 		}
 
-		return this.level == ((SchemaNode)obj).level
-				&& this.path.equals(((SchemaNode)obj).path)
-				&& this.parentPath.equals(((SchemaNode)obj).parentPath)
-				&& this.type.equals(((SchemaNode)obj).type)
-				&& this.key.equals(((SchemaNode)obj).key);
+		SchemaNode other = (SchemaNode) obj;
+		boolean pathEquals = (this.path == null && other.path == null) || (this.path != null && this.path.equals(other.path));
+		boolean parentPathEquals = (this.parentPath == null && other.parentPath == null) || (this.parentPath != null && this.parentPath.equals(other.parentPath));
+		boolean typeEquals = (this.type == null && other.type == null) || (this.type != null && this.type.equals(other.type));
+		boolean keyEquals = (this.key == null && other.key == null) || (this.key != null && this.key.equals(other.key));
+
+		return this.level == ((SchemaNode)obj).level && pathEquals && parentPathEquals && typeEquals && keyEquals;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = level !=0 ? level : 41;
-		hash = hash * 41 + path.hashCode();
-		hash = hash * 41 + parentPath.hashCode();
-		hash = hash * 41 + type.hashCode();
-		hash = hash * 41 + key.hashCode();
+		hash = hash * 41 + (path == null ? 0 : path.hashCode());
+		hash = hash * 41 + (parentPath == null ? 0 : parentPath.hashCode());
+		hash = hash * 41 + (type == null ? 0 : type.hashCode());
+		hash = hash * 41 + (key == null ? 0 : key.hashCode());
 		return hash;
 	}
 }
