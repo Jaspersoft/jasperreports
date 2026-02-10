@@ -51,15 +51,13 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		writer.write(
 				getIndent()
 						.append("</")
-						.append(arrayNode.getKey())
-						.append(ARRAY_ITEM_SUFFIX)
+						.append(getChildrenWrapper(arrayNode))
 						.append(">\n").toString());
 
 		writer.write(
 				getIndent()
 						.append("<")
-						.append(arrayNode.getKey())
-						.append(ARRAY_ITEM_SUFFIX)
+						.append(getChildrenWrapper(arrayNode))
 						.append(">")
 						.toString());
 
@@ -79,6 +77,14 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		// do nothing
 	}
 
+	private String getChildrenWrapper(SchemaNode arrayNode) {
+		if (arrayNode.getChildrenKey() != null) {
+			return arrayNode.getChildrenKey();
+		} else {
+			return arrayNode.getKey() + ARRAY_ITEM_SUFFIX;
+		}
+	}
+
 	@Override
 	public void writeArrayStart(SchemaNode node) throws IOException {
 		if (node.getLevel() > 0) {
@@ -95,8 +101,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		writer.write(
 				getIndent()
 						.append("<")
-						.append(node.getKey())
-						.append(ARRAY_ITEM_SUFFIX)
+						.append(getChildrenWrapper(node))
 						.append(">").toString());
 
 		incrementPadding();
@@ -110,8 +115,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		writer.write(
 				getIndent()
 						.append("</")
-						.append(node.getKey())
-						.append(ARRAY_ITEM_SUFFIX)
+						.append(getChildrenWrapper(node))
 						.append(">\n").toString());
 
 		decrementPadding();

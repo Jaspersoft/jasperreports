@@ -48,9 +48,11 @@ public class JsonSchema {
 
 	private static final String TYPE_KEY = "_type";
 	private static final String CHILDREN_KEY = "_children";
+	private static final String WRAP_KEY = "_wrapKey";
 	private static final String[] OBJECT_NODE_RESERVED_KEYS = new String[] { TYPE_KEY }; // FIXME: Use these reserved keys objects
 	private static final String[] ARRAY_NODE_RESERVED_KEYS = new String[] { TYPE_KEY, CHILDREN_KEY };
 	public static final String JSON_SCHEMA_ROOT_NAME = "___root";
+	public static final String DEFAULT_SCHEMA_ROOT_WRAP_KEY_NAME = "root";
 
 	private final Map<String, SchemaNode> pathToSchemaNodeMap = new LinkedHashMap<>();
 	private final Set<String> invalidSchemaPaths = new HashSet<>();
@@ -141,6 +143,15 @@ public class JsonSchema {
 
 		if (parent != null) {
 			schemaNode = parent;
+
+			// this should always be the case
+			if (NodeTypeEnum.ARRAY.equals(parent.getType())) {
+				// this makes sense only for XML
+				// try to find the wrapper key for the children of the array node
+				if (objectNode.has(WRAP_KEY) && objectNode.path(WRAP_KEY).isTextual()) {
+					schemaNode.setChildrenKey(objectNode.path(WRAP_KEY).asText());
+				}
+			}
 		} else {
 			int level = currentSchemaPath.split("\\.").length;
 			if (log.isDebugEnabled()) {
@@ -154,7 +165,12 @@ public class JsonSchema {
 				currentKey = currentSchemaPath.substring(currentSchemaPath.lastIndexOf(".") + 1);
 			}
 
-			schemaNode = new SchemaNode(level - 1, currentSchemaPath, parentPath, nodeType, currentKey);
+			String key = currentKey.equals(JSON_SCHEMA_ROOT_NAME) ? DEFAULT_SCHEMA_ROOT_WRAP_KEY_NAME : currentKey;
+			if (objectNode.has(WRAP_KEY) && objectNode.path(WRAP_KEY).isTextual()) {
+				key = objectNode.path(WRAP_KEY).asText();
+			}
+
+			schemaNode = new SchemaNode(level - 1, currentSchemaPath, parentPath, nodeType, key);
 			pathToSchemaNodeMap.put(currentSchemaPath, schemaNode);
 		}
 

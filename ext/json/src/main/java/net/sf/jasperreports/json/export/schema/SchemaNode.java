@@ -36,6 +36,7 @@ public class SchemaNode {
 	private String parentPath;
 	private NodeTypeEnum type;
 	private String key;
+	private String childrenKey;
 	private List<SchemaNodeMember> members;
 	private List<String> memberNames;
 
@@ -67,6 +68,14 @@ public class SchemaNode {
 
 	public NodeTypeEnum getType() {
 		return type;
+	}
+
+	public String getChildrenKey() {
+		return childrenKey;
+	}
+
+	public void setChildrenKey(String childrenKey) {
+		this.childrenKey = childrenKey;
 	}
 
 	public void addMember(String memberName) {
@@ -116,6 +125,7 @@ public class SchemaNode {
 		out.append("parentPath: ").append(parentPath).append(", ");
 		out.append("type: ").append(type.getName()).append(", ");
 		out.append("key: ").append(key).append(", ");
+		out.append("childrenKey: ").append(childrenKey).append(", ");
 		out.append("members: [");
 		if (isArray) {
 			out.append("{");
@@ -147,8 +157,9 @@ public class SchemaNode {
 		boolean parentPathEquals = (this.parentPath == null && other.parentPath == null) || (this.parentPath != null && this.parentPath.equals(other.parentPath));
 		boolean typeEquals = (this.type == null && other.type == null) || (this.type != null && this.type.equals(other.type));
 		boolean keyEquals = (this.key == null && other.key == null) || (this.key != null && this.key.equals(other.key));
+		boolean childrenKeyEquals = (this.childrenKey == null && other.childrenKey == null) || (this.childrenKey != null && this.childrenKey.equals(other.childrenKey));
 
-		return this.level == ((SchemaNode)obj).level && pathEquals && parentPathEquals && typeEquals && keyEquals;
+		return this.level == ((SchemaNode)obj).level && pathEquals && parentPathEquals && typeEquals && keyEquals && childrenKeyEquals;
 	}
 
 	@Override
@@ -158,6 +169,7 @@ public class SchemaNode {
 		hash = hash * 41 + (parentPath == null ? 0 : parentPath.hashCode());
 		hash = hash * 41 + (type == null ? 0 : type.hashCode());
 		hash = hash * 41 + (key == null ? 0 : key.hashCode());
+		hash = hash * 41 + (childrenKey == null ? 0 : childrenKey.hashCode());
 		return hash;
 	}
 }
