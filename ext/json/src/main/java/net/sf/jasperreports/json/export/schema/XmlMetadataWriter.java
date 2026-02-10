@@ -49,14 +49,14 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		writer.write("\n");
 		decrementPadding();
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("</")
 						.append(arrayNode.getKey())
 						.append(ARRAY_ITEM_SUFFIX)
 						.append(">\n").toString());
 
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("<")
 						.append(arrayNode.getKey())
 						.append(ARRAY_ITEM_SUFFIX)
@@ -85,7 +85,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 			writer.write("\n");
 		}
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("<")
 						.append(node.getKey())
 						.append(">\n").toString());
@@ -93,7 +93,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		incrementPadding();
 
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("<")
 						.append(node.getKey())
 						.append(ARRAY_ITEM_SUFFIX)
@@ -108,7 +108,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		decrementPadding();
 
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("</")
 						.append(node.getKey())
 						.append(ARRAY_ITEM_SUFFIX)
@@ -117,7 +117,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		decrementPadding();
 
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("</")
 						.append(node.getKey())
 						.append(">").toString());
@@ -129,7 +129,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 			writer.write("\n");
 		}
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("<")
 						.append(node.getKey())
 						.append(">").toString());
@@ -143,7 +143,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		decrementPadding();
 
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("</")
 						.append(node.getKey())
 						.append(">").toString());
@@ -161,7 +161,7 @@ public class XmlMetadataWriter extends JsonMetadataWriter {
 		writer.write("\n");
 
 		writer.write(
-				getSpaceIndexedString()
+				getIndent()
 						.append("<")
 						.append(key)
 						.append(">").toString());

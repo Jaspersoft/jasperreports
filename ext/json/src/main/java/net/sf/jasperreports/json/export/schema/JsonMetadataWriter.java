@@ -63,7 +63,7 @@ public class JsonMetadataWriter {
 		currentPadding -= spacesPerTab;
 	}
 
-	protected StringBuilder getSpaceIndexedString() {
+	protected StringBuilder getIndent() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < currentPadding; i++) {
 			sb.append(" ");
@@ -71,8 +71,8 @@ public class JsonMetadataWriter {
 		return sb;
 	}
 
-	private String getSpaceIndexedKey(String key) {
-		StringBuilder sb = getSpaceIndexedString();
+	private String getIndentedKey(String key) {
+		StringBuilder sb = getIndent();
 		if (escapeMembers) sb.append("\"");
 		sb.append(key); // FIXME: should we also escape the key string?
 		if (escapeMembers) sb.append("\"");
@@ -87,13 +87,13 @@ public class JsonMetadataWriter {
 	public void closeAndStartNewObject(SchemaNode node) throws IOException {
 		writer.write("\n");
 		decrementPadding();
-		writer.write(getSpaceIndexedString() + "}, {");
+		writer.write(getIndent() + "}, {");
 		incrementPadding();
 	}
 
 	public void writeKeyWithVal(String key, Object value) throws IOException {
 		writer.write("\n");
-		String paddedKey = getSpaceIndexedKey(key);
+		String paddedKey = getIndentedKey(key);
 		writer.write(paddedKey + ": ");
 		writeValue(key, value);
 		writer.write(",");
@@ -102,7 +102,7 @@ public class JsonMetadataWriter {
 	public void writeKey(String key, boolean isSameObject) throws IOException {
 		writer.write("\n");
 		if (!isSameObject) incrementPadding();
-		String paddedKey = getSpaceIndexedKey(key);
+		String paddedKey = getIndentedKey(key);
 		writer.write(paddedKey + ": ");
 	}
 
@@ -113,7 +113,7 @@ public class JsonMetadataWriter {
 	public void writeArrayClosing(SchemaNode node) throws IOException {
 		writer.write("\n");
 		decrementPadding();
-		writer.write(getSpaceIndexedString() + "}]");
+		writer.write(getIndent() + "}]");
 	}
 
 	public void writeObjectStart(SchemaNode node) throws IOException {
@@ -123,7 +123,7 @@ public class JsonMetadataWriter {
 	public void writeObjectClosing(SchemaNode node) throws IOException {
 		writer.write("\n");
 		decrementPadding();
-		writer.write(getSpaceIndexedString() + "}");
+		writer.write(getIndent() + "}");
 	}
 
 	public void writeValueClosing(SchemaNode node) throws IOException {
