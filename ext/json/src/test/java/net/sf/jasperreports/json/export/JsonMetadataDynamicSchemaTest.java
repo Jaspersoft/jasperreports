@@ -126,6 +126,7 @@ public class JsonMetadataDynamicSchemaTest {
 		jsonProcessor.processElement(() -> "value_6", "a.j.k", false);
 
 		jsonProcessor.closeOpenNodes();
+		boolean isValid;
 		try {
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
@@ -135,11 +136,16 @@ public class JsonMetadataDynamicSchemaTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 
 	@Test
@@ -158,6 +164,7 @@ public class JsonMetadataDynamicSchemaTest {
 		jsonProcessor.processElement(() -> "value_7", "a.k.l", false);
 
 		jsonProcessor.closeOpenNodes();
+		boolean isValid;
 		try {
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
@@ -167,11 +174,16 @@ public class JsonMetadataDynamicSchemaTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 
 	@Test
@@ -190,6 +202,7 @@ public class JsonMetadataDynamicSchemaTest {
 		jsonProcessor.processElement(() -> "value_7", "a.b.c.d.e", true);
 
 		jsonProcessor.closeOpenNodes();
+		boolean isValid;
 		try {
 			String generatedJson = sw.toString();
 			if (log.isDebugEnabled()) {
@@ -199,10 +212,15 @@ public class JsonMetadataDynamicSchemaTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage());
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 }

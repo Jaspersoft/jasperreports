@@ -156,6 +156,7 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
+		boolean isValid;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -181,11 +182,16 @@ public class JsonMetadataSchemaFileTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 
 	@Test
@@ -197,6 +203,7 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
+		boolean isValid;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -223,11 +230,16 @@ public class JsonMetadataSchemaFileTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 
 	@Test
@@ -239,6 +251,7 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
+		boolean isValid;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -270,11 +283,16 @@ public class JsonMetadataSchemaFileTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 
 	@Test
@@ -286,6 +304,7 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
+		boolean isValid;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -317,11 +336,16 @@ public class JsonMetadataSchemaFileTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 
 	@Test
@@ -333,6 +357,7 @@ public class JsonMetadataSchemaFileTest {
 				);
 
 		JsonSchema jsonSchema = new JsonSchema();
+		boolean isValid;
 		try {
 			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
 
@@ -365,10 +390,15 @@ public class JsonMetadataSchemaFileTest {
 			}
 
 			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
+			isValid = false;
 		}
+
+		assert isValid;
 	}
 }
