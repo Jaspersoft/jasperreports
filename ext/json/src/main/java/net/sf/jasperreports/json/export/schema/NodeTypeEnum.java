@@ -26,6 +26,10 @@ package net.sf.jasperreports.json.export.schema;
 import net.sf.jasperreports.engine.type.EnumUtil;
 import net.sf.jasperreports.engine.type.NamedEnum;
 
+
+/**
+ * @author Narcis Marcu (narcism@users.sourceforge.net)
+ */
 public enum NodeTypeEnum implements NamedEnum {
 	/**
 	 *

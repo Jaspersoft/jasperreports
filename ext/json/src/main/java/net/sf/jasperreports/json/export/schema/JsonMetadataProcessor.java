@@ -23,24 +23,24 @@
  */
 package net.sf.jasperreports.json.export.schema;
 
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import net.sf.jasperreports.engine.util.JRDataUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.text.DateFormat;
 import java.util.*;
 import java.util.function.Supplier;
 
+
+/**
+ * @author Narcis Marcu (narcism@users.sourceforge.net)
+ */
 public class JsonMetadataProcessor {
 	private static final Log log = LogFactory.getLog(JsonMetadataProcessor.class);
 
 	private final JsonSchema jsonSchema;
 	private Writer writer;
-	private boolean escapeMembers;
-	private final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
+	private JsonMetadataWriter metadataWriter = new JsonMetadataWriter();
 
 	private final Map<String, ArrayList<String>> pathToVisitedMembers = new HashMap<>();
 	private final ArrayList<SchemaNode> openedSchemaNodes = new ArrayList<>();
@@ -59,10 +59,11 @@ public class JsonMetadataProcessor {
 
 	public void setWriter(Writer writer) {
 		this.writer = writer;
+		this.metadataWriter.setWriter(writer);
 	}
 
 	public void setEscapeMembers(boolean escapeMembers) {
-		this.escapeMembers = escapeMembers;
+		this.metadataWriter.setEscapeMembers(escapeMembers);
 	}
 
 	public void processElement(Supplier<Object> valueSupplier, String valuePath, boolean repeatValue) throws IOException {
@@ -207,11 +208,12 @@ public class JsonMetadataProcessor {
 	}
 
 	private void openNode(SchemaNode node, Object value) throws IOException {
-		// try to write previous repeated values for keys of parent nodes
 		String currentKey = node.getKey();
 		String parentPath = node.getParentPath();
+		boolean isSameObject = false;
 		if (parentPath != null) {
 			if (pathToVisitedMembers.containsKey(parentPath)) {
+				isSameObject = true;
 				SchemaNode parent = jsonSchema.getSchemaNode(parentPath);
 				int currentKeyIndex = parent.indexOfMember(currentKey);
 
@@ -221,7 +223,7 @@ public class JsonMetadataProcessor {
 
 				// we'll be adding to the same object
 				if (currentKeyIndex > lastVisitedIndex) {
-					writer.write(",");
+					metadataWriter.writeKeyValSeparator();
 				}
 				// we'll be adding to a new object
 				else {
@@ -230,38 +232,37 @@ public class JsonMetadataProcessor {
 						return; // FIXME: should we just continue or throw an exception here?
 					}
 
-					writer.write("\n");
-					writer.write(getSpaceIndexedString(parent.getLevel()) + "}, {");
+					metadataWriter.closeAndStartNewObject();
 
 					// try to find repeated values up until current index
+					List<SchemaNodeMember> membersToRepeat = new ArrayList<>();
 					for (int i = 0; i < currentKeyIndex; i++) {
 						SchemaNodeMember schemaMember = parent.getMember(i);
 						if (schemaMember.isRepeatValue()) {
-							String paddedKey = getSpaceIndexedKey(schemaMember.getName(), node.getLevel());
-							writer.write("\n");
-							writer.write(paddedKey + ": ");
-							writeValue(schemaMember.getPreviousValue());
-							writer.write(",");
+							membersToRepeat.add(schemaMember);
 						}
 					}
 
+					if (!membersToRepeat.isEmpty()) {
+						for (SchemaNodeMember memberToRepeat : membersToRepeat) {
+							metadataWriter.writePaddedKeyWithVal(memberToRepeat.getName(), memberToRepeat.getPreviousValue());
+						}
+					}
 				}
 			}
 		}
 
 		// for the root schema node do not write the key as there should not be one
 		if (!node.getKey().equals(JsonSchema.JSON_SCHEMA_ROOT_NAME)) {
-			String paddedKey = getSpaceIndexedKey(node.getKey(), node.getLevel());
-			writer.write("\n");
-			writer.write(paddedKey + ": ");
+			metadataWriter.writePaddedKey(node.getKey(), isSameObject);
 		}
 
 		if (node.isArray()) {
-			writer.write("[{");
+			metadataWriter.writeArrayStart();
 		} else if (node.isObject()){
-			writer.write("{");
+			metadataWriter.writeObjectStart();
 		} else { // isValue
-			writeValue(value);
+			metadataWriter.writeValue(value);
 		}
 
 		// mark visited for current node's parent
@@ -295,18 +296,14 @@ public class JsonMetadataProcessor {
 					}
 
 					if (!membersToRepeat.isEmpty()) {
-						writer.write(",");
+						metadataWriter.writeKeyValSeparator();
 
 						for (int i = 0; i < membersToRepeat.size(); i++) {
 							SchemaNodeMember memberToRepeat = membersToRepeat.get(i);
-
-							SchemaNode memberSchema = jsonSchema.getSchemaNode(node.getPath() + "." + memberToRepeat.getName());
-							String paddedKey = getSpaceIndexedKey(memberToRepeat.getName(), memberSchema.getLevel());
-							writer.write("\n");
-							writer.write(paddedKey + ": ");
-							writeValue(memberToRepeat.getPreviousValue());
+							metadataWriter.writePaddedKey(memberToRepeat.getName(), true);
+							metadataWriter.writeValue(memberToRepeat.getPreviousValue());
 							if (i < membersToRepeat.size() - 1) {
-								writer.write(",");
+								metadataWriter.writeKeyValSeparator();
 							}
 						}
 					}
@@ -315,15 +312,14 @@ public class JsonMetadataProcessor {
 		}
 
 		if (node.isArray()) {
-			writer.write("\n");
-			writer.write(getSpaceIndexedString(node.getLevel()) + "}]");
+			metadataWriter.writeArrayClose();
 		} else if (node.isObject()){
-			writer.write("\n");
-			writer.write(getSpaceIndexedString(node.getLevel()) + "}");
+			metadataWriter.writeObjectClose();
 		}
 
 		if (!node.isValue()) {
 			pathToVisitedMembers.remove(node.getPath());
+			// FIXME: for array nodes we should also clear the repeated values for each member
 		}
 	}
 
@@ -337,39 +333,4 @@ public class JsonMetadataProcessor {
 		writer.write("\n");
 	}
 
-	private StringBuilder getSpaceIndexedString(int level) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < level * 4; i++) {
-			sb.append(" ");
-		}
-
-		return sb;
-	}
-
-	private String getSpaceIndexedKey(String key, int level) {
-		StringBuilder sb = getSpaceIndexedString(level);
-		if (escapeMembers) sb.append("\"");
-		sb.append(key); // FIXME: should we also escape the key string?
-		if (escapeMembers) sb.append("\"");
-
-		return sb.toString();
-	}
-
-	private void writeValue(Object value)throws IOException {
-		if (value != null) {
-			if (value instanceof Number || value instanceof Boolean) {
-				writer.write(value.toString());
-			} else if (value instanceof Date) {
-				writer.write("\"");
-				writer.write(isoDateFormat.format((Date)value));
-				writer.write("\"");
-			} else {
-				writer.write("\"");
-				writer.write(JsonStringEncoder.getInstance().quoteAsString(value.toString()));
-				writer.write("\"");
-			}
-		} else {
-			writer.write("null");  // FIXMEJSONMETA: how to treat null values?
-		}
-	}
 }

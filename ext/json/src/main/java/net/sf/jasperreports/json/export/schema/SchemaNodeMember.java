@@ -23,7 +23,11 @@
  */
 package net.sf.jasperreports.json.export.schema;
 
- public class SchemaNodeMember {
+
+/**
+ * @author Narcis Marcu (narcism@users.sourceforge.net)
+ */
+public class SchemaNodeMember {
 
 	private boolean repeatValue;
 	private Object previousValue;

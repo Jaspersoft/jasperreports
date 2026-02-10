@@ -34,6 +34,10 @@ import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
 import java.util.*;
 
+
+/**
+ * @author Narcis Marcu (narcism@users.sourceforge.net)
+ */
 public class JsonSchema {
 
 	private static final Log log = LogFactory.getLog(JsonSchema.class);

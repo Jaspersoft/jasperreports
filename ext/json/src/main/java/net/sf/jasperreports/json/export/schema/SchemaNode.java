@@ -26,6 +26,10 @@ package net.sf.jasperreports.json.export.schema;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @author Narcis Marcu (narcism@users.sourceforge.net)
+ */
 public class SchemaNode {
 	private int level;
 	private String path;
