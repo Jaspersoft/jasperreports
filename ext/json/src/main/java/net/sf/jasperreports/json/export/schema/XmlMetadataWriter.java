@@ -24,127 +24,158 @@
 package net.sf.jasperreports.json.export.schema;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import net.sf.jasperreports.engine.util.JRDataUtils;
 
 import java.io.IOException;
-import java.io.Writer;
-import java.text.DateFormat;
 import java.util.Date;
 
 
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
-public class JsonMetadataWriter {
+public class XmlMetadataWriter extends JsonMetadataWriter {
 
-	protected Writer writer;
-	private boolean escapeMembers;
+	private static final String ARRAY_ITEM_SUFFIX = "_item";
 
-	protected final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
-	private int currentPadding = 0;
-	private int spacesPerTab = 4;
-
-	public JsonMetadataWriter() {
+	public XmlMetadataWriter() {
 	}
 
-	public void setWriter(Writer writer) {
-		this.writer = writer;
-	}
-
-	public void setEscapeMembers(boolean escapeMembers) {
-		this.escapeMembers = escapeMembers;
-	}
-
-	protected void incrementPadding() {
-		currentPadding += spacesPerTab;
-	}
-
-	protected void decrementPadding() {
-		currentPadding -= spacesPerTab;
-	}
-
-	protected StringBuilder getSpaceIndexedString() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < currentPadding; i++) {
-			sb.append(" ");
-		}
-		return sb;
-	}
-
-	private String getSpaceIndexedKey(String key) {
-		StringBuilder sb = getSpaceIndexedString();
-		if (escapeMembers) sb.append("\"");
-		sb.append(key); // FIXME: should we also escape the key string?
-		if (escapeMembers) sb.append("\"");
-
-		return sb.toString();
-	}
-
-	public void writeKeyValSeparator() throws IOException {
-		writer.write(",");
-	}
-
-	public void closeAndStartNewObject(SchemaNode node) throws IOException {
-		writer.write("\n");
-		decrementPadding();
-		writer.write(getSpaceIndexedString() + "}, {");
-		incrementPadding();
-	}
-
-	public void writeKeyWithVal(String key, Object value) throws IOException {
-		writer.write("\n");
-		String paddedKey = getSpaceIndexedKey(key);
-		writer.write(paddedKey + ": ");
-		writeValue(key, value);
-		writer.write(",");
-	}
-
-	public void writeKey(String key, boolean isSameObject) throws IOException {
-		writer.write("\n");
-		if (!isSameObject) incrementPadding();
-		String paddedKey = getSpaceIndexedKey(key);
-		writer.write(paddedKey + ": ");
-	}
-
-	public void writeArrayStart(SchemaNode node) throws IOException {
-		writer.write("[{");
-	}
-
-	public void writeArrayClosing(SchemaNode node) throws IOException {
-		writer.write("\n");
-		decrementPadding();
-		writer.write(getSpaceIndexedString() + "}]");
-	}
-
-	public void writeObjectStart(SchemaNode node) throws IOException {
-		writer.write("{");
-	}
-
-	public void writeObjectClosing(SchemaNode node) throws IOException {
-		writer.write("\n");
-		decrementPadding();
-		writer.write(getSpaceIndexedString() + "}");
-	}
-
-	public void writeValueClosing(SchemaNode node) throws IOException {
+	@Override
+	public void writeKeyValSeparator() {
 		// do nothing
 	}
 
+	@Override
+	public void closeAndStartNewObject(SchemaNode arrayNode) throws IOException {
+		writer.write("\n");
+		decrementPadding();
+		writer.write(
+				getSpaceIndexedString()
+						.append("</")
+						.append(arrayNode.getKey())
+						.append(ARRAY_ITEM_SUFFIX)
+						.append(">\n").toString());
+
+		writer.write(
+				getSpaceIndexedString()
+						.append("<")
+						.append(arrayNode.getKey())
+						.append(ARRAY_ITEM_SUFFIX)
+						.append(">")
+						.toString());
+
+		incrementPadding();
+	}
+
+	@Override
+	public void writeKeyWithVal(String key, Object value) throws IOException {
+		writeValue(key, value);
+		writer.write("</");
+		writer.write(key);
+		writer.write(">");
+	}
+
+	@Override
+	public void writeKey(String key, boolean isSameObject) throws IOException {
+		// do nothing
+	}
+
+	@Override
+	public void writeArrayStart(SchemaNode node) throws IOException {
+		if (node.getLevel() > 0) {
+			writer.write("\n");
+		}
+		writer.write(
+				getSpaceIndexedString()
+						.append("<")
+						.append(node.getKey())
+						.append(">\n").toString());
+
+		incrementPadding();
+
+		writer.write(
+				getSpaceIndexedString()
+						.append("<")
+						.append(node.getKey())
+						.append(ARRAY_ITEM_SUFFIX)
+						.append(">").toString());
+
+		incrementPadding();
+	}
+
+	@Override
+	public void writeArrayClosing(SchemaNode node) throws IOException {
+		writer.write("\n");
+		decrementPadding();
+
+		writer.write(
+				getSpaceIndexedString()
+						.append("</")
+						.append(node.getKey())
+						.append(ARRAY_ITEM_SUFFIX)
+						.append(">\n").toString());
+
+		decrementPadding();
+
+		writer.write(
+				getSpaceIndexedString()
+						.append("</")
+						.append(node.getKey())
+						.append(">").toString());
+	}
+
+	@Override
+	public void writeObjectStart(SchemaNode node) throws IOException {
+		if (node.getLevel() > 0) {
+			writer.write("\n");
+		}
+		writer.write(
+				getSpaceIndexedString()
+						.append("<")
+						.append(node.getKey())
+						.append(">").toString());
+
+		incrementPadding();
+	}
+
+	@Override
+	public void writeObjectClosing(SchemaNode node) throws IOException {
+		writer.write("\n");
+		decrementPadding();
+
+		writer.write(
+				getSpaceIndexedString()
+						.append("</")
+						.append(node.getKey())
+						.append(">").toString());
+	}
+
+	@Override
+	public void writeValueClosing(SchemaNode node) throws IOException {
+		writer.write("</");
+		writer.write(node.getKey());
+		writer.write(">");
+	}
+
+	@Override
 	public void writeValue(String key, Object value)throws IOException {
+		writer.write("\n");
+
+		writer.write(
+				getSpaceIndexedString()
+						.append("<")
+						.append(key)
+						.append(">").toString());
+
 		if (value != null) {
 			if (value instanceof Number || value instanceof Boolean) {
 				writer.write(value.toString());
 			} else if (value instanceof Date) {
-				writer.write("\"");
 				writer.write(isoDateFormat.format((Date)value));
-				writer.write("\"");
 			} else {
-				writer.write("\"");
-				writer.write(JsonStringEncoder.getInstance().quoteAsString(value.toString()));
-				writer.write("\"");
+				writer.write(JsonStringEncoder.getInstance().quoteAsString(value.toString())); // FIXME: Encode for XML
 			}
 		} else {
-			writer.write("null");  // FIXMEJSONMETA: how to treat null values?
+			writer.write("null");  // FIXME: how to treat null values?
 		}
 	}
 }

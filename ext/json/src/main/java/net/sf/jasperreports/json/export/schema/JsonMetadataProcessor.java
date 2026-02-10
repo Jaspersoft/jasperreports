@@ -232,7 +232,7 @@ public class JsonMetadataProcessor {
 						return; // FIXME: should we just continue or throw an exception here?
 					}
 
-					metadataWriter.closeAndStartNewObject();
+					metadataWriter.closeAndStartNewObject(parent);
 
 					// try to find repeated values up until current index
 					List<SchemaNodeMember> membersToRepeat = new ArrayList<>();
@@ -245,7 +245,7 @@ public class JsonMetadataProcessor {
 
 					if (!membersToRepeat.isEmpty()) {
 						for (SchemaNodeMember memberToRepeat : membersToRepeat) {
-							metadataWriter.writePaddedKeyWithVal(memberToRepeat.getName(), memberToRepeat.getPreviousValue());
+							metadataWriter.writeKeyWithVal(memberToRepeat.getName(), memberToRepeat.getPreviousValue());
 						}
 					}
 				}
@@ -253,16 +253,16 @@ public class JsonMetadataProcessor {
 		}
 
 		// for the root schema node do not write the key as there should not be one
-		if (!node.getKey().equals(JsonSchema.JSON_SCHEMA_ROOT_NAME)) {
-			metadataWriter.writePaddedKey(node.getKey(), isSameObject);
+		if (node.getLevel() > 0) {
+			metadataWriter.writeKey(node.getKey(), isSameObject);
 		}
 
 		if (node.isArray()) {
-			metadataWriter.writeArrayStart();
+			metadataWriter.writeArrayStart(node);
 		} else if (node.isObject()){
-			metadataWriter.writeObjectStart();
+			metadataWriter.writeObjectStart(node);
 		} else { // isValue
-			metadataWriter.writeValue(value);
+			metadataWriter.writeValue(node.getKey(), value);
 		}
 
 		// mark visited for current node's parent
@@ -300,8 +300,8 @@ public class JsonMetadataProcessor {
 
 						for (int i = 0; i < membersToRepeat.size(); i++) {
 							SchemaNodeMember memberToRepeat = membersToRepeat.get(i);
-							metadataWriter.writePaddedKey(memberToRepeat.getName(), true);
-							metadataWriter.writeValue(memberToRepeat.getPreviousValue());
+							metadataWriter.writeKey(memberToRepeat.getName(), true);
+							metadataWriter.writeValue(memberToRepeat.getName(), memberToRepeat.getPreviousValue());
 							if (i < membersToRepeat.size() - 1) {
 								metadataWriter.writeKeyValSeparator();
 							}
@@ -312,9 +312,11 @@ public class JsonMetadataProcessor {
 		}
 
 		if (node.isArray()) {
-			metadataWriter.writeArrayClose();
+			metadataWriter.writeArrayClosing(node);
 		} else if (node.isObject()){
-			metadataWriter.writeObjectClose();
+			metadataWriter.writeObjectClosing(node);
+		} else {
+			metadataWriter.writeValueClosing(node);
 		}
 
 		if (!node.isValue()) {
