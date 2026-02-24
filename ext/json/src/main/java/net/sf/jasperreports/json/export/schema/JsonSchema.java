@@ -269,7 +269,10 @@ public class JsonSchema {
 					parentPath = schemaPath.substring(0, schemaPath.lastIndexOf("."));
 				}
 
-				currenNode = new SchemaNode(i, schemaPath, parentPath, schemaNodeType, pathSegments[i]);
+				String currentKey = pathSegments[i];
+				String key = currentKey.equals(JSON_SCHEMA_ROOT_NAME) ? DEFAULT_SCHEMA_ROOT_WRAP_KEY_NAME : currentKey;
+
+				currenNode = new SchemaNode(i, schemaPath, parentPath, schemaNodeType, key);
 				pathToSchemaNodeMap.put(schemaPath, currenNode);
 			} else {
 				currenNode = pathToSchemaNodeMap.get(schemaPath);
