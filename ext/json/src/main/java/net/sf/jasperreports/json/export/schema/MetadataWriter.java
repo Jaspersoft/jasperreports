@@ -23,31 +23,37 @@
  */
 package net.sf.jasperreports.json.export.schema;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.io.IOException;
 import java.io.Writer;
-import java.util.*;
-import java.util.function.Supplier;
 
 
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
-public class JsonMetadataProcessor extends AbstractMetadataProcessor {
+public interface MetadataWriter {
 
-	public JsonMetadataProcessor(Writer writer) {
-		super(new JsonSchema(), new JsonMetadataWriter(writer));
-	}
+	Writer getWriter();
 
-	public JsonMetadataProcessor(JsonSchema jsonSchema, Writer writer) {
-		super(jsonSchema, new JsonMetadataWriter(writer));
-	}
+	void writeHeader() throws IOException;
 
-	@Override
-	public JsonMetadataWriter getMetadataWriter() {
-		return (JsonMetadataWriter)metadataWriter;
-	}
+	void writeKeyValSeparator() throws IOException;
+
+	void closeAndStartNewObject(SchemaNode node) throws IOException;
+
+	void writeKeyWithVal(String key, Object value) throws IOException;
+
+	void writeKey(String key, boolean isSameObject) throws IOException;
+
+	void writeArrayStart(SchemaNode node) throws IOException;
+
+	void writeArrayClosing(SchemaNode node) throws IOException;
+
+	void writeObjectStart(SchemaNode node) throws IOException;
+
+	void writeObjectClosing(SchemaNode node) throws IOException;
+
+	void writeValueClosing(SchemaNode node) throws IOException;
+
+	void writeValue(String key, Object value)throws IOException;
 
 }

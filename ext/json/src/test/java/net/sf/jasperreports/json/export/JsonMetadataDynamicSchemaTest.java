@@ -27,10 +27,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
-import net.sf.jasperreports.json.export.schema.JsonSchema;
-import net.sf.jasperreports.json.export.schema.NodeTypeEnum;
-import net.sf.jasperreports.json.export.schema.SchemaNode;
+import net.sf.jasperreports.json.export.schema.*;
 import net.sf.jasperreports.repo.RepositoryUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,8 +66,7 @@ public class JsonMetadataDynamicSchemaTest {
 
     @Test
     public void validateSchema() {
-		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
-		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
+		JsonSchema jsonSchema = new JsonSchema();
 
 		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.id");
 		jsonSchema.addPathToSchema(JsonSchema.JSON_SCHEMA_ROOT_NAME + ".products.name");
@@ -113,10 +109,8 @@ public class JsonMetadataDynamicSchemaTest {
 
 	@Test
 	public void buildJSON_1() throws IOException {
-		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
-
 		StringWriter sw = new StringWriter();
-		jsonProcessor.setWriter(sw);
+		MetadataProcessor jsonProcessor = new JsonMetadataProcessor(sw);
 
 		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", true);
 		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", false);
@@ -150,10 +144,8 @@ public class JsonMetadataDynamicSchemaTest {
 
 	@Test
 	public void buildJSON_2() throws IOException {
-		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
-
 		StringWriter sw = new StringWriter();
-		jsonProcessor.setWriter(sw);
+		MetadataProcessor jsonProcessor = new JsonMetadataProcessor(sw);
 
 		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", false);
 		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", true);
@@ -188,10 +180,8 @@ public class JsonMetadataDynamicSchemaTest {
 
 	@Test
 	public void buildJSON_3() throws IOException {
-		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
-
 		StringWriter sw = new StringWriter();
-		jsonProcessor.setWriter(sw);
+		MetadataProcessor jsonProcessor = new JsonMetadataProcessor(sw);
 
 		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", true);
 		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", false);

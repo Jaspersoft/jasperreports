@@ -27,10 +27,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.json.export.schema.JsonMetadataProcessor;
-import net.sf.jasperreports.json.export.schema.JsonSchema;
-import net.sf.jasperreports.json.export.schema.NodeTypeEnum;
-import net.sf.jasperreports.json.export.schema.SchemaNode;
+import net.sf.jasperreports.json.export.schema.*;
 import net.sf.jasperreports.repo.RepositoryUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -75,8 +72,7 @@ public class JsonMetadataSchemaFileTest {
 						StandardCharsets.UTF_8.name()
 				);
 
-		JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor();
-		JsonSchema jsonSchema = jsonProcessor.getJsonSchema();
+		JsonSchema jsonSchema = new JsonSchema();
 
 		boolean isValid;
 		try {
@@ -166,9 +162,8 @@ public class JsonMetadataSchemaFileTest {
 				}
 			}
 
-			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
 			StringWriter sw = new StringWriter();
-			jsonProcessor.setWriter(sw);
+			MetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema, sw);
 
 			jsonProcessor.processElement(() -> "1", "product.id", false);
 			jsonProcessor.processElement(() -> "2", "product.id", false);
@@ -213,9 +208,8 @@ public class JsonMetadataSchemaFileTest {
 				}
 			}
 
-			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
 			StringWriter sw = new StringWriter();
-			jsonProcessor.setWriter(sw);
+			MetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema, sw);
 
 			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
 			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
@@ -257,13 +251,12 @@ public class JsonMetadataSchemaFileTest {
 
 			if (log.isDebugEnabled()) {
 				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
-					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
+					log.debug("pathToSchemaNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
 				}
 			}
 
-			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
 			StringWriter sw = new StringWriter();
-			jsonProcessor.setWriter(sw);
+			MetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema, sw);
 
 			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
 			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
@@ -314,9 +307,8 @@ public class JsonMetadataSchemaFileTest {
 				}
 			}
 
-			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
 			StringWriter sw = new StringWriter();
-			jsonProcessor.setWriter(sw);
+			MetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema, sw);
 
 			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
 			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);
@@ -367,10 +359,9 @@ public class JsonMetadataSchemaFileTest {
 				}
 			}
 
-			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema);
-			jsonProcessor.setEscapeMembers(true);
 			StringWriter sw = new StringWriter();
-			jsonProcessor.setWriter(sw);
+			JsonMetadataProcessor jsonProcessor = new JsonMetadataProcessor(jsonSchema, sw);
+			jsonProcessor.getMetadataWriter().setEscapeMembers(true);
 
 			jsonProcessor.processElement(() -> "id_1", "products.details.id", false);
 			jsonProcessor.processElement(() -> "name_1", "products.details.name", false);

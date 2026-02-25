@@ -23,31 +23,21 @@
  */
 package net.sf.jasperreports.json.export.schema;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.io.IOException;
-import java.io.Writer;
-import java.util.*;
 import java.util.function.Supplier;
 
 
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
-public class JsonMetadataProcessor extends AbstractMetadataProcessor {
+public interface MetadataProcessor {
 
-	public JsonMetadataProcessor(Writer writer) {
-		super(new JsonSchema(), new JsonMetadataWriter(writer));
-	}
+	JsonSchema getJsonSchema();
 
-	public JsonMetadataProcessor(JsonSchema jsonSchema, Writer writer) {
-		super(jsonSchema, new JsonMetadataWriter(writer));
-	}
+	MetadataWriter getMetadataWriter();
 
-	@Override
-	public JsonMetadataWriter getMetadataWriter() {
-		return (JsonMetadataWriter)metadataWriter;
-	}
+	void processElement(Supplier<Object> valueSupplier, String valuePath, boolean repeatValue) throws IOException;
+
+	void closeOpenNodes() throws IOException;
 
 }

@@ -26,17 +26,24 @@ package net.sf.jasperreports.json.export.schema;
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Date;
 
 
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
-public class XmlMetadataWriter extends JsonMetadataWriter {
+public class XmlMetadataWriter extends AbstractMetadataWriter {
 
 	private static final String ARRAY_ITEM_SUFFIX = "_item";
 
-	public XmlMetadataWriter() {
+	public XmlMetadataWriter(Writer writer) {
+		super(writer);
+	}
+
+	@Override
+	public void writeHeader() throws IOException {
+		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 	}
 
 	@Override

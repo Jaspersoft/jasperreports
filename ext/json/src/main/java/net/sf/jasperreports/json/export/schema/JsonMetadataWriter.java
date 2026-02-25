@@ -35,40 +35,16 @@ import java.util.Date;
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
-public class JsonMetadataWriter {
+public class JsonMetadataWriter extends AbstractMetadataWriter {
 
-	protected Writer writer;
 	private boolean escapeMembers;
 
-	protected final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
-	private int currentPadding = 0;
-	private int spacesPerTab = 4;
-
-	public JsonMetadataWriter() {
-	}
-
-	public void setWriter(Writer writer) {
-		this.writer = writer;
+	public JsonMetadataWriter(Writer writer) {
+		super(writer);
 	}
 
 	public void setEscapeMembers(boolean escapeMembers) {
 		this.escapeMembers = escapeMembers;
-	}
-
-	protected void incrementPadding() {
-		currentPadding += spacesPerTab;
-	}
-
-	protected void decrementPadding() {
-		currentPadding -= spacesPerTab;
-	}
-
-	protected StringBuilder getIndent() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < currentPadding; i++) {
-			sb.append(" ");
-		}
-		return sb;
 	}
 
 	private String getIndentedKey(String key) {
@@ -80,10 +56,17 @@ public class JsonMetadataWriter {
 		return sb.toString();
 	}
 
+	@Override
+	public void writeHeader() {
+		// do nothing for now // FIXME maybe add JasperReports version and a date?
+	}
+
+	@Override
 	public void writeKeyValSeparator() throws IOException {
 		writer.write(",");
 	}
 
+	@Override
 	public void closeAndStartNewObject(SchemaNode node) throws IOException {
 		writer.write("\n");
 		decrementPadding();
@@ -91,6 +74,7 @@ public class JsonMetadataWriter {
 		incrementPadding();
 	}
 
+	@Override
 	public void writeKeyWithVal(String key, Object value) throws IOException {
 		writer.write("\n");
 		String paddedKey = getIndentedKey(key);
@@ -99,6 +83,7 @@ public class JsonMetadataWriter {
 		writer.write(",");
 	}
 
+	@Override
 	public void writeKey(String key, boolean isSameObject) throws IOException {
 		writer.write("\n");
 		if (!isSameObject) incrementPadding();
@@ -106,30 +91,36 @@ public class JsonMetadataWriter {
 		writer.write(paddedKey + ": ");
 	}
 
+	@Override
 	public void writeArrayStart(SchemaNode node) throws IOException {
 		writer.write("[{");
 	}
 
+	@Override
 	public void writeArrayClosing(SchemaNode node) throws IOException {
 		writer.write("\n");
 		decrementPadding();
 		writer.write(getIndent() + "}]");
 	}
 
+	@Override
 	public void writeObjectStart(SchemaNode node) throws IOException {
 		writer.write("{");
 	}
 
+	@Override
 	public void writeObjectClosing(SchemaNode node) throws IOException {
 		writer.write("\n");
 		decrementPadding();
 		writer.write(getIndent() + "}");
 	}
 
+	@Override
 	public void writeValueClosing(SchemaNode node) throws IOException {
 		// do nothing
 	}
 
+	@Override
 	public void writeValue(String key, Object value)throws IOException {
 		if (value != null) {
 			if (value instanceof Number || value instanceof Boolean) {

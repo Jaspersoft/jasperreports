@@ -23,31 +23,49 @@
  */
 package net.sf.jasperreports.json.export.schema;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import net.sf.jasperreports.engine.util.JRDataUtils;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.*;
-import java.util.function.Supplier;
+import java.text.DateFormat;
+import java.util.Date;
 
 
 /**
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
-public class JsonMetadataProcessor extends AbstractMetadataProcessor {
+public abstract class AbstractMetadataWriter implements MetadataWriter {
 
-	public JsonMetadataProcessor(Writer writer) {
-		super(new JsonSchema(), new JsonMetadataWriter(writer));
-	}
+	private int currentPadding = 0;
+	private int spacesPerTab = 4;
 
-	public JsonMetadataProcessor(JsonSchema jsonSchema, Writer writer) {
-		super(jsonSchema, new JsonMetadataWriter(writer));
+	protected final DateFormat isoDateFormat = JRDataUtils.getIsoDateFormat();
+	protected Writer writer;
+
+	public AbstractMetadataWriter(Writer writer) {
+		this.writer = writer;
 	}
 
 	@Override
-	public JsonMetadataWriter getMetadataWriter() {
-		return (JsonMetadataWriter)metadataWriter;
+	public Writer getWriter() {
+		return writer;
+	}
+
+	protected void incrementPadding() {
+		currentPadding += spacesPerTab;
+	}
+
+	protected void decrementPadding() {
+		currentPadding -= spacesPerTab;
+	}
+
+	protected StringBuilder getIndent() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < currentPadding; i++) {
+			sb.append(" ");
+		}
+		return sb;
 	}
 
 }
