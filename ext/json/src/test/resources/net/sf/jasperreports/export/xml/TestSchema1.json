@@ -1,0 +1,8 @@
+{
+  _type: 'object',
+  product: {
+      _type: 'object',
+      id: 'value',
+      name: 'value'
+  }
+}

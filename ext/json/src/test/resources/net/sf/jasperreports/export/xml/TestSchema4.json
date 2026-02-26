@@ -1,0 +1,9 @@
+{
+  products: {
+    details: {
+      id: 'value',
+      name: 'value'
+    },
+    orderId: 'value'
+  }
+}

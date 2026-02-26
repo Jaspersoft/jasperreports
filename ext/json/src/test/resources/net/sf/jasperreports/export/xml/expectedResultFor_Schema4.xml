@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <products>
+        <details>
+            <id><![CDATA[id_1]]></id>
+            <name><![CDATA[name_1]]></name>
+        </details>
+        <orderId><![CDATA[order_id_1]]></orderId>
+    </products>
+</root>

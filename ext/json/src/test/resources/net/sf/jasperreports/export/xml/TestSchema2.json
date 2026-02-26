@@ -1,0 +1,12 @@
+{
+  products: {
+    _type: 'array',
+    _children: {
+      _wrapKey: 'product',
+      details: {
+        id: 'value',
+        name: 'value'
+      }
+    }
+  }
+}

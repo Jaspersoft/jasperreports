@@ -28,6 +28,8 @@ import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -178,15 +180,29 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 						.append(">").toString());
 
 		if (value != null) {
+			String strVal;
 			if (value instanceof Number || value instanceof Boolean) {
-				writer.write(value.toString());
+				strVal = value.toString();
 			} else if (value instanceof Date) {
-				writer.write(isoDateFormat.format((Date)value));
+				strVal = isoDateFormat.format((Date)value);
 			} else {
-				writer.write(JsonStringEncoder.getInstance().quoteAsString(value.toString())); // FIXME: Encode for XML
+				strVal = encodeCDATA(value.toString());
 			}
+			writer.write("<![CDATA[");
+			writer.write(strVal);
+			writer.write("]]>");
 		} else {
 			writer.write("null");  // FIXME: how to treat null values?
 		}
+	}
+
+	// Duplicated lines from JRXmlWriteHelper
+	protected static final Pattern PATTERN_CDATA_CLOSE = Pattern.compile("\\]\\]\\>");
+	protected static final String ESCAPED_CDATA_CLOSE = "]]]]><![CDATA[>";
+
+	protected static String encodeCDATA(String data) {
+		//replacing "]]>" by "]]]]><![CDATA[>"
+		Matcher matcher = PATTERN_CDATA_CLOSE.matcher(data);
+		return matcher.replaceAll(ESCAPED_CDATA_CLOSE);
 	}
 }

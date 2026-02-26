@@ -1,0 +1,14 @@
+{
+  _type: 'array',
+  _wrapKey: 'report',
+  _children: {
+    _wrapKey: 'item',
+    products: {
+      details: {
+        id: 'value',
+        name: 'value'
+      },
+      orderId: 'value'
+    }
+  }
+}

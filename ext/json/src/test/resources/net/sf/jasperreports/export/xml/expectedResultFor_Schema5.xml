@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+    <item>
+        <products>
+            <details>
+                <id><![CDATA[id_1]]></id>
+                <name><![CDATA[name_1]]></name>
+            </details>
+            <orderId><![CDATA[order_id_1]]></orderId>
+        </products>
+    </item>
+    <item>
+        <products>
+            <orderId><![CDATA[order_id_2]]></orderId>
+        </products>
+    </item>
+    <item>
+        <products>
+            <orderId><![CDATA[order_id_3]]></orderId>
+        </products>
+    </item>
+    <item>
+        <products>
+            <details>
+                <id><![CDATA[id_2]]></id>
+            </details>
+            <orderId><![CDATA[order_id_4]]></orderId>
+        </products>
+    </item>
+    <item>
+        <products>
+            <orderId><![CDATA[order_id_5]]></orderId>
+        </products>
+    </item>
+</report>
