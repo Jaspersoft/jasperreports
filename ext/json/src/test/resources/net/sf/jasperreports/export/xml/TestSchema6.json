@@ -1,0 +1,24 @@
+{
+  _type: 'array',
+  _children: {
+    a: {
+      _type: 'array',
+      _children: {
+        d: {
+          _type: 'array',
+          _children: {
+            e: 'value',
+            f: 'value',
+            g: {
+              _type: 'array',
+              _children: {
+                h: 'value'
+              }
+            },
+            i: 'value'
+          }
+        }
+      }
+    }
+  }
+}

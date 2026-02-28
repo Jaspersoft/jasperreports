@@ -213,4 +213,40 @@ public class JsonMetadataDynamicSchemaTest {
 
 		assert isValid;
 	}
+
+	@Test
+	public void buildJSON_4() throws IOException {
+		StringWriter sw = new StringWriter();
+		MetadataProcessor jsonProcessor = new JsonMetadataProcessor(sw);
+
+		jsonProcessor.processElement(() -> "value_1", "a.b.c.d.e", true);
+		jsonProcessor.processElement(() -> "value_2", "a.b.c.d.f", false);
+		jsonProcessor.processElement(() -> "value_3", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_4", "a.b.c.d.i", true);
+		jsonProcessor.processElement(() -> "value_5", "a.b.c.d.g.h", false);
+		jsonProcessor.processElement(() -> "value_7", "a.b.c.d.e", true);
+
+		jsonProcessor.closeOpenNodes();
+		boolean isValid;
+		try {
+			String generatedJson = sw.toString();
+			if (log.isDebugEnabled()) {
+				log.debug("The generated JSON:\n" + generatedJson);
+
+				log.debug("The Expected JSON:\n" + expectedJsonOutput);
+			}
+
+			assert objectMapper.readTree(generatedJson).equals(objectMapper.readTree(expectedJsonOutput));
+
+			isValid = true;
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			isValid = false;
+		}
+
+		assert isValid;
+	}
+
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <root_item>
+        <a>
+            <a_item>
+                <d>
+                    <d_item>
+                        <e><![CDATA[value_1]]></e>
+                        <f><![CDATA[value_2]]></f>
+                        <g>
+                            <g_item>
+                                <h><![CDATA[value_3]]></h>
+                            </g_item>
+                        </g>
+                        <i><![CDATA[value_4]]></i>
+                    </d_item>
+                    <d_item>
+                        <e><![CDATA[value_1]]></e>
+                        <g>
+                            <g_item>
+                                <h><![CDATA[value_5]]></h>
+                            </g_item>
+                        </g>
+                        <i><![CDATA[value_4]]></i>
+                    </d_item>
+                    <d_item>
+                        <e><![CDATA[value_6]]></e>
+                        <i><![CDATA[value_4]]></i>
+                    </d_item>
+                </d>
+            </a_item>
+        </a>
+    </root_item>
+</root>

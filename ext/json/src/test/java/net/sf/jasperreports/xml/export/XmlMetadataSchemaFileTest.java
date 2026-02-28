@@ -54,6 +54,8 @@ public class XmlMetadataSchemaFileTest {
     private RepositoryUtil repoUtil;
 	private String expectedXmlOutput;
 	private DocumentBuilder documentBuilder;
+	private MetadataProcessor xmlProcessor;
+	private boolean schemaIsValid;
 
     @BeforeClass
     public void setUp() throws JRException {
@@ -62,274 +64,168 @@ public class XmlMetadataSchemaFileTest {
     }
 
 	@BeforeMethod
-	public void expectedResult(Method method) throws JRException {
+	public void prepare(Method method) throws JRException {
 		String methodName = method.getName();
-		String pathPrefix = "net/sf/jasperreports/export/xml/expectedResultFor_Schema";
 		String methodPrefix = "validateJsonForSchema_";
-		if (methodName.startsWith(methodPrefix)) {
-			String filePath = pathPrefix + methodName.substring(methodPrefix.length())+ ".xml";
-			Scanner scanner = new Scanner(repoUtil.getInputStreamFromLocation(filePath), StandardCharsets.UTF_8.name());
 
+		String expectedResultPathPrefix = "net/sf/jasperreports/export/xml/expectedResultFor_Schema";
+		String schemaPathPrefix = "net/sf/jasperreports/export/xml/TestSchema";
+
+		if (methodName.startsWith(methodPrefix)) {
+			String suffix = methodName.substring(methodPrefix.length());
+
+			String schemaPath = schemaPathPrefix + suffix + ".json";
+			Scanner scanner = new Scanner(repoUtil.getInputStreamFromLocation(schemaPath), StandardCharsets.UTF_8.name());
+
+			JsonSchema jsonSchema = new JsonSchema();
+			schemaIsValid = true;
+			try {
+				jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+
+				if (log.isDebugEnabled()) {
+					for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
+						log.debug("pathToSchemaNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
+					}
+				}
+
+				StringWriter sw = new StringWriter();
+				xmlProcessor = new XmlMetadataProcessor(jsonSchema, sw);
+				xmlProcessor.getMetadataWriter().writeHeader();
+			} catch (Exception e) {
+				if (log.isErrorEnabled()) {
+					log.error(e.getMessage(), e);
+				}
+				schemaIsValid = false;
+			}
+
+			String expectedResultPath = expectedResultPathPrefix + suffix + ".xml";
+			scanner = new Scanner(repoUtil.getInputStreamFromLocation(expectedResultPath), StandardCharsets.UTF_8.name());
 			expectedXmlOutput = scanner.useDelimiter("\\A").next();
 		}
+
 	}
 
-	@Test
-	public void validateJsonForSchema_1() throws JRException, IOException {
-		Scanner scanner =
-				new Scanner(
-						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/xml/TestSchema1.json"),
-						StandardCharsets.UTF_8.name()
-				);
+	private boolean isGeneratedXmlValid() {
+		String generatedXml = xmlProcessor.getMetadataWriter().getWriter().toString();
 
-		JsonSchema jsonSchema = new JsonSchema();
-		boolean isValid;
+		if (log.isDebugEnabled()) {
+			log.debug("The generated XML:\n" + generatedXml);
+
+			log.debug("The Expected XML:\n" + expectedXmlOutput);
+		}
+
 		try {
-			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
-
-			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
-					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
-				}
-			}
-
-			StringWriter sw = new StringWriter();
-			MetadataProcessor xmlProcessor = new XmlMetadataProcessor(jsonSchema, sw);
-			xmlProcessor.getMetadataWriter().writeHeader();
-
-			xmlProcessor.processElement(() -> "1", "product.id", false);
-			xmlProcessor.processElement(() -> "2", "product.id", false);
-			xmlProcessor.closeOpenNodes();
-
-			String generatedXml = sw.toString();
-			if (log.isDebugEnabled()) {
-				log.debug("The generated XML:\n" + generatedXml);
-
-				log.debug("The Expected XML:\n" + expectedXmlOutput);
-			}
-
 			Document generatedDoc = documentBuilder.parse(new ByteArrayInputStream(generatedXml.getBytes(StandardCharsets.UTF_8)));
 			Document expectedDoc = documentBuilder.parse(new ByteArrayInputStream(expectedXmlOutput.getBytes(StandardCharsets.UTF_8)));
 
-			isValid = generatedDoc.isEqualNode(expectedDoc);
+			return generatedDoc.isEqualNode(expectedDoc);
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {
 				log.error(e.getMessage(), e);
 			}
-			isValid = false;
+			return false;
 		}
-
-		assert isValid;
 	}
 
 	@Test
-	public void validateJsonForSchema_2() throws JRException, IOException {
-		Scanner scanner =
-				new Scanner(
-						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/xml/TestSchema2.json"),
-						StandardCharsets.UTF_8.name()
-				);
+	public void validateJsonForSchema_1() throws IOException {
+		assert schemaIsValid;
 
-		JsonSchema jsonSchema = new JsonSchema();
-		boolean isValid;
-		try {
-			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+		xmlProcessor.processElement(() -> "1", "product.id", false);
+		xmlProcessor.processElement(() -> "2", "product.id", false);
+		xmlProcessor.closeOpenNodes();
 
-			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
-					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
-				}
-			}
-
-			StringWriter sw = new StringWriter();
-			MetadataProcessor xmlProcessor = new XmlMetadataProcessor(jsonSchema, sw);
-			xmlProcessor.getMetadataWriter().writeHeader();
-
-			xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
-			xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
-			xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
-			xmlProcessor.closeOpenNodes();
-
-			String generatedXml = sw.toString();
-			if (log.isDebugEnabled()) {
-				log.debug("The generated XML:\n" + generatedXml);
-
-				log.debug("The Expected XML:\n" + expectedXmlOutput);
-			}
-
-			Document generatedDoc = documentBuilder.parse(new ByteArrayInputStream(generatedXml.getBytes(StandardCharsets.UTF_8)));
-			Document expectedDoc = documentBuilder.parse(new ByteArrayInputStream(expectedXmlOutput.getBytes(StandardCharsets.UTF_8)));
-
-			isValid = generatedDoc.isEqualNode(expectedDoc);
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error(e.getMessage(), e);
-			}
-			isValid = false;
-		}
-
-		assert isValid;
+		assert isGeneratedXmlValid();
 	}
 
 	@Test
-	public void validateJsonForSchema_3() throws JRException, IOException {
-		Scanner scanner =
-				new Scanner(
-						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/xml/TestSchema3.json"),
-						StandardCharsets.UTF_8.name()
-				);
+	public void validateJsonForSchema_2() throws IOException {
+		assert schemaIsValid;
 
-		JsonSchema jsonSchema = new JsonSchema();
-		boolean isValid;
-		try {
-			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
+		xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
+		xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
+		xmlProcessor.closeOpenNodes();
 
-			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
-					log.debug("pathToSchemaNode: key: " + String.format("%-25s", entry.getKey()) + "; value: " + entry.getValue());
-				}
-			}
-
-			StringWriter sw = new StringWriter();
-			MetadataProcessor xmlProcessor = new XmlMetadataProcessor(jsonSchema, sw);
-			xmlProcessor.getMetadataWriter().writeHeader();
-
-			xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
-			xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
-			xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
-			xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
-			xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
-			xmlProcessor.closeOpenNodes();
-
-			String generatedXml = sw.toString();
-			if (log.isDebugEnabled()) {
-				log.debug("The generated XML:\n" + generatedXml);
-
-				log.debug("The Expected XML:\n" + expectedXmlOutput);
-			}
-
-			Document generatedDoc = documentBuilder.parse(new ByteArrayInputStream(generatedXml.getBytes(StandardCharsets.UTF_8)));
-			Document expectedDoc = documentBuilder.parse(new ByteArrayInputStream(expectedXmlOutput.getBytes(StandardCharsets.UTF_8)));
-
-			isValid = generatedDoc.isEqualNode(expectedDoc);
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error(e.getMessage(), e);
-			}
-			isValid = false;
-		}
-
-		assert isValid;
+		assert isGeneratedXmlValid();
 	}
 
 	@Test
-	public void validateJsonForSchema_4() throws JRException, IOException {
-		Scanner scanner =
-				new Scanner(
-						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/xml/TestSchema4.json"),
-						StandardCharsets.UTF_8.name()
-				);
+	public void validateJsonForSchema_3() throws IOException {
+		assert schemaIsValid;
 
-		JsonSchema jsonSchema = new JsonSchema();
-		boolean isValid;
-		try {
-			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
+		xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
+		xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+		xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
+		xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
+		xmlProcessor.closeOpenNodes();
 
-			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
-					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
-				}
-			}
-
-			StringWriter sw = new StringWriter();
-			MetadataProcessor xmlProcessor = new XmlMetadataProcessor(jsonSchema, sw);
-			xmlProcessor.getMetadataWriter().writeHeader();
-
-			xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
-			xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
-			xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
-			xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
-			xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
-			xmlProcessor.closeOpenNodes();
-
-			String generatedXml = sw.toString();
-			if (log.isDebugEnabled()) {
-				log.debug("The generated XML:\n" + generatedXml);
-
-				log.debug("The Expected XML:\n" + expectedXmlOutput);
-			}
-
-			Document generatedDoc = documentBuilder.parse(new ByteArrayInputStream(generatedXml.getBytes(StandardCharsets.UTF_8)));
-			Document expectedDoc = documentBuilder.parse(new ByteArrayInputStream(expectedXmlOutput.getBytes(StandardCharsets.UTF_8)));
-
-			isValid = generatedDoc.isEqualNode(expectedDoc);
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error(e.getMessage(), e);
-			}
-			isValid = false;
-		}
-
-		assert isValid;
+		assert isGeneratedXmlValid();
 	}
 
 	@Test
-	public void validateJsonForSchema_5() throws JRException, IOException {
-		Scanner scanner =
-				new Scanner(
-						repoUtil.getInputStreamFromLocation("net/sf/jasperreports/export/xml/TestSchema5.json"),
-						StandardCharsets.UTF_8.name()
-				);
+	public void validateJsonForSchema_4() throws IOException {
+		assert schemaIsValid;
 
-		JsonSchema jsonSchema = new JsonSchema();
-		boolean isValid;
-		try {
-			jsonSchema.initialize(scanner.useDelimiter("\\A").next());
+		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
+		xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
+		xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+		xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
+		xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
+		xmlProcessor.closeOpenNodes();
 
-			if (log.isDebugEnabled()) {
-				for (Map.Entry<String, SchemaNode> entry : jsonSchema.getPathToSchemaNodeMap().entrySet()) {
-					log.debug("pathToSchemaNode: key: " + String.format("%-20s", entry.getKey()) + "; value: " + entry.getValue());
-				}
-			}
+		assert isGeneratedXmlValid();
+	}
 
-			StringWriter sw = new StringWriter();
-			MetadataProcessor xmlProcessor = new XmlMetadataProcessor(jsonSchema, sw);
-			xmlProcessor.getMetadataWriter().writeHeader();
+	@Test
+	public void validateJsonForSchema_5() throws IOException {
+		assert  schemaIsValid;
 
-			xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
-			xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
-			xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
-			xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
-			xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
-			xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
-			xmlProcessor.closeOpenNodes();
+		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
+		xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
+		xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+		xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
+		xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
+		xmlProcessor.closeOpenNodes();
 
-			String generatedXml = sw.toString();
-			if (log.isDebugEnabled()) {
-				log.debug("The generated XML:\n" + generatedXml);
+		assert isGeneratedXmlValid();
+	}
 
-				log.debug("The Expected XML:\n" + expectedXmlOutput);
-			}
+	@Test
+	public void validateJsonForSchema_6() throws JRException, IOException {
+		assert schemaIsValid;
 
-			Document generatedDoc = documentBuilder.parse(new ByteArrayInputStream(generatedXml.getBytes(StandardCharsets.UTF_8)));
-			Document expectedDoc = documentBuilder.parse(new ByteArrayInputStream(expectedXmlOutput.getBytes(StandardCharsets.UTF_8)));
+		xmlProcessor.processElement(() -> "value_1", "a.d.e", true);
+		xmlProcessor.processElement(() -> "value_2", "a.d.f", false);
+		xmlProcessor.processElement(() -> "value_3", "a.d.g.h", false);
+		xmlProcessor.processElement(() -> "value_4", "a.d.i", true);
+		xmlProcessor.processElement(() -> "value_5", "a.d.g.h", false);
+		xmlProcessor.processElement(() -> "value_6", "a.d.e", true);
+		xmlProcessor.closeOpenNodes();
 
-			isValid = generatedDoc.isEqualNode(expectedDoc);
-		} catch (Exception e) {
-			if (log.isErrorEnabled()) {
-				log.error(e.getMessage(), e);
-			}
-			isValid = false;
-		}
+		assert isGeneratedXmlValid();
+	}
 
-		assert isValid;
+	@Test
+	public void validateJsonForSchema_7() throws JRException, IOException {
+		assert schemaIsValid;
+
+		xmlProcessor.processElement(() -> "1", "product.id", false);
+		xmlProcessor.processElement(() -> "part_1", "product.parts.name", false);
+		xmlProcessor.processElement(() -> "cat_1", "product.parts.category", false);
+		xmlProcessor.processElement(() -> "name_1", "product.name", false);
+		xmlProcessor.closeOpenNodes();
+
+		assert isGeneratedXmlValid();
 	}
 }

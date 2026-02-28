@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <product>
+        <id><![CDATA[1]]></id>
+        <parts>
+            <parts_item>
+                <name><![CDATA[part_1]]></name>
+                <category><![CDATA[cat_1]]></category>
+            </parts_item>
+        </parts>
+        <name><![CDATA[name_1]]></name>
+    </product>
+</root>

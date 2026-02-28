@@ -10,9 +10,9 @@
 		<Root level="error">
 			<AppenderRef ref="STDOUT"/>
 		</Root>
+        <!--
         <Logger name="net.sf.jasperreports.json.export" level="debug"/>
         <Logger name="net.sf.jasperreports.xml.export" level="debug"/>
-        <!--
         -->
 	</Loggers>
 </Configuration>

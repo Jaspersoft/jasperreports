@@ -2,10 +2,7 @@
 <root>
     <products>
         <products_item>
-            <details>
-                <id><![CDATA[id_1]]></id>
-                <name><![CDATA[name_1]]></name>
-            </details>
+            <details id="id_1" name="name_1" />
             <orderId><![CDATA[order_id_1]]></orderId>
         </products_item>
         <products_item>
@@ -15,9 +12,7 @@
             <orderId><![CDATA[order_id_3]]></orderId>
         </products_item>
         <products_item>
-            <details>
-                <id><![CDATA[id_2]]></id>
-            </details>
+            <details id="id_2" />
             <orderId><![CDATA[order_id_4]]></orderId>
         </products_item>
         <products_item>

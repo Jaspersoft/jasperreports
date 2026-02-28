@@ -3,6 +3,7 @@
     _type: 'array',
     _children: {
       details: {
+        _writeAttributes: true,
         id: 'value',
         name: 'value'
       },

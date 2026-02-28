@@ -1,0 +1,14 @@
+{
+  product: {
+    _writeAttributes: true,
+    id: 'value',
+    parts: {
+      _type: 'array',
+      _children: {
+        name: 'value',
+        category: 'value'
+      }
+    },
+    name: 'value'
+  }
+}
