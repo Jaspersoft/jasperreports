@@ -23,7 +23,7 @@
  */
 package net.sf.jasperreports.json.export.schema;
 
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import net.sf.jasperreports.engine.util.JRStringUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -74,15 +74,7 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 	}
 
 	@Override
-	public void writeKeyWithVal(String key, Object value) throws IOException {
-		writeValue(key, value);
-		writer.write("</");
-		writer.write(key);
-		writer.write(">");
-	}
-
-	@Override
-	public void writeKey(String key, boolean isSameObject) throws IOException {
+	public void writeNodeKey(SchemaNode node, boolean isSameObject) throws IOException {
 		// do nothing
 	}
 
@@ -138,62 +130,98 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 
 	@Override
 	public void writeObjectStart(SchemaNode node) throws IOException {
-		if (node.getLevel() > 0) {
-			writer.write("\n");
-		}
-		writer.write(
-				getIndent()
-						.append("<")
-						.append(node.getKey())
-						.append(">").toString());
+		if (node.isWriteAttributes()) {
+			if (node.getLevel() > 0) {
+				writer.write("\n");
+			}
+			writer.write(
+					getIndent()
+							.append("<")
+							.append(node.getKey()).toString());
 
-		incrementPadding();
+		} else {
+			if (node.getLevel() > 0) {
+				writer.write("\n");
+			}
+			writer.write(
+					getIndent()
+							.append("<")
+							.append(node.getKey())
+							.append(">").toString());
+
+			incrementPadding();
+		}
 	}
 
 	@Override
 	public void writeObjectClosing(SchemaNode node) throws IOException {
-		writer.write("\n");
-		decrementPadding();
-
-		writer.write(
-				getIndent()
-						.append("</")
-						.append(node.getKey())
-						.append(">").toString());
-	}
-
-	@Override
-	public void writeValueClosing(SchemaNode node) throws IOException {
-		writer.write("</");
-		writer.write(node.getKey());
-		writer.write(">");
-	}
-
-	@Override
-	public void writeValue(String key, Object value)throws IOException {
-		writer.write("\n");
-
-		writer.write(
-				getIndent()
-						.append("<")
-						.append(key)
-						.append(">").toString());
-
-		if (value != null) {
-			String strVal;
-			if (value instanceof Number || value instanceof Boolean) {
-				strVal = value.toString();
-			} else if (value instanceof Date) {
-				strVal = isoDateFormat.format((Date)value);
-			} else {
-				strVal = encodeCDATA(value.toString());
-			}
-			writer.write("<![CDATA[");
-			writer.write(strVal);
-			writer.write("]]>");
+		if (node.isWriteAttributes()) {
+			writer.write(" />");
 		} else {
-			writer.write("null");  // FIXME: how to treat null values?
+			writer.write("\n");
+			decrementPadding();
+
+			writer.write(
+					getIndent()
+							.append("</")
+							.append(node.getKey())
+							.append(">").toString());
 		}
+	}
+
+	@Override
+	public void writeValueClosing(SchemaNode node, SchemaNode parent) throws IOException {
+		if (!parent.isWriteAttributes()) {
+			writer.write("</");
+			writer.write(node.getKey());
+			writer.write(">");
+		}
+	}
+
+	@Override
+	public void writeValue(String key, Object value, SchemaNode parent) throws IOException {
+		if (parent.isWriteAttributes()) {
+			if (value != null) { // Consider creating attribute for non-null values only
+				writer.write(" ");
+				writer.write(key);
+				writer.write("=\"");
+				writer.write(JRStringUtil.encodeXmlAttribute(value.toString()));
+				writer.write("\"");
+			}
+		} else {
+			writer.write("\n");
+
+			writer.write(
+					getIndent()
+							.append("<")
+							.append(key)
+							.append(">").toString());
+
+			if (value != null) {
+				String strVal;
+				if (value instanceof Number || value instanceof Boolean) {
+					strVal = value.toString();
+				} else if (value instanceof Date) {
+					strVal = isoDateFormat.format((Date) value);
+				} else {
+					strVal = encodeCDATA(value.toString());
+				}
+				writer.write("<![CDATA[");
+				writer.write(strVal);
+				writer.write("]]>");
+			} else {
+				writer.write("null");  // FIXME: how to treat null values?
+			}
+		}
+	}
+
+	@Override
+	public void writePreviousMemberValue(SchemaNodeMember member, SchemaNode parent, boolean isSameObject) throws IOException {
+		String key = member.getName();
+		writeValue(key, member.getPreviousValue(), parent);
+		writer.write("</");
+		writer.write(key);
+		writer.write(">");
 	}
 
 	// Duplicated lines from JRXmlWriteHelper
@@ -205,4 +233,5 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 		Matcher matcher = PATTERN_CDATA_CLOSE.matcher(data);
 		return matcher.replaceAll(ESCAPED_CDATA_CLOSE);
 	}
+
 }

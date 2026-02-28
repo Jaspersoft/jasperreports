@@ -37,6 +37,7 @@ public class SchemaNode {
 	private NodeTypeEnum type;
 	private String key;
 	private String childrenKey;
+	private boolean isWriteAttributes;
 	private List<SchemaNodeMember> members;
 	private List<String> memberNames;
 
@@ -76,6 +77,14 @@ public class SchemaNode {
 
 	public void setChildrenKey(String childrenKey) {
 		this.childrenKey = childrenKey;
+	}
+
+	public boolean isWriteAttributes() {
+		return isWriteAttributes;
+	}
+
+	public void setWriteAttributes(boolean isWriteAttributes) {
+		this.isWriteAttributes = isWriteAttributes;
 	}
 
 	public void addMember(String memberName) {
@@ -126,6 +135,7 @@ public class SchemaNode {
 		out.append("type: ").append(type.getName()).append(", ");
 		out.append("key: ").append(key).append(", ");
 		out.append("childrenKey: ").append(childrenKey).append(", ");
+		out.append("isWriteAttributes: ").append(isWriteAttributes).append(", ");
 		out.append("members: [");
 		if (isArray) {
 			out.append("{");
@@ -158,8 +168,9 @@ public class SchemaNode {
 		boolean typeEquals = (this.type == null && other.type == null) || (this.type != null && this.type.equals(other.type));
 		boolean keyEquals = (this.key == null && other.key == null) || (this.key != null && this.key.equals(other.key));
 		boolean childrenKeyEquals = (this.childrenKey == null && other.childrenKey == null) || (this.childrenKey != null && this.childrenKey.equals(other.childrenKey));
+		boolean isWriteAttributesEquals = (this.isWriteAttributes == other.isWriteAttributes);
 
-		return this.level == ((SchemaNode)obj).level && pathEquals && parentPathEquals && typeEquals && keyEquals && childrenKeyEquals;
+		return this.level == ((SchemaNode)obj).level && pathEquals && parentPathEquals && typeEquals && keyEquals && childrenKeyEquals && isWriteAttributesEquals;
 	}
 
 	@Override
@@ -170,6 +181,7 @@ public class SchemaNode {
 		hash = hash * 41 + (type == null ? 0 : type.hashCode());
 		hash = hash * 41 + (key == null ? 0 : key.hashCode());
 		hash = hash * 41 + (childrenKey == null ? 0 : childrenKey.hashCode());
+		hash = hash * 41 + Boolean.hashCode(isWriteAttributes);
 		return hash;
 	}
 }

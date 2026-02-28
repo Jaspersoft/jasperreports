@@ -48,9 +48,20 @@ public class JsonSchema {
 
 	private static final String TYPE_KEY = "_type";
 	private static final String CHILDREN_KEY = "_children";
+
+	/**
+	 * If present on any kind of object, the wrapping key will be changed to this one.
+	 * This is mostly useful when outputting XML and need control over the _children keys
+	 */
 	private static final String WRAP_KEY = "_wrapKey";
-	private static final String[] OBJECT_NODE_RESERVED_KEYS = new String[] { TYPE_KEY }; // FIXME: Use these reserved keys objects
-	private static final String[] ARRAY_NODE_RESERVED_KEYS = new String[] { TYPE_KEY, CHILDREN_KEY };
+
+	/**
+	 * If present on an object node with _type: 'object' will attempt to write all its keys as XML attributes
+	 * When the object contains non-value nodes, this flag will be ignored
+	 */
+	private static final String WRITE_ATTRIBUTES = "_writeAttributes";
+
+	private static final String[] RESERVED_KEYS = new String[] { TYPE_KEY, CHILDREN_KEY, WRAP_KEY, WRITE_ATTRIBUTES }; // FIXME: Use these reserved keys
 	public static final String JSON_SCHEMA_ROOT_NAME = "___root";
 	public static final String DEFAULT_SCHEMA_ROOT_WRAP_KEY_NAME = "root";
 
@@ -146,7 +157,6 @@ public class JsonSchema {
 
 			// this should always be the case
 			if (NodeTypeEnum.ARRAY.equals(parent.getType())) {
-				// this makes sense only for XML
 				// try to find the wrapper key for the children of the array node
 				if (objectNode.has(WRAP_KEY) && objectNode.path(WRAP_KEY).isTextual()) {
 					schemaNode.setChildrenKey(objectNode.path(WRAP_KEY).asText());
@@ -171,6 +181,14 @@ public class JsonSchema {
 			}
 
 			schemaNode = new SchemaNode(level - 1, currentSchemaPath, parentPath, nodeType, key);
+
+			// search for the _writeAttributes key only for object nodes
+			if (NodeTypeEnum.OBJECT.equals(nodeType) &&
+					objectNode.has(WRITE_ATTRIBUTES) &&
+					objectNode.path(WRITE_ATTRIBUTES).isBoolean()) {
+				schemaNode.setWriteAttributes(objectNode.path(WRITE_ATTRIBUTES).asBoolean());
+			}
+
 			pathToSchemaNodeMap.put(currentSchemaPath, schemaNode);
 		}
 
@@ -198,6 +216,10 @@ public class JsonSchema {
 						if (log.isDebugEnabled()) {
 							log.debug(getPaddedPrefix(realJsonPath) + "validating object node on real path: " + realJsonPath + "." + field);
 						}
+
+						// for now, cancel the _writeAttributes flag when encountering non-value nodes
+						schemaNode.setWriteAttributes(false);
+
 						if (!isValid((ObjectNode) node, localPath, realJsonPath + "." + field, null)) {
 							result = false;
 							break;

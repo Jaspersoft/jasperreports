@@ -40,9 +40,7 @@ public interface MetadataWriter {
 
 	void closeAndStartNewObject(SchemaNode node) throws IOException;
 
-	void writeKeyWithVal(String key, Object value) throws IOException;
-
-	void writeKey(String key, boolean isSameObject) throws IOException;
+	void writeNodeKey(SchemaNode node, boolean isSameObject) throws IOException;
 
 	void writeArrayStart(SchemaNode node) throws IOException;
 
@@ -52,8 +50,10 @@ public interface MetadataWriter {
 
 	void writeObjectClosing(SchemaNode node) throws IOException;
 
-	void writeValueClosing(SchemaNode node) throws IOException;
+	void writeValueClosing(SchemaNode node, SchemaNode parent) throws IOException;
 
-	void writeValue(String key, Object value)throws IOException;
+	void writeValue(String key, Object value, SchemaNode parent) throws IOException;
+
+	void writePreviousMemberValue(SchemaNodeMember member, SchemaNode parent, boolean isSameObject) throws IOException;
 
 }

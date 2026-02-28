@@ -27,7 +27,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -206,7 +205,7 @@ public abstract class AbstractMetadataProcessor implements MetadataProcessor {
 				int currentKeyIndex = parent.indexOfMember(currentKey);
 
 				List<String> visitedMembers = pathToVisitedMembers.get(parentPath);
-				String lastVisited = visitedMembers.get(visitedMembers.size() - 1);
+				String lastVisited = visitedMembers.get(visitedMembers.size() - 1); // FIXME: visitedMembers should be just the last visited member, not an array
 				int lastVisitedIndex = parent.indexOfMember(lastVisited);
 
 				// we'll be adding to the same object
@@ -220,37 +219,29 @@ public abstract class AbstractMetadataProcessor implements MetadataProcessor {
 						return; // FIXME: should we just continue or throw an exception here?
 					}
 
+					// before closing and starting a new object search for repeated values
+					int allMembersSize = parent.getMembers().size();
+					if (lastVisitedIndex < allMembersSize - 1) {
+						// try to find repeated values since last visited index
+						writePreviousValues(lastVisitedIndex + 1, allMembersSize, parent, true, false);
+					}
+
 					metadataWriter.closeAndStartNewObject(parent);
 
 					// try to find repeated values up until current index
-					List<SchemaNodeMember> membersToRepeat = new ArrayList<>();
-					for (int i = 0; i < currentKeyIndex; i++) {
-						SchemaNodeMember schemaMember = parent.getMember(i);
-						if (schemaMember.isRepeatValue()) {
-							membersToRepeat.add(schemaMember);
-						}
-					}
-
-					if (!membersToRepeat.isEmpty()) {
-						for (SchemaNodeMember memberToRepeat : membersToRepeat) {
-							metadataWriter.writeKeyWithVal(memberToRepeat.getName(), memberToRepeat.getPreviousValue());
-						}
-					}
+					writePreviousValues(0, currentKeyIndex, parent, false, true);
 				}
 			}
 		}
 
-		// for the root schema node do not write the key as there should not be one
-		if (node.getLevel() > 0) {
-			metadataWriter.writeKey(node.getKey(), isSameObject);
-		}
+		metadataWriter.writeNodeKey(node, isSameObject);
 
 		if (node.isArray()) {
 			metadataWriter.writeArrayStart(node);
 		} else if (node.isObject()){
 			metadataWriter.writeObjectStart(node);
 		} else { // isValue
-			metadataWriter.writeValue(node.getKey(), value);
+			metadataWriter.writeValue(node.getKey(), value, jsonSchema.getSchemaNode(parentPath)); // parent should not be null for value nodes
 		}
 
 		// mark visited for current node's parent
@@ -264,6 +255,30 @@ public abstract class AbstractMetadataProcessor implements MetadataProcessor {
 		visitedMembers.add(currentKey);
 	}
 
+	private void writePreviousValues(int from, int to, SchemaNode parent, boolean startWithSeparator, boolean endWithSeparator) throws IOException {
+		List<SchemaNodeMember> membersToRepeat = new ArrayList<>();
+		for (int i = from; i < to; i++) {
+			SchemaNodeMember schemaMember = parent.getMember(i);
+			if (schemaMember.isRepeatValue()) {
+				membersToRepeat.add(schemaMember);
+			}
+		}
+
+		if (!membersToRepeat.isEmpty()) {
+			if (startWithSeparator) {
+				metadataWriter.writeKeyValSeparator();
+			}
+
+			for (int i = 0; i < membersToRepeat.size(); i++) {
+				SchemaNodeMember memberToRepeat = membersToRepeat.get(i);
+				metadataWriter.writePreviousMemberValue(memberToRepeat, parent, true);
+				if (endWithSeparator || i < membersToRepeat.size() - 1) {
+					metadataWriter.writeKeyValSeparator();
+				}
+			}
+		}
+	}
+
 	private void closeNode(SchemaNode node) throws IOException {
 		if (!node.isValue()) {
 			if (pathToVisitedMembers.containsKey(node.getPath())) {
@@ -275,26 +290,7 @@ public abstract class AbstractMetadataProcessor implements MetadataProcessor {
 				// if last visited member is not the last node member
 				if (lastVisitedIndex < allMembersSize - 1) {
 					// try to find the remaining repeated values
-					List<SchemaNodeMember> membersToRepeat = new ArrayList<>();
-					for (int i = lastVisitedIndex + 1; i < allMembersSize; i++) {
-						SchemaNodeMember schemaMember = node.getMember(i);
-						if (schemaMember.isRepeatValue()) {
-							membersToRepeat.add(schemaMember);
-						}
-					}
-
-					if (!membersToRepeat.isEmpty()) {
-						metadataWriter.writeKeyValSeparator();
-
-						for (int i = 0; i < membersToRepeat.size(); i++) {
-							SchemaNodeMember memberToRepeat = membersToRepeat.get(i);
-							metadataWriter.writeKey(memberToRepeat.getName(), true);
-							metadataWriter.writeValue(memberToRepeat.getName(), memberToRepeat.getPreviousValue());
-							if (i < membersToRepeat.size() - 1) {
-								metadataWriter.writeKeyValSeparator();
-							}
-						}
-					}
+					writePreviousValues(lastVisitedIndex + 1, allMembersSize, node, true, false);
 				}
 			}
 		}
@@ -304,7 +300,7 @@ public abstract class AbstractMetadataProcessor implements MetadataProcessor {
 		} else if (node.isObject()){
 			metadataWriter.writeObjectClosing(node);
 		} else {
-			metadataWriter.writeValueClosing(node);
+			metadataWriter.writeValueClosing(node, jsonSchema.getSchemaNode(node.getParentPath()));
 		}
 
 		if (!node.isValue()) {

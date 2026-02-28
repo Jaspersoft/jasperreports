@@ -24,11 +24,9 @@
 package net.sf.jasperreports.json.export.schema;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import net.sf.jasperreports.engine.util.JRDataUtils;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -75,20 +73,14 @@ public class JsonMetadataWriter extends AbstractMetadataWriter {
 	}
 
 	@Override
-	public void writeKeyWithVal(String key, Object value) throws IOException {
-		writer.write("\n");
-		String paddedKey = getIndentedKey(key);
-		writer.write(paddedKey + ": ");
-		writeValue(key, value);
-		writer.write(",");
-	}
-
-	@Override
-	public void writeKey(String key, boolean isSameObject) throws IOException {
-		writer.write("\n");
-		if (!isSameObject) incrementPadding();
-		String paddedKey = getIndentedKey(key);
-		writer.write(paddedKey + ": ");
+	public void writeNodeKey(SchemaNode node, boolean isSameObject) throws IOException {
+		// for the root schema node do not write the key as there should not be one
+		if (node.getLevel() > 0) {
+			writer.write("\n");
+			if (!isSameObject) incrementPadding();
+			String paddedKey = getIndentedKey(node.getKey());
+			writer.write(paddedKey + ": ");
+		}
 	}
 
 	@Override
@@ -116,12 +108,12 @@ public class JsonMetadataWriter extends AbstractMetadataWriter {
 	}
 
 	@Override
-	public void writeValueClosing(SchemaNode node) throws IOException {
+	public void writeValueClosing(SchemaNode node, SchemaNode parent) throws IOException {
 		// do nothing
 	}
 
 	@Override
-	public void writeValue(String key, Object value)throws IOException {
+	public void writeValue(String key, Object value, SchemaNode parent)throws IOException {
 		if (value != null) {
 			if (value instanceof Number || value instanceof Boolean) {
 				writer.write(value.toString());
@@ -138,4 +130,14 @@ public class JsonMetadataWriter extends AbstractMetadataWriter {
 			writer.write("null");  // FIXMEJSONMETA: how to treat null values?
 		}
 	}
+
+	@Override
+	public void writePreviousMemberValue(SchemaNodeMember member, SchemaNode parent, boolean isSameObject) throws IOException {
+		writer.write("\n");
+		String key = member.getName();
+		String paddedKey = getIndentedKey(key);
+		writer.write(paddedKey + ": ");
+		writeValue(key, member.getPreviousValue(), parent);
+	}
+
 }
