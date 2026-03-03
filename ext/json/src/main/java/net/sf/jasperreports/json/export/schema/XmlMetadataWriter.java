@@ -55,22 +55,31 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 
 	@Override
 	public void closeAndStartNewObject(SchemaNode arrayNode) throws IOException {
-		writer.write("\n");
-		decrementPadding();
-		writer.write(
-				getIndent()
-						.append("</")
-						.append(getChildrenWrapper(arrayNode))
-						.append(">\n").toString());
+		if (arrayNode.isWriteAttributes()) {
+			writer.write(" />\n");
+			writer.write(
+					getIndent()
+							.append("<")
+							.append(getChildrenWrapper(arrayNode)).toString());
+		} else {
+			writer.write("\n");
+			decrementPadding();
+			writer.write(
+					getIndent()
+							.append("</")
+							.append(getChildrenWrapper(arrayNode))
+							.append(">\n").toString());
 
-		writer.write(
-				getIndent()
-						.append("<")
-						.append(getChildrenWrapper(arrayNode))
-						.append(">")
-						.toString());
+			writer.write(
+					getIndent()
+							.append("<")
+							.append(getChildrenWrapper(arrayNode))
+							.append(">")
+							.toString());
 
-		incrementPadding();
+			incrementPadding();
+		}
+
 	}
 
 	@Override
@@ -87,14 +96,14 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 	}
 
 	@Override
-	public void writeArrayStart(SchemaNode node) throws IOException {
-		if (node.getLevel() > 0) {
+	public void writeArrayStart(SchemaNode arrayNode) throws IOException {
+		if (arrayNode.getLevel() > 0) {
 			writer.write("\n");
 		}
 		writer.write(
 				getIndent()
 						.append("<")
-						.append(node.getKey())
+						.append(arrayNode.getKey())
 						.append(">\n").toString());
 
 		incrementPadding();
@@ -102,29 +111,36 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 		writer.write(
 				getIndent()
 						.append("<")
-						.append(getChildrenWrapper(node))
-						.append(">").toString());
+						.append(getChildrenWrapper(arrayNode)).toString());
 
-		incrementPadding();
+		if (!arrayNode.isWriteAttributes()) {
+			writer.write(">");
+			incrementPadding();
+		}
+
 	}
 
 	@Override
-	public void writeArrayClosing(SchemaNode node) throws IOException {
-		writer.write("\n");
+	public void writeArrayClosing(SchemaNode arrayNode) throws IOException {
+		if (arrayNode.isWriteAttributes()) {
+			writer.write(" />\n");
+		} else {
+			writer.write("\n");
+			decrementPadding();
+
+			writer.write(
+					getIndent()
+							.append("</")
+							.append(getChildrenWrapper(arrayNode))
+							.append(">\n").toString());
+		}
+
 		decrementPadding();
 
 		writer.write(
 				getIndent()
 						.append("</")
-						.append(getChildrenWrapper(node))
-						.append(">\n").toString());
-
-		decrementPadding();
-
-		writer.write(
-				getIndent()
-						.append("</")
-						.append(node.getKey())
+						.append(arrayNode.getKey())
 						.append(">").toString());
 	}
 
@@ -219,9 +235,11 @@ public class XmlMetadataWriter extends AbstractMetadataWriter {
 	public void writePreviousMemberValue(SchemaNodeMember member, SchemaNode parent, boolean isSameObject) throws IOException {
 		String key = member.getName();
 		writeValue(key, member.getPreviousValue(), parent);
-		writer.write("</");
-		writer.write(key);
-		writer.write(">");
+		if (!parent.isWriteAttributes()) {
+			writer.write("</");
+			writer.write(key);
+			writer.write(">");
+		}
 	}
 
 	// Duplicated lines from JRXmlWriteHelper

@@ -1,0 +1,15 @@
+{
+    _type: 'array',
+    _children: {
+        city: 'value',
+        products: {
+            _type: 'array',
+            _children: {
+                _wrapKey: 'product',
+                _writeAttributes: true,
+                id: 'value',
+                name: 'value'
+            }
+        }
+    }
+}

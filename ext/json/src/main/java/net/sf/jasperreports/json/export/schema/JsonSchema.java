@@ -182,17 +182,16 @@ public class JsonSchema {
 
 			schemaNode = new SchemaNode(level - 1, currentSchemaPath, parentPath, nodeType, key);
 
-			// search for the _writeAttributes key only for object nodes
-			if (NodeTypeEnum.OBJECT.equals(nodeType) &&
-					objectNode.has(WRITE_ATTRIBUTES) &&
-					objectNode.path(WRITE_ATTRIBUTES).isBoolean()) {
-				schemaNode.setWriteAttributes(objectNode.path(WRITE_ATTRIBUTES).asBoolean());
-			}
-
 			pathToSchemaNodeMap.put(currentSchemaPath, schemaNode);
 		}
 
 		if (NodeTypeEnum.OBJECT.equals(nodeType)) {
+
+			// search for the _writeAttributes key only for object nodes
+			if (objectNode.has(WRITE_ATTRIBUTES) && objectNode.path(WRITE_ATTRIBUTES).isBoolean()) {
+				schemaNode.setWriteAttributes(objectNode.path(WRITE_ATTRIBUTES).asBoolean());
+			}
+
 			Iterator<String> it = objectNode.fieldNames();
 			while (it.hasNext()) {
 				String field = it.next();
@@ -217,8 +216,13 @@ public class JsonSchema {
 							log.debug(getPaddedPrefix(realJsonPath) + "validating object node on real path: " + realJsonPath + "." + field);
 						}
 
-						// for now, cancel the _writeAttributes flag when encountering non-value nodes
-						schemaNode.setWriteAttributes(false);
+						if (schemaNode.isWriteAttributes()) {
+							// for now, cancel the _writeAttributes flag when encountering non-value nodes
+							if (log.isDebugEnabled()) {
+								log.debug("Cancelling the _writeAttributes flag for schemaNode with path: " + schemaNode.getPath());
+							}
+							schemaNode.setWriteAttributes(false);
+						}
 
 						if (!isValid((ObjectNode) node, localPath, realJsonPath + "." + field, null)) {
 							result = false;

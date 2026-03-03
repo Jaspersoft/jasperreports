@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <root_item>
+        <city><![CDATA[city_1]]></city>
+        <products>
+            <product id="id_1" name="name_1" />
+            <product id="id_2" />
+        </products>
+    </root_item>
+    <root_item>
+        <city><![CDATA[city_2]]></city>
+    </root_item>
+</root>

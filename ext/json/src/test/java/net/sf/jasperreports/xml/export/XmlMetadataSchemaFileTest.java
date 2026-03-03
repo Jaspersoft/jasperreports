@@ -66,7 +66,7 @@ public class XmlMetadataSchemaFileTest {
 	@BeforeMethod
 	public void prepare(Method method) throws JRException {
 		String methodName = method.getName();
-		String methodPrefix = "validateJsonForSchema_";
+		String methodPrefix = "validateXmlForSchema_";
 
 		String expectedResultPathPrefix = "net/sf/jasperreports/export/xml/expectedResultFor_Schema";
 		String schemaPathPrefix = "net/sf/jasperreports/export/xml/TestSchema";
@@ -128,7 +128,7 @@ public class XmlMetadataSchemaFileTest {
 	}
 
 	@Test
-	public void validateJsonForSchema_1() throws IOException {
+	public void validateXmlForSchema_1() throws IOException {
 		assert schemaIsValid;
 
 		xmlProcessor.processElement(() -> "1", "product.id", false);
@@ -139,7 +139,7 @@ public class XmlMetadataSchemaFileTest {
 	}
 
 	@Test
-	public void validateJsonForSchema_2() throws IOException {
+	public void validateXmlForSchema_2() throws IOException {
 		assert schemaIsValid;
 
 		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
@@ -151,24 +151,7 @@ public class XmlMetadataSchemaFileTest {
 	}
 
 	@Test
-	public void validateJsonForSchema_3() throws IOException {
-		assert schemaIsValid;
-
-		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
-		xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
-		xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
-		xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
-		xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
-		xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
-		xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
-		xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
-		xmlProcessor.closeOpenNodes();
-
-		assert isGeneratedXmlValid();
-	}
-
-	@Test
-	public void validateJsonForSchema_4() throws IOException {
+	public void validateXmlForSchema_3() throws IOException {
 		assert schemaIsValid;
 
 		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
@@ -185,7 +168,24 @@ public class XmlMetadataSchemaFileTest {
 	}
 
 	@Test
-	public void validateJsonForSchema_5() throws IOException {
+	public void validateXmlForSchema_4() throws IOException {
+		assert schemaIsValid;
+
+		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
+		xmlProcessor.processElement(() -> "name_1", "products.details.name", false);
+		xmlProcessor.processElement(() -> "order_id_1", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_2", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_3", "products.orderId", false);
+		xmlProcessor.processElement(() -> "id_2", "products.details.id", false);
+		xmlProcessor.processElement(() -> "order_id_4", "products.orderId", false);
+		xmlProcessor.processElement(() -> "order_id_5", "products.orderId", false);
+		xmlProcessor.closeOpenNodes();
+
+		assert isGeneratedXmlValid();
+	}
+
+	@Test
+	public void validateXmlForSchema_5() throws IOException {
 		assert  schemaIsValid;
 
 		xmlProcessor.processElement(() -> "id_1", "products.details.id", false);
@@ -202,7 +202,7 @@ public class XmlMetadataSchemaFileTest {
 	}
 
 	@Test
-	public void validateJsonForSchema_6() throws JRException, IOException {
+	public void validateXmlForSchema_6() throws JRException, IOException {
 		assert schemaIsValid;
 
 		xmlProcessor.processElement(() -> "value_1", "a.d.e", true);
@@ -217,13 +217,43 @@ public class XmlMetadataSchemaFileTest {
 	}
 
 	@Test
-	public void validateJsonForSchema_7() throws JRException, IOException {
+	public void validateXmlForSchema_7() throws JRException, IOException {
 		assert schemaIsValid;
 
 		xmlProcessor.processElement(() -> "1", "product.id", false);
 		xmlProcessor.processElement(() -> "part_1", "product.parts.name", false);
 		xmlProcessor.processElement(() -> "cat_1", "product.parts.category", false);
 		xmlProcessor.processElement(() -> "name_1", "product.name", false);
+		xmlProcessor.closeOpenNodes();
+
+		assert isGeneratedXmlValid();
+	}
+
+	@Test
+	public void validateXmlForSchema_8() throws IOException {
+		assert schemaIsValid;
+
+		xmlProcessor.processElement(() -> "city_1", "city", false);
+		xmlProcessor.processElement(() -> "id_1", "products.id", false);
+		xmlProcessor.processElement(() -> "name_1", "products.name", false);
+		xmlProcessor.processElement(() -> "id_2", "products.id", false);
+		xmlProcessor.processElement(() -> "city_2", "city", false);
+		xmlProcessor.closeOpenNodes();
+
+		assert isGeneratedXmlValid();
+	}
+
+	@Test
+	public void validateXmlForSchema_9() throws JRException, IOException {
+		assert schemaIsValid;
+
+		xmlProcessor.processElement(() -> "value_1", "a.d.e", true);
+		xmlProcessor.processElement(() -> "value_2", "a.d.f", false);
+		xmlProcessor.processElement(() -> "value_3", "a.d.g", true);
+		xmlProcessor.processElement(() -> "value_4", "a.d.e", true);
+		xmlProcessor.processElement(() -> "value_5", "a.d.g", true);
+		xmlProcessor.processElement(() -> "value_6", "a.d.f", false);
+		xmlProcessor.processElement(() -> null, "a.d.e", false);
 		xmlProcessor.closeOpenNodes();
 
 		assert isGeneratedXmlValid();

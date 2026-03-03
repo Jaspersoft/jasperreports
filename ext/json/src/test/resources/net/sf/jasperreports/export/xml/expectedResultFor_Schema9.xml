@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <root_item>
+        <a>
+            <a_item>
+                <d>
+                    <d_item e="value_1" f="value_2" g="value_3" />
+                    <d_item e="value_4" g="value_5" />
+                    <d_item e="value_4" f="value_6" g="value_5" />
+                    <d_item g="value_5" />
+                </d>
+            </a_item>
+        </a>
+    </root_item>
+</root>

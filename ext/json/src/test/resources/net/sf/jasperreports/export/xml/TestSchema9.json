@@ -1,0 +1,19 @@
+{
+  _type: 'array',
+  _children: {
+    a: {
+      _type: 'array',
+      _children: {
+        d: {
+          _type: 'array',
+          _children: {
+            _writeAttributes: true,
+            e: 'value',
+            f: 'value',
+            g: 'value'
+          }
+        }
+      }
+    }
+  }
+}
