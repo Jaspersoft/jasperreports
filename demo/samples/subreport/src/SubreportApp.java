@@ -48,6 +48,7 @@ import net.sf.jasperreports.export.SimpleWriterExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 import net.sf.jasperreports.json.export.JsonMetadataExporter;
+import net.sf.jasperreports.json.export.XmlMetadataExporter;
 import net.sf.jasperreports.poi.export.JRXlsExporter;
 
 
@@ -80,6 +81,7 @@ public class SubreportApp extends AbstractSampleApp
 		xls();
 		csv();
 		jsonMetadata();
+		xmlMetadata();
 		odt();
 		ods();
 		docx();
@@ -260,6 +262,37 @@ public class SubreportApp extends AbstractSampleApp
 		exporter.exportReport();
 
 		System.err.println("Metadata JSON creation time : " + (System.currentTimeMillis() - start));
+	}
+
+
+	/**
+	 *
+	 */
+	public void xmlMetadata() throws JRException
+	{
+		long start = System.currentTimeMillis();
+		JasperReport subreport = (JasperReport)JRLoader.loadObjectFromFile("target/reports/ProductReport.jasper");
+
+		//Preparing parameters
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("ProductsSubreport", subreport);
+		parameters.put(JRParameter.IS_IGNORE_PAGINATION, true);
+
+		JasperPrint jasperPrint = JasperFillManager.fillReport("target/reports/MasterReport.jasper", parameters, getDemoHsqldbConnection());
+		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+
+		start = System.currentTimeMillis();
+
+		File destFile = new File(new File("target/reports"), jasperPrint.getName() + ".xml");
+
+		XmlMetadataExporter exporter = new XmlMetadataExporter();
+
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleWriterExporterOutput(destFile));
+
+		exporter.exportReport();
+
+		System.err.println("Metadata XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	

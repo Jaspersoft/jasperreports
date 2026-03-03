@@ -1,12 +1,16 @@
 {
 	_type: 'array',
+	_wrapKey: 'report',
 	_children: {
 		_type: 'object',
+		_wrapKey: 'item',
 		City: 'value',
 		products: {
 			_type: 'array',
 			_children: {
 				_type: 'object',
+				_wrapKey: 'product',
+				_writeAttributes: true,
 				Id: 'value',
 				Name: 'value',
 				Quantity: 'value',
@@ -17,6 +21,8 @@
 			_type: 'array',
 			_children: {
 				_type: 'object',
+				_wrapKey: 'customer',
+				_writeAttributes: true,
 				Name: 'value',
 				Street: 'value'
 			}
