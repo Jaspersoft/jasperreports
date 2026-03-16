@@ -62,6 +62,7 @@
 										<include>net/sf/jasperreports/engine/fill/JRSubreportRunnable.class</include>
 										<include>net/sf/jasperreports/engine/fill/JRContinuationSubreportRunner.class</include>
 										<include>net/sf/jasperreports/engine/fill/FillerSubreportParent.class</include>
+										<include>net/sf/jasperreports/engine/fill/JRVirtualizationContext.class</include>
 										<include>default.jasperreports.properties</include>
 									</includes>
 								</resource>
