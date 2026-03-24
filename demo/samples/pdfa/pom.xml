@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.github.librepdf</groupId>
 			<artifactId>openpdf-fonts-extra</artifactId>
-			<version>${openpdf.version}</version>
+			<version>${openpdf.classic.version}</version>
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>

@@ -23,8 +23,6 @@
  */
 package net.sf.jasperreports.pdf;
 
-import com.lowagie.text.pdf.PdfWriter;
-
 import net.sf.jasperreports.engine.export.JRExporterContext;
 import net.sf.jasperreports.pdf.common.PdfProducer;
 
@@ -38,13 +36,6 @@ import net.sf.jasperreports.pdf.common.PdfProducer;
  */
 public interface JRPdfExporterContext extends JRExporterContext
 {
-
-	/**
-	 * Returns the {@link PdfWriter} instance used by the exporter.
-	 * 
-	 * @return the exporter's {@link PdfWriter} instance
-	 */
-	PdfWriter getPdfWriter();
 	
 	PdfProducer getPdfProducer();
 	

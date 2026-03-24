@@ -23,59 +23,49 @@
  */
 package net.sf.jasperreports.pdf.type;
 
-import com.lowagie.text.pdf.PdfBorderDictionary;
-
 import net.sf.jasperreports.engine.type.EnumUtil;
-import net.sf.jasperreports.engine.type.NamedValueEnum;
+import net.sf.jasperreports.engine.type.NamedEnum;
 
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public enum PdfFieldBorderStyleEnum implements NamedValueEnum<Integer>
+public enum PdfFieldBorderStyleEnum implements NamedEnum
 {
 	/**
 	 * Constant useful for specifying the solid border for the input field in PDF form.
 	 */
-	SOLID(PdfBorderDictionary.STYLE_SOLID, "Solid"),
+	SOLID("Solid"),
 
 	/**
 	 * Constant useful for specifying the dashed border for the input field in PDF form.
 	 */
-	DASHED(PdfBorderDictionary.STYLE_DASHED, "Dashed"),
+	DASHED("Dashed"),
 
 	/**
 	 * Constant useful for specifying the beveled border for the input field in PDF form.
 	 */
-	BEVELED(PdfBorderDictionary.STYLE_BEVELED, "Beveled"),
+	BEVELED("Beveled"),
 
 	/**
 	 * Constant useful for specifying the inset border for the input field in PDF form.
 	 */
-	INSET(PdfBorderDictionary.STYLE_INSET, "Inset"),
+	INSET("Inset"),
 
 	/**
 	 * Constant useful for specifying the underline border for the input field in PDF form.
 	 */
-	UNDERLINE(PdfBorderDictionary.STYLE_UNDERLINE, "Underline");
+	UNDERLINE("Underline");
 	
 	
 	/**
 	 *
 	 */
-	private final transient int value;
 	private final transient String name;
 
-	private PdfFieldBorderStyleEnum(int value, String name)
+	private PdfFieldBorderStyleEnum(String name)
 	{
-		this.value = value;
 		this.name = name;
-	}
-
-	@Override
-	public final Integer getValue()
-	{
-		return value;
 	}
 	
 	@Override

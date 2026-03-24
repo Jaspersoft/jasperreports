@@ -23,8 +23,6 @@
  */
 package net.sf.jasperreports.pdf;
 
-import com.lowagie.text.pdf.PdfWriter;
-
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
@@ -45,19 +43,6 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public interface PdfExporterConfiguration extends ExporterConfiguration
 {
-	/**
-	 * Integer property that contains all permissions for the generated PDF document
-	 */
-	//TODO lucian
-	public static final Integer ALL_PERMISSIONS = 
-			PdfWriter.ALLOW_ASSEMBLY 
-			| PdfWriter.ALLOW_COPY
-			| PdfWriter.ALLOW_DEGRADED_PRINTING
-			| PdfWriter.ALLOW_FILL_IN
-			| PdfWriter.ALLOW_MODIFY_ANNOTATIONS
-			| PdfWriter.ALLOW_MODIFY_CONTENTS
-			| PdfWriter.ALLOW_PRINTING
-			| PdfWriter.ALLOW_SCREENREADERS;
 	
 	/**
 	 * Property whose value is used as default state of the {@link #isCreatingBatchModeBookmarks()} export configuration flag.

@@ -121,6 +121,8 @@ public interface PdfProducer
 	
 	PdfOutlineEntry getRootOutline();
 	
+	void addPdfPage(byte[] pdfData, int x, int y, int width, int height);
+	
 	void close();
 	
 }

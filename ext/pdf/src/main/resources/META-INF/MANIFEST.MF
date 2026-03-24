@@ -14,7 +14,6 @@ Bundle-Vendor: ${project.organization.name}
 Bundle-SymbolicName: net.sf.jasperreports.pdf
 Bundle-ClassPath: .
 Export-Package: net.sf.jasperreports.pdf,
- net.sf.jasperreports.pdf.classic,
  net.sf.jasperreports.pdf.common,
  net.sf.jasperreports.pdf.components.iconlabel,
  net.sf.jasperreports.pdf.type,

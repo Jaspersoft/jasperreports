@@ -42,6 +42,8 @@
 		<module>ext/maven</module>
 		<module>ext/maven-bom</module>
 		<module>ext/olap</module>
+		<module>ext/openpdf-classic</module>
+		<module>ext/openpdf</module>
 		<module>ext/pdf</module>
 		<module>ext/servlets</module>
 		<module>ext/servlets-j2ee</module>
