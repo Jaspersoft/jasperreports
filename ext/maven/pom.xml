@@ -18,11 +18,7 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<maven.install.skip>false</maven.install.skip>
-		<maven.source.skip>false</maven.source.skip>
-		<maven.javadoc.skip>false</maven.javadoc.skip>
-		<maven.deploy.skip>false</maven.deploy.skip>
-		<maven.test.skip>false</maven.test.skip>
+		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -36,13 +32,6 @@
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-core</artifactId>
 			<version>3.9.12</version>
-			<scope>provided</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-project</artifactId>
-			<version>2.2.1</version>
 			<scope>provided</scope>
 			<optional>false</optional>
 		</dependency>
@@ -79,6 +68,19 @@
 					<showWarnings>true</showWarnings>
 					<fork>true</fork><!-- TODO lucianc is this ok? -->
 					<compilerArgument>-Xlint:deprecation,-unchecked,-options</compilerArgument>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<ignoredUsedUndeclaredDependencies>
+						<dependency>net.sf.jasperreports:jasperreports</dependency>
+					</ignoredUsedUndeclaredDependencies>
+					<ignoredUnusedDeclaredDependencies>
+						<dependency>net.sf.jasperreports:jasperreports-maven-plugin-bom</dependency>
+					</ignoredUnusedDeclaredDependencies>
 				</configuration>
 			</plugin>
 		</plugins>

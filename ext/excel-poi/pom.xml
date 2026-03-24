@@ -53,5 +53,36 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
+		<!--
+			dependencies here are for controlling their versions and avoid CVEs;
+			each of them is also mentioned in the maven-dependency-plugin below
+		-->
+		<!--
+			CVE-2025-68161
+			+- org.apache.poi:poi:jar:5.4.1:compile
+			|  \- org.apache.logging.log4j:log4j-api:jar:2.24.3:compile
+		-->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+ 			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<ignoredUnusedDeclaredDependencies>
+						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
+						<dependency>org.apache.logging.log4j:log4j-api</dependency>
+					</ignoredUnusedDeclaredDependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

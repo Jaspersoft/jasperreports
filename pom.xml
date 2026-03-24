@@ -50,4 +50,12 @@
 		<module>ext/spring</module>
 		<module>ext/xalan</module>
 	</modules>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
+		<maven.resources.skip>true</maven.resources.skip>
+		<maven.source.skip>true</maven.source.skip>
+		<maven.test.skip>true</maven.test.skip>
+	</properties>
 </project>

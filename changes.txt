@@ -2,7 +2,26 @@
 JasperReports Library Change Log
 =============================================
 
-JasperReports 7.0.5 (2025-1x-xx)
+JasperReports 7.0.6 (2026-03-13)
+---------------------------------------------
+
+- introducing an official JasperReports Maven Plugin for compiling, decompiling and updating
+report design files (groupId: net.sf.jasperreports, artifactId: jasperreports-maven-plugin);
+
+- improved performance of the Ant tasks for compiling, decompiling and updating report design 
+files by implementing multi-threading support;
+
+- various dependencies upgrades including: Apache Commons Lang 3.20.0, Rhino 1.8.1, ICU4J 78.2 
+and Apache Log4J 2.25.3; 
+
+- minor bug fixes and improvements;
+
+
+
+
+
+
+JasperReports 7.0.5 (2026-02-27)
 ---------------------------------------------
 
 - support for proportional table column resize using negative weight values convention;

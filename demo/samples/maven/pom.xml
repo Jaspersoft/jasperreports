@@ -10,8 +10,9 @@
 	<artifactId>jasperreports-samples-maven</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<maven.test.skip>false</maven.test.skip>
 		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
 	</properties>
 	<dependencies>
 		<dependency>

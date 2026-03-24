@@ -6,8 +6,11 @@ This document lists all the major features of the JasperReports library, as show
 - [Browse Sample Source Files on Git](https://github.com/Jaspersoft/jasperreports/tree/release-7.0.0/demo/samples)
 
 ## General
+- [JasperReports Maven Plugin Usage](./maven/README.md#usage)
 - [Updating Multiple Report Template Files Using the Ant Build Tool](./antupdate/README.md#antupdate)
+- [Updating Multiple Report Template Files Using the JasperReports Maven Plugin](./maven/README.md#update)
 - [Generating the JRXML Source Files for Multiple Compiled Report Template Files Using the Ant Build Tool (Decompiling)](./antcompile/README.md#antdecompile)
+- [Generating the JRXML Source Files for Multiple Compiled Report Template Files Using the JasperReports Maven Plugin (Decompiling)](./maven/README.md#decompile)
 - [Deploying Reports in Web Applications](./webapp/README.md#webapp)
 
 ## Report Design
@@ -61,6 +64,7 @@ This document lists all the major features of the JasperReports library, as show
 ## Report Compilation
 - [Report Compilers](./groovy/README.md#reportcompilers)
 - [Compiling Multiple Report Template Files Using the Ant Build Tool](./antcompile/README.md#antcompile)
+- [Compiling Multiple Report Template Files Using the JasperReports Maven Plugin](./maven/README.md#compile)
 - [Generating the JRXML Source File for an In-Memory Report Report Template Object](./hyperlink/README.md#xmlwriter)
 - [Creating In-Memory JasperDesign Objects Using the API Directly (Without JRXML Report Templates)](./noxmldesign/README.md#noxmldesign)
 - [Using the Groovy Scripting Language for Report Expressions (Groovy Report Compiler)](./groovy/README.md#groovy)

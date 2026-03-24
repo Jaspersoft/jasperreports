@@ -19,10 +19,6 @@
 	</scm>
 	<properties>
 		<jasperreports.root.dir>${basedir}/../</jasperreports.root.dir>
-		<maven.install.skip>false</maven.install.skip>
-		<maven.source.skip>false</maven.source.skip>
-		<maven.javadoc.skip>false</maven.javadoc.skip>
-		<maven.deploy.skip>false</maven.deploy.skip>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -84,20 +80,13 @@
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
-			<version>77.1</version>
+			<version>78.2</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-anim</artifactId>
-			<version>${batik.version}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-bridge</artifactId>
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
@@ -115,7 +104,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-dom</artifactId>
+			<artifactId>batik-bridge</artifactId>
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
@@ -161,14 +150,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-constants</artifactId>
-			<version>${batik.version}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-css</artifactId>
+			<artifactId>batik-parser</artifactId>
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
@@ -193,6 +175,22 @@
 			<version>2.19.0</version>
 			<scope>compile</scope>
 			<optional>true</optional>
+		</dependency>
+		<!--
+			dependencies here are for controlling their versions and avoid CVEs;
+			each of them is also mentioned in the maven-dependency-plugin below
+		-->
+		<!--
+			CVE-2025-48924
+			\- org.apache.commons:commons-beanutils2:jar:2.0.0-M2:compile
+			   \- org.apache.commons:commons-lang3:jar:3.17.0:compile
+		-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+ 			<scope>runtime</scope>
+			<optional>false</optional>
 		</dependency>
 	</dependencies>
 	<build>
@@ -252,6 +250,20 @@
 					<source>8</source>
 					<quiet>true</quiet>
 					<doclint>none</doclint>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<ignoredUnusedDeclaredDependencies>
+						<dependency>org.apache.commons:commons-lang3</dependency>
+					</ignoredUnusedDeclaredDependencies>
+					<ignoredUsedUndeclaredDependencies>
+						<!-- used through com.fasterxml.jackson.dataformat:jackson-format-xml -->
+						<dependency>org.codehaus.woodstox:stax2-api</dependency>
+					</ignoredUsedUndeclaredDependencies>
 				</configuration>
 			</plugin>
 		</plugins>

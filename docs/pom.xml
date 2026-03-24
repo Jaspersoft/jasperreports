@@ -18,8 +18,8 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<maven.install.skip>false</maven.install.skip>
-		<maven.deploy.skip>false</maven.deploy.skip>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
 		<!-- set this property right here to true to enable online statistics -->
 		<sf.net>false</sf.net>
 	</properties>
@@ -70,7 +70,7 @@
 				<version>${maven-markdown-page-generator-plugin.version}</version>
 				<executions>
 					<execution>
-				 	<id>convert-to-html</id>
+						<id>convert-to-html</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>generate</goal>
@@ -88,7 +88,7 @@
 						</configuration>
 					</execution>
 					<execution>
-				 	<id>convert-root-to-html</id>
+						<id>convert-root-to-html</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>generate</goal>
