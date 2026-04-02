@@ -73,6 +73,10 @@ public class StandardFontRecipient implements FontRecipient
 		{
 			font = null;
 		}
+		if (font != null && font.getBaseFont() != null)
+		{
+			font.getBaseFont().setIncludeCidSet(false);
+		}
 		this.font = font;
 	}
 
@@ -91,6 +95,8 @@ public class StandardFontRecipient implements FontRecipient
 		{
 			throw new JRRuntimeException(e);
 		}
+
+		baseFont.setIncludeCidSet(false);
 
 		font = new Font(baseFont, size, toPdfFontStyle(pdfFontStyle), StandardPdfUtils.convertColor(cmykColorSpace, forecolor));
 	}

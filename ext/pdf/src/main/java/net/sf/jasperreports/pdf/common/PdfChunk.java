@@ -42,4 +42,6 @@ public interface PdfChunk
 
 	void setRemoteGoto(String reference, int page);
 
+	void setLinkTag(PdfStructureEntry linkTag, float llx, float lly, float urx, float ury, String linkContents);
+
 }

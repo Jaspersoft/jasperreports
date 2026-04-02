@@ -46,6 +46,12 @@ public final class AccessibilityUtil
 			valueType = String.class
 			)
 	public static final String PROPERTY_ACCESSIBILITY_TAG = JRPropertiesUtil.PROPERTY_PREFIX + "export.accessibility.tag";
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			scopes = {PropertyScope.ELEMENT},
+			sinceVersion = PropertyConstants.VERSION_7_0_6
+			)
+	public static final String PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT = JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.tag.attribute.ActualText";
 
 	/**
 	 *

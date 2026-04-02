@@ -57,7 +57,7 @@ public interface PdfDocumentWriter
 
 	void setPdfaConformance(PdfaConformanceEnum pdfaConformance);
 
-	void createXmpMetadata(String title, String subject, String keywords);
+	void createXmpMetadata(String title, String subject, String keywords, boolean isTagged);
 
 	void setRgbTransparencyBlending(boolean rgbTransparencyBlending);
 

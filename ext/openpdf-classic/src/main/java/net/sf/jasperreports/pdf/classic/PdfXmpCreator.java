@@ -32,6 +32,8 @@ import com.adobe.internal.xmp.XMPConst;
 import com.adobe.internal.xmp.XMPException;
 import com.adobe.internal.xmp.XMPMeta;
 import com.adobe.internal.xmp.XMPMetaFactory;
+import com.adobe.internal.xmp.XMPPathFactory;
+import com.adobe.internal.xmp.XMPSchemaRegistry;
 import com.adobe.internal.xmp.options.PropertyOptions;
 import com.adobe.internal.xmp.options.SerializeOptions;
 import com.lowagie.text.pdf.PdfDate;
@@ -78,9 +80,9 @@ public class PdfXmpCreator
 		return XMP_LIBRARY;
 	}
 
-	public static byte[] createXmpMetadata(PdfWriter pdfWriter, PdfaConformanceEnum conformance)
+	public static byte[] createXmpMetadata(PdfWriter pdfWriter, PdfaConformanceEnum conformance, boolean isTagged)
 	{
-		XmpWriter writer = new XmpWriter(pdfWriter, conformance);
+		XmpWriter writer = new XmpWriter(pdfWriter, conformance, isTagged);
 		return writer.createXmpMetadata();
 	}
 
@@ -116,16 +118,24 @@ class XmpWriter
 	private static final String XMP_MODIFY_DATE = "ModifyDate";
 
 	private static final String XMP_CREATOR_TOOL = "CreatorTool";
-	
+
+	private static final String NS_PDFUA_ID = "http://www.aiim.org/pdfua/ns/id/";
+
+	private static final String PDFUA_PART = "part";
+
+	private static final String PDFUA_PART_1 = "1";
+
 	private final PdfWriter pdfWriter;
 	private final PdfDictionary info;
 	private final PdfaConformanceEnum conformance;
-	
-	XmpWriter(PdfWriter pdfWriter, PdfaConformanceEnum conformance)
+	private final boolean isTagged;
+
+	XmpWriter(PdfWriter pdfWriter, PdfaConformanceEnum conformance, boolean isTagged)
 	{
 		this.pdfWriter = pdfWriter;
 		this.info = pdfWriter.getInfo();
 		this.conformance = conformance;
+		this.isTagged = isTagged;
 	}
 	
 	byte[] createXmpMetadata()
@@ -182,6 +192,18 @@ class XmpWriter
 			{
 				xmp.setProperty(XMPConst.NS_PDFA_ID, PDFA_PART, PDFA_PART_3);
 				xmp.setProperty(XMPConst.NS_PDFA_ID, PDFA_CONFORMANCE, PDFA_CONFORMANCE_U);
+			}
+
+			if (isTagged)
+			{
+				XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
+				registry.registerNamespace(NS_PDFUA_ID, "pdfuaid");
+				xmp.setProperty(NS_PDFUA_ID, PDFUA_PART, PDFUA_PART_1);
+
+				if (conformance != null)
+				{
+					addPdfUaExtensionSchema(xmp);
+				}
 			}
 
 			xmp.setProperty(XMPConst.NS_XMP, XMP_CREATE_DATE, ((PdfDate) info.get(PdfName.CREATIONDATE)).getW3CDate());
@@ -245,5 +267,46 @@ class XmpWriter
 	{
 		PdfString value = (PdfString) info.get(key);
 		return value == null ? null : value.toUnicodeString();
+	}
+
+	/**
+	 * Adds a PDF/A extension schema declaration for the pdfuaid namespace.
+	 * PDF/A requires non-predefined XMP properties to be declared via extension schemas
+	 * (ISO 19005-1, clause 6.7.9). The pdfuaid namespace is defined by PDF/UA (ISO 14289),
+	 * not by the XMP specification, so it must be declared as an extension schema.
+	 */
+	private void addPdfUaExtensionSchema(XMPMeta xmp) throws XMPException
+	{
+		PropertyOptions bagOptions = new PropertyOptions().setArray(true);
+		PropertyOptions structOptions = new PropertyOptions().setStruct(true);
+		PropertyOptions seqOptions = new PropertyOptions().setArrayOrdered(true);
+
+		String schemaPath = "schemas[1]";
+		String propertySeqPath = schemaPath
+				+ XMPPathFactory.composeStructFieldPath(XMPConst.NS_PDFA_SCHEMA, "property");
+		String propertyItemPath = propertySeqPath + "[1]";
+
+		xmp.appendArrayItem(XMPConst.NS_PDFA_EXTENSION, "schemas", bagOptions, null, structOptions);
+
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, schemaPath,
+				XMPConst.NS_PDFA_SCHEMA, "schema", "PDF/UA Universal Accessibility Schema");
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, schemaPath,
+				XMPConst.NS_PDFA_SCHEMA, "namespaceURI", NS_PDFUA_ID);
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, schemaPath,
+				XMPConst.NS_PDFA_SCHEMA, "prefix", "pdfuaid");
+
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, schemaPath,
+				XMPConst.NS_PDFA_SCHEMA, "property", null, seqOptions);
+
+		xmp.appendArrayItem(XMPConst.NS_PDFA_EXTENSION, propertySeqPath, seqOptions, null, structOptions);
+
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, propertyItemPath,
+				XMPConst.NS_PDFA_PROPERTY, "name", "part");
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, propertyItemPath,
+				XMPConst.NS_PDFA_PROPERTY, "valueType", "Integer");
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, propertyItemPath,
+				XMPConst.NS_PDFA_PROPERTY, "category", "internal");
+		xmp.setStructField(XMPConst.NS_PDFA_EXTENSION, propertyItemPath,
+				XMPConst.NS_PDFA_PROPERTY, "description", "Indicates which part of ISO 14289 standard is followed");
 	}
 }

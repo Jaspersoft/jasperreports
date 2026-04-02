@@ -85,7 +85,6 @@
 			config properties
 		-->
 		<jasperreports.root.dir>${basedir}</jasperreports.root.dir>
-		<maven.buildNumber.phase>validate</maven.buildNumber.phase>
 		<maven.buildNumber.doCheck>true</maven.buildNumber.doCheck>
 		<owasp.ossindex.enabled>true</owasp.ossindex.enabled>
 		<source.version>8</source.version>
@@ -172,14 +171,14 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>flatten</id>
+						<id>default-flatten</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>flatten</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>flatten.clean</id>
+						<id>default-clean</id>
 						<phase>clean</phase>
 						<goals>
 							<goal>clean</goal>
@@ -193,18 +192,11 @@
 				<version>${buildnumber-maven-plugin.version}</version>
 				<executions>
 					<execution>
-						<phase>${maven.buildNumber.phase}</phase>
 						<goals>
 							<goal>create</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<!--
-					<doCheck>${maven.buildNumber.doCheck}</doCheck>
-					-->
-					<doUpdate>false</doUpdate>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -212,7 +204,6 @@
 				<version>${maven-resources-plugin.version}</version>
 				<executions>
 					<execution>
-						<id>copy-license</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>

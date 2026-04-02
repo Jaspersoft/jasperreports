@@ -27,6 +27,7 @@ import com.lowagie.text.pdf.PdfArray;
 import com.lowagie.text.pdf.PdfDictionary;
 import com.lowagie.text.pdf.PdfName;
 import com.lowagie.text.pdf.PdfNumber;
+import com.lowagie.text.pdf.PdfObject;
 import com.lowagie.text.pdf.PdfString;
 import com.lowagie.text.pdf.PdfStructureElement;
 
@@ -82,5 +83,78 @@ public class StandardStructureEntry implements PdfStructureEntry
 		a.add(dict);
 		element.put(PdfName.A, a);
 	}
-	
+
+	@Override
+	public void setBBox(float llx, float lly, float urx, float ury)
+	{
+		PdfDictionary dict = new PdfDictionary();
+		PdfArray bbox = new PdfArray();
+		bbox.add(new PdfNumber(llx));
+		bbox.add(new PdfNumber(lly));
+		bbox.add(new PdfNumber(urx));
+		bbox.add(new PdfNumber(ury));
+		dict.put(pdfStructure.pdfName("BBox"), bbox);
+		dict.put(PdfName.O, pdfStructure.pdfName("Layout"));
+
+		PdfObject existing = element.get(PdfName.A);
+		if (existing instanceof PdfArray)
+		{
+			((PdfArray) existing).add(dict);
+		}
+		else
+		{
+			PdfArray a = new PdfArray();
+			a.add(dict);
+			element.put(PdfName.A, a);
+		}
+	}
+
+	@Override
+	public void setScope(String scope)
+	{
+		PdfObject existing = element.get(PdfName.A);
+		if (existing instanceof PdfArray)
+		{
+			PdfArray a = (PdfArray) existing;
+			PdfDictionary tableDict = findTableDict(a);
+			if (tableDict != null)
+			{
+				tableDict.put(pdfStructure.pdfName("Scope"), pdfStructure.pdfName(scope));
+			}
+			else
+			{
+				PdfDictionary dict = new PdfDictionary();
+				dict.put(pdfStructure.pdfName("Scope"), pdfStructure.pdfName(scope));
+				dict.put(PdfName.O, PdfName.TABLE);
+				a.add(dict);
+			}
+		}
+		else
+		{
+			PdfArray a = new PdfArray();
+			PdfDictionary dict = new PdfDictionary();
+			dict.put(pdfStructure.pdfName("Scope"), pdfStructure.pdfName(scope));
+			dict.put(PdfName.O, PdfName.TABLE);
+			a.add(dict);
+			element.put(PdfName.A, a);
+		}
+	}
+
+	private PdfDictionary findTableDict(PdfArray a)
+	{
+		for (int i = 0; i < a.size(); i++)
+		{
+			PdfObject item = a.getPdfObject(i);
+			if (item instanceof PdfDictionary)
+			{
+				PdfDictionary dict = (PdfDictionary) item;
+				if (PdfName.TABLE.equals(dict.get(PdfName.O)))
+				{
+					return dict;
+				}
+			}
+		}
+		return null;
+	}
+
 }

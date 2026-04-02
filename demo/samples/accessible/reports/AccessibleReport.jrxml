@@ -7,6 +7,7 @@
 	<property name="net.sf.jasperreports.export.pdf.tag.language" value="EN-US"/>
 	<property name="net.sf.jasperreports.export.pdf.metadata.title" value="Accessible Report"/>
 	<property name="net.sf.jasperreports.export.pdf.display.metadata.title" value="true"/>
+	<property name="net.sf.jasperreports.export.pdf.bookmarks.enabled" value="true"/>
 	<property name="net.sf.jasperreports.components.table.accessible" value="true"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Description" mode="Opaque" backcolor="#EEEEEE">
@@ -105,10 +106,11 @@
 			<band height="20">
 				<element kind="textField" uuid="f4f107df-72cf-4276-927e-8e04fea1ff36" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
 					<expression><![CDATA["This is a sequence of level 1 and level 2 headings."]]></expression>
+					<anchorNameExpression><![CDATA["title"]]></anchorNameExpression>
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="7dac312f-4c73-41f3-bef6-0edcacc789a0" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1">
+				<element kind="textField" uuid="7dac312f-4c73-41f3-bef6-0edcacc789a0" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1" bookmarkLevel="1">
 					<expression><![CDATA["Fruit"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h1"/>
 				</element>
@@ -119,7 +121,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="3b9e83ea-55d1-4224-bcb2-dcb612d76258" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2">
+				<element kind="textField" uuid="3b9e83ea-55d1-4224-bcb2-dcb612d76258" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2" bookmarkLevel="2">
 					<expression><![CDATA["Apples"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
 				</element>
@@ -130,9 +132,10 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="c31fb47d-10ae-47cf-b1f5-5b2b6e45aa0c" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2">
+				<element kind="textField" uuid="c31fb47d-10ae-47cf-b1f5-5b2b6e45aa0c" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2" linkType="Reference" bookmarkLevel="2">
 					<expression><![CDATA["Bananas"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
+					<hyperlinkReferenceExpression><![CDATA["https://en.wikipedia.org/wiki/Banana"]]></hyperlinkReferenceExpression>
 				</element>
 			</band>
 			<band height="20">
@@ -142,7 +145,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="9ef7cebf-7244-41a0-af98-844412fd0333" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1">
+				<element kind="textField" uuid="9ef7cebf-7244-41a0-af98-844412fd0333" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1" bookmarkLevel="1">
 					<expression><![CDATA["Vegetables"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h1"/>
 					<property name="net.sf.jasperreports.export.pdf.tag.attribute.ActualText" value="We are now describing vegetables"/>
@@ -154,7 +157,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="3ecd40e1-fb0c-43b6-954a-6c55a576cf77" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2">
+				<element kind="textField" uuid="3ecd40e1-fb0c-43b6-954a-6c55a576cf77" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2" bookmarkLevel="2">
 					<expression><![CDATA["Cucumbers"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
 				</element>
@@ -178,7 +181,7 @@
 			<band height="30"/>
 			<band height="20">
 				<element kind="textField" uuid="f6590373-78af-4976-ab23-a2d8ef68b693" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
-					<expression><![CDATA["This is an image."]]></expression>
+					<expression><![CDATA["These are some images."]]></expression>
 				</element>
 			</band>
 			<band height="50">
@@ -189,110 +192,46 @@
 						<pen lineWidth="0.5"/>
 					</box>
 				</element>
+				<element kind="image" uuid="82785a38-76be-4973-bea6-1614dbdaeec8" x="300" y="0" width="200" height="30" linkType="Reference" linkTarget="Blank" hImageAlign="Center" vImageAlign="Middle" mode="Opaque" backcolor="#EEEEEE">
+					<expression><![CDATA["jasperreports.svg"]]></expression>
+					<hyperlinkReferenceExpression><![CDATA["https://jasperreports.sourceforge.net/README.html"]]></hyperlinkReferenceExpression>
+					<hyperlinkTooltipExpression><![CDATA["JasperReports Library Documentation"]]></hyperlinkTooltipExpression>
+				</element>
 			</band>
 			<band height="30"/>
 			<band height="20">
-				<element kind="textField" uuid="48c45474-ff24-4cb8-b1b0-456c2ea0a8de" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
-					<expression><![CDATA["This is a crosstab without a header cell at its top left corner."]]></expression>
+				<element kind="textField" uuid="f6590373-78af-4976-ab23-a2d8ef68b693" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
+					<expression><![CDATA["These are some hyperlinks."]]></expression>
 				</element>
 			</band>
-			<band height="50">
-				<element kind="crosstab" uuid="bd692f7b-a38d-41e3-a7f1-0762e26ae74e" x="0" y="0" width="510" height="30" columnBreakOffset="10">
-					<dataset>
-						<datasetRun uuid="40791c66-0992-4fdc-94b8-0d5a7f337145" subDataset="CrosstabDataset"/>
-					</dataset>
-					<rowGroup name="Category" totalPosition="End" width="70">
-						<bucket class="java.lang.String">
-							<expression><![CDATA[$F{Category}]]></expression>
-						</bucket>
-						<header>
-							<element kind="textField" uuid="3b4d0e0a-13a1-4073-a60f-cf57011934db" stretchType="ContainerHeight" x="0" y="0" width="70" height="20" textAdjust="StretchHeight" style="Crosstab_RowHeader">
-								<expression><![CDATA[$V{Category}]]></expression>
-							</element>
-						</header>
-						<totalHeader>
-							<element kind="textField" uuid="030fffa3-2bd9-4d08-9124-eaa4c7053e79" stretchType="ContainerHeight" x="0" y="0" width="130" height="10" textAdjust="StretchHeight" style="Crosstab_Total">
-								<expression><![CDATA["Category Total"]]></expression>
-							</element>
-						</totalHeader>
-					</rowGroup>
-					<rowGroup name="Type" totalPosition="End" width="60">
-						<bucket class="java.lang.String">
-							<expression><![CDATA[$F{Type}]]></expression>
-						</bucket>
-						<header>
-							<element kind="textField" uuid="daca1d35-ae94-4fca-9ba6-a41c69018bd4" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" style="Crosstab_RowHeader">
-								<expression><![CDATA[$V{Type}]]></expression>
-							</element>
-						</header>
-						<totalHeader>
-							<element kind="textField" uuid="2036fe22-10c5-4351-ad88-ed780eb66e2d" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" style="Crosstab_RowGroupTotal">
-								<expression><![CDATA["Type Total"]]></expression>
-							</element>
-						</totalHeader>
-					</rowGroup>
-					<columnGroup name="Year" totalPosition="End" height="10">
-						<bucket class="java.lang.Integer">
-							<expression><![CDATA[$F{Year}]]></expression>
-						</bucket>
-						<header style="Crosstab_ColumnHeader">
-							<element kind="textField" uuid="00690fcb-022f-4a1b-92b4-ee6e5ed421c1" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_ColumnHeader_Text">
-								<expression><![CDATA[$V{Year}]]></expression>
-							</element>
-						</header>
-						<totalHeader style="Crosstab_TotalColumnHeader">
-							<element kind="textField" uuid="51d11170-3965-4f3d-ab6e-18b2811f2472" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_TotalColumnHeader_Text">
-								<expression><![CDATA["Year Total"]]></expression>
-							</element>
-						</totalHeader>
-					</columnGroup>
-					<measure name="Quantity_MEASURE" calculation="Sum" class="java.lang.Integer">
-						<expression><![CDATA[$F{Quantity}]]></expression>
-					</measure>
-					<cell width="60" height="10">
-						<contents>
-							<element kind="textField" uuid="8d3f6b26-adaa-4d41-88e1-febcee2301f6" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_Detail">
-								<expression><![CDATA[$V{Quantity_MEASURE}]]></expression>
-							</element>
-						</contents>
-					</cell>
-					<cell width="60" height="10" columnTotalGroup="Year">
-						<contents>
-							<element kind="textField" uuid="7d73ed34-bf87-4c9a-871b-b77b75aecd07" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_Total">
-								<expression><![CDATA[$V{Quantity_MEASURE}]]></expression>
-							</element>
-						</contents>
-					</cell>
-					<cell width="60" height="10" rowTotalGroup="Category">
-						<contents>
-							<element kind="textField" uuid="5b5d1848-4020-4cbc-8dc0-939be53f6e44" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_Total">
-								<expression><![CDATA[$V{Quantity_MEASURE}]]></expression>
-							</element>
-						</contents>
-					</cell>
-					<cell width="60" height="10" rowTotalGroup="Category" columnTotalGroup="Year">
-						<contents>
-							<element kind="textField" uuid="cb812594-7af5-4e0f-9920-2d58b5a13cb9" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_Total">
-								<expression><![CDATA[$V{Quantity_MEASURE}]]></expression>
-							</element>
-						</contents>
-					</cell>
-					<cell width="60" height="10" rowTotalGroup="Type">
-						<contents>
-							<element kind="textField" uuid="57742681-cf4b-4b3a-824f-74a3d8fdb982" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_RowGroupTotal">
-								<expression><![CDATA[$V{Quantity_MEASURE}]]></expression>
-							</element>
-						</contents>
-					</cell>
-					<cell width="60" height="10" rowTotalGroup="Type" columnTotalGroup="Year">
-						<contents>
-							<element kind="textField" uuid="e13f7404-4313-47ae-9469-90d57505ed30" stretchType="ContainerHeight" x="0" y="0" width="60" height="10" textAdjust="StretchHeight" hTextAlign="Right" style="Crosstab_Total">
-								<expression><![CDATA[$V{Quantity_MEASURE}]]></expression>
-							</element>
-						</contents>
-					</cell>
+			<band height="20">
+				<element kind="textField" uuid="e8bddac5-3ad7-49b3-80ff-698cf84de7c6" x="0" y="0" width="300" height="15" forecolor="#0000FF" linkType="LocalAnchor">
+					<expression><![CDATA["Click here to go to the summary section."]]></expression>
+					<hyperlinkAnchorExpression><![CDATA["summary"]]></hyperlinkAnchorExpression>
+					<hyperlinkTooltipExpression><![CDATA["Skip to the summary section"]]></hyperlinkTooltipExpression>
 				</element>
 			</band>
+			<band height="20">
+				<element kind="textField" uuid="218ee333-139f-4d52-a444-4ea23f6265f7" x="0" y="0" width="300" height="15" forecolor="#008000" linkType="LocalPage">
+					<expression><![CDATA["Click here to go to the second page."]]></expression>
+					<hyperlinkPageExpression><![CDATA[2]]></hyperlinkPageExpression>
+				</element>
+			</band>
+			<band height="20">
+				<element kind="textField" uuid="773ef7f6-735d-47f7-8b16-d8136c5da1d3" x="0" y="0" width="300" height="15" linkType="Reference" linkTarget="Blank">
+					<expression><![CDATA["Click here to go to www.google.com"]]></expression>
+					<hyperlinkReferenceExpression><![CDATA["http://www.google.com"]]></hyperlinkReferenceExpression>
+				</element>
+			</band>
+			<band height="20">
+				<element kind="textField" uuid="a6fae2b6-f702-43e7-b0ad-896b1e1cf00f" x="0" y="0" width="400" height="15" linkType="RemoteAnchor">
+					<expression><![CDATA["Click here to go to another PDF file (in fact, we use the same file)."]]></expression>
+					<hyperlinkReferenceExpression><![CDATA["./AccessibleReport.pdf"]]></hyperlinkReferenceExpression>
+					<hyperlinkAnchorExpression><![CDATA["title"]]></hyperlinkAnchorExpression>
+				</element>
+			</band>
+			<band height="30"/>
+			<band height="30"/>
 			<band height="20">
 				<element kind="textField" uuid="a98a7704-439e-45ee-af84-a3cfb2b4ab17" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
 					<expression><![CDATA["This is a crosstab having a header cell at its top left corner."]]></expression>
@@ -581,6 +520,19 @@
 							</column>
 						</column>
 					</component>
+				</element>
+			</band>
+			<band height="20">
+				<element kind="textField" uuid="f6590373-78af-4976-ab23-a2d8ef68b693" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Description">
+					<expression><![CDATA["This is a local anchor hyperlink."]]></expression>
+				</element>
+			</band>
+			<band height="20">
+				<element kind="textField" uuid="e8bddac5-3ad7-49b3-80ff-698cf84de7c6" x="0" y="0" width="300" height="15" forecolor="#0000FF" linkType="LocalAnchor">
+					<expression><![CDATA["Click here to go to the title section."]]></expression>
+					<anchorNameExpression><![CDATA["summary"]]></anchorNameExpression>
+					<hyperlinkAnchorExpression><![CDATA["title"]]></hyperlinkAnchorExpression>
+					<hyperlinkTooltipExpression><![CDATA["Jump back to the title section"]]></hyperlinkTooltipExpression>
 				</element>
 			</band>
 		</groupHeader>

@@ -37,6 +37,8 @@ import net.sf.jasperreports.engine.type.HorizontalTextAlignEnum;
 import net.sf.jasperreports.engine.type.TextAdjustEnum;
 import net.sf.jasperreports.engine.type.VerticalImageAlignEnum;
 import net.sf.jasperreports.engine.util.JRBoxUtil;
+import net.sf.jasperreports.export.AccessibilityUtil;
+import net.sf.jasperreports.export.type.AccessibilityTagEnum;
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
@@ -274,6 +276,9 @@ public class IconLabelComponentUtil
 		iconTextField.getLineBox().getTopPen().setLineWidth((Float)0f);
 		iconTextField.getLineBox().getBottomPen().setLineWidth((Float)0f);
 		
+		iconTextField.getPropertiesMap().setProperty(AccessibilityUtil.PROPERTY_ACCESSIBILITY_TAG, AccessibilityTagEnum.ARTIFACT.getName());
+		iconTextField.getPropertiesMap().setProperty(AccessibilityUtil.PROPERTY_TAG_ATTRIBUTE_ACTUAL_TEXT, " "); // this should actually not be read by a screen reader, but is needed to pass PDF/A-2a checks for PUA characters present in text
+
 		iconLabelComponent.setIconTextField(iconTextField);
 		
 		componentElement.setComponent(iconLabelComponent);

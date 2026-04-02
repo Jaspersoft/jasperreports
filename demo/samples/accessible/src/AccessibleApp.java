@@ -84,6 +84,7 @@ public class AccessibleApp extends AbstractSampleApp
 	{
 		fill();
 		pdf();
+		pdfa();
 		xmlEmbed();
 		xml();
 		html();
@@ -159,11 +160,27 @@ public class AccessibleApp extends AbstractSampleApp
 	/**
 	 * 
 	 */
-	public void pdfa1() throws JRException
+	public void pdfa() throws JRException
+	{
+		for (PdfaConformanceEnum value : PdfaConformanceEnum.values())
+		{
+			if (value != PdfaConformanceEnum.NONE)
+			{
+				pdfa(value);
+			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 */
+	private void pdfa(PdfaConformanceEnum conformance) throws JRException
 	{
 		long start = System.currentTimeMillis();
 
-		try{
+		try
+		{
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 			JRPdfExporter exporter = new JRPdfExporter();
@@ -182,22 +199,23 @@ public class AccessibleApp extends AbstractSampleApp
 			// Include structure tags for PDF/A-1a compliance; unnecessary for PDF/A-1b
 			configuration.setTagged(true);
 			
-			configuration.setPdfaConformance(PdfaConformanceEnum.PDFA_1A);
+			configuration.setPdfaConformance(conformance);
 			
-			// Uncomment the following line and specify a valid path for the ICC profile
-//			configuration.setIccProfilePath("path/to/ICC/profile");
+			configuration.setIccProfilePath("./sRGB_IEC61966-2-1_no_black_scaling.icc");
 			
 			exporter.setConfiguration(configuration);
 			exporter.exportReport();
 
-			FileOutputStream fos = new FileOutputStream("target/reports/AccessibleReport_pdfa.pdf");
+			FileOutputStream fos = new FileOutputStream("target/reports/AccessibleReport_" + conformance.getName() + ".pdf");
 			os.writeTo(fos);
 			fos.close();
-		}catch(Exception e){
+		}
+		catch(Exception e)
+		{
 			 e.printStackTrace();
 		}
 				
-		System.err.println("PDF/A-1a creation time : " + (System.currentTimeMillis() - start));
+		System.err.println("PDF/A-" + conformance.getName().substring(conformance.getName().length() - 2) + " creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
