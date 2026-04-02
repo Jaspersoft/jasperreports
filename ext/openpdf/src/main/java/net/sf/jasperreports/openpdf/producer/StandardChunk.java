@@ -24,9 +24,21 @@
 package net.sf.jasperreports.openpdf.producer;
 
 import org.openpdf.text.Chunk;
+import org.openpdf.text.Rectangle;
 import org.openpdf.text.pdf.PdfAction;
+import org.openpdf.text.pdf.PdfAnnotation;
+import org.openpdf.text.pdf.PdfArray;
+import org.openpdf.text.pdf.PdfBorderArray;
+import org.openpdf.text.pdf.PdfDictionary;
+import org.openpdf.text.pdf.PdfName;
+import org.openpdf.text.pdf.PdfNumber;
+import org.openpdf.text.pdf.PdfObject;
+import org.openpdf.text.pdf.PdfString;
+import org.openpdf.text.pdf.PdfStructureElement;
+import org.openpdf.text.pdf.PdfStructureTreeRootUtil;
 
 import net.sf.jasperreports.pdf.common.PdfChunk;
+import net.sf.jasperreports.pdf.common.PdfStructureEntry;
 
 /**
  * 
@@ -37,6 +49,13 @@ public class StandardChunk implements PdfChunk
 
 	private StandardPdfProducer pdfProducer;
 	protected Chunk chunk;
+
+	private PdfStructureEntry linkTag;
+	private float linkLlx;
+	private float linkLly;
+	private float linkUrx;
+	private float linkUry;
+	private String linkContents;
 
 	public StandardChunk(StandardPdfProducer pdfProducer, Chunk chunk)
 	{
@@ -56,33 +75,149 @@ public class StandardChunk implements PdfChunk
 	}
 
 	@Override
+	public void setLinkTag(PdfStructureEntry linkTag, float llx, float lly, float urx, float ury, String linkContents)
+	{
+		this.linkTag = linkTag;
+		this.linkLlx = llx;
+		this.linkLly = lly;
+		this.linkUrx = urx;
+		this.linkUry = ury;
+		this.linkContents = linkContents;
+	}
+
+	@Override
 	public void setJavaScriptAction(String script)
 	{
-		chunk.setAction(PdfAction.javaScript(script, pdfProducer.getPdfWriter()));
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					new Rectangle(linkLlx, linkLly, linkUrx, linkUry),
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					PdfAction.javaScript(script, pdfProducer.getPdfWriter())
+					)
+				);
+		}
+		else
+		{
+			chunk.setAction(PdfAction.javaScript(script, pdfProducer.getPdfWriter()));
+		}
 	}
 
 	@Override
 	public void setAnchor(String reference)
 	{
-		chunk.setAnchor(reference);
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				new PdfAnnotation(pdfProducer.getPdfWriter(), linkLlx, linkLly, linkUrx, linkUry, new PdfAction(reference))
+				);
+		}
+		else
+		{
+			chunk.setAnchor(reference);
+		}
 	}
 
 	@Override
 	public void setLocalGoto(String anchor)
 	{
-		chunk.setLocalGoto(anchor);
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					new Rectangle(linkLlx, linkLly, linkUrx, linkUry),
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					anchor
+					)
+				);
+		}
+		else
+		{
+			chunk.setLocalGoto(anchor);
+		}
 	}
 
 	@Override
 	public void setRemoteGoto(String reference, String anchor)
 	{
-		chunk.setRemoteGoto(reference, anchor);
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					new Rectangle(linkLlx, linkLly, linkUrx, linkUry),
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					new PdfAction(reference, anchor)
+					)
+				);
+		}
+		else
+		{
+			chunk.setRemoteGoto(reference, anchor);
+		}
 	}
 
 	@Override
 	public void setRemoteGoto(String reference, int page)
 	{
-		chunk.setRemoteGoto(reference, page);
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					new Rectangle(linkLlx, linkLly, linkUrx, linkUry),
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					new PdfAction(reference, page)
+					)
+				);
+		}
+		else
+		{
+			chunk.setRemoteGoto(reference, page);
+		}
+	}
+
+	protected void addAnnotationToTag(PdfStructureEntry linkTag, PdfAnnotation annotation)
+	{
+		annotation.put(PdfName.BORDER, new PdfBorderArray(0, 0, 0));
+		annotation.remove(PdfName.C);
+		annotation.put(PdfName.F, new PdfNumber(PdfAnnotation.FLAGS_PRINT));
+
+		if (linkContents != null && linkContents.trim().length() > 0)
+		{
+			annotation.put(PdfName.CONTENTS, new PdfString(linkContents));
+		}
+
+		PdfStructureElement element = ((StandardStructureEntry) linkTag).getElement();
+
+		PdfStructureTreeRootUtil treeRoot = (PdfStructureTreeRootUtil) pdfProducer.getPdfWriter().getStructureTreeRoot();
+		treeRoot.addAnnotationParent(annotation, element.getReference());
+
+		pdfProducer.getPdfWriter().addAnnotation(annotation);
+
+		PdfDictionary objr = new PdfDictionary(PdfName.OBJR);
+		objr.put(PdfName.OBJ, annotation.getIndirectReference());
+
+		PdfObject kObj = element.get(PdfName.K);
+		if (kObj instanceof PdfArray)
+		{
+			((PdfArray) kObj).add(objr);
+		}
+		else if (kObj instanceof PdfNumber)
+		{
+			PdfArray ar = new PdfArray();
+			ar.add(kObj);
+			ar.add(objr);
+			element.put(PdfName.K, ar);
+		}
 	}
 
 }

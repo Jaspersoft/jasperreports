@@ -211,11 +211,11 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	}
 
 	@Override
-	public void createXmpMetadata(String title, String subject, String keywords)
+	public void createXmpMetadata(String title, String subject, String keywords, boolean isTagged)
 	{
 		if (PdfXmpCreator.supported())
 		{
-			byte[] metadata = PdfXmpCreator.createXmpMetadata(pdfWriter, pdfaConformance);
+			byte[] metadata = PdfXmpCreator.createXmpMetadata(pdfWriter, pdfaConformance, isTagged);
 			pdfWriter.setXmpMetadata(metadata);
 		}
 		else

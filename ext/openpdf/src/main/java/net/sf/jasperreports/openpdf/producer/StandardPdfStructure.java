@@ -32,6 +32,7 @@ import org.openpdf.text.pdf.PdfObject;
 import org.openpdf.text.pdf.PdfString;
 import org.openpdf.text.pdf.PdfStructureElement;
 import org.openpdf.text.pdf.PdfStructureTreeRoot;
+import org.openpdf.text.pdf.PdfStructureTreeRootUtil;
 import org.openpdf.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.pdf.common.PdfStructure;
@@ -55,20 +56,17 @@ public class StandardPdfStructure implements PdfStructure
 	}
 
 	@Override
-	public PdfStructureEntry createAllTag(String language)
+	public PdfStructureEntry createDocumentTag(String language)
 	{
 		PdfWriter pdfWriter = pdfProducer.getPdfWriter();
+		PdfStructureTreeRootUtil.install(pdfWriter);
 		PdfStructureTreeRoot root = pdfWriter.getStructureTreeRoot();
 		
-		PdfName pdfNameALL = new PdfName("All");
-		root.mapRole(pdfNameALL, PdfName.SECT);
-		root.mapRole(PdfName.IMAGE, PdfName.FIGURE);
 		root.mapRole(PdfName.TEXT, PdfName.P);
-		PdfStructureElement allTag = new PdfStructureElement(root, pdfNameALL);
+		PdfStructureElement documentTag = new PdfStructureElement(root, PdfName.DOCUMENT);
 		if(pdfWriter.getPDFXConformance() == PdfWriter.PDFA1A)
 		{
 			root.mapRole(new PdfName("Anchor"), PdfName.NONSTRUCT);
-			root.mapRole(PdfName.TEXT, PdfName.SPAN);
 		}
 		else
 		{
@@ -77,10 +75,10 @@ public class StandardPdfStructure implements PdfStructure
 		
 		if (language != null)
 		{
-			allTag.put(PdfName.LANG, new PdfString(language));
+			documentTag.put(PdfName.LANG, new PdfString(language));
 		}
 		
-		return new StandardStructureEntry(this, allTag);
+		return new StandardStructureEntry(this, documentTag);
 	}
 	
 	protected PdfName pdfName(String name)
@@ -110,7 +108,17 @@ public class StandardPdfStructure implements PdfStructure
 	@Override
 	public PdfStructureEntry beginTag(PdfStructureEntry parent, String name)
 	{
-		StandardStructureEntry tag = createElement(parent, name);
+		StandardStructureEntry tag = null;
+		
+		if (name == null)
+		{
+			tag = ((StandardStructureEntry) parent);
+		}
+		else
+		{
+			tag = createElement(parent, name);
+		}
+		
 		pdfProducer.getPdfContentByte().beginMarkedContentSequence(tag.getElement());
 		return tag;
 	}
@@ -121,7 +129,17 @@ public class StandardPdfStructure implements PdfStructure
 		PdfDictionary markedContentProps = new PdfDictionary();
 		markedContentProps.put(PdfName.ACTUALTEXT, new PdfString(text, PdfObject.TEXT_UNICODE));
 		
-		StandardStructureEntry tag = createElement(parent, name);
+		StandardStructureEntry tag = null;
+		
+		if (name == null)
+		{
+			tag = ((StandardStructureEntry) parent);
+		}
+		else
+		{
+			tag = createElement(parent, name);
+		}
+		
 		pdfProducer.getPdfContentByte().beginMarkedContentSequence(tag.getElement(), 
 				markedContentProps);
 		return tag;
@@ -129,6 +147,32 @@ public class StandardPdfStructure implements PdfStructure
 
 	@Override
 	public void endTag()
+	{
+		pdfProducer.getPdfContentByte().endMarkedContentSequence();
+	}
+
+	@Override
+	public void beginArtifact()
+	{
+		pdfProducer.getPdfContentByte().beginMarkedContentSequence(new PdfName("Artifact"));
+	}
+
+	@Override
+	public void endArtifact()
+	{
+		pdfProducer.getPdfContentByte().endMarkedContentSequence();
+	}
+
+	@Override
+	public void beginSpan(String actualText)
+	{
+		PdfDictionary markedContentProps = new PdfDictionary();
+		markedContentProps.put(PdfName.ACTUALTEXT, new PdfString(actualText, PdfObject.TEXT_UNICODE));
+		pdfProducer.getPdfContentByte().beginMarkedContentSequence(PdfName.SPAN, markedContentProps, true);
+	}
+
+	@Override
+	public void endSpan()
 	{
 		pdfProducer.getPdfContentByte().endMarkedContentSequence();
 	}
