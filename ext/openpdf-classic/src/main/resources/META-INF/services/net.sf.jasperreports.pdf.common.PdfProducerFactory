@@ -1,1 +1,1 @@
-net.sf.jasperreports.pdf.classic.producer.ClassicPdfProducerFactory
+net.sf.jasperreports.pdf.classic.producer.StandardPdfProducerFactory

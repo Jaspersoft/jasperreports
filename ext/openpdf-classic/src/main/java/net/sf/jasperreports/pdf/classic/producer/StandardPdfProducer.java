@@ -89,15 +89,15 @@ import net.sf.jasperreports.renderers.Graphics2DRenderable;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfProducer implements PdfProducer
+public class StandardPdfProducer implements PdfProducer
 {
 	
 	private PdfProducerContext context;
 	
-	private ClassicPdfStructure pdfStructure;
+	private StandardPdfStructure pdfStructure;
 	
-	private ClassicDocument document;
-	private ClassicPdfWriter writer;
+	private StandardDocument document;
+	private StandardPdfWriter writer;
 
 	private Document imageTesterDocument;
 	private PdfContentByte imageTesterPdfContentByte;
@@ -105,14 +105,14 @@ public class ClassicPdfProducer implements PdfProducer
 	private SplitCharacter splitCharacter;
 	private GlyphRendering glyphRendering;
 	
-	private ClassicPdfContent pdfContent;
+	private StandardPdfContent pdfContent;
 	
 	private Map<String, RadioCheckField> radioFieldFactories;
 	private Map<String, PdfFormField> radioGroups;
 	
 	private boolean defaultUseSavedLineBreaks;
 
-	public ClassicPdfProducer(PdfProducerContext context)
+	public StandardPdfProducer(PdfProducerContext context)
 	{
 		this.context = context;
 		this.glyphRendering = new GlyphRendering(this);
@@ -144,7 +144,7 @@ public class ClassicPdfProducer implements PdfProducer
 					)
 				);
 		
-		document = new ClassicDocument(pdfDocument);
+		document = new StandardDocument(pdfDocument);
 		return document;
 	}
 
@@ -182,7 +182,7 @@ public class ClassicPdfProducer implements PdfProducer
 			imageTesterPdfContentByte = imageTesterPdfWriter.getDirectContent();
 			imageTesterPdfContentByte.setLiteral("\n");
 			
-			writer = new ClassicPdfWriter(this, pdfWriter);
+			writer = new StandardPdfWriter(this, pdfWriter);
 			return writer;
 		}
 		catch (DocumentException e)
@@ -205,7 +205,7 @@ public class ClassicPdfProducer implements PdfProducer
 	@Override
 	public PdfContent createPdfContent()
 	{
-		pdfContent = new ClassicPdfContent(writer.getPdfWriter(), context.getCMYKColorSpace());
+		pdfContent = new StandardPdfContent(writer.getPdfWriter(), context.getCMYKColorSpace());
 		return pdfContent;
 	}
 
@@ -387,7 +387,7 @@ public class ClassicPdfProducer implements PdfProducer
 				imageTesterPdfContentByte.addImage(image, 10, 0, 0, 10, 0, 0);
 			}
 			
-			return new ClassicImage(image);
+			return new StandardImage(image);
 		}
 		catch (DocumentException e)
 		{
@@ -408,7 +408,7 @@ public class ClassicPdfProducer implements PdfProducer
 		Graphics2D g = forceSvgShapes
 			? template.createGraphicsShapes((float) renderWidth, (float) renderHeight)
 			: template.createGraphics((float) renderWidth, (float) renderHeight, 
-					new ClassicPdfFontMapper(this));
+					new StandardPdfFontMapper(this));
 
 		try
 		{
@@ -426,13 +426,13 @@ public class ClassicPdfProducer implements PdfProducer
 			g.dispose();
 		}
 
-		return new ClassicImage(new ImgTemplate(template));
+		return new StandardImage(new ImgTemplate(template));
 	}
 	
 	@Override
 	public PdfImage clipImage(PdfImage image, int clipWidth, int clipHeight, int translateX, int translateY) throws JRException
 	{
-		Image img = ((ClassicImage)image).getImage();
+		Image img = ((StandardImage)image).getImage();
 
 		PdfContentByte pdfContentByte = getPdfContentByte();
 		PdfTemplate template = pdfContentByte.createTemplate(img.getWidth(), img.getHeight());
@@ -443,12 +443,12 @@ public class ClassicPdfProducer implements PdfProducer
 		img.setAbsolutePosition(0, 0);
 		template.addImage(img);
 		
-		return new ClassicImage(Image.getInstance(template));
+		return new StandardImage(Image.getInstance(template));
 	}
 	
 	public Font getFont(Map<Attribute,Object> attributes, Locale locale)
 	{
-		ClassicFontRecipient fontRecipient = new ClassicFontRecipient(context.getCMYKColorSpace());
+		StandardFontRecipient fontRecipient = new StandardFontRecipient(context.getCMYKColorSpace());
 		context.setFont(attributes, locale, false, fontRecipient);
 		Font font = fontRecipient.getFont();
 		return font;
@@ -466,36 +466,36 @@ public class ClassicPdfProducer implements PdfProducer
 			chunk.setSplitCharacter(splitCharacter);
 		}
 		
-		return new ClassicTextChunk(this, chunk, font);
+		return new StandardTextChunk(this, chunk, font);
 	}
 
 	@Override
 	public PdfChunk createChunk(PdfImage imageContainer)
 	{
-		Image image = ((ClassicImage) imageContainer).getImage();
+		Image image = ((StandardImage) imageContainer).getImage();
 		Chunk chunk = new Chunk(image, 0, 0);
-		return new ClassicChunk(this, chunk);
+		return new StandardChunk(this, chunk);
 	}
 	
 	@Override
 	public PdfPhrase createPhrase()
 	{
 		Phrase phrase = new Phrase();
-		return new ClassicPhrase(this, phrase);
+		return new StandardPhrase(this, phrase);
 	}
 
 	@Override
 	public PdfPhrase createPhrase(PdfChunk chunk)
 	{
-		Phrase phrase = new Phrase(((ClassicChunk) chunk).getChunk());
-		return new ClassicPhrase(this, phrase);
+		Phrase phrase = new Phrase(((StandardChunk) chunk).getChunk());
+		return new StandardPhrase(this, phrase);
 	}
 
 	@Override
 	public PdfTextField createTextField(float llx, float lly, float urx, float ury, String fieldName)
 	{
 		TextField textField = createTextFormField(llx, lly, urx, ury, fieldName);
-		return new ClassicPdfTextField(this, textField, PdfFieldTypeEnum.TEXT);
+		return new StandardPdfTextField(this, textField, PdfFieldTypeEnum.TEXT);
 	}
 
 	protected TextField createTextFormField(float llx, float lly, float urx, float ury, String fieldName)
@@ -511,7 +511,7 @@ public class ClassicPdfProducer implements PdfProducer
 	{
 		TextField textField = createTextFormField(llx, lly, urx, ury, fieldName);		
 		setFieldChoices(textField, value, choices);
-		return new ClassicPdfTextField(this, textField, PdfFieldTypeEnum.COMBO);
+		return new StandardPdfTextField(this, textField, PdfFieldTypeEnum.COMBO);
 	}
 
 	protected void setFieldChoices(TextField textField, String value, String[] choices)
@@ -542,7 +542,7 @@ public class ClassicPdfProducer implements PdfProducer
 	{
 		TextField textField = createTextFormField(llx, lly, urx, ury, fieldName);		
 		setFieldChoices(textField, value, choices);
-		return new ClassicPdfTextField(this, textField, PdfFieldTypeEnum.LIST);
+		return new StandardPdfTextField(this, textField, PdfFieldTypeEnum.LIST);
 	}
 
 	@Override
@@ -551,7 +551,7 @@ public class ClassicPdfProducer implements PdfProducer
 	{
 		Rectangle rectangle = new Rectangle(llx, lly, urx, ury);
 		RadioCheckField radioField = new RadioCheckField(writer.getPdfWriter(), rectangle, fieldName, onValue);
-		return new ClassicRadioCheck(this, radioField);
+		return new StandardRadioCheck(this, radioField);
 	}
 
 	@Override
@@ -573,7 +573,7 @@ public class ClassicPdfProducer implements PdfProducer
 		
 		radioField.setBox(rectangle);
 		
-		return new ClassicRadioCheck(this, radioField);
+		return new StandardRadioCheck(this, radioField);
 	}
 	
 	protected PdfFormField getRadioGroup(RadioCheckField radioCheckField)
@@ -597,7 +597,7 @@ public class ClassicPdfProducer implements PdfProducer
 	public PdfOutlineEntry getRootOutline()
 	{
 		PdfOutline rootOutline = pdfContent.getPdfContentByte().getRootOutline();
-		return new ClassicPdfOutline(rootOutline);
+		return new StandardPdfOutline(rootOutline);
 	}
 
 	@Override
@@ -605,7 +605,7 @@ public class ClassicPdfProducer implements PdfProducer
 	{
 		if (pdfStructure == null)
 		{
-			pdfStructure = new ClassicPdfStructure(this);
+			pdfStructure = new StandardPdfStructure(this);
 		}
 		return pdfStructure;
 	}

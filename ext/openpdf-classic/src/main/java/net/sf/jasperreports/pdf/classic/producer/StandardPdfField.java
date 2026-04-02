@@ -42,13 +42,13 @@ import net.sf.jasperreports.pdf.type.PdfFieldBorderStyleEnum;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public abstract class ClassicPdfField implements PdfField
+public abstract class StandardPdfField implements PdfField
 {
 
-	protected ClassicPdfProducer pdfProducer;
+	protected StandardPdfProducer pdfProducer;
 	private BaseField field;
 	
-	public ClassicPdfField(ClassicPdfProducer pdfProducer, BaseField field)
+	public StandardPdfField(StandardPdfProducer pdfProducer, BaseField field)
 	{
 		this.pdfProducer = pdfProducer;
 		this.field = field;
@@ -76,7 +76,7 @@ public abstract class ClassicPdfField implements PdfField
 	@Override
 	public void setAlignment(PdfTextAlignment alignment)
 	{
-		field.setAlignment(ClassicPdfUtils.toPdfAlignment(alignment));
+		field.setAlignment(StandardPdfUtils.toPdfAlignment(alignment));
 	}
 
 	@Override

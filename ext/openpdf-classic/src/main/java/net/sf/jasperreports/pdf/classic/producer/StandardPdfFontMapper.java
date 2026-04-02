@@ -23,66 +23,44 @@
  */
 package net.sf.jasperreports.pdf.classic.producer;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.pdf.PdfAction;
+import java.text.AttributedCharacterIterator.Attribute;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.sf.jasperreports.pdf.common.PdfChunk;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.FontMapper;
 
 /**
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicChunk implements PdfChunk
+public class StandardPdfFontMapper implements FontMapper
 {
 
-	private ClassicPdfProducer pdfProducer;
-	protected Chunk chunk;
+	private StandardPdfProducer pdfProducer;
 
-	public ClassicChunk(ClassicPdfProducer pdfProducer, Chunk chunk)
+	public StandardPdfFontMapper(StandardPdfProducer pdfProducer)
 	{
 		this.pdfProducer = pdfProducer;
-		this.chunk = chunk;
-	}
-
-	public Chunk getChunk()
-	{
-		return chunk;
-	}
-	
-	@Override
-	public void setLocalDestination(String anchorName)
-	{
-		chunk.setLocalDestination(anchorName);
 	}
 
 	@Override
-	public void setJavaScriptAction(String script)
+	public BaseFont awtToPdf(java.awt.Font font)
 	{
-		chunk.setAction(PdfAction.javaScript(script, pdfProducer.getPdfWriter()));
+		// not setting underline and strikethrough as we only need the base font.
+		// underline and strikethrough will not work here because PdfGraphics2D
+		// doesn't check the font attributes.
+		Map<Attribute,Object> atts = new HashMap<>();
+		atts.putAll(font.getAttributes());
+		Font pdfFont = pdfProducer.getFont(atts, null);
+		return pdfFont.getBaseFont();
 	}
 
 	@Override
-	public void setAnchor(String reference)
+	public java.awt.Font pdfToAwt(BaseFont font, int size)
 	{
-		chunk.setAnchor(reference);
-	}
-
-	@Override
-	public void setLocalGoto(String anchor)
-	{
-		chunk.setLocalGoto(anchor);
-	}
-
-	@Override
-	public void setRemoteGoto(String reference, String anchor)
-	{
-		chunk.setRemoteGoto(reference, anchor);
-	}
-
-	@Override
-	public void setRemoteGoto(String reference, int page)
-	{
-		chunk.setRemoteGoto(reference, page);
+		return null;
 	}
 
 }

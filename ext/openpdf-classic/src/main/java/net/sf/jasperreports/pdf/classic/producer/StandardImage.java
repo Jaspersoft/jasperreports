@@ -23,38 +23,75 @@
  */
 package net.sf.jasperreports.pdf.classic.producer;
 
-import com.lowagie.text.pdf.PdfDestination;
-import com.lowagie.text.pdf.PdfOutline;
+import com.lowagie.text.Image;
 
-import net.sf.jasperreports.pdf.common.PdfOutlineEntry;
+import net.sf.jasperreports.pdf.common.PdfImage;
 
 /**
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfOutline implements PdfOutlineEntry
+public class StandardImage implements PdfImage
 {
 
-	private PdfOutline pdfOutline;
+	private Image image;
 
-	public ClassicPdfOutline(PdfOutline pdfOutline)
+	public StandardImage(Image image)
 	{
-		this.pdfOutline = pdfOutline;
+		this.image = image;
+	}
+	
+	public Image getImage()
+	{
+		return image;
 	}
 
 	@Override
-	public PdfOutlineEntry createChild(String title)
+	public float getPlainWidth()
 	{
-		PdfOutline childOutline = new PdfOutline(pdfOutline, pdfOutline.getPdfDestination(), title, false);
-		return new ClassicPdfOutline(childOutline);
+		return image.getPlainWidth();
 	}
 
 	@Override
-	public PdfOutlineEntry createChild(String title, float left, float top)
+	public float getPlainHeight()
 	{
-		PdfDestination destination = new PdfDestination(PdfDestination.XYZ, left, top, 0);
-		PdfOutline childOutline = new PdfOutline(pdfOutline, destination, title, false);
-		return new ClassicPdfOutline(childOutline);
+		return image.getPlainHeight();
+	}
+
+	@Override
+	public float getScaledWidth()
+	{
+		return image.getScaledWidth();
+	}
+
+	@Override
+	public float getScaledHeight()
+	{
+		return image.getScaledHeight();
+	}
+
+	@Override
+	public void scaleAbsolute(int width, int height)
+	{
+		image.scaleAbsolute(width, height);
+	}
+
+	@Override
+	public void scaleToFit(int width, int height)
+	{
+		image.scaleToFit(width, height);
+	}
+
+	@Override
+	public void scalePercent(float percent)
+	{
+		image.scalePercent(percent);
+	}
+
+	@Override
+	public void setRotationDegrees(int degrees)
+	{
+		image.setRotationDegrees(degrees);
 	}
 
 }

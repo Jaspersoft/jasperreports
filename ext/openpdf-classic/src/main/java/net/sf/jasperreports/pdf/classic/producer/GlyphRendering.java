@@ -60,12 +60,12 @@ public class GlyphRendering
 	
 	private static final Log log = LogFactory.getLog(GlyphRendering.class);
 	
-	private ClassicPdfProducer pdfProducer;
+	private StandardPdfProducer pdfProducer;
 	private Set<UnicodeBlock> glyphRendererBlocks;
 	private boolean glyphRendererAddActualText;
 	private Map<FontKey, Boolean> glyphRendererFonts;
 
-	public GlyphRendering(ClassicPdfProducer pdfProducer)
+	public GlyphRendering(StandardPdfProducer pdfProducer)
 	{
 		this.pdfProducer = pdfProducer;
 		this.glyphRendererFonts = new HashMap<>();

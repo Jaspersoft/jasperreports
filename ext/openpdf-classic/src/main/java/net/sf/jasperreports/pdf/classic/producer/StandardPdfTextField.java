@@ -37,13 +37,13 @@ import net.sf.jasperreports.pdf.type.PdfFieldTypeEnum;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfTextField extends ClassicPdfField implements PdfTextField
+public class StandardPdfTextField extends StandardPdfField implements PdfTextField
 {
 
 	private TextField textField;
 	private PdfFieldTypeEnum fieldType;
 	
-	public ClassicPdfTextField(ClassicPdfProducer pdfProducer, TextField textField, PdfFieldTypeEnum fieldType)
+	public StandardPdfTextField(StandardPdfProducer pdfProducer, TextField textField, PdfFieldTypeEnum fieldType)
 	{
 		super(pdfProducer, textField);
 		this.textField = textField;

@@ -45,7 +45,7 @@ import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.pdf.AbstractPdfTextRenderer;
 import net.sf.jasperreports.pdf.JRPdfExporter;
 import net.sf.jasperreports.pdf.JRPdfExporterTagHelper;
-import net.sf.jasperreports.pdf.classic.producer.ClassicPdfProducer;
+import net.sf.jasperreports.pdf.classic.producer.StandardPdfProducer;
 import net.sf.jasperreports.pdf.common.PdfProducer;
 
 
@@ -86,7 +86,7 @@ public class PdfGlyphRenderer extends AbstractPdfTextRenderer
 		return PATCHED_LIBRARY;
 	}
 
-	private ClassicPdfProducer classicPdfProducer;
+	private StandardPdfProducer classicPdfProducer;
 	private PdfContentByte pdfContentByte;
 	
 	private boolean addActualText;	
@@ -120,13 +120,13 @@ public class PdfGlyphRenderer extends AbstractPdfTextRenderer
 		int offsetY
 		)
 	{
-		if (!(pdfProducer instanceof ClassicPdfProducer))
+		if (!(pdfProducer instanceof StandardPdfProducer))
 		{
 			throw new IllegalArgumentException("Only ClassicPdfProducer is supported");
 		}
 		super.initialize(pdfExporter, pdfProducer, tagHelper, text, styledText, offsetX, offsetY);
 		
-		classicPdfProducer = (ClassicPdfProducer) pdfProducer;
+		classicPdfProducer = (StandardPdfProducer) pdfProducer;
 		pdfContentByte = classicPdfProducer.getPdfContentByte();
 	}
 

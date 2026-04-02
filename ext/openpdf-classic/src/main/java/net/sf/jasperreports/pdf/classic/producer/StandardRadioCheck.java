@@ -37,12 +37,12 @@ import net.sf.jasperreports.pdf.type.PdfFieldCheckTypeEnum;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicRadioCheck extends ClassicPdfField implements PdfRadioCheck
+public class StandardRadioCheck extends StandardPdfField implements PdfRadioCheck
 {
 
 	private RadioCheckField radioCheckField;
 	
-	public ClassicRadioCheck(ClassicPdfProducer pdfProducer, RadioCheckField radioCheckField)
+	public StandardRadioCheck(StandardPdfProducer pdfProducer, RadioCheckField radioCheckField)
 	{
 		super(pdfProducer, radioCheckField);
 		this.radioCheckField = radioCheckField;

@@ -36,10 +36,10 @@ import net.sf.jasperreports.pdf.common.PdfTextAlignment;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfUtils
+public class StandardPdfUtils
 {
 
-	public ClassicPdfUtils()
+	public StandardPdfUtils()
 	{
 	}
 	

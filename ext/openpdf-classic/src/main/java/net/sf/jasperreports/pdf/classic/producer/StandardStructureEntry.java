@@ -36,13 +36,13 @@ import net.sf.jasperreports.pdf.common.PdfStructureEntry;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicStructureEntry implements PdfStructureEntry
+public class StandardStructureEntry implements PdfStructureEntry
 {
 
-	private ClassicPdfStructure pdfStructure;
+	private StandardPdfStructure pdfStructure;
 	private PdfStructureElement element;
 	
-	public ClassicStructureEntry(ClassicPdfStructure pdfStructure, PdfStructureElement element)
+	public StandardStructureEntry(StandardPdfStructure pdfStructure, PdfStructureElement element)
 	{
 		this.pdfStructure = pdfStructure;
 		this.element = element;

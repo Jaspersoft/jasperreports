@@ -53,10 +53,10 @@ import net.sf.jasperreports.pdf.type.PdfaConformanceEnum;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfWriter implements PdfDocumentWriter
+public class StandardPdfWriter implements PdfDocumentWriter
 {
 
-	private static final Log log = LogFactory.getLog(ClassicPdfWriter.class);
+	private static final Log log = LogFactory.getLog(StandardPdfWriter.class);
 
 	/**
 	 * Integer property that contains all permissions for the generated PDF document
@@ -71,11 +71,11 @@ public class ClassicPdfWriter implements PdfDocumentWriter
 			| PdfWriter.ALLOW_PRINTING
 			| PdfWriter.ALLOW_SCREENREADERS;
 	
-	private ClassicPdfProducer pdfProducer;
+	private StandardPdfProducer pdfProducer;
 	private PdfWriter pdfWriter;
 	private PdfaConformanceEnum pdfaConformance;
 
-	public ClassicPdfWriter(ClassicPdfProducer pdfProducer, PdfWriter pdfWriter)
+	public StandardPdfWriter(StandardPdfProducer pdfProducer, PdfWriter pdfWriter)
 	{
 		this.pdfProducer = pdfProducer;
 		this.pdfWriter = pdfWriter;

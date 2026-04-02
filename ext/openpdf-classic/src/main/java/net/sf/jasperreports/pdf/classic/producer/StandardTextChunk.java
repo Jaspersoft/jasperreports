@@ -23,69 +23,61 @@
  */
 package net.sf.jasperreports.pdf.classic.producer;
 
-import com.lowagie.text.Document;
+import java.awt.Color;
 
-import net.sf.jasperreports.pdf.common.PdfDocument;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Font;
+
+import net.sf.jasperreports.pdf.common.PdfTextChunk;
 
 /**
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicDocument implements PdfDocument
+public class StandardTextChunk extends StandardChunk implements PdfTextChunk
 {
-
-	private Document document;
-
-	public ClassicDocument(Document document)
-	{
-		this.document = document;
-	}
-
-	public Document getDocument()
-	{
-		return document;
-	}
-
-	@Override
-	public void addTitle(String title)
-	{
-		document.addTitle(title);
-	}
-
-	@Override
-	public void addAuthor(String author)
-	{
-		document.addAuthor(author);
-	}
-
-	@Override
-	public void addSubject(String subject)
-	{
-		document.addSubject(subject);
-	}
-
-	@Override
-	public void addKeywords(String keywords)
-	{
-		document.addKeywords(keywords);
-	}
-
-	@Override
-	public void addCreator(String creator)
-	{
-		document.addCreator(creator);
-	}
-
-	@Override
-	public void addProducer(String producer)
-	{
-		document.addProducer(producer);
-	}
-
-	@Override
-	public void open()
-	{
-		document.open();
-	}
 	
+	private Font font;
+
+	public StandardTextChunk(StandardPdfProducer pdfProducer, Chunk chunk, Font font)
+	{
+		super(pdfProducer, chunk);
+		
+		this.font = font;
+	}
+
+	@Override
+	public void setUnderline()
+	{
+		// using the same values as sun.font.Fond2D
+		chunk.setUnderline(null, 0, 1f / 18, 0, -1f / 12, 0);
+	}
+
+	@Override
+	public void setStrikethrough()
+	{
+		// using the same thickness as sun.font.Fond2D.
+		// the position is calculated in Fond2D based on the ascent, defaulting 
+		// to OpenPDF default position which depends on the font size
+		chunk.setUnderline(null, 0, 1f / 18, 0, 1f / 3, 0);
+	}
+
+	@Override
+	public void setSuperscript()
+	{
+		chunk.setTextRise(font.getCalculatedLeading(1f)/2);
+	}
+
+	@Override
+	public void setSubscript()
+	{
+		chunk.setTextRise(-font.getCalculatedLeading(1f)/2);
+	}
+
+	@Override
+	public void setBackground(Color backcolor)
+	{
+		chunk.setBackground(backcolor);
+	}
+
 }

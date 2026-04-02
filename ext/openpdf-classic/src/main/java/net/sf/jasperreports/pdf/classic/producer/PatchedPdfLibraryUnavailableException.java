@@ -53,7 +53,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  * </p>
  * 
  * <p>
- * Glyph substitution is configured via the {@link ClassicPdfProducer#PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled}
+ * Glyph substitution is configured via the {@link StandardPdfProducer#PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled}
  * property, set to false by default.
  * </p>
  * 
@@ -65,9 +65,9 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  * 
  * <p>
  * To avoid the exception being raised, one can either use the patched OpenPDF 
- * version or explicitly set the {@link ClassicPdfProducer#PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled}
+ * version or explicitly set the {@link StandardPdfProducer#PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled}
  * to true.
- * If choosing the latter option, the {@link ClassicPdfProducer#PROPERTY_DOCUMENT_LANGUAGE net.sf.jasperreports.export.pdf.classic.document.language}
+ * If choosing the latter option, the {@link StandardPdfProducer#PROPERTY_DOCUMENT_LANGUAGE net.sf.jasperreports.export.pdf.classic.document.language}
  * property can be set to specify the language used for glyph substitutions.
  * </p>
  * 

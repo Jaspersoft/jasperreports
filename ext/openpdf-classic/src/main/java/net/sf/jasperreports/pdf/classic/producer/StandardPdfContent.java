@@ -39,7 +39,7 @@ import net.sf.jasperreports.pdf.common.PdfContent;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfContent implements PdfContent
+public class StandardPdfContent implements PdfContent
 {
 	
 	private PdfWriter pdfWriter;
@@ -52,7 +52,7 @@ public class ClassicPdfContent implements PdfContent
 	private PdfGState[] strokeAlphaStates = new PdfGState[256];
 	private boolean strokeAlphaSet = false;
 
-	public ClassicPdfContent(PdfWriter pdfWriter, ColorSpace cmykColorSpace)
+	public StandardPdfContent(PdfWriter pdfWriter, ColorSpace cmykColorSpace)
 	{
 		this.pdfWriter = pdfWriter;
 		this.pdfContentByte = pdfWriter.getDirectContent();
@@ -79,7 +79,7 @@ public class ClassicPdfContent implements PdfContent
 	{
 		setFillColorAlpha(color.getAlpha());
 		pdfContentByte.setColorFill(
-			ClassicPdfUtils.convertColor(cmykColorSpace, color)
+			StandardPdfUtils.convertColor(cmykColorSpace, color)
 			);
 	}
 
@@ -126,7 +126,7 @@ public class ClassicPdfContent implements PdfContent
 		}
 		
 		pdfContentByte.setColorStroke(
-			ClassicPdfUtils.convertColor(cmykColorSpace, color)
+			StandardPdfUtils.convertColor(cmykColorSpace, color)
 			);		
 	}
 	

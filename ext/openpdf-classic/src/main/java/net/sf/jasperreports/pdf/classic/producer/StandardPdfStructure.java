@@ -41,14 +41,14 @@ import net.sf.jasperreports.pdf.common.PdfStructureEntry;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfStructure implements PdfStructure
+public class StandardPdfStructure implements PdfStructure
 {
 
-	private ClassicPdfProducer pdfProducer;
+	private StandardPdfProducer pdfProducer;
 	
 	private Map<String, PdfName> pdfNames;
 
-	public ClassicPdfStructure(ClassicPdfProducer pdfProducer)
+	public StandardPdfStructure(StandardPdfProducer pdfProducer)
 	{
 		this.pdfProducer = pdfProducer;
 		this.pdfNames = new HashMap<>();
@@ -80,7 +80,7 @@ public class ClassicPdfStructure implements PdfStructure
 			allTag.put(PdfName.LANG, new PdfString(language));
 		}
 		
-		return new ClassicStructureEntry(this, allTag);
+		return new StandardStructureEntry(this, allTag);
 	}
 	
 	protected PdfName pdfName(String name)
@@ -94,11 +94,11 @@ public class ClassicPdfStructure implements PdfStructure
 		return pdfName;
 	}
 
-	protected ClassicStructureEntry createElement(PdfStructureEntry parent, String name)
+	protected StandardStructureEntry createElement(PdfStructureEntry parent, String name)
 	{
-		PdfStructureElement parentElement = ((ClassicStructureEntry) parent).getElement();
+		PdfStructureElement parentElement = ((StandardStructureEntry) parent).getElement();
 		PdfStructureElement element = new PdfStructureElement(parentElement, pdfName(name));
-		return new ClassicStructureEntry(this, element);
+		return new StandardStructureEntry(this, element);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class ClassicPdfStructure implements PdfStructure
 	@Override
 	public PdfStructureEntry beginTag(PdfStructureEntry parent, String name)
 	{
-		ClassicStructureEntry tag = createElement(parent, name);
+		StandardStructureEntry tag = createElement(parent, name);
 		pdfProducer.getPdfContentByte().beginMarkedContentSequence(tag.getElement());
 		return tag;
 	}
@@ -121,7 +121,7 @@ public class ClassicPdfStructure implements PdfStructure
 		PdfDictionary markedContentProps = new PdfDictionary();
 		markedContentProps.put(PdfName.ACTUALTEXT, new PdfString(text, PdfObject.TEXT_UNICODE));
 		
-		ClassicStructureEntry tag = createElement(parent, name);
+		StandardStructureEntry tag = createElement(parent, name);
 		pdfProducer.getPdfContentByte().beginMarkedContentSequence(tag.getElement(), 
 				markedContentProps);
 		return tag;

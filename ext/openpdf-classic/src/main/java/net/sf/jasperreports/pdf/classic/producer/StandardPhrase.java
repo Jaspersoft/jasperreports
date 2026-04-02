@@ -38,13 +38,13 @@ import net.sf.jasperreports.pdf.common.TextDirection;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPhrase implements PdfPhrase
+public class StandardPhrase implements PdfPhrase
 {
 
-	private ClassicPdfProducer pdfProducer;
+	private StandardPdfProducer pdfProducer;
 	private Phrase phrase;
 
-	public ClassicPhrase(ClassicPdfProducer pdfProducer, Phrase phrase)
+	public StandardPhrase(StandardPdfProducer pdfProducer, Phrase phrase)
 	{
 		this.pdfProducer = pdfProducer;
 		this.phrase = phrase;
@@ -53,7 +53,7 @@ public class ClassicPhrase implements PdfPhrase
 	@Override
 	public void add(PdfChunk chunk)
 	{
-		phrase.add(((ClassicChunk) chunk).getChunk());
+		phrase.add(((StandardChunk) chunk).getChunk());
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ClassicPhrase implements PdfPhrase
 		colText.setSimpleColumn(phrase, 
 				llx, lly, urx, ury, 
 				fixedLeading, 
-				ClassicPdfUtils.toPdfAlignment(alignment));
+				StandardPdfUtils.toPdfAlignment(alignment));
 		if (multipliedLeading != 0f)
 		{
 			colText.setLeading(fixedLeading, multipliedLeading);

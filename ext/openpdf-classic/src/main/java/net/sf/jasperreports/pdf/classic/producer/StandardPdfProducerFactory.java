@@ -41,21 +41,20 @@ import net.sf.jasperreports.pdf.common.PdfProducerFactory;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicPdfProducerFactory implements PdfProducerFactory
+public class StandardPdfProducerFactory implements PdfProducerFactory
 {
 
 	protected static boolean fontsRegistered;
 
-	public ClassicPdfProducerFactory()
+	public StandardPdfProducerFactory()
 	{
-		Document.compress = false;
 		registerFonts();
 	}
 
 	@Override
 	public PdfProducer createProducer(PdfProducerContext context)
 	{
-		return new ClassicPdfProducer(context);
+		return new StandardPdfProducer(context);
 	}
 
 	protected static synchronized void registerFonts ()

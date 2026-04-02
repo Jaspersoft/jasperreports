@@ -36,7 +36,7 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfGraphics2D;
 
 import net.sf.jasperreports.pdf.JRPdfExporter;
-import net.sf.jasperreports.pdf.classic.producer.ClassicPdfProducer;
+import net.sf.jasperreports.pdf.classic.producer.StandardPdfProducer;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -50,11 +50,11 @@ public class PdfGlyphGraphics2D extends PdfGraphics2D
 	private boolean initialized;
 	private PdfContentByte pdfContentByte;
 	private JRPdfExporter pdfExporter;
-	private ClassicPdfProducer pdfProducer;
+	private StandardPdfProducer pdfProducer;
 	private Locale locale;
 
 	public PdfGlyphGraphics2D(PdfContentByte pdfContentByte, JRPdfExporter pdfExporter, 
-			ClassicPdfProducer pdfProducer, Locale locale)
+			StandardPdfProducer pdfProducer, Locale locale)
 	{
 		super(pdfContentByte, 
 				pdfExporter.getCurrentPageFormat().getPageWidth(), pdfExporter.getCurrentPageFormat().getPageHeight(), 

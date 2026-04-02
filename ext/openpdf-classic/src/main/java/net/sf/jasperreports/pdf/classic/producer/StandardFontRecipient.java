@@ -40,13 +40,13 @@ import net.sf.jasperreports.pdf.common.PdfFontStyle;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ClassicFontRecipient implements FontRecipient
+public class StandardFontRecipient implements FontRecipient
 {
 
 	private ColorSpace cmykColorSpace;
 	private Font font;
 
-	public ClassicFontRecipient(ColorSpace cmykColorSpace)
+	public StandardFontRecipient(ColorSpace cmykColorSpace)
 	{
 		this.cmykColorSpace = cmykColorSpace;
 	}
@@ -67,7 +67,7 @@ public class ClassicFontRecipient implements FontRecipient
 			float size, PdfFontStyle pdfFontStyle, Color forecolor)
 	{
 		Font font = FontFactory.getFont(pdfFontName, pdfEncoding, isPdfEmbedded, 
-				size, toPdfFontStyle(pdfFontStyle), ClassicPdfUtils.convertColor(cmykColorSpace, forecolor));
+				size, toPdfFontStyle(pdfFontStyle), StandardPdfUtils.convertColor(cmykColorSpace, forecolor));
 		// check if FontFactory didn't find the font
 		if (font != null && font.getBaseFont() == null && font.getFamily() == Font.UNDEFINED)
 		{
@@ -92,7 +92,7 @@ public class ClassicFontRecipient implements FontRecipient
 			throw new JRRuntimeException(e);
 		}
 
-		font = new Font(baseFont, size, toPdfFontStyle(pdfFontStyle), ClassicPdfUtils.convertColor(cmykColorSpace, forecolor));
+		font = new Font(baseFont, size, toPdfFontStyle(pdfFontStyle), StandardPdfUtils.convertColor(cmykColorSpace, forecolor));
 	}
 	
 	protected static int toPdfFontStyle(PdfFontStyle pdfFontStyle)

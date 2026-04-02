@@ -58,12 +58,12 @@ public class StandardPdfContent implements PdfContent
 		this.pdfContentByte = pdfWriter.getDirectContent();
 		this.cmykColorSpace = cmykColorSpace;
 	}
-	
+
 	public PdfWriter getPdfWriter()
 	{
 		return pdfWriter;
 	}
-
+	
 	public PdfContentByte getPdfContentByte()
 	{
 		return pdfContentByte;
