@@ -208,6 +208,30 @@ public class StandardPdfWriter implements PdfDocumentWriter
 		{
 			pdfWriter.setPDFXConformance(PdfWriter.PDFA1B);
 		}
+		else if (PdfaConformanceEnum.PDFA_2A == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA2A);
+		}
+		else if (PdfaConformanceEnum.PDFA_2B == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA2B);
+		}
+		else if (PdfaConformanceEnum.PDFA_2U == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA2U);
+		}
+		else if (PdfaConformanceEnum.PDFA_3A == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA3A);
+		}
+		else if (PdfaConformanceEnum.PDFA_3B == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA3B);
+		}
+		else if (PdfaConformanceEnum.PDFA_3U == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA3U);
+		}
 	}
 
 	@Override
