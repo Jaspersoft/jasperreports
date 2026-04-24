@@ -197,7 +197,7 @@ public class StandardChunk implements PdfChunk
 
 		PdfStructureElement element = ((StandardStructureEntry) linkTag).getElement();
 
-		ClassicPdfStructureTreeRoot treeRoot = (ClassicPdfStructureTreeRoot) pdfProducer.getPdfWriter().getStructureTreeRoot();
+		StandardPdfStructureTreeRoot treeRoot = (StandardPdfStructureTreeRoot) pdfProducer.getPdfWriter().getStructureTreeRoot();
 		treeRoot.addAnnotationParent(annotation, element.getReference());
 
 		pdfProducer.getPdfWriter().addAnnotation(annotation);

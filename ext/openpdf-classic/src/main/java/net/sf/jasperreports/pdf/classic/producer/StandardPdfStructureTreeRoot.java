@@ -31,12 +31,12 @@ import com.lowagie.text.pdf.PdfWriter;
  * collisions with page /StructParents values (which are assigned by
  * OpenPDF using page indices 0, 1, 2, ...).
  */
-public class ClassicPdfStructureTreeRoot extends PdfStructureTreeRoot
+public class StandardPdfStructureTreeRoot extends PdfStructureTreeRoot
 {
 
 	private final List<AnnotationParent> annotationParents = new ArrayList<>();
 
-	ClassicPdfStructureTreeRoot(PdfWriter writer)
+	StandardPdfStructureTreeRoot(PdfWriter writer)
 	{
 		super(writer);
 	}
@@ -49,9 +49,9 @@ public class ClassicPdfStructureTreeRoot extends PdfStructureTreeRoot
 	 * @param writer the PdfWriter to install into
 	 * @return the installed PdfStructureTreeRootUtil instance
 	 */
-	public static ClassicPdfStructureTreeRoot install(PdfWriter writer)
+	public static StandardPdfStructureTreeRoot install(PdfWriter writer)
 	{
-		ClassicPdfStructureTreeRoot root = new ClassicPdfStructureTreeRoot(writer);
+		StandardPdfStructureTreeRoot root = new StandardPdfStructureTreeRoot(writer);
 		writer.setStructureTreeRoot(root);
 		return root;
 	}
