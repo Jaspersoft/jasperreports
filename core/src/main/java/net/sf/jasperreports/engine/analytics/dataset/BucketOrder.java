@@ -123,6 +123,14 @@ public enum BucketOrder implements NamedEnum
 		return order;
 	}
 	
+	/**
+	 *
+	 */
+	public static BucketOrder getValueOrDefault(BucketOrder value)
+	{
+		return value == null ? ASCENDING : value;
+	}
+	
 	@Override
 	public BucketOrder getDefault()
 	{

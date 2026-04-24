@@ -141,8 +141,8 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	protected Map<String, Integer> columnGroupsMap;
 	protected Map<String, Integer> measuresMap;
 	protected Integer columnBreakOffset;
-	protected boolean repeatColumnHeaders = true;
-	protected boolean repeatRowHeaders = true;
+	protected boolean repeatColumnHeaders = true; // primitive boolean field can't be null; custom BooleanTrueAsEmptySerializer used
+	protected boolean repeatRowHeaders = true; // primitive boolean field can't be null; custom BooleanTrueAsEmptySerializer used
 	protected RunDirectionEnum runDirection;
 	protected HorizontalPosition horizontalPosition;
 	protected List<JRCrosstabCell> cellsList;

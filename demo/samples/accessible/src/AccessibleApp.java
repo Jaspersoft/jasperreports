@@ -201,8 +201,6 @@ public class AccessibleApp extends AbstractSampleApp
 			
 			configuration.setPdfaConformance(conformance);
 			
-			configuration.setIccProfilePath("./sRGB_IEC61966-2-1_no_black_scaling.icc");
-			
 			exporter.setConfiguration(configuration);
 			exporter.exportReport();
 

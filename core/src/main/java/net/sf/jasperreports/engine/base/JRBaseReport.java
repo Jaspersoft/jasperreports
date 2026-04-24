@@ -87,7 +87,7 @@ public class JRBaseReport implements JRReport, Serializable, JRChangeEventsSuppo
 	 *
 	 */
 	protected String name;
-	protected String language = LANGUAGE_JAVA; //FIXMEJACK
+	protected String language;
 	protected Integer columnCount;
 	protected PrintOrderEnum printOrder;
 	protected RunDirectionEnum columnDirection;

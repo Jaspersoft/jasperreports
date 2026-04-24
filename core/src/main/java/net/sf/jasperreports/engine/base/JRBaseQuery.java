@@ -51,7 +51,7 @@ public class JRBaseQuery implements JRQuery, Serializable
 	 */
 	private JRQueryChunk[] chunks;
 	
-	protected String language = JRJdbcQueryExecuterFactory.QUERY_LANGUAGE_SQL; //FIXMEJACK
+	protected String language = JRJdbcQueryExecuterFactory.QUERY_LANGUAGE_SQL;
 
 
 	/**

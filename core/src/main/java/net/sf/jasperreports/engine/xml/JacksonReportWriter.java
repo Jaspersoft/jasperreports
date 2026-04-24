@@ -55,7 +55,7 @@ public class JacksonReportWriter implements ReportWriter
 		String version = JRPropertiesUtil.getInstance(jasperReportsContext).getProperty(report, JRXmlWriter.PROPERTY_REPORT_VERSION);
 		if (version == null || new VersionComparator().compare(version, JRConstants.VERSION_7_0_0) >= 0)
 		{
-			JacksonUtil.getInstance(jasperReportsContext).writeXml(report, out);
+			JacksonUtil.getInstance(jasperReportsContext).writeXml(report, out, version);
 			return true;
 		}
 		return false;
@@ -68,7 +68,7 @@ public class JacksonReportWriter implements ReportWriter
 		String version = JRPropertiesUtil.getInstance(jasperReportsContext).getProperty(JRXmlWriter.PROPERTY_REPORT_VERSION);
 		if (version == null || new VersionComparator().compare(version, JRConstants.VERSION_7_0_0) >= 0)
 		{
-			JacksonUtil.getInstance(jasperReportsContext).writeXml(template, out);
+			JacksonUtil.getInstance(jasperReportsContext).writeXml(template, out, version);
 			return true;
 		}
 		return false;

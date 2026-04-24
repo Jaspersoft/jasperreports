@@ -359,7 +359,7 @@ public class RendererUtil
 	{
 		Renderable renderer = null;
 		
-		switch (onErrorType)
+		switch (OnErrorTypeEnum.getValueOrDefault(onErrorType))
 		{
 			case ICON :
 			{
@@ -387,7 +387,7 @@ public class RendererUtil
 	{
 		Renderable renderer = null;
 		
-		switch (onErrorType)
+		switch (OnErrorTypeEnum.getValueOrDefault(onErrorType))
 		{
 			case ICON :
 			{

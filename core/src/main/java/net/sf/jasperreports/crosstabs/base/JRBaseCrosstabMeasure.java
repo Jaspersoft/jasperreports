@@ -59,7 +59,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 	protected String incrementerFactoryClassName;
 	protected String incrementerFactoryClassRealName;
 	protected Class<?> incrementerFactoryClass;
-	protected CrosstabPercentageEnum percentageType = CrosstabPercentageEnum.NONE;
+	protected CrosstabPercentageEnum percentageType;
 	protected String percentageCalculatorClassName;
 	protected String percentageCalculatorClassRealName;
 	protected Class<?> percentageCalculatorClass;

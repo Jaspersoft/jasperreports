@@ -54,4 +54,11 @@ public class JRFillCrosstabRowGroup extends JRFillCrosstabGroup implements JRCro
 		return ((JRCrosstabRowGroup) parentGroup).getWidth();
 	}
 
+
+	@Override
+	public boolean isKeepTogether()
+	{
+		return ((JRCrosstabRowGroup) parentGroup).isKeepTogether();
+	}
+
 }

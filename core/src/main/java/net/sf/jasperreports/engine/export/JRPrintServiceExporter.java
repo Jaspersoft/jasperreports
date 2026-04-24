@@ -52,6 +52,7 @@ import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.print.JRPrinterAWT;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.ExporterOutput;
 import net.sf.jasperreports.export.PrintServiceExporterConfiguration;
@@ -424,7 +425,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 						PageFormat pageFormat = printerJob.defaultPage();
 						Paper paper = pageFormat.getPaper();
 						
-						switch (jasperPrint.getOrientation())
+						switch (OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()))
 						{
 							case LANDSCAPE :
 							{
@@ -529,7 +530,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 		{
 			int printableWidth;
 			int printableHeight;
-			switch (jPrint.getOrientation())
+			switch (OrientationEnum.getValueOrDefault(jPrint.getOrientation()))
 			{
 				case LANDSCAPE:
 					printableWidth = jPrint.getPageHeight();
@@ -555,7 +556,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 		if (!printRequestAttributeSet.containsKey(OrientationRequested.class))
 		{
 			OrientationRequested orientation;
-			switch (jPrint.getOrientation())
+			switch (OrientationEnum.getValueOrDefault(jPrint.getOrientation()))
 			{
 				case LANDSCAPE:
 					orientation = OrientationRequested.LANDSCAPE;

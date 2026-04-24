@@ -35,7 +35,6 @@ import com.lowagie.text.pdf.PdfNumber;
 import com.lowagie.text.pdf.PdfObject;
 import com.lowagie.text.pdf.PdfString;
 import com.lowagie.text.pdf.PdfStructureElement;
-import com.lowagie.text.pdf.PdfStructureTreeRootUtil;
 
 import net.sf.jasperreports.pdf.common.PdfChunk;
 import net.sf.jasperreports.pdf.common.PdfStructureEntry;
@@ -198,7 +197,7 @@ public class StandardChunk implements PdfChunk
 
 		PdfStructureElement element = ((StandardStructureEntry) linkTag).getElement();
 
-		PdfStructureTreeRootUtil treeRoot = (PdfStructureTreeRootUtil) pdfProducer.getPdfWriter().getStructureTreeRoot();
+		ClassicPdfStructureTreeRoot treeRoot = (ClassicPdfStructureTreeRoot) pdfProducer.getPdfWriter().getStructureTreeRoot();
 		treeRoot.addAnnotationParent(annotation, element.getReference());
 
 		pdfProducer.getPdfWriter().addAnnotation(annotation);

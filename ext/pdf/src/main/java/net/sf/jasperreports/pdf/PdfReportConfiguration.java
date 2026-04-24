@@ -179,11 +179,50 @@ public interface PdfReportConfiguration extends ReportExportConfiguration
 			)
 	public static final String PROPERTY_EVEN_PAGE_OFFSET_Y = JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.even.page.offset.y";
 
-	//FIXME: add property annotation and configref description
-	public static final String PROPERTY_PREFIX_GLYPH_RENDERER_BLOCKS = 
+	/**
+	 * Property prefix for specifying the Unicode blocks for which the glyph rendering mode should be used
+	 * during PDF export. The glyph rendering mode writes text as {@link java.awt.font.GlyphVector GlyphVector}
+	 * directly to the PDF content, which allows correct rendering of complex scripts such as Indic languages
+	 * (Devanagari, Bengali, Telugu, Tamil, etc.) that require advanced text shaping.
+	 *
+	 * <p>
+	 * Properties with this prefix should have an arbitrary suffix as name and a comma-separated list of
+	 * {@link java.lang.Character.UnicodeBlock} names as value. If the text of a report element contains characters
+	 * belonging to any of the specified Unicode blocks, the glyph renderer will be used for the entire text element.
+	 * </p>
+	 *
+	 * @see net.sf.jasperreports.pdf.PdfGlyphRenderer
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_6_2_0,
+			name = "net.sf.jasperreports.export.pdf.glyph.renderer.blocks.{arbitrary_name}"
+			)
+	public static final String PROPERTY_PREFIX_GLYPH_RENDERER_BLOCKS =
 			JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.glyph.renderer.blocks.";
-	
-	//FIXME: add property annotation and configref description
+
+	/**
+	 * Property that specifies whether the glyph renderer should add actual text to the PDF content
+	 * when rendering text via {@link java.awt.font.GlyphVector GlyphVector}. Adding actual text enables
+	 * text selection, copy-paste, and searchability in the resulting PDF document for text that is rendered
+	 * using the glyph rendering mode.
+	 *
+	 * <p>
+	 * When this property is set to <code>true</code>, the generated PDF will require at least PDF version 1.5.
+	 * By default, this property is set to <code>true</code>.
+	 * </p>
+	 *
+	 * @see #PROPERTY_PREFIX_GLYPH_RENDERER_BLOCKS
+	 * @see net.sf.jasperreports.pdf.PdfGlyphRenderer
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			defaultValue = PropertyConstants.BOOLEAN_TRUE,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_6_2_0,
+			valueType = Boolean.class
+			)
 	public static final String PROPERTY_GLYPH_RENDERER_ADD_ACTUAL_TEXT =
 			JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.glyph.renderer.add.actual.text";
 	

@@ -21,60 +21,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.jasperreports.engine.type;
+package net.sf.jasperreports.jackson.util;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 
 /**
+ * Annotation used to mark properties or types that were introduced in a specific
+ * version of JasperReports. When writing JRXML targeting an older version,
+ * properties or types annotated with a version newer than the target will be excluded
+ * from the output.
+ *
+ * <p>The value should be a version string matching a constant from
+ * {@link net.sf.jasperreports.engine.JRConstants}, e.g. "7.0.1".</p>
+ *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public enum SortFieldTypeEnum implements NamedEnum
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface JRXmlSince
 {
 	/**
-	 * Specifies the sort field name represents a dataset field name.
+	 * The version in which the annotated property or type was introduced.
 	 */
-	FIELD("Field"),
-
-	/**
-	 * Specifies the sort field name represents a dataset variable name.
-	 */
-	VARIABLE("Variable");
-
-
-	/**
-	 *
-	 */
-	private final transient String name;
-
-	private SortFieldTypeEnum(String name)
-	{
-		this.name = name;
-	}
-	
-	@Override
-	public String getName()
-	{
-		return name;
-	}
-	
-	/**
-	 *
-	 */
-	public static SortFieldTypeEnum getByName(String name)
-	{
-		return EnumUtil.getEnumByName(values(), name);
-	}
-	
-	/**
-	 *
-	 */
-	public static SortFieldTypeEnum getValueOrDefault(SortFieldTypeEnum value)
-	{
-		return value == null ? FIELD : value;
-	}
-	
-	@Override
-	public SortFieldTypeEnum getDefault()
-	{
-		return FIELD;
-	}
+	String value();
 }

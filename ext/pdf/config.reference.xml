@@ -382,8 +382,21 @@ This should be enabled only when the legacy text measuring is enabled with the <
 otherwise the additional pixel in PDF text rendering is not needed since the newer text measuring code no longer truncates text height.
     </description>
   </configProperty>
-
-
+  
+  
+  <!-- 	net.sf.jasperreports.export.pdf.legacy.page.anchors -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.legacy.page.anchors">
+    <description>
+Flag that enables legacy page anchors in PDF.
+<br/>
+Before version 7.0.7, the PDF exporter created page anchors in PDF by adding an empty text chunk using default font.
+Starting from version 7.0.7, these page anchors are no longer created by default, but the property can be set to true to 
+reinstate the behaviour.
+    </description>
+  </configProperty>
+  
+  
   <!-- net.sf.jasperreports.export.pdf.metadata.author -->
   
   <configProperty name="net.sf.jasperreports.export.pdf.metadata.author">

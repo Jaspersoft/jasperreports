@@ -104,13 +104,13 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 			}
 			case RIGHT :
 			{
-				if (text.getRunDirection() == RunDirectionEnum.LTR)
+				if (text.getRunDirection() == RunDirectionEnum.RTL)
 				{
-					horizontalAlignment = PdfTextAlignment.RIGHT;
+					horizontalAlignment = PdfTextAlignment.LEFT;
 				}
 				else
 				{
-					horizontalAlignment =  PdfTextAlignment.LEFT;
+					horizontalAlignment = PdfTextAlignment.RIGHT;
 				}
 				leftOffsetFactor = -0.2f;
 				rightOffsetFactor = 0f;
@@ -126,13 +126,13 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 			case LEFT :
 			default :
 			{
-				if (text.getRunDirection() == RunDirectionEnum.LTR)
+				if (text.getRunDirection() == RunDirectionEnum.RTL)
 				{
-					horizontalAlignment = PdfTextAlignment.LEFT;
+					horizontalAlignment = PdfTextAlignment.RIGHT;
 				}
 				else
 				{
-					horizontalAlignment = PdfTextAlignment.RIGHT;
+					horizontalAlignment = PdfTextAlignment.LEFT;
 				}
 				leftOffsetFactor = 0f;
 				rightOffsetFactor = 0.2f;

@@ -68,6 +68,7 @@ import net.sf.jasperreports.engine.base.JRBaseDataset;
 import net.sf.jasperreports.engine.query.QueryExecuterFactory;
 import net.sf.jasperreports.engine.type.CalculationEnum;
 import net.sf.jasperreports.engine.type.ResetTypeEnum;
+import net.sf.jasperreports.engine.type.SortFieldTypeEnum;
 import net.sf.jasperreports.engine.util.CloneStore;
 import net.sf.jasperreports.engine.util.ContextClassLoaderObjectInputStream;
 import net.sf.jasperreports.engine.util.FormatFactory;
@@ -1491,7 +1492,7 @@ public class JRDesignDataset extends JRBaseDataset
 	 */
 	private String getSortFieldKey(JRSortField sortField)
 	{
-		return sortField.getName() + "|" + sortField.getType().getName();
+		return sortField.getName() + "|" + SortFieldTypeEnum.getValueOrDefault(sortField.getType()).getName();
 	}
 
 	

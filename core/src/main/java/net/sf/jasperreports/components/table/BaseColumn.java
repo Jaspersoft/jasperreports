@@ -33,11 +33,13 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRCloneable;
+import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRIdentifiable;
 import net.sf.jasperreports.engine.JRPropertiesHolder;
 import net.sf.jasperreports.engine.JRPropertyExpression;
 import net.sf.jasperreports.engine.xml.JRXmlConstants;
+import net.sf.jasperreports.jackson.util.JRXmlSince;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -84,6 +86,7 @@ public interface BaseColumn extends JRCloneable, JRPropertiesHolder, JRIdentifia
 	 * A typical case would be to have weight -1 for all columns, meaning they will all grow proportionally to their initial width.
 	 * Another typical case is to have weight 1 for all columns, meaning they will all grow with an equal amount, regardless of their initial width.
 	 */
+	@JRXmlSince(JRConstants.VERSION_7_0_2)
 	@JacksonXmlProperty(isAttribute = true)
 	Integer getWeight();
 

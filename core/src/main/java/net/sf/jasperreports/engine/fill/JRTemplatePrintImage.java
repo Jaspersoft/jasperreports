@@ -78,7 +78,7 @@ public class JRTemplatePrintImage extends JRTemplatePrintGraphicElement implemen
 	 * The bookmark level for the anchor associated with this field.
 	 * @see JRAnchor#getBookmarkLevel()
 	 */
-	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK;
+	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK; // primitive int field has zero as default value anyway, but it is explicitly initialized for clarity
 	
 	public JRTemplatePrintImage()
 	{

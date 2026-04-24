@@ -167,7 +167,7 @@ public abstract class JRAbstractCompiler implements JRCompiler
 	public final JasperReport compileReport(JasperDesign jasperDesign) throws JRException
 	{
 		// check if the language is supported by the compiler
-		checkLanguage(jasperDesign.getLanguage());
+		checkLanguage(jasperDesign.getLanguage() == null ? JRReport.LANGUAGE_JAVA : jasperDesign.getLanguage());
 		
 		// collect all report expressions
 		JRExpressionCollector expressionCollector = JRExpressionCollector.collector(jasperReportsContext, jasperDesign);

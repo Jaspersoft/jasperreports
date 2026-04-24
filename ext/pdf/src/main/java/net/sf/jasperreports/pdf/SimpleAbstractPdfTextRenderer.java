@@ -204,8 +204,8 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 			text.getLineSpacingFactor(),
 			horizontalAlignment == PdfTextAlignment.JUSTIFIED && justifyAll 
 				? PdfTextAlignment.JUSTIFIED_ALL : horizontalAlignment,
-			text.getRunDirection() == RunDirectionEnum.LTR
-				? TextDirection.LTR : TextDirection.RTL
+			text.getRunDirection() == RunDirectionEnum.RTL
+				? TextDirection.RTL : TextDirection.LTR
 			);
 	}
 

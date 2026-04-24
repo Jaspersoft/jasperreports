@@ -79,7 +79,7 @@ public class JRFillCellContents extends JRFillElementContainer implements JRCell
 	private int x;
 	private int y;
 	private int verticalSpan;
-	private CrosstabRowPositionEnum verticalPositionType = CrosstabRowPositionEnum.TOP;
+	private CrosstabRowPositionEnum verticalPositionType;
 	private int horizontalSpan;
 	
 	private Map<JRStyle,JRTemplateFrame> templateFrames;
@@ -460,7 +460,7 @@ public class JRFillCellContents extends JRFillElementContainer implements JRCell
 	{
 		int positionOffset;
 		
-		switch (verticalPositionType)
+		switch (CrosstabRowPositionEnum.getValueOrDefault(verticalPositionType))
 		{
 			case MIDDLE:
 				positionOffset = (getStretchHeight() - prepareStretchHeight) / 2;

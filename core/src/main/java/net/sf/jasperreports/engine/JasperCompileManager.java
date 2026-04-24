@@ -840,7 +840,7 @@ public final class JasperCompileManager
 		String compilerClassName = getCompilerClassProperty();
 		if (compilerClassName == null || compilerClassName.trim().length() == 0)
 		{
-			String language = jasperDesign.getLanguage();
+			String language = jasperDesign.getLanguage() == null ? JRReport.LANGUAGE_JAVA : jasperDesign.getLanguage();
 			compilerClassName = JRPropertiesUtil.getInstance(jasperReportsContext).getProperty(JRCompiler.COMPILER_PREFIX + language);
 			if (compilerClassName == null || compilerClassName.trim().length() == 0)
 			{

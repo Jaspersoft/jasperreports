@@ -114,8 +114,8 @@ public class PdfTextRenderer extends AbstractPdfTextRenderer
 			0,
 			horizontalAlignment == PdfTextAlignment.JUSTIFIED && (!segment.isLastLine || justifyLastLine) 
 				? PdfTextAlignment.JUSTIFIED_ALL : horizontalAlignment,
-			text.getRunDirection() == RunDirectionEnum.LTR
-				? TextDirection.LTR : TextDirection.RTL
+			text.getRunDirection() == RunDirectionEnum.RTL
+				? TextDirection.RTL : TextDirection.LTR
 			);
 	}
 

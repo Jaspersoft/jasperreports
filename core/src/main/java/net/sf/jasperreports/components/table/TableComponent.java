@@ -38,9 +38,11 @@ import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRDatasetRun;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRVisitable;
+import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.type.HorizontalPosition;
 import net.sf.jasperreports.engine.xml.JRXmlConstants;
+import net.sf.jasperreports.jackson.util.JRXmlSince;
 import net.sf.jasperreports.properties.PropertyConstants;
 
 
@@ -114,12 +116,14 @@ public interface TableComponent extends Component, JRCloneable, JRVisitable, Dat
 	 * @return the position of the table columns within the table element box, 
 	 * <code>null</code> if no position is specified
 	 */
+	@JRXmlSince(JRConstants.VERSION_7_0_2)
 	@JacksonXmlProperty(isAttribute = true)
 	HorizontalPosition getHorizontalPosition();
 
 	/**
 	 * Specifies if the table box should shrink to accommodate the smaller total width of visible columns.
 	 */
+	@JRXmlSince(JRConstants.VERSION_7_0_2)
 	@JacksonXmlProperty(isAttribute = true)
 	Boolean shrinkWidth();
 

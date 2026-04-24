@@ -43,7 +43,7 @@ public class JRBasePrintLine extends JRBasePrintGraphicElement implements JRPrin
 	/**
 	 *
 	 */
-	protected LineDirectionEnum direction = LineDirectionEnum.TOP_DOWN;
+	protected LineDirectionEnum direction;
 
 
 	/**

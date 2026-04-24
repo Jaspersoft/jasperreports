@@ -63,14 +63,14 @@ public class CrosstabOrderAttributes implements Serializable
 		rowGroupOrders = new BucketOrder[rowGroups.length];
 		for (int i = 0; i < rowGroups.length; i++)
 		{
-			rowGroupOrders[i] = rowGroups[i].getBucket().getOrder();
+			rowGroupOrders[i] = BucketOrder.getValueOrDefault(rowGroups[i].getBucket().getOrder());
 		}
 		
 		JRCrosstabColumnGroup[] colGroups = crosstab.getColumnGroups();
 		colGroupOrders = new BucketOrder[colGroups.length];
 		for (int i = 0; i < colGroups.length; i++)
 		{
-			colGroupOrders[i] = colGroups[i].getBucket().getOrder();
+			colGroupOrders[i] = BucketOrder.getValueOrDefault(colGroups[i].getBucket().getOrder());
 		}
 		
 		orderByColumnProp = crosstab.getPropertiesMap().getProperty(JRFillCrosstab.PROPERTY_ORDER_BY_COLUMN);

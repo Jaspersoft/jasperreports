@@ -590,7 +590,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		
 		BucketOrderer orderer = createOrderer(group, groupIndex, comparator);
 		BucketDefinition bucketDefinition = new BucketDefinition(bucket.getValueClass(),
-				orderer, comparator, bucket.getOrder(), 
+				orderer, comparator, BucketOrder.getValueOrDefault(bucket.getOrder()), 
 				group.getTotalPosition());
 		
 		Boolean mergeHeaderCells = group.getMergeHeaderCells();
@@ -603,11 +603,12 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 	protected BucketOrderer createOrderer(JRCrosstabGroup group, int groupIndex, Comparator<Object> bucketComparator)
 	{
 		BucketOrderer orderer = null;
+		BucketOrder bucketOrder = BucketOrder.getValueOrDefault(group.getBucket().getOrder());
 		
 		if (group instanceof JRCrosstabRowGroup
 				&& orderByColumnInfo != null && orderByColumnInfo.getOrder() != null
 				// ordering by column only applies to nesting groups is they are not already ordered
-				&& (groupIndex == rowGroups.length - 1 || group.getBucket().getOrder() == BucketOrder.NONE))
+				&& (groupIndex == rowGroups.length - 1 || bucketOrder == BucketOrder.NONE))
 		{
 			orderer = new OrderByColumnOrderer(orderByColumnInfo);
 		}
@@ -616,7 +617,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		{
 			JRCrosstabBucket bucket = group.getBucket();
 			JRExpression orderByExpression = bucket.getOrderByExpression();
-			if (orderByExpression != null && bucket.getOrder() != BucketOrder.NONE)
+			if (orderByExpression != null && bucketOrder != BucketOrder.NONE)
 			{
 				if (log.isDebugEnabled())
 				{
@@ -624,7 +625,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 				}
 				
 				// when we have an order by expression, the comparator is applied to order values
-				Comparator<Object> orderValueComparator = BucketDefinition.createOrderComparator(bucketComparator, bucket.getOrder());
+				Comparator<Object> orderValueComparator = BucketDefinition.createOrderComparator(bucketComparator, bucketOrder);
 				orderer = new BucketExpressionOrderer(orderByExpression, orderValueComparator);
 			}
 		}
@@ -1400,6 +1401,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			
 			int[] rowYOffsets = computeOffsets(rowHeadersData, rowGroups, false);
 			rowBreakable = computeBreakableHeaders(rowHeadersData, rowGroups, rowYOffsets, false, false);
+			applyKeepTogether(rowHeadersData, rowBreakable);
 			rowCount = computeCounts(rowHeadersData);
 			
 			spanHeaders = new HeaderCell[rowGroups.length - 1];
@@ -1486,6 +1488,35 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			}
 
 			return breakable;
+		}
+
+		/**
+		 * Applies the keepTogether flag for row groups that have it set.
+		 * This method only sets breakable entries to false, never to true,
+		 * so it does not interfere with the values already computed by
+		 * computeBreakableHeaders; it only adds further restrictions on
+		 * top of the existing ones.
+		 */
+		protected void applyKeepTogether(HeaderCell[][] headersData, boolean[] breakable)
+		{
+			for (int j = 0; j < rowGroups.length; ++j)
+			{
+				if (rowGroups[j].isKeepTogether())
+				{
+					for (int i = 0; i < headersData[0].length; i++)
+					{
+						HeaderCell header = headersData[j][i];
+						if (header != null && !header.isTotal() && header.getLevelSpan() > 1)
+						{
+							int span = header.getLevelSpan();
+							for (int k = i + 1; k < i + span; ++k)
+							{
+								breakable[k] = false;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		private int[] computeCounts(HeaderCell[][] headersData)

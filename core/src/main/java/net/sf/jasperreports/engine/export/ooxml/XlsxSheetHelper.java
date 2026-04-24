@@ -39,6 +39,7 @@ import net.sf.jasperreports.engine.export.JRXlsAbstractExporter;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.export.XlsRowLevelInfo;
 import net.sf.jasperreports.engine.export.ooxml.type.PaperSizeEnum;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.engine.util.FileBufferedWriter;
 import net.sf.jasperreports.engine.util.JRColorUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
@@ -236,10 +237,7 @@ public class XlsxSheetHelper extends BaseHelper
 		write("\"/>\n");
 		write("<pageSetup");	
 		
-		if (jasperPrint.getOrientation() != null)
-		{
-			write(" orientation=\"" + jasperPrint.getOrientation().getName().toLowerCase() + "\"");	
-		}
+		write(" orientation=\"" + OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()).getName().toLowerCase() + "\"");	
 		
 		/* the scale factor takes precedence over fitWidth and fitHeight properties */
 		if(scale != null && scale > 9 && scale < 401)

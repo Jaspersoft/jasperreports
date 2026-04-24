@@ -71,6 +71,14 @@ public enum CrosstabTotalPositionEnum implements NamedEnum
 		return EnumUtil.getEnumByName(values(), name);
 	}
 	
+	/**
+	 *
+	 */
+	public static CrosstabTotalPositionEnum getValueOrDefault(CrosstabTotalPositionEnum value)
+	{
+		return value == null ? NONE : value;
+	}
+	
 	@Override
 	public CrosstabTotalPositionEnum getDefault()
 	{

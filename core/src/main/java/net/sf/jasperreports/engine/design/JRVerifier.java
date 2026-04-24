@@ -1045,7 +1045,7 @@ public class JRVerifier
 
 					if (!isFound)
 					{
-						addBrokenRule("Sort " + sortField.getType().getName().toLowerCase() + " \'" + sortFieldName + "\' not found in dataset.", sortField);
+						addBrokenRule("Sort " + SortFieldTypeEnum.getValueOrDefault(sortField.getType()).getName().toLowerCase() + " \'" + sortFieldName + "\' not found in dataset.", sortField);
 					}
 				}
 			}
@@ -1741,7 +1741,7 @@ public class JRVerifier
 	protected void verifyCrosstabNextGroup(JRCrosstabGroup group, JRCrosstabGroup nextGroup)
 	{
 		if (Boolean.FALSE.equals(group.getMergeHeaderCells())
-				&& nextGroup.getTotalPosition() != CrosstabTotalPositionEnum.NONE)
+				&& CrosstabTotalPositionEnum.getValueOrDefault(nextGroup.getTotalPosition()) != CrosstabTotalPositionEnum.NONE)
 		{
 			addBrokenRule("Row crosstab group has repeating header cells but the next group has a total row",
 					group);
@@ -1947,7 +1947,7 @@ public class JRVerifier
 			{
 				addBrokenRule("Measure value class missing.", measure);
 			}
-			if (measure.getPercentageType() != CrosstabPercentageEnum.NONE)
+			if (CrosstabPercentageEnum.getValueOrDefault(measure.getPercentageType()) != CrosstabPercentageEnum.NONE)
 			{
 				Class<?> percentageCalculatorClass = measure.getPercentageCalculatorClass();
 				if (percentageCalculatorClass == null)

@@ -244,7 +244,7 @@ public class JRFillImage extends JRFillGraphicElement implements JRImage
 	@Override
 	public OnErrorTypeEnum getOnErrorType()
 	{
-		return ((JRImage)this.parent).getOnErrorType();
+		return OnErrorTypeEnum.getValueOrDefault(((JRImage)this.parent).getOnErrorType());
 	}
 		
 	@Override

@@ -21,60 +21,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.jasperreports.engine.type;
+package net.sf.jasperreports.jackson.util;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 
 /**
+ * Jackson mixin class that applies the version property filter globally
+ * to all serialized objects. This is registered via
+ * {@code mapper.addMixIn(Object.class, VersionFilterMixin.class)} so that
+ * the {@link VersionPropertyFilter} is active for all bean properties
+ * without requiring {@code @JsonFilter} on each individual class.
+ *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public enum SortFieldTypeEnum implements NamedEnum
+@JsonFilter(VersionPropertyFilter.FILTER_ID)
+public class VersionFilterMixin
 {
-	/**
-	 * Specifies the sort field name represents a dataset field name.
-	 */
-	FIELD("Field"),
-
-	/**
-	 * Specifies the sort field name represents a dataset variable name.
-	 */
-	VARIABLE("Variable");
-
-
-	/**
-	 *
-	 */
-	private final transient String name;
-
-	private SortFieldTypeEnum(String name)
-	{
-		this.name = name;
-	}
-	
-	@Override
-	public String getName()
-	{
-		return name;
-	}
-	
-	/**
-	 *
-	 */
-	public static SortFieldTypeEnum getByName(String name)
-	{
-		return EnumUtil.getEnumByName(values(), name);
-	}
-	
-	/**
-	 *
-	 */
-	public static SortFieldTypeEnum getValueOrDefault(SortFieldTypeEnum value)
-	{
-		return value == null ? FIELD : value;
-	}
-	
-	@Override
-	public SortFieldTypeEnum getDefault()
-	{
-		return FIELD;
-	}
 }
