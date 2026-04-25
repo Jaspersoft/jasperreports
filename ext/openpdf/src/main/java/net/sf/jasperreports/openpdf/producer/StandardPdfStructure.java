@@ -23,10 +23,12 @@
  */
 package net.sf.jasperreports.openpdf.producer;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.openpdf.text.pdf.PdfDictionary;
+import org.openpdf.text.pdf.PdfIndirectReference;
 import org.openpdf.text.pdf.PdfName;
 import org.openpdf.text.pdf.PdfObject;
 import org.openpdf.text.pdf.PdfString;
@@ -34,6 +36,7 @@ import org.openpdf.text.pdf.PdfStructureElement;
 import org.openpdf.text.pdf.PdfStructureTreeRoot;
 import org.openpdf.text.pdf.PdfWriter;
 
+import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.pdf.common.PdfStructure;
 import net.sf.jasperreports.pdf.common.PdfStructureEntry;
 
@@ -66,12 +69,33 @@ public class StandardPdfStructure implements PdfStructure
 		
 		PdfStructureElement documentTag = new PdfStructureElement(root, PdfName.DOCUMENT);
 		
+		if (pdfWriter.getPdfVersionString().startsWith("2."))
+		{
+			setPDF2Namespace(pdfWriter, documentTag);
+		}
+
 		if (language != null)
 		{
 			documentTag.put(PdfName.LANG, new PdfString(language));
 		}
 		
 		return new StandardStructureEntry(this, documentTag);
+	}
+
+	protected void setPDF2Namespace(PdfWriter pdfWriter, PdfStructureElement documentTag)
+	{
+		try
+		{
+			PdfDictionary namespaceDict = new PdfDictionary();
+			namespaceDict.put(PdfName.TYPE, new PdfName("Namespace"));
+			namespaceDict.put(new PdfName("NS"), new PdfString("http://iso.org/pdf2/ssn"));
+			PdfIndirectReference nsRef = pdfWriter.addToBody(namespaceDict).getIndirectReference();
+			documentTag.put(new PdfName("NS"), nsRef);
+		}
+		catch (IOException e)
+		{
+			throw new JRRuntimeException(e);
+		}
 	}
 	
 	protected PdfName pdfName(String name)
