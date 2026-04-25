@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>com.github.librepdf</groupId>
 			<artifactId>openpdf</artifactId>
-			<version>3.0.3</version>
+			<version>${openpdf.version}</version>
  			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>

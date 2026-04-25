@@ -35,7 +35,6 @@ import org.openpdf.text.pdf.PdfNumber;
 import org.openpdf.text.pdf.PdfObject;
 import org.openpdf.text.pdf.PdfString;
 import org.openpdf.text.pdf.PdfStructureElement;
-import org.openpdf.text.pdf.PdfStructureTreeRootUtil;
 
 import net.sf.jasperreports.pdf.common.PdfChunk;
 import net.sf.jasperreports.pdf.common.PdfStructureEntry;
@@ -198,7 +197,7 @@ public class StandardChunk implements PdfChunk
 
 		PdfStructureElement element = ((StandardStructureEntry) linkTag).getElement();
 
-		PdfStructureTreeRootUtil treeRoot = (PdfStructureTreeRootUtil) pdfProducer.getPdfWriter().getStructureTreeRoot();
+		StandardPdfStructureTreeRoot treeRoot = (StandardPdfStructureTreeRoot) pdfProducer.getPdfWriter().getStructureTreeRoot();
 		treeRoot.addAnnotationParent(annotation, element.getReference());
 
 		pdfProducer.getPdfWriter().addAnnotation(annotation);

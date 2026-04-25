@@ -1,10 +1,22 @@
-package org.openpdf.text.pdf;
+package net.sf.jasperreports.openpdf.producer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.openpdf.text.pdf.PdfAnnotation;
+import org.openpdf.text.pdf.PdfArray;
+import org.openpdf.text.pdf.PdfDictionary;
+import org.openpdf.text.pdf.PdfIndirectReference;
+import org.openpdf.text.pdf.PdfName;
+import org.openpdf.text.pdf.PdfNumber;
+import org.openpdf.text.pdf.PdfNumberTree;
+import org.openpdf.text.pdf.PdfObject;
+import org.openpdf.text.pdf.PdfStructureElement;
+import org.openpdf.text.pdf.PdfStructureTreeRoot;
+import org.openpdf.text.pdf.PdfWriter;
 
 /**
  * Extension of {@link PdfStructureTreeRoot} that supports annotation
@@ -19,12 +31,12 @@ import java.util.Map;
  * collisions with page /StructParents values (which are assigned by
  * OpenPDF using page indices 0, 1, 2, ...).
  */
-public class PdfStructureTreeRootUtil extends PdfStructureTreeRoot
+public class StandardPdfStructureTreeRoot extends PdfStructureTreeRoot
 {
 
 	private final List<AnnotationParent> annotationParents = new ArrayList<>();
 
-	PdfStructureTreeRootUtil(PdfWriter writer)
+	StandardPdfStructureTreeRoot(PdfWriter writer)
 	{
 		super(writer);
 	}
@@ -37,10 +49,10 @@ public class PdfStructureTreeRootUtil extends PdfStructureTreeRoot
 	 * @param writer the PdfWriter to install into
 	 * @return the installed PdfStructureTreeRootUtil instance
 	 */
-	public static PdfStructureTreeRootUtil install(PdfWriter writer)
+	public static StandardPdfStructureTreeRoot install(PdfWriter writer)
 	{
-		PdfStructureTreeRootUtil root = new PdfStructureTreeRootUtil(writer);
-		writer.structureTreeRoot = root;
+		StandardPdfStructureTreeRoot root = new StandardPdfStructureTreeRoot(writer);
+		writer.setStructureTreeRoot(root);
 		return root;
 	}
 
@@ -58,7 +70,7 @@ public class PdfStructureTreeRootUtil extends PdfStructureTreeRoot
 	}
 
 	@Override
-	void buildTree() throws IOException
+	protected void buildTree() throws IOException
 	{
 		PdfWriter writer = getWriter();
 
