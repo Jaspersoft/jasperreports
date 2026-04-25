@@ -125,6 +125,12 @@ class XmpWriter
 
 	private static final String PDFUA_PART_1 = "1";
 
+	private static final String PDFUA_PART_2 = "2";
+
+	private static final String PDFUA_REV = "rev";
+
+	private static final String PDFUA_REV_2024 = "2024";
+
 	private final PdfWriter pdfWriter;
 	private final PdfDictionary info;
 	private final PdfaConformanceEnum conformance;
@@ -198,7 +204,16 @@ class XmpWriter
 			{
 				XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
 				registry.registerNamespace(NS_PDFUA_ID, "pdfuaid");
-				xmp.setProperty(NS_PDFUA_ID, PDFUA_PART, PDFUA_PART_1);
+
+				if (pdfWriter.getPdfVersionString().startsWith("2."))
+				{
+					xmp.setProperty(NS_PDFUA_ID, PDFUA_PART, PDFUA_PART_2);
+					xmp.setProperty(NS_PDFUA_ID, PDFUA_REV, PDFUA_REV_2024);
+				}
+				else
+				{
+					xmp.setProperty(NS_PDFUA_ID, PDFUA_PART, PDFUA_PART_1);
+				}
 
 				if (conformance != null)
 				{
