@@ -27,6 +27,7 @@ import com.lowagie.text.pdf.PdfDestination;
 import com.lowagie.text.pdf.PdfOutline;
 
 import net.sf.jasperreports.pdf.common.PdfOutlineEntry;
+import net.sf.jasperreports.pdf.common.PdfStructureEntry;
 
 /**
  * 
@@ -50,7 +51,9 @@ public class StandardPdfOutline implements PdfOutlineEntry
 	}
 
 	@Override
-	public PdfOutlineEntry createChild(String title, float left, float top)
+	public PdfOutlineEntry createChild(String title, float left, float top,
+			//not using the structure entry for now, as it is not supported by the classic producer
+			PdfStructureEntry structureEntry)
 	{
 		PdfDestination destination = new PdfDestination(PdfDestination.XYZ, left, top, 0);
 		PdfOutline childOutline = new PdfOutline(pdfOutline, destination, title, false);

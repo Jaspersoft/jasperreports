@@ -23,10 +23,16 @@
  */
 package net.sf.jasperreports.openpdf.producer;
 
+import org.openpdf.text.pdf.PdfAction;
+import org.openpdf.text.pdf.PdfArray;
 import org.openpdf.text.pdf.PdfDestination;
+import org.openpdf.text.pdf.PdfName;
+import org.openpdf.text.pdf.PdfNumber;
 import org.openpdf.text.pdf.PdfOutline;
+import org.openpdf.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.pdf.common.PdfOutlineEntry;
+import net.sf.jasperreports.pdf.common.PdfStructureEntry;
 
 /**
  * 
@@ -35,26 +41,49 @@ import net.sf.jasperreports.pdf.common.PdfOutlineEntry;
 public class StandardPdfOutline implements PdfOutlineEntry
 {
 
+	private static final PdfName PDF_NAME_SD = new PdfName("SD");
+	
 	private PdfOutline pdfOutline;
+	private PdfWriter pdfWriter;
 
-	public StandardPdfOutline(PdfOutline pdfOutline)
+	public StandardPdfOutline(PdfOutline pdfOutline, PdfWriter pdfWriter)
 	{
 		this.pdfOutline = pdfOutline;
+		this.pdfWriter = pdfWriter;
 	}
 
 	@Override
 	public PdfOutlineEntry createChild(String title)
 	{
 		PdfOutline childOutline = new PdfOutline(pdfOutline, pdfOutline.getPdfDestination(), title, false);
-		return new StandardPdfOutline(childOutline);
+		return new StandardPdfOutline(childOutline, pdfWriter);
 	}
 
 	@Override
-	public PdfOutlineEntry createChild(String title, float left, float top)
+	public PdfOutlineEntry createChild(String title, float left, float top, PdfStructureEntry structureEntry)
 	{
 		PdfDestination destination = new PdfDestination(PdfDestination.XYZ, left, top, 0);
-		PdfOutline childOutline = new PdfOutline(pdfOutline, destination, title, false);
-		return new StandardPdfOutline(childOutline);
+		PdfOutline childOutline;
+		if (structureEntry == null || !pdfWriter.getPdfVersionString().startsWith("2."))
+		{
+			childOutline = new PdfOutline(pdfOutline, destination, title, false);
+		}
+		else
+		{
+			int currentPageNumber = pdfWriter.getCurrentPageNumber();
+			PdfAction action = PdfAction.gotoLocalPage(currentPageNumber, destination, pdfWriter);
+
+			PdfArray structDest = new PdfArray();
+			structDest.add(((StandardStructureEntry) structureEntry).getElement().getReference());
+			structDest.add(PdfName.XYZ);
+			structDest.add(new PdfNumber(left));
+			structDest.add(new PdfNumber(top));
+			structDest.add(new PdfNumber(0));
+			action.put(PDF_NAME_SD, structDest);
+
+			childOutline = new PdfOutline(pdfOutline, action, title, false);
+		}
+		return new StandardPdfOutline(childOutline, pdfWriter);
 	}
 
 }

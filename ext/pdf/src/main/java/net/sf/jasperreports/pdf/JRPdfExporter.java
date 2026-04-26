@@ -1136,7 +1136,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 						if( isCreatingBatchModeBookmarks )
 						{
 							//add a new level to our outline for this report
-							addBookmark(0, jasperPrint.getName(), 0, 0);
+							addBookmark(0, jasperPrint.getName(), 0, 0, null);//FIXME structure entry is required for PDF/UA-2
 						}
 					}
 					
@@ -3386,9 +3386,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		final PdfOutlineEntry pdfOutline;
 		final int level;
 
-		Bookmark(Bookmark parent, int x, int top, String title)
+		Bookmark(Bookmark parent, int x, int top, String title, PdfStructureEntry structureEntry)
 		{
-			this.pdfOutline = parent.pdfOutline.createChild(title, x, top);
+			this.pdfOutline = parent.pdfOutline.createChild(title, x, top, structureEntry);
 			this.level = parent.level + 1;
 		}
 
@@ -3441,7 +3441,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	}
 
 
-	protected void addBookmark(int level, String title, int x, int y)
+	protected void addBookmark(int level, String title, int x, int y, PdfStructureEntry structureEntry)
 	{
 		if (!bookmarksEnabled)
 		{
@@ -3469,7 +3469,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		int height = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 				? y 
 				: pageFormat.getPageHeight() - y;
-		Bookmark bookmark = new Bookmark(parent, x, height, title);
+		Bookmark bookmark = new Bookmark(parent, x, height, title, structureEntry);
 		bookmarkStack.push(bookmark);
 	}
 
@@ -3497,7 +3497,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			int y = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 					? getOffsetX() + element.getX()
 					: getOffsetY() + element.getY(); 
-			addBookmark(anchor.getBookmarkLevel(), anchorName, x, y);
+			PdfStructureEntry structureEntry = tagHelper.isTagged ? tagHelper.tagStack.peek() : null;
+			addBookmark(anchor.getBookmarkLevel(), anchorName, x, y, structureEntry);
 		}
 	}
 

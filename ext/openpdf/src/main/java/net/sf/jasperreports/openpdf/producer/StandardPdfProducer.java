@@ -597,7 +597,7 @@ public class StandardPdfProducer implements PdfProducer
 	public PdfOutlineEntry getRootOutline()
 	{
 		PdfOutline rootOutline = pdfContent.getPdfContentByte().getRootOutline();
-		return new StandardPdfOutline(rootOutline);
+		return new StandardPdfOutline(rootOutline, pdfContent.getPdfWriter());
 	}
 
 	@Override
