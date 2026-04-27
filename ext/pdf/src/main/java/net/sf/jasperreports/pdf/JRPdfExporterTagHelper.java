@@ -288,6 +288,7 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 	protected Stack<AccessibilityTagEnum> headerStack;
 	protected PdfStructureEntry currentLinkTag;
 	protected PdfStructureEntry elementLinkTag;
+	protected PdfStructureEntry currentContentEntry;
 	protected boolean firstLinkParagraph;
 	protected boolean firstTextParagraph;
 	protected boolean isTagEmpty = true;
@@ -529,6 +530,8 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 			{
 				imageTag.putString("Alt", printImage.getHyperlinkTooltip());
 			}
+
+			currentContentEntry = imageTag;
 		}
 	}
 
@@ -538,6 +541,7 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 		{
 			pdfStructure.endTag();
 			currentLinkTag = null;
+			currentContentEntry = null;
 			isTagEmpty = false;
 		}
 	}
@@ -545,6 +549,11 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 	protected PdfStructureEntry getCurrentLinkTag()
 	{
 		return currentLinkTag;
+	}
+
+	protected PdfStructureEntry getCurrentContentEntry()
+	{
+		return currentContentEntry;
 	}
 
 	protected boolean isFirstTextParagraph()
@@ -612,6 +621,7 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 					actualText == null
 					? pdfStructure.beginTag(mcParent, tagName)
 					: pdfStructure.beginTag(mcParent, tagName, actualText);
+				currentContentEntry = textEntry;
 
 				if (textElement.hasProperties())
 				{
@@ -644,6 +654,7 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 					currentLinkTag = null;
 				}
 				isTagEmpty = false;
+				currentContentEntry = null;
 			}
 		}
 		

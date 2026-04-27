@@ -30,8 +30,8 @@ package net.sf.jasperreports.pdf.common;
 public interface PdfChunk
 {
 
-	void setLocalDestination(String anchorName);
-	
+	void setLocalDestination(String anchorName, PdfStructureEntry structureEntry);
+
 	void setJavaScriptAction(String script);
 
 	void setAnchor(String reference);

@@ -68,7 +68,9 @@ public class StandardChunk implements PdfChunk
 	}
 	
 	@Override
-	public void setLocalDestination(String anchorName)
+	public void setLocalDestination(String anchorName,
+			// structure entry not supported by the classic producer
+			PdfStructureEntry structureEntry)
 	{
 		chunk.setLocalDestination(anchorName);
 	}

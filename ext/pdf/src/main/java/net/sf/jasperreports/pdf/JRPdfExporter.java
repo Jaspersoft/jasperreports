@@ -1228,7 +1228,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		fontUtil.getAttributesWithoutAwtFont(attributes, new JRBasePrintText(jasperPrint.getDefaultStyleProvider()));
 		PdfTextChunk chunk = pdfProducer.createChunk(" ", attributes, getLocale());
 		
-		chunk.setLocalDestination(JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (pageIndex + 1));
+		chunk.setLocalDestination(JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (pageIndex + 1), null);
 
 		tagHelper.beginArtifact();
 		
@@ -1706,14 +1706,14 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 			if (imageProcessorResult != null)
 			{
-				setAnchor(imageProcessorResult.chunk, printImage, printImage);
-
 				float llx = printImage.getX() + getOffsetX();
 				float ury = pageFormat.getPageHeight() - printImage.getY() - getOffsetY();
 				float urx = llx + printImage.getWidth();
 				float lly = ury - printImage.getHeight();
 
 				tagHelper.startImage(printImage, llx, lly, urx, ury);
+
+				setAnchor(imageProcessorResult.chunk, printImage, printImage);
 
 				PdfStructureEntry linkTag = tagHelper.getCurrentLinkTag();
 				if (linkTag != null)
@@ -3477,10 +3477,11 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected void setAnchor(PdfChunk chunk, JRPrintAnchor anchor, JRPrintElement element)
 	{
 		String anchorName = anchor.getAnchorName();
+		PdfStructureEntry structureEntry = tagHelper.isTagged ? tagHelper.getCurrentContentEntry() : null;
 		
 		if (anchorName != null)
 		{
-			chunk.setLocalDestination(anchorName);
+			chunk.setLocalDestination(anchorName, structureEntry);
 		}
 		
 		
@@ -3497,7 +3498,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			int y = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 					? getOffsetX() + element.getX()
 					: getOffsetY() + element.getY(); 
-			PdfStructureEntry structureEntry = tagHelper.isTagged ? tagHelper.tagStack.peek() : null;
 			addBookmark(anchor.getBookmarkLevel(), anchorName, x, y, structureEntry);
 		}
 	}

@@ -68,9 +68,15 @@ public class StandardChunk implements PdfChunk
 	}
 	
 	@Override
-	public void setLocalDestination(String anchorName)
+	public void setLocalDestination(String anchorName, PdfStructureEntry structureEntry)
 	{
 		chunk.setLocalDestination(anchorName);
+		if (structureEntry != null
+				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
+		{
+			chunk.setLocalDestinationStructElement(
+					((StandardStructureEntry) structureEntry).getElement().getReference());
+		}
 	}
 
 	@Override
