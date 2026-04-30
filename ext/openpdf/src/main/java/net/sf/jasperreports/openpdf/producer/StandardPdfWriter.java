@@ -100,31 +100,7 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	
 	protected String toPdfVersion(PdfVersionEnum pdfVersion)
 	{
-		String version;
-		switch (pdfVersion)
-		{
-		case VERSION_1_2:
-			version = PdfWriter.VERSION_1_2;
-			break;
-		case VERSION_1_3:
-			version = PdfWriter.VERSION_1_3;
-			break;
-		case VERSION_1_4:
-			version = PdfWriter.VERSION_1_4;
-			break;
-		case VERSION_1_5:
-			version = PdfWriter.VERSION_1_5;
-			break;
-		case VERSION_1_6:
-			version = PdfWriter.VERSION_1_6;
-			break;
-		case VERSION_1_7:
-			version = PdfWriter.VERSION_1_7;
-			break;
-		default:
-			throw new JRRuntimeException("Unexpected PDF version: " + pdfVersion);
-		}
-		return version;
+		return pdfVersion.getName();
 	}
 
 	@Override

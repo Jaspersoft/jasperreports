@@ -89,13 +89,23 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	@Override
 	public void setPdfVersion(PdfVersionEnum pdfVersion)
 	{
-		pdfWriter.setPdfVersion(pdfVersion.getName().charAt(0));
+		pdfWriter.setPdfVersion(toClassicVersion(pdfVersion));
 	}
 
 	@Override
 	public void setMinimalPdfVersion(PdfVersionEnum minimalVersion)
 	{
-		pdfWriter.setAtLeastPdfVersion(minimalVersion.getName().charAt(0));
+		pdfWriter.setAtLeastPdfVersion(toClassicVersion(minimalVersion));
+	}
+
+	protected char toClassicVersion(PdfVersionEnum pdfVersion)
+	{
+		String name = pdfVersion.getName();
+		if (!name.startsWith("1."))
+		{
+			throw new JRRuntimeException("PDF version " + name + " is not supported by the classic PDF producer");
+		}
+		return name.charAt(2);
 	}
 
 	@Override
