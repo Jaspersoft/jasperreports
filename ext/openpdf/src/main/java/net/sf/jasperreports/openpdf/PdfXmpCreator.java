@@ -107,6 +107,12 @@ class XmpWriter
 	
 	private static final String PDFA_PART_3 = "3";
 
+	private static final String PDFA_PART_4 = "4";
+
+	private static final String PDFA_REV = "rev";
+
+	private static final String PDFA_REV_2020 = "2020";
+
 	private static final String PDFA_CONFORMANCE_A = "A";
 
 	private static final String PDFA_CONFORMANCE_B = "B";
@@ -198,6 +204,11 @@ class XmpWriter
 			{
 				xmp.setProperty(XMPConst.NS_PDFA_ID, PDFA_PART, PDFA_PART_3);
 				xmp.setProperty(XMPConst.NS_PDFA_ID, PDFA_CONFORMANCE, PDFA_CONFORMANCE_U);
+			}
+			else if (this.conformance == PdfaConformanceEnum.PDFA_4)
+			{
+				xmp.setProperty(XMPConst.NS_PDFA_ID, PDFA_PART, PDFA_PART_4);
+				xmp.setProperty(XMPConst.NS_PDFA_ID, PDFA_REV, PDFA_REV_2020);
 			}
 
 			if (isTagged)

@@ -213,7 +213,7 @@ public class AccessibleApp extends AbstractSampleApp
 			 e.printStackTrace();
 		}
 				
-		System.err.println("PDF/A-" + conformance.getName().substring(conformance.getName().length() - 2) + " creation time : " + (System.currentTimeMillis() - start));
+		System.err.println("PDF/A-" + conformance.getName().substring("pdfa".length()) + " creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	

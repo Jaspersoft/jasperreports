@@ -211,6 +211,10 @@ public class StandardPdfWriter implements PdfDocumentWriter
 		{
 			pdfWriter.setPDFXConformance(PdfWriter.PDFA3U);
 		}
+		else if (PdfaConformanceEnum.PDFA_4 == pdfaConformance)
+		{
+			pdfWriter.setPDFXConformance(PdfWriter.PDFA4);
+		}
 	}
 
 	@Override

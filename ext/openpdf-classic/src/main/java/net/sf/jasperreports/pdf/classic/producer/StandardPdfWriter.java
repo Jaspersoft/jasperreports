@@ -179,6 +179,11 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	@Override
 	public void setPdfaConformance(PdfaConformanceEnum pdfaConformance)
 	{
+		if (PdfaConformanceEnum.PDFA_4 == pdfaConformance)
+		{
+			throw new JRRuntimeException("PDF/A-4 is not supported by the classic PDF producer");
+		}
+		
 		this.pdfaConformance = pdfaConformance;
 		
 		// there is an incompatibility regarding font handling, 
