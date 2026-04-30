@@ -39,20 +39,7 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports-pdf</artifactId>
-			<version>${revision}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-			<!-- to allow switching to jasperreports-javaflow -->
-			<exclusions>
-				<exclusion>
-					<groupId>net.sf.jasperreports</groupId>
-					<artifactId>jasperreports</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- PDF producer dependency is in profiles below -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-excel-poi</artifactId>
@@ -82,6 +69,49 @@
 			<optional>false</optional>
 		</dependency>
 	</dependencies>
+	<profiles>
+		<profile>
+			<id>openpdf-classic</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.jasperreports</groupId>
+					<artifactId>jasperreports-pdf</artifactId>
+					<version>${revision}</version>
+					<scope>compile</scope>
+					<optional>false</optional>
+					<!-- to allow switching to jasperreports-javaflow -->
+					<exclusions>
+						<exclusion>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>openpdf3</id>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.jasperreports</groupId>
+					<artifactId>jasperreports-openpdf</artifactId>
+					<version>${revision}</version>
+					<scope>compile</scope>
+					<optional>false</optional>
+					<!-- to allow switching to jasperreports-javaflow -->
+					<exclusions>
+						<exclusion>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
