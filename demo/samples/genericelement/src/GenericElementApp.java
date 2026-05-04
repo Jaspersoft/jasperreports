@@ -61,7 +61,7 @@ public class GenericElementApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperFillManager.fillReportToFile("target/reports/GenericElementReport.jasper", null);
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -72,7 +72,7 @@ public class GenericElementApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/GenericElementReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -83,7 +83,7 @@ public class GenericElementApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/GenericElementReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -94,7 +94,7 @@ public class GenericElementApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/GenericElementReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	

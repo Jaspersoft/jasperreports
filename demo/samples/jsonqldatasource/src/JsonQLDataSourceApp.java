@@ -73,7 +73,7 @@ public class JsonQLDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperFillManager.fillReportToFile(reportFile.getAbsolutePath(), new HashMap<String, Object>());
-			System.err.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -89,7 +89,7 @@ public class JsonQLDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToPdfFile(reportFile.getAbsolutePath());
-			System.err.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -105,7 +105,7 @@ public class JsonQLDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToHtmlFile(reportFile.getAbsolutePath());
-			System.err.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 

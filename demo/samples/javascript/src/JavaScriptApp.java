@@ -60,7 +60,7 @@ public class JavaScriptApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperFillManager.fillReportToFile("target/reports/JavaScriptReport.jasper", null, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -71,7 +71,7 @@ public class JavaScriptApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/JavaScriptReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

@@ -114,7 +114,7 @@ public class MarkupApp extends AbstractSampleApp
 			parameters.put("HtmlText", htmlText);
 			
 			JasperFillManager.fillReportToFile("target/reports/MarkupReport.jasper", parameters, (JRDataSource)null);
-			System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 		}
 		catch (FileNotFoundException e)
 		{
@@ -134,7 +134,7 @@ public class MarkupApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/MarkupReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -145,7 +145,7 @@ public class MarkupApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/MarkupReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -168,7 +168,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -179,7 +179,7 @@ public class MarkupApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/MarkupReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -190,7 +190,7 @@ public class MarkupApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/MarkupReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -201,7 +201,7 @@ public class MarkupApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/MarkupReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -227,7 +227,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -250,7 +250,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -273,7 +273,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -299,7 +299,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -322,7 +322,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -348,7 +348,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -371,7 +371,7 @@ public class MarkupApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -397,7 +397,7 @@ public class MarkupApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 
-			System.err.println("Metadata CSV creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Metadata CSV creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -424,7 +424,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -451,7 +451,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -478,7 +478,7 @@ public class MarkupApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". JSON creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". JSON creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 

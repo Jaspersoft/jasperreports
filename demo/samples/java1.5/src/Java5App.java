@@ -65,7 +65,7 @@ public class Java5App extends AbstractSampleApp
 		parameters.put("greeting", Greeting.bye);
 		
 		JasperFillManager.fillReportToFile("target/reports/Java5Report.jasper", parameters, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -76,7 +76,7 @@ public class Java5App extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/Java5Report.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 }

@@ -123,11 +123,11 @@ public class MondrianApp extends AbstractSampleApp
 				parameters.put(JRMondrianQueryExecuterFactory.PARAMETER_MONDRIAN_CONNECTION, conn);
 				
 				JasperFillManager.fillReportToFile(fileName, parameters);
-				System.err.println("Report : " + fileName + ". Filling time : " + (System.currentTimeMillis() - start));
+				System.out.println("Report : " + fileName + ". Filling time : " + (System.currentTimeMillis() - start));
 			}
 			else
 			{
-				System.err.println("Report : " + fileName + " not enabled");
+				System.out.println("Report : " + fileName + " not enabled");
 			}
 		}
 		catch (FileNotFoundException e)
@@ -174,11 +174,11 @@ public class MondrianApp extends AbstractSampleApp
 			if (run)
 			{
 				JasperFillManager.fillReportToFile(fileName, parameters);
-				System.err.println("Report : " + fileName + ". Filling time : " + (System.currentTimeMillis() - start));
+				System.out.println("Report : " + fileName + ". Filling time : " + (System.currentTimeMillis() - start));
 			} 
 			else
 			{
-				System.err.println("Report : " + fileName + " not enabled");
+				System.out.println("Report : " + fileName + " not enabled");
 			}
 		}
 		catch (FileNotFoundException e)
@@ -205,7 +205,7 @@ public class MondrianApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(), 
 				true
 				);
-			System.err.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -223,7 +223,7 @@ public class MondrianApp extends AbstractSampleApp
 			JasperExportManager.exportReportToPdfFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -242,7 +242,7 @@ public class MondrianApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(),
 				false
 				);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -261,7 +261,7 @@ public class MondrianApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(), 
 				true
 				);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -279,7 +279,7 @@ public class MondrianApp extends AbstractSampleApp
 			JasperExportManager.exportReportToHtmlFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -306,7 +306,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -336,7 +336,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -363,7 +363,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -390,7 +390,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -420,7 +420,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -447,7 +447,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -477,7 +477,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -504,7 +504,7 @@ public class MondrianApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	

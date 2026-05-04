@@ -68,7 +68,7 @@ public class PdfEncryptApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperFillManager.fillReportToFile("target/reports/PdfEncryptReport.jasper", null, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -97,7 +97,7 @@ public class PdfEncryptApp extends AbstractSampleApp
 		exporter.setConfiguration(configuration);
 		exporter.exportReport();
 
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

@@ -104,7 +104,7 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 		jasperReport.setProperty(DataAdapterParameterContributorFactory.PROPERTY_DATA_ADAPTER_LOCATION, "data/XlsxDataAdapter.jrdax");
 		JasperFillManager.fillReportToFile(jasperReport, "target/reports/XlsxDataAdapterReport.jrprint", new HashMap<String, Object>(parameters));
 		
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -115,7 +115,7 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/ExcelXlsDataAdapterReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -134,7 +134,7 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 				fileName, 
 				fileName.substring(0, fileName.indexOf(".jrprint")) + ".pdf"
 				);
-			System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -154,7 +154,7 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 					fileName, 
 					fileName.substring(0, fileName.indexOf(".jrprint")) + ".html"
 				);
-			System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 		
 	}

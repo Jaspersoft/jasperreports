@@ -91,7 +91,7 @@ public class JFreeChartApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperFillManager.fillReportToFile("target/reports/JFreeChartReport.jasper", null, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -102,7 +102,7 @@ public class JFreeChartApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/JFreeChartReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -113,7 +113,7 @@ public class JFreeChartApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/JFreeChartReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -136,7 +136,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -147,7 +147,7 @@ public class JFreeChartApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/JFreeChartReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -158,7 +158,7 @@ public class JFreeChartApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/JFreeChartReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -169,7 +169,7 @@ public class JFreeChartApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/JFreeChartReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -195,7 +195,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -218,7 +218,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -241,7 +241,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -267,7 +267,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -290,7 +290,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -316,7 +316,7 @@ public class JFreeChartApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -339,7 +339,7 @@ public class JFreeChartApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	

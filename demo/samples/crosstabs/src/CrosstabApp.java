@@ -108,7 +108,7 @@ public class CrosstabApp extends AbstractSampleApp
 				null, 
 				getDemoHsqldbConnection()
 				);
-			System.err.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -127,7 +127,7 @@ public class CrosstabApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(), 
 				true
 				);
-			System.err.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -145,7 +145,7 @@ public class CrosstabApp extends AbstractSampleApp
 			JasperExportManager.exportReportToPdfFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -164,7 +164,7 @@ public class CrosstabApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(),
 				false
 				);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -183,7 +183,7 @@ public class CrosstabApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(), 
 				true
 				);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -201,7 +201,7 @@ public class CrosstabApp extends AbstractSampleApp
 			JasperExportManager.exportReportToHtmlFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -228,7 +228,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -258,7 +258,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -288,7 +288,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". Metadata XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". Metadata XLS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -315,7 +315,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -342,7 +342,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". Metadata CSV creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". Metadata CSV creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -369,7 +369,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". Metadata JSON creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". Metadata JSON creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -396,7 +396,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -426,7 +426,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". ODS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -453,7 +453,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -483,7 +483,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -513,7 +513,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". Metadata XLSX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". Metadata XLSX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -540,7 +540,7 @@ public class CrosstabApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	

@@ -110,7 +110,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			dataSource.setColumnNames(columnNames);
 			
 			JasperFillManager.fillReportToFile("target/reports/CsvDataSourceReport.jasper", parameters, dataSource);
-			System.err.println("Report : CsvDataSourceReport.jasper. Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : CsvDataSourceReport.jasper. Filling time : " + (System.currentTimeMillis() - start));
 		}
 
 		
@@ -126,7 +126,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			parameters.put("IncludedStates", states);
 
 			JasperFillManager.fillReportToFile("target/reports/CsvQueryExecuterReport.jasper", parameters);
-			System.err.println("Report : CsvQueryExecuterReport.jasper. Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : CsvQueryExecuterReport.jasper. Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -142,7 +142,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperPrintManager.printReport(reportFile.getAbsolutePath(), true);
-			System.err.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -158,7 +158,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToPdfFile(reportFile.getAbsolutePath());
-			System.err.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -174,7 +174,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), false);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -190,7 +190,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), true);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -206,7 +206,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToHtmlFile(reportFile.getAbsolutePath());
-			System.err.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -233,7 +233,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -263,7 +263,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 	
 		}
 	}
@@ -290,7 +290,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -317,7 +317,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -347,7 +347,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". ODS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -374,7 +374,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -404,7 +404,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -431,7 +431,7 @@ public class CsvDataSourceApp extends AbstractSampleApp
 	
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
