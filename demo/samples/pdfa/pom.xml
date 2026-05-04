@@ -31,6 +31,12 @@
 		</profile>
 		<profile>
 			<id>openpdf3</id>
+			<activation>
+				<property>
+					<name>pdf.producer</name>
+					<value>openpdf3</value>
+				</property>
+			</activation>
 			<dependencies>
 				<dependency>
 					<groupId>com.github.librepdf</groupId>
