@@ -2243,7 +2243,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 							int pdfPage = crtReportPdfPageStart + (link.getHyperlinkPage() - 1 - crtReportStartPageIndex);
 							int targetPageIndex = link.getHyperlinkPage() - 1;
 							float targetPageHeight = jasperPrint.getPageFormat(targetPageIndex).getPageHeight();
-							chunk.setLocalGotoPage(pdfPage, targetPageHeight);
+							chunk.setLocalGotoPage(pdfPage, targetPageHeight, () -> tagHelper.getPageStructureEntry(pdfPage));
 							wasHyperlinkSet = true;
 						}
 						break;

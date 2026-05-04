@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.openpdf.producer;
 
+import java.util.function.Supplier;
+
 import org.openpdf.text.Chunk;
 import org.openpdf.text.Rectangle;
 import org.openpdf.text.pdf.PdfAction;
@@ -150,9 +152,22 @@ public class StandardChunk implements PdfChunk
 	}
 
 	@Override
-	public void setLocalGotoPage(int page, float top)
+	public void setLocalGotoPage(int page, float top, Supplier<PdfStructureEntry> targetStructureEntry)
 	{
-		PdfAction action = PdfAction.gotoLocalPage(page, new PdfDestination(PdfDestination.XYZ, 0, top, 0), pdfProducer.getPdfWriter());
+		PdfDestination dest = new PdfDestination(PdfDestination.XYZ, 0, top, 0);
+		PdfAction action = PdfAction.gotoLocalPage(page, dest, pdfProducer.getPdfWriter());
+		if (targetStructureEntry != null
+				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
+		{
+			PdfStructureElement element = ((StandardStructureEntry) targetStructureEntry.get()).getElement();
+			PdfArray sd = new PdfArray();
+			sd.add(element.getReference());
+			sd.add(dest.getPdfObject(1));
+			sd.add(dest.getPdfObject(2));
+			sd.add(dest.getPdfObject(3));
+			sd.add(dest.getPdfObject(4));
+			action.put(new PdfName("SD"), sd);
+		}
 		if (linkTag != null)
 		{
 			addAnnotationToTag(

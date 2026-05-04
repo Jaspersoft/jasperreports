@@ -32,6 +32,8 @@
  */
 package net.sf.jasperreports.pdf;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import net.sf.jasperreports.annotations.properties.Property;
@@ -296,6 +298,8 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 	protected boolean insideCrosstabCellFrame;
 	protected boolean isDataCellPrinted;
 
+	protected Map<Integer, PdfStructureEntry> pageStructureEntries;
+
 	protected boolean isTagged;
 	protected boolean isArtifactText;
 	protected boolean isArtifactSpan;
@@ -355,6 +359,20 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 		}
 	}
 	
+	protected PdfStructureEntry getPageStructureEntry(int pdfPage)
+	{
+		if (!isTagged)
+		{
+			return null;
+		}
+		if (pageStructureEntries == null)
+		{
+			pageStructureEntries = new HashMap<>();
+		}
+		return pageStructureEntries.computeIfAbsent(pdfPage,
+				p -> pdfStructure.createTag(documentTag, "NonStruct"));
+	}
+
 	protected void beginArtifact()
 	{
 		if (isTagged)

@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.pdf.common;
 
+import java.util.function.Supplier;
+
 /**
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -38,7 +40,7 @@ public interface PdfChunk
 
 	void setLocalGoto(String anchor);
 
-	void setLocalGotoPage(int page, float top);
+	void setLocalGotoPage(int page, float top, Supplier<PdfStructureEntry> targetStructureEntry);
 
 	void setRemoteGoto(String reference, String anchor);
 

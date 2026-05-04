@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.pdf.classic.producer;
 
+import java.util.function.Supplier;
+
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfAction;
@@ -146,8 +148,9 @@ public class StandardChunk implements PdfChunk
 	}
 
 	@Override
-	public void setLocalGotoPage(int page, float top)
+	public void setLocalGotoPage(int page, float top, Supplier<PdfStructureEntry> targetStructureEntry)
 	{
+		// targetStructureEntry not supported by the classic producer
 		PdfAction action = PdfAction.gotoLocalPage(page, new PdfDestination(PdfDestination.XYZ, 0, top, 0), pdfProducer.getPdfWriter());
 		if (linkTag != null)
 		{
