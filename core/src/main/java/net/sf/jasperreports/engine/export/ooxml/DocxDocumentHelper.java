@@ -150,8 +150,8 @@ public class DocxDocumentHelper extends BaseHelper
 		if (headerIndex > 0) // headers are being created
 		{
 			write("   <w:headerReference w:type=\"default\" r:id=\"header" + headerIndex + "\"/>\n");
-			write("   <w:type w:val=\"continuous\"/>\n");
 		}
+		write("   <w:type w:val=\"continuous\"/>\n");
 		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageWidth) + "\" w:h=\"" + LengthUtil.twip(pageHeight) + "\"");
 		write(" w:orient=\"" + (pageFormat.getOrientation() == OrientationEnum.LANDSCAPE ? "landscape" : "portrait") + "\"");
 		
