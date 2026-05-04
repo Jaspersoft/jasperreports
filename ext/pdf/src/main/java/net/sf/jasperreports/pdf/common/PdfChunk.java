@@ -38,6 +38,8 @@ public interface PdfChunk
 
 	void setLocalGoto(String anchor);
 
+	void setLocalGotoPage(int page, float top);
+
 	void setRemoteGoto(String reference, String anchor);
 
 	void setRemoteGoto(String reference, int page);
