@@ -29,6 +29,7 @@ import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfAnnotation;
 import com.lowagie.text.pdf.PdfArray;
 import com.lowagie.text.pdf.PdfBorderArray;
+import com.lowagie.text.pdf.PdfDestination;
 import com.lowagie.text.pdf.PdfDictionary;
 import com.lowagie.text.pdf.PdfName;
 import com.lowagie.text.pdf.PdfNumber;
@@ -139,6 +140,28 @@ public class ClassicChunk implements PdfChunk
 		else
 		{
 			chunk.setLocalGoto(anchor);
+		}
+	}
+
+	@Override
+	public void setLocalGotoPage(int page, float top)
+	{
+		PdfAction action = PdfAction.gotoLocalPage(page, new PdfDestination(PdfDestination.XYZ, 0, top, 0), pdfProducer.getPdfWriter());
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					new Rectangle(linkLlx, linkLly, linkUrx, linkUry),
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					action
+					)
+				);
+		}
+		else
+		{
+			chunk.setAction(action);
 		}
 	}
 
