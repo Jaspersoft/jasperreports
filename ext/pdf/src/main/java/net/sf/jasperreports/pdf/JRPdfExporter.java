@@ -89,7 +89,6 @@ import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.base.JRBaseFont;
 import net.sf.jasperreports.engine.base.JRBasePen;
-import net.sf.jasperreports.engine.base.JRBasePrintText;
 import net.sf.jasperreports.engine.export.GenericElementHandlerEnviroment;
 import net.sf.jasperreports.engine.export.HyperlinkUtil;
 import net.sf.jasperreports.engine.export.JRExportProgressMonitor;
@@ -530,15 +529,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		)
 	public static final String LEGACY_TEXT_MEASURING_FIX = PDF_EXPORTER_PROPERTIES_PREFIX + "legacy.text.measuring.fix";
 	
-	@Property(
-		category = PropertyConstants.CATEGORY_EXPORT,
-		scopes = {PropertyScope.GLOBAL, PropertyScope.CONTEXT, PropertyScope.REPORT},
-		sinceVersion = PropertyConstants.VERSION_7_0_7,
-		valueType = Boolean.class,
-		defaultValue = PropertyConstants.BOOLEAN_FALSE
-		)
-	public static final String LEGACY_PAGE_ANCHORS = PDF_EXPORTER_PROPERTIES_PREFIX + "legacy.page.anchors";
-	
 	/**
 	 * Flag that determines whether glyph substitution based on Apache FOP is enabled.
 	 * 
@@ -587,10 +577,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	
 	private static final String EMPTY_BOOKMARK_TITLE = "";
 
-	/**
-	 *
-	 */
-	protected static final String JR_PAGE_ANCHOR_PREFIX = "JR_PAGE_ANCHOR_";
 	
 	private static final JRSingletonCache<PdfProducerFactory> pdfProducerCache = 
 			new JRSingletonCache<>(PdfProducerFactory.class);
@@ -616,6 +602,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected int reportIndex;
 	protected PrintPageFormat pageFormat;
 	protected int crtDocumentPageNumber;
+	protected int crtReportStartPageIndex;
+	protected int crtReportPdfPageStart;
 
 	/**
 	 *
@@ -1123,8 +1111,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 				setPageSize(null);
 				
-				boolean legacyPageAnchor = propertiesUtil.getBooleanProperty(jasperPrint, LEGACY_PAGE_ANCHORS, false);
-				
 				boolean pageExported = false;
 				List<JRPrintPage> pages = jasperPrint.getPages();
 				if (pages != null && pages.size() > 0)
@@ -1150,6 +1136,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					int startPageIndex = (pageRange == null || pageRange.getStartPageIndex() == null) ? 0 : pageRange.getStartPageIndex();
 					int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
+					crtReportStartPageIndex = startPageIndex;
+					crtReportPdfPageStart = crtDocumentPageNumber + 1;
+
 					for (int pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 					{
 						checkInterrupted();
@@ -1170,11 +1159,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 						pdfProducer.getPdfContent().setLineCap(LineCapStyle.PROJECTING_SQUARE);
 
-						if (legacyPageAnchor)
-						{
-							writePageAnchor(pageIndex);
-						}
-						
 						crtDocumentPageNumber++;
 
 						/*   */
@@ -1221,32 +1205,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		//return os.toByteArray();
 	}
 
-
-	protected void writePageAnchor(int pageIndex) 
-	{
-		Map<Attribute,Object> attributes = new HashMap<>();
-		fontUtil.getAttributesWithoutAwtFont(attributes, new JRBasePrintText(jasperPrint.getDefaultStyleProvider()));
-		PdfTextChunk chunk = pdfProducer.createChunk(" ", attributes, getLocale());
-		
-		chunk.setLocalDestination(JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (pageIndex + 1), null);
-
-		tagHelper.beginArtifact();
-		
-		PdfPhrase phrase = pdfProducer.createPhrase(chunk);
-		
-		phrase.go(
-			0,
-			pageFormat.getPageHeight(),
-			1,
-			1,
-			0,
-			0,
-			PdfTextAlignment.LEFT,
-			TextDirection.DEFAULT
-			);
-
-		tagHelper.endArtifact();
-	}
 
 	/**
 	 *
@@ -2282,7 +2240,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					{
 						if (link.getHyperlinkPage() != null)
 						{
-							chunk.setLocalGoto(JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + link.getHyperlinkPage().toString());
+							int pdfPage = crtReportPdfPageStart + (link.getHyperlinkPage() - 1 - crtReportStartPageIndex);
+							int targetPageIndex = link.getHyperlinkPage() - 1;
+							float targetPageHeight = jasperPrint.getPageFormat(targetPageIndex).getPageHeight();
+							chunk.setLocalGotoPage(pdfPage, targetPageHeight);
 							wasHyperlinkSet = true;
 						}
 						break;

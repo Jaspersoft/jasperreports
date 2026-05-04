@@ -25,7 +25,8 @@ package net.sf.jasperreports.engine.fill;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
+
+import net.sf.jasperreports.engine.util.FilteredObjectInputStream;
 
 /**
  * <code>java.io.ObjectInputStream</code> subclass used for deserializing report
@@ -33,14 +34,14 @@ import java.io.ObjectInputStream;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class VirtualizationObjectInputStream extends ObjectInputStream
+public class VirtualizationObjectInputStream extends FilteredObjectInputStream
 {
 	private final JRVirtualizationContext virtualizationContext;
 
 	public VirtualizationObjectInputStream(InputStream in, 
 			JRVirtualizationContext virtualizationContext) throws IOException
 	{
-		super(in);
+		super(virtualizationContext.getJasperReportsContext(), in);
 		
 		this.virtualizationContext = virtualizationContext;
 		enableResolveObject(true);

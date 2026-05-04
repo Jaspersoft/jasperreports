@@ -29,6 +29,7 @@ import org.openpdf.text.pdf.PdfAction;
 import org.openpdf.text.pdf.PdfAnnotation;
 import org.openpdf.text.pdf.PdfArray;
 import org.openpdf.text.pdf.PdfBorderArray;
+import org.openpdf.text.pdf.PdfDestination;
 import org.openpdf.text.pdf.PdfDictionary;
 import org.openpdf.text.pdf.PdfName;
 import org.openpdf.text.pdf.PdfNumber;
@@ -145,6 +146,28 @@ public class StandardChunk implements PdfChunk
 		else
 		{
 			chunk.setLocalGoto(anchor);
+		}
+	}
+
+	@Override
+	public void setLocalGotoPage(int page, float top)
+	{
+		PdfAction action = PdfAction.gotoLocalPage(page, new PdfDestination(PdfDestination.XYZ, 0, top, 0), pdfProducer.getPdfWriter());
+		if (linkTag != null)
+		{
+			addAnnotationToTag(
+				linkTag,
+				PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					new Rectangle(linkLlx, linkLly, linkUrx, linkUry),
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					action
+					)
+				);
+		}
+		else
+		{
+			chunk.setAction(action);
 		}
 	}
 
