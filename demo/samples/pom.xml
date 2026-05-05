@@ -59,6 +59,7 @@
 		<module>nopagebreak</module>
 		<module>noreport</module>
 		<module>noxmldesign</module>
+		<module>osgi</module>
 		<module>paragraphs</module>
 		<module>pdfa</module>
 		<module>pdfencrypt</module>

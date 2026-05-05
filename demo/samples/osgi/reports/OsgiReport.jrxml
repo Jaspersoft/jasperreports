@@ -1,0 +1,33 @@
+<jasperReport name="OsgiReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" whenNoDataType="AllSectionsNoDetail">
+	<style name="Sans_Normal" default="true" fontName="SansSerif" fontSize="10.0"/>
+	<style name="Sans_Bold" fontName="SansSerif" fontSize="10.0" bold="true"/>
+	<parameter name="ReportTitle" class="java.lang.String"/>
+	<parameter name="FrameworkInfo" class="java.lang.String"/>
+	<parameter name="BundleList" class="java.lang.String"/>
+	<parameter name="ClassLoaderInfo" class="java.lang.String"/>
+	<title height="50">
+		<element kind="textField" x="0" y="10" width="515" height="25" hTextAlign="Center" style="Sans_Bold" fontSize="16.0">
+			<expression>$P{ReportTitle} + "_blah"</expression>
+		</element>
+	</title>
+	<summary height="250">
+		<element kind="staticText" x="0" y="10" width="515" height="15" style="Sans_Bold">
+			<text>Framework</text>
+		</element>
+		<element kind="textField" x="0" y="25" width="515" height="15" style="Sans_Normal">
+			<expression>$P{FrameworkInfo}</expression>
+		</element>
+		<element kind="staticText" x="0" y="50" width="515" height="15" style="Sans_Bold">
+			<text>Class Loading</text>
+		</element>
+		<element kind="textField" x="0" y="65" width="515" height="30" style="Sans_Normal" textAdjust="StretchHeight">
+			<expression>$P{ClassLoaderInfo}</expression>
+		</element>
+		<element kind="staticText" x="0" y="105" width="515" height="15" style="Sans_Bold">
+			<text>Installed Bundles</text>
+		</element>
+		<element kind="textField" x="0" y="120" width="515" height="100" style="Sans_Normal" textAdjust="StretchHeight">
+			<expression>$P{BundleList}</expression>
+		</element>
+	</summary>
+</jasperReport>
