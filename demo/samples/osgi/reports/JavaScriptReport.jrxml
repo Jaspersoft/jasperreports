@@ -1,0 +1,32 @@
+<jasperReport name="JavaScriptReport" language="javascript" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="418e076d-d0f8-4400-aec9-2cbc64314d64">
+	<parameter name="A" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
+	</parameter>
+	<parameter name="B" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[5]]></defaultValueExpression>
+	</parameter>
+	<title height="742">
+		<element kind="line" uuid="d7f34daf-9399-4685-bd09-3822528b8bac" x="0" y="0" width="515" height="1"/>
+		<element kind="staticText" uuid="579698b9-4fb7-4c83-981b-2b8ee74fa007" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
+			<text><![CDATA[JavaScript Sample]]></text>
+		</element>
+		<element kind="staticText" uuid="fae829a7-88b1-45cc-a75d-61a43de86079" positionType="Float" x="0" y="150" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[A =]]></text>
+		</element>
+		<element kind="textField" uuid="fcd695e0-78b1-4ccb-81ca-4de3b380708a" x="280" y="150" width="200" height="35" fontSize="24.0">
+			<expression><![CDATA[$P{A}]]></expression>
+		</element>
+		<element kind="staticText" uuid="592f0f5d-7dcf-452a-9c41-dd075876d058" positionType="Float" x="0" y="190" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[B =]]></text>
+		</element>
+		<element kind="textField" uuid="0b4ec720-f78c-4cdd-8d9e-023ab209d8bb" x="280" y="190" width="200" height="35" fontSize="24.0">
+			<expression><![CDATA[$P{B}]]></expression>
+		</element>
+		<element kind="staticText" uuid="5171008e-24c8-4515-bbe5-952a65015217" positionType="Float" x="0" y="240" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[A + B =]]></text>
+		</element>
+		<element kind="textField" uuid="4d3a5016-b734-4ecd-b795-9ec91755a0f7" x="280" y="240" width="200" height="35" forecolor="#008000" fontSize="24.0">
+			<expression><![CDATA[$P{A} + $P{B}]]></expression>
+		</element>
+	</title>
+</jasperReport>

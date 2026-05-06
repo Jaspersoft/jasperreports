@@ -167,8 +167,6 @@ public class OsgiApp extends AbstractSampleApp
 
 	public void fill() throws JRException
 	{
-		long start = System.currentTimeMillis();
-
 		ClassLoader originalCL = Thread.currentThread().getContextClassLoader();
 		try
 		{
@@ -176,43 +174,27 @@ public class OsgiApp extends AbstractSampleApp
 			ClassLoader bundleCL = fillManagerClass.getClassLoader();
 			Thread.currentThread().setContextClassLoader(bundleCL);
 
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("ReportTitle", "OSGi Embedded Framework Report");
-			parameters.put("FrameworkInfo", framework.getSymbolicName() + " " + framework.getVersion());
+			Method fillMethod = 
+				fillManagerClass.getMethod(
+					"fillReportToFile", 
+					String.class, 
+					Map.class
+					);
 
-			StringBuilder bundleList = new StringBuilder();
-			BundleContext bundleContext = framework.getBundleContext();
-			for (Bundle bundle : bundleContext.getBundles())
+			System.out.println("Filling reports via bundle-loaded JasperFillManager...");
+
+			File[] files = getFiles(new File("target/reports"), "jasper");
+			for(int i = 0; i < files.length; i++)
 			{
-				if (bundleList.length() > 0)
-				{
-					bundleList.append("\n");
-				}
-				bundleList.append(bundle.getSymbolicName())
-					.append(" ").append(bundle.getVersion())
-					.append(" [").append(OsgiUtil.getBundleState(bundle)).append("]");
+				File reportFile = files[i];
+				long start = System.currentTimeMillis();
+				fillMethod.invoke(
+					null,
+					reportFile.getAbsolutePath(), 
+					(Map)null
+					);
+				System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 			}
-			parameters.put("BundleList", bundleList.toString());
-
-			Class<?> loadedClass = jrBundle.loadClass("net.sf.jasperreports.engine.JasperFillManager");
-			parameters.put(
-				"ClassLoaderInfo",
-				"JasperFillManager classloader: " + loadedClass.getClassLoader()
-				+ "\nApplication classloader: " + getClass().getClassLoader()
-				+ "\nClasses loaded from different classloaders: " + (loadedClass.getClassLoader() != getClass().getClassLoader())
-			);
-
-			System.out.println("Filling report via bundle-loaded JasperFillManager...");
-
-			Method fillMethod = fillManagerClass.getMethod(
-				"fillReportToFile", String.class, String.class, Map.class
-			);
-			fillMethod.invoke(
-				null,
-				"target/reports/OsgiReport.jasper",
-				"target/reports/OsgiReport.jrprint",
-				parameters
-			);
 		}
 		catch (Exception e)
 		{
@@ -222,8 +204,6 @@ public class OsgiApp extends AbstractSampleApp
 		{
 			Thread.currentThread().setContextClassLoader(originalCL);
 		}
-
-		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 

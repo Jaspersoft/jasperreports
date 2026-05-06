@@ -17,5 +17,12 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-javascript</artifactId>
+			<version>${revision}</version>
+			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
 	</dependencies>
 </project>
