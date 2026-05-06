@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.sf.jasperreports</groupId>
-		<artifactId>jasperreports-samples-parent</artifactId>
+		<artifactId>jasperreports-parent</artifactId>
 		<version>${revision}</version>
-		<relativePath>../pom-parent.xml</relativePath>
+		<relativePath>../../../pom-parent.xml</relativePath>
 	</parent>
 	<artifactId>jasperreports-samples-osgi</artifactId>
 	<packaging>jar</packaging>
@@ -30,9 +30,51 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${source.version}</source>
+					<target>${target.version}</target>
+					<showWarnings>true</showWarnings>
+					<fork>true</fork><!-- TODO lucianc is this ok? -->
+					<compilerArgument>-Xlint:deprecation,-unchecked,-options</compilerArgument>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports-maven-plugin</artifactId>
+				<version>${revision}</version>
+				<executions>
+					<execution>
+						<id>compile-reports</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/reports</sourceDirectory>
+							<outputDirectory>${project.build.directory}/reports</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<!-- this is for decompile, as update goal is not expected to be called on all samples -->
+						<id>default-cli</id>
+						<configuration>
+							<sourceDirectory>${project.build.directory}/reports</sourceDirectory>
+							<outputDirectory>${project.build.directory}/reports</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>${exec-maven-plugin.version}</version>
+				<configuration>
+					<mainClass>OsgiApp</mainClass>
+					<cleanupDaemonThreads>false</cleanupDaemonThreads>
+				</configuration>
 				<executions>
 					<execution>
 						<id>copy-osgi-dependencies</id>
@@ -46,6 +88,21 @@
 								<argument>dependency:copy-dependencies</argument>
 								<argument>-f</argument>
 								<argument>pom-osgi-bom.xml</argument>
+							</arguments>
+							<workingDirectory>${project.basedir}</workingDirectory>
+						</configuration>
+					</execution>
+					<!-- 
+					This execution is similar to the exec:java test one above, but needed because setting the working directory
+					seems to work only for the exec:exec goal. We need to set the working directory when running all the samples
+					from parent folder.
+					 -->
+					<execution>
+						<id>all</id>
+						<configuration>
+							<executable>mvn</executable>
+							<arguments>
+								<argument>exec:java</argument>
 							</arguments>
 							<workingDirectory>${project.basedir}</workingDirectory>
 						</configuration>

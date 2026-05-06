@@ -23,7 +23,9 @@
  */
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.felix.framework.FrameworkFactory;
@@ -31,14 +33,11 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.launch.Framework;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.util.AbstractSampleApp;
-
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public class OsgiApp extends AbstractSampleApp
+public class OsgiApp
 {
 	private Framework framework;
 	private Bundle jrBundle;
@@ -49,12 +48,21 @@ public class OsgiApp extends AbstractSampleApp
 	 */
 	public static void main(String[] args)
 	{
-		main(new OsgiApp(), args);
+		OsgiApp app = new OsgiApp();
+
+		try
+		{
+			app.test();
+		}
+		catch (Throwable e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 
 
-	@Override
-	public void test() throws JRException
+	private void test() throws Exception
 	{
 		startFramework();
 		try
@@ -70,7 +78,7 @@ public class OsgiApp extends AbstractSampleApp
 	}
 
 
-	public void startFramework() throws JRException
+	private void startFramework() throws Exception
 	{
 		try
 		{
@@ -97,12 +105,12 @@ public class OsgiApp extends AbstractSampleApp
 		}
 		catch (Exception e)
 		{
-			throw new JRException("Failed to start OSGi framework", e);
+			throw new Exception("Failed to start OSGi framework", e);
 		}
 	}
 
 
-	public void installBundles() throws JRException
+	private void installBundles() throws Exception
 	{
 		File[] files = getFiles(new File("target/dependency"), "jar");
 		for (File jarFile : files)
@@ -123,7 +131,7 @@ public class OsgiApp extends AbstractSampleApp
 			}
 			catch (Exception e)
 			{
-				throw new JRException("Failed to install bundle: " + jarFile.getAbsolutePath(), e);
+				throw new Exception("Failed to install bundle: " + jarFile.getAbsolutePath(), e);
 			}
 		}
 
@@ -135,7 +143,7 @@ public class OsgiApp extends AbstractSampleApp
 			}
 			catch (Exception e)
 			{
-				throw new JRException("Failed to start core bundle", e);
+				throw new Exception("Failed to start core bundle", e);
 			}
 		}
 
@@ -165,7 +173,7 @@ public class OsgiApp extends AbstractSampleApp
 	}
 
 
-	public void fill() throws JRException
+	private void fill() throws Exception
 	{
 		ClassLoader originalCL = Thread.currentThread().getContextClassLoader();
 		try
@@ -199,7 +207,7 @@ public class OsgiApp extends AbstractSampleApp
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			throw new JRException("Failed to fill report via OSGi bundle: " + e);
+			throw new Exception("Failed to fill report via OSGi bundle: " + e);
 		}
 		finally
 		{
@@ -208,7 +216,7 @@ public class OsgiApp extends AbstractSampleApp
 	}
 
 
-	public void xml() throws JRException
+	private void xml() throws Exception
 	{
 		long start = System.currentTimeMillis();
 
@@ -227,7 +235,7 @@ public class OsgiApp extends AbstractSampleApp
 		}
 		catch (Exception e)
 		{
-			throw new JRException("Failed to export report via OSGi bundle", e);
+			throw new Exception("Failed to export report via OSGi bundle", e);
 		}
 		finally
 		{
@@ -238,7 +246,7 @@ public class OsgiApp extends AbstractSampleApp
 	}
 
 
-	public void stopFramework() throws JRException
+	private void stopFramework() throws Exception
 	{
 		if (framework != null)
 		{
@@ -250,8 +258,27 @@ public class OsgiApp extends AbstractSampleApp
 			}
 			catch (Exception e)
 			{
-				throw new JRException("Failed to stop OSGi framework", e);
+				throw new Exception("Failed to stop OSGi framework", e);
 			}
 		}
+	}
+
+	
+	private File[] getFiles(File parentFile, String extension)
+	{
+		List<File> fileList = new ArrayList<>();
+		String[] files = parentFile.list();
+		if (files != null)
+		{
+			for(int i = 0; i < files.length; i++)
+			{
+				String reportFile = files[i];
+				if (reportFile.endsWith("." + extension))
+				{
+					fileList.add(new File(parentFile, reportFile)); 
+				}
+			}
+		}
+		return fileList.toArray(new File[fileList.size()]);
 	}
 }
