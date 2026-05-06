@@ -30,8 +30,6 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
-import org.osgi.framework.Bundle;
-
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
@@ -145,20 +143,5 @@ public class OsgiUtil
 			osgiVersion.append(".").append(qualifier);
 		}
 		return osgiVersion.toString();
-	}
-
-
-	public static String getBundleState(Bundle bundle)
-	{
-		switch (bundle.getState())
-		{
-			case Bundle.UNINSTALLED : return "UNINSTALLED";
-			case Bundle.INSTALLED : return "INSTALLED";
-			case Bundle.RESOLVED : return "RESOLVED";
-			case Bundle.STARTING : return "STARTING";
-			case Bundle.STOPPING : return "STOPPING";
-			case Bundle.ACTIVE : return "ACTIVE";
-			default : return "UNKNOWN";
-		}
 	}
 }

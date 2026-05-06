@@ -146,19 +146,6 @@ public class OsgiApp
 				throw new Exception("Failed to start core bundle", e);
 			}
 		}
-
-		BundleContext bundleContext = framework.getBundleContext();
-		Bundle[] bundles = bundleContext.getBundles();
-		System.out.println("Installed bundles:");
-		for (Bundle bundle : bundles)
-		{
-			System.out.println(
-				"  " + bundle.getBundleId()
-				+ " - " + bundle.getSymbolicName()
-				+ " " + bundle.getVersion()
-				+ " [" + OsgiUtil.getBundleState(bundle) + "]"
-			);
-		}
 	}
 
 
@@ -168,7 +155,6 @@ public class OsgiApp
 		String bundleLocation = "file:" + bundleJar.getAbsolutePath();
 		System.out.println("Installing: " + bundleLocation);
 		Bundle bundle = bundleContext.installBundle(bundleLocation);
-		System.out.println("Installed bundle: " + bundle.getSymbolicName() + " " + bundle.getVersion());
 		return bundle;
 	}
 

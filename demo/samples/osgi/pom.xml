@@ -10,8 +10,10 @@
 	<artifactId>jasperreports-samples-osgi</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<sample.base.name>Osgi</sample.base.name>
-		<sample.report.name>OsgiReport</sample.report.name>
+		<jasperreports.root.dir>${basedir}/../../../</jasperreports.root.dir>
+		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
 	</properties>
 	<dependencies>
 		<dependency>
