@@ -198,7 +198,8 @@ public class OsgiApp extends AbstractSampleApp
 		}
 		catch (Exception e)
 		{
-			throw new JRException("Failed to fill report via OSGi bundle", e);
+			e.printStackTrace();
+			throw new JRException("Failed to fill report via OSGi bundle: " + e);
 		}
 		finally
 		{
