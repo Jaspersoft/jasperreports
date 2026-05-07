@@ -70,6 +70,7 @@ public class OsgiApp
 		{
 			installBundles();
 			fill();
+			pdf();
 			xml();
 		}
 		finally
@@ -234,6 +235,40 @@ public class OsgiApp
 		{
 			e.printStackTrace();
 			throw new Exception("Failed to export report to XML via OSGi bundle", e);
+		}
+		finally
+		{
+			Thread.currentThread().setContextClassLoader(originalCL);
+		}
+	}
+
+
+	private void pdf() throws Exception
+	{
+		ClassLoader originalCL = Thread.currentThread().getContextClassLoader();
+		try
+		{
+			Thread.currentThread().setContextClassLoader(createCompositeClassLoader());
+
+			Class<?> exportManagerClass = jrBundle.loadClass("net.sf.jasperreports.engine.JasperExportManager");
+
+			Method exportMethod = exportManagerClass.getMethod("exportReportToPdfFile", String.class);
+
+			System.out.println("Exporting reports to PDF via bundle-loaded JasperExportManager...");
+
+			File[] files = getFiles(new File("target/reports"), "jrprint");
+			for (int i = 0; i < files.length; i++)
+			{
+				File reportFile = files[i];
+				long start = System.currentTimeMillis();
+				exportMethod.invoke(null, reportFile.getAbsolutePath());
+				System.out.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			throw new Exception("Failed to export report to PDF via OSGi bundle", e);
 		}
 		finally
 		{
