@@ -390,9 +390,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		String application = configuration.getMetadataApplication();
 		if( application == null )
 		{
-			@SuppressWarnings("deprecation") //this can be replaced only after abandoning Java 8 support 
-			String depApplication = "JasperReports Library version " + Package.getPackage("net.sf.jasperreports.engine").getImplementationVersion();
-			application = depApplication;
+			application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 		}
 		appHelper.exportProperty(PropsAppHelper.PROPERTY_APPLICATION, application);
 
