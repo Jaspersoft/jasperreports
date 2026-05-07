@@ -32,6 +32,7 @@ import org.apache.felix.framework.FrameworkFactory;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.launch.Framework;
+import org.osgi.framework.wiring.BundleWiring;
 
 
 /**
@@ -69,7 +70,7 @@ public class OsgiApp
 		{
 			installBundles();
 			fill();
-			//xml();
+			xml();
 		}
 		finally
 		{
@@ -119,7 +120,11 @@ public class OsgiApp
 			{
 				if (jarFile.getName().startsWith("jasperreports-"))
 				{
-					jarFile = OsgiUtil.alterOsgiBundle(jarFile);
+					jarFile = OsgiUtil.alterBundleVersion(jarFile);
+				}
+				else
+				{
+					jarFile = OsgiUtil.ensureImportExportPackage(jarFile);
 				}
 
 				Bundle bundle = installBundle(jarFile);
@@ -135,15 +140,16 @@ public class OsgiApp
 			}
 		}
 
-		if (jrBundle != null)
+		BundleContext bundleContext = framework.getBundleContext();
+		for (Bundle bundle : bundleContext.getBundles())
 		{
 			try
 			{
-				jrBundle.start();
+				bundle.start();
 			}
 			catch (Exception e)
 			{
-				throw new Exception("Failed to start core bundle", e);
+				System.out.println("Could not start bundle: " + bundle.getSymbolicName() + " (" + e.getMessage() + ")");
 			}
 		}
 	}
@@ -164,9 +170,9 @@ public class OsgiApp
 		ClassLoader originalCL = Thread.currentThread().getContextClassLoader();
 		try
 		{
+			Thread.currentThread().setContextClassLoader(createCompositeClassLoader());
+
 			Class<?> fillManagerClass = jrBundle.loadClass("net.sf.jasperreports.engine.JasperFillManager");
-			ClassLoader bundleCL = fillManagerClass.getClassLoader();
-			Thread.currentThread().setContextClassLoader(bundleCL);
 
 			Method fillMethod = 
 				fillManagerClass.getMethod(
@@ -185,7 +191,7 @@ public class OsgiApp
 				fillMethod.invoke(
 					null,
 					reportFile.getAbsolutePath(), 
-					(Map)null
+					(Map<String, Object>)null
 					);
 				System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 			}
@@ -193,7 +199,7 @@ public class OsgiApp
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			throw new Exception("Failed to fill report via OSGi bundle: " + e);
+			throw new Exception("Failed to fill report via OSGi bundle" + e);
 		}
 		finally
 		{
@@ -204,31 +210,55 @@ public class OsgiApp
 
 	private void xml() throws Exception
 	{
-		long start = System.currentTimeMillis();
-
 		ClassLoader originalCL = Thread.currentThread().getContextClassLoader();
 		try
 		{
+			Thread.currentThread().setContextClassLoader(createCompositeClassLoader());
+
 			Class<?> exportManagerClass = jrBundle.loadClass("net.sf.jasperreports.engine.JasperExportManager");
-			Thread.currentThread().setContextClassLoader(exportManagerClass.getClassLoader());
 
-			System.out.println("Exporting report via bundle-loaded JasperExportManager...");
+			Method exportMethod = exportManagerClass.getMethod("exportReportToXmlFile", String.class, boolean.class);
 
-			Method exportMethod = exportManagerClass.getMethod(
-				"exportReportToXmlFile", String.class, boolean.class
-			);
-			exportMethod.invoke(null, "target/reports/OsgiReport.jrprint", false);
+			System.out.println("Exporting reports via bundle-loaded JasperExportManager...");
+
+			File[] files = getFiles(new File("target/reports"), "jrprint");
+			for (int i = 0; i < files.length; i++)
+			{
+				File reportFile = files[i];
+				long start = System.currentTimeMillis();
+				exportMethod.invoke(null, reportFile.getAbsolutePath(), false);
+				System.out.println("Report : " + reportFile + ". XML export time : " + (System.currentTimeMillis() - start));
+			}
 		}
 		catch (Exception e)
 		{
-			throw new Exception("Failed to export report via OSGi bundle", e);
+			e.printStackTrace();
+			throw new Exception("Failed to export report to XML via OSGi bundle", e);
 		}
 		finally
 		{
 			Thread.currentThread().setContextClassLoader(originalCL);
 		}
+	}
 
-		System.out.println("XML export time : " + (System.currentTimeMillis() - start));
+
+	private ClassLoader createCompositeClassLoader()
+	{
+		List<ClassLoader> classLoaders = new ArrayList<>();
+		BundleContext bundleContext = framework.getBundleContext();
+		for (Bundle bundle : bundleContext.getBundles())
+		{
+			BundleWiring wiring = bundle.adapt(BundleWiring.class);
+			if (wiring != null)
+			{
+				ClassLoader cl = wiring.getClassLoader();
+				if (cl != null)
+				{
+					classLoaders.add(cl);
+				}
+			}
+		}
+		return new CompositeClassLoader(classLoaders);
 	}
 
 
