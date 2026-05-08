@@ -1,4 +1,4 @@
-<jasperReport name="JavaScriptReport" language="javascript" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="418e076d-d0f8-4400-aec9-2cbc64314d64">
+<jasperReport name="JavaScriptReport" language="javascript" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" whenNoDataType="AllSectionsNoDetail" uuid="418e076d-d0f8-4400-aec9-2cbc64314d64">
 	<parameter name="A" class="java.lang.Double">
 		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
 	</parameter>

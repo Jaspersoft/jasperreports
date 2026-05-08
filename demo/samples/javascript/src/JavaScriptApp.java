@@ -22,7 +22,6 @@
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -59,7 +58,7 @@ public class JavaScriptApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		long start = System.currentTimeMillis();
-		JasperFillManager.fillReportToFile("target/reports/JavaScriptReport.jasper", null, new JREmptyDataSource());
+		JasperFillManager.fillReportToFile("target/reports/JavaScriptReport.jasper", null);
 		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	

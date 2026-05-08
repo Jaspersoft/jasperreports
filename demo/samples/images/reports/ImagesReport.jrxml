@@ -1,4 +1,4 @@
-<jasperReport name="ImagesReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="25" bottomMargin="25" uuid="deb309d8-6d84-4de7-85b5-31bc8f46df2e">
+<jasperReport name="ImagesReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="25" bottomMargin="25" whenNoDataType="AllSectionsNoDetail" uuid="deb309d8-6d84-4de7-85b5-31bc8f46df2e">
 	<style name="imageBox" mode="Opaque" backcolor="#FFFF00">
 		<box>
 			<pen lineWidth="0.5"/>
