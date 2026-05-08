@@ -1,4 +1,4 @@
-<jasperReport name="GenericElementReport" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="820" leftMargin="11" rightMargin="11" topMargin="50" bottomMargin="50" uuid="ed16b371-5ada-4abb-8973-bcfa77094161">
+<jasperReport name="GenericElementReport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="820" leftMargin="11" rightMargin="11" topMargin="50" bottomMargin="50" uuid="ed16b371-5ada-4abb-8973-bcfa77094161">
 	<style name="widget1" hTextAlign="Right" hImageAlign="Right"/>
 	<parameter name="JRProjectID" class="java.lang.String">
 		<defaultValueExpression><![CDATA["jasperreports"]]></defaultValueExpression>

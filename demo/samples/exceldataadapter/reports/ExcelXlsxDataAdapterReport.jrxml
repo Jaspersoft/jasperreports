@@ -1,4 +1,4 @@
-<jasperReport name="ExcelXlsxDataAdapterReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="623644de-c1a7-4f9b-a0b8-6cd49534177b">
+<jasperReport name="ExcelXlsxDataAdapterReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="623644de-c1a7-4f9b-a0b8-6cd49534177b">
 	<property name="net.sf.jasperreports.data.adapter" value="data/ExcelXlsxDataAdapter.jrdax"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="12.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="12.0" bold="true" italic="false" underline="false" strikeThrough="false"/>

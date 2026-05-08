@@ -1,4 +1,4 @@
-<jasperReport name="HorizontalListOverflow" language="java" pageWidth="612" pageHeight="392" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d99cebe4-daae-4fa8-bdd4-0a610c0fb491">
+<jasperReport name="HorizontalListOverflow" pageWidth="612" pageHeight="392" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d99cebe4-daae-4fa8-bdd4-0a610c0fb491">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="20.0"/>
 	<dataset name="ListDataset" uuid="4cf5fe40-b40d-4f7a-8d91-d276ec79bd9b">
 		<variable name="Text" class="java.lang.String">

@@ -1,4 +1,4 @@
-<jasperReport name="SubDatasetChartReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c83ff4c3-c99d-4fbb-b1a9-54dda8194309">
+<jasperReport name="SubDatasetChartReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c83ff4c3-c99d-4fbb-b1a9-54dda8194309">
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="8.0" bold="true" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Serif_Bold" fontName="DejaVu Serif" fontSize="10.0" bold="true" italic="false" underline="false" strikeThrough="false"/>
 	<dataset name="Country_Orders" uuid="d89be355-eac7-43cd-971d-21b8bf0bb71e">

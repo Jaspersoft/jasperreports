@@ -1,4 +1,4 @@
-<jasperReport name="FooReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="2f0f8d81-d6c4-497b-8f73-17a65c0af94c">
+<jasperReport name="FooReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="2f0f8d81-d6c4-497b-8f73-17a65c0af94c">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<title height="782" splitType="Stretch">
 		<printWhenExpression><![CDATA[com.foo.SomeFooClass.isToPrint()]]></printWhenExpression>

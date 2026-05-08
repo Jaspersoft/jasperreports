@@ -1,4 +1,4 @@
-<jasperReport name="MacroReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="0" bottomMargin="5" uuid="cde631ab-364a-4f1a-956a-636d167e36ee">
+<jasperReport name="MacroReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="0" bottomMargin="5" uuid="cde631ab-364a-4f1a-956a-636d167e36ee">
 	<property name="net.sf.jasperreports.csv.column.names" value="city, id, name, address, state"/>
 	<property name="net.sf.jasperreports.csv.source" value="data/CsvDataSource.txt"/>
 	<property name="net.sf.jasperreports.export.xls.workbook.template.keep.sheets" value="true"/>

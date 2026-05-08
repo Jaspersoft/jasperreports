@@ -1,4 +1,4 @@
-<jasperReport name="ChartCustomizersReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bce0058f-ad1c-4b93-9d6b-6289cc922a3c">
+<jasperReport name="ChartCustomizersReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bce0058f-ad1c-4b93-9d6b-6289cc922a3c">
 	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
 	<import>net.sf.jasperreports.engine.data.JRCsvDataSource</import>
 	<dataset name="categoryDataset" uuid="f674686b-b3b5-451d-a81b-3617caa71a9f">

@@ -1,4 +1,4 @@
-<jasperReport name="GroupKeepTogether" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b5bf102-916b-4454-9864-2ee39f799344">
+<jasperReport name="GroupKeepTogether" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b5bf102-916b-4454-9864-2ee39f799344">
 	<property name="net.sf.jasperreports.data.adapter" value="net/sf/jasperreports/data/EmptyDataAdapter.30.jrdax"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0"/>
 	<variable name="groupVar" class="java.lang.Integer">

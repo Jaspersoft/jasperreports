@@ -1,4 +1,4 @@
-<jasperReport name="MasterReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="0bb3792b-2400-4fdf-b19f-7928164e6ce1">
+<jasperReport name="MasterReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="0bb3792b-2400-4fdf-b19f-7928164e6ce1">
 	<property name="net.sf.jasperreports.export.json.schema" value="reports/MasterReport.schema.json"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="12.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="12.0" bold="true" italic="false" underline="false" strikeThrough="false"/>

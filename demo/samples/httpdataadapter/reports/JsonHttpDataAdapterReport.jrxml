@@ -1,4 +1,4 @@
-<jasperReport name="JsonHttpDataAdapterReport" language="java" columnCount="3" pageWidth="595" pageHeight="842" columnWidth="171" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="b85a2cf8-dd0c-4a31-804c-e7b217f9b42b">
+<jasperReport name="JsonHttpDataAdapterReport" columnCount="3" pageWidth="595" pageHeight="842" columnWidth="171" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="b85a2cf8-dd0c-4a31-804c-e7b217f9b42b">
 	<property name="net.sf.jasperreports.data.adapter" value="data/JsonHttpDataAdapter.jrdax"/>
 	<dataset name="FetchDataset" uuid="753275b1-35e7-428e-87be-88a1863e1c06"/>
 	<dataset name="MoviesDataset" uuid="bb6eeca6-9992-4268-8570-db12d8d5c79d">

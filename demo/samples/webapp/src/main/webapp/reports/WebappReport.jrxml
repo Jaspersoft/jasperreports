@@ -1,4 +1,4 @@
-<jasperReport name="WebappReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" scriptletClass="scriptlets.WebappScriptlet" uuid="4bfc4df9-db93-4bd6-a4e7-4335e2618615">
+<jasperReport name="WebappReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" scriptletClass="scriptlets.WebappScriptlet" uuid="4bfc4df9-db93-4bd6-a4e7-4335e2618615">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="12.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="12.0" bold="true" italic="false" underline="false" strikeThrough="false"/>

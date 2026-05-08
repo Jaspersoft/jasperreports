@@ -1,4 +1,4 @@
-<jasperReport name="VirtualizedFrames" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="ab7e07f2-79ec-4d1c-b8d6-85059172a296">
+<jasperReport name="VirtualizedFrames" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="ab7e07f2-79ec-4d1c-b8d6-85059172a296">
 	<property name="net.sf.jasperreports.virtual.page.element.size" value="5"/>
 	<property name="net.sf.jasperreports.data.adapter" value="net/sf/jasperreports/virtualization/empty40.jrdax"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0"/>

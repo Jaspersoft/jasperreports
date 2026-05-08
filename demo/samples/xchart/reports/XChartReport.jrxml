@@ -1,4 +1,4 @@
-<jasperReport name="XChartReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" scriptletClass="XChartScriptlet" uuid="bfa059a3-b0ad-417d-9032-503996c53730">
+<jasperReport name="XChartReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" scriptletClass="XChartScriptlet" uuid="bfa059a3-b0ad-417d-9032-503996c53730">
 	<variable name="ChartImage" calculation="System" class="java.awt.Image"/>
 	<title height="742">
 		<element kind="line" uuid="fd60c6eb-343f-433b-80b0-a2c5be88db9a" x="0" y="0" width="515" height="1"/>

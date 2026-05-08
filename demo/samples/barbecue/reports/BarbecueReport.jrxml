@@ -1,4 +1,4 @@
-<jasperReport name="BarbecueReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="1d7cf054-80bc-4b63-933e-e2f7736c3e3f">
+<jasperReport name="BarbecueReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="1d7cf054-80bc-4b63-933e-e2f7736c3e3f">
 	<parameter name="Code" class="java.lang.String">
 		<defaultValueExpression><![CDATA["01234567890"]]></defaultValueExpression>
 	</parameter>

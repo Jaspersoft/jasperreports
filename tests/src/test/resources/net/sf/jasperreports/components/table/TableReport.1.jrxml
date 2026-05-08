@@ -1,4 +1,4 @@
-<jasperReport name="TableReport.1" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c927e671-66f3-40f2-a189-49d30d607fe5" floatColumnFooter="true">
+<jasperReport name="TableReport.1" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c927e671-66f3-40f2-a189-49d30d607fe5" floatColumnFooter="true">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Table">
 		<box>

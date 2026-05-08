@@ -1,4 +1,4 @@
-<jasperReport name="AlterDesignReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="bfcdbee3-9db9-4688-bc22-273a1901e119">
+<jasperReport name="AlterDesignReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="bfcdbee3-9db9-4688-bc22-273a1901e119">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<title height="782">
 		<element kind="staticText" uuid="7e8a0a22-e6be-454f-b8ef-c3cd4e6490eb" mode="Opaque" x="0" y="0" width="555" height="90" backcolor="#DDDDDD" hTextAlign="Center" vTextAlign="Middle" style="Sans_Normal">

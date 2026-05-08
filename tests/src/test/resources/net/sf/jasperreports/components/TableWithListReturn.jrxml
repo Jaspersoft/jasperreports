@@ -1,4 +1,4 @@
-<jasperReport name="TableWithListReturn" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="72031eb8-888d-4429-aa63-0c5f9ba0bfee">
+<jasperReport name="TableWithListReturn" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="72031eb8-888d-4429-aa63-0c5f9ba0bfee">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<dataset name="TableData" uuid="6840df8b-0a6a-4cb5-8c03-8ce53d7b4cae">
 		<variable name="ReturnedVariable" class="java.lang.String"/>

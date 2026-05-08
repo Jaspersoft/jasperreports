@@ -1,4 +1,4 @@
-<jasperReport name="ProductReport" language="java" columnCount="2" pageWidth="325" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="160" columnSpacing="5" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="092b3dd1-2ae9-4cf5-aaaf-ff033e77d383">
+<jasperReport name="ProductReport" columnCount="2" pageWidth="325" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="160" columnSpacing="5" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="092b3dd1-2ae9-4cf5-aaaf-ff033e77d383">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="8.0" bold="true" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Italic" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="true" underline="false" strikeThrough="false"/>

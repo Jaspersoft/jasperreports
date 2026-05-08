@@ -1,4 +1,4 @@
-<jasperReport name="SplitTypePreventReport.45" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2cfe8dc0-5f37-4121-8302-8a8f0f5875ff">
+<jasperReport name="SplitTypePreventReport.45" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2cfe8dc0-5f37-4121-8302-8a8f0f5875ff">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<dataset name="Empty Dataset1" uuid="3fc367ec-010a-4de2-b51c-c71e2664817b">
 		<property name="net.sf.jasperreports.data.adapter" value="net/sf/jasperreports/data/EmptyDataAdapter.1.jrdax"/>
