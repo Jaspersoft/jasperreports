@@ -24,5 +24,12 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-webp</artifactId>
+			<version>${imageio-webp.version}</version>
+			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
 	</dependencies>
 </project>

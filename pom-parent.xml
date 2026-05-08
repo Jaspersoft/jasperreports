@@ -128,6 +128,7 @@
 		<hibernate.version>6.3.1.Final</hibernate.version>
 		<hibernate.j2ee.version>5.6.15.Final</hibernate.j2ee.version>
 		<hsqldb.version>2.7.2</hsqldb.version>
+		<imageio-webp.version>3.9.4</imageio-webp.version>
 		<jackson.version>2.18.6</jackson.version>
 		<jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version>
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
