@@ -995,9 +995,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			String creator = configuration.getMetadataCreator();
 			if( creator == null )
 			{
-				@SuppressWarnings("deprecation") //this can be replaced only after abandoning Java 8 support 
-				String depCreator = "JasperReports Library version " + Package.getPackage("net.sf.jasperreports.engine").getImplementationVersion();
-				creator = depCreator;
+				creator = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 			}
 			document.addCreator(creator);
 			String producer = configuration.getMetadataProducer();

@@ -24,7 +24,6 @@
 
 import java.io.File;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -88,7 +87,7 @@ public class ImagesApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		long start = System.currentTimeMillis();
-		JasperFillManager.fillReportToFile("target/reports/ImagesReport.jasper", null, new JREmptyDataSource());
+		JasperFillManager.fillReportToFile("target/reports/ImagesReport.jasper", null);
 		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
