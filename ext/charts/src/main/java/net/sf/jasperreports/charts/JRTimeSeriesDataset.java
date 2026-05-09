@@ -25,6 +25,7 @@ package net.sf.jasperreports.charts;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -40,6 +41,17 @@ import net.sf.jasperreports.charts.type.TimePeriodEnum;
  * 
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"timePeriod",
+	"datasetRun",
+	"incrementWhenExpression",
+	"series"
+	})
 @JsonTypeName("timeSeries")
 @JsonDeserialize(as = JRDesignTimeSeriesDataset.class)
 public interface JRTimeSeriesDataset extends JRChartDataset {

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -35,6 +36,16 @@ import net.sf.jasperreports.charts.design.JRDesignGanttDataset;
  * 
  * @author Peter Risko (peter@risko.hu)
  */
+@JsonPropertyOrder({
+	"kind",
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"datasetRun",
+	"incrementWhenExpression",
+	"series"
+	})
 @JsonTypeName("gantt")
 @JsonDeserialize(as = JRDesignGanttDataset.class)
 public interface JRGanttDataset extends JRChartDataset {

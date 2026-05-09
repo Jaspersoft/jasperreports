@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
@@ -42,6 +43,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"namespace",
+	"name"
+	})
 public class JRGenericElementType implements Serializable
 {
 

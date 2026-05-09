@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.crosstabs;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -31,10 +32,17 @@ import net.sf.jasperreports.engine.JRCloneable;
 
 /**
  * Crosstab data cell interface.
- * 
+ *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  * @see net.sf.jasperreports.crosstabs.JRCrosstab#getCells()
  */
+@JsonPropertyOrder({
+	"width",
+	"height",
+	"rowTotalGroup",
+	"columnTotalGroup",
+	"contents"
+	})
 @JsonDeserialize(as = JRDesignCrosstabCell.class)
 public interface JRCrosstabCell extends JRCloneable
 {

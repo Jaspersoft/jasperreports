@@ -25,16 +25,31 @@ package net.sf.jasperreports.components.table;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
- * 
- * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"width",
+	"weight",
+	"printWhenExpression",
+	"property",
+	"propertyExpression",
+	"tableHeader",
+	"columnHeader",
+	"groupHeader",
+	"groupFooter",
+	"columnFooter",
+	"tableFooter",
+	"column"
+	})
 @JsonTypeName("group")
 @JsonDeserialize(as = StandardColumnGroup.class)
 public interface ColumnGroup extends BaseColumn

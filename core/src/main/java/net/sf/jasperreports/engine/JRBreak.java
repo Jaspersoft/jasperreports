@@ -24,8 +24,9 @@
 package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -56,6 +57,31 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"type",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression"
+	})
 @JsonTypeName("break")
 @JsonDeserialize(as = JRDesignBreak.class)
 public interface JRBreak extends JRElement

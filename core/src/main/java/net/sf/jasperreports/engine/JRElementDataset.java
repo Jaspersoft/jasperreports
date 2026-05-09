@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.type.DatasetResetTypeEnum;
@@ -36,9 +37,17 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * Element datasets are used to represent the report data needed to generate a chart or crosstab.
  * The dataset structure may vary with each chart type or crosstab.
  * This is the superinterface for all datasets and contains common dataset properties.
- * 
+ *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"datasetRun",
+	"incrementWhenExpression"
+	})
 public interface JRElementDataset extends JRCloneable, DatasetRunHolder
 {
 

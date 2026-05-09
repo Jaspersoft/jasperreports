@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.spiderchart;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -47,6 +48,13 @@ import net.sf.jasperreports.engine.util.JRCloneUtils;
  * 
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"evaluationTime",
+	"evaluationGroup",
+	"chartSettings",
+	"dataset",
+	"plot"
+	})
 @JsonTypeName(ChartsExtensionsRegistryFactory.SPIDERCHART_COMPONENT_NAME)
 public class SpiderChartComponent implements ChartComponent, JRChangeEventsSupport, JRCloneable
 {

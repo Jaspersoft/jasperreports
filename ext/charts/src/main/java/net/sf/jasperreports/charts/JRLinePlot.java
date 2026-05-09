@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -33,6 +34,37 @@ import net.sf.jasperreports.charts.design.JRDesignLinePlot;
  * 
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"showLines",
+	"showShapes",
+	"categoryAxisLabelColor",
+	"categoryAxisTickLabelColor",
+	"categoryAxisTickLabelMask",
+	"categoryAxisVerticalTickLabels",
+	"categoryAxisLineColor",
+	"categoryAxisTickLabelRotation",
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	"seriesColor",
+	"categoryAxisLabelExpression",
+	"categoryAxisLabelFont",
+	"categoryAxisTickLabelFont",
+	"valueAxisLabelExpression",
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont",
+	"domainAxisMinValueExpression",
+	"domainAxisMaxValueExpression",
+	"rangeAxisMinValueExpression",
+	"rangeAxisMaxValueExpression"
+	})
 @JsonTypeName("line")
 @JsonDeserialize(as = JRDesignLinePlot.class)
 public interface JRLinePlot extends JRCategoryPlot, JRCommonLinePlot

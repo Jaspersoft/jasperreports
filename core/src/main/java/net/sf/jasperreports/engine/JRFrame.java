@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -53,6 +54,33 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"borderSplitType",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"box",
+	"elements"
+	})
 @JsonTypeName("frame")
 @JsonDeserialize(as = JRDesignFrame.class)
 public interface JRFrame extends JRElement, JRElementGroup, JRBoxContainer

@@ -25,6 +25,7 @@ package net.sf.jasperreports.crosstabs;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -33,9 +34,18 @@ import net.sf.jasperreports.engine.JRElementDataset;
 
 /**
  * Input dataset interface used by crosstabs.
- * 
+ *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"dataPreSorted",
+	"datasetRun",
+	"incrementWhenExpression"
+	})
 @JsonDeserialize(as = JRDesignCrosstabDataset.class)
 public interface JRCrosstabDataset extends JRElementDataset
 {

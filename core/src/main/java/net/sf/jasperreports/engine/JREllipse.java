@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -34,9 +35,35 @@ import net.sf.jasperreports.engine.design.JRDesignEllipse;
  * Ellipses are the most basic graphic elements. As such, there are no supplementary
  * settings to declare an ellipse element besides those already mentioned in the sections for
  * the <code>&lt;reportElement&gt;</code> and <code>&lt;graphicElement&gt;</code> tags.
- * 
+ *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"fill",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"pen"
+	})
 @JsonTypeName("ellipse")
 @JsonDeserialize(as = JRDesignEllipse.class)
 public interface JREllipse extends JRGraphicElement

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -42,6 +43,19 @@ import net.sf.jasperreports.charts.design.JRDesignPiePlot;
  * </ul>
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"circular",
+	"labelFormat",
+	"legendLabelFormat",
+	"showLabels",
+	"seriesColor",
+	"itemLabel"
+	})
 @JsonTypeName("pie")
 @JsonDeserialize(as = JRDesignPiePlot.class)
 public interface JRPiePlot extends JRChartPlot

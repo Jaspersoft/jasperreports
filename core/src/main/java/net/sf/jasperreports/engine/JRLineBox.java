@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -67,6 +68,18 @@ import net.sf.jasperreports.jackson.util.PenSerializer;
  * @see net.sf.jasperreports.engine.JRPen
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"padding",
+	"topPadding",
+	"leftPadding",
+	"bottomPadding",
+	"rightPadding",
+	"pen",
+	"topPen",
+	"leftPen",
+	"bottomPen",
+	"rightPen"
+	})
 @JsonDeserialize(as = JRBaseLineBox.class)
 public interface JRLineBox extends JRPenContainer
 {

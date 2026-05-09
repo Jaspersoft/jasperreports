@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -43,6 +44,21 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"minPercentage",
+	"maxCount",
+	"datasetRun",
+	"incrementWhenExpression",
+	"series",
+	"otherKeyExpression",
+	"otherLabelExpression",
+	"otherSectionHyperlink"
+	})
 @JsonTypeName("pie")
 @JsonDeserialize(as = JRDesignPieDataset.class)
 public interface JRPieDataset extends JRChartDataset

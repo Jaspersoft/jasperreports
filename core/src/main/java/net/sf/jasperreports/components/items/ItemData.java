@@ -25,6 +25,7 @@ package net.sf.jasperreports.components.items;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -37,6 +38,10 @@ import net.sf.jasperreports.engine.design.JRDesignElementDataset;
  * The ItemData interface
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"dataset",
+	"items"
+	})
 @JsonDeserialize(as = StandardItemData.class)
 public interface ItemData extends JRCloneable
 {

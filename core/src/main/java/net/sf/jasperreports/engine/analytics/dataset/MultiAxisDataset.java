@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine.analytics.dataset;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.engine.JRElementDataset;
@@ -30,6 +31,14 @@ import net.sf.jasperreports.engine.JRElementDataset;
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"datasetRun",
+	"incrementWhenExpression"
+	})
 @JsonDeserialize(as = DesignMultiAxisDataset.class)
 public interface MultiAxisDataset extends JRElementDataset
 {

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -245,6 +246,39 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @see net.sf.jasperreports.engine.fill.JRThreadSubreportRunnerFactory
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"usingCache",
+	"runToBottom",
+	"overflowType",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"parametersMapExpression",
+	"parameter",
+	"connectionExpression",
+	"dataSourceExpression",
+	"expression",
+	"returnValue"
+	})
 @JsonTypeName("subreport")
 @JsonDeserialize(as = JRDesignSubreport.class)
 public interface JRSubreport extends JRElement

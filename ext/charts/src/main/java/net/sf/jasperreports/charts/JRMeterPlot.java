@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -46,6 +47,26 @@ import net.sf.jasperreports.engine.JRFont;
  *
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"shape",
+	"meterAngle",
+	"units",
+	"tickInterval",
+	"tickCount",
+	"meterColor",
+	"needleColor",
+	"tickColor",
+	"seriesColor",
+	"dataRange",
+	"valueDisplay",
+	"tickLabelFont",
+	"interval"
+	})
 @JsonTypeName("meter")
 @JsonDeserialize(as = JRDesignMeterPlot.class)
 public interface JRMeterPlot extends JRChartPlot

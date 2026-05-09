@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -34,6 +35,31 @@ import net.sf.jasperreports.engine.design.JRDesignComponentElement;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"component"
+	})
 @JsonTypeName("component")
 @JsonDeserialize(as = JRDesignComponentElement.class)
 public interface JRComponentElement extends JRElement

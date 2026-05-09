@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -37,6 +38,36 @@ import net.sf.jasperreports.engine.JRExpression;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"showLines",
+	"showShapes",
+	"xAxisLabelColor",
+	"xAxisTickLabelColor",
+	"xAxisTickLabelMask",
+	"xAxisVerticalTickLabels",
+	"xAxisLineColor",
+	"yAxisLabelColor",
+	"yAxisTickLabelColor",
+	"yAxisTickLabelMask",
+	"yAxisVerticalTickLabels",
+	"yAxisLineColor",
+	"seriesColor",
+	"xAxisLabelExpression",
+	"xAxisLabelFont",
+	"xAxisTickLabelFont",
+	"yAxisLabelExpression",
+	"yAxisLabelFont",
+	"yAxisTickLabelFont",
+	"domainAxisMinValueExpression",
+	"domainAxisMaxValueExpression",
+	"rangeAxisMinValueExpression",
+	"rangeAxisMaxValueExpression"
+	})
 @JsonTypeName("scatter")
 @JsonDeserialize(as = JRDesignScatterPlot.class)
 public interface JRScatterPlot extends JRChartPlot, JRXAxisFormat, JRYAxisFormat, JRCommonLinePlot

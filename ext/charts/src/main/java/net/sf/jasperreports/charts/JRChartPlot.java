@@ -30,6 +30,7 @@ import java.util.SortedSet;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -52,6 +53,14 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * properties.
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"seriesColor"
+	})
 @JsonTypeInfo(use = Id.NAME, include = As.EXISTING_PROPERTY, property = "trick-to-avoid-serializing-the-type")
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = JRBubblePlot.class),
@@ -190,6 +199,10 @@ public interface JRChartPlot extends JRCloneable
 	 */
 	public void collectExpressions(ChartsExpressionCollector collector);
 
+	@JsonPropertyOrder({
+		"order",
+		"color"
+		})
 	@JsonDeserialize(as = JRBaseSeriesColor.class)
 	public interface JRSeriesColor extends JRCloneable
 	{

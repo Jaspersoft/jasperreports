@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
@@ -42,6 +43,46 @@ import net.sf.jasperreports.engine.design.JRDesignStaticText;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"markup",
+	"fontName",
+	"fontSize",
+	"pdfFontName",
+	"bold",
+	"italic",
+	"pdfEmbedded",
+	"rotation",
+	"strikeThrough",
+	"underline",
+	"pdfEncoding",
+	"hTextAlign",
+	"vTextAlign",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"box",
+	"paragraph",
+	"text"
+	})
 @JsonTypeName("staticText")
 @JsonDeserialize(as = JRDesignStaticText.class)
 public interface JRStaticText extends JRTextElement

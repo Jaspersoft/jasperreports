@@ -26,6 +26,7 @@ package net.sf.jasperreports.components.charts;
 import java.awt.Color;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -40,6 +41,36 @@ import net.sf.jasperreports.engine.JRHyperlink;
 /**
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"showLegend",
+	"backcolor",
+	"titlePosition",
+	"titleColor",
+	"subtitleColor",
+	"legendColor",
+	"legendBackgroundColor",
+	"legendPosition",
+	"renderType",
+	"customizerClass",
+	"bookmarkLevel",
+	"hyperlinkType",
+	"hyperlinkTarget",
+	"linkType",
+	"linkTarget",
+	"titleExpression",
+	"titleFont",
+	"subtitleExpression",
+	"subtitleFont",
+	"legendFont",
+	"anchorNameExpression",
+	"bookmarkLevelExpression",
+	"hyperlinkReferenceExpression",
+	"hyperlinkWhenExpression",
+	"hyperlinkAnchorExpression",
+	"hyperlinkPageExpression",
+	"hyperlinkTooltipExpression",
+	"hyperlinkParameter"
+	})
 @JsonDeserialize(as = StandardChartSettings.class)
 public interface ChartSettings extends JRAnchor, JRHyperlink, Serializable
 {

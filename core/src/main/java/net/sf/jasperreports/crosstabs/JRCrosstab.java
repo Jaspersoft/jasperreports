@@ -26,6 +26,7 @@ package net.sf.jasperreports.crosstabs;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -53,6 +54,47 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"columnBreakOffset",
+	"repeatColumnHeaders",
+	"repeatRowHeaders",
+	"runDirection",
+	"ignoreWidth",
+	"horizontalPosition",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"box",
+	"dataset",
+	"parametersMapExpression",
+	"parameter",
+	"headerCell",
+	"titleCell",
+	"rowGroup",
+	"columnGroup",
+	"measure",
+	"cells",
+	"whenNoDataCell"
+	})
 @JsonTypeName("crosstab")
 @JsonDeserialize(as = JRDesignCrosstab.class)
 public interface JRCrosstab extends JRElement, JRBoxContainer

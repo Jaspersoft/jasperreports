@@ -25,6 +25,7 @@ package net.sf.jasperreports.crosstabs;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -36,9 +37,20 @@ import net.sf.jasperreports.jackson.util.JRXmlSince;
 
 /**
  * Crosstab row group interface.
- * 
+ *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"name",
+	"totalPosition",
+	"width",
+	"position",
+	"keepTogether",
+	"mergeHeaderCells",
+	"bucket",
+	"header",
+	"totalHeader"
+	})
 @JsonDeserialize(as = JRDesignCrosstabRowGroup.class)
 public interface JRCrosstabRowGroup extends JRCrosstabGroup
 {

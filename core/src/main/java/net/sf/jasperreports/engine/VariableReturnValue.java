@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
@@ -30,6 +31,12 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"toVariable",
+	"calculation",
+	"incrementerFactoryClass",
+	"fromVariable"
+	})
 public interface VariableReturnValue extends CommonReturnValue
 {
 

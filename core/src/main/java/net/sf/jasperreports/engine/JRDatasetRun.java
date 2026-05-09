@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -61,6 +62,15 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @see net.sf.jasperreports.charts.JRChartDataset#getDatasetType()
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"uuid",
+	"subDataset",
+	"parametersMapExpression",
+	"parameter",
+	"connectionExpression",
+	"dataSourceExpression",
+	"returnValue"
+	})
 @JsonDeserialize(as = JRDesignDatasetRun.class)
 public interface JRDatasetRun extends JRCloneable, JRIdentifiable, JRPropertiesHolder
 {

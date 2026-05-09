@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -38,6 +39,23 @@ import net.sf.jasperreports.engine.JRHyperlink;
  * 
  * @author Ionut Nedelcu (ionutned@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"datasetRun",
+	"incrementWhenExpression",
+	"seriesExpression",
+	"dateExpression",
+	"highExpression",
+	"lowExpression",
+	"openExpression",
+	"closeExpression",
+	"volumeExpression",
+	"itemHyperlink"
+	})
 @JsonTypeName("highLow")
 @JsonDeserialize(as = JRDesignHighLowDataset.class)
 public interface JRHighLowDataset extends JRChartDataset

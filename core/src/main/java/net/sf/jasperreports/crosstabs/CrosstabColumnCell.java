@@ -25,6 +25,7 @@ package net.sf.jasperreports.crosstabs;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.crosstabs.type.CrosstabColumnPositionEnum;
@@ -33,6 +34,11 @@ import net.sf.jasperreports.engine.JRCloneable;
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"height",
+	"contentsPosition",
+	"cellContents"
+	})
 public interface CrosstabColumnCell extends JRCloneable
 {
 

@@ -25,6 +25,7 @@ package net.sf.jasperreports.components.items;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -37,6 +38,9 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"properties"
+	})
 @JsonDeserialize(as = StandardItem.class)
 public interface Item extends JRCloneable 
 {

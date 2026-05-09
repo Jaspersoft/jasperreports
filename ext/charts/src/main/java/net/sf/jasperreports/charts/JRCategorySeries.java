@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignCategorySeries;
@@ -36,6 +37,13 @@ import net.sf.jasperreports.engine.JRHyperlink;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"seriesExpression",
+	"categoryExpression",
+	"valueExpression",
+	"labelExpression",
+	"itemHyperlink"
+	})
 @JsonDeserialize(as = JRDesignCategorySeries.class)
 public interface JRCategorySeries extends JRCloneable
 {

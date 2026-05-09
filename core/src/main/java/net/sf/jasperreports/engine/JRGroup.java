@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -146,6 +147,22 @@ import net.sf.jasperreports.jackson.util.SectionSerializer;
  * might be wrong after they are moved.
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"name",
+	"startNewColumn",
+	"startNewPage",
+	"resetPageNumber",
+	"reprintHeaderOnEachPage",
+	"reprintHeaderOnEachColumn",
+	"minHeightToStartNewPage",
+	"minDetailsToStartFromTop",
+	"footerPosition",
+	"keepTogether",
+	"preventOrphanFooter",
+	"expression",
+	"groupHeader",
+	"groupFooter"
+	})
 @JsonDeserialize(as = JRDesignGroup.class)
 public interface JRGroup extends JRCloneable
 {

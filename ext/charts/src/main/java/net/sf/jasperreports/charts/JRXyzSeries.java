@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignXyzSeries;
@@ -33,8 +34,15 @@ import net.sf.jasperreports.engine.JRHyperlink;
 /**
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"seriesExpression",
+	"xValueExpression",
+	"yValueExpression",
+	"zValueExpression",
+	"itemHyperlink"
+	})
 @JsonDeserialize(as = JRDesignXyzSeries.class)
-public interface JRXyzSeries extends JRCloneable 
+public interface JRXyzSeries extends JRCloneable
 {
 	/**
 	 * @return a <code>java.lang.Comparable</code> object that identifies 

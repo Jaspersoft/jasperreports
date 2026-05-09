@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.components.charts.ChartPlot;
@@ -39,6 +40,23 @@ import net.sf.jasperreports.engine.JRFont;
 /**
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"rotation",
+	"tableOrder",
+	"webFilled",
+	"startAngle",
+	"headPercent",
+	"interiorGap",
+	"axisLineColor",
+	"axisLineWidth",
+	"labelGap",
+	"labelColor",
+	"maxValueExpression",
+	"labelFont"
+	})
 public interface SpiderPlot extends ChartPlot
 {
 

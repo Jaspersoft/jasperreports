@@ -25,6 +25,7 @@ package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -60,6 +61,11 @@ import net.sf.jasperreports.engine.type.SortOrderEnum;
  * @see net.sf.jasperreports.engine.fill.DatasetSortUtil
  * @see net.sf.jasperreports.engine.fill.SortedDataSource
  */
+@JsonPropertyOrder({
+	"name",
+	"order",
+	"type"
+	})
 @JsonDeserialize(as = JRDesignSortField.class)
 public interface JRSortField extends JRCloneable
 {

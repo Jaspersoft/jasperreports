@@ -25,6 +25,7 @@ package net.sf.jasperreports.engine;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.type.TabStopAlignEnum;
@@ -34,6 +35,10 @@ import net.sf.jasperreports.engine.util.ObjectUtils;
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"position",
+	"alignment"
+	})
 public class TabStop implements JRCloneable, Serializable, Deduplicable
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;

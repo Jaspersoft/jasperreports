@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -33,6 +34,10 @@ import net.sf.jasperreports.engine.design.JRDesignDatasetParameter;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"name",
+	"expression"
+	})
 @JsonDeserialize(as = JRDesignDatasetParameter.class)
 public interface JRDatasetParameter extends JRCloneable
 {

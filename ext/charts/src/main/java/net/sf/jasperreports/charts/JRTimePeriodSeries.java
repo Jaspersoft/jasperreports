@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignTimePeriodSeries;
@@ -35,8 +36,16 @@ import net.sf.jasperreports.engine.JRHyperlink;
  * 
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"seriesExpression",
+	"startDateExpression",
+	"endDateExpression",
+	"valueExpression",
+	"labelExpression",
+	"itemHyperlink"
+	})
 @JsonDeserialize(as = JRDesignTimePeriodSeries.class)
-public interface JRTimePeriodSeries extends JRCloneable 
+public interface JRTimePeriodSeries extends JRCloneable
 {
 	
 	/**

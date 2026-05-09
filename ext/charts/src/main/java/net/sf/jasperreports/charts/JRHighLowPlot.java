@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -43,6 +44,36 @@ import net.sf.jasperreports.engine.JRExpression;
  * 
  * @author Ionut Nedelcu (ionutned@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"showOpenTicks",
+	"showCloseTicks",
+	"timeAxisLabelColor",
+	"timeAxisTickLabelColor",
+	"timeAxisTickLabelMask",
+	"timeAxisVerticalTickLabels",
+	"timeAxisLineColor",
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	"seriesColor",
+	"timeAxisLabelExpression",
+	"timeAxisLabelFont",
+	"timeAxisTickLabelFont",
+	"valueAxisLabelExpression",
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont",
+	"domainAxisMinValueExpression",
+	"domainAxisMaxValueExpression",
+	"rangeAxisMinValueExpression",
+	"rangeAxisMaxValueExpression"
+	})
 @JsonTypeName("highLow")
 @JsonDeserialize(as = JRDesignHighLowPlot.class)
 public interface JRHighLowPlot extends JRChartPlot, JRTimeAxisFormat, JRValueAxisFormat

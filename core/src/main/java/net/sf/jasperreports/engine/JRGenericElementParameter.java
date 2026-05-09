@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -38,6 +39,11 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  * @see JRGenericElement#getParameters()
  */
+@JsonPropertyOrder({
+	"name",
+	"skipWhenEmpty",
+	"expression"
+	})
 @JsonDeserialize(as = JRDesignGenericElementParameter.class)
 public interface JRGenericElementParameter extends JRCloneable
 {

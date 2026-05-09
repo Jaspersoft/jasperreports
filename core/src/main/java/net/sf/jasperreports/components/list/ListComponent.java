@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.list;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -40,6 +41,12 @@ import net.sf.jasperreports.engine.type.PrintOrderEnum;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"printOrder",
+	"ignoreWidth",
+	"datasetRun",
+	"contents"
+	})
 @JsonTypeName(ComponentsExtensionsRegistryFactory.LIST_COMPONENT_NAME)
 @JsonDeserialize(as = StandardListComponent.class)
 public interface ListComponent extends Component, JRCloneable, JRVisitable, DatasetRunHolder

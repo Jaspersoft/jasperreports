@@ -27,6 +27,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -105,6 +106,12 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @see net.sf.jasperreports.engine.JRSection
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"height",
+	"splitType",
+	"printWhenExpression",
+	"returnValue"
+	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because JRBand extends JRChild, which has subtypes annotations
 @JsonDeserialize(as = JRDesignBand.class)
 public interface JRBand extends JRElementGroup, JRPropertiesHolder

@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -56,6 +57,64 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * its own dataset and characteristics. This interface only defines the common properties.
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"evaluationTime",
+	"evaluationGroup",
+	"showLegend",
+	"chartType",
+	"titlePosition",
+	"titleColor",
+	"subtitleColor",
+	"legendColor",
+	"legendBackgroundColor",
+	"legendPosition",
+	"customizerClass",
+	"renderType",
+	"theme",
+	"bookmarkLevel",
+	"hyperlinkType",
+	"hyperlinkTarget",
+	"linkType",
+	"linkTarget",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"box",
+	"titleExpression",
+	"titleFont",
+	"subtitleExpression",
+	"subtitleFont",
+	"legendFont",
+	"anchorNameExpression",
+	"bookmarkLevelExpression",
+	"hyperlinkReferenceExpression",
+	"hyperlinkWhenExpression",
+	"hyperlinkAnchorExpression",
+	"hyperlinkPageExpression",
+	"hyperlinkTooltipExpression",
+	"hyperlinkParameter",
+	"dataset",
+	"plot"
+	})
 @JsonTypeName("chart")
 @JsonDeserialize(as = JRDesignChart.class)
 public interface JRChart extends JRElement, JREvaluation, JRAnchor, JRHyperlink, JRBoxContainer

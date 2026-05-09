@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -35,6 +36,35 @@ import net.sf.jasperreports.charts.design.JRDesignAreaPlot;
  * 
  * @author Flavus Sana (flavius_sana@users.sourceforge.net) 
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"categoryAxisLabelColor",
+	"categoryAxisTickLabelColor",
+	"categoryAxisTickLabelMask",
+	"categoryAxisVerticalTickLabels",
+	"categoryAxisLineColor",
+	"categoryAxisTickLabelRotation",
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	"seriesColor",
+	"categoryAxisLabelExpression",
+	"categoryAxisLabelFont",
+	"categoryAxisTickLabelFont",
+	"valueAxisLabelExpression",
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont",
+	"domainAxisMinValueExpression",
+	"domainAxisMaxValueExpression",
+	"rangeAxisMinValueExpression",
+	"rangeAxisMaxValueExpression"
+	})
 @JsonTypeName("area")
 @JsonDeserialize(as = JRDesignAreaPlot.class)
 public interface JRAreaPlot extends JRCategoryPlot

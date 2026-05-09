@@ -25,6 +25,7 @@ package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -144,6 +145,54 @@ import net.sf.jasperreports.engine.type.OnErrorTypeEnum;
  *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"fill",
+	"scaleImage",
+	"rotation",
+	"hImageAlign",
+	"vImageAlign",
+	"evaluationTime",
+	"evaluationGroup",
+	"linkType",
+	"linkTarget",
+	"usingCache",
+	"lazy",
+	"onErrorType",
+	"bookmarkLevel",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"box",
+	"pen",
+	"expression",
+	"anchorNameExpression",
+	"bookmarkLevelExpression",
+	"hyperlinkReferenceExpression",
+	"hyperlinkWhenExpression",
+	"hyperlinkAnchorExpression",
+	"hyperlinkPageExpression",
+	"hyperlinkTooltipExpression",
+	"hyperlinkParameter"
+	})
 @JsonTypeName("image")
 @JsonDeserialize(as = JRDesignImage.class)
 public interface JRImage extends JRGraphicElement, JREvaluation, JRAnchor, JRHyperlink, JRCommonImage

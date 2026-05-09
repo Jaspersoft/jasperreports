@@ -25,6 +25,7 @@ package net.sf.jasperreports.components.table;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -49,6 +50,21 @@ import net.sf.jasperreports.properties.PropertyConstants;
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"whenNoDataType",
+	"horizontalPosition",
+	"shrinkWidth",
+	"datasetRun",
+	"column",
+	"tableHeader",
+	"columnHeader",
+	"groupHeader",
+	"groupFooter",
+	"columnFooter",
+	"tableFooter",
+	"detail",
+	"noData"
+	})
 @JsonTypeName(ComponentsExtensionsRegistryFactory.TABLE_COMPONENT_NAME)
 @JsonDeserialize(as = StandardTable.class)
 public interface TableComponent extends Component, JRCloneable, JRVisitable, DatasetRunHolder

@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -146,6 +147,63 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @see net.sf.jasperreports.engine.JREvaluation
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"uuid",
+	"key",
+	"x",
+	"y",
+	"width",
+	"height",
+	"forecolor",
+	"backcolor",
+	"mode",
+	"positionType",
+	"stretchType",
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	"printWhenGroupChanges",
+	"removeLineWhenBlank",
+	"markup",
+	"fontName",
+	"fontSize",
+	"pdfFontName",
+	"rotation",
+	"textAdjust",
+	"evaluationTime",
+	"linkType",
+	"linkTarget",
+	"pattern",
+	"bold",
+	"evaluationGroup",
+	"bookmarkLevel",
+	"blankWhenNull",
+	"italic",
+	"strikeThrough",
+	"underline",
+	"pdfEncoding",
+	"pdfEmbedded",
+	"hTextAlign",
+	"vTextAlign",
+	"style",
+	"printWhenExpression",
+	"styleExpression",
+	"property",
+	"propertyExpression",
+	"box",
+	"paragraph",
+	"expression",
+	"patternExpression",
+	"anchorNameExpression",
+	"bookmarkLevelExpression",
+	"hyperlinkReferenceExpression",
+	"hyperlinkWhenExpression",
+	"hyperlinkAnchorExpression",
+	"hyperlinkPageExpression",
+	"hyperlinkTooltipExpression",
+	"hyperlinkParameter"
+	})
 @JsonTypeName("textField")
 @JsonDeserialize(as = JRDesignTextField.class)
 public interface JRTextField extends JRTextElement, JREvaluation, JRAnchor, JRHyperlink

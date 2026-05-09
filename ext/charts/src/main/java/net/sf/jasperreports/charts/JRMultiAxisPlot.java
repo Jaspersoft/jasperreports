@@ -26,6 +26,7 @@ package net.sf.jasperreports.charts;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -41,6 +42,15 @@ import net.sf.jasperreports.charts.design.JRDesignMultiAxisPlot;
  *
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"seriesColor",
+	"axis"
+	})
 @JsonTypeName("multiAxis")
 @JsonDeserialize(as = JRDesignMultiAxisPlot.class)
 public interface JRMultiAxisPlot extends JRChartPlot

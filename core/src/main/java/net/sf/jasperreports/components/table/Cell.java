@@ -23,14 +23,21 @@
  */
 package net.sf.jasperreports.components.table;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
- * 
- * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"height",
+	"rowSpan",
+	"style",
+	"property",
+	"box",
+	"elements"
+	})
 @JsonDeserialize(as = DesignCell.class)
 public interface Cell extends BaseCell
 {

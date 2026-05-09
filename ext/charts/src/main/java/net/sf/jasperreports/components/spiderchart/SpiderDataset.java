@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.spiderchart;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import net.sf.jasperreports.charts.JRCategorySeries;
@@ -32,6 +33,15 @@ import net.sf.jasperreports.components.charts.ChartDataset;
  * 
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"resetType",
+	"resetGroup",
+	"incrementType",
+	"incrementGroup",
+	"datasetRun",
+	"incrementWhenExpression",
+	"series"
+	})
 public interface SpiderDataset extends ChartDataset
 {
 

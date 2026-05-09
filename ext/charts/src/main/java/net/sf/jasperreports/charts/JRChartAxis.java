@@ -24,6 +24,7 @@
 package net.sf.jasperreports.charts;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -40,6 +41,10 @@ import net.sf.jasperreports.engine.JRCloneable;
  *
  * @author Barry Klawans (barry@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"position",
+	"chart"
+	})
 @JsonDeserialize(as = JRDesignChartAxis.class)
 public interface JRChartAxis extends JRCloneable
 {

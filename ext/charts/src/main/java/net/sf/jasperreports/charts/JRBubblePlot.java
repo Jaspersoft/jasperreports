@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -54,6 +55,35 @@ import net.sf.jasperreports.engine.JRExpression;
  *
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"orientation",
+	"backgroundAlpha",
+	"foregroundAlpha",
+	"labelRotation",
+	"scaleType",
+	"xAxisLabelColor",
+	"xAxisTickLabelColor",
+	"xAxisTickLabelMask",
+	"xAxisVerticalTickLabels",
+	"xAxisLineColor",
+	"yAxisLabelColor",
+	"yAxisTickLabelColor",
+	"yAxisTickLabelMask",
+	"yAxisVerticalTickLabels",
+	"yAxisLineColor",
+	"seriesColor",
+	"xAxisLabelExpression",
+	"xAxisLabelFont",
+	"xAxisTickLabelFont",
+	"yAxisLabelExpression",
+	"yAxisLabelFont",
+	"yAxisTickLabelFont",
+	"domainAxisMinValueExpression",
+	"domainAxisMaxValueExpression",
+	"rangeAxisMinValueExpression",
+	"rangeAxisMaxValueExpression"
+	})
 @JsonTypeName("bubble")
 @JsonDeserialize(as = JRDesignBubblePlot.class)
 public interface JRBubblePlot extends JRChartPlot, JRXAxisFormat, JRYAxisFormat

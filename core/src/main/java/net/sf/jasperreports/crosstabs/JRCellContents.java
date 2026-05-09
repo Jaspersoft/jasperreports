@@ -26,6 +26,7 @@ package net.sf.jasperreports.crosstabs;
 import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -55,6 +56,14 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"mode",
+	"backcolor",
+	"style",
+	"property",
+	"box",
+	"elements"
+	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because JRCellContents extends JRChild, which has subtypes annotations
 @JsonDeserialize(as = JRDesignCellContents.class)
 public interface JRCellContents extends JRElementGroup, JRBoxContainer, JRPropertiesHolder

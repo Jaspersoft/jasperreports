@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.table;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -33,6 +34,10 @@ import net.sf.jasperreports.engine.type.SplitTypeEnum;
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"splitType",
+	"printWhenExpression"
+	})
 @JsonDeserialize(as = StandardRow.class)
 public interface Row extends JRCloneable
 {

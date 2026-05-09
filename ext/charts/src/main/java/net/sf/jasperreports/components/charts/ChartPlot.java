@@ -26,6 +26,7 @@ package net.sf.jasperreports.components.charts;
 import java.awt.Color;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRCloneable;
@@ -34,6 +35,11 @@ import net.sf.jasperreports.engine.JRCloneable;
  *
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"backcolor",
+	"backgroundAlpha",
+	"foregroundAlpha"
+	})
 public interface ChartPlot extends Serializable, JRCloneable
 {
 	/**

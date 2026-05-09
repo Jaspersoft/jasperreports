@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.list;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -37,6 +38,11 @@ import net.sf.jasperreports.engine.JRElementGroup;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  * @see ListComponent#getContents()
  */
+@JsonPropertyOrder({
+	"width",
+	"height",
+	"elements"
+	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because ListContents extends JRChild, which has subtypes annotations
 @JsonDeserialize(as = DesignListContents.class)
 public interface ListContents extends JRElementGroup
