@@ -43,14 +43,14 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"lineSpacing",
-	"lineSpacingSize",
-	"firstLineIndent",
-	"leftIndent",
-	"rightIndent",
-	"spacingBefore",
-	"spacingAfter",
-	"tabStopWidth",
+	JRXmlConstants.ATTRIBUTE_lineSpacing,
+	JRXmlConstants.ATTRIBUTE_lineSpacingSize,
+	JRXmlConstants.ATTRIBUTE_firstLineIndent,
+	JRXmlConstants.ATTRIBUTE_leftIndent,
+	JRXmlConstants.ATTRIBUTE_rightIndent,
+	JRXmlConstants.ATTRIBUTE_spacingBefore,
+	JRXmlConstants.ATTRIBUTE_spacingAfter,
+	JRXmlConstants.ATTRIBUTE_tabStopWidth,
 	"tabStops"
 	})
 @JsonDeserialize(as = JRBaseParagraph.class)

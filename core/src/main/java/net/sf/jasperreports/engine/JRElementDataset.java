@@ -41,12 +41,12 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"datasetRun",
-	"incrementWhenExpression"
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression
 	})
 public interface JRElementDataset extends JRCloneable, DatasetRunHolder
 {

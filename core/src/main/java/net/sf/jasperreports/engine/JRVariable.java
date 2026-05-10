@@ -204,17 +204,17 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
-	"resetType",
-	"incrementType",
-	"calculation",
-	"resetGroup",
-	"incrementGroup",
-	"incrementerFactoryClass",
-	"class",
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass,
+	JRXmlConstants.ATTRIBUTE_class,
 	"description",
-	"expression",
-	"initialValueExpression"
+	JRXmlConstants.ELEMENT_expression,
+	JRXmlConstants.ELEMENT_initialValueExpression
 	})
 @JsonDeserialize(as = JRDesignVariable.class)
 public interface JRVariable extends JRCloneable

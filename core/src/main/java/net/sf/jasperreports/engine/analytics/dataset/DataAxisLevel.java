@@ -29,13 +29,14 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
-	"labelExpression",
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ELEMENT_labelExpression,
 	"bucket"
 	})
 @JsonDeserialize(as = DesignDataAxisLevel.class)

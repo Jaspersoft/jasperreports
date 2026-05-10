@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignScatterPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRExpression;
 
 /**
@@ -39,11 +40,11 @@ import net.sf.jasperreports.engine.JRExpression;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
 	"showLines",
 	"showShapes",
 	"xAxisLabelColor",
@@ -56,17 +57,17 @@ import net.sf.jasperreports.engine.JRExpression;
 	"yAxisTickLabelMask",
 	"yAxisVerticalTickLabels",
 	"yAxisLineColor",
-	"seriesColor",
-	"xAxisLabelExpression",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_xAxisLabelExpression,
 	"xAxisLabelFont",
 	"xAxisTickLabelFont",
-	"yAxisLabelExpression",
+	JRXmlConstants.ELEMENT_yAxisLabelExpression,
 	"yAxisLabelFont",
 	"yAxisTickLabelFont",
-	"domainAxisMinValueExpression",
-	"domainAxisMaxValueExpression",
-	"rangeAxisMinValueExpression",
-	"rangeAxisMaxValueExpression"
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression
 	})
 @JsonTypeName("scatter")
 @JsonDeserialize(as = JRDesignScatterPlot.class)

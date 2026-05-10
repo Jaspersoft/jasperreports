@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.components.ComponentsExtensionsRegistryFactory;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.crosstabs.JRCrosstab;
 import net.sf.jasperreports.engine.DatasetRunHolder;
 import net.sf.jasperreports.engine.JRCloneable;
@@ -42,9 +43,9 @@ import net.sf.jasperreports.engine.type.PrintOrderEnum;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"printOrder",
+	JRXmlConstants.ATTRIBUTE_printOrder,
 	"ignoreWidth",
-	"datasetRun",
+	JRXmlConstants.ELEMENT_datasetRun,
 	"contents"
 	})
 @JsonTypeName(ComponentsExtensionsRegistryFactory.LIST_COMPONENT_NAME)

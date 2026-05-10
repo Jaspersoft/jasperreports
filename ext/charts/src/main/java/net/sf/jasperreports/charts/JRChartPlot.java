@@ -54,12 +54,12 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
-	"seriesColor"
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	JRXmlConstants.ELEMENT_seriesColor
 	})
 @JsonTypeInfo(use = Id.NAME, include = As.EXISTING_PROPERTY, property = "trick-to-avoid-serializing-the-type")
 @JsonSubTypes({
@@ -200,8 +200,8 @@ public interface JRChartPlot extends JRCloneable
 	public void collectExpressions(ChartsExpressionCollector collector);
 
 	@JsonPropertyOrder({
-		"order",
-		"color"
+		JRXmlConstants.ATTRIBUTE_order,
+		JRXmlConstants.ATTRIBUTE_color
 		})
 	@JsonDeserialize(as = JRBaseSeriesColor.class)
 	public interface JRSeriesColor extends JRCloneable

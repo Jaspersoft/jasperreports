@@ -69,16 +69,16 @@ import net.sf.jasperreports.jackson.util.PenSerializer;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"padding",
-	"topPadding",
-	"leftPadding",
-	"bottomPadding",
-	"rightPadding",
-	"pen",
-	"topPen",
-	"leftPen",
-	"bottomPen",
-	"rightPen"
+	JRXmlConstants.ATTRIBUTE_padding,
+	JRXmlConstants.ATTRIBUTE_topPadding,
+	JRXmlConstants.ATTRIBUTE_leftPadding,
+	JRXmlConstants.ATTRIBUTE_bottomPadding,
+	JRXmlConstants.ATTRIBUTE_rightPadding,
+	JRXmlConstants.ELEMENT_pen,
+	JRXmlConstants.ELEMENT_topPen,
+	JRXmlConstants.ELEMENT_leftPen,
+	JRXmlConstants.ELEMENT_bottomPen,
+	JRXmlConstants.ELEMENT_rightPen
 	})
 @JsonDeserialize(as = JRBaseLineBox.class)
 public interface JRLineBox extends JRPenContainer

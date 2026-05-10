@@ -31,22 +31,24 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
+
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
 	"kind",
-	"uuid",
-	"width",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_width,
 	"weight",
-	"property",
-	"propertyExpression",
-	"printWhenExpression",
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
 	"tableHeader",
-	"columnHeader",
-	"groupHeader",
-	"groupFooter",
-	"columnFooter",
+	JRXmlConstants.ELEMENT_columnHeader,
+	JRXmlConstants.ELEMENT_groupHeader,
+	JRXmlConstants.ELEMENT_groupFooter,
+	JRXmlConstants.ELEMENT_columnFooter,
 	"tableFooter",
 	"column"
 	})

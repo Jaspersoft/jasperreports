@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignValueDataset;
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -40,13 +41,13 @@ import net.sf.jasperreports.engine.JRExpression;
  */
 @JsonPropertyOrder({
 	"kind",
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"datasetRun",
-	"incrementWhenExpression",
-	"valueExpression"
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
+	JRXmlConstants.ELEMENT_valueExpression
 	})
 @JsonTypeName("value")
 @JsonDeserialize(as = JRDesignValueDataset.class)

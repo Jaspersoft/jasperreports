@@ -38,9 +38,9 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"toVariable",
-	"calculation",
-	"incrementerFactoryClass"
+	JRXmlConstants.ATTRIBUTE_toVariable,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass
 	})
 public interface CommonReturnValue extends JRCloneable
 {

@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 
 import net.sf.jasperreports.engine.design.JRDesignStaticText;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * An abstract representation of a report static text. It provides functionality for static texts.
@@ -45,43 +46,43 @@ import net.sf.jasperreports.engine.design.JRDesignStaticText;
  */
 @JsonPropertyOrder({
 	"kind",
-	"uuid",
-	"key",
-	"x",
-	"y",
-	"width",
-	"height",
-	"forecolor",
-	"backcolor",
-	"mode",
-	"positionType",
-	"stretchType",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
 	"printRepeatedValues",
 	"printInFirstWholeBand",
 	"printWhenDetailOverflows",
-	"printWhenGroupChanges",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
 	"removeLineWhenBlank",
-	"markup",
-	"fontName",
-	"fontSize",
-	"pdfFontName",
+	JRXmlConstants.ATTRIBUTE_markup,
+	JRXmlConstants.ATTRIBUTE_fontName,
+	JRXmlConstants.ATTRIBUTE_fontSize,
+	JRXmlConstants.ATTRIBUTE_pdfFontName,
 	"bold",
 	"italic",
 	"pdfEmbedded",
-	"rotation",
+	JRXmlConstants.ATTRIBUTE_rotation,
 	"strikeThrough",
 	"underline",
-	"pdfEncoding",
-	"hTextAlign",
-	"vTextAlign",
-	"style",
-	"property",
-	"propertyExpression",
-	"styleExpression",
-	"printWhenExpression",
-	"box",
-	"paragraph",
-	"text"
+	JRXmlConstants.ATTRIBUTE_pdfEncoding,
+	JRXmlConstants.ATTRIBUTE_hTextAlign,
+	JRXmlConstants.ATTRIBUTE_vTextAlign,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_box,
+	JRXmlConstants.ELEMENT_paragraph,
+	JRXmlConstants.ELEMENT_text
 	})
 @JsonTypeName("staticText")
 @JsonDeserialize(as = JRDesignStaticText.class)

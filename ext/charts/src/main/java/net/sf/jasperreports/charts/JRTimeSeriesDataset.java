@@ -32,6 +32,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignTimeSeriesDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.charts.type.TimePeriodEnum;
 
 /**
@@ -43,13 +44,13 @@ import net.sf.jasperreports.charts.type.TimePeriodEnum;
  */
 @JsonPropertyOrder({
 	"kind",
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"timePeriod",
-	"datasetRun",
-	"incrementWhenExpression",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ATTRIBUTE_timePeriod,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
 	"series"
 	})
 @JsonTypeName("timeSeries")

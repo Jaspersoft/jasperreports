@@ -32,15 +32,16 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.engine.JRBoxContainer;
 import net.sf.jasperreports.engine.JRElementGroup;
 import net.sf.jasperreports.engine.JRPropertiesHolder;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"height",
-	"style",
-	"property",
-	"box",
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_box,
 	"elements"
 	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because JRElementGroup has its own type info

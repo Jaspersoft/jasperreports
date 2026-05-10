@@ -32,6 +32,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.charts.design.JRDesignPieDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRHyperlink;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
@@ -46,18 +47,18 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 @JsonPropertyOrder({
 	"kind",
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"minPercentage",
-	"maxCount",
-	"datasetRun",
-	"incrementWhenExpression",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ATTRIBUTE_minPercentage,
+	JRXmlConstants.ATTRIBUTE_maxCount,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
 	"series",
-	"otherKeyExpression",
-	"otherLabelExpression",
-	"otherSectionHyperlink"
+	JRXmlConstants.ELEMENT_otherKeyExpression,
+	JRXmlConstants.ELEMENT_otherLabelExpression,
+	JRXmlConstants.ELEMENT_otherSectionHyperlink
 	})
 @JsonTypeName("pie")
 @JsonDeserialize(as = JRDesignPieDataset.class)

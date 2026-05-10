@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignHighLowPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRExpression;
 
 
@@ -45,11 +46,11 @@ import net.sf.jasperreports.engine.JRExpression;
  * @author Ionut Nedelcu (ionutned@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
 	"showOpenTicks",
 	"showCloseTicks",
 	"timeAxisLabelColor",
@@ -62,17 +63,17 @@ import net.sf.jasperreports.engine.JRExpression;
 	"valueAxisTickLabelMask",
 	"valueAxisVerticalTickLabels",
 	"valueAxisLineColor",
-	"seriesColor",
-	"timeAxisLabelExpression",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_timeAxisLabelExpression,
 	"timeAxisLabelFont",
 	"timeAxisTickLabelFont",
-	"valueAxisLabelExpression",
+	JRXmlConstants.ELEMENT_valueAxisLabelExpression,
 	"valueAxisLabelFont",
 	"valueAxisTickLabelFont",
-	"domainAxisMinValueExpression",
-	"domainAxisMaxValueExpression",
-	"rangeAxisMinValueExpression",
-	"rangeAxisMaxValueExpression"
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression
 	})
 @JsonTypeName("highLow")
 @JsonDeserialize(as = JRDesignHighLowPlot.class)

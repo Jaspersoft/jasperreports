@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.crosstabs.design.JRDesignCellContents;
 import net.sf.jasperreports.engine.JRBoxContainer;
@@ -57,11 +58,11 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"mode",
-	"backcolor",
-	"style",
-	"property",
-	"box",
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_box,
 	"elements"
 	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because JRCellContents extends JRChild, which has subtypes annotations

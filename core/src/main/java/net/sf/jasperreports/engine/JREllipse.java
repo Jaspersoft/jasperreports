@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.engine.design.JRDesignEllipse;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * An abstract representation of a graphic element representing an ellipse.
@@ -40,29 +41,29 @@ import net.sf.jasperreports.engine.design.JRDesignEllipse;
  */
 @JsonPropertyOrder({
 	"kind",
-	"uuid",
-	"key",
-	"x",
-	"y",
-	"width",
-	"height",
-	"forecolor",
-	"backcolor",
-	"mode",
-	"positionType",
-	"stretchType",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
 	"printRepeatedValues",
 	"printInFirstWholeBand",
 	"printWhenDetailOverflows",
-	"printWhenGroupChanges",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
 	"removeLineWhenBlank",
-	"fill",
-	"style",
-	"property",
-	"propertyExpression",
-	"styleExpression",
-	"printWhenExpression",
-	"pen"
+	JRXmlConstants.ATTRIBUTE_fill,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_pen
 	})
 @JsonTypeName("ellipse")
 @JsonDeserialize(as = JRDesignEllipse.class)

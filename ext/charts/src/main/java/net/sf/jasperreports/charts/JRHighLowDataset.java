@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignHighLowDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRHyperlink;
 
@@ -41,20 +42,20 @@ import net.sf.jasperreports.engine.JRHyperlink;
  */
 @JsonPropertyOrder({
 	"kind",
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"datasetRun",
-	"incrementWhenExpression",
-	"seriesExpression",
-	"dateExpression",
-	"highExpression",
-	"lowExpression",
-	"openExpression",
-	"closeExpression",
-	"volumeExpression",
-	"itemHyperlink"
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
+	JRXmlConstants.ELEMENT_seriesExpression,
+	JRXmlConstants.ELEMENT_dateExpression,
+	JRXmlConstants.ELEMENT_highExpression,
+	JRXmlConstants.ELEMENT_lowExpression,
+	JRXmlConstants.ELEMENT_openExpression,
+	JRXmlConstants.ELEMENT_closeExpression,
+	JRXmlConstants.ELEMENT_volumeExpression,
+	JRXmlConstants.ELEMENT_itemHyperlink
 	})
 @JsonTypeName("highLow")
 @JsonDeserialize(as = JRDesignHighLowDataset.class)

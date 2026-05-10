@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.design.JRDesignComponentElement;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * A report element that wraps an abstract component.
@@ -37,27 +38,27 @@ import net.sf.jasperreports.engine.design.JRDesignComponentElement;
  */
 @JsonPropertyOrder({
 	"kind",
-	"uuid",
-	"key",
-	"x",
-	"y",
-	"width",
-	"height",
-	"forecolor",
-	"backcolor",
-	"mode",
-	"positionType",
-	"stretchType",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
 	"printRepeatedValues",
 	"printInFirstWholeBand",
 	"printWhenDetailOverflows",
-	"printWhenGroupChanges",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
 	"removeLineWhenBlank",
-	"style",
-	"property",
-	"propertyExpression",
-	"styleExpression",
-	"printWhenExpression",
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
 	"component"
 	})
 @JsonTypeName("component")

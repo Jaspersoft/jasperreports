@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignPie3DPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Type of plot used for rendering Pie 3D charts.
@@ -46,18 +47,18 @@ import net.sf.jasperreports.charts.design.JRDesignPie3DPlot;
  * @deprecated To be removed.
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
 	"circular",
-	"labelFormat",
-	"legendLabelFormat",
+	JRXmlConstants.ATTRIBUTE_labelFormat,
+	JRXmlConstants.ATTRIBUTE_legendLabelFormat,
 	"showLabels",
-	"depthFactor",
-	"seriesColor",
-	"itemLabel"
+	JRXmlConstants.ATTRIBUTE_depthFactor,
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_itemLabel
 	})
 @JsonTypeName("pie3D")
 @JsonDeserialize(as = JRDesignPie3DPlot.class)

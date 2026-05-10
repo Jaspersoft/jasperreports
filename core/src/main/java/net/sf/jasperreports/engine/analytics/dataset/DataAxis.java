@@ -32,12 +32,13 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.analytics.data.Axis;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"axis",
+	JRXmlConstants.ATTRIBUTE_axis,
 	"levels"
 	})
 @JsonDeserialize(as = DesignDataAxis.class)

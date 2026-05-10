@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import net.sf.jasperreports.charts.design.ChartsVerifier;
 import net.sf.jasperreports.engine.JRElementDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -41,12 +42,12 @@ import net.sf.jasperreports.engine.JRElementDataset;
  */
 @JsonPropertyOrder({
 	"kind",
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"datasetRun",
-	"incrementWhenExpression"
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression
 	})
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "kind")
 @JsonSubTypes({

@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import net.sf.jasperreports.charts.design.JRDesignChartAxis;
 import net.sf.jasperreports.charts.type.AxisPositionEnum;
 import net.sf.jasperreports.engine.JRCloneable;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Describes an axis that can be added to a multiple axis chart.  The name
@@ -42,8 +43,8 @@ import net.sf.jasperreports.engine.JRCloneable;
  * @author Barry Klawans (barry@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"position",
-	"chart"
+	JRXmlConstants.ATTRIBUTE_position,
+	JRXmlConstants.ELEMENT_chart
 	})
 @JsonDeserialize(as = JRDesignChartAxis.class)
 public interface JRChartAxis extends JRCloneable

@@ -28,18 +28,19 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import net.sf.jasperreports.charts.JRCategorySeries;
 import net.sf.jasperreports.components.charts.ChartDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * 
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"datasetRun",
-	"incrementWhenExpression",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
 	"series"
 	})
 public interface SpiderDataset extends ChartDataset

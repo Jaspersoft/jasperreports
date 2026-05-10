@@ -63,13 +63,13 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"uuid",
-	"subDataset",
-	"parameter",
-	"parametersMapExpression",
-	"connectionExpression",
-	"dataSourceExpression",
-	"returnValue"
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_subDataset,
+	JRXmlConstants.ELEMENT_parameter,
+	JRXmlConstants.ELEMENT_parametersMapExpression,
+	JRXmlConstants.ELEMENT_connectionExpression,
+	JRXmlConstants.ELEMENT_dataSourceExpression,
+	JRXmlConstants.ELEMENT_returnValue
 	})
 @JsonDeserialize(as = JRDesignDatasetRun.class)
 public interface JRDatasetRun extends JRCloneable, JRIdentifiable, JRPropertiesHolder

@@ -36,6 +36,7 @@ import net.sf.jasperreports.engine.JRAnchor;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRFont;
 import net.sf.jasperreports.engine.JRHyperlink;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -43,33 +44,33 @@ import net.sf.jasperreports.engine.JRHyperlink;
  */
 @JsonPropertyOrder({
 	"showLegend",
-	"backcolor",
+	JRXmlConstants.ATTRIBUTE_backcolor,
 	"titlePosition",
 	"titleColor",
 	"subtitleColor",
 	"legendColor",
 	"legendBackgroundColor",
 	"legendPosition",
-	"renderType",
-	"customizerClass",
-	"bookmarkLevel",
-	"hyperlinkType",
-	"hyperlinkTarget",
+	JRXmlConstants.ATTRIBUTE_renderType,
+	JRXmlConstants.ATTRIBUTE_customizerClass,
+	JRXmlConstants.ATTRIBUTE_bookmarkLevel,
+	JRXmlConstants.ATTRIBUTE_hyperlinkType,
+	JRXmlConstants.ATTRIBUTE_hyperlinkTarget,
 	"linkType",
 	"linkTarget",
-	"titleExpression",
+	JRXmlConstants.ELEMENT_titleExpression,
 	"titleFont",
-	"subtitleExpression",
+	JRXmlConstants.ELEMENT_subtitleExpression,
 	"subtitleFont",
 	"legendFont",
-	"anchorNameExpression",
-	"bookmarkLevelExpression",
-	"hyperlinkReferenceExpression",
-	"hyperlinkWhenExpression",
-	"hyperlinkAnchorExpression",
-	"hyperlinkPageExpression",
-	"hyperlinkTooltipExpression",
-	"hyperlinkParameter"
+	JRXmlConstants.ELEMENT_anchorNameExpression,
+	JRXmlConstants.ELEMENT_bookmarkLevelExpression,
+	JRXmlConstants.ELEMENT_hyperlinkReferenceExpression,
+	JRXmlConstants.ELEMENT_hyperlinkWhenExpression,
+	JRXmlConstants.ELEMENT_hyperlinkAnchorExpression,
+	JRXmlConstants.ELEMENT_hyperlinkPageExpression,
+	JRXmlConstants.ELEMENT_hyperlinkTooltipExpression,
+	JRXmlConstants.ELEMENT_hyperlinkParameter
 	})
 @JsonDeserialize(as = StandardChartSettings.class)
 public interface ChartSettings extends JRAnchor, JRHyperlink, Serializable

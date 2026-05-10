@@ -110,13 +110,13 @@ import net.sf.jasperreports.repo.RepositoryContext;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
+	JRXmlConstants.ATTRIBUTE_name,
 	"forPrompting",
-	"class",
-	"evaluationTime",
-	"nestedType",
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	JRXmlConstants.ATTRIBUTE_nestedType,
 	"description",
-	"defaultValueExpression"
+	JRXmlConstants.ELEMENT_defaultValueExpression
 	})
 @JsonDeserialize(as = JRDesignParameter.class)
 public interface JRParameter extends JRPropertiesHolder, JRCloneable

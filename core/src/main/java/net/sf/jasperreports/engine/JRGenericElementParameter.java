@@ -40,9 +40,9 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @see JRGenericElement#getParameters()
  */
 @JsonPropertyOrder({
-	"name",
+	JRXmlConstants.ATTRIBUTE_name,
 	"skipWhenEmpty",
-	"expression"
+	JRXmlConstants.ELEMENT_expression
 	})
 @JsonDeserialize(as = JRDesignGenericElementParameter.class)
 public interface JRGenericElementParameter extends JRCloneable

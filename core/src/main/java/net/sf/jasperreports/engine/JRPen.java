@@ -59,9 +59,9 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"lineWidth",
-	"lineStyle",
-	"lineColor"
+	JRXmlConstants.ATTRIBUTE_lineWidth,
+	JRXmlConstants.ATTRIBUTE_lineStyle,
+	JRXmlConstants.ATTRIBUTE_lineColor
 	})
 @JsonDeserialize(as = JRBasePen.class)
 public interface JRPen

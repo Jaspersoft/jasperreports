@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignThermometerPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.charts.type.ValueLocationEnum;
 
 /**
@@ -42,16 +43,16 @@ import net.sf.jasperreports.charts.type.ValueLocationEnum;
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
 	"valueLocation",
 	"mercuryColor",
-	"seriesColor",
-	"dataRange",
-	"valueDisplay",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_dataRange,
+	JRXmlConstants.ELEMENT_valueDisplay,
 	"lowRange",
 	"mediumRange",
 	"highRange"

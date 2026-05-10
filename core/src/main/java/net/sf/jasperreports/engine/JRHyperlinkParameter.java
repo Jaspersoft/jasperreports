@@ -40,8 +40,8 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @see JRHyperlink#getHyperlinkParameters()
  */
 @JsonPropertyOrder({
-	"name",
-	"expression"
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ELEMENT_expression
 	})
 @JsonDeserialize(as = JRDesignHyperlinkParameter.class)
 public interface JRHyperlinkParameter extends JRCloneable

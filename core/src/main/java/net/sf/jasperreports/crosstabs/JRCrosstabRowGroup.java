@@ -32,6 +32,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.crosstabs.design.JRDesignCrosstabRowGroup;
 import net.sf.jasperreports.crosstabs.type.CrosstabRowPositionEnum;
 import net.sf.jasperreports.engine.JRConstants;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.jackson.util.JRXmlSince;
 
 
@@ -41,11 +42,11 @@ import net.sf.jasperreports.jackson.util.JRXmlSince;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
+	JRXmlConstants.ATTRIBUTE_name,
 	"totalPosition",
-	"width",
-	"position",
-	"keepTogether",
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_position,
+	JRXmlConstants.ATTRIBUTE_keepTogether,
 	"mergeHeaderCells",
 	"bucket",
 	"header",

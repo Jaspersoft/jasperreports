@@ -33,13 +33,14 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRElementDataset;
 import net.sf.jasperreports.engine.design.JRDesignElementDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * The ItemData interface
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"dataset",
+	JRXmlConstants.ELEMENT_dataset,
 	"items"
 	})
 @JsonDeserialize(as = StandardItemData.class)

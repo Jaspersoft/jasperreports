@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignXySeries;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRHyperlink;
@@ -38,12 +39,12 @@ import net.sf.jasperreports.engine.JRHyperlink;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"autoSort",
-	"seriesExpression",
-	"xValueExpression",
-	"yValueExpression",
-	"labelExpression",
-	"itemHyperlink"
+	JRXmlConstants.ATTRIBUTE_autoSort,
+	JRXmlConstants.ELEMENT_seriesExpression,
+	JRXmlConstants.ELEMENT_xValueExpression,
+	JRXmlConstants.ELEMENT_yValueExpression,
+	JRXmlConstants.ELEMENT_labelExpression,
+	JRXmlConstants.ELEMENT_itemHyperlink
 	})
 @JsonDeserialize(as = JRDesignXySeries.class)
 public interface JRXySeries extends JRCloneable

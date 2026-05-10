@@ -48,13 +48,13 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
-	"calculation",
-	"class",
-	"incrementerFactoryClass",
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass,
 	"percentageType",
 	"percentageCalculatorClass",
-	"expression"
+	JRXmlConstants.ELEMENT_expression
 	})
 @JsonDeserialize(as = JRDesignCrosstabMeasure.class)
 public interface JRCrosstabMeasure extends JRCloneable

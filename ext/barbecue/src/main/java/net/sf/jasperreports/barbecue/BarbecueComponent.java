@@ -41,14 +41,14 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"type",
+	JRXmlConstants.ATTRIBUTE_type,
 	"drawText",
 	"checksumRequired",
 	"barWidth",
 	"barHeight",
-	"rotation",
-	"evaluationTime",
-	"evaluationGroup",
+	JRXmlConstants.ATTRIBUTE_rotation,
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	JRXmlConstants.ATTRIBUTE_evaluationGroup,
 	"codeExpression",
 	"applicationIdentifierExpression"
 	})

@@ -32,6 +32,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.crosstabs.type.CrosstabTotalPositionEnum;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRVariable;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -40,7 +41,7 @@ import net.sf.jasperreports.engine.JRVariable;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
+	JRXmlConstants.ATTRIBUTE_name,
 	"totalPosition",
 	"mergeHeaderCells",
 	"bucket",

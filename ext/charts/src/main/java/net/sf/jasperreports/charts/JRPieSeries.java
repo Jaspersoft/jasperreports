@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignPieSeries;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRHyperlink;
@@ -38,10 +39,10 @@ import net.sf.jasperreports.engine.JRHyperlink;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"keyExpression",
-	"valueExpression",
-	"labelExpression",
-	"sectionHyperlink"
+	JRXmlConstants.ELEMENT_keyExpression,
+	JRXmlConstants.ELEMENT_valueExpression,
+	JRXmlConstants.ELEMENT_labelExpression,
+	JRXmlConstants.ELEMENT_sectionHyperlink
 	})
 @JsonDeserialize(as = JRDesignPieSeries.class)
 public interface JRPieSeries extends JRCloneable

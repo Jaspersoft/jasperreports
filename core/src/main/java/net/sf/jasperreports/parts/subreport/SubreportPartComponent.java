@@ -44,10 +44,10 @@ import net.sf.jasperreports.parts.PartComponentsExtensionsRegistryFactory;
  */
 @JsonPropertyOrder({
 	"usingCache",
-	"parametersMapExpression",
-	"parameter",
-	"returnValue",
-	"expression"
+	JRXmlConstants.ELEMENT_parametersMapExpression,
+	JRXmlConstants.ELEMENT_parameter,
+	JRXmlConstants.ELEMENT_returnValue,
+	JRXmlConstants.ELEMENT_expression
 	})
 @JsonTypeName(PartComponentsExtensionsRegistryFactory.SUBREPORT_PART_COMPONENT_NAME)
 @JsonDeserialize(as = StandardSubreportPartComponent.class)

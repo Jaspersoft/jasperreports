@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"dataset",
+	JRXmlConstants.ELEMENT_dataset,
 	"dataAxes",
 	"measures"
 	})

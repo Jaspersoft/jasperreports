@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignBar3DPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Type of plot 
@@ -41,16 +42,16 @@ import net.sf.jasperreports.charts.design.JRDesignBar3DPlot;
  * @deprecated To be removed.
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
 	"showTickMarks",
 	"showTickLabels",
 	"showLabels",
-	"xOffset",
-	"yOffset",
+	JRXmlConstants.ATTRIBUTE_xOffset,
+	JRXmlConstants.ATTRIBUTE_yOffset,
 	"categoryAxisLabelColor",
 	"categoryAxisTickLabelColor",
 	"categoryAxisTickLabelMask",
@@ -62,18 +63,18 @@ import net.sf.jasperreports.charts.design.JRDesignBar3DPlot;
 	"valueAxisTickLabelMask",
 	"valueAxisVerticalTickLabels",
 	"valueAxisLineColor",
-	"seriesColor",
-	"categoryAxisLabelExpression",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_categoryAxisLabelExpression,
 	"categoryAxisLabelFont",
 	"categoryAxisTickLabelFont",
-	"valueAxisLabelExpression",
+	JRXmlConstants.ELEMENT_valueAxisLabelExpression,
 	"valueAxisLabelFont",
 	"valueAxisTickLabelFont",
-	"domainAxisMinValueExpression",
-	"domainAxisMaxValueExpression",
-	"rangeAxisMinValueExpression",
-	"rangeAxisMaxValueExpression",
-	"itemLabel"
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_itemLabel
 	})
 @JsonTypeName("bar3D")
 @JsonDeserialize(as = JRDesignBar3DPlot.class)

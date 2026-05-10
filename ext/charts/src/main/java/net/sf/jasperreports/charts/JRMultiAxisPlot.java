@@ -33,6 +33,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignMultiAxisPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -43,13 +44,13 @@ import net.sf.jasperreports.charts.design.JRDesignMultiAxisPlot;
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
-	"seriesColor",
-	"axis"
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ATTRIBUTE_axis
 	})
 @JsonTypeName("multiAxis")
 @JsonDeserialize(as = JRDesignMultiAxisPlot.class)

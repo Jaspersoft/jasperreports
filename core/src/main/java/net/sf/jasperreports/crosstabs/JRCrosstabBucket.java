@@ -48,9 +48,9 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"order",
-	"class",
-	"expression",
+	JRXmlConstants.ATTRIBUTE_order,
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ELEMENT_expression,
 	"comparatorExpression",
 	"orderByExpression"
 	})

@@ -132,8 +132,8 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"band",
-	"part"
+	JRXmlConstants.ELEMENT_band,
+	JRXmlConstants.ELEMENT_part
 	})
 @JsonDeserialize(as = JRDesignSection.class)
 public interface JRSection extends JRCloneable

@@ -47,17 +47,17 @@ import net.sf.jasperreports.jackson.util.JRXmlSince;
  */
 @JsonPropertyOrder({
 	"kind",
-	"uuid",
-	"width",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_width,
 	"weight",
-	"property",
-	"propertyExpression",
-	"printWhenExpression",
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
 	"tableHeader",
-	"columnHeader",
-	"groupHeader",
-	"groupFooter",
-	"columnFooter",
+	JRXmlConstants.ELEMENT_columnHeader,
+	JRXmlConstants.ELEMENT_groupHeader,
+	JRXmlConstants.ELEMENT_groupFooter,
+	JRXmlConstants.ELEMENT_columnFooter,
 	"tableFooter"
 	})
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "kind")

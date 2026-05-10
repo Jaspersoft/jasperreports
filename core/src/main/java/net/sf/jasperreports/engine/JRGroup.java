@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.design.JRDesignGroup;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.type.FooterPositionEnum;
 import net.sf.jasperreports.jackson.util.SectionSerializer;
 
@@ -148,20 +149,20 @@ import net.sf.jasperreports.jackson.util.SectionSerializer;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
+	JRXmlConstants.ATTRIBUTE_name,
 	"startNewColumn",
 	"startNewPage",
 	"resetPageNumber",
 	"reprintHeaderOnEachPage",
 	"reprintHeaderOnEachColumn",
-	"minHeightToStartNewPage",
-	"minDetailsToStartFromTop",
-	"footerPosition",
-	"keepTogether",
-	"preventOrphanFooter",
-	"expression",
-	"groupHeader",
-	"groupFooter"
+	JRXmlConstants.ATTRIBUTE_minHeightToStartNewPage,
+	JRXmlConstants.ATTRIBUTE_minDetailsToStartFromTop,
+	JRXmlConstants.ATTRIBUTE_footerPosition,
+	JRXmlConstants.ATTRIBUTE_keepTogether,
+	JRXmlConstants.ATTRIBUTE_preventOrphanFooter,
+	JRXmlConstants.ELEMENT_expression,
+	JRXmlConstants.ELEMENT_groupHeader,
+	JRXmlConstants.ELEMENT_groupFooter
 	})
 @JsonDeserialize(as = JRDesignGroup.class)
 public interface JRGroup extends JRCloneable

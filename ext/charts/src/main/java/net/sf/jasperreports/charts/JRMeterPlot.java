@@ -34,6 +34,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignMeterPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.charts.type.MeterShapeEnum;
 import net.sf.jasperreports.charts.util.JRMeterInterval;
 import net.sf.jasperreports.engine.JRFont;
@@ -48,11 +49,11 @@ import net.sf.jasperreports.engine.JRFont;
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"backcolor",
-	"orientation",
-	"backgroundAlpha",
-	"foregroundAlpha",
-	"labelRotation",
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
 	"shape",
 	"meterAngle",
 	"units",
@@ -61,10 +62,10 @@ import net.sf.jasperreports.engine.JRFont;
 	"meterColor",
 	"needleColor",
 	"tickColor",
-	"seriesColor",
-	"dataRange",
-	"valueDisplay",
-	"tickLabelFont",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_dataRange,
+	JRXmlConstants.ELEMENT_valueDisplay,
+	JRXmlConstants.ELEMENT_tickLabelFont,
 	"interval"
 	})
 @JsonTypeName("meter")

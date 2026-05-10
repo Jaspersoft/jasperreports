@@ -38,12 +38,12 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
-	"class",
-	"calculation",
-	"incrementerFactoryClass",
-	"labelExpression",
-	"valueExpression"
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass,
+	JRXmlConstants.ELEMENT_labelExpression,
+	JRXmlConstants.ELEMENT_valueExpression
 	})
 @JsonDeserialize(as = DesignDataMeasure.class)
 public interface DataMeasure extends JRCloneable

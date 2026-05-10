@@ -30,13 +30,14 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.type.SplitTypeEnum;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"splitType",
-	"printWhenExpression"
+	JRXmlConstants.ATTRIBUTE_splitType,
+	JRXmlConstants.ELEMENT_printWhenExpression
 	})
 @JsonDeserialize(as = StandardRow.class)
 public interface Row extends JRCloneable

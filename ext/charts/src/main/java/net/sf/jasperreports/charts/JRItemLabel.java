@@ -33,6 +33,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import net.sf.jasperreports.charts.design.JRDesignItemLabel;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRFont;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -42,9 +43,9 @@ import net.sf.jasperreports.engine.JRFont;
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"color",
-	"backgroundColor",
-	"font"
+	JRXmlConstants.ATTRIBUTE_color,
+	JRXmlConstants.ATTRIBUTE_backgroundColor,
+	JRXmlConstants.ELEMENT_font
 	})
 @JsonDeserialize(as = JRDesignItemLabel.class)
 public interface JRItemLabel extends JRCloneable

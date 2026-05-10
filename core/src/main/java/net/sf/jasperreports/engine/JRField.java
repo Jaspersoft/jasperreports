@@ -88,10 +88,10 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"name",
-	"class",
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_class,
 	"description",
-	"propertyExpression"
+	JRXmlConstants.ELEMENT_propertyExpression
 	})
 @JsonDeserialize(as = JRDesignField.class)
 public interface JRField extends JRPropertiesHolder, JRCloneable

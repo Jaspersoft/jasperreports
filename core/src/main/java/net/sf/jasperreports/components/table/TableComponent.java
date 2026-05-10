@@ -51,19 +51,19 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"whenNoDataType",
-	"horizontalPosition",
+	JRXmlConstants.ATTRIBUTE_whenNoDataType,
+	JRXmlConstants.ATTRIBUTE_horizontalPosition,
 	"shrinkWidth",
-	"datasetRun",
+	JRXmlConstants.ELEMENT_datasetRun,
 	"column",
 	"tableHeader",
-	"columnHeader",
-	"groupHeader",
-	"groupFooter",
-	"columnFooter",
+	JRXmlConstants.ELEMENT_columnHeader,
+	JRXmlConstants.ELEMENT_groupHeader,
+	JRXmlConstants.ELEMENT_groupFooter,
+	JRXmlConstants.ELEMENT_columnFooter,
 	"tableFooter",
-	"detail",
-	"noData"
+	JRXmlConstants.ELEMENT_detail,
+	JRXmlConstants.ELEMENT_noData
 	})
 @JsonTypeName(ComponentsExtensionsRegistryFactory.TABLE_COMPONENT_NAME)
 @JsonDeserialize(as = StandardTable.class)

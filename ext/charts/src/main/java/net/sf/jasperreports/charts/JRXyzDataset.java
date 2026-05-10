@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import net.sf.jasperreports.charts.design.JRDesignXyzDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * The XYZ dataset wraps series consisting of (x, y, z) items. 
@@ -38,12 +39,12 @@ import net.sf.jasperreports.charts.design.JRDesignXyzDataset;
  */
 @JsonPropertyOrder({
 	"kind",
-	"resetType",
-	"resetGroup",
-	"incrementType",
-	"incrementGroup",
-	"datasetRun",
-	"incrementWhenExpression",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
 	"series"
 	})
 @JsonTypeName("xyz")

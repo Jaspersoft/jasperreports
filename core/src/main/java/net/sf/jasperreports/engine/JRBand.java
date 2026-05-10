@@ -107,10 +107,10 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"height",
-	"splitType",
-	"printWhenExpression",
-	"returnValue"
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_splitType,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_returnValue
 	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because JRBand extends JRChild, which has subtypes annotations
 @JsonDeserialize(as = JRDesignBand.class)

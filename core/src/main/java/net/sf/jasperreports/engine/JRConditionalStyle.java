@@ -58,7 +58,7 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
 	JRXmlConstants.ATTRIBUTE_pdfFontName,
 	JRXmlConstants.ATTRIBUTE_pdfEncoding,
 	"pdfEmbedded",
-	"conditionExpression",
+	JRXmlConstants.ELEMENT_conditionExpression,
 	JRXmlConstants.ELEMENT_pen,
 	JRXmlConstants.ELEMENT_box,
 	JRXmlConstants.ELEMENT_paragraph

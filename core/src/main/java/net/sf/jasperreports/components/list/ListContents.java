@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRElementGroup;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Container of report elements that are to be printed for each record in the
@@ -39,8 +40,8 @@ import net.sf.jasperreports.engine.JRElementGroup;
  * @see ListComponent#getContents()
  */
 @JsonPropertyOrder({
-	"width",
-	"height",
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
 	"elements"
 	})
 @JsonTypeInfo(use = Id.NONE) // this is needed because ListContents extends JRChild, which has subtypes annotations
