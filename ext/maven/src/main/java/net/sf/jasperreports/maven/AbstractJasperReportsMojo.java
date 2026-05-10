@@ -48,7 +48,7 @@ public abstract class AbstractJasperReportsMojo extends AbstractMojo
 	
 	private boolean isError;
 	
-	protected SimpleJasperReportsContext jasperReportsContext = new SimpleJasperReportsContext();
+	protected SimpleJasperReportsContext jasperReportsContext;
 
 	
 	protected synchronized void error()

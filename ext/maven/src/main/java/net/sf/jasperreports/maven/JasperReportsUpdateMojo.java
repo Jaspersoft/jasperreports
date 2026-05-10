@@ -51,6 +51,7 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.SimpleJasperReportsContext;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.ReportUpdater;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -157,7 +158,9 @@ public class JasperReportsUpdateMojo extends AbstractJasperReportsMojo
 				{
 					Thread.currentThread().setContextClassLoader(newClassLoader);
 				}
-				
+
+				jasperReportsContext = new SimpleJasperReportsContext();
+
 				update(sources, mapping);
 			}
 			finally
