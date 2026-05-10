@@ -58,10 +58,10 @@ import net.sf.jasperreports.engine.design.JRDesignEllipse;
 	"removeLineWhenBlank",
 	"fill",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"pen"
 	})
 @JsonTypeName("ellipse")

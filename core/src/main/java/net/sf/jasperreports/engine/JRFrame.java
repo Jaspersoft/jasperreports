@@ -74,10 +74,10 @@ import net.sf.jasperreports.properties.PropertyConstants;
 	"removeLineWhenBlank",
 	"borderSplitType",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"box",
 	"elements"
 	})

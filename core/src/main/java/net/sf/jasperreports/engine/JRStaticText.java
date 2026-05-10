@@ -75,10 +75,10 @@ import net.sf.jasperreports.engine.design.JRDesignStaticText;
 	"hTextAlign",
 	"vTextAlign",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"box",
 	"paragraph",
 	"text"

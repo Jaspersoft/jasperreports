@@ -77,10 +77,10 @@ import net.sf.jasperreports.properties.PropertyConstants;
 	"removeLineWhenBlank",
 	"type",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
-	"propertyExpression"
+	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression"
 	})
 @JsonTypeName("break")
 @JsonDeserialize(as = JRDesignBreak.class)

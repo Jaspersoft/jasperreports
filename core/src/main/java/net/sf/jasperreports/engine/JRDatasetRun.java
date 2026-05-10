@@ -65,8 +65,8 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
 @JsonPropertyOrder({
 	"uuid",
 	"subDataset",
-	"parametersMapExpression",
 	"parameter",
+	"parametersMapExpression",
 	"connectionExpression",
 	"dataSourceExpression",
 	"returnValue"

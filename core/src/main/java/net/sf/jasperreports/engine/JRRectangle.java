@@ -55,10 +55,10 @@ import net.sf.jasperreports.engine.design.JRDesignRectangle;
 	"fill",
 	"radius",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"pen"
 	})
 @JsonTypeName("rectangle")

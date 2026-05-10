@@ -78,10 +78,10 @@ import net.sf.jasperreports.engine.type.LineDirectionEnum;
 	"fill",
 	"direction",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"pen"
 	})
 @JsonTypeName("line")

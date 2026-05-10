@@ -54,10 +54,10 @@ import net.sf.jasperreports.engine.design.JRDesignComponentElement;
 	"printWhenGroupChanges",
 	"removeLineWhenBlank",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"component"
 	})
 @JsonTypeName("component")

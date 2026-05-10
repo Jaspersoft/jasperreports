@@ -142,10 +142,10 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
 	"evaluationTime",
 	"evaluationGroup",
 	"style",
-	"printWhenExpression",
-	"styleExpression",
 	"property",
 	"propertyExpression",
+	"styleExpression",
+	"printWhenExpression",
 	"genericType",
 	"parameter"
 	})
