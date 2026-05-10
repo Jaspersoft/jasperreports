@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -245,6 +246,39 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @see net.sf.jasperreports.engine.fill.JRThreadSubreportRunnerFactory
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
+	"removeLineWhenBlank",
+	"usingCache",
+	JRXmlConstants.ATTRIBUTE_runToBottom,
+	JRXmlConstants.ATTRIBUTE_overflowType,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_parametersMapExpression,
+	JRXmlConstants.ELEMENT_parameter,
+	JRXmlConstants.ELEMENT_connectionExpression,
+	JRXmlConstants.ELEMENT_dataSourceExpression,
+	JRXmlConstants.ELEMENT_expression,
+	JRXmlConstants.ELEMENT_returnValue
+	})
 @JsonTypeName("subreport")
 @JsonDeserialize(as = JRDesignSubreport.class)
 public interface JRSubreport extends JRElement

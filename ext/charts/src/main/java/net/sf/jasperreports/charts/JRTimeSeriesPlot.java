@@ -23,10 +23,12 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignTimeSeriesPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRExpression;
 
 /**
@@ -37,6 +39,36 @@ import net.sf.jasperreports.engine.JRExpression;
  * 
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	"showLines",
+	"showShapes",
+	"timeAxisLabelColor",
+	"timeAxisTickLabelColor",
+	"timeAxisTickLabelMask",
+	"timeAxisVerticalTickLabels",
+	"timeAxisLineColor",
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_timeAxisLabelExpression,
+	"timeAxisLabelFont",
+	"timeAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_valueAxisLabelExpression,
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression
+	})
 @JsonTypeName("timeSeries")
 @JsonDeserialize(as = JRDesignTimeSeriesPlot.class)
 public interface JRTimeSeriesPlot extends JRChartPlot, JRTimeAxisFormat, JRValueAxisFormat, JRCommonLinePlot

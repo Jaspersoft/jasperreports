@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -43,9 +44,18 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * <p>
  * A measure is a value that is accumulated by the crosstab and is displayed
  * in the crosstab cells.
- * 
+ *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass,
+	"percentageType",
+	"percentageCalculatorClass",
+	JRXmlConstants.ELEMENT_expression
+	})
 @JsonDeserialize(as = JRDesignCrosstabMeasure.class)
 public interface JRCrosstabMeasure extends JRCloneable
 {

@@ -24,6 +24,7 @@
 package net.sf.jasperreports.charts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import net.sf.jasperreports.charts.design.ChartsVerifier;
 import net.sf.jasperreports.engine.JRElementDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -38,6 +40,15 @@ import net.sf.jasperreports.engine.JRElementDataset;
  * is the superinterface for all datasets and contains common dataset properties.
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression
+	})
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "kind")
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = JRCategoryDataset.class),

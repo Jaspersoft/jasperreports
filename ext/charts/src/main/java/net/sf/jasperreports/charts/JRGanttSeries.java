@@ -23,9 +23,11 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignGanttSeries;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRHyperlink;
 
@@ -34,6 +36,16 @@ import net.sf.jasperreports.engine.JRHyperlink;
  * 
  * @author Peter Risko (peter@risko.hu)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ELEMENT_seriesExpression,
+	JRXmlConstants.ELEMENT_taskExpression,
+	JRXmlConstants.ELEMENT_subtaskExpression,
+	JRXmlConstants.ELEMENT_startDateExpression,
+	JRXmlConstants.ELEMENT_endDateExpression,
+	JRXmlConstants.ELEMENT_percentExpression,
+	JRXmlConstants.ELEMENT_labelExpression,
+	JRXmlConstants.ELEMENT_itemHyperlink
+	})
 @JsonDeserialize(as = JRDesignGanttSeries.class)
 public interface JRGanttSeries {
 

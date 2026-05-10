@@ -24,9 +24,12 @@
 package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
+
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Represents a query used for generation of report data.
@@ -42,6 +45,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  * @see net.sf.jasperreports.engine.query.QueryExecuterFactory
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_language,
+	JRXmlConstants.ELEMENT_text
+	})
 public interface JRQuery extends JRCloneable
 {
 	

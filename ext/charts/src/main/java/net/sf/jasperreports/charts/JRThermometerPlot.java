@@ -25,11 +25,13 @@ package net.sf.jasperreports.charts;
 
 import java.awt.Color;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignThermometerPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.charts.type.ValueLocationEnum;
 
 /**
@@ -40,6 +42,21 @@ import net.sf.jasperreports.charts.type.ValueLocationEnum;
  *
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	"valueLocation",
+	"mercuryColor",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_dataRange,
+	JRXmlConstants.ELEMENT_valueDisplay,
+	"lowRange",
+	"mediumRange",
+	"highRange"
+	})
 @JsonTypeName("thermometer")
 @JsonDeserialize(as = JRDesignThermometerPlot.class)
 public interface JRThermometerPlot extends JRChartPlot

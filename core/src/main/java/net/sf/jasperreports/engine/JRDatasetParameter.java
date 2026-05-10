@@ -23,16 +23,22 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.design.JRDesignDatasetParameter;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Dataset parameter value interface.
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ELEMENT_expression
+	})
 @JsonDeserialize(as = JRDesignDatasetParameter.class)
 public interface JRDatasetParameter extends JRCloneable
 {

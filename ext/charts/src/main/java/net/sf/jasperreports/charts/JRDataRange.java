@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignDataRange;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -35,6 +37,10 @@ import net.sf.jasperreports.engine.JRExpression;
  *
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ELEMENT_lowExpression,
+	JRXmlConstants.ELEMENT_highExpression
+	})
 @JsonDeserialize(as = JRDesignDataRange.class)
 public interface JRDataRange extends JRCloneable
 {

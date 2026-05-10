@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -57,6 +58,11 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_lineWidth,
+	JRXmlConstants.ATTRIBUTE_lineStyle,
+	JRXmlConstants.ATTRIBUTE_lineColor
+	})
 @JsonDeserialize(as = JRBasePen.class)
 public interface JRPen
 {

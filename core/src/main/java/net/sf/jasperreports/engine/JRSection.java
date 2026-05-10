@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -130,6 +131,10 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @see JRBand
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ELEMENT_band,
+	JRXmlConstants.ELEMENT_part
+	})
 @JsonDeserialize(as = JRDesignSection.class)
 public interface JRSection extends JRCloneable
 {

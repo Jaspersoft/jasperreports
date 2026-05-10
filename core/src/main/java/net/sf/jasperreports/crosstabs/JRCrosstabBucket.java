@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -46,6 +47,13 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_order,
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ELEMENT_expression,
+	"comparatorExpression",
+	"orderByExpression"
+	})
 @JsonDeserialize(as = JRDesignCrosstabBucket.class)
 public interface JRCrosstabBucket extends JRCloneable
 {

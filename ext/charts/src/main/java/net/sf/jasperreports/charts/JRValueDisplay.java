@@ -26,12 +26,14 @@ package net.sf.jasperreports.charts;
 import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignValueDisplay;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRFont;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 
 /**
@@ -41,6 +43,11 @@ import net.sf.jasperreports.engine.JRFont;
  *
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_color,
+	JRXmlConstants.ATTRIBUTE_mask,
+	JRXmlConstants.ELEMENT_font
+	})
 @JsonDeserialize(as = JRDesignValueDisplay.class)
 public interface JRValueDisplay extends JRCloneable
 {

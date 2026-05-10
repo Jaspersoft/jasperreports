@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -202,6 +203,19 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass,
+	JRXmlConstants.ATTRIBUTE_class,
+	"description",
+	JRXmlConstants.ELEMENT_expression,
+	JRXmlConstants.ELEMENT_initialValueExpression
+	})
 @JsonDeserialize(as = JRDesignVariable.class)
 public interface JRVariable extends JRCloneable
 {

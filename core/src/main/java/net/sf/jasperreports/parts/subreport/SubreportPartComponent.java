@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.parts.subreport;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -41,6 +42,13 @@ import net.sf.jasperreports.parts.PartComponentsExtensionsRegistryFactory;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"usingCache",
+	JRXmlConstants.ELEMENT_parametersMapExpression,
+	JRXmlConstants.ELEMENT_parameter,
+	JRXmlConstants.ELEMENT_returnValue,
+	JRXmlConstants.ELEMENT_expression
+	})
 @JsonTypeName(PartComponentsExtensionsRegistryFactory.SUBREPORT_PART_COMPONENT_NAME)
 @JsonDeserialize(as = StandardSubreportPartComponent.class)
 public interface SubreportPartComponent extends PartComponent, JRCloneable
