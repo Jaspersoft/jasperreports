@@ -34,12 +34,15 @@ import java.nio.file.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRResourcesUtil;
+import net.sf.jasperreports.properties.PropertyConstants;
 
 
 /**
@@ -50,7 +53,14 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	
 	private static final Log log = LogFactory.getLog(DefaultRepositoryService.class);
 	
-	public static final String PROPERTY_FILES_ENABLED = 
+	@Property(
+			category = PropertyConstants.CATEGORY_REPOSITORY,
+			defaultValue = PropertyConstants.BOOLEAN_TRUE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_6_11_0,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_FILES_ENABLED =
 			JRPropertiesUtil.PROPERTY_PREFIX + "default.file.repository.enabled";
 	
 	public static final String EXCEPTION_MESSAGE_KEY_NOT_IMPLEMENTED = "repo.default.not.implemented";

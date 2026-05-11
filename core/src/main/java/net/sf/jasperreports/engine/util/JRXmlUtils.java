@@ -39,9 +39,12 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
+import net.sf.jasperreports.properties.PropertyConstants;
 
 /**
  * XML parsing utilities.
@@ -54,7 +57,13 @@ public final class JRXmlUtils
 	public static final String EXCEPTION_MESSAGE_KEY_DOCUMENT_BUILDER_FACTORY_CREATION_FAILURE = "util.xml.document.builder.factory.creation.failure";
 	public static final String EXCEPTION_MESSAGE_KEY_DOCUMENT_PARSING_FAILURE = "util.xml.document.parsing.failure";
 	
-	//FIXME doc
+	@Property(
+			category = PropertyConstants.CATEGORY_OTHER,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_6_1_2,
+			valueType = Boolean.class
+			)
 	public static final String PROPERTY_ALLOW_DOCTYPE = JRPropertiesUtil.PROPERTY_PREFIX + "xml.allow.doctype";
 	
 	public static final String FEATURE_DISALLOW_DOCTYPE = "http://apache.org/xml/features/disallow-doctype-decl";

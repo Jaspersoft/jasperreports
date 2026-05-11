@@ -5397,6 +5397,26 @@ A boolean property that determines whether the HTML exporter should flush the ou
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.default.file.repository.enabled -->
+
+  <configProperty name="net.sf.jasperreports.default.file.repository.enabled">
+    <description>
+Property that determines whether the default repository service resolves resources against the local file system.
+
+<p>
+When set to <code>true</code> (the default), the default repository service attempts to locate resources as files on the
+local file system in addition to resolving them as URLs and classpath resources.
+</p>
+
+<p>
+Setting this property to <code>false</code> disables file system resolution in the default repository service, restricting
+resource loading to URLs and classpath lookups only. This can be useful in server environments where direct file system
+access should be prevented for security reasons.
+</p>
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.extension.file.repository.resolve.absolute.path -->
 
   <configProperty name="net.sf.jasperreports.extension.file.repository.resolve.absolute.path">
@@ -6125,6 +6145,27 @@ Property that determines whether external resources in SVG images are allowed an
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.xml.allow.doctype -->
+
+  <configProperty name="net.sf.jasperreports.xml.allow.doctype">
+    <description>
+Security property that controls whether DOCTYPE declarations are allowed in XML documents parsed by the library.
+
+<p>
+When set to <code>false</code> (the default), the XML parser is configured to reject any document that contains a DOCTYPE declaration.
+This prevents XML External Entity (XXE) attacks in which a malicious DOCTYPE definition could be used to read local files,
+perform server-side request forgery, or cause denial of service through entity expansion.
+</p>
+
+<p>
+Setting this property to <code>true</code> allows DOCTYPE declarations in parsed XML documents. This should only be done
+in trusted environments where the XML input is known to be safe, for instance when loading XML data sources that
+legitimately use a DTD.
+</p>
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.font.use.own.temp.file -->
 
   <configProperty name="net.sf.jasperreports.font.use.own.temp.file">
@@ -6148,6 +6189,28 @@ temporary font files, usually named <code>+~JF*</code>.
     <description>
 Property that determines whether frame elements will continue on the next page when stretched
 to the bottom of the current page due to stretching of other elements or the container.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.frame.virtualization.enabled -->
+
+  <configProperty name="net.sf.jasperreports.frame.virtualization.enabled">
+    <description>
+Property that determines whether frame element lists can be virtualized when a report virtualizer is used.
+
+<p>
+When a virtualizer is configured and this property is set to <code>true</code> (the default), the element list of a frame
+whose deep element count exceeds the virtual page element size is replaced with a virtualizable element list
+that can be swapped to disk by the virtualizer. This reduces memory consumption for reports that contain frames
+with large numbers of child elements, such as subreport bands or complex table structures.
+</p>
+
+<p>
+Setting this property to <code>false</code> disables frame element list virtualization, which means frame contents are always
+kept in memory regardless of their size. This can be useful for troubleshooting in case the frame virtualization
+causes unexpected issues with a particular report.
+</p>
     </description>
   </configProperty>
 
