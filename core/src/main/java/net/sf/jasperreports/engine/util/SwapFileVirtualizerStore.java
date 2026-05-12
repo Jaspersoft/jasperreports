@@ -109,8 +109,11 @@ public class SwapFileVirtualizerStore implements VirtualizerStore
 		}
 		catch (IOException e)
 		{
-			log.error("Error virtualizing object " + o.getUID() + " to " + swap, e);
-			throw 
+			if (log.isDebugEnabled())
+			{
+				log.debug("Error virtualizing object " + o.getUID() + " to " + swap, e);
+			}
+			throw
 				new JRRuntimeException(
 					EXCEPTION_MESSAGE_KEY_VIRTUALIZING_ERROR,
 					(Object[])null,
@@ -126,8 +129,11 @@ public class SwapFileVirtualizerStore implements VirtualizerStore
 		{
 			// should not happen
 			//FIXME lucianc happened once, look into it
-			log.error("No swap handle found for " + o.getUID() + " in " + this);
-			throw 
+			if (log.isDebugEnabled())
+			{
+				log.debug("No swap handle found for " + o.getUID() + " in " + this);
+			}
+			throw
 				new JRRuntimeException(
 					EXCEPTION_MESSAGE_KEY_UNABLE_TO_READ_DATA,
 					(Object[])null);
@@ -148,8 +154,11 @@ public class SwapFileVirtualizerStore implements VirtualizerStore
 		}
 		catch (IOException e)
 		{
-			log.error("Error reading object data " + o.getUID() + " from " + swap, e);
-			throw 
+			if (log.isDebugEnabled())
+			{
+				log.debug("Error reading object data " + o.getUID() + " from " + swap, e);
+			}
+			throw
 				new JRRuntimeException(
 					EXCEPTION_MESSAGE_KEY_DEVIRTUALIZING_ERROR,
 					(Object[])null,
