@@ -12,6 +12,8 @@ This document lists all the major features of the JasperReports library, as show
 - [Generating the JRXML Source Files for Multiple Compiled Report Template Files Using the Ant Build Tool (Decompiling)](./antcompile/README.md#antdecompile)
 - [Generating the JRXML Source Files for Multiple Compiled Report Template Files Using the JasperReports Maven Plugin (Decompiling)](./maven/README.md#decompile)
 - [Deploying Reports in Web Applications](./webapp/README.md#webapp)
+- [Running Reports in an OSGi Container](./osgi/README.md#osgi)
+- [Running Reports in a Spring Boot Application](./springboot/README.md#springboot)
 
 ## Report Design
 - [Altering Compiled Report Templates](./alterdesign/README.md#alterdesign)
