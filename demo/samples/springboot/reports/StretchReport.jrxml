@@ -1,4 +1,5 @@
 <jasperReport name="StretchReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="a09b55bb-d25f-4b19-a103-ef479d2e3c41">
+	<property name="net.sf.jasperreports.data.adapter" value="data/EmptyDataAdapter.20.jrdax"/>
 	<title height="315">
 		<element kind="staticText" uuid="e1fcb691-9fb1-4488-a0c9-54dfb71eb2a7" x="5" y="5" width="130" height="200" fontSize="10.0">
 			<text><![CDATA[The outline on this column is made up of multiple vertical segments, two for each text field (left, right). They stretch with the corresponding text field. This solution has the disadvantage that it is impossible to suppres a text field space when the section overflows to a new page. Check the top of the second page to see that.]]></text>
