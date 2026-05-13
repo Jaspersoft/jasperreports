@@ -1,7 +1,7 @@
 
 # JasperReports - HTTP Data Adapter Sample <img src="../../resources/jasperreports.svg" alt="JasperReports logo" align="right"/>
 
-Shows how the HTTP data adapters can be used to fill reports.
+Shows how the HTTP data adapters can be used to fill reports, including basic authentication.
 
 ### Main Features in This Sample
 
@@ -155,6 +155,8 @@ Following are the 2 data adapter definitions:
       xsi:type="httpDataLocation">
     <method>GET</method>
     <url><![CDATA[https://www.omdbapi.com/?r=json]] ></url>
+    <username>jasper</username>
+    <password>r3Ports</password>
   </dataFile>
   <useConnection>true</useConnection>
   <timeZone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -174,6 +176,8 @@ Following are the 2 data adapter definitions:
       xsi:type="httpDataLocation">
     <method>GET</method>
     <url><![CDATA[https://www.omdbapi.com/?r=xml]] ></url>
+    <username>jasper</username>
+    <password>r3Ports</password>
   </dataFile>
   <useConnection>true</useConnection>
   <timeZone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -189,6 +193,7 @@ We can observe that the above data adapters are quite similar:
 - both of them provide a `<dataFile/>` element of type `httpDataLocation`, therefore they also became HTTP data adapters
 - both of them are based on a HTTP request `GET` method
 - both of them provide the same base URL: https://www.omdbapi.com - a web service URL to retrieve various movies information in terms of title, year, IMDb ID, type, poster image
+- both of them use basic authentication via `<username>` and `<password>` elements; the embedded Jetty server is configured with a `HashLoginService` realm (`etc/realm.properties`) and a `web.xml` security constraint to require credentials for data access
 - also the same settings are present for `<useConnection/>`, `<timeZone/>` and `<locale/>`
 - a `selectExpression` is not provided, so that it has to be set in the related report
 

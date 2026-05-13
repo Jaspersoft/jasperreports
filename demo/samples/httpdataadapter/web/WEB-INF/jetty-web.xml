@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "https://eclipse.dev/jetty/configure_10.dtd">
+<Configure class="org.eclipse.jetty.ee10.webapp.WebAppContext">
+	<Call id="rf" class="org.eclipse.jetty.util.resource.ResourceFactory" name="root"/>
+	<Ref refid="rf">
+		<Call id="realmConfig" name="newResource">
+			<Arg type="String">etc/realm.properties</Arg>
+		</Call>
+	</Ref>
+	<Call name="getSecurityHandler">
+		<Call name="setLoginService">
+			<Arg>
+				<New class="org.eclipse.jetty.security.HashLoginService">
+					<Set name="name">JasperRealm</Set>
+					<Set name="config"><Ref refid="realmConfig"/></Set>
+				</New>
+			</Arg>
+		</Call>
+	</Call>
+</Configure>
