@@ -117,6 +117,7 @@
 					-->
 					<include>**/*.txt</include>
 					<include>**/*.xsd</include>
+					<include>**/*.jrctx</include>
 				</includes>
 			</resource>
 			<resource>
