@@ -44,6 +44,16 @@
 					<stopKey>foo</stopKey>
 					<deployMode>EMBED</deployMode>
 				</configuration>
+				<executions>
+					<execution>
+						<id>digest</id>
+						<configuration>
+							<webApp>
+								<descriptor>${project.basedir}/web/WEB-INF/web-digest.xml</descriptor>
+							</webApp>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -56,6 +66,9 @@
 							<executable>mvn</executable>
 							<arguments>
 								<argument>jetty:start</argument>
+								<argument>exec:java@test</argument>
+								<argument>jetty:stop</argument>
+								<argument>jetty:start@digest</argument>
 								<argument>exec:java@test</argument>
 								<argument>jetty:stop</argument>
 							</arguments>

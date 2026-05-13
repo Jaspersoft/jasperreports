@@ -59,7 +59,7 @@ The [HttpDataLocation](https://jasperreports.sourceforge.net/api/net/sf/jasperre
     - `POST`
     - `PUT`
 - `url` - the data resource location URL
-- `username` and `password` - user basic authentication info
+- `username` and `password` - user authentication info (supports both basic and digest HTTP authentication)
 - a list of `urlParameter` elements - representing request URL parameters, each one being defined by a name and a value
 - `body` - a String representing the request body, in case of a `POST` (or `PUT`) method; it will be ignored by a `GET` method
 - a list of `postParameter` elements - representing request `POST` parameters, each characterized by a name and a value; they will be always ignored by a `GET` method. They will also be ignored if a body element was already specified
@@ -193,7 +193,7 @@ We can observe that the above data adapters are quite similar:
 - both of them provide a `<dataFile/>` element of type `httpDataLocation`, therefore they also became HTTP data adapters
 - both of them are based on a HTTP request `GET` method
 - both of them provide the same base URL: https://www.omdbapi.com - a web service URL to retrieve various movies information in terms of title, year, IMDb ID, type, poster image
-- both of them use basic authentication via `<username>` and `<password>` elements; the embedded Jetty server is configured with a `HashLoginService` realm (`etc/realm.properties`) and a `web.xml` security constraint to require credentials for data access
+- both of them use HTTP authentication via `<username>` and `<password>` elements; the embedded Jetty server is configured with a `HashLoginService` realm (`etc/realm.properties`) and `web.xml` security constraints to require credentials for data access. The sample runs the reports twice: first against a server configured with basic authentication (`web.xml`), then against one configured with digest authentication (`web-digest.xml`). The same data adapter credentials work transparently with both authentication methods, since the underlying Apache HttpClient automatically negotiates the appropriate scheme
 - also the same settings are present for `<useConnection/>`, `<timeZone/>` and `<locale/>`
 - a `selectExpression` is not provided, so that it has to be set in the related report
 
