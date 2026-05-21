@@ -27,11 +27,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.util.Base64Util;
 
@@ -556,8 +556,11 @@ public final class JRValueStringUtils
 				Base64Util.decode(dataIn, bytesOut);
 				
 				ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
-				ObjectInputStream objectIn = new ObjectInputStream(bytesIn);
-				return objectIn.readObject();
+				try (ContextClassLoaderObjectInputStream objectIn = new ContextClassLoaderObjectInputStream(
+						DefaultJasperReportsContext.getInstance(), bytesIn))
+				{
+					return objectIn.readObject();
+				}
 			}
 			catch (IOException | ClassNotFoundException e)
 			{
