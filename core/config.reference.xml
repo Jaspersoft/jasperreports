@@ -388,6 +388,18 @@ To obtain query executer factories, a property having the query language appende
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.query.executer.factory.{language}.enabled -->
+
+  <configProperty name="net.sf.jasperreports.query.executer.factory.{language}.enabled">
+    <description>
+Flag property that determines whether a query executer factory for a given language is enabled.
+When set to <code>false</code>, any attempt to execute a query in the specified language will result
+in an error. This can be used to restrict the query languages available in a deployment.
+The property is enabled by default for all query languages.
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.sql.field.column.name -->
 
   <configProperty name="net.sf.jasperreports.sql.field.column.name">
