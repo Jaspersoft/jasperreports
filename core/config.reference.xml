@@ -351,6 +351,18 @@ in report SQL queries.
     </description>
   </configProperty>
 
+  <!-- net.sf.jasperreports.query.parameter.clause.enabled -->
+
+  <configProperty name="net.sf.jasperreports.query.parameter.clause.enabled">
+    <description>
+Flag property that determines whether query parameter clause text injection ($P!{}) is enabled.
+When set to <code>false</code>, any use of <code>$P!{}</code> parameter clause syntax in a query will result
+in an error. This can be used to prevent parameter values from being directly injected as text into queries.
+The property is enabled by default.
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.query.chunk.token.separators -->
 
   <configProperty name="net.sf.jasperreports.query.chunk.token.separators">
