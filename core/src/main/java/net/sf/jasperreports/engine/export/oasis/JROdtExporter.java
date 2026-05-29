@@ -236,6 +236,8 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 
 	protected StyleCache styleCache;
 
+	protected int reportDpi;
+
 	protected ExporterNature nature;
 
 	protected Map<Integer, String> rowStyles = new HashMap<>();
@@ -316,6 +318,8 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	{
 		super.initReport();
 		
+		reportDpi = jasperPrint.getDpi();
+
 		if(jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
 			// allows null values for the property
@@ -335,6 +339,8 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	 */
 	protected void exportReportToOasisZip(OutputStream os) throws JRException, IOException
 	{
+		reportDpi = jasperPrint.getDpi();
+
 		OasisZip oasisZip = new OdtZip();
 
 		ExportZipEntry tempBodyEntry = new FileBufferedZipEntry(null);
@@ -345,13 +351,13 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 
 		documentBuilder = new OdtDocumentBuilder(oasisZip);
 		
-		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey());
+		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey(), reportDpi);
 
 		WriterHelper stylesWriter = new WriterHelper(jasperReportsContext, oasisZip.getStylesEntry().getWriter());
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		StyleBuilder styleBuilder = new StyleBuilder(stylesWriter);
+		StyleBuilder styleBuilder = new StyleBuilder(stylesWriter, reportDpi);
 		
 		styleBuilder.buildBeforeAutomaticStyles(jasperPrint);
 		
@@ -779,8 +785,8 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 						+ "draw:style-name=\"G_ImgFrm\" "
 						+ "svg:x=\"0in\" "
 						+ "svg:y=\"0in\" "
-						+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameWidth) + "in\" "
-						+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameHeight) + "in\" "
+						+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameWidth, reportDpi) + "in\" "
+						+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameHeight, reportDpi) + "in\" "
 						+ ">\n"
 						);
 				tempBodyWriter.write("<draw:text-box>\n");
@@ -793,10 +799,10 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 							imageProcessorResult.cropBottom,
 							imageProcessorResult.cropRight
 							) + "\" "
-					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.xoffset) + "in\" "
-					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.yoffset) + "in\" "
-					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageWidth) + "in\" "
-					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageHeight) + "in\" "
+					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.xoffset, reportDpi) + "in\" "
+					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.yoffset, reportDpi) + "in\" "
+					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageWidth, reportDpi) + "in\" "
+					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageHeight, reportDpi) + "in\" "
 					+ "draw:transform=\"rotate (" + imageProcessorResult.angle + ")\">\n"
 					);
 				tempBodyWriter.write("<draw:image ");

@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintImage;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.type.ModeEnum;
 import net.sf.jasperreports.engine.util.ExifOrientationEnum;
@@ -58,6 +59,7 @@ import net.sf.jasperreports.renderers.util.RendererUtil;
 public class ImageDrawer extends ElementDrawer<JRPrintImage>
 {
 	private final RenderersCache renderersCache;
+	private final int reportDpi;
 
 	/**
 	 *
@@ -67,9 +69,19 @@ public class ImageDrawer extends ElementDrawer<JRPrintImage>
 		RenderersCache renderersCache
 		)
 	{
+		this(jasperReportsContext, renderersCache, JasperPrint.DEFAULT_REPORT_DPI);
+	}
+
+	public ImageDrawer(
+		JasperReportsContext jasperReportsContext,
+		RenderersCache renderersCache,
+		int reportDpi
+		)
+	{
 		super(jasperReportsContext);
-		
+
 		this.renderersCache = renderersCache;
+		this.reportDpi = reportDpi;
 	}
 	
 	
@@ -231,8 +243,9 @@ public class ImageDrawer extends ElementDrawer<JRPrintImage>
 			}
 			else
 			{
-				renderWidth = (int)dimension.getWidth();
-				renderHeight = (int)dimension.getHeight();
+				float dpiScale = (float) reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+				renderWidth = (int)(dimension.getWidth() * dpiScale);
+				renderHeight = (int)(dimension.getHeight() * dpiScale);
 			}
 			
 			ExifOrientationEnum exifOrientation = ExifOrientationEnum.NORMAL;
@@ -423,8 +436,8 @@ public class ImageDrawer extends ElementDrawer<JRPrintImage>
 			float renderHeight = 0;
 			double angle = 0;
 			
-			Dimension2D dimension = 
-				renderer instanceof DimensionRenderable 
+			Dimension2D dimension =
+				renderer instanceof DimensionRenderable
 				? ((DimensionRenderable)renderer).getDimension(getJasperReportsContext())
 				: null;
 			if (dimension == null)
@@ -434,8 +447,9 @@ public class ImageDrawer extends ElementDrawer<JRPrintImage>
 			}
 			else
 			{
-				normalWidth = (int)dimension.getWidth();
-				normalHeight = (int)dimension.getHeight();
+				float dpiScale = (float) reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+				normalWidth = (int)(dimension.getWidth() * dpiScale);
+				normalHeight = (int)(dimension.getHeight() * dpiScale);
 			}
 			
 			ExifOrientationEnum exifOrientation = ExifOrientationEnum.NORMAL;

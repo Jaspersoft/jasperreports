@@ -288,7 +288,15 @@ public class JRStyledText implements Cloneable
 	 */
 	public AttributedString getAwtAttributedString(FontUtil fontUtil, boolean ignoreMissingFont)
 	{
-		return getAwtAttributedString(() -> fontUtil, ignoreMissingFont);
+		return getAwtAttributedString(() -> fontUtil, ignoreMissingFont, 1f);
+	}
+
+	/**
+	 *
+	 */
+	public AttributedString getAwtAttributedString(FontUtil fontUtil, boolean ignoreMissingFont, float fontSizeScale)
+	{
+		return getAwtAttributedString(() -> fontUtil, ignoreMissingFont, fontSizeScale);
 	}
 
 	/**
@@ -296,10 +304,10 @@ public class JRStyledText implements Cloneable
 	 */
 	public AttributedString getAwtAttributedString(JasperReportsContext jasperReportsContext, boolean ignoreMissingFont)
 	{
-		return getAwtAttributedString(() -> FontUtil.getInstance(jasperReportsContext), ignoreMissingFont);
+		return getAwtAttributedString(() -> FontUtil.getInstance(jasperReportsContext), ignoreMissingFont, 1f);
 	}
 
-	protected AttributedString getAwtAttributedString(Supplier<FontUtil> fontUtilSupplier, boolean ignoreMissingFont)
+	protected AttributedString getAwtAttributedString(Supplier<FontUtil> fontUtilSupplier, boolean ignoreMissingFont, float fontSizeScale)
 	{
 		if (awtAttributedString == null)
 		{
@@ -332,23 +340,40 @@ public class JRStyledText implements Cloneable
 //					}
 //				}
 			}
-			
+
+			if (fontSizeScale != 1f)
+			{
+				AttributedCharacterIterator sizeIterator = awtAttributedString.getIterator();
+				int sizeRunLimit = 0;
+				while (sizeRunLimit < sizeIterator.getEndIndex()
+						&& (sizeRunLimit = sizeIterator.getRunLimit(TextAttribute.SIZE)) <= sizeIterator.getEndIndex())
+				{
+					Float size = (Float) sizeIterator.getAttribute(TextAttribute.SIZE);
+					if (size != null)
+					{
+						awtAttributedString.addAttribute(TextAttribute.SIZE, size * fontSizeScale,
+								sizeIterator.getIndex(), sizeRunLimit);
+					}
+					sizeIterator.setIndex(sizeRunLimit);
+				}
+			}
+
 			AttributedCharacterIterator iterator = awtAttributedString.getIterator();
-			
+
 			int runLimit = 0;
 			AffineTransform atrans = null;
 
 			while(runLimit < iterator.getEndIndex() && (runLimit = iterator.getRunLimit(FONT_ATTRS)) <= iterator.getEndIndex())
 			{
 				Map<Attribute,Object> attrs = iterator.getAttributes();
-					
+
 				AwtFontAttribute fontAttribute = AwtFontAttribute.fromAttributes(attrs);
-				
+
 				FontUtil fontUtil = fontUtilSupplier.get();
 				Font awtFont = fontUtil.getAwtFontFromBundles(
-						fontAttribute, 
+						fontAttribute,
 						((TextAttribute.WEIGHT_BOLD.equals(attrs.get(TextAttribute.WEIGHT))?Font.BOLD:Font.PLAIN)
-							|(TextAttribute.POSTURE_OBLIQUE.equals(attrs.get(TextAttribute.POSTURE))?Font.ITALIC:Font.PLAIN)), 
+							|(TextAttribute.POSTURE_OBLIQUE.equals(attrs.get(TextAttribute.POSTURE))?Font.ITALIC:Font.PLAIN)),
 						(Float)attrs.get(TextAttribute.SIZE),
 						locale,
 						ignoreMissingFont

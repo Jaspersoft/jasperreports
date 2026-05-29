@@ -44,6 +44,7 @@ import net.sf.jasperreports.engine.JRPropertiesHolder;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRTextElement;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.TabStop;
 import net.sf.jasperreports.engine.export.AbstractTextRenderer;
@@ -208,6 +209,7 @@ public class TextMeasurer implements JRTextMeasurer
 	protected JRCommonText textElement;
 	private JRPropertiesHolder propertiesHolder;
 	private DynamicPropertiesHolder dynamicPropertiesHolder;
+	private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
 	
 	private SimpleTextLineWrapper simpleLineWrapper;
 	private ComplexTextLineWrapper complexLineWrapper;
@@ -590,7 +592,7 @@ public class TextMeasurer implements JRTextMeasurer
 		// decide if a bullet should be rendered
 		StyledTextWriteContext context = new StyledTextWriteContext(true);
 
-		AttributedCharacterIterator allParagraphs = styledText.getAwtAttributedString(fontUtil, ignoreMissingFont).getIterator(); 
+		AttributedCharacterIterator allParagraphs = styledText.getAwtAttributedString(fontUtil, ignoreMissingFont, getFontSizeScale()).getIterator();
 
 		isFirstParagraph = true;
 
@@ -1127,6 +1129,22 @@ public class TextMeasurer implements JRTextMeasurer
 		return AwtTextRenderer.LINE_BREAK_FONT_RENDER_CONTEXT;
 	}
 
+	/**
+	 *
+	 */
+	public void setDpi(int dpi)
+	{
+		this.dpi = dpi;
+	}
+
+	/**
+	 *
+	 */
+	public float getFontSizeScale()
+	{
+		return (float) dpi / JasperPrint.DEFAULT_REPORT_DPI;
+	}
+
 	class Context implements TextMeasureContext
 	{
 		@Override
@@ -1163,6 +1181,12 @@ public class TextMeasurer implements JRTextMeasurer
 		public FontRenderContext getFontRenderContext()
 		{
 			return TextMeasurer.this.getFontRenderContext();
+		}
+
+		@Override
+		public float getFontSizeScale()
+		{
+			return TextMeasurer.this.getFontSizeScale();
 		}
 	}
 }

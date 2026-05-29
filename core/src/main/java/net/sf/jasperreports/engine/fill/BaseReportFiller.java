@@ -302,6 +302,14 @@ public abstract class BaseReportFiller implements ReportFiller
 		return jasperPrint;
 	}
 
+	/**
+	 *
+	 */
+	public int getDpi()
+	{
+		return jasperReport.getDpi();
+	}
+
 	protected void setJasperReportsContext(JasperReportsContext jasperReportsContext)
 	{
 		this.jasperReportsContext = jasperReportsContext;

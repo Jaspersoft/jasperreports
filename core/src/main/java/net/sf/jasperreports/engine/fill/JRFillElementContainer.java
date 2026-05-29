@@ -743,11 +743,20 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 							filler.getJasperPrint().addOrigin(origins.get(j));
 						}
 						
+						int parentDpi = filler.getDpi();
+						int subreportDpi = subreport.subreportFiller.getDpi();
+						double dpiScale = (parentDpi != subreportDpi) ? (double) parentDpi / subreportDpi : 1d;
+
 						Collection<JRPrintElement> printElements = subreport.getPrintElements();
-						addSubElements(printContainer, element, printElements);
-						if (subreport.getX() + subreport.getPrintContentsWidth() > maxWidth)
+						addSubElements(printContainer, element, printElements, dpiScale);
+						int contentsWidth = subreport.getPrintContentsWidth();
+						if (dpiScale != 1d)
 						{
-							maxWidth = subreport.getX() + subreport.getPrintContentsWidth();
+							contentsWidth = (int) Math.round(contentsWidth * dpiScale);
+						}
+						if (subreport.getX() + contentsWidth > maxWidth)
+						{
+							maxWidth = subreport.getX() + contentsWidth;
 						}
 						
 						subreport.subreportPageFilled();
@@ -777,22 +786,36 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	protected void addSubElements(JRPrintElementContainer printContainer, JRFillElement element, 
 			Collection<? extends JRPrintElement> printElements)
 	{
+		addSubElements(printContainer, element, printElements, 1d);
+	}
+
+	protected void addSubElements(JRPrintElementContainer printContainer, JRFillElement element,
+			Collection<? extends JRPrintElement> printElements, double dpiScale)
+	{
 		if (printContainer instanceof OffsetElementsContainer)
 		{
-			// adding the subelements as whole lists to bands so that we don't need
-			// another virtualized list at print band level
 			((OffsetElementsContainer) printContainer).addOffsetElements(printElements, 
-					element.getX(), element.getRelativeY());
+					element.getX(), element.getRelativeY(), dpiScale);
 		}
 		else
 		{
 			if (printElements != null && printElements.size() > 0)
 			{
-				for(Iterator<? extends JRPrintElement> it = printElements.iterator(); it.hasNext();)
+				for (Iterator<? extends JRPrintElement> it = printElements.iterator(); it.hasNext();)
 				{
-					JRPrintElement printElement =it.next();
-					printElement.setX(element.getX() + printElement.getX());
-					printElement.setY(element.getRelativeY() + printElement.getY());
+					JRPrintElement printElement = it.next();
+					if (dpiScale != 1d)
+					{
+						printElement.setX(element.getX() + (int) Math.round(printElement.getX() * dpiScale));
+						printElement.setY(element.getRelativeY() + (int) Math.round(printElement.getY() * dpiScale));
+						printElement.setWidth((int) Math.round(printElement.getWidth() * dpiScale));
+						printElement.setHeight((int) Math.round(printElement.getHeight() * dpiScale));
+					}
+					else
+					{
+						printElement.setX(element.getX() + printElement.getX());
+						printElement.setY(element.getRelativeY() + printElement.getY());
+					}
 					printContainer.addElement(printElement);
 				}
 			}

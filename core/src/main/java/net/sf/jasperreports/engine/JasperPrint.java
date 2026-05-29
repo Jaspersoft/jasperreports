@@ -105,6 +105,8 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 	public static final String PROPERTY_COLLAPSE_MISSING_BOOKMARK_LEVELS = 
 		JRPropertiesUtil.PROPERTY_PREFIX + "print.collapse.missing.bookmark.levels";
 	
+	public static final int DEFAULT_REPORT_DPI = 72;
+
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_PAGE_WIDTH = "pageWidth";
 	public static final String PROPERTY_PAGE_HEIGHT = "pageHeight";
@@ -178,6 +180,7 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 	private String name;
 	private int pageWidth;
 	private int pageHeight;
+	private int dpi = DEFAULT_REPORT_DPI;
 	private Integer topMargin = 0;
 	private Integer leftMargin = 0;
 	private Integer bottomMargin = 0;
@@ -539,6 +542,22 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 	public void removeProperty(String propName)
 	{
 		propertiesMap.removeProperty(propName);
+	}
+
+	/**
+	 *
+	 */
+	public int getDpi()
+	{
+		return dpi;
+	}
+
+	/**
+	 *
+	 */
+	public void setDpi(int dpi)
+	{
+		this.dpi = dpi;
 	}
 
 	/**

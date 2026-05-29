@@ -47,13 +47,15 @@ public abstract class BorderStyle extends Style
 	private String[] borderWidth = new String[4];
 	private String[] borderStyle = new String[4];
 	private String[] borderPadding = new String[4];
+	protected int reportDpi;
 
 	/**
 	 *
 	 */
-	public BorderStyle(WriterHelper styleWriter)
+	public BorderStyle(WriterHelper styleWriter, int reportDpi)
 	{
 		super(styleWriter);
+		this.reportDpi = reportDpi;
 	}
 	
 	/**
@@ -64,13 +66,13 @@ public abstract class BorderStyle extends Style
 		if (box != null)
 		{
 			appendBorder(box.getTopPen(), TOP_BORDER);
-			borderPadding[TOP_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getTopPadding()));
+			borderPadding[TOP_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getTopPadding(), reportDpi));
 			appendBorder(box.getLeftPen(), LEFT_BORDER);
-			borderPadding[LEFT_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getLeftPadding()));
+			borderPadding[LEFT_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getLeftPadding(), reportDpi));
 			appendBorder(box.getBottomPen(), BOTTOM_BORDER);
-			borderPadding[BOTTOM_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getBottomPadding()));
+			borderPadding[BOTTOM_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getBottomPadding(), reportDpi));
 			appendBorder(box.getRightPen(), RIGHT_BORDER);
-			borderPadding[RIGHT_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getRightPadding()));
+			borderPadding[RIGHT_BORDER] = String.valueOf(LengthUtil.inchFloor4Dec(box.getRightPadding(), reportDpi));
 		}
 	}
 
@@ -161,7 +163,7 @@ public abstract class BorderStyle extends Style
 				}
 			}
 
-			borderWidth[side] = String.valueOf(LengthUtil.inchFloor4Dec(width));
+			borderWidth[side] = String.valueOf(LengthUtil.inchFloor4Dec(width, reportDpi));
 		}
 		else
 		{

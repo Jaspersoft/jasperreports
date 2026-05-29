@@ -135,6 +135,8 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 
 	protected StyleCache styleCache;
 
+	protected int reportDpi;
+
 	protected DocumentBuilder documentBuilder;
 	protected TableBuilder tableBuilder;
 	protected StyleBuilder styleBuilder;
@@ -151,6 +153,8 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	@Override
 	protected void openWorkbook(OutputStream os) throws JRException, IOException
 	{
+		reportDpi = jasperPrint.getDpi();
+
 		oasisZip = new OdsZip();
 
 		tempBodyEntry = new FileBufferedZipEntry(null);
@@ -163,11 +167,11 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		columnStyles.clear();
 		documentBuilder = new OdsDocumentBuilder(oasisZip);
 		
-		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey());
+		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey(), reportDpi);
 
 		stylesWriter = new WriterHelper(jasperReportsContext, oasisZip.getStylesEntry().getWriter());
 
-		styleBuilder = new StyleBuilder(stylesWriter);
+		styleBuilder = new StyleBuilder(stylesWriter, reportDpi);
 		styleBuilder.buildBeforeAutomaticStyles(jasperPrint);
 
 		namedExpressions = new StringBuilder("<table:named-expressions>\n");
@@ -476,13 +480,13 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 					// probably because the image is anchored to the paragraph
 					+ "svg:x=\"0in\" "
 					+ "svg:y=\"0in\" "
-//					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset) + "in\" "
-//					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset) + "in\" "
-					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.width) + "in\" "
-					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.height) + "in\" "
+//					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset, reportDpi) + "in\" "
+//					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset, reportDpi) + "in\" "
+					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.width, reportDpi) + "in\" "
+					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.height, reportDpi) + "in\" "
 					+ "draw:transform=\"rotate (" + imageProcessorResult.angle + ") "
-					+ "translate (" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset) 
-					+ "in," + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset) + "in)\">"
+					+ "translate (" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset, reportDpi)
+					+ "in," + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset, reportDpi) + "in)\">"
 					);				
 				tempBodyWriter.write("<draw:image ");
 				tempBodyWriter.write(" xlink:href=\"" + JRStringUtil.xmlEncode(imageProcessorResult.imagePath) + "\"");
@@ -1389,6 +1393,8 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	protected void initReport()
 	{
 		super.initReport();
+
+		reportDpi = jasperPrint.getDpi();
 
 		XlsReportConfiguration configuration = getCurrentItemConfiguration();
 		

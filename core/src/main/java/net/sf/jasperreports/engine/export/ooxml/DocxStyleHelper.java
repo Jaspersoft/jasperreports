@@ -62,7 +62,7 @@ public class DocxStyleHelper extends BaseHelper
 		
 		this.exporter = exporter;
 		
-		paragraphHelper = new DocxParagraphHelper(jasperReportsContext, writer, false);
+		paragraphHelper = new DocxParagraphHelper(jasperReportsContext, writer, false, JasperPrint.DEFAULT_REPORT_DPI);
 		runHelper = new DocxRunHelper(jasperReportsContext, writer, docxFontHelper);
 	}
 

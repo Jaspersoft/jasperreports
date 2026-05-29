@@ -154,6 +154,7 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	 *
 	 */
 	protected PrintDrawVisitor drawVisitor;
+	protected int reportDpi;
 	
 	private boolean whitePageBackground = true;
 	
@@ -233,6 +234,8 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	{
 		super.initReport();
 		
+		reportDpi = jasperPrint.getDpi();
+
 		setOffset(false);
 
 		Graphics2DReportConfiguration configuration = getCurrentItemConfiguration();
@@ -252,7 +255,7 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 				false
 				);
 		
-		drawVisitor = 
+		drawVisitor =
 			new PrintDrawVisitor(
 				exporterContext,
 				filter,
@@ -260,7 +263,8 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 				isMinimizePrinterJobSize == null ? Boolean.TRUE : isMinimizePrinterJobSize,
 				isIgnoreMissingFont == null ? Boolean.FALSE : isIgnoreMissingFont,
 				defaultIndentFirstLine,
-				defaultJustifyLastLine
+				defaultJustifyLastLine,
+				reportDpi
 				);
 		
 		whitePageBackground = configuration.isWhitePageBackground();
@@ -296,7 +300,8 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 			configuration.getOffsetY() == null ? 0 : configuration.getOffsetY()
 			);
 		float zoom = getZoom();
-		atrans.scale(zoom, zoom);
+		float dpiScale = 72f / reportDpi;
+		atrans.scale(zoom * dpiScale, zoom * dpiScale);
 		grx.transform(atrans);
 
 		List<JRPrintPage> pages = jasperPrint.getPages();

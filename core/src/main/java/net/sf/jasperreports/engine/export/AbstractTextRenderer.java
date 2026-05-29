@@ -101,10 +101,19 @@ public abstract class AbstractTextRenderer
 	protected final boolean ignoreMissingFont;
 	private final boolean defaultIndentFirstLine;
 	private final boolean defaultJustifyLastLine;
+	protected float fontSizeScale = 1f;
 
-	
+
 	/**
-	 * 
+	 *
+	 */
+	public void setFontSizeScale(float fontSizeScale)
+	{
+		this.fontSizeScale = fontSizeScale;
+	}
+
+	/**
+	 *
 	 */
 	public AbstractTextRenderer(
 		JasperReportsContext jasperReportsContext,
@@ -768,7 +777,7 @@ public abstract class AbstractTextRenderer
 	 */
 	protected AttributedString getAttributedString()
 	{
-		return styledText.getAwtAttributedString(fontUtil, ignoreMissingFont);
+		return styledText.getAwtAttributedString(fontUtil, ignoreMissingFont, fontSizeScale);
 	}
 
 	/**

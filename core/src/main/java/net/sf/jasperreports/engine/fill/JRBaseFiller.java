@@ -131,6 +131,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 
 	protected int pageHeight;
 
+	protected int dpi;
+
 	protected OrientationEnum orientation;
 
 	private WhenNoDataTypeEnum whenNoDataType;
@@ -332,6 +334,7 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		columnDirection = jasperReport.getColumnDirection();
 		pageWidth = jasperReport.getPageWidth();
 		pageHeight = jasperReport.getPageHeight();
+		dpi = jasperReport.getDpi();
 		orientation = jasperReport.getOrientation();
 		whenNoDataType = jasperReport.getWhenNoDataType();
 		columnWidth = jasperReport.getColumnWidth();
@@ -596,6 +599,7 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			jasperPrint.setName(name);
 			jasperPrint.setPageWidth(pageWidth);
 			jasperPrint.setPageHeight(pageHeight);
+			jasperPrint.setDpi(dpi);
 			jasperPrint.setTopMargin(topMargin);
 			jasperPrint.setLeftMargin(leftMargin);
 			jasperPrint.setBottomMargin(bottomMargin);

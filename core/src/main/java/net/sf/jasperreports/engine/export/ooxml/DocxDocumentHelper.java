@@ -41,12 +41,15 @@ public class DocxDocumentHelper extends BaseHelper
 {
 	protected static int DEFAULT_LINE_PITCH = 360;
 
+	protected int dpi;
+
 	/**
 	 * 
 	 */
-	public DocxDocumentHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	public DocxDocumentHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
+		this.dpi = dpi;
 	}
 	
 	/**
@@ -152,7 +155,7 @@ public class DocxDocumentHelper extends BaseHelper
 			write("   <w:headerReference w:type=\"default\" r:id=\"header" + headerIndex + "\"/>\n");
 		}
 		write("   <w:type w:val=\"continuous\"/>\n");
-		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageWidth) + "\" w:h=\"" + LengthUtil.twip(pageHeight) + "\"");
+		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageWidth, dpi) + "\" w:h=\"" + LengthUtil.twip(pageHeight, dpi) + "\"");
 		write(" w:orient=\"" + (pageFormat.getOrientation() == OrientationEnum.LANDSCAPE ? "landscape" : "portrait") + "\"");
 		
 		if (OoxmlUtils.getSuitablePaperSize(pageWidth, pageHeight) == PaperSizeEnum.UNDEFINED)
@@ -163,18 +166,18 @@ public class DocxDocumentHelper extends BaseHelper
 		write("/>\n");
 
 		write("   <w:pgMar w:top=\""
-				+ LengthUtil.twip(topMargin)
+				+ LengthUtil.twip(topMargin, dpi)
 				+ "\" w:right=\""
-				+ LengthUtil.twip(rightMargin)
+				+ LengthUtil.twip(rightMargin, dpi)
 				+ "\" w:bottom=\""
 				// putting bottom margin could force some content to the next page, which is not wanted
 				+ "0" 
 				// alternatively, we could make bottom margin just a bit smaller, except for last page 
 				// where a mandatory empty paragraph would cause a new last empty page;
 				// this would work better for LibreOffice, which does not honour hard page breaks from docx
-				//+ (lastPage ? 0 : LengthUtil.twip(bottomMargin - 1))
+				//+ (lastPage ? 0 : LengthUtil.twip(bottomMargin - 1, dpi))
 				+ "\" w:left=\""
-				+ LengthUtil.twip(leftMargin)
+				+ LengthUtil.twip(leftMargin, dpi)
 				+ "\" w:header=\"0\" w:footer=\"0\" w:gutter=\"0\" />\n");
 //		write("   <w:cols w:space=\"720\" />\n");
 		write("   <w:docGrid w:linePitch=\"" + DEFAULT_LINE_PITCH + "\" />\n");

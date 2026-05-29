@@ -63,15 +63,17 @@ public class DocxParagraphHelper extends BaseHelper
 	 *
 	 */
 	private boolean pageBreak;
+	private int dpi;
 
 	/**
 	 *
 	 */
-	public DocxParagraphHelper(JasperReportsContext jasperReportsContext, Writer writer, boolean pageBreak)
+	public DocxParagraphHelper(JasperReportsContext jasperReportsContext, Writer writer, boolean pageBreak, int dpi)
 	{
 		super(jasperReportsContext, writer);
 		
 		this.pageBreak = pageBreak;
+		this.dpi = dpi;
 	}
 	
 	/**
@@ -157,15 +159,15 @@ public class DocxParagraphHelper extends BaseHelper
 			write("      <w:ind");
 			if (paragraph.getOwnFirstLineIndent() != null)
 			{
-				write(" w:firstLine=\"" + LengthUtil.twip(paragraph.getOwnFirstLineIndent()) + "\"");
+				write(" w:firstLine=\"" + LengthUtil.twip(paragraph.getOwnFirstLineIndent(), dpi) + "\"");
 			}
 			if (paragraph.getOwnLeftIndent() != null)
 			{
-				write(" w:left=\"" + LengthUtil.twip(paragraph.getOwnLeftIndent()) + "\"");
+				write(" w:left=\"" + LengthUtil.twip(paragraph.getOwnLeftIndent(), dpi) + "\"");
 			}
 			if (paragraph.getOwnRightIndent() != null)
 			{
-				write(" w:right=\"" + LengthUtil.twip(paragraph.getOwnRightIndent()) + "\"");
+				write(" w:right=\"" + LengthUtil.twip(paragraph.getOwnRightIndent(), dpi) + "\"");
 			}
 			write("/>\n");
 		}
@@ -200,7 +202,7 @@ public class DocxParagraphHelper extends BaseHelper
 			{
 				TabStop tabStop = tabStops[i];
 				write(
-					"   <w:tab w:pos=\"" + LengthUtil.twip(tabStop.getPosition()) 
+					"   <w:tab w:pos=\"" + LengthUtil.twip(tabStop.getPosition(), dpi)
 					+ "\" w:val=\"" + getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 
 					+ "\"/>\n"
 					);
@@ -229,13 +231,13 @@ public class DocxParagraphHelper extends BaseHelper
 				case AT_LEAST :
 				{
 					lineRule = "atLeast";
-					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize())); 
+					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize(), dpi));
 					break;
 				}
 				case FIXED :
 				{
 					lineRule = "exact";
-					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize())); 
+					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize(), dpi)); 
 					break;
 				}
 				case PROPORTIONAL :
@@ -265,8 +267,8 @@ public class DocxParagraphHelper extends BaseHelper
 			}
 			
 			write("   <w:spacing w:lineRule=\"" + lineRule + "\" w:line=\"" + lineSpacing + "\"");
-			write(" w:after=\"" + LengthUtil.twip(paragraph.getSpacingAfter()) + "\"");
-			write(" w:before=\"" + LengthUtil.twip(paragraph.getSpacingBefore()) + "\"/>\n");
+			write(" w:after=\"" + LengthUtil.twip(paragraph.getSpacingAfter(), dpi) + "\"");
+			write(" w:before=\"" + LengthUtil.twip(paragraph.getSpacingBefore(), dpi) + "\"/>\n");
 		}
 	}
 	

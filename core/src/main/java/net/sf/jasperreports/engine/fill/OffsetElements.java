@@ -36,13 +36,21 @@ public class OffsetElements
 	private final Collection<? extends JRPrintElement> elements;
 	private final int offsetX;
 	private final int offsetY;
+	private final double dpiScale;
 	
 	public OffsetElements(Collection<? extends JRPrintElement> elements,
 			int offsetX, int offsetY)
 	{
+		this(elements, offsetX, offsetY, 1d);
+	}
+
+	public OffsetElements(Collection<? extends JRPrintElement> elements,
+			int offsetX, int offsetY, double dpiScale)
+	{
 		this.elements = elements;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
+		this.dpiScale = dpiScale;
 	}
 
 	public Collection<? extends JRPrintElement> getElements()
@@ -58,6 +66,11 @@ public class OffsetElements
 	public int getOffsetY()
 	{
 		return offsetY;
+	}
+
+	public double getDpiScale()
+	{
+		return dpiScale;
 	}
 
 }

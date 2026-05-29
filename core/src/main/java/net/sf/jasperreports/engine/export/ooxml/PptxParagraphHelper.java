@@ -62,9 +62,15 @@ public class PptxParagraphHelper extends BaseHelper
 	/**
 	 *
 	 */
-	public PptxParagraphHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	private int dpi;
+
+	/**
+	 *
+	 */
+	public PptxParagraphHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
+		this.dpi = dpi;
 	}
 	
 	/**
@@ -150,15 +156,15 @@ public class PptxParagraphHelper extends BaseHelper
 			write("      <a:ind");
 			if (paragraph.getOwnFirstLineIndent() != null)
 			{
-				write(" a:firstLine=\"" + LengthUtil.twip(paragraph.getOwnFirstLineIndent()) + "\"");
+				write(" a:firstLine=\"" + LengthUtil.twip(paragraph.getOwnFirstLineIndent(), dpi) + "\"");
 			}
 			if (paragraph.getOwnLeftIndent() != null)
 			{
-				write(" a:left=\"" + LengthUtil.twip(paragraph.getOwnLeftIndent()) + "\"");
+				write(" a:left=\"" + LengthUtil.twip(paragraph.getOwnLeftIndent(), dpi) + "\"");
 			}
 			if (paragraph.getOwnRightIndent() != null)
 			{
-				write(" a:right=\"" + LengthUtil.twip(paragraph.getOwnRightIndent()) + "\"");
+				write(" a:right=\"" + LengthUtil.twip(paragraph.getOwnRightIndent(), dpi) + "\"");
 			}
 			write("/>\n");
 		}
@@ -189,7 +195,7 @@ public class PptxParagraphHelper extends BaseHelper
 				TabStop tabStop = tabStops[i];
 				write(
 					"   <a:tab a:pos=\"" 
-					+ LengthUtil.twip(tabStop.getPosition()) 
+					+ LengthUtil.twip(tabStop.getPosition(), dpi)
 					+ "\" a:val=\"" + getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 
 					+ "\"/>\n"
 					);
@@ -218,13 +224,13 @@ public class PptxParagraphHelper extends BaseHelper
 				case AT_LEAST :
 				{
 					lineRule = "atLeast";
-					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize())); 
+					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize(), dpi));
 					break;
 				}
 				case FIXED :
 				{
 					lineRule = "exact";
-					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize())); 
+					lineSpacing = String.valueOf(LengthUtil.twip(paragraph.getLineSpacingSize(), dpi)); 
 					break;
 				}
 				case PROPORTIONAL :
@@ -254,8 +260,8 @@ public class PptxParagraphHelper extends BaseHelper
 			}
 			
 			write("   <a:spacing a:lineRule=\"" + lineRule + "\" a:line=\"" + lineSpacing + "\"");
-			write(" a:after=\"" + LengthUtil.twip(paragraph.getSpacingAfter()) + "\"");
-			write(" a:before=\"" + LengthUtil.twip(paragraph.getSpacingBefore()) + "\"/>\n");
+			write(" a:after=\"" + LengthUtil.twip(paragraph.getSpacingAfter(), dpi) + "\"");
+			write(" a:before=\"" + LengthUtil.twip(paragraph.getSpacingBefore(), dpi) + "\"/>\n");
 		}
 	}
 	

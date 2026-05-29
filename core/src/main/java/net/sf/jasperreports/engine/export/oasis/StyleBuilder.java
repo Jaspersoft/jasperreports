@@ -47,13 +47,15 @@ public class StyleBuilder
 	 * 
 	 */
 	private WriterHelper writer;
+	private int reportDpi;
 	
 	/**
 	 * 
 	 */
-	public StyleBuilder(WriterHelper writer)
+	public StyleBuilder(WriterHelper writer, int reportDpi)
 	{
 		this.writer = writer;
+		this.reportDpi = reportDpi;
 	}
 
 	/**
@@ -96,7 +98,7 @@ public class StyleBuilder
 			"draw:style=\"rect\" draw:dots1=\"1\" draw:dots1-length=\"0.05cm\" draw:dots2=\"1\" " +
 			"draw:dots2-length=\"0.05cm\" draw:distance=\"0.05cm\"/>");
 		writer.write(" <style:default-style style:family=\"paragraph\"><style:paragraph-properties style:tab-stop-distance=\"" +
-				LengthUtil.inchFloor4Dec(new JRBasePrintText(jasperPrint.getDefaultStyleProvider()).getParagraph().getTabStopWidth()) +
+				LengthUtil.inchFloor4Dec(new JRBasePrintText(jasperPrint.getDefaultStyleProvider()).getParagraph().getTabStopWidth(), reportDpi) +
 				"in\"/></style:default-style>\n");	
 		writer.write(" </office:styles>\n");	
 		writer.write(" <office:automatic-styles>\n");	
@@ -111,8 +113,8 @@ public class StyleBuilder
 			writer.write(" style:name=\"page_" + pageFormatIndex + "\">\n");
 			
 			writer.write("<style:page-layout-properties");
-			writer.write(" fo:page-width=\"" + LengthUtil.inchRound4Dec(pageFormat.getPageWidth()) +"in\"");
-			writer.write(" fo:page-height=\"" + LengthUtil.inchRound4Dec(pageFormat.getPageHeight()) +"in\"");//FIXMEODT we probably need some actualHeight trick
+			writer.write(" fo:page-width=\"" + LengthUtil.inchRound4Dec(pageFormat.getPageWidth(), reportDpi) +"in\"");
+			writer.write(" fo:page-height=\"" + LengthUtil.inchRound4Dec(pageFormat.getPageHeight(), reportDpi) +"in\"");//FIXMEODT we probably need some actualHeight trick
 			writer.write(" fo:margin-top=\"0in\"");//FIXMEODT if first cell on page is for frame (nested table), this forcing of margins to zero does not work
 			writer.write(" fo:margin-bottom=\"0in\"");
 			writer.write(" fo:margin-left=\"0in\"");

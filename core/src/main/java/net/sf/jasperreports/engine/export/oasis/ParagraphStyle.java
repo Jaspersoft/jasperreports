@@ -74,13 +74,15 @@ public class ParagraphStyle extends Style
 	private String runDirection;
 	private String textRotation = "0";
 	private JRParagraph paragraph;
+	private int reportDpi;
 
 	/**
 	 *
 	 */
-	public ParagraphStyle(WriterHelper styleWriter, JRPrintText text, boolean isIgnoreTextFormatting)
+	public ParagraphStyle(WriterHelper styleWriter, JRPrintText text, boolean isIgnoreTextFormatting, int reportDpi)
 	{
 		super(styleWriter);
+		this.reportDpi = reportDpi;
 		
 		horizontalAlignment = getHorizontalAlignment(
 				text.getHorizontalTextAlign(), 
@@ -310,12 +312,12 @@ public class ParagraphStyle extends Style
 			}
 			case AT_LEAST:
 			{
-				styleWriter.write(" style:line-height-at-least=\"" + LengthUtil.inchFloor4Dec(paragraph.getLineSpacingSize()) + "in\"");
+				styleWriter.write(" style:line-height-at-least=\"" + LengthUtil.inchFloor4Dec(paragraph.getLineSpacingSize(), reportDpi) + "in\"");
 				break;
 			}
 			case FIXED:
 			{
-				styleWriter.write(" fo:line-height=\"" + LengthUtil.inchFloor4Dec(paragraph.getLineSpacingSize()) + "in\"");
+				styleWriter.write(" fo:line-height=\"" + LengthUtil.inchFloor4Dec(paragraph.getLineSpacingSize(), reportDpi) + "in\"");
 				break;
 			}
 			case PROPORTIONAL:
@@ -335,11 +337,11 @@ public class ParagraphStyle extends Style
 		styleWriter.write(" fo:text-align=\"" + horizontalAlignment + "\"");
 
 //		styleWriter.write(" fo:keep-together=\"" + pKeepTogether + "\"");
-		styleWriter.write(" fo:text-indent=\"" + LengthUtil.inchFloor4Dec(paragraph.getFirstLineIndent()) + "in\"");
-		styleWriter.write(" fo:margin-left=\"" + LengthUtil.inchFloor4Dec(paragraph.getLeftIndent()) + "in\"");
-		styleWriter.write(" fo:margin-right=\"" + LengthUtil.inchFloor4Dec(paragraph.getRightIndent()) + "in\"");
-		styleWriter.write(" fo:margin-top=\"" + LengthUtil.inchFloor4Dec(paragraph.getSpacingBefore()) + "in\"");
-		styleWriter.write(" fo:margin-bottom=\"" + LengthUtil.inchFloor4Dec(paragraph.getSpacingAfter()) + "in\"");
+		styleWriter.write(" fo:text-indent=\"" + LengthUtil.inchFloor4Dec(paragraph.getFirstLineIndent(), reportDpi) + "in\"");
+		styleWriter.write(" fo:margin-left=\"" + LengthUtil.inchFloor4Dec(paragraph.getLeftIndent(), reportDpi) + "in\"");
+		styleWriter.write(" fo:margin-right=\"" + LengthUtil.inchFloor4Dec(paragraph.getRightIndent(), reportDpi) + "in\"");
+		styleWriter.write(" fo:margin-top=\"" + LengthUtil.inchFloor4Dec(paragraph.getSpacingBefore(), reportDpi) + "in\"");
+		styleWriter.write(" fo:margin-bottom=\"" + LengthUtil.inchFloor4Dec(paragraph.getSpacingAfter(), reportDpi) + "in\"");
 //		styleWriter.write(" fo:background-color=\"#" + pBackGroundColor + "\"");
 		styleWriter.write(" style:vertical-align=\"" + verticalAlignment + "\"");
 		if (runDirection != null)
@@ -359,7 +361,7 @@ public class ParagraphStyle extends Style
 					"<style:tab-stop style:type=\"" 
 						+ getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 
 						+ "\" style:position=\"" 
-						+ LengthUtil.inchFloor4Dec(tabStop.getPosition()) 
+						+ LengthUtil.inchFloor4Dec(tabStop.getPosition(), reportDpi)
 						+ "in\"/>"
 					);
 			}

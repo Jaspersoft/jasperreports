@@ -35,4 +35,9 @@ public interface OffsetElementsContainer
 
 	void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY);
 	
+	default void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY, double dpiScale)
+	{
+		addOffsetElements(elements, offsetX, offsetY);
+	}
+
 }

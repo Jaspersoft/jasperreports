@@ -143,6 +143,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 	protected File destFile;
 
 	protected int reportIndex;
+	protected int reportDpi;
 
 	protected List<Color> colors;
 	protected List<String> fonts;
@@ -240,6 +241,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 	{
 		super.initReport();
 		
+		reportDpi = jasperPrint.getDpi();
 		renderersCache = new RenderersCache(getJasperReportsContext());
 	}
 	
@@ -275,20 +277,20 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 				contentWriter.write("}}\n");
 
 				contentWriter.write("\\viewkind1\\paperw");
-				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getPageWidth())));//FIXMEPART rtf does not work in batch mode
+				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getPageWidth(), reportDpi)));//FIXMEPART rtf does not work in batch mode
 				contentWriter.write("\\paperh");
-				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getPageHeight())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getPageHeight(), reportDpi)));
 
 				contentWriter.write("\\marglsxn");
-				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getLeftMargin() == null ? 0 : jasperPrint.getLeftMargin())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getLeftMargin() == null ? 0 : jasperPrint.getLeftMargin(), reportDpi)));
 				contentWriter.write("\\margrsxn");
-				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getRightMargin() == null ? 0 : jasperPrint.getRightMargin())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getRightMargin() == null ? 0 : jasperPrint.getRightMargin(), reportDpi)));
 				contentWriter.write("\\margtsxn");
-				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getTopMargin() == null ? 0 : jasperPrint.getTopMargin())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getTopMargin() == null ? 0 : jasperPrint.getTopMargin(), reportDpi)));
 				contentWriter.write("\\margbsxn");
-				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getBottomMargin() == null ? 0 : jasperPrint.getBottomMargin())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(jasperPrint.getBottomMargin() == null ? 0 : jasperPrint.getBottomMargin(), reportDpi)));
 				contentWriter.write("\\deftab");
-				contentWriter.write(String.valueOf(LengthUtil.twip(new JRBasePrintText(jasperPrint.getDefaultStyleProvider()).getParagraph().getTabStopWidth())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(new JRBasePrintText(jasperPrint.getDefaultStyleProvider()).getParagraph().getTabStopWidth(), reportDpi)));
 
 				if (jasperPrint.getOrientation() == OrientationEnum.LANDSCAPE) {
 					contentWriter.write("\\lndscpsxn");
@@ -417,13 +419,13 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 		contentWriter.write("{\\shp\\shpbxpage\\shpbypage\\shpwr5\\shpfhdr0\\shpfblwtxt0\\shpz");
 		contentWriter.write(String.valueOf(zorder++));
 		contentWriter.write("\\shpleft");
-		contentWriter.write(String.valueOf(LengthUtil.twip(element.getX() + getOffsetX())));
+		contentWriter.write(String.valueOf(LengthUtil.twip(element.getX() + getOffsetX(), reportDpi)));
 		contentWriter.write("\\shpright");
-		contentWriter.write(String.valueOf(LengthUtil.twip(element.getX() + getOffsetX() + element.getWidth())));
+		contentWriter.write(String.valueOf(LengthUtil.twip(element.getX() + getOffsetX() + element.getWidth(), reportDpi)));
 		contentWriter.write("\\shptop");
-		contentWriter.write(String.valueOf(LengthUtil.twip(element.getY() + getOffsetY())));
+		contentWriter.write(String.valueOf(LengthUtil.twip(element.getY() + getOffsetY(), reportDpi)));
 		contentWriter.write("\\shpbottom");
-		contentWriter.write(String.valueOf(LengthUtil.twip(element.getY() + getOffsetY() + element.getHeight())));
+		contentWriter.write(String.valueOf(LengthUtil.twip(element.getY() + getOffsetY() + element.getHeight(), reportDpi)));
 
 		Color bgcolor = element.getBackcolor();
 
@@ -495,7 +497,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 		}
 
 		contentWriter.write("{\\sp{\\sn lineWidth}{\\sv ");
-		contentWriter.write(String.valueOf(LengthUtil.emu(lineWidth)));
+		contentWriter.write(String.valueOf(LengthUtil.emu(lineWidth, reportDpi)));
 		contentWriter.write("}}");
 	}
 
@@ -540,13 +542,13 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 		contentWriter.write("{\\shp\\shpbxpage\\shpbypage\\shpwr5\\shpfhdr0\\shpz");
 		contentWriter.write(String.valueOf(zorder++));
 		contentWriter.write("\\shpleft");
-		contentWriter.write(String.valueOf(LengthUtil.twip(x)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(x, reportDpi)));
 		contentWriter.write("\\shpright");
-		contentWriter.write(String.valueOf(LengthUtil.twip(x + width)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(x + width, reportDpi)));
 		contentWriter.write("\\shptop");
-		contentWriter.write(String.valueOf(LengthUtil.twip(y)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(y, reportDpi)));
 		contentWriter.write("\\shpbottom");
-		contentWriter.write(String.valueOf(LengthUtil.twip(y + height)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(y + height, reportDpi)));
 
 		contentWriter.write("{\\shpinst");
 		
@@ -575,13 +577,13 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 		contentWriter.write("{\\shp\\shpbxpage\\shpbypage\\shpwr5\\shpfhdr0\\shpz");
 		contentWriter.write(String.valueOf(zorder++));
 		contentWriter.write("\\shpleft");
-		contentWriter.write(String.valueOf(LengthUtil.twip(x)));//FIXMEBORDER starting point of borders seem to have CAP_SQUARE-like appearence at least for Thin
+		contentWriter.write(String.valueOf(LengthUtil.twip(x, reportDpi)));//FIXMEBORDER starting point of borders seem to have CAP_SQUARE-like appearence at least for Thin
 		contentWriter.write("\\shpright");
-		contentWriter.write(String.valueOf(LengthUtil.twip(x + width)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(x + width, reportDpi)));
 		contentWriter.write("\\shptop");
-		contentWriter.write(String.valueOf(LengthUtil.twip(y)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(y, reportDpi)));
 		contentWriter.write("\\shpbottom");
-		contentWriter.write(String.valueOf(LengthUtil.twip(y + height)));
+		contentWriter.write(String.valueOf(LengthUtil.twip(y + height, reportDpi)));
 
 		contentWriter.write("{\\shpinst");
 		
@@ -771,25 +773,25 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 
 		contentWriter.write(rotation);
 		contentWriter.write("{\\sp{\\sn dyTextTop}{\\sv ");
-		contentWriter.write(String.valueOf(LengthUtil.emu(topPadding)));
+		contentWriter.write(String.valueOf(LengthUtil.emu(topPadding, reportDpi)));
 		contentWriter.write("}}");
 		contentWriter.write("{\\sp{\\sn dxTextLeft}{\\sv ");
-		contentWriter.write(String.valueOf(LengthUtil.emu(leftPadding)));
+		contentWriter.write(String.valueOf(LengthUtil.emu(leftPadding, reportDpi)));
 		contentWriter.write("}}");
 		contentWriter.write("{\\sp{\\sn dyTextBottom}{\\sv ");
-		contentWriter.write(String.valueOf(LengthUtil.emu(bottomPadding)));
+		contentWriter.write(String.valueOf(LengthUtil.emu(bottomPadding, reportDpi)));
 		contentWriter.write("}}");
 		contentWriter.write("{\\sp{\\sn dxTextRight}{\\sv ");
-		contentWriter.write(String.valueOf(LengthUtil.emu(rightPadding)));
+		contentWriter.write(String.valueOf(LengthUtil.emu(rightPadding, reportDpi)));
 		contentWriter.write("}}");
 		contentWriter.write("{\\sp{\\sn fLine}{\\sv 0}}");
 		contentWriter.write("{\\shptxt{\\pard ");
 
-		contentWriter.write("\\fi" + LengthUtil.twip(text.getParagraph().getFirstLineIndent()) + " ");
-		contentWriter.write("\\li" + LengthUtil.twip(text.getParagraph().getLeftIndent()) + " ");
-		contentWriter.write("\\ri" + LengthUtil.twip(text.getParagraph().getRightIndent()) + " ");
-		contentWriter.write("\\sb" + LengthUtil.twip(text.getParagraph().getSpacingBefore()) + " ");
-		contentWriter.write("\\sa" + LengthUtil.twip(text.getParagraph().getSpacingAfter()) + " ");
+		contentWriter.write("\\fi" + LengthUtil.twip(text.getParagraph().getFirstLineIndent(), reportDpi) + " ");
+		contentWriter.write("\\li" + LengthUtil.twip(text.getParagraph().getLeftIndent(), reportDpi) + " ");
+		contentWriter.write("\\ri" + LengthUtil.twip(text.getParagraph().getRightIndent(), reportDpi) + " ");
+		contentWriter.write("\\sb" + LengthUtil.twip(text.getParagraph().getSpacingBefore(), reportDpi) + " ");
+		contentWriter.write("\\sa" + LengthUtil.twip(text.getParagraph().getSpacingAfter(), reportDpi) + " ");
 
 		TabStop[] tabStops = text.getParagraph().getTabStops();
 		if (tabStops != null && tabStops.length > 0)
@@ -814,7 +816,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 						break;
 				}
 
-				contentWriter.write(tabStopAlign + "\\tx" + LengthUtil.twip(tabStop.getPosition()) + " ");
+				contentWriter.write(tabStopAlign + "\\tx" + LengthUtil.twip(tabStop.getPosition(), reportDpi) + " ");
 			}
 		}
 
@@ -865,13 +867,13 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 		{
 			case AT_LEAST:
 			{
-				contentWriter.write("\\sl" + LengthUtil.twip(text.getParagraph().getLineSpacingSize()));
+				contentWriter.write("\\sl" + LengthUtil.twip(text.getParagraph().getLineSpacingSize(), reportDpi));
 				contentWriter.write(" \\slmult0 ");
 				break;
 			}
 			case FIXED:
 			{
-				contentWriter.write("\\sl-" + LengthUtil.twip(text.getParagraph().getLineSpacingSize()));
+				contentWriter.write("\\sl-" + LengthUtil.twip(text.getParagraph().getLineSpacingSize(), reportDpi));
 				contentWriter.write(" \\slmult0 ");
 				break;
 			}
@@ -1399,13 +1401,13 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 				contentWriter.write("{\\shp{\\*\\shpinst\\shpbxpage\\shpbypage\\shpwr5\\shpfhdr0\\shpfblwtxt0\\shpz");
 				contentWriter.write(String.valueOf(zorder++));
 				contentWriter.write("\\shpleft");
-				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getX() + leftPadding + xoffset + getOffsetX())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getX() + leftPadding + xoffset + getOffsetX(), reportDpi)));
 				contentWriter.write("\\shpright");
-				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getX() + leftPadding + xoffset + getOffsetX() + imageWidth)));
+				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getX() + leftPadding + xoffset + getOffsetX() + imageWidth, reportDpi)));
 				contentWriter.write("\\shptop");
-				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getY() + topPadding + yoffset + getOffsetY())));
+				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getY() + topPadding + yoffset + getOffsetY(), reportDpi)));
 				contentWriter.write("\\shpbottom");
-				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getY() + topPadding + yoffset + getOffsetY() + imageHeight)));
+				contentWriter.write(String.valueOf(LengthUtil.twip(printImage.getY() + topPadding + yoffset + getOffsetY() + imageHeight, reportDpi)));
 				contentWriter.write("{\\sp{\\sn shapeType}{\\sv 75}}");
 				contentWriter.write("{\\sp{\\sn fFilled}{\\sv 0}}");
 				contentWriter.write("{\\sp{\\sn Rotation}{\\sv " + (65536 * angle) + "}}");

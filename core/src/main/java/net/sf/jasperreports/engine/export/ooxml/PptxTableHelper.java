@@ -42,6 +42,7 @@ public class PptxTableHelper extends BaseHelper
 	private CutsInfo xCuts;
 	private PptxCellHelper cellHelper;
 	private PptxParagraphHelper paragraphHelper;
+	private int dpi;
 
 	/**
 	 * 
@@ -49,14 +50,16 @@ public class PptxTableHelper extends BaseHelper
 	protected PptxTableHelper(
 		JasperReportsContext jasperReportsContext,
 		Writer writer,
-		CutsInfo xCuts
+		CutsInfo xCuts,
+		int dpi
 		) 
 	{
 		super(jasperReportsContext, writer);
 
 		this.xCuts = xCuts;
-		this.cellHelper = new PptxCellHelper(jasperReportsContext, writer);
-		this.paragraphHelper = new PptxParagraphHelper(jasperReportsContext, writer);
+		this.dpi = dpi;
+		this.cellHelper = new PptxCellHelper(jasperReportsContext, writer, dpi);
+		this.paragraphHelper = new PptxParagraphHelper(jasperReportsContext, writer, dpi);
 	}
 
 
@@ -90,7 +93,7 @@ public class PptxTableHelper extends BaseHelper
 		write("   <a:tblGrid>\n");
 		for(int col = 1; col < xCuts.size(); col++)
 		{
-			write("    <a:gridCol w=\"" + LengthUtil.emu(xCuts.getCutOffset(col) - xCuts.getCutOffset(col - 1)) + "\"/>\n");
+			write("    <a:gridCol w=\"" + LengthUtil.emu(xCuts.getCutOffset(col) - xCuts.getCutOffset(col - 1), dpi) + "\"/>\n");
 		}
 		write("   </a:tblGrid>\n");
 	}
@@ -102,7 +105,7 @@ public class PptxTableHelper extends BaseHelper
 	
 	public void exportRowHeader(int rowHeight) 
 	{
-		write("   <a:tr h=\"" + LengthUtil.emu(rowHeight) + "\">\n");
+		write("   <a:tr h=\"" + LengthUtil.emu(rowHeight, dpi) + "\">\n");
 	}
 	
 	public void exportRowFooter() 

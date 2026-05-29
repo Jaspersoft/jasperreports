@@ -43,11 +43,12 @@ public class TableStyle extends Style
 	private boolean isFrame;
 	private boolean isPageBreak;
 	private Color tabColor;
+	private int reportDpi;
 
 	/**
 	 *
 	 */
-	public TableStyle(WriterHelper styleWriter, int width, int pageFormatIndex, boolean isFrame, boolean isPageBreak, Color tabColor)
+	public TableStyle(WriterHelper styleWriter, int width, int pageFormatIndex, boolean isFrame, boolean isPageBreak, Color tabColor, int reportDpi)
 	{
 		super(styleWriter);
 		this.width = width;
@@ -55,6 +56,7 @@ public class TableStyle extends Style
 		this.isFrame = isFrame;
 		this.isPageBreak = isPageBreak;
 		this.tabColor = tabColor;
+		this.reportDpi = reportDpi;
 	}
 	
 	@Override
@@ -73,7 +75,7 @@ public class TableStyle extends Style
 		}
 		styleWriter.write(" style:family=\"table\">\n");
 		styleWriter.write("   <style:table-properties");		
-		styleWriter.write(" table:align=\"left\" style:width=\"" + LengthUtil.inchFloor4Dec(width) + "in\"");
+		styleWriter.write(" table:align=\"left\" style:width=\"" + LengthUtil.inchFloor4Dec(width, reportDpi) + "in\"");
 		if (isPageBreak)
 		{
 			styleWriter.write(" fo:break-before=\"page\"");

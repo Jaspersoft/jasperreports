@@ -40,9 +40,15 @@ public class DocxSettingsHelper extends BaseHelper
 	/**
 	 * 
 	 */
-	public DocxSettingsHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	private int dpi;
+
+	/**
+	 *
+	 */
+	public DocxSettingsHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
+		this.dpi = dpi;
 	}
 
 	/**
@@ -58,7 +64,7 @@ public class DocxSettingsHelper extends BaseHelper
 			write("  <w:embedTrueTypeFonts w:val=\"true\" />\n"); 
 		}
 		write("  <w:defaultTabStop w:val=\"" 
-			+ LengthUtil.twip(new JRBasePrintText(jasperPrint.getDefaultStyleProvider()).getParagraph().getTabStopWidth()) 
+			+ LengthUtil.twip(new JRBasePrintText(jasperPrint.getDefaultStyleProvider()).getParagraph().getTabStopWidth(), dpi)
 			+ "\"/>\n");
 		write("</w:settings>");
 	}

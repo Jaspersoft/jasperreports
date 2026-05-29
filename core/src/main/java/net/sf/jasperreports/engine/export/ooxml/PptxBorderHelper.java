@@ -43,9 +43,15 @@ public class PptxBorderHelper extends BaseHelper
 	/**
 	 *
 	 */
-	public PptxBorderHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	private int dpi;
+
+	/**
+	 *
+	 */
+	public PptxBorderHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
+		this.dpi = dpi;
 	}
 	
 	/**
@@ -154,7 +160,7 @@ public class PptxBorderHelper extends BaseHelper
 	 */
 	protected void exportBorder(String side, JRBoxPen pen)
 	{
-		write("<a:" + side + " w=\"" + LengthUtil.emu(pen.getLineWidth()) + "\">\n");
+		write("<a:" + side + " w=\"" + LengthUtil.emu(pen.getLineWidth(), dpi) + "\">\n");
 		write("  <a:solidFill>\n");
 		write("    <a:srgbClr val=\"" + JRColorUtil.getColorHexa(pen.getLineColor()) + "\"/>\n");
 		write("  </a:solidFill>\n");

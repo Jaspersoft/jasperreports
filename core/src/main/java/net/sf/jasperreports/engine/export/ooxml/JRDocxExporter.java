@@ -216,6 +216,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	protected DocxRunHelper headerRunHelper;
 	protected DocxRunHelper crtRunHelper;
 
+	protected int reportDpi;
+
 	protected ExporterNature backgroundNature;
 	protected ExporterNature pageNature;
 
@@ -332,6 +334,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	{
 		super.initReport();
 		
+		reportDpi = jasperPrint.getDpi();
+
 		if (jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
 			// allows null values for the property
@@ -371,7 +375,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 
 		docWriter = docxZip.getDocumentEntry().getWriter();
 		
-		docHelper = new DocxDocumentHelper(jasperReportsContext, docWriter);
+		docHelper = new DocxDocumentHelper(jasperReportsContext, docWriter, reportDpi);
 		docHelper.exportHeader(pageFormat);
 		
 		relsHelper = new DocxRelsHelper(jasperReportsContext, docxZip.getRelsEntry().getWriter());
@@ -440,7 +444,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		DocxSettingsHelper settingsHelper = 
 			new DocxSettingsHelper(
 				jasperReportsContext,
-				docxZip.getSettingsEntry().getWriter()
+				docxZip.getSettingsEntry().getWriter(),
+				reportDpi
 				);
 		settingsHelper.export(jasperPrint, isEmbedFonts);
 		settingsHelper.close();
@@ -589,7 +594,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
 				headerWriter = headerEntry.getWriter();
 
-				headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
+				headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter, reportDpi);
 				headerHelper.exportHeader(pageFormat);
 
 				ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
@@ -688,7 +693,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 							xCuts,
 							false,
 							pageFormat,
-							frameIndex
+							frameIndex,
+							reportDpi
 							);
 				int maxReportIndex = exporterInput.getItems().size() - 1;
 				
@@ -711,7 +717,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 					xCuts,
 					frameIndex == null && (reportIndex != 0 || pageIndex != startPageIndex),
 					pageFormat,
-					frameIndex
+					frameIndex,
+					reportDpi
 					);
 
 		tableHelper.exportHeader();
@@ -1429,10 +1436,10 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 						+ "relativeHeight=\"0\" behindDoc=\"0\" locked=\"0\" layoutInCell=\"1\" allowOverlap=\"1\">\n");
 					crtDocHelper.write("<wp:simplePos x=\"0\" y=\"0\"/>\n");
 					crtDocHelper.write("<wp:positionH relativeFrom=\"column\">\n");
-					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(xoffset) + "</wp:posOffset>\n");
+					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(xoffset, reportDpi) + "</wp:posOffset>\n");
 					crtDocHelper.write("</wp:positionH>\n");
 					crtDocHelper.write("<wp:positionV relativeFrom=\"paragraph\">\n");
-					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(yoffset + topPadding - tableHelper.getRowMaxTopPadding()) + "</wp:posOffset>\n");
+					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(yoffset + topPadding - tableHelper.getRowMaxTopPadding(), reportDpi) + "</wp:posOffset>\n");
 					crtDocHelper.write("</wp:positionV>\n");
 				}
 				else
@@ -1440,7 +1447,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 					// in header writer, images need inline instead of anchor, otherwise they do not show up
 					crtDocHelper.write("<wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\">\n");
 				}
-				crtDocHelper.write("<wp:extent cx=\"" + LengthUtil.emu(renderWidth) + "\" cy=\"" + LengthUtil.emu(renderHeight) + "\"/>\n");
+				crtDocHelper.write("<wp:extent cx=\"" + LengthUtil.emu(renderWidth, reportDpi) + "\" cy=\"" + LengthUtil.emu(renderHeight, reportDpi) + "\"/>\n");
 				crtDocHelper.write("<wp:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\"/>\n");
 				crtDocHelper.write("<wp:wrapNone/>\n");
 
@@ -1470,7 +1477,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				crtDocHelper.write("<pic:spPr>\n");
 				crtDocHelper.write("  <a:xfrm rot=\"" + (60000 * angle) + "\">\n");
 				crtDocHelper.write("    <a:off x=\"0\" y=\"0\"/>\n");
-				crtDocHelper.write("    <a:ext cx=\"" + LengthUtil.emu(renderWidth) + "\" cy=\"" + LengthUtil.emu(renderHeight) + "\"/>");
+				crtDocHelper.write("    <a:ext cx=\"" + LengthUtil.emu(renderWidth, reportDpi) + "\" cy=\"" + LengthUtil.emu(renderHeight, reportDpi) + "\"/>");
 				crtDocHelper.write("  </a:xfrm>\n");
 				crtDocHelper.write("  <a:prstGeom prst=\"rect\"></a:prstGeom>\n");
 				crtDocHelper.write("</pic:spPr>\n");

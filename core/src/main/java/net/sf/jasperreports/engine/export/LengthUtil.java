@@ -42,6 +42,14 @@ public final class LengthUtil
 	}
 	
 	/**
+	 *
+	 */
+	public static double inch(double pixels, int dpi)
+	{
+		return pixels / dpi;
+	}
+
+	/**
 	 * 
 	 */
 	public static double inchFloor2Dec(double pixels)
@@ -53,6 +61,15 @@ public final class LengthUtil
 	}
 	
 	/**
+	 *
+	 */
+	public static double inchFloor2Dec(double pixels, int dpi)
+	{
+		double inches = pixels / dpi;
+		return (Math.floor(inches * 100.0)) / 100.0;
+	}
+
+	/**
 	 * 
 	 */
 	public static double inchFloor4Dec(double pixels)
@@ -61,6 +78,15 @@ public final class LengthUtil
 		inches = pixels / 72.0;
 		inches = (Math.floor(inches * 10000.0)) / 10000.0;
 		return inches;
+	}
+
+	/**
+	 *
+	 */
+	public static double inchFloor4Dec(double pixels, int dpi)
+	{
+		double inches = pixels / dpi;
+		return (Math.floor(inches * 10000.0)) / 10000.0;
 	}
 
 	/**
@@ -75,6 +101,15 @@ public final class LengthUtil
 	}
 	
 	/**
+	 *
+	 */
+	public static double inchRound2Dec(double pixels, int dpi)
+	{
+		double inches = pixels / dpi;
+		return (Math.round(inches * 10000.0)) / 10000.0;
+	}
+
+	/**
 	 * 
 	 */
 	public static double inchRound4Dec(double pixels)
@@ -83,6 +118,15 @@ public final class LengthUtil
 		inches = pixels / 72.0;
 		inches = (Math.round(inches * 10000.0)) / 10000.0;
 		return inches;
+	}
+
+	/**
+	 *
+	 */
+	public static double inchRound4Dec(double pixels, int dpi)
+	{
+		double inches = pixels / dpi;
+		return (Math.round(inches * 10000.0)) / 10000.0;
 	}
 
 	/**
@@ -96,6 +140,14 @@ public final class LengthUtil
 	}
 
 	/**
+	 *
+	 */
+	public static int twip(float pixels, int dpi)
+	{
+		return (int)(pixels * 1440.0f / dpi);
+	}
+
+	/**
 	 * Convert an int value from points to EMU (multiply with 12700)
 	 * @param points value that needs to be converted
 	 * @return converted value in EMU
@@ -106,11 +158,27 @@ public final class LengthUtil
 	}
 	
 	/**
+	 *
+	 */
+	public static int emu(float pixels, int dpi)
+	{
+		return (int)(pixels * 914400.0f / dpi);
+	}
+
+	/**
 	 * 
 	 */
 	public static int halfPoint(float pixels) 
 	{
 		return (int)(pixels * 8);
+	}
+
+	/**
+	 *
+	 */
+	public static int halfPoint(float pixels, int dpi)
+	{
+		return (int)(pixels * 576.0f / dpi);
 	}
 
 	

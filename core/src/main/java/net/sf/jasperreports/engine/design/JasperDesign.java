@@ -178,6 +178,8 @@ public class JasperDesign extends JRBaseReport
 
 	public static final String PROPERTY_PAGE_HEADER = "pageHeader";
 
+	public static final String PROPERTY_DPI = "dpi";
+
 	public static final String PROPERTY_PAGE_HEIGHT = "pageHeight";
 
 	public static final String PROPERTY_PAGE_WIDTH = "pageWidth";
@@ -359,6 +361,17 @@ public class JasperDesign extends JRBaseReport
 		int old = this.pageHeight;
 		this.pageHeight = pageHeight;
 		getEventSupport().firePropertyChange(PROPERTY_PAGE_HEIGHT, old, this.pageHeight);
+	}
+
+
+	/**
+	 *
+	 */
+	public void setDpi(int dpi)
+	{
+		int old = this.dpi;
+		this.dpi = dpi;
+		getEventSupport().firePropertyChange(PROPERTY_DPI, old, this.dpi);
 	}
 
 

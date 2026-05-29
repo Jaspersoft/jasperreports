@@ -108,12 +108,13 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 			offsetY
 			);
 		
-		yLine = 
+		yLine = pdfExporter.toPoints(
 			pdfExporter.getCurrentPageFormat().getPageHeight()
 				- y
 				- topPadding
 				- verticalAlignOffset
-				- text.getLeadingOffset();
+				- text.getLeadingOffset()
+		);
 	}
 
 	
@@ -139,13 +140,15 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 			pdfExporter.getPhrase(bulletChunk, bulletText, text, phrase);
 
 			phrase.go(
-				x + leftPadding,
+				pdfExporter.toPoints(x + leftPadding),
 				yLine,
-				htmlListIndent + x + leftPadding - 10,
-				pdfExporter.getCurrentPageFormat().getPageHeight()
-					- y
-					- height
-					+ bottomPadding,
+				pdfExporter.toPoints(htmlListIndent + x + leftPadding) - 10,
+				pdfExporter.toPoints(
+					pdfExporter.getCurrentPageFormat().getPageHeight()
+						- y
+						- height
+						+ bottomPadding
+				),
 				0,//text.getLineSpacingFactor(),// * text.getFont().getSize(),
 				text.getLineSpacingFactor(),
 				PdfTextAlignment.RIGHT,
@@ -192,14 +195,15 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 		PdfPhrase phrase = pdfProducer.createPhrase();
 		pdfExporter.getPhrase(paragraph, startIndex, endIndex, paragraphText, text, phrase);
 		yLine = phrase.go(
-			htmlListIndent + x + leftPadding,
+			pdfExporter.toPoints(htmlListIndent + x + leftPadding),
 			yLine,
-			x + width - rightPadding,
-			pdfExporter.getCurrentPageFormat().getPageHeight()
-				- y
-				- height
-				+ bottomPadding
-				- (legacyTextMeasuringFix ? 1 : 0),
+			pdfExporter.toPoints(x + width - rightPadding),
+			pdfExporter.toPoints(
+				pdfExporter.getCurrentPageFormat().getPageHeight()
+					- y
+					- height
+					+ bottomPadding
+			) - (legacyTextMeasuringFix ? 1 : 0),
 			0,//text.getLineSpacingFactor(),// * text.getFont().getSize(),
 			text.getLineSpacingFactor(),
 			horizontalAlignment == PdfTextAlignment.JUSTIFIED && justifyAll 

@@ -514,6 +514,7 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	protected boolean collapseRowSpan;
 	protected boolean defaultUseTimeZone;
 	protected boolean imageBorderFixEnabled;
+	protected int reportDpi;
 	
 	public class NameScope {
 		private String name;
@@ -624,6 +625,8 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	@Override
 	protected void initReport() {
 		super.initReport();
+
+		reportDpi = jasperPrint.getDpi();
 
 		setSheetNames();
 		if (jasperPrint.hasProperties()

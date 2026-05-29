@@ -416,10 +416,10 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		}
 		
 		JRXlsAbstractExporter.SheetInfo.SheetPrintSettings printSettings = sheetInfo.printSettings;
-		sheet.setMargin(PageMargin.LEFT, LengthUtil.inch(printSettings.getLeftMargin()));
-		sheet.setMargin(PageMargin.RIGHT, LengthUtil.inch(printSettings.getRightMargin()));
-		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(printSettings.getTopMargin()));
-		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(printSettings.getBottomMargin()));
+		sheet.setMargin(PageMargin.LEFT, LengthUtil.inch(printSettings.getLeftMargin(), reportDpi));
+		sheet.setMargin(PageMargin.RIGHT, LengthUtil.inch(printSettings.getRightMargin(), reportDpi));
+		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(printSettings.getTopMargin(), reportDpi));
+		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(printSettings.getBottomMargin(), reportDpi));
 
 		String sheetHeaderLeft = printSettings.getHeaderLeft();
 		if(sheetHeaderLeft != null)
@@ -457,8 +457,8 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			sheet.getFooter().setRight(sheetFooterRight);
 		}
 
-		printSetup.setHeaderMargin(LengthUtil.inch(printSettings.getHeaderMargin()));	
-		printSetup.setFooterMargin(LengthUtil.inch(printSettings.getFooterMargin()));	
+		printSetup.setHeaderMargin(LengthUtil.inch(printSettings.getHeaderMargin(), reportDpi));
+		printSetup.setFooterMargin(LengthUtil.inch(printSettings.getFooterMargin(), reportDpi));	
 		
 		RunDirectionEnum sheetDirection = configuration.getSheetDirection();
 		if(sheetDirection != null)
@@ -681,7 +681,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		}
 		else
 		{
-			sheet.setColumnWidth(col, Math.min(43 * width, 256*255));
+			sheet.setColumnWidth(col, Math.min(43 * width * 72 / reportDpi, 256*255));
 		}
 	}
 
@@ -700,7 +700,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				: getCurrentItemConfiguration().isAutoFitRow();
 		if (!isAutoFit)
 		{
-			row.setHeightInPoints(lastRowHeight);
+			row.setHeightInPoints(lastRowHeight * 72f / reportDpi);
 		}
 	}
 

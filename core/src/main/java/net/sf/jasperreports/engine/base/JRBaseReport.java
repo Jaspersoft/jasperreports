@@ -48,6 +48,7 @@ import net.sf.jasperreports.engine.JRPropertiesHolder;
 import net.sf.jasperreports.engine.JRPropertiesMap;
 import net.sf.jasperreports.engine.JRQuery;
 import net.sf.jasperreports.engine.JRReport;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JRReportTemplate;
 import net.sf.jasperreports.engine.JRScriptlet;
 import net.sf.jasperreports.engine.JRSection;
@@ -93,6 +94,7 @@ public class JRBaseReport implements JRReport, Serializable, JRChangeEventsSuppo
 	protected RunDirectionEnum columnDirection;
 	protected int pageWidth = 595;
 	protected int pageHeight = 842;
+	protected int dpi = JasperPrint.DEFAULT_REPORT_DPI;
 	protected OrientationEnum orientation;
 	protected WhenNoDataTypeEnum whenNoDataType;
 	protected SectionTypeEnum sectionType;
@@ -172,6 +174,7 @@ public class JRBaseReport implements JRReport, Serializable, JRChangeEventsSuppo
 		columnDirection = report.getColumnDirection();
 		pageWidth = report.getPageWidth();
 		pageHeight = report.getPageHeight();
+		dpi = report.getDpi();
 		orientation = report.getOrientation();
 		whenNoDataType = report.getWhenNoDataType();
 		sectionType = report.getSectionType();
@@ -312,6 +315,12 @@ public class JRBaseReport implements JRReport, Serializable, JRChangeEventsSuppo
 	public int getPageHeight()
 	{
 		return pageHeight;
+	}
+
+	@Override
+	public int getDpi()
+	{
+		return dpi;
 	}
 
 	@Override

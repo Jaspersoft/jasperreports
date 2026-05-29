@@ -302,6 +302,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 	JRXmlConstants.ATTRIBUTE_columnDirection,
 	JRXmlConstants.ATTRIBUTE_pageWidth,
 	JRXmlConstants.ATTRIBUTE_pageHeight,
+	JRXmlConstants.ATTRIBUTE_dpi,
 	JRXmlConstants.ATTRIBUTE_orientation,
 	JRXmlConstants.ATTRIBUTE_whenNoDataType,
 	JRXmlConstants.ATTRIBUTE_sectionType,
@@ -431,6 +432,12 @@ public interface JRReport extends JRDefaultStyleProvider, JRPropertiesHolder, JR
 	 */
 	@JacksonXmlProperty(isAttribute = true)
 	public int getPageHeight();
+
+	/**
+	 *
+	 */
+	@JacksonXmlProperty(isAttribute = true)
+	public int getDpi();
 
 	/**
 	 * Specifies whether document pages will be rendered in a portrait or landscape layout.

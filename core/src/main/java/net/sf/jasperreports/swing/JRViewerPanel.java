@@ -578,11 +578,17 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 		}
 	}
 
+	protected float getDpiScale()
+	{
+		return (float) REPORT_RESOLUTION / viewerContext.getJasperPrint().getDpi();
+	}
+
 	protected void drawPageError(Graphics grx)
 	{
 		PrintPageFormat pageFormat = viewerContext.getPageFormat();
+		float dpiScale = getDpiScale();
 		grx.setColor(Color.white);
-		grx.fillRect(0, 0, pageFormat.getPageWidth() + 1, pageFormat.getPageHeight() + 1);
+		grx.fillRect(0, 0, (int)(pageFormat.getPageWidth() * dpiScale) + 1, (int)(pageFormat.getPageHeight() * dpiScale) + 1);
 	}
 
 	class PageRenderer extends JLabel
@@ -643,14 +649,15 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	protected void fitPage()
 	{
 		PrintPageFormat pageFormat = viewerContext.getPageFormat();
-		float heightRatio = getPageCanvasHeight() / pageFormat.getPageHeight();
-		float widthRatio = getPageCanvasWidth() / pageFormat.getPageWidth();
+		float dpiScale = getDpiScale();
+		float heightRatio = getPageCanvasHeight() / (pageFormat.getPageHeight() * dpiScale);
+		float widthRatio = getPageCanvasWidth() / (pageFormat.getPageWidth() * dpiScale);
 		setRealZoomRatio(heightRatio < widthRatio ? heightRatio : widthRatio);
 	}
 
 	protected void fitWidth()
 	{
-		setRealZoomRatio(getPageCanvasWidth() / viewerContext.getPageFormat().getPageWidth());
+		setRealZoomRatio(getPageCanvasWidth() / (viewerContext.getPageFormat().getPageWidth() * getDpiScale()));
 	}
 
 	protected float getPageCanvasWidth()
@@ -813,9 +820,12 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 		pnlPage.setVisible(true);
 
 		PrintPageFormat pageFormat = viewerContext.getPageFormat();
+		float dpiScale = getDpiScale();
+		float displayWidth = pageFormat.getPageWidth() * dpiScale;
+		float displayHeight = pageFormat.getPageHeight() * dpiScale;
 		Dimension dim = new Dimension(
-			(int)(pageFormat.getPageWidth() * realZoom) + 8, // 2 from border, 5 from shadow and 1 extra pixel for image
-			(int)(pageFormat.getPageHeight() * realZoom) + 8
+			(int)(displayWidth * realZoom) + 8, // 2 from border, 5 from shadow and 1 extra pixel for image
+			(int)(displayHeight * realZoom) + 8
 			);
 		pnlPage.setMaximumSize(dim);
 		pnlPage.setMinimumSize(dim);
@@ -829,7 +839,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 		}
 		else
 		{
-			long imageSize = ((int) (pageFormat.getPageWidth() * realZoom) + 1) * ((int) (pageFormat.getPageHeight() * realZoom) + 1);
+			long imageSize = ((int) (displayWidth * realZoom) + 1) * ((int) (displayHeight * realZoom) + 1);
 			renderImage = imageSize <= maxImageSize;
 		}
 
@@ -887,9 +897,10 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	protected Image getPageErrorImage()
 	{
 		PrintPageFormat pageFormat = viewerContext.getPageFormat();
+		float dpiScale = getDpiScale();
 		Image image = new BufferedImage(
-				(int) (pageFormat.getPageWidth() * realZoom) + 1,
-				(int) (pageFormat.getPageHeight() * realZoom) + 1,
+				(int) (pageFormat.getPageWidth() * dpiScale * realZoom) + 1,
+				(int) (pageFormat.getPageHeight() * dpiScale * realZoom) + 1,
 				BufferedImage.TYPE_INT_RGB
 				);
 		
@@ -977,13 +988,14 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 						link.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					}
 
+					float dpiScale = getDpiScale();
 					link.setLocation(
-						(int)((element.getX() + offsetX) * realZoom),
-						(int)((element.getY() + offsetY) * realZoom)
+						(int)((element.getX() + offsetX) * dpiScale * realZoom),
+						(int)((element.getY() + offsetY) * dpiScale * realZoom)
 						);
 					link.setSize(
-						(int)(element.getWidth() * realZoom),
-						(int)(element.getHeight() * realZoom)
+						(int)(element.getWidth() * dpiScale * realZoom),
+						(int)(element.getHeight() * dpiScale * realZoom)
 						);
 					link.setOpaque(false);
 
@@ -1240,12 +1252,12 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 
 	public void setFitWidthZoomRatio()
 	{
-		setRealZoomRatio(getPageCanvasWidth() / viewerContext.getPageFormat().getPageWidth());
+		setRealZoomRatio(getPageCanvasWidth() / (viewerContext.getPageFormat().getPageWidth() * getDpiScale()));
 	}
 
 	public void setFitPageZoomRatio()
 	{
-		setRealZoomRatio(getPageCanvasHeight() / viewerContext.getPageFormat().getPageHeight());
+		setRealZoomRatio(getPageCanvasHeight() / (viewerContext.getPageFormat().getPageHeight() * getDpiScale()));
 	}
 
 	protected void keyNavigate(KeyEvent evt)

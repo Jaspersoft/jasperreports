@@ -47,11 +47,26 @@ public class OffsetElementsUtil
 			else
 			{
 				OffsetElements offsetElements = (OffsetElements) item;
-				Consumer<JRPrintElement> offsetElementConsumer = (element -> 
+				double dpiScale = offsetElements.getDpiScale();
+				Consumer<JRPrintElement> offsetElementConsumer;
+				if (dpiScale != 1d)
 				{
-					element.setX(offsetElements.getOffsetX() + element.getX());
-					element.setY(offsetElements.getOffsetY() + element.getY());
-				});
+					offsetElementConsumer = (element ->
+					{
+						element.setX(offsetElements.getOffsetX() + (int) Math.round(element.getX() * dpiScale));
+						element.setY(offsetElements.getOffsetY() + (int) Math.round(element.getY() * dpiScale));
+						element.setWidth((int) Math.round(element.getWidth() * dpiScale));
+						element.setHeight((int) Math.round(element.getHeight() * dpiScale));
+					});
+				}
+				else
+				{
+					offsetElementConsumer = (element ->
+					{
+						element.setX(offsetElements.getOffsetX() + element.getX());
+						element.setY(offsetElements.getOffsetY() + element.getY());
+					});
+				}
 				offsetElementConsumer = offsetElementConsumer.andThen(consumer);
 				
 				Collection<? extends JRPrintElement> subElements = offsetElements.getElements();

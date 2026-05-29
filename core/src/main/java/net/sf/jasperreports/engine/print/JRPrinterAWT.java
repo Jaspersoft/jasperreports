@@ -271,9 +271,10 @@ public class JRPrinterAWT implements Printable
 	public Image printPageToImage(int pageIndex, float zoom) throws JRException
 	{
 		PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
-		
-		int rasterWidth = (int) Math.ceil(pageFormat.getPageWidth() * zoom);
-		int rasterHeight = (int) Math.ceil(pageFormat.getPageHeight() * zoom);
+		float dpiScale = (float) JasperPrint.DEFAULT_REPORT_DPI / jasperPrint.getDpi();
+
+		int rasterWidth = (int) Math.ceil(pageFormat.getPageWidth() * dpiScale * zoom);
+		int rasterHeight = (int) Math.ceil(pageFormat.getPageHeight() * dpiScale * zoom);
 		Image pageImage = new BufferedImage(
 			rasterWidth,
 			rasterHeight,

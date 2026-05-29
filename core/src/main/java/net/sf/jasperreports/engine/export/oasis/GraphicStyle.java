@@ -55,6 +55,7 @@ public class GraphicStyle extends Style
 	private double cropRight;
 
 	private String clip;
+	private int reportDpi;
 
 
 	/**
@@ -66,7 +67,8 @@ public class GraphicStyle extends Style
 			double cropTop,
 			double cropLeft,
 			double cropBottom,
-			double cropRight
+			double cropRight,
+			int reportDpi
 			)
 	{
 		super(styleWriter);
@@ -74,6 +76,7 @@ public class GraphicStyle extends Style
 		this.cropLeft = cropLeft;
 		this.cropBottom = cropBottom;
 		this.cropRight = cropRight;
+		this.reportDpi = reportDpi;
 		
 		if (element.getMode() == ModeEnum.OPAQUE)
 		{
@@ -114,13 +117,13 @@ public class GraphicStyle extends Style
 		if (element instanceof JRPrintImage)
 		{
 			clip = " fo:clip=\"rect("
-				+ LengthUtil.inchFloor4Dec(cropTop * DPI_RATIO)
+				+ LengthUtil.inchFloor4Dec(cropTop * DPI_RATIO, reportDpi)
 				+ "in,"
-				+ LengthUtil.inchFloor4Dec(cropRight * DPI_RATIO) 
+				+ LengthUtil.inchFloor4Dec(cropRight * DPI_RATIO, reportDpi)
 				+ "in,"
-				+ LengthUtil.inchFloor4Dec(cropBottom * DPI_RATIO) 
+				+ LengthUtil.inchFloor4Dec(cropBottom * DPI_RATIO, reportDpi)
 				+ "in,"
-				+ LengthUtil.inchFloor4Dec(cropLeft * DPI_RATIO) 
+				+ LengthUtil.inchFloor4Dec(cropLeft * DPI_RATIO, reportDpi)
 				+ "in)\"";
 		}
 	}
@@ -171,7 +174,7 @@ public class GraphicStyle extends Style
 		styleWriter.write(" svg:stroke-color=\"#" + forecolor + "\"");
 		styleWriter.write(" draw:stroke=\"" + style + "\"");//FIXMENOW dashed borders do not work; only dashed lines and ellipses seem to work
 		styleWriter.write(" draw:stroke-dash=\"Dashed\"");
-		styleWriter.write(" svg:stroke-width=\"" + LengthUtil.inchFloor4Dec(width) + "in\"");
+		styleWriter.write(" svg:stroke-width=\"" + LengthUtil.inchFloor4Dec(width, reportDpi) + "in\"");
 		styleWriter.write("/>\n");
 		styleWriter.write("</style:style>\n");
 	}

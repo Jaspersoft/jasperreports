@@ -55,6 +55,7 @@ public class StyleCache
 	private final WriterHelper styleWriter;
 	private Set<String> fontFaces = new HashSet<>();
 	private final String exporterKey;
+	private final int reportDpi;
 
 	/**
 	 *
@@ -83,12 +84,14 @@ public class StyleCache
 	public StyleCache(
 		JasperReportsContext jasperReportsContext, 
 		WriterHelper styleWriter, 
-		String exporterKey
+		String exporterKey,
+		int reportDpi
 		)
 	{
 		this.fontUtil = FontUtil.getInstance(jasperReportsContext);
 		this.styleWriter = styleWriter;
 		this.exporterKey = exporterKey;
+		this.reportDpi = reportDpi;
 	}
 
 
@@ -106,7 +109,7 @@ public class StyleCache
 	 */
 	public String getTableStyle(int width, int pageFormatIndex, boolean isFrame, boolean isPageBreak, Color tabColor) throws IOException 
 	{
-		TableStyle tableStyle  = new TableStyle(styleWriter, width, pageFormatIndex, isFrame, isPageBreak, tabColor);
+		TableStyle tableStyle  = new TableStyle(styleWriter, width, pageFormatIndex, isFrame, isPageBreak, tabColor, reportDpi);
 		
 		String tableStyleId = tableStyle.getId();
 		String tableStyleName = tableStyles.get(tableStyleId);
@@ -128,7 +131,7 @@ public class StyleCache
 	 */
 	public String getRowStyle(int rowHeight) throws IOException 
 	{
-		RowStyle rowStyle  = new RowStyle(styleWriter, rowHeight);
+		RowStyle rowStyle  = new RowStyle(styleWriter, rowHeight, reportDpi);
 		
 		String rowStyleId = rowStyle.getId();
 		String rowStyleName = rowStyles.get(rowStyleId);
@@ -150,7 +153,7 @@ public class StyleCache
 	 */
 	public String getColumnStyle(int columnWidth) throws IOException 
 	{
-		ColumnStyle columnStyle  = new ColumnStyle(styleWriter, columnWidth);
+		ColumnStyle columnStyle  = new ColumnStyle(styleWriter, columnWidth, reportDpi);
 		
 		String columnStyleId = columnStyle.getId();
 		String columnStyleName = columnStyles.get(columnStyleId);
@@ -172,7 +175,7 @@ public class StyleCache
 	 */
 	public String getFrameStyle(JRPrintText text) throws IOException //FIXMEODT is this used?
 	{
-		FrameStyle frameStyle  = new FrameStyle(styleWriter, text);
+		FrameStyle frameStyle  = new FrameStyle(styleWriter, text, reportDpi);
 		frameStyle.setBox(text.getLineBox());
 		
 		String frameStyleId = frameStyle.getId();
@@ -195,7 +198,7 @@ public class StyleCache
 	 */
 	public String getFrameStyle(JRPrintElement element) throws IOException //FIXMEODT is this used?
 	{
-		FrameStyle frameStyle  = new FrameStyle(styleWriter, element);
+		FrameStyle frameStyle  = new FrameStyle(styleWriter, element, reportDpi);
 		
 		String frameStyleId = frameStyle.getId();
 		String frameStyleName = frameStyles.get(frameStyleId);
@@ -238,7 +241,8 @@ public class StyleCache
 				cropTop, 
 				cropLeft,
 				cropBottom,
-				cropRight);
+				cropRight,
+				reportDpi);
 		
 		String graphicStyleId = graphicStyle.getId();
 		String graphicStyleName = cellStyles.get(graphicStyleId);
@@ -268,7 +272,7 @@ public class StyleCache
 	 */
 	public String getCellStyle(JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText)
 	{
-		CellStyle cellStyle  = new CellStyle(styleWriter, gridCell, shrinkToFit, wrapText);
+		CellStyle cellStyle  = new CellStyle(styleWriter, gridCell, shrinkToFit, wrapText, reportDpi);
 		
 //		JRPrintElement element = gridCell.getElement();
 //
@@ -296,7 +300,7 @@ public class StyleCache
 	 */
 	public String getParagraphStyle(JRPrintText text, boolean isIgnoreTextFormatting)
 	{
-		ParagraphStyle paragraphStyle  = new ParagraphStyle(styleWriter, text, isIgnoreTextFormatting);
+		ParagraphStyle paragraphStyle  = new ParagraphStyle(styleWriter, text, isIgnoreTextFormatting, reportDpi);
 		
 		String paragraphStyleId = paragraphStyle.getId();
 		String paragraphStyleName = paragraphStyles.get(paragraphStyleId);

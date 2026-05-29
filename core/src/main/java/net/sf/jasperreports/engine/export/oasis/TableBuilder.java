@@ -85,6 +85,7 @@ public class TableBuilder
 	private Map<Integer, String> columnStyles;
 	private Color tabColor;
 	private boolean rowTagOpen;
+	protected final int reportDpi;
 	
 
 	protected TableBuilder(
@@ -113,6 +114,7 @@ public class TableBuilder
 		this.rowStyles = rowStyles == null ? new HashMap<>() : rowStyles;
 		this.columnStyles = columnStyles == null ? new HashMap<>() : columnStyles;
 		this.tabColor = tabColor;
+		this.reportDpi = jasperPrint.getDpi();
 	}
 	
 	protected TableBuilder(
@@ -159,6 +161,7 @@ public class TableBuilder
 		this.rowStyles = rowStyles == null ? new HashMap<>() : rowStyles;
 		this.columnStyles = columnStyles == null ? new HashMap<>() : columnStyles;
 		this.tabColor = tabColor;
+		this.reportDpi = jasperPrint.getDpi();
 	}
 
 
@@ -338,10 +341,10 @@ public class TableBuilder
 		bodyWriter.write(
 				"<draw:line text:anchor-type=\"paragraph\" "
 				+ "draw:style-name=\"" + styleCache.getGraphicStyle(line) + "\" "
-				+ "svg:x1=\"" + LengthUtil.inchFloor4Dec(x1) + "in\" "
-				+ "svg:y1=\"" + LengthUtil.inchFloor4Dec(y1) + "in\" "
-				+ "svg:x2=\"" + LengthUtil.inchFloor4Dec(x2) + "in\" "
-				+ "svg:y2=\"" + LengthUtil.inchFloor4Dec(y2) + "in\">"
+				+ "svg:x1=\"" + LengthUtil.inchFloor4Dec(x1, reportDpi) + "in\" "
+				+ "svg:y1=\"" + LengthUtil.inchFloor4Dec(y1, reportDpi) + "in\" "
+				+ "svg:x2=\"" + LengthUtil.inchFloor4Dec(x2, reportDpi) + "in\" "
+				+ "svg:y2=\"" + LengthUtil.inchFloor4Dec(y2, reportDpi) + "in\">"
 				//+ "</draw:line>"
 				+ "<text:p/></draw:line>"
 				+ "</text:p>"
@@ -361,8 +364,8 @@ public class TableBuilder
 		bodyWriter.write(
 			"<draw:ellipse text:anchor-type=\"paragraph\" "
 			+ "draw:style-name=\"" + styleCache.getGraphicStyle(ellipse) + "\" "
-			+ "svg:width=\"" + LengthUtil.inchFloor4Dec(ellipse.getWidth()) + "in\" "
-			+ "svg:height=\"" + LengthUtil.inchFloor4Dec(ellipse.getHeight()) + "in\" "
+			+ "svg:width=\"" + LengthUtil.inchFloor4Dec(ellipse.getWidth(), reportDpi) + "in\" "
+			+ "svg:height=\"" + LengthUtil.inchFloor4Dec(ellipse.getHeight(), reportDpi) + "in\" "
 			+ "svg:x=\"0in\" "
 			+ "svg:y=\"0in\">"
 			+ "<text:p/></draw:ellipse></text:p>"

@@ -52,16 +52,17 @@ public class PdfGlyphGraphics2D extends PdfGraphics2D
 	private ClassicPdfProducer pdfProducer;
 	private Locale locale;
 
-	public PdfGlyphGraphics2D(PdfContentByte pdfContentByte, JRPdfExporter pdfExporter, 
+	public PdfGlyphGraphics2D(PdfContentByte pdfContentByte, JRPdfExporter pdfExporter,
 			ClassicPdfProducer pdfProducer, Locale locale)
 	{
-		super(pdfContentByte, 
-				pdfExporter.getCurrentPageFormat().getPageWidth(), pdfExporter.getCurrentPageFormat().getPageHeight(), 
+		super(pdfContentByte,
+				pdfExporter.toPoints((float) pdfExporter.getCurrentPageFormat().getPageWidth()),
+				pdfExporter.toPoints((float) pdfExporter.getCurrentPageFormat().getPageHeight()),
 				null, true, false, 0);
 		this.initialized = true;
 		this.pdfContentByte = pdfContentByte;
 		this.pdfExporter = pdfExporter;
-		this.pdfProducer = pdfProducer;		
+		this.pdfProducer = pdfProducer;
 		this.locale = locale;
 	}
 	
@@ -96,8 +97,8 @@ public class PdfGlyphGraphics2D extends PdfGraphics2D
         float[] originalCoords = new float[]{x, y};
         float[] transformedCoors = new float[2];
         getTransform().transform(originalCoords, 0, transformedCoors, 0, 1);
-        text.setTextMatrix(1, 0, italic ? ITALIC_ANGLE : 0f, 1, 
-        		transformedCoors[0], pdfExporter.getCurrentPageFormat().getPageHeight() - transformedCoors[1]);
+        text.setTextMatrix(1, 0, italic ? ITALIC_ANGLE : 0f, 1,
+        		transformedCoors[0], pdfExporter.toPoints((float) pdfExporter.getCurrentPageFormat().getPageHeight()) - transformedCoors[1]);
         
         double scaleX = awtFont.getTransform().getScaleX();
         double scaleY = awtFont.getTransform().getScaleY();

@@ -229,7 +229,7 @@ public class SimpleTextLineWrapper implements TextLineWrapper
 			}
 		}
 		
-		fontKey = new FontKey(fontAttribute, size.floatValue(), style, styledText.getLocale());
+		fontKey = new FontKey(fontAttribute, size.floatValue() * context.getFontSizeScale(), style, styledText.getLocale());
 		createFontInfo(run.attributes);
 		
 		return true;

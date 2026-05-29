@@ -344,10 +344,10 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			sheet.protectSheet(password);
 		}
 		
-		sheet.setMargin(PageMargin.LEFT, LengthUtil.inch(configuration.getPrintPageLeftMargin()));
-		sheet.setMargin(PageMargin.RIGHT, LengthUtil.inch(configuration.getPrintPageRightMargin()));
-		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(configuration.getPrintPageTopMargin()));
-		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(configuration.getPrintPageBottomMargin()));
+		sheet.setMargin(PageMargin.LEFT, LengthUtil.inch(configuration.getPrintPageLeftMargin(), reportDpi));
+		sheet.setMargin(PageMargin.RIGHT, LengthUtil.inch(configuration.getPrintPageRightMargin(), reportDpi));
+		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(configuration.getPrintPageTopMargin(), reportDpi));
+		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(configuration.getPrintPageBottomMargin(), reportDpi));
 
 		if(configuration.getSheetHeaderLeft() != null)
 		{
@@ -379,8 +379,8 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			sheet.getFooter().setRight(configuration.getSheetFooterRight());
 		}
 		
-		printSetup.setHeaderMargin(LengthUtil.inch(configuration.getPrintHeaderMargin()));	
-		printSetup.setFooterMargin(LengthUtil.inch(configuration.getPrintFooterMargin()));	
+		printSetup.setHeaderMargin(LengthUtil.inch(configuration.getPrintHeaderMargin(), reportDpi));
+		printSetup.setFooterMargin(LengthUtil.inch(configuration.getPrintFooterMargin(), reportDpi));	
 		
 		RunDirectionEnum sheetDirection = configuration.getSheetDirection();
 		if(sheetDirection != null) {
@@ -558,11 +558,11 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					if (columnWidth != null && columnWidth < Integer.MAX_VALUE) {
 						if(columnWidthRatio != null && columnWidthRatio > 1f)
 						{
-							columnWidth =  Math.round(43 * columnWidth * columnWidthRatio);
+							columnWidth =  Math.round(43 * columnWidth * columnWidthRatio * 72 / reportDpi);
 						}
 						else
 						{
-							columnWidth =  43 * columnWidth;
+							columnWidth =  43 * columnWidth * 72 / reportDpi;
 						}
 						currentSheet.setColumnWidth(columnNamesMap.get(columnName), Math.min(columnWidth, 256*255));
 					} else {
@@ -599,7 +599,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	protected void setRowHeight(HSSFRow row) {
 		Integer rowHeight = (Integer)currentRow.get(CURRENT_ROW_HEIGHT);
 		if (row != null && rowHeight != null && rowHeight < Integer.MAX_VALUE) {
-			row.setHeightInPoints((Integer)currentRow.get(CURRENT_ROW_HEIGHT));
+			row.setHeightInPoints(rowHeight * 72f / reportDpi);
 		}
 	}
 	
@@ -2253,7 +2253,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	{
 		if(marginValue != null)
 		{
-			double margin = LengthUtil.inch(marginValue);
+			double margin = LengthUtil.inch(marginValue, reportDpi);
 			if(margin > sheet.getMargin(marginType))
 			{
 				sheet.setMargin(marginType, margin);
@@ -2266,7 +2266,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		if(marginValue != null)
 		{
 			HSSFPrintSetup printSetup = sheet.getPrintSetup();
-			double margin = LengthUtil.inch(marginValue);
+			double margin = LengthUtil.inch(marginValue, reportDpi);
 			if(isHeaderMargin)
 			{
 				if(margin > printSetup.getHeaderMargin())

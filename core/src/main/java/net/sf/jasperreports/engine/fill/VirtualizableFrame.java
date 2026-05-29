@@ -102,9 +102,14 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 	@Override
 	public void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY)
 	{
+		addOffsetElements(elements, offsetX, offsetY, 1d);
+	}
+
+	@Override
+	public void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY, double dpiScale)
+	{
 		if (elements == null || elements.isEmpty())
 		{
-			// nothing to do
 			return;
 		}
 		
@@ -117,7 +122,7 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 			deepSize += VirtualizableElementCounter.count(elements);
 		}
 		
-		OffsetElements offsetElements = new OffsetElements(elements, offsetX, offsetY);
+		OffsetElements offsetElements = new OffsetElements(elements, offsetX, offsetY, dpiScale);
 		this.elements.add(offsetElements);		
 	}
 	

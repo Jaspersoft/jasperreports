@@ -67,6 +67,7 @@ import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintElementId;
 import net.sf.jasperreports.engine.PrintElementVisitor;
@@ -198,6 +199,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	private boolean defaultIndentFirstLine;
 	private boolean defaultJustifyLastLine;
 
+	protected int reportDpi;
 	private float currentZoomRatio;
 	private String currentSizeUnit;
 
@@ -291,6 +293,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	protected void initReport()
 	{
 		super.initReport();
+
+		reportDpi = jasperPrint.getDpi();
 
 		HtmlReportConfiguration configuration = getCurrentItemConfiguration();
 		
@@ -2774,7 +2778,12 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 	protected float toZoom(float size)//FIXMEEXPORT cache this
 	{
-		return (currentZoomRatio * size);
+		float scaled = size;
+		if (reportDpi != JasperPrint.DEFAULT_REPORT_DPI)
+		{
+			scaled = (float)(size * 72.0 / reportDpi);
+		}
+		return currentZoomRatio * scaled;
 	}
 
 	private void addSearchAttributes(JRStyledText styledText, JRPrintText textElement) {
