@@ -2,6 +2,32 @@
 JasperReports Library Change Log
 =============================================
 
+JasperReports 7.0.7 (2026-0x-xx)
+---------------------------------------------
+
+- add deserialization class filter to fix the CVE-2026-6009 security vulnerability;
+
+- introduce URL whitelist filter for controlling repository resources access;
+
+- new keepTogether flag for crosstab row groups;
+
+- various fixes made to the PDF exporter to better support the PDF/UA (accessibility) 
+and PDF/A (archiving) standards;
+
+- new OSGi and Spring Boot samples;
+
+- support for versioning in the Jackson JRXML writer;
+
+- various dependencies upgrades including: Spring 6.2.18, Jackson 2.18.6, Bouncy Castle 1.84,
+Jetty 12.0.35 and Apache Log4J 2.25.4; 
+
+- minor bug fixes and improvements;
+
+
+
+
+
+
 JasperReports 7.0.6 (2026-03-13)
 ---------------------------------------------
 

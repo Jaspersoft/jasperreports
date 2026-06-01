@@ -5441,6 +5441,46 @@ access should be prevented for security reasons.
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.repository.url.filter.enabled -->
+
+  <configProperty name="net.sf.jasperreports.repository.url.filter.enabled">
+    <description>
+Flag property that enables URL filtering for the default repository service.
+
+<p>
+When set to <code>true</code>, only URLs matching patterns defined by
+<code>net.sf.jasperreports.repository.url.whitelist.{name}</code> properties are allowed.
+URLs that do not match any pattern are rejected and treated as not found.
+</p>
+
+<p>
+By default this property is set to <code>false</code>, which means all URLs are allowed.
+</p>
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.repository.url.whitelist.{name} -->
+
+  <configProperty name="net.sf.jasperreports.repository.url.whitelist.{name}">
+    <description>
+Properties that define allowed URL patterns as regular expressions.
+Each property value is a regular expression that is matched against the full URL string.
+
+<p>
+These properties are only used when URL filtering is enabled via
+<code>net.sf.jasperreports.repository.url.filter.enabled</code>.
+A URL is allowed if it matches at least one of the whitelist patterns.
+</p>
+
+<p>
+For example, <code>net.sf.jasperreports.repository.url.whitelist.reports=https://reports\.example\.com/.*</code>
+would allow HTTPS URLs to <code>reports.example.com</code>.
+</p>
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.extension.file.repository.resolve.absolute.path -->
 
   <configProperty name="net.sf.jasperreports.extension.file.repository.resolve.absolute.path">
