@@ -217,9 +217,18 @@ public final class CrosstabConverter extends FrameConverter
 		{
 			frame.copyBox(box);
 			
-			boolean copyLeft = left && box.getLeftPen().getLineWidth() <= 0f && box.getRightPen().getLineWidth() > 0f;
-			boolean copyRight = right && box.getRightPen().getLineWidth() <= 0f && box.getLeftPen().getLineWidth() > 0f;
-			boolean copyTop = top && box.getTopPen().getLineWidth() <= 0f && box.getBottomPen().getLineWidth() > 0f;
+			boolean copyLeft = 
+				left 
+				&& (box.getLeftPen().getLineWidth() == null || box.getLeftPen().getLineWidth() <= 0f) 
+				&& box.getRightPen().getLineWidth() != null && box.getRightPen().getLineWidth() > 0f;
+			boolean copyRight = 
+				right 
+				&& (box.getRightPen().getLineWidth() == null || box.getRightPen().getLineWidth() <= 0f) 
+				&& box.getLeftPen().getLineWidth() != null && box.getLeftPen().getLineWidth() > 0f;
+			boolean copyTop = 
+				top 
+				&& (box.getTopPen().getLineWidth() == null || box.getTopPen().getLineWidth() <= 0f) 
+				&& box.getBottomPen().getLineWidth() != null && box.getBottomPen().getLineWidth() > 0f;
 			
 			if (copyLeft)
 			{

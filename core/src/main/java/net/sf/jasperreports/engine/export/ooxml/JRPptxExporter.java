@@ -96,6 +96,7 @@ import net.sf.jasperreports.engine.util.FileBufferedWriter;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
 import net.sf.jasperreports.engine.util.JRColorUtil;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.engine.util.JRTypeSniffer;
@@ -808,9 +809,10 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	 */
 	protected void exportPen(JRPen pen)
 	{
-		if (pen != null && pen.getLineWidth() > 0)
+		float lineWidth = pen == null ? 0 : JRPenUtil.getLineWidthOrDefault(pen, reportDpi);
+		if (lineWidth > 0)
 		{
-			slideHelper.write("  <a:ln w=\"" + LengthUtil.emu(pen.getLineWidth(), reportDpi) + "\"");
+			slideHelper.write("  <a:ln w=\"" + LengthUtil.emu(lineWidth, reportDpi) + "\"");
 			if(LineStyleEnum.DOUBLE.equals(pen.getLineStyle()))
 			{
 				slideHelper.write(" cmpd=\"dbl\"");
@@ -2839,7 +2841,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	{
 		JRBasePen pen = null;
 		Float lineWidth = box.getPen().getLineWidth();
-		if(lineWidth == 0)
+		if(lineWidth == null || lineWidth == 0)
 		{
 			// PPTX does not support side borders
 			// in case side borders are defined for the report element, ensure that all 4 are declared and all of them come with the same settings
@@ -2847,7 +2849,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				((JRBasePen)box.getTopPen()).isIdentical(box.getLeftPen())
 				&& ((JRBasePen)box.getTopPen()).isIdentical(box.getBottomPen())
 				&& ((JRBasePen)box.getTopPen()).isIdentical(box.getRightPen())
-				&& box.getTopPen().getLineWidth() > 0
+				&& box.getTopPen().getLineWidth() != null && box.getTopPen().getLineWidth() > 0
 				)
 			{
 				pen = new JRBasePen(box);

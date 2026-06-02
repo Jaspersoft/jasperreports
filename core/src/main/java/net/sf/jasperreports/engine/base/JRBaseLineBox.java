@@ -34,7 +34,6 @@ import net.sf.jasperreports.engine.JRBoxContainer;
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRLineBox;
-import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.design.events.JRChangeEventsSupport;
@@ -156,12 +155,6 @@ public class JRBaseLineBox implements JRLineBox, Serializable, Cloneable, JRChan
 	public JRBoxContainer getBoxContainer()
 	{
 		return boxContainer;
-	}
-
-	@Override
-	public Float getDefaultLineWidth()
-	{
-		return JRPen.LINE_WIDTH_0;
 	}
 
 	@Override

@@ -31,7 +31,6 @@ import net.sf.jasperreports.engine.JRHyperlinkHelper;
 import net.sf.jasperreports.engine.JRHyperlinkParameter;
 import net.sf.jasperreports.engine.JRImage;
 import net.sf.jasperreports.engine.JRLineBox;
-import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRVisitor;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.type.HorizontalImageAlignEnum;
@@ -372,13 +371,6 @@ public class JRBaseImage extends JRBaseGraphicElement implements JRImage
 	public int getBookmarkLevel()
 	{
 		return bookmarkLevel;
-	}
-
-	
-	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_0;
 	}
 
 	

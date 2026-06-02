@@ -205,9 +205,18 @@ public class JRFillCellContents extends JRFillElementContainer implements JRCell
 			return this;
 		}
 		
-		boolean copyLeft = left && lineBox.getLeftPen().getLineWidth() <= 0f && lineBox.getRightPen().getLineWidth() > 0f;
-		boolean copyRight = right && lineBox.getRightPen().getLineWidth() <= 0f && lineBox.getLeftPen().getLineWidth() > 0f;
-		boolean copyTop = top && lineBox.getTopPen().getLineWidth() <= 0f && lineBox.getBottomPen().getLineWidth() > 0f;
+		boolean copyLeft = 
+			left 
+			&& (lineBox.getLeftPen().getLineWidth() == null || lineBox.getLeftPen().getLineWidth() <= 0f) 
+			&& lineBox.getRightPen().getLineWidth() != null && lineBox.getRightPen().getLineWidth() > 0f;
+		boolean copyRight = 
+			right 
+			&& (lineBox.getRightPen().getLineWidth() == null || lineBox.getRightPen().getLineWidth() <= 0f) 
+			&& lineBox.getLeftPen().getLineWidth() != null && lineBox.getLeftPen().getLineWidth() > 0f;
+		boolean copyTop = 
+			top 
+			&& (lineBox.getTopPen().getLineWidth() == null || lineBox.getTopPen().getLineWidth() <= 0f) 
+			&& lineBox.getBottomPen().getLineWidth() != null && lineBox.getBottomPen().getLineWidth() > 0f;
 		
 		if (!(copyLeft || copyRight || copyTop))
 		{

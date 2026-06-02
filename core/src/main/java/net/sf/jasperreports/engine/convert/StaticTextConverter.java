@@ -74,7 +74,7 @@ public final class StaticTextConverter extends TextElementConverter
 		
 		printText.setText(staticText.getText());
 		
-		JRTextMeasurerUtil.getInstance(reportConverter.getJasperReportsContext()).measureTextElement(printText);
+		JRTextMeasurerUtil.getInstance(reportConverter.getJasperReportsContext()).measureTextElement(printText, reportConverter.getReport().getDpi());
 		
 		return printText;
 	}

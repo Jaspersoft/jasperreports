@@ -381,13 +381,13 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		) throws JRException 
 	{
 		int topPadding = 
-			Math.max(image.getLineBox().getTopPadding(), Math.round(image.getLineBox().getTopPen().getLineWidth()));
+			Math.max(image.getLineBox().getTopPadding(), image.getLineBox().getTopPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getTopPen().getLineWidth()));
 		int leftPadding = 
-			Math.max(image.getLineBox().getLeftPadding(), Math.round(image.getLineBox().getLeftPen().getLineWidth()));
+			Math.max(image.getLineBox().getLeftPadding(), image.getLineBox().getLeftPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getLeftPen().getLineWidth()));
 		int bottomPadding = 
-			Math.max(image.getLineBox().getBottomPadding(), Math.round(image.getLineBox().getBottomPen().getLineWidth()));
+			Math.max(image.getLineBox().getBottomPadding(), image.getLineBox().getBottomPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getBottomPen().getLineWidth()));
 		int rightPadding = 
-			Math.max(image.getLineBox().getRightPadding(), Math.round(image.getLineBox().getRightPen().getLineWidth()));
+			Math.max(image.getLineBox().getRightPadding(), image.getLineBox().getRightPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getRightPen().getLineWidth()));
 
 		int availableImageWidth = image.getWidth() - leftPadding - rightPadding;
 		availableImageWidth = availableImageWidth < 0 ? 0 : availableImageWidth;

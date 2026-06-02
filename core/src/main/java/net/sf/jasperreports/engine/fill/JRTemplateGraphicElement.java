@@ -123,12 +123,6 @@ public abstract class JRTemplateGraphicElement extends JRTemplateElement impleme
 	}
 
 	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_1;
-	}
-
-	@Override
 	public Color getDefaultLineColor() 
 	{
 		return getForecolor();

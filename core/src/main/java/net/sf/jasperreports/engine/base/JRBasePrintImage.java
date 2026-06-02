@@ -28,7 +28,6 @@ import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRHyperlinkHelper;
 import net.sf.jasperreports.engine.JRLineBox;
-import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRPrintHyperlinkParameter;
 import net.sf.jasperreports.engine.JRPrintHyperlinkParameters;
 import net.sf.jasperreports.engine.JRPrintImage;
@@ -218,12 +217,6 @@ public class JRBasePrintImage extends JRBasePrintGraphicElement implements JRPri
 	public void copyBox(JRLineBox lineBox)
 	{
 		this.lineBox = lineBox.clone(this);
-	}
-
-	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_0;
 	}
 
 	@Override

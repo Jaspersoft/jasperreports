@@ -87,12 +87,6 @@ public class JRTemplatePrintGraphicElement extends JRTemplatePrintElement implem
 	}
 	
 	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return ((JRTemplateGraphicElement)template).getDefaultLineWidth();
-	}
-
-	@Override
 	public Color getDefaultLineColor() 
 	{
 		return ((JRTemplateGraphicElement)template).getDefaultLineColor();

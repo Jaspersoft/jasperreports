@@ -112,6 +112,7 @@ import net.sf.jasperreports.engine.util.ExifOrientationEnum;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.JRImageLoader;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRSingletonCache;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -1313,7 +1314,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		int lcOffsetX = getOffsetX();
 		int lcOffsetY = getOffsetY();
 
-		float lineWidth = toPoints(line.getLinePen().getLineWidth());
+		float lineWidth = toPoints(JRPenUtil.getLineWidthOrDefault(line.getLinePen(), reportDpi));
 		if (lineWidth > 0f)
 		{
 			tagHelper.beginArtifact();
@@ -1470,7 +1471,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfContent.setFillColor(rectangle.getBackcolor());
 		preparePen(rectangle.getLinePen(), LineCapStyle.PROJECTING_SQUARE);
 
-		float lineWidth = toPoints(rectangle.getLinePen().getLineWidth());
+		float lineWidth = toPoints(JRPenUtil.getLineWidthOrDefault(rectangle.getLinePen(), reportDpi));
 		int lcOffsetX = getOffsetX();
 		int lcOffsetY = getOffsetY();
 		
@@ -1535,7 +1536,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfContent.setFillColor(ellipse.getBackcolor());
 		preparePen(ellipse.getLinePen(), LineCapStyle.PROJECTING_SQUARE);
 
-		float lineWidth = toPoints(ellipse.getLinePen().getLineWidth());
+		float lineWidth = toPoints(JRPenUtil.getLineWidthOrDefault(ellipse.getLinePen(), reportDpi));
 		int lcOffsetX = getOffsetX();
 		int lcOffsetY = getOffsetY();
 		
@@ -1705,13 +1706,13 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 		tagHelper.beginArtifact();
 		if (
-			printImage.getLineBox().getTopPen().getLineWidth() <= 0f &&
-			printImage.getLineBox().getLeftPen().getLineWidth() <= 0f &&
-			printImage.getLineBox().getBottomPen().getLineWidth() <= 0f &&
-			printImage.getLineBox().getRightPen().getLineWidth() <= 0f
+			(printImage.getLineBox().getTopPen().getLineWidth() == null || printImage.getLineBox().getTopPen().getLineWidth() <= 0f) &&
+			(printImage.getLineBox().getLeftPen().getLineWidth() == null || printImage.getLineBox().getLeftPen().getLineWidth() <= 0f) &&
+			(printImage.getLineBox().getBottomPen().getLineWidth() == null || printImage.getLineBox().getBottomPen().getLineWidth() <= 0f) &&
+			(printImage.getLineBox().getRightPen().getLineWidth() == null || printImage.getLineBox().getRightPen().getLineWidth() <= 0f)
 			)
 		{
-			if (printImage.getLinePen().getLineWidth() > 0f)
+			if (printImage.getLinePen().getLineWidth() != null && printImage.getLinePen().getLineWidth() > 0f)
 			{
 				exportPen(printImage.getLinePen(), printImage);
 			}
@@ -2770,7 +2771,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen pen = getFieldPen(text);
 		if (pen != null)
 		{
-			float borderWidth = Math.round(toPoints(pen.getLineWidth()));
+			float borderWidth = pen.getLineWidth() == null ? 0 : Math.round(toPoints(pen.getLineWidth()));
 			if (borderWidth > 0)
 			{
 				pdfTextField.setBorderColor(pen.getLineColor());
@@ -2867,7 +2868,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen pen = getFieldPen(element);
 		if (pen != null)
 		{
-			float borderWidth = Math.round(toPoints(pen.getLineWidth()));
+			float borderWidth = pen.getLineWidth() == null ? 0 : Math.round(toPoints(pen.getLineWidth()));
 			if (borderWidth > 0)
 			{
 				checkField.setBorderColor(pen.getLineColor());
@@ -2931,7 +2932,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen pen = getFieldPen(element);
 		if (pen != null)
 		{
-			float borderWidth = Math.round(toPoints(pen.getLineWidth()));
+			float borderWidth = pen.getLineWidth() == null ? 0 : Math.round(toPoints(pen.getLineWidth()));
 			if (borderWidth > 0)
 			{
 				radioField.setBorderColor(pen.getLineColor());
@@ -2977,7 +2978,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		else
 		{
 			Float lineWidth = box.getPen().getLineWidth();
-			if (lineWidth == 0)
+			if (lineWidth == null || lineWidth == 0)
 			{
 				// PDF fields do not support side borders
 				// in case side borders are defined for the report element, ensure that all 4 are declared and all of them come with the same settings
@@ -2985,7 +2986,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					((JRBasePen)box.getTopPen()).isIdentical(box.getLeftPen())
 					&& ((JRBasePen)box.getTopPen()).isIdentical(box.getBottomPen())
 					&& ((JRBasePen)box.getTopPen()).isIdentical(box.getRightPen())
-					&& box.getTopPen().getLineWidth() > 0
+					&& box.getTopPen().getLineWidth() != null && box.getTopPen().getLineWidth() > 0
 					)
 				{
 					pen = new JRBasePen(box);
@@ -3054,10 +3055,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen rightPen,
 		JRPrintElement element)
 	{
-		if (topPen.getLineWidth() > 0f)
+		if (topPen.getLineWidth() != null && topPen.getLineWidth() > 0f)
 		{
-			float leftOffset = toPoints(leftPen.getLineWidth()) / 2;
-			float rightOffset = toPoints(rightPen.getLineWidth()) / 2;
+			float leftOffset = leftPen.getLineWidth() == null ? 0 : toPoints(leftPen.getLineWidth()) / 2;
+			float rightOffset = rightPen.getLineWidth() == null ? 0 : toPoints(rightPen.getLineWidth()) / 2;
 			int lcOffsetX = getOffsetX();
 			int lcOffsetY = getOffsetY();
 
@@ -3101,10 +3102,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	protected void exportLeftPen(JRPen topPen, JRPen leftPen, JRPen bottomPen, JRPrintElement element)
 	{
-		if (leftPen.getLineWidth() > 0f)
+		if (leftPen.getLineWidth() != null && leftPen.getLineWidth() > 0f)
 		{
-			float topOffset = toPoints(topPen.getLineWidth()) / 2;
-			float bottomOffset = toPoints(bottomPen.getLineWidth()) / 2;
+			float topOffset = topPen.getLineWidth() == null ? 0 : toPoints(topPen.getLineWidth()) / 2;
+			float bottomOffset = bottomPen.getLineWidth() == null ? 0 : toPoints(bottomPen.getLineWidth()) / 2;
 			int lcOffsetX = getOffsetX();
 			int lcOffsetY = getOffsetY();
 
@@ -3148,10 +3149,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	protected void exportBottomPen(JRPen leftPen, JRPen bottomPen, JRPen rightPen, JRPrintElement element)
 	{
-		if (bottomPen.getLineWidth() > 0f)
+		if (bottomPen.getLineWidth() != null && bottomPen.getLineWidth() > 0f)
 		{
-			float leftOffset = toPoints(leftPen.getLineWidth()) / 2;
-			float rightOffset = toPoints(rightPen.getLineWidth()) / 2;
+			float leftOffset = leftPen.getLineWidth() == null ? 0 : toPoints(leftPen.getLineWidth()) / 2;
+			float rightOffset = rightPen.getLineWidth() == null ? 0 : toPoints(rightPen.getLineWidth()) / 2;
 			int lcOffsetX = getOffsetX();
 			int lcOffsetY = getOffsetY();
 
@@ -3195,10 +3196,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	protected void exportRightPen(JRPen topPen, JRPen bottomPen, JRPen rightPen, JRPrintElement element)
 	{
-		if (rightPen.getLineWidth() > 0f)
+		if (rightPen.getLineWidth() != null && rightPen.getLineWidth() > 0f)
 		{
-			float topOffset = toPoints(topPen.getLineWidth()) / 2;
-			float bottomOffset = toPoints(bottomPen.getLineWidth()) / 2;
+			float topOffset = topPen.getLineWidth() == null ? 0 : toPoints(topPen.getLineWidth()) / 2;
+			float bottomOffset = bottomPen.getLineWidth() == null ? 0 : toPoints(bottomPen.getLineWidth()) / 2;
 			int lcOffsetX = getOffsetX();
 			int lcOffsetY = getOffsetY();
 
@@ -3242,12 +3243,13 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	private void preparePen(JRPen pen, LineCapStyle lineCap)
 	{
-		float lineWidth = toPoints(pen.getLineWidth());
-
-		if (lineWidth <= 0)
+		Float lineWidth = pen.getLineWidth();
+		if (lineWidth == null || lineWidth <= 0)
 		{
 			return;
 		}
+
+		lineWidth = toPoints(lineWidth);
 		
 		PdfContent pdfContent = pdfProducer.getPdfContent();
 		pdfContent.setLineWidth(lineWidth);

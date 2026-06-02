@@ -82,7 +82,7 @@ public final class TextFieldConverter extends TextElementConverter
 		
 		printText.setText(JRExpressionUtil.getExpressionText(textField.getExpression()));
 		
-		JRTextMeasurerUtil.getInstance(reportConverter.getJasperReportsContext()).measureTextElement(printText);
+		JRTextMeasurerUtil.getInstance(reportConverter.getJasperReportsContext()).measureTextElement(printText, reportConverter.getReport().getDpi());
 
 		return printText;
 	}

@@ -2223,10 +2223,10 @@ public class SimpleChartTheme implements ChartTheme
 		ChartSettings chartSettings = getChartSettings();
 		JRLineBox lineBox = getChart().getLineBox();
 		if (
-			lineBox.getLeftPen().getLineWidth() == 0
-			&& lineBox.getBottomPen().getLineWidth() == 0
-			&& lineBox.getRightPen().getLineWidth() == 0
-			&& lineBox.getTopPen().getLineWidth() == 0
+			(lineBox.getLeftPen().getLineWidth() == null || lineBox.getLeftPen().getLineWidth() == 0)
+			&& (lineBox.getBottomPen().getLineWidth() == null || lineBox.getBottomPen().getLineWidth() == 0)
+			&& (lineBox.getRightPen().getLineWidth() == null || lineBox.getRightPen().getLineWidth() == 0)
+			&& (lineBox.getTopPen().getLineWidth() == null || lineBox.getTopPen().getLineWidth() == 0)
 			)
 		{
 			boolean isVisible = chartSettings.getBorderVisible() == null 

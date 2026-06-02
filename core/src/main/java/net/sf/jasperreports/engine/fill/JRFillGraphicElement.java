@@ -110,12 +110,6 @@ public abstract class JRFillGraphicElement extends JRFillElement implements JRGr
 	
 
 	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return ((JRGraphicElement)this.parent).getDefaultLineWidth();
-	}
-
-	@Override
 	public Color getDefaultLineColor() 
 	{
 		return getForecolor();

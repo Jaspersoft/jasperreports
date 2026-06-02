@@ -1464,7 +1464,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	 */
 	protected static BorderStyle getBorderStyle(JRPen pen)
 	{
-		float lineWidth = pen.getLineWidth();
+		float lineWidth = pen.getLineWidth() == null ? 0 : pen.getLineWidth();
 
 		if (lineWidth > 0f)
 		{

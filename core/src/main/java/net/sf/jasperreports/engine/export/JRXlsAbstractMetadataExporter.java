@@ -369,7 +369,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 	@Override
 	protected int getImageBorderCorrection(JRPen pen)
 	{
-		float lineWidth = pen.getLineWidth();
+		float lineWidth = pen.getLineWidth() == null ? 0 : pen.getLineWidth();
 		
 		if (lineWidth > 0f)
 		{

@@ -150,8 +150,8 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 	{
 		Stroke topStroke = JRPenUtil.getStroke(topPen, BasicStroke.CAP_BUTT);
 		int width = element.getWidth();
-		float leftOffset = leftPen.getLineWidth() / 2;
-		float rightOffset = rightPen.getLineWidth() / 2;
+		float leftOffset = leftPen.getLineWidth() == null ? 0 : leftPen.getLineWidth() / 2;
+		float rightOffset = rightPen.getLineWidth() == null ? 0 : rightPen.getLineWidth() / 2;
 		
 		if (topStroke != null && width > 0)
 		{
@@ -162,7 +162,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 
 			if (topPen.getLineStyle() == LineStyleEnum.DOUBLE)
 			{
-				float topPenWidth = topPen.getLineWidth();
+				float topPenWidth = topPen.getLineWidth() == null ? 0 : topPen.getLineWidth();
 
 				grx.translate(
 					element.getX() + offsetX - leftOffset, 
@@ -240,8 +240,8 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 	{
 		Stroke leftStroke = JRPenUtil.getStroke(leftPen, BasicStroke.CAP_BUTT);
 		int height = element.getHeight();
-		float topOffset = topPen.getLineWidth() / 2;
-		float bottomOffset = bottomPen.getLineWidth() / 2;
+		float topOffset = topPen.getLineWidth() == null ? 0 : topPen.getLineWidth() / 2;
+		float bottomOffset = bottomPen.getLineWidth() == null ? 0 : bottomPen.getLineWidth() / 2;
 		
 		if (leftStroke != null && height > 0)
 		{
@@ -252,7 +252,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 
 			if (leftPen.getLineStyle() == LineStyleEnum.DOUBLE)
 			{
-				float leftPenWidth = leftPen.getLineWidth();
+				float leftPenWidth = leftPen.getLineWidth() == null ? 0 : leftPen.getLineWidth();
 
 				grx.translate(
 					element.getX() + offsetX - leftPenWidth / 3, 
@@ -331,8 +331,8 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 		Stroke bottomStroke = JRPenUtil.getStroke(bottomPen, BasicStroke.CAP_BUTT);
 		int width = element.getWidth();
 		int height = element.getHeight();
-		float leftOffset = leftPen.getLineWidth() / 2;
-		float rightOffset = rightPen.getLineWidth() / 2;
+		float leftOffset = leftPen.getLineWidth() == null ? 0 : leftPen.getLineWidth() / 2;
+		float rightOffset = rightPen.getLineWidth() == null ? 0 : rightPen.getLineWidth() / 2;
 		
 		if (bottomStroke != null && width > 0)
 		{
@@ -343,7 +343,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 
 			if (bottomPen.getLineStyle() == LineStyleEnum.DOUBLE)
 			{
-				float bottomPenWidth = bottomPen.getLineWidth();
+				float bottomPenWidth = bottomPen.getLineWidth() == null ? 0 : bottomPen.getLineWidth();
 
 				grx.translate(
 					element.getX() + offsetX - leftOffset, 
@@ -422,8 +422,8 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 		Stroke rightStroke = JRPenUtil.getStroke(rightPen, BasicStroke.CAP_BUTT);
 		int height = element.getHeight();
 		int width = element.getWidth();
-		float topOffset = topPen.getLineWidth() / 2;
-		float bottomOffset = bottomPen.getLineWidth() / 2;
+		float topOffset = topPen.getLineWidth() == null ? 0 : topPen.getLineWidth() / 2;
+		float bottomOffset = bottomPen.getLineWidth() == null ? 0 : bottomPen.getLineWidth() / 2;
 		
 		if (rightStroke != null && height > 0)
 		{
@@ -434,7 +434,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 
 			if (rightPen.getLineStyle() == LineStyleEnum.DOUBLE)
 			{
-				float rightPenWidth = rightPen.getLineWidth();
+				float rightPenWidth = rightPen.getLineWidth() == null ? 0 : rightPen.getLineWidth();
 
 				grx.translate(
 					element.getX() + offsetX + width + rightPenWidth / 3, 

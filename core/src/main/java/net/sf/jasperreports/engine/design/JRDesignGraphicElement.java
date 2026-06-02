@@ -102,12 +102,6 @@ public abstract class JRDesignGraphicElement extends JRDesignElement implements 
 	}
 
 	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_1;
-	}
-
-	@Override
 	public Color getDefaultLineColor() 
 	{
 		return getForecolor();

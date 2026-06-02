@@ -105,12 +105,6 @@ public abstract class JRBaseGraphicElement extends JRBaseElement implements JRGr
 	}
 
 	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_1;
-	}
-
-	@Override
 	public Color getDefaultLineColor() 
 	{
 		return getForecolor();

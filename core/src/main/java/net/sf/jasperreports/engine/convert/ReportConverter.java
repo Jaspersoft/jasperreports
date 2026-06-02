@@ -172,6 +172,7 @@ public class ReportConverter
 		jasperPrint.setLeftMargin(report.getLeftMargin());
 		jasperPrint.setBottomMargin(report.getBottomMargin());
 		jasperPrint.setRightMargin(report.getRightMargin());
+		jasperPrint.setDpi(report.getDpi());
 		
 		JRPropertiesUtil.getInstance(jasperReportsContext).transferProperties(report, jasperPrint, JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX);
 
@@ -479,14 +480,15 @@ public class ReportConverter
 	 */
 	private void addHorizontalGridLine(int x, int y, int width)
 	{
+		float dpiScale = (float) report.getDpi() / JasperPrint.DEFAULT_REPORT_DPI;
 		JRPrintFrame printFrame = new JRBasePrintFrame(getDefaultStyleProvider());
 		printFrame.setX(x);
 		printFrame.setY(y);
 		printFrame.setWidth(width);
-		printFrame.setHeight(1);
+		printFrame.setHeight(Math.max(1, (int) dpiScale));
 		printFrame.getLineBox().getPen().setLineWidth((Float)0f);
 		printFrame.getLineBox().getPen().setLineStyle(LineStyleEnum.SOLID);
-		printFrame.getLineBox().getTopPen().setLineWidth((Float)0.1f);
+		printFrame.getLineBox().getTopPen().setLineWidth(0.1f * dpiScale);
 		printFrame.getLineBox().getTopPen().setLineStyle(LineStyleEnum.DASHED);
 		printFrame.getLineBox().getTopPen().setLineColor(GRID_LINE_COLOR);
 		pageElements.add(0, printFrame);
@@ -497,14 +499,15 @@ public class ReportConverter
 	 */
 	private void addVerticalGridLine(int x, int y, int height)
 	{
+		float dpiScale = (float) report.getDpi() / JasperPrint.DEFAULT_REPORT_DPI;
 		JRPrintFrame printFrame = new JRBasePrintFrame(getDefaultStyleProvider());
 		printFrame.setX(x);
 		printFrame.setY(y);
-		printFrame.setWidth(1);
+		printFrame.setWidth(Math.max(1, (int) dpiScale));
 		printFrame.setHeight(height);
 		printFrame.getLineBox().getPen().setLineWidth((Float)0f);
 		printFrame.getLineBox().getPen().setLineStyle(LineStyleEnum.SOLID);
-		printFrame.getLineBox().getLeftPen().setLineWidth((Float)0.1f);
+		printFrame.getLineBox().getLeftPen().setLineWidth(0.1f * dpiScale);
 		printFrame.getLineBox().getLeftPen().setLineStyle(LineStyleEnum.DASHED);
 		printFrame.getLineBox().getLeftPen().setLineColor(GRID_LINE_COLOR);
 		pageElements.add(0, printFrame);

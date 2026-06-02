@@ -348,7 +348,7 @@ public class StyleResolver
 	/**
 	 *
 	 */
-	public Float getLineWidth(JRPen pen, Float defaultLineWidth)
+	public Float getLineWidth(JRPen pen)
 	{
 		Float ownLineWidth = pen.getOwnLineWidth();
 		if (ownLineWidth != null)
@@ -358,45 +358,20 @@ public class StyleResolver
 		JRStyle baseStyle = getBaseStyle(pen);
 		if (baseStyle != null)
 		{
-			Float lineWidth = baseStyle.getLinePen().getLineWidth();
-			if (lineWidth != null)
-			{
-				return lineWidth;
-			}
+			return baseStyle.getLinePen().getLineWidth();
 		}
-		return defaultLineWidth;
+		return null;
 	}
 
-	/**
-	 *
-	 */
-	public Float getLineWidth(JRBoxPen boxPen, Float defaultLineWidth)
-	{
-		Float ownLineWidth = boxPen.getOwnLineWidth();
-		if (ownLineWidth != null)
-		{
-			return ownLineWidth;
-		}
-		Float penLineWidth = boxPen.getBox().getPen().getOwnLineWidth();
-		if (penLineWidth != null) 
-		{
-			return penLineWidth;
-		}
-		return getParentLineWidth(boxPen, defaultLineWidth);
-	}
 
-	public Float getParentLineWidth(JRBoxPen boxPen, Float defaultLineWidth)
+	public Float getParentLineWidth(JRBoxPen boxPen)
 	{
 		JRStyle baseStyle = getBaseStyle(boxPen);
 		if (baseStyle != null)
 		{
-			Float lineWidth = boxPen.getPen(baseStyle.getLineBox()).getLineWidth();
-			if (lineWidth != null)
-			{
-				return lineWidth;
-			}
+			return boxPen.getPen(baseStyle.getLineBox()).getLineWidth();
 		}
-		return defaultLineWidth;
+		return null;
 	}
 
 	/**

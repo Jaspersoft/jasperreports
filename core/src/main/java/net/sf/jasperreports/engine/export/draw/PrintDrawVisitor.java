@@ -98,9 +98,9 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 		)
 	{
 		this.jasperReportsContext = jasperReportsContext;
-		this.lineDrawer = new LineDrawer(jasperReportsContext);
-		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext);
-		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext);
+		this.lineDrawer = new LineDrawer(jasperReportsContext, reportDpi);
+		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext, reportDpi);
+		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext, reportDpi);
 		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache, reportDpi);
 
 		AwtTextRenderer textRenderer =
@@ -151,9 +151,9 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 		)
 	{
 		this.jasperReportsContext = exporterContext.getJasperReportsContext();
-		this.lineDrawer = new LineDrawer(jasperReportsContext);
-		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext);
-		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext);
+		this.lineDrawer = new LineDrawer(jasperReportsContext, reportDpi);
+		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext, reportDpi);
+		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext, reportDpi);
 		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache, reportDpi);
 
 		AwtTextRenderer textRenderer =

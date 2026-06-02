@@ -138,7 +138,8 @@ public abstract class BorderStyle extends Style
 	 */
 	private void appendBorder(JRPen pen, int side)
 	{
-		double width = pen.getLineWidth();
+		Float penWidth = pen.getLineWidth();
+		double width = penWidth == null ? 0 : penWidth;
 		String style = null;
 
 		if (width > 0f)

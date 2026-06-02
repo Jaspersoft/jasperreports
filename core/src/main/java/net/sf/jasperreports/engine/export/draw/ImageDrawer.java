@@ -130,13 +130,13 @@ public class ImageDrawer extends ElementDrawer<JRPrintImage>
 		}
 
 		if (
-			printImage.getLineBox().getTopPen().getLineWidth() <= 0f &&
-			printImage.getLineBox().getLeftPen().getLineWidth() <= 0f &&
-			printImage.getLineBox().getBottomPen().getLineWidth() <= 0f &&
-			printImage.getLineBox().getRightPen().getLineWidth() <= 0f
+			(printImage.getLineBox().getTopPen().getLineWidth() == null || printImage.getLineBox().getTopPen().getLineWidth() <= 0f) &&
+			(printImage.getLineBox().getLeftPen().getLineWidth() == null || printImage.getLineBox().getLeftPen().getLineWidth() <= 0f) &&
+			(printImage.getLineBox().getBottomPen().getLineWidth() == null || printImage.getLineBox().getBottomPen().getLineWidth() <= 0f) &&
+			(printImage.getLineBox().getRightPen().getLineWidth() == null || printImage.getLineBox().getRightPen().getLineWidth() <= 0f)
 			)
 		{
-			if (printImage.getLinePen().getLineWidth() != 0)
+			if (printImage.getLinePen().getLineWidth() != null && printImage.getLinePen().getLineWidth() != 0)
 			{
 				drawPen(
 					grx, 

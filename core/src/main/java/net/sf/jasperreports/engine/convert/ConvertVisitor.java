@@ -43,6 +43,7 @@ import net.sf.jasperreports.engine.JREllipse;
 import net.sf.jasperreports.engine.JRFrame;
 import net.sf.jasperreports.engine.JRGenericElement;
 import net.sf.jasperreports.engine.JRImage;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JRLine;
 import net.sf.jasperreports.engine.JRLineBox;
 import net.sf.jasperreports.engine.JRPrintElement;
@@ -218,26 +219,27 @@ public class ConvertVisitor implements JRVisitor
 			if (box == null)
 			{
 				JRPrintGraphicElement graphicElement = element instanceof JRPrintGraphicElement ? (JRPrintGraphicElement)element : null;
-				hasContour = (graphicElement == null) || graphicElement.getLinePen().getLineWidth() <= 0f; 
+				hasContour = (graphicElement == null) || graphicElement.getLinePen().getLineWidth() == null || graphicElement.getLinePen().getLineWidth() <= 0f;
 			}
 			else
 			{
-				hasContour = 
-					box.getTopPen().getLineWidth() <= 0f 
-					&& box.getLeftPen().getLineWidth() <= 0f 
-					&& box.getRightPen().getLineWidth() <= 0f 
-					&& box.getBottomPen().getLineWidth() <= 0f;
+				hasContour =
+					(box.getTopPen().getLineWidth() == null || box.getTopPen().getLineWidth() <= 0f)
+					&& (box.getLeftPen().getLineWidth() == null || box.getLeftPen().getLineWidth() <= 0f)
+					&& (box.getRightPen().getLineWidth() == null || box.getRightPen().getLineWidth() <= 0f)
+					&& (box.getBottomPen().getLineWidth() == null || box.getBottomPen().getLineWidth() <= 0f);
 			}
 			
 			if (hasContour)
 			{
+				float dpiScale = (float) reportConverter.getReport().getDpi() / JasperPrint.DEFAULT_REPORT_DPI;
 				JRBasePrintRectangle rectangle = new JRBasePrintRectangle(reportConverter.getDefaultStyleProvider());
 				rectangle.setUUID(element.getUUID());
 				rectangle.setX(element.getX());
 				rectangle.setY(element.getY());
 				rectangle.setWidth(element.getWidth());
 				rectangle.setHeight(element.getHeight());
-				rectangle.getLinePen().setLineWidth((Float)0.1f);
+				rectangle.getLinePen().setLineWidth(0.1f * dpiScale);
 				rectangle.getLinePen().setLineStyle(LineStyleEnum.DASHED);
 				rectangle.getLinePen().setLineColor(ReportConverter.GRID_LINE_COLOR);
 				rectangle.setMode(ModeEnum.TRANSPARENT);

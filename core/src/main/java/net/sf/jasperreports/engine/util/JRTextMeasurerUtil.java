@@ -37,6 +37,7 @@ import net.sf.jasperreports.engine.JRStyledTextAttributeSelector;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.fill.JRMeasuredText;
 import net.sf.jasperreports.engine.fill.JRTextMeasurer;
+import net.sf.jasperreports.engine.fill.TextMeasurer;
 import net.sf.jasperreports.engine.fonts.FontUtil;
 import net.sf.jasperreports.properties.PropertyConstants;
 
@@ -186,11 +187,15 @@ public final class JRTextMeasurerUtil
 	/**
 	 * 
 	 */
-	public void measureTextElement(JRPrintText printText)
+	public void measureTextElement(JRPrintText printText, int dpi)
 	{
 		String text = styledTextUtil.getTruncatedText(printText);
 		
 		JRTextMeasurer textMeasurer = createTextMeasurer(printText);//FIXME use element properties?
+		if (textMeasurer instanceof TextMeasurer)
+		{
+			((TextMeasurer) textMeasurer).setDpi(dpi);
+		}
 		
 		if (text == null)
 		{

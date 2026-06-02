@@ -741,7 +741,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				JRLineBox box = gridCell.getBox();
 				if (box != null)
 				{
-					Integer topPadding = box.getTopPadding() + Math.round(box.getTopPen().getLineWidth());
+					Integer topPadding = box.getTopPadding() + (box.getTopPen().getLineWidth() == null ? 0 : Math.round(box.getTopPen().getLineWidth()));
 					if (
 						topPadding != null 
 						&& maxTopPadding < topPadding
@@ -1138,7 +1138,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	public void exportImage(DocxTableHelper tableHelper, JRPrintImage image, JRExporterGridCell gridCell) throws JRException
 	{
 		int leftPadding = image.getLineBox().getLeftPadding();
-		int topPadding = image.getLineBox().getTopPadding() + Math.round(image.getLineBox().getTopPen().getLineWidth()); // top border eats into cell space
+		int topPadding = image.getLineBox().getTopPadding() + (image.getLineBox().getTopPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getTopPen().getLineWidth())); // top border eats into cell space
 		int rightPadding = image.getLineBox().getRightPadding();
 		int bottomPadding = image.getLineBox().getBottomPadding();
 

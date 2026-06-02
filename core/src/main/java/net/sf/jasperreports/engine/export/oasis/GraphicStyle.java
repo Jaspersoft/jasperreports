@@ -28,6 +28,7 @@ import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.type.ModeEnum;
 import net.sf.jasperreports.engine.util.JRColorUtil;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 
 
 /**
@@ -90,7 +91,7 @@ public class GraphicStyle extends Style
 
 		forecolor = JRColorUtil.getColorHexa(element.getLinePen().getLineColor());
 
-		width = element.getLinePen().getLineWidth();
+		width = JRPenUtil.getLineWidthOrDefault(element.getLinePen(), reportDpi);
 		if (width <= 0)
 		{
 			style = "none";

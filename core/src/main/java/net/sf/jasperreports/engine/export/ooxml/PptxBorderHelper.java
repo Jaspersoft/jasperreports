@@ -71,7 +71,7 @@ public class PptxBorderHelper extends BaseHelper
 		{
 			pen = gridCell.getBox().getLeftPen();
 		}
-		if ((pen == null || pen.getLineWidth() == 0) && leftGridCell != null) // ideally, here we should test for null, but the grid cell box always resolves to non null value through style resolver 
+		if ((pen == null || pen.getLineWidth() == null || pen.getLineWidth() == 0) && leftGridCell != null) // ideally, here we should test for null, but the grid cell box always resolves to non null value through style resolver
 		{
 			if (leftGridCell.getType() == JRExporterGridCell.TYPE_OCCUPIED_CELL)
 			{
@@ -83,7 +83,7 @@ public class PptxBorderHelper extends BaseHelper
 				pen = leftGridCell.getBox().getRightPen(); // reinforce border from adjacent cell as this is how pptx tables work; otherwise noFill border from table style would have priority
 			}
 		}
-		if (pen != null && pen.getLineWidth() > 0) // ideally, here we should test for null, but the grid cell box always resolves to non null value through style resolver
+		if (pen != null && pen.getLineWidth() != null && pen.getLineWidth() > 0) // ideally, here we should test for null, but the grid cell box always resolves to non null value through style resolver
 		{
 			exportBorder("lnL", pen);
 		}
@@ -93,7 +93,7 @@ public class PptxBorderHelper extends BaseHelper
 		{
 			pen = gridCell.getBox().getRightPen();
 		}
-		if ((pen == null || pen.getLineWidth() == 0) && rightGridCell != null) 
+		if ((pen == null || pen.getLineWidth() == null || pen.getLineWidth() == 0) && rightGridCell != null)
 		{
 			if (rightGridCell.getType() == JRExporterGridCell.TYPE_OCCUPIED_CELL)
 			{
@@ -105,7 +105,7 @@ public class PptxBorderHelper extends BaseHelper
 				pen = rightGridCell.getBox().getLeftPen();
 			}
 		}
-		if (pen != null && pen.getLineWidth() > 0)
+		if (pen != null && pen.getLineWidth() != null && pen.getLineWidth() > 0)
 		{
 			exportBorder("lnR", pen);
 		}
@@ -115,7 +115,7 @@ public class PptxBorderHelper extends BaseHelper
 		{
 			pen = gridCell.getBox().getTopPen();
 		}
-		if ((pen == null || pen.getLineWidth() == 0) && topGridCell != null) 
+		if ((pen == null || pen.getLineWidth() == null || pen.getLineWidth() == 0) && topGridCell != null)
 		{
 			if (topGridCell.getType() == JRExporterGridCell.TYPE_OCCUPIED_CELL)
 			{
@@ -127,7 +127,7 @@ public class PptxBorderHelper extends BaseHelper
 				pen = topGridCell.getBox().getBottomPen();
 			}
 		}
-		if (pen != null && pen.getLineWidth() > 0)
+		if (pen != null && pen.getLineWidth() != null && pen.getLineWidth() > 0)
 		{
 			exportBorder("lnT", pen);
 		}
@@ -137,7 +137,7 @@ public class PptxBorderHelper extends BaseHelper
 		{
 			pen = gridCell.getBox().getBottomPen();
 		}
-		if ((pen == null || pen.getLineWidth() == 0) && bottomGridCell != null) 
+		if ((pen == null || pen.getLineWidth() == null || pen.getLineWidth() == 0) && bottomGridCell != null)
 		{
 			if (bottomGridCell.getType() == JRExporterGridCell.TYPE_OCCUPIED_CELL)
 			{
@@ -149,7 +149,7 @@ public class PptxBorderHelper extends BaseHelper
 				pen = bottomGridCell.getBox().getTopPen();
 			}
 		}
-		if (pen != null && pen.getLineWidth() > 0)
+		if (pen != null && pen.getLineWidth() != null && pen.getLineWidth() > 0)
 		{
 			exportBorder("lnB", pen);
 		}

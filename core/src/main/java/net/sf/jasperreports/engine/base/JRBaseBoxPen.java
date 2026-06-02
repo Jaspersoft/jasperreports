@@ -81,7 +81,7 @@ public class JRBaseBoxPen extends JRBasePen implements JRBoxPen
 		{
 			return penLineWidth;
 		}
-		return getStyleResolver().getParentLineWidth(this, penContainer.getDefaultLineWidth());
+		return getStyleResolver().getParentLineWidth(this);
 	}
 
 	@Override
