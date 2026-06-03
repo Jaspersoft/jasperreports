@@ -2,7 +2,7 @@
 JasperReports Library Change Log
 =============================================
 
-JasperReports 7.0.7 (2026-0x-xx)
+JasperReports 7.0.7 (2026-05-30)
 ---------------------------------------------
 
 - add deserialization class filter to fix the CVE-2026-6009 security vulnerability;
