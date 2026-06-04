@@ -30,6 +30,15 @@ import com.lowagie.text.pdf.PdfWriter;
  * Annotation /StructParent keys are assigned at build time to avoid
  * collisions with page /StructParents values (which are assigned by
  * OpenPDF using page indices 0, 1, 2, ...).
+ *
+ * <p>
+ * This class relies on OpenPDF members (the {@link PdfStructureTreeRoot} constructor and
+ * {@code buildTree()}, and {@link PdfWriter#setStructureTreeRoot(PdfStructureTreeRoot)}) that are
+ * only accessible in the Jaspersoft build of OpenPDF. It must therefore only be loaded and used
+ * when {@link ClassicPdfUtils#isCustomStructureTreeRootSupported()} returns {@code true}; with stock
+ * OpenPDF the exporter falls back to the default structure tree root and skips the annotation
+ * /StructParent tagging.
+ * </p>
  */
 public class ClassicPdfStructureTreeRoot extends PdfStructureTreeRoot
 {
