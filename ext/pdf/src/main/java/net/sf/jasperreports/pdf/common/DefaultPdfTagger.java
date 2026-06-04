@@ -127,12 +127,6 @@ public class DefaultPdfTagger implements PdfTagger
 	}
 
 	@Override
-	public boolean isFirstTextParagraph()
-	{
-		return false;
-	}
-
-	@Override
 	public boolean isFirstLinkParagraph()
 	{
 		return false;

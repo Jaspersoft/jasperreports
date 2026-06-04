@@ -299,8 +299,6 @@ public interface PdfTagger
 
 	void endText();
 
-	boolean isFirstTextParagraph();
-
 	boolean isFirstLinkParagraph();
 
 	PdfStructureEntry getCurrentLinkTag();

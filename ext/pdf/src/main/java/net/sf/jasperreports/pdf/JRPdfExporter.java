@@ -613,6 +613,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected PdfImage pxImage;
 
 	private BookmarkStack bookmarkStack;
+	private boolean firstParagraph;
 
 	private int crtPageOffsetX;
 	private int crtPageOffsetY;
@@ -1282,6 +1283,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 				if (filter == null || filter.isToExport(element))
 				{
+					firstParagraph = true;
+
 					pdfTagger.startElement(element);
 
 					String strFieldType = element.getPropertiesMap().getProperty(PDF_FIELD_TYPE);
@@ -2374,7 +2377,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			Map<Attribute,Object> attributes = iterator.getAttributes();
 			PdfTextChunk chunk = getChunk(attributes, text.substring(iterator.getIndex(), runLimit), locale);
 
-			if (firstChunk && pdfTagger.isFirstTextParagraph())
+			if (firstChunk && firstParagraph)
 			{
 				// only set anchor + bookmark for the first chunk in the text
 				setAnchor(chunk, textElement, textElement);
@@ -2406,6 +2409,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			iterator.setIndex(runLimit);
 			firstChunk = false;
 		}
+
+		firstParagraph = false;
 	}
 
 
