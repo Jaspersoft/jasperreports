@@ -581,9 +581,9 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				Biff8EncryptionKey.setCurrentUserPassword(encryptionPassword);
 			}
 			try {
-			    workbook.write(os);
+				workbook.write(os);
 			} finally {
-			    Biff8EncryptionKey.setCurrentUserPassword(null);
+				Biff8EncryptionKey.setCurrentUserPassword(null);
 			}
 			
 		} catch (IOException e) {
