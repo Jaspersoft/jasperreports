@@ -100,7 +100,7 @@ public class JRClassLoader extends ClassLoader
 	
 	private ProtectionDomain protectionDomain;
 	
-	private ClassLoaderFilter classLoaderFilter;
+	private ClassFilter classLoaderFilter;
 	
 	/**
 	 *
@@ -110,7 +110,7 @@ public class JRClassLoader extends ClassLoader
 		super();
 	}
 
-	protected JRClassLoader(ClassLoaderFilter classLoaderFilter)
+	protected JRClassLoader(ClassFilter classLoaderFilter)
 	{
 		super();
 		
@@ -125,7 +125,7 @@ public class JRClassLoader extends ClassLoader
 		super(parent);
 	}
 
-	protected JRClassLoader(ClassLoader parent, ClassLoaderFilter classLoaderFilter)
+	protected JRClassLoader(ClassLoader parent, ClassFilter classLoaderFilter)
 	{
 		super(parent);
 		
@@ -265,13 +265,13 @@ public class JRClassLoader extends ClassLoader
 		return loadClassFromBytes(null, className, bytecodes);
 	}
 	
-	public static Class<?> loadClassFromBytes(ClassLoaderFilter classLoaderFilter, 
+	public static Class<?> loadClassFromBytes(ClassFilter classLoaderFilter, 
 			String className, byte[] bytecodes)
 	{
 		return loadClassFromBytes(classLoaderFilter, className, CompiledClasses.forClass(className, bytecodes));
 	}
 	
-	public static Class<?> loadClassFromBytes(ClassLoaderFilter classLoaderFilter, 
+	public static Class<?> loadClassFromBytes(ClassFilter classLoaderFilter, 
 			String className, CompiledClasses compiledClasses)
 	{
 		Class<?> clazz = null;

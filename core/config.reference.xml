@@ -5417,6 +5417,46 @@ access should be prevented for security reasons.
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.repository.url.filter.enabled -->
+
+  <configProperty name="net.sf.jasperreports.repository.url.filter.enabled">
+    <description>
+Flag property that enables URL filtering for the default repository service.
+
+<p>
+When set to <code>true</code>, only URLs matching patterns defined by
+<code>net.sf.jasperreports.repository.url.whitelist.{name}</code> properties are allowed.
+URLs that do not match any pattern are rejected and treated as not found.
+</p>
+
+<p>
+By default this property is set to <code>false</code>, which means all URLs are allowed.
+</p>
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.repository.url.whitelist.{name} -->
+
+  <configProperty name="net.sf.jasperreports.repository.url.whitelist.{name}">
+    <description>
+Properties that define allowed URL patterns as regular expressions.
+Each property value is a regular expression that is matched against the full URL string.
+
+<p>
+These properties are only used when URL filtering is enabled via
+<code>net.sf.jasperreports.repository.url.filter.enabled</code>.
+A URL is allowed if it matches at least one of the whitelist patterns.
+</p>
+
+<p>
+For example, <code>net.sf.jasperreports.repository.url.whitelist.reports=https://reports\.example\.com/.*</code>
+would allow HTTPS URLs to <code>reports.example.com</code>.
+</p>
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.extension.file.repository.resolve.absolute.path -->
 
   <configProperty name="net.sf.jasperreports.extension.file.repository.resolve.absolute.path">
@@ -5945,6 +5985,37 @@ flag needs to be set in order for the whitelist to apply.
   </configProperty>
   
   
+  <!-- 	net.sf.jasperreports.value.deserialization.class.whitelist.{arbitrary_name} -->
+
+  <configProperty name="net.sf.jasperreports.value.deserialization.class.whitelist.{arbitrary_name}">
+    <description>
+Defines a list of classes that are allowed when deserializing values used in reports.
+<br/>
+The property value should be a comma separated list of class names.  Wildcards are supported in class names:
+<ul>
+ <li><code>*</code> stands for any class/package name or part of a class/package name, e.g.
+  <ul>
+   <li><code>com.example.*</code> means any class in the <code>com.example</code> package (but not in subpackages)</li>
+   <li><code>com.example.*Data</code> means any class in the <code>com.example</code> package that ends in <code>Data</code></li>
+  </ul>
+ </li>
+ <li><code>**</code> stands for any fully qualified class name or part of a fully qualified class name, e.g.
+  <ul>
+   <li><code>com.example.**</code> means any class in the <code>com.example</code> package or in a subpackage</li>
+   <li><code>com.example.**Data</code> means any class that ends in <code>Data</code> in the <code>com.example</code> package or in a subpackage</li>
+   <li><code>**</code> means any class</li>
+  </ul>
+ </li>
+</ul>
+<br/>
+The <a href="#net.sf.jasperreports.deserialization.class.filter.enabled">net.sf.jasperreports.deserialization.class.filter.enabled</a>
+flag needs to be set in order for the whitelist to apply.
+<br/>
+By default, no classes are whitelisted for value deserialization.
+    </description>
+  </configProperty>
+
+
   <!-- 	net.sf.jasperreports.deserialization.byte.count.limit -->
   
   <configProperty name="net.sf.jasperreports.deserialization.byte.count.limit">

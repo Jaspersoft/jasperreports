@@ -40,14 +40,14 @@ public class CompiledClassesLoader extends JRClassLoader
 	
 	private CompiledClasses compiledClasses;
 
-	protected CompiledClassesLoader(ClassLoaderFilter classLoaderFilter,
+	protected CompiledClassesLoader(ClassFilter classLoaderFilter,
 			CompiledClasses compiledClasses)
 	{
 		super(classLoaderFilter);
 		this.compiledClasses = compiledClasses;
 	}
 
-	protected CompiledClassesLoader(ClassLoader parent, ClassLoaderFilter classLoaderFilter,
+	protected CompiledClassesLoader(ClassLoader parent, ClassFilter classLoaderFilter,
 			CompiledClasses compiledClasses)
 	{
 		super(parent, classLoaderFilter);

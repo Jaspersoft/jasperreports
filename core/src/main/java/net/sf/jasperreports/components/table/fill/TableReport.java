@@ -1425,7 +1425,7 @@ public class TableReport implements JRReport
 			xOffset = subVisitor.xOffset;
 		}
 
-		setAccessibilitTags(bandInfo, false);
+		setAccessibilitTags(bandInfo, true);
 		
 		if (title.getHeight() == 0) //FIXMETABLE not sure we actually need this; maybe check the section is truly empty; do the same for the other sections as well
 		{

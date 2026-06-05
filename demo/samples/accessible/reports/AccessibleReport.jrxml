@@ -111,7 +111,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="7dac312f-4c73-41f3-bef6-0edcacc789a0" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1" bookmarkLevel="1">
+				<element kind="textField" uuid="7dac312f-4c73-41f3-bef6-0edcacc789a0" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" bookmarkLevel="1" style="Heading1">
 					<expression><![CDATA["Fruit"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h1"/>
 				</element>
@@ -122,7 +122,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="3b9e83ea-55d1-4224-bcb2-dcb612d76258" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2" bookmarkLevel="2">
+				<element kind="textField" uuid="3b9e83ea-55d1-4224-bcb2-dcb612d76258" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" bookmarkLevel="2" style="Heading2">
 					<expression><![CDATA["Apples"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
 				</element>
@@ -133,10 +133,10 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="c31fb47d-10ae-47cf-b1f5-5b2b6e45aa0c" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2" linkType="Reference" bookmarkLevel="2">
+				<element kind="textField" uuid="c31fb47d-10ae-47cf-b1f5-5b2b6e45aa0c" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" linkType="Reference" bookmarkLevel="2" style="Heading2">
 					<expression><![CDATA["Bananas"]]></expression>
-					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
 					<hyperlinkReferenceExpression><![CDATA["https://en.wikipedia.org/wiki/Banana"]]></hyperlinkReferenceExpression>
+					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
 				</element>
 			</band>
 			<band height="20">
@@ -146,7 +146,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="9ef7cebf-7244-41a0-af98-844412fd0333" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading1" bookmarkLevel="1">
+				<element kind="textField" uuid="9ef7cebf-7244-41a0-af98-844412fd0333" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" bookmarkLevel="1" style="Heading1">
 					<expression><![CDATA["Vegetables"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h1"/>
 					<property name="net.sf.jasperreports.export.pdf.tag.attribute.ActualText" value="We are now describing vegetables"/>
@@ -158,7 +158,7 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="3ecd40e1-fb0c-43b6-954a-6c55a576cf77" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Heading2" bookmarkLevel="2">
+				<element kind="textField" uuid="3ecd40e1-fb0c-43b6-954a-6c55a576cf77" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" bookmarkLevel="2" style="Heading2">
 					<expression><![CDATA["Cucumbers"]]></expression>
 					<property name="net.sf.jasperreports.export.accessibility.tag" value="h2"/>
 				</element>
@@ -193,7 +193,7 @@
 						<pen lineWidth="0.5"/>
 					</box>
 				</element>
-				<element kind="image" uuid="82785a38-76be-4973-bea6-1614dbdaeec8" x="300" y="0" width="200" height="30" linkType="Reference" linkTarget="Blank" hImageAlign="Center" vImageAlign="Middle" mode="Opaque" backcolor="#EEEEEE">
+				<element kind="image" uuid="82785a38-76be-4973-bea6-1614dbdaeec8" mode="Opaque" x="300" y="0" width="200" height="30" backcolor="#EEEEEE" linkType="Reference" linkTarget="Blank" hImageAlign="Center" vImageAlign="Middle">
 					<expression><![CDATA["jasperreports.svg"]]></expression>
 					<hyperlinkReferenceExpression><![CDATA["https://jasperreports.sourceforge.net/README.html"]]></hyperlinkReferenceExpression>
 					<hyperlinkTooltipExpression><![CDATA["JasperReports Library Documentation"]]></hyperlinkTooltipExpression>
@@ -243,6 +243,13 @@
 					<dataset>
 						<datasetRun uuid="5b7dd341-4cad-4742-8661-c7d2f6306610" subDataset="CrosstabDataset"/>
 					</dataset>
+					<titleCell height="40" contentsPosition="Stretch">
+						<cellContents>
+							<element kind="textField" uuid="f1d0d60a-5958-4e30-8014-5ffda39daf5c" x="0" y="0" width="250" height="40" fontSize="16.0" hTextAlign="Center" vTextAlign="Middle" style="Crosstab_Detail">
+								<expression><![CDATA["The Greatest Title Ever"]]></expression>
+							</element>
+						</cellContents>
+					</titleCell>
 					<headerCell>
 						<element kind="textField" uuid="be844fc8-8eb5-4039-a9ee-8d8aef21cc38" stretchType="ContainerHeight" x="0" y="0" width="70" height="10" textAdjust="StretchHeight" style="Crosstab_RowHeader">
 							<expression><![CDATA["Category"]]></expression>

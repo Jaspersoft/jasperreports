@@ -23,14 +23,32 @@
  */
 package net.sf.jasperreports.engine.util;
 
-import net.sf.jasperreports.engine.JRRuntimeException;
+import java.util.List;
+
+import net.sf.jasperreports.engine.JRPropertiesMap;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
+import net.sf.jasperreports.engine.JRPropertiesUtil.PropertySuffix;
+import net.sf.jasperreports.extensions.ExtensionsRegistry;
+import net.sf.jasperreports.extensions.ExtensionsRegistryFactory;
+import net.sf.jasperreports.extensions.SingletonExtensionRegistry;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public interface ClassLoaderFilter
+public class StandardValueClassWhitelistExtension implements ExtensionsRegistryFactory
 {
 
-	void checkClassVisibility(String className) throws JRRuntimeException;
-	
+	@Override
+	public ExtensionsRegistry createRegistry(String registryId, JRPropertiesMap properties)
+	{
+		StandardValueClassWhitelist whitelist = new StandardValueClassWhitelist();
+		List<PropertySuffix> whitelistProps = JRPropertiesUtil.getProperties(properties,
+				ValueClassFilter.PROPERTY_PREFIX_CLASS_WHITELIST);
+		for (PropertySuffix propertySuffix : whitelistProps)
+		{
+			whitelist.addWhitelist(propertySuffix.getValue());
+		}
+		return new SingletonExtensionRegistry<>(ValueClassWhitelist.class, whitelist);
+	}
+
 }

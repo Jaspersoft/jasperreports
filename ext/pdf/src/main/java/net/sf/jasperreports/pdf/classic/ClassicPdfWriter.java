@@ -143,6 +143,9 @@ public class ClassicPdfWriter implements PdfDocumentWriter
 	{
 		this.pdfaConformance = pdfaConformance;
 		
+		// there is an incompatibility regarding font handling, 
+		// specifically concerning the CIDSet entry for subsetted CIDFonts, 
+		// when attempting to comply with PDF/A-1a and PDF/UA-1 simultaneously.
 		if (PdfaConformanceEnum.PDFA_1A == pdfaConformance)
 		{
 			pdfWriter.setPDFXConformance(PdfWriter.PDFA1A);

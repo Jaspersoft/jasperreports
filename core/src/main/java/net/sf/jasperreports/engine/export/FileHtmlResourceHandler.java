@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
@@ -78,13 +79,20 @@ public class FileHtmlResourceHandler implements HtmlResourceHandler
 	public void handleResource(String id, byte[] data)
 	{
 		ensureParentFolder();
-		
+
+		File file = new File(parentFolder, id);
+		Path parentPath = parentFolder.toPath().normalize();
+		Path filePath = file.toPath().normalize();
+		if (!filePath.startsWith(parentPath))
+		{
+			throw new JRRuntimeException("Resource path " + id + " normalized to " + filePath
+					+ ", which falls outside resources directory " + parentPath);
+		}
+
 		try (
 			OutputStream os = 
 				new BufferedOutputStream(
-					new FileOutputStream(
-						new File(parentFolder, id)
-						)
+					new FileOutputStream(file)
 					)
 			)
 		{

@@ -23,12 +23,17 @@
  */
 package net.sf.jasperreports.compilers;
 
+import java.util.List;
+
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.AbstractClassFilter;
+import net.sf.jasperreports.engine.util.ClassWhitelist;
 import net.sf.jasperreports.engine.util.StandardClassWhitelist;
+import net.sf.jasperreports.functions.FunctionsBundle;
+import net.sf.jasperreports.functions.FunctionsUtil;
 import net.sf.jasperreports.properties.PropertyConstants;
 
 /**
@@ -75,9 +80,16 @@ public class ReportClassFilter extends AbstractClassFilter
 		return EXCEPTION_MESSAGE_KEY_CLASS_NOT_VISIBLE;
 	}
 
-	@Override
-	protected void addHardcodedWhitelist(StandardClassWhitelist whitelist)
+	public ReportClassFilter(JasperReportsContext jasperReportsContext)
 	{
+		super(jasperReportsContext);
+	}
+
+	@Override
+	protected void addExtraWhitelists(JasperReportsContext jasperReportsContext,
+			List<ClassWhitelist> whitelists)
+	{
+		StandardClassWhitelist whitelist = new StandardClassWhitelist();
 		whitelist.addClass("java.lang.Boolean");
 		whitelist.addClass("java.lang.String");
 		whitelist.addClass("java.lang.StringBuffer");
@@ -90,11 +102,20 @@ public class ReportClassFilter extends AbstractClassFilter
 		whitelist.addClass("java.lang.Float");
 		whitelist.addClass("java.lang.Double");
 		whitelist.addClass("java.lang.Math");
+		whitelists.add(whitelist);
+
+		StandardClassWhitelist functionsWhitelist = new StandardClassWhitelist();
+		FunctionsUtil functionsUtil = FunctionsUtil.getInstance(jasperReportsContext);
+		List<FunctionsBundle> functionBundles = functionsUtil.getAllFunctionBundles();
+		for (FunctionsBundle functionsBundle : functionBundles)
+		{
+			List<Class<?>> functionClasses = functionsBundle.getFunctionClasses();
+			for (Class<?> functionClass : functionClasses)
+			{
+				functionsWhitelist.addClass(functionClass.getName());
+			}
+		}
+		whitelists.add(functionsWhitelist);
 	}
-	
-	public ReportClassFilter(JasperReportsContext jasperReportsContext)
-	{
-		super(jasperReportsContext);
-	}
-	
+
 }

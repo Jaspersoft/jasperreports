@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.engine.util;
 
+import java.util.List;
+
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
@@ -73,9 +75,16 @@ public class DeserializationClassFilter extends AbstractClassFilter
 		return EXCEPTION_MESSAGE_KEY_CLASS_NOT_VISIBLE;
 	}
 
-	@Override
-	protected void addHardcodedWhitelist(StandardClassWhitelist whitelist)
+	public DeserializationClassFilter(JasperReportsContext jasperReportsContext)
 	{
+		super(jasperReportsContext);
+	}
+
+	@Override
+	protected void addExtraWhitelists(JasperReportsContext jasperReportsContext,
+			List<ClassWhitelist> whitelists)
+	{
+		StandardClassWhitelist whitelist = new StandardClassWhitelist();
 		whitelist.addClass("B");
 		//whitelist.addClass("C");
 		whitelist.addClass("D");
@@ -96,10 +105,10 @@ public class DeserializationClassFilter extends AbstractClassFilter
 		whitelist.addClass("java.lang.Object");
 		whitelist.addClass("java.lang.Short");
 		whitelist.addClass("java.lang.String");
-	}
-	
-	public DeserializationClassFilter(JasperReportsContext jasperReportsContext)
-	{
-		super(jasperReportsContext);
+		whitelists.add(whitelist);
+
+		List<DeserializationClassWhitelist> extensionWhitelists = jasperReportsContext.getExtensions(
+				DeserializationClassWhitelist.class);
+		whitelists.addAll(extensionWhitelists);
 	}
 }

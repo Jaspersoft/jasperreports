@@ -94,6 +94,7 @@ public class ClassicStructureEntry implements PdfStructureEntry
 		bbox.add(new PdfNumber(urx));
 		bbox.add(new PdfNumber(ury));
 		dict.put(pdfStructure.pdfName("BBox"), bbox);
+		dict.put(pdfStructure.pdfName("Placement"), pdfStructure.pdfName("Block"));
 		dict.put(PdfName.O, pdfStructure.pdfName("Layout"));
 
 		PdfObject existing = element.get(PdfName.A);

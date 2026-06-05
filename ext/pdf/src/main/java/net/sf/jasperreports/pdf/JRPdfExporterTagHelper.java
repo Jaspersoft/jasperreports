@@ -426,7 +426,8 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 						
 						if (
 							isDataCellPrinted
-							&& (JRCellContents.TYPE_CROSSTAB_HEADER.equals(frame.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE))
+							&& (JRCellContents.TYPE_CROSSTAB_TITLE.equals(frame.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE))
+								|| JRCellContents.TYPE_CROSSTAB_HEADER.equals(frame.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE))
 								|| JRCellContents.TYPE_COLUMN_HEADER.equals(frame.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE)))
 							)
 						{
@@ -678,7 +679,11 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 			}
 			
 			prop = element.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE);
-			if (JRCellContents.TYPE_CROSSTAB_HEADER.equals(prop))
+			if (JRCellContents.TYPE_CROSSTAB_TITLE.equals(prop))
+			{
+				createThStartTag(element, "Both");
+			}
+			else if (JRCellContents.TYPE_CROSSTAB_HEADER.equals(prop))
 			{
 				createThStartTag(element, "Both");
 			}
@@ -900,7 +905,8 @@ public class JRPdfExporterTagHelper implements StyledTextListWriter
 			prop = element.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE);
 			if (
 				prop != null 
-				&& (JRCellContents.TYPE_CROSSTAB_HEADER.equals(prop) 
+				&& (JRCellContents.TYPE_CROSSTAB_TITLE.equals(prop) 
+					|| JRCellContents.TYPE_CROSSTAB_HEADER.equals(prop)
 					|| JRCellContents.TYPE_COLUMN_HEADER.equals(prop)
 					|| JRCellContents.TYPE_ROW_HEADER.equals(prop)
 					|| JRCellContents.TYPE_DATA.equals(prop)))

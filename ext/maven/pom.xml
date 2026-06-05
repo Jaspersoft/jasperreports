@@ -19,19 +19,20 @@
 	</scm>
 	<properties>
 		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
+		<maven-plugin-api.version>3.9.16</maven-plugin-api.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
-			<version>3.9.12</version>
+			<version>${maven-plugin-api.version}</version>
 			<scope>provided</scope>
 			<optional>false</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-core</artifactId>
-			<version>3.9.12</version>
+			<version>${maven-plugin-api.version}</version>
 			<scope>provided</scope>
 			<optional>false</optional>
 		</dependency>

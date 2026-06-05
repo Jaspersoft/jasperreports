@@ -21,37 +21,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.jasperreports.engine.fill;
+package net.sf.jasperreports.engine.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import net.sf.jasperreports.engine.util.DeserializationClassFilter;
-import net.sf.jasperreports.engine.util.FilteredObjectInputStream;
+import net.sf.jasperreports.engine.JRRuntimeException;
 
 /**
- * <code>java.io.ObjectInputStream</code> subclass used for deserializing report
- * data on virtualization.
- * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class VirtualizationObjectInputStream extends FilteredObjectInputStream
+public interface ClassFilter
 {
-	private final JRVirtualizationContext virtualizationContext;
 
-	public VirtualizationObjectInputStream(InputStream in, 
-			JRVirtualizationContext virtualizationContext) throws IOException
-	{
-		super(virtualizationContext.getJasperReportsContext(), in,
-				new DeserializationClassFilter(virtualizationContext.getJasperReportsContext()));
-		
-		this.virtualizationContext = virtualizationContext;
-		enableResolveObject(true);
-	}
+	boolean isFilteringEnabled();
 
-	@Override
-	protected Object resolveObject(Object obj) throws IOException
-	{
-		return virtualizationContext.resolveSerializedObject(obj);
-	}
+	void checkClassVisibility(String className) throws JRRuntimeException;
+
 }
