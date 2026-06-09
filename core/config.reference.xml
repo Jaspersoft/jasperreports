@@ -351,6 +351,18 @@ in report SQL queries.
     </description>
   </configProperty>
 
+  <!-- net.sf.jasperreports.query.parameter.clause.enabled -->
+
+  <configProperty name="net.sf.jasperreports.query.parameter.clause.enabled">
+    <description>
+Flag property that determines whether query parameter clause text injection ($P!{}) is enabled.
+When set to <code>false</code>, any use of <code>$P!{}</code> parameter clause syntax in a query will result
+in an error. This can be used to prevent parameter values from being directly injected as text into queries.
+The property is enabled by default.
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.query.chunk.token.separators -->
 
   <configProperty name="net.sf.jasperreports.query.chunk.token.separators">
@@ -384,6 +396,18 @@ the optional third parameter of the clause is not provided.
     <description>
 Properties with this prefix associate a query executer factory implementation with a query language.
 To obtain query executer factories, a property having the query language appended to this prefix is used to get the query executer factory name.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.query.executer.factory.{language}.enabled -->
+
+  <configProperty name="net.sf.jasperreports.query.executer.factory.{language}.enabled">
+    <description>
+Flag property that determines whether a query executer factory for a given language is enabled.
+When set to <code>false</code>, any attempt to execute a query in the specified language will result
+in an error. This can be used to restrict the query languages available in a deployment.
+The property is enabled by default for all query languages.
     </description>
   </configProperty>
 
