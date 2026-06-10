@@ -111,15 +111,22 @@ public abstract class AbstractSampleApp
 	protected File[] getFiles(File parentFile, String extension)
 	{
 		List<File> fileList = new ArrayList<>();
-		String[] files = parentFile.list();
-		if (files != null)
+		String[] fileNames = parentFile.list();
+		if (fileNames != null)
 		{
-			for(int i = 0; i < files.length; i++)
+			for (String fileName : fileNames)
 			{
-				String reportFile = files[i];
-				if (reportFile.endsWith("." + extension))
+				File file = new File(parentFile, fileName);
+				if (file.isDirectory())
 				{
-					fileList.add(new File(parentFile, reportFile)); 
+					fileList.addAll(List.of(getFiles(file, extension)));
+				}
+				else
+				{
+					if (fileName.endsWith("." + extension))
+					{
+						fileList.add(file); 
+					}
 				}
 			}
 		}

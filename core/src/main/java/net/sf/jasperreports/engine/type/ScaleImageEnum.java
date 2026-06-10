@@ -52,21 +52,23 @@ public enum ScaleImageEnum implements NamedEnum
 	RETAIN_SHAPE("RetainShape"),
 	
 	/**
-	 * A scale image type that instructs the engine to stretch the image height
-	 * to fit the actual height of the image.
-	 * 
+	 * A scale image type that adjusts the image element height to the actual image dimensions.
+	 * The image element height stretches to accommodate the actual image, but does not shrink
+	 * below its declared value. If the actual image is wider than the image element, the image
+	 * is proportionally shrunk to fit the element width and the element height is adjusted
+	 * accordingly. The image is then rendered proportionally within the element boundaries,
+	 * preserving its aspect ratio.
+	 *
 	 * <p>
-	 * Several restrictions apply to the image stretching mechanism:
+	 * Several restrictions apply to the image element stretching:
 	 * <ul>
 	 * 	<li>It only works when the image renderer implements
 	 *  {@link DimensionRenderable}.</li>
-	 *  <li>If the actual image width exceeds the declared image element width,
-	 * the image is proportionally stretched to fit the declared width.</li>
-	 * 	<li>Images with delayed evaluation (see {@link JRImage#getEvaluationTime()}) 
-	 * do not stretch and is proportionally shrunk to fit the declared
-	 * height/width.</li>
-	 * 	<li>An image overflows (to the next page/column) only once, after this
-	 * the image gets rendered on the available space by proportionally
+	 * 	<li>Images with delayed evaluation (see {@link JRImage#getEvaluationTime()})
+	 * do not stretch the element; the image is proportionally shrunk to fit the declared
+	 * element dimensions.</li>
+	 * 	<li>An image overflows (to the next page/column) only once; after that,
+	 * the image is rendered in the available space by proportionally
 	 * shrinking its size.</li>
 	 * </ul>
 	 * </p>
@@ -76,12 +78,14 @@ public enum ScaleImageEnum implements NamedEnum
 	REAL_HEIGHT("RealHeight"),
 	
 	/**
-	 * A scale image type that stretches the images height in the same way as 
-	 * {@link #REAL_HEIGHT}, and in addition it reduces the image
-	 * width to the actual width of the image.
+	 * A scale image type that adjusts the image element height in the same way as
+	 * {@link #REAL_HEIGHT}, and in addition reduces the image element
+	 * width to match the width occupied by the rendered image.
 	 * 
-	 * This can be useful when, for instance, a border has to be drawn around
-	 * the image, respecting its actual size.
+	 * <p>
+	 * This is useful when, for instance, a border needs to be drawn around
+	 * the image element, tightly wrapping the rendered image content.
+	 * </p>
 	 */
 	REAL_SIZE("RealSize");
 	
