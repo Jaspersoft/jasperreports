@@ -254,7 +254,7 @@ public class DefaultFormatFactory implements FormatFactory
 			try
 			{
 				Class<?> formatFactoryClass = JRClassLoader.loadClassForName(formatFactoryClassName);	
-				formatFactory = (FormatFactory) formatFactoryClass.getDeclaredConstructor().newInstance();
+				formatFactory = formatFactoryClass.asSubclass(FormatFactory.class).getDeclaredConstructor().newInstance();
 			}
 			catch (ClassNotFoundException e)
 			{

@@ -108,7 +108,7 @@ public final class DefaultScriptletFactory implements ScriptletFactory
 		try
 		{
 			Class<?> scriptletClass = JRClassLoader.loadClassForName(scriptletClassName);	
-			scriptlet = (JRAbstractScriptlet) scriptletClass.getDeclaredConstructor().newInstance();
+			scriptlet = scriptletClass.asSubclass(JRAbstractScriptlet.class).getDeclaredConstructor().newInstance();
 		}
 		catch (ClassNotFoundException e)
 		{
