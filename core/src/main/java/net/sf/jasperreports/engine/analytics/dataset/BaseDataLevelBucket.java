@@ -119,7 +119,7 @@ public class BaseDataLevelBucket implements DataLevelBucket, Serializable
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{

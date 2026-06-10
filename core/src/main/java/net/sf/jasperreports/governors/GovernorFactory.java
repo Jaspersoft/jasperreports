@@ -92,7 +92,7 @@ public final class GovernorFactory implements ScriptletFactory
 
 		try
 		{
-			Class<?> scriptletClass = JRClassLoader.loadClassForName(scriptletClassName);	
+			Class<?> scriptletClass = JRClassLoader.resolveClassForName(scriptletClassName);
 			scriptlet = scriptletClass.asSubclass(JRAbstractScriptlet.class).getDeclaredConstructor().newInstance();
 		}
 		catch (ClassNotFoundException e)
