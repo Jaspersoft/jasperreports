@@ -68,6 +68,8 @@ public interface PropertyConstants
 	
 	String CATEGORY_WEB_UTIL = PREFIX_CATEGORY + "web.util";
 
+	String CATEGORY_SECURITY = PREFIX_CATEGORY + "security";
+
 	String BOOLEAN_FALSE = "false";
 	
 	String BOOLEAN_TRUE = "true";

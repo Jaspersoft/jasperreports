@@ -42,7 +42,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class ReportClassFilter extends AbstractClassFilter
 {
 	@Property(
-			category = PropertyConstants.CATEGORY_FILL,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = "false",
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_6_13_0,
@@ -52,7 +52,7 @@ public class ReportClassFilter extends AbstractClassFilter
 			JRPropertiesUtil.PROPERTY_PREFIX + "report.class.filter.enabled";
 	
 	@Property(
-			category = PropertyConstants.CATEGORY_FILL,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_6_13_0,
 			name = "net.sf.jasperreports.report.class.whitelist.{arbitrary_name}"
