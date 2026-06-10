@@ -26,8 +26,13 @@ package net.sf.jasperreports.pdf.classic;
 import java.awt.Color;
 import java.awt.color.ColorSpace;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.lowagie.text.Element;
 import com.lowagie.text.pdf.CMYKColor;
+import com.lowagie.text.pdf.PdfStructureTreeRoot;
+import com.lowagie.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.pdf.common.PdfTextAlignment;
@@ -38,6 +43,51 @@ import net.sf.jasperreports.pdf.common.PdfTextAlignment;
  */
 public class ClassicPdfUtils
 {
+
+	private static final Log log = LogFactory.getLog(ClassicPdfUtils.class);
+
+	/**
+	 * Whether the OpenPDF library on the classpath allows installing a custom
+	 * {@link PdfStructureTreeRoot}, which is required for the PDF/UA link annotation
+	 * <code>/StructParent</code> tagging performed by {@link ClassicPdfStructureTreeRoot}.
+	 *
+	 * <p>
+	 * This is supported by the Jaspersoft build of OpenPDF (which exposes
+	 * {@link PdfWriter#setStructureTreeRoot(PdfStructureTreeRoot)}), but not by stock OpenPDF.
+	 * When unavailable, the PDF exporter still produces valid tagged PDFs, only without the
+	 * annotation <code>/StructParent</code> back-references.
+	 * </p>
+	 */
+	private static final boolean CUSTOM_STRUCTURE_TREE_ROOT_SUPPORTED = determineCustomStructureTreeRootSupported();
+
+	private static boolean determineCustomStructureTreeRootSupported()
+	{
+		try
+		{
+			PdfWriter.class.getMethod("setStructureTreeRoot", PdfStructureTreeRoot.class);
+			return true;
+		}
+		catch (NoSuchMethodException e)
+		{
+			log.warn("Stock OpenPDF detected, link annotation /StructParent tagging is disabled");
+			return false;
+		}
+		catch (SecurityException e)
+		{
+			throw new JRRuntimeException(e);
+		}
+	}
+
+	/**
+	 * Returns whether a custom {@link PdfStructureTreeRoot} can be installed on the OpenPDF
+	 * {@link PdfWriter}, enabling the link annotation <code>/StructParent</code> tagging.
+	 *
+	 * @see ClassicPdfStructureTreeRoot
+	 */
+	public static boolean isCustomStructureTreeRootSupported()
+	{
+		return CUSTOM_STRUCTURE_TREE_ROOT_SUPPORTED;
+	}
 
 	public ClassicPdfUtils()
 	{

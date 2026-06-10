@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.util.JRStringUtil;
 
 
 /**
@@ -74,7 +75,7 @@ public class XlsxFormatHelper extends BaseHelper
 		write("<numFmt numFmtId=\"" + (formatIndex + 1) + "\"");
 		if (formatInfo.pattern != null && formatInfo.pattern.trim().length() > 0)
 		{
-			write(" formatCode=\"" + formatInfo.pattern + "\"");
+			write(" formatCode=\"" + JRStringUtil.xmlEncode(formatInfo.pattern) + "\"");
 		}
 		else
 		{

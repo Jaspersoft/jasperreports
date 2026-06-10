@@ -50,8 +50,6 @@ public interface PdfProducer
 
 	PdfDocumentWriter createWriter(OutputStream os) throws JRException;
 
-	void setTagged();
-	
 	PdfStructure getPdfStructure();
 
 	PdfContent createPdfContent();
