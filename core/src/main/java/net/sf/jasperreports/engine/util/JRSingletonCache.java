@@ -85,7 +85,7 @@ public class JRSingletonCache<T>
 		try
 		{
 			@SuppressWarnings("unchecked")
-			Class<? extends T> clazz = (Class<? extends T>) JRClassLoader.loadClassForName(className);
+			Class<? extends T> clazz = (Class<? extends T>) JRClassLoader.resolveClassForName(className);
 			if (itf != null && !itf.isAssignableFrom(clazz))
 			{
 				throw 

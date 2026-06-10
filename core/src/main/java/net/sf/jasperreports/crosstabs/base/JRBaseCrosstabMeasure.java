@@ -129,7 +129,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 			{
 				try
 				{
-					incrementerFactoryClass = JRClassLoader.loadClassForName(className);
+					incrementerFactoryClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -168,7 +168,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -219,7 +219,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 			{
 				try
 				{
-					percentageCalculatorClass = JRClassLoader.loadClassForName(className);
+					percentageCalculatorClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{

@@ -671,7 +671,7 @@ public class JRVerifier
 		{
 			try
 			{
-				Class<?> formatFactoryClass = JRClassLoader.loadClassForName(formatFactoryClassName);
+				Class<?> formatFactoryClass = JRClassLoader.resolveClassForName(formatFactoryClassName);
 				if (!FormatFactory.class.isAssignableFrom(formatFactoryClass))
 				{
 					addBrokenRule("The report format factory class is not compatible with " + FormatFactory.class.getName(), jasperDesign);

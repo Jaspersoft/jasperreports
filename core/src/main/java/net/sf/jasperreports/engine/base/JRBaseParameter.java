@@ -135,7 +135,7 @@ public class JRBaseParameter implements JRParameter, Serializable, JRChangeEvent
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch(ClassNotFoundException e)
 				{
