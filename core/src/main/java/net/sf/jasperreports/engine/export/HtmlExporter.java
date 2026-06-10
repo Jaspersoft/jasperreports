@@ -195,7 +195,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	 * </p>
 	 */
 	@Property(
-			category = PropertyConstants.CATEGORY_EXPORT,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_FALSE,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_8,
@@ -215,7 +215,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	 * </p>
 	 */
 	@Property(
-			category = PropertyConstants.CATEGORY_EXPORT,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_8,
 			name = "net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}"
