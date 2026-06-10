@@ -2975,6 +2975,10 @@ The property itself defaults to the text value of the report element this proper
     <description>
 Flag property that enforces field values containing formula to be escaped in order to be interpreted as pure text. Its value is used as default for the
 <api href="net/sf/jasperreports/export/CsvExporterConfiguration.html#getEscapeFormula()">getEscapeFormula()</api> CSV export configuration setting.
+<br/>
+As a security control against CSV formula injection, enabling formula escaping at context level acts as an enforced floor that cannot be turned off.
+The property can also be set at report level, but only to strengthen the behavior by enabling escaping; a report-level value of <code>false</code>,
+as well as values set on the export configuration setting, cannot disable escaping that is enforced at context level.
     </description>
   </configProperty>
 

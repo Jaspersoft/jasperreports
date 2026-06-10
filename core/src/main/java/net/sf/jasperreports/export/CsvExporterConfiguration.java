@@ -117,11 +117,16 @@ public interface CsvExporterConfiguration extends ExporterConfiguration
 	/**
 	 * Property whose value is used as default for the {@link #getEscapeFormula()} export configuration setting.
 	 * Default value is <code>false</code>.
-	 * 
+	 * <p/>
+	 * As a security control against CSV formula injection, enabling formula escaping at context level acts as
+	 * an enforced floor that cannot be turned off. The property can also be set at report level, but only to
+	 * strengthen the behavior by enabling escaping; a report-level value of <code>false</code> cannot disable
+	 * escaping that is enforced at context level.
+	 *
 	 * @see JRPropertiesUtil
 	 */
 	@Property(
-			category = PropertyConstants.CATEGORY_EXPORT,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_FALSE,
 			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
 			sinceVersion = PropertyConstants.VERSION_6_18_0,
@@ -178,6 +183,11 @@ public interface CsvExporterConfiguration extends ExporterConfiguration
 	 * Returns a flag that enforces field values containing formula to be escaped in order to be interpreted as pure text. 
 	 * <p/>
 	 * Default value is <code>false</code>.
+	 * <p/>
+	 * As a security control against CSV formula injection, formula escaping enabled via the
+	 * {@link #PROPERTY_ESCAPE_FORMULA} property at context level acts as an enforced floor that cannot be
+	 * turned off. This configuration setting can only strengthen the behavior by additionally enabling
+	 * escaping; it cannot disable escaping that is enforced at context level.
 	 * @see #PROPERTY_ESCAPE_FORMULA
 	 */
 	@ExporterProperty(
