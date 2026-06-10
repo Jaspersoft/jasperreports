@@ -73,7 +73,7 @@ public interface QueryExecuterFactory
 	 */
 	@Property(
 			name = "net.sf.jasperreports.query.executer.factory.{language}.enabled",
-			category = PropertyConstants.CATEGORY_DATA_SOURCE,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_TRUE,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_7,

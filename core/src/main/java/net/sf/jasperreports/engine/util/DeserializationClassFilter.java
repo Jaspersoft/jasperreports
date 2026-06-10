@@ -37,7 +37,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class DeserializationClassFilter extends AbstractClassFilter
 {
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = "true",
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_4,
@@ -47,7 +47,7 @@ public class DeserializationClassFilter extends AbstractClassFilter
 			JRPropertiesUtil.PROPERTY_PREFIX + "deserialization.class.filter.enabled";
 	
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_4,
 			name = "net.sf.jasperreports.deserialization.class.whitelist.{arbitrary_name}"

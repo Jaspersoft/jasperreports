@@ -56,6 +56,10 @@
     <name>Web Util</name>
   </category>
 
+  <category key="net.sf.jasperreports.metadata.property.category:security">
+    <name>Security</name>
+  </category>
+
   <category key="net.sf.jasperreports.metadata.property.category:other">
     <name>Other</name>
   </category>

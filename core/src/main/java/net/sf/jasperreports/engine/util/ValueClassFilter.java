@@ -37,7 +37,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class ValueClassFilter extends AbstractClassFilter
 {
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_7,
 			name = "net.sf.jasperreports.value.deserialization.class.whitelist.{arbitrary_name}"

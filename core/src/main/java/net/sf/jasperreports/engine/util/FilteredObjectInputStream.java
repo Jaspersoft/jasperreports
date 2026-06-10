@@ -43,7 +43,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class FilteredObjectInputStream extends ObjectInputStream
 {
 	@Property(
-		category = PropertyConstants.CATEGORY_OTHER,
+		category = PropertyConstants.CATEGORY_SECURITY,
 		scopes = {PropertyScope.CONTEXT},
 		sinceVersion = PropertyConstants.VERSION_7_0_4,
 		valueType = Long.class

@@ -72,7 +72,7 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 	 * The property is enabled by default.
 	 */
 	@Property(
-			category = PropertyConstants.CATEGORY_DATA_SOURCE,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_TRUE,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_7,
