@@ -869,7 +869,7 @@ public class JRFillImage extends JRFillGraphicElement implements JRImage
 			imageHeight = reducedHeight;
 			if (getScaleImage() == ScaleImageEnum.REAL_SIZE)
 			{
-				imageWidth = reducedWidth;
+				imageWidth = realSizeWidth(realWidth, realHeight, imageHeight);
 			}
 			fitted = true;
 		}
@@ -882,8 +882,7 @@ public class JRFillImage extends JRFillGraphicElement implements JRImage
 			imageHeight = availableHeight;
 			if (getScaleImage() == ScaleImageEnum.REAL_SIZE)
 			{
-				double hRatio = ((double) availableHeight) / realHeight;
-				imageWidth = (int) (hRatio * realWidth);
+				imageWidth = realSizeWidth(realWidth, realHeight, imageHeight);
 			}
 			fitted = true;
 		}
@@ -951,6 +950,15 @@ public class JRFillImage extends JRFillGraphicElement implements JRImage
 		}
 		
 		return fitted;
+	}
+
+	private int realSizeWidth(int realWidth, int realHeight, int imageHeight)
+	{
+		int effectiveHeight = Math.max(getHeight(), imageHeight);
+		double retainRatioX = ((double) getWidth()) / realWidth;
+		double retainRatioY = ((double) effectiveHeight) / realHeight;
+		double retainRatio = Math.min(retainRatioX, retainRatioY);
+		return (int)(realWidth * retainRatio);
 	}
 
 	@Override

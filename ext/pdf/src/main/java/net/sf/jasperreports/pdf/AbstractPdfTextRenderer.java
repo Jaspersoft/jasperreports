@@ -32,6 +32,7 @@ import net.sf.jasperreports.engine.type.RunDirectionEnum;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.StyledTextListWriter;
 import net.sf.jasperreports.pdf.common.PdfProducer;
+import net.sf.jasperreports.pdf.common.PdfTagger;
 import net.sf.jasperreports.pdf.common.PdfTextAlignment;
 
 
@@ -45,7 +46,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	 */
 	protected JRPdfExporter pdfExporter;
 	protected PdfProducer pdfProducer;
-	protected JRPdfExporterTagHelper tagHelper;
+	protected PdfTagger pdfTagger;
 	protected PdfTextAlignment horizontalAlignment;
 	protected float leftOffsetFactor;
 	protected float rightOffsetFactor;
@@ -77,7 +78,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	public void initialize(
 		JRPdfExporter pdfExporter, 
 		PdfProducer pdfProducer,
-		JRPdfExporterTagHelper tagHelper,
+		PdfTagger pdfTagger,
 		JRPrintText text, 
 		JRStyledText styledText, 
 		int offsetX,
@@ -86,7 +87,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	{
 		this.pdfExporter = pdfExporter;
 		this.pdfProducer = pdfProducer;
-		this.tagHelper = tagHelper;
+		this.pdfTagger = pdfTagger;
 		
 		horizontalAlignment = PdfTextAlignment.LEFT;
 		leftOffsetFactor = 0f;
@@ -146,7 +147,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	@Override
 	protected StyledTextListWriter getListWriter()
 	{
-		return tagHelper.getListWriter();
+		return pdfTagger.getListWriter();
 	}
 	
 	public abstract boolean addActualText();
@@ -160,15 +161,15 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	 {
 		if (addActualText())
 		{
-			tagHelper.startText(text, paragraphText);
+			pdfTagger.startText(text, paragraphText);
 		}
 		else
 		{
-			tagHelper.startText(text);
+			pdfTagger.startText(text);
 		}
 		
 		super.renderParagraph(allParagraphs, paragraphStart, paragraphText);
 		
-		tagHelper.endText();
+		pdfTagger.endText();
 	}
 }

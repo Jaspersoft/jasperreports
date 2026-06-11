@@ -142,7 +142,7 @@ public class JRBaseVariable implements JRVariable, Serializable, StoreCloneable<
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch(ClassNotFoundException e)
 				{
@@ -183,7 +183,7 @@ public class JRBaseVariable implements JRVariable, Serializable, StoreCloneable<
 			{
 				try
 				{
-					incrementerFactoryClass = JRClassLoader.loadClassForName(className);
+					incrementerFactoryClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch(ClassNotFoundException e)
 				{

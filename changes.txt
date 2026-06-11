@@ -2,6 +2,18 @@
 JasperReports Library Change Log
 =============================================
 
+JasperReports 7.0.8 (2026-06-xx)
+---------------------------------------------
+
+- JasperReports can now run on stock OpenPDF 1.3.43; the Jaspersoft build of OpenPDF is only
+required for the PDF/UA link annotation /StructParent tagging, which is otherwise skipped;
+
+- minor bug fixes and improvements;
+
+
+
+
+
 JasperReports 7.0.7 (2026-05-30)
 ---------------------------------------------
 
@@ -27,7 +39,6 @@ Jetty 12.0.35 and Apache Log4J 2.25.4;
 
 
 
-
 JasperReports 7.0.6 (2026-03-13)
 ---------------------------------------------
 
@@ -41,7 +52,6 @@ files by implementing multi-threading support;
 and Apache Log4J 2.25.3; 
 
 - minor bug fixes and improvements;
-
 
 
 
