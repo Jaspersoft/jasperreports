@@ -3369,6 +3369,38 @@ This property specifies whether the HTML embedded SVG should have the font famil
   </configProperty>
 
 
+  <!-- net.sf.jasperreports.export.html.href.filter.enabled -->
+
+  <configProperty name="net.sf.jasperreports.export.html.href.filter.enabled">
+    <description>
+Flag property that enables whitelist filtering of the hyperlink URLs (<code>href</code> attributes) produced by the HTML exporter.
+<br/>
+When set to <code>true</code>, only the hyperlink URLs that match one of the patterns configured through
+<a href="#net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}">net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}</a>
+are allowed in the output; any non-matching URL causes the export to fail with an exception. If the flag is enabled but no allow patterns are configured, no hyperlink URL is permitted.
+<br/>
+The filtering applies to all resolved hyperlink URLs, including those generated internally by the exporter, such as local anchors and local page links.
+<br/>
+The property can only be set globally and it defaults to <code>false</code>, meaning that no filtering is performed.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name} -->
+
+  <configProperty name="net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}">
+    <description>
+Defines a hyperlink URL pattern that is allowed in the output produced by the HTML exporter.
+<br/>
+The property value should be a Java regular expression pattern that is matched against the entire <code>href</code> URL.
+Multiple patterns can be configured by using different arbitrary suffixes.
+<br/>
+The <a href="#net.sf.jasperreports.export.html.href.filter.enabled">net.sf.jasperreports.export.html.href.filter.enabled</a>
+flag needs to be set in order for the filtering to apply.
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.export.html.id -->
 
   <configProperty name="net.sf.jasperreports.export.html.id">
