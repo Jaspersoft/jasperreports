@@ -139,7 +139,7 @@
 		<openpdf.version>1.3.43.jaspersoft.2</openpdf.version>
 		<poi.version>5.4.1</poi.version>
 		<rhino.version>1.8.1</rhino.version>
-		<spring.version>6.2.18</spring.version>
+		<spring.version>6.2.19</spring.version>
 		<xchart.version>3.2.2</xchart.version>
 		<xml-apis-ext.version>1.3.04</xml-apis-ext.version>
 	</properties>
