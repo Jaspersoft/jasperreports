@@ -111,7 +111,7 @@ public class FileRepositoryService implements StreamRepositoryService
 		File file = null;
 		if (uri != null)
 		{
-			file = JRResourcesUtil.resolveFile(context, uri, this::locateFile);
+			file = JRResourcesUtil.resolveFile(context, uri, this::locateFile, this::locateContextFile);
 			if (file != null && !file.isFile())
 			{
 				file = null;
@@ -175,6 +175,38 @@ public class FileRepositoryService implements StreamRepositoryService
 		return file;
 	}
 	
+	protected File locateContextFile(File contextFolder, String location)
+	{
+		Path rootPath = rootNormalizedPath();
+		Path contextPath = contextFolder.toPath().normalize();
+		//already checked, but just to be sure
+		if (!contextPath.startsWith(rootPath))
+		{
+			log.warn("Requested context " + contextFolder + " normalized to " + contextPath
+					+ ", which falls outside repository root path " + rootPath);
+			return null;
+		}
+		
+		File file = new File(contextFolder, location);
+		if (file.exists())
+		{
+			//checking that syntactically the requested path is still inside the root
+			//we are not dealing with symlinks/real paths for now
+			Path filePath = file.toPath().normalize();
+			if (!filePath.startsWith(rootPath))
+			{
+				log.warn("Requested path " + location + " normalized to " + filePath
+						+ ", which falls outside repository root path " + rootPath);
+				file = null;
+			}
+		}
+		else
+		{
+			file = null;
+		}
+		return file;
+	}
+	
 	@Override
 	public OutputStream getOutputStream(String uri)
 	{
@@ -183,6 +215,14 @@ public class FileRepositoryService implements StreamRepositoryService
 		if (uri != null)
 		{
 			file = new File(getRoot(), uri);
+
+			Path rootPath = rootNormalizedPath();
+			Path filePath = file.toPath().normalize();
+			if (!filePath.startsWith(rootPath))
+			{
+				throw new JRRuntimeException("Requested output path " + uri 
+						+ " falls outside repository root path " + rootPath);
+			}
 		}
 
 		OutputStream os = null;

@@ -43,6 +43,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.pdf.classic.ClassicPdfProducer;
+import net.sf.jasperreports.pdf.common.PdfTagger;
 import net.sf.jasperreports.pdf.common.PdfProducer;
 
 
@@ -110,7 +111,7 @@ public class PdfGlyphRenderer extends AbstractPdfTextRenderer
 	public void initialize(
 		JRPdfExporter pdfExporter, 
 		PdfProducer pdfProducer,
-		JRPdfExporterTagHelper tagHelper,
+		PdfTagger pdfTagger,
 		JRPrintText text,
 		JRStyledText styledText, 
 		int offsetX, 
@@ -121,7 +122,7 @@ public class PdfGlyphRenderer extends AbstractPdfTextRenderer
 		{
 			throw new IllegalArgumentException("Only ClassicPdfProducer is supported");
 		}
-		super.initialize(pdfExporter, pdfProducer, tagHelper, text, styledText, offsetX, offsetY);
+		super.initialize(pdfExporter, pdfProducer, pdfTagger, text, styledText, offsetX, offsetY);
 		
 		classicPdfProducer = (ClassicPdfProducer) pdfProducer;
 		pdfContentByte = classicPdfProducer.getPdfContentByte();

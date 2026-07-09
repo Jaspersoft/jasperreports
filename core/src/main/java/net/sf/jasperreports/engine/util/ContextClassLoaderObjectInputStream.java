@@ -52,7 +52,7 @@ public class ContextClassLoaderObjectInputStream extends FilteredObjectInputStre
 	 */
 	public ContextClassLoaderObjectInputStream(JasperReportsContext jasperReportsContext, InputStream in) throws IOException
 	{
-		super(jasperReportsContext, in);
+		super(jasperReportsContext, in, new DeserializationClassFilter(jasperReportsContext));
 		
 		try
 		{

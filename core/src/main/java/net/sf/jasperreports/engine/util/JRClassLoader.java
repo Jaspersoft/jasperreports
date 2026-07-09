@@ -100,7 +100,7 @@ public class JRClassLoader extends ClassLoader
 	
 	private ProtectionDomain protectionDomain;
 	
-	private ClassLoaderFilter classLoaderFilter;
+	private ClassFilter classLoaderFilter;
 	
 	/**
 	 *
@@ -110,7 +110,7 @@ public class JRClassLoader extends ClassLoader
 		super();
 	}
 
-	protected JRClassLoader(ClassLoaderFilter classLoaderFilter)
+	protected JRClassLoader(ClassFilter classLoaderFilter)
 	{
 		super();
 		
@@ -125,7 +125,7 @@ public class JRClassLoader extends ClassLoader
 		super(parent);
 	}
 
-	protected JRClassLoader(ClassLoader parent, ClassLoaderFilter classLoaderFilter)
+	protected JRClassLoader(ClassLoader parent, ClassFilter classLoaderFilter)
 	{
 		super(parent);
 		
@@ -138,6 +138,29 @@ public class JRClassLoader extends ClassLoader
 	 */
 	public static Class<?> loadClassForName(String className) throws ClassNotFoundException
 	{
+		return loadClassForName(className, true);
+	}
+
+
+	/**
+	 * Resolves a class by name without initializing it, i.e. without running its static initializers.
+	 * <p>
+	 * This allows callers to verify the type of a class loaded by name before triggering any code
+	 * execution; initialization then happens when the class is actually used (for instance when an
+	 * instance is created).
+	 *
+	 * @param className the class name
+	 * @return the loaded, uninitialized class
+	 * @see #loadClassForName(String)
+	 */
+	public static Class<?> resolveClassForName(String className) throws ClassNotFoundException
+	{
+		return loadClassForName(className, false);
+	}
+
+
+	private static Class<?> loadClassForName(String className, boolean initialize) throws ClassNotFoundException
+	{
 		Class<?> clazz = null;
 
 		String classRealName = className;
@@ -145,7 +168,7 @@ public class JRClassLoader extends ClassLoader
 
 		try
 		{
-			clazz = loadClassForRealName(classRealName);
+			clazz = loadClassForRealName(classRealName, initialize);
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -159,7 +182,7 @@ public class JRClassLoader extends ClassLoader
 				classRealName.substring(0, lastDotIndex) + "$" + classRealName.substring(lastDotIndex + 1);
 			try
 			{
-				clazz = loadClassForRealName(classRealName);
+				clazz = loadClassForRealName(classRealName, initialize);
 			}
 			catch (ClassNotFoundException e)
 			{
@@ -180,6 +203,12 @@ public class JRClassLoader extends ClassLoader
 	 */
 	public static Class<?> loadClassForRealName(String className) throws ClassNotFoundException
 	{
+		return loadClassForRealName(className, true);
+	}
+
+
+	private static Class<?> loadClassForRealName(String className, boolean initialize) throws ClassNotFoundException
+	{
 		Class<?> clazz = null;
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -187,7 +216,7 @@ public class JRClassLoader extends ClassLoader
 		{
 			try
 			{
-				clazz = Class.forName(className, true, classLoader);
+				clazz = Class.forName(className, initialize, classLoader);
 			}
 			catch (ClassNotFoundException e)
 			{
@@ -201,11 +230,11 @@ public class JRClassLoader extends ClassLoader
 			classLoader = JRClassLoader.class.getClassLoader();
 			if (classLoader == null)
 			{
-				clazz = Class.forName(className);
+				clazz = Class.forName(className, initialize, null);
 			}
 			else
 			{
-				clazz = Class.forName(className, true, classLoader);
+				clazz = Class.forName(className, initialize, classLoader);
 			}
 		}
 
@@ -265,13 +294,13 @@ public class JRClassLoader extends ClassLoader
 		return loadClassFromBytes(null, className, bytecodes);
 	}
 	
-	public static Class<?> loadClassFromBytes(ClassLoaderFilter classLoaderFilter, 
+	public static Class<?> loadClassFromBytes(ClassFilter classLoaderFilter, 
 			String className, byte[] bytecodes)
 	{
 		return loadClassFromBytes(classLoaderFilter, className, CompiledClasses.forClass(className, bytecodes));
 	}
 	
-	public static Class<?> loadClassFromBytes(ClassLoaderFilter classLoaderFilter, 
+	public static Class<?> loadClassFromBytes(ClassFilter classLoaderFilter, 
 			String className, CompiledClasses compiledClasses)
 	{
 		Class<?> clazz = null;

@@ -109,7 +109,7 @@ public final class JRPercentageCalculatorFactory
 			{
 				try
 				{
-					calculator = (JRPercentageCalculator) percentageCalculatorClass.getDeclaredConstructor().newInstance();
+					calculator = percentageCalculatorClass.asSubclass(JRPercentageCalculator.class).getDeclaredConstructor().newInstance();
 					cachedCalculators.put(percentageCalculatorClass.getName(), calculator);
 				}
 				catch (InstantiationException | IllegalAccessException 

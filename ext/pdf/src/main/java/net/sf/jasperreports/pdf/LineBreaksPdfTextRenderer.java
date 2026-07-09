@@ -28,6 +28,7 @@ import java.text.AttributedString;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRStyledText;
+import net.sf.jasperreports.pdf.common.PdfTagger;
 import net.sf.jasperreports.pdf.common.PdfProducer;
 import net.sf.jasperreports.pdf.common.PdfTextRendererContext;
 
@@ -51,7 +52,7 @@ public class LineBreaksPdfTextRenderer extends SimpleAbstractPdfTextRenderer
 
 	@Override
 	public void initialize(JRPdfExporter pdfExporter, PdfProducer pdfProducer, 
-			JRPdfExporterTagHelper tagHelper,
+			PdfTagger pdfTagger,
 			JRPrintText text, JRStyledText styledText, 
 			int offsetX, int offsetY)
 	{
@@ -60,7 +61,7 @@ public class LineBreaksPdfTextRenderer extends SimpleAbstractPdfTextRenderer
 			styledText.insert(LINE_BREAK_STRING, text.getLineBreakOffsets());
 		}
 		
-		super.initialize(pdfExporter, pdfProducer, tagHelper,
+		super.initialize(pdfExporter, pdfProducer, pdfTagger,
 			text, styledText, offsetX, offsetY);
 	}
 

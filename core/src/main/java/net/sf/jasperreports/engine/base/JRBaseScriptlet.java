@@ -124,7 +124,7 @@ public class JRBaseScriptlet implements JRScriptlet, Serializable, JRChangeEvent
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch(ClassNotFoundException e)
 				{

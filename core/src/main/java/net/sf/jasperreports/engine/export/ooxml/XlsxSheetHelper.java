@@ -364,9 +364,30 @@ public class XlsxSheetHelper extends BaseHelper
 	 */
 	public void exportColumn(int colIndex, int colWidth, boolean autoFit) 
 	{
+		/*
+		bestFit on <col> is not an instruction for Excel to calculate the optimal column width when opening the file. It's a state flag that marks the column as
+		being in auto-fit mode for future interactive user input. It tells Excel: "when the user types a number into this column, grow the column to fit." But it
+		does nothing to measure and fit existing cell content on file open.
+		
+		For rows it's different. Excel does recalculate row heights when opening a file if customHeight="0" is set. Row height depends mainly on font size and text
+		wrapping, which Excel evaluates automatically. That's why bestFit="1" with customHeight="0" works for rows — Excel sees "this height isn't custom,
+		recalculate it" and does so.
+		
+		For columns there's no equivalent mechanism. Column width calculation requires measuring the rendered pixel width of every cell value in the column using
+		font metrics — Excel simply doesn't do this automatically on open. The only way to get auto-fitted column widths in a generated XLSX is to calculate the
+		widths yourself.
+		
+		Since we are already calculating the width of auto fit columns, there is no point in setting bestFit for columns, as it would be inhibited by customWidth="1".
+		*/
 		try
 		{
-			colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + (3f * colWidth / 18f) + "\"/>\n");
+			//colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + ((float)colWidth * 4 / 21) + "\"/>\n");
+			//colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + (int)((colWidth * 4 / 3 + 5) / 7) + "\"/>\n");
+			//colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + (int)(colWidth / 6f) + "\"/>\n");
+
+			// this ratio was found empirically, by using a square image with scaleImage=RetainShape, to make sure it remains square (if at all possible), 
+			// on different operating systems, and viewing the documents using both Microsoft Excel and LibreOffice 
+			colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + ((float)colWidth * 45 / 256) + "\"/>\n");
 		}
 		catch (IOException e)
 		{

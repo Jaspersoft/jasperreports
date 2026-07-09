@@ -43,7 +43,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class FilteredObjectInputStream extends ObjectInputStream
 {
 	@Property(
-		category = PropertyConstants.CATEGORY_OTHER,
+		category = PropertyConstants.CATEGORY_SECURITY,
 		scopes = {PropertyScope.CONTEXT},
 		sinceVersion = PropertyConstants.VERSION_7_0_4,
 		valueType = Long.class
@@ -53,7 +53,7 @@ public class FilteredObjectInputStream extends ObjectInputStream
 	
 	protected final JasperReportsContext jasperReportsContext;
 
-	private DeserializationClassFilter deserializationClassFilter;
+	private ClassFilter deserializationFilter;
 
 	/**
 	 * Creates an object input stream that reads data from the specified
@@ -63,12 +63,13 @@ public class FilteredObjectInputStream extends ObjectInputStream
 	 * @throws IOException
 	 * @see ObjectInputStream#ObjectInputStream(InputStream)
 	 */
-	public FilteredObjectInputStream(JasperReportsContext jasperReportsContext, InputStream in) throws IOException
+	public FilteredObjectInputStream(JasperReportsContext jasperReportsContext, InputStream in,
+			ClassFilter deserializationFilter) throws IOException
 	{
 		super(wrapInputStream(jasperReportsContext, in));
 		
 		this.jasperReportsContext = jasperReportsContext;		
-		this.deserializationClassFilter = new DeserializationClassFilter(jasperReportsContext);
+		this.deserializationFilter = deserializationFilter;
 	}
 	
 	private static InputStream wrapInputStream(JasperReportsContext jasperReportsContext, InputStream is)
@@ -86,7 +87,7 @@ public class FilteredObjectInputStream extends ObjectInputStream
 	protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException,
 			ClassNotFoundException
 	{
-		if (deserializationClassFilter.isFilteringEnabled())
+		if (deserializationFilter.isFilteringEnabled())
 		{
 			String className = desc.getName();
 			if (className.startsWith("["))
@@ -100,7 +101,7 @@ public class FilteredObjectInputStream extends ObjectInputStream
 					className = className.substring(className.lastIndexOf("[") + 1);
 				}
 			}
-			deserializationClassFilter.checkClassVisibility(className);
+			deserializationFilter.checkClassVisibility(className);
 		}
 
 		return super.resolveClass(desc);

@@ -275,7 +275,7 @@ public class XlsxStyleHelper extends BaseHelper
 		write("</numFmts>\n");
 
 		write("<fonts>\n");// count=\"1\">\n");
-		write("<font><sz val=\"11\"/><color theme=\"1\"/><name val=\"Calibri\"/><family val=\"2\"/><scheme val=\"minor\"/></font>\n");
+		write("<font><sz val=\"11\"/><color theme=\"1\"/><name val=\"Calibri\"/><family val=\"2\"/></font>\n");
 		fontsWriter.writeData(writer);
 		write("</fonts>\n");
 
@@ -289,14 +289,14 @@ public class XlsxStyleHelper extends BaseHelper
 		bordersWriter.writeData(writer);
 		write("</borders>\n");
 		
-		write("<cellStyleXfs count=\"1\"><xf/></cellStyleXfs>\n");
+		write("<cellStyleXfs count=\"1\"><xf fontId=\"0\" applyFont=\"1\"/></cellStyleXfs>\n");
 
 		write("<cellXfs>\n");// count=\"1\">\n");
 		write("<xf numFmtId=\"0\" fontId=\"0\" fillId=\"0\" borderId=\"0\" xfId=\"0\" applyAlignment=\"1\" applyProtection=\"1\" applyNumberFormat=\"1\" applyFont=\"1\" applyFill=\"1\" applyBorder=\"1\"/>\n");
 		cellXfsWriter.writeData(writer);
 		write("</cellXfs>\n");
 		
-		//write("<cellStyles count=\"1\"><cellStyle name=\"Normal\" xfId=\"0\" builtinId=\"0\"/></cellStyles>\n");
+		write("<cellStyles count=\"1\"><cellStyle name=\"Normal\" xfId=\"0\" builtinId=\"0\" customBuiltin=\"1\"/></cellStyles>\n");
 		write("<dxfs count=\"0\"/><tableStyles count=\"0\" defaultTableStyle=\"TableStyleMedium9\" defaultPivotStyle=\"PivotStyleLight16\"/>\n");
 
 		write("</styleSheet>\n");

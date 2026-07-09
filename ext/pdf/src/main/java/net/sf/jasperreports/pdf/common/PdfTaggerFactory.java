@@ -21,16 +21,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.jasperreports.engine.util;
+package net.sf.jasperreports.pdf.common;
 
-import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.pdf.JRPdfExporter;
 
 /**
- * @author Lucian Chirita (lucianc@users.sourceforge.net)
+ *
+ * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public interface ClassLoaderFilter
+public interface PdfTaggerFactory
 {
 
-	void checkClassVisibility(String className) throws JRRuntimeException;
-	
+	PdfTagger createTagger(JRPdfExporter exporter);
+
 }

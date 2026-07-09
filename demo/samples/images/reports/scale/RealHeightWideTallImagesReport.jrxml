@@ -1,0 +1,108 @@
+<jasperReport name="RealHeightWideTallImagesReport" pageWidth="595" pageHeight="842" columnWidth="270" columnSpacing="15" columnCount="2" leftMargin="20" rightMargin="20" topMargin="25" bottomMargin="25" whenNoDataType="AllSectionsNoDetail" uuid="d0000000-0000-0000-0000-000000000000">
+	<style name="ImageStyle" rotation="None"/>
+	<style name="TextStyle" fontSize="9.0"/>
+	<parameter name="ImageFileName" class="java.lang.String"/>
+	<group name="dummy">
+		<groupHeader>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000001" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Left  vImageAlign=Top]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000001" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Left" vImageAlign="Top" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000002" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Left  vImageAlign=Middle]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000002" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Left" vImageAlign="Middle" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000003" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Left  vImageAlign=Bottom]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000003" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Left" vImageAlign="Bottom" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000004" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Center  vImageAlign=Top]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000004" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Center" vImageAlign="Top" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000005" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Center  vImageAlign=Middle]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000005" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Center" vImageAlign="Middle" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000006" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Center  vImageAlign=Bottom]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000006" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Center" vImageAlign="Bottom" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000007" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Right  vImageAlign=Top]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000007" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Right" vImageAlign="Top" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000008" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Right  vImageAlign=Middle]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000008" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Right" vImageAlign="Middle" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+			<band height="155">
+				<element kind="staticText" uuid="a0000000-0000-0000-0000-000000000009" x="0" y="0" width="267" height="14" style="TextStyle">
+					<text><![CDATA[hImageAlign=Right  vImageAlign=Bottom]]></text>
+				</element>
+				<element kind="image" uuid="b0000000-0000-0000-0000-000000000009" mode="Opaque" x="0" y="16" width="270" height="135" backcolor="#DDFFDD" scaleImage="RealHeight" hImageAlign="Right" vImageAlign="Bottom" style="ImageStyle">
+					<expression><![CDATA[$P{ImageFileName}]]></expression>
+					<box>
+						<pen lineWidth="0.5"/>
+					</box>
+				</element>
+			</band>
+		</groupHeader>
+	</group>
+</jasperReport>

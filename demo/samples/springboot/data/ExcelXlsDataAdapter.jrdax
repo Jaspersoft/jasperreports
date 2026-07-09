@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excelDataAdapter class="net.sf.jasperreports.data.excel.ExcelDataAdapterImpl">
+	<name>Excel XLS Data Adapter</name>
+	<fileName>data/data.xls</fileName>
+	<useFirstRowAsHeader>false</useFirstRowAsHeader>
+	<queryExecuterMode>false</queryExecuterMode>
+	<numberPattern>#,##0</numberPattern>
+	<datePattern>yyyy-MM-dd</datePattern>
+	<columnNames>city</columnNames>
+	<columnNames>id</columnNames>
+	<columnNames>name</columnNames>
+	<columnNames>address</columnNames>
+	<columnNames>state</columnNames>
+	<columnNames>date</columnNames>
+	<columnIndexes>0</columnIndexes>
+	<columnIndexes>2</columnIndexes>
+	<columnIndexes>3</columnIndexes>
+	<columnIndexes>4</columnIndexes>
+	<columnIndexes>5</columnIndexes>
+	<columnIndexes>6</columnIndexes>
+	<sheetSelection>Data Sheet 2</sheetSelection>
+	<format>xls</format>
+</excelDataAdapter>
