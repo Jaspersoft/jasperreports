@@ -58,7 +58,10 @@ public class StandardPdfStructure implements PdfStructure
 	public PdfStructureEntry createDocumentTag(String language)
 	{
 		PdfWriter pdfWriter = pdfProducer.getPdfWriter();
-		StandardPdfStructureTreeRoot.install(pdfWriter);
+		if (StandardPdfUtils.isCustomStructureTreeRootSupported())
+		{
+			StandardPdfStructureTreeRoot.install(pdfWriter);
+		}
 		
 		PdfStructureTreeRoot root = pdfWriter.getStructureTreeRoot();
 		root.mapRole(PdfName.TEXT, PdfName.P);

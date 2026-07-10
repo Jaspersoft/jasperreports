@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excelDataAdapter class="net.sf.jasperreports.data.excel.ExcelDataAdapterImpl">
+	<name>Excel XLS Query Executer Data Adapter</name>
+	<fileName>data/data.xls</fileName>
+	<useFirstRowAsHeader>false</useFirstRowAsHeader>
+	<queryExecuterMode>true</queryExecuterMode>
+	<numberPattern>#,##0</numberPattern>
+	<datePattern>yyyy-MM-dd</datePattern>
+	<sheetSelection>Data Sheet 2</sheetSelection>
+	<format>xls</format>
+</excelDataAdapter>

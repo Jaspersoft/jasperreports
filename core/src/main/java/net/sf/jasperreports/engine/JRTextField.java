@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -146,6 +147,63 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * @see net.sf.jasperreports.engine.JREvaluation
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
+	"removeLineWhenBlank",
+	JRXmlConstants.ATTRIBUTE_markup,
+	JRXmlConstants.ATTRIBUTE_fontName,
+	JRXmlConstants.ATTRIBUTE_fontSize,
+	JRXmlConstants.ATTRIBUTE_pdfFontName,
+	JRXmlConstants.ATTRIBUTE_rotation,
+	JRXmlConstants.ATTRIBUTE_textAdjust,
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	"linkType",
+	"linkTarget",
+	JRXmlConstants.ATTRIBUTE_pattern,
+	"bold",
+	JRXmlConstants.ATTRIBUTE_evaluationGroup,
+	JRXmlConstants.ATTRIBUTE_bookmarkLevel,
+	"blankWhenNull",
+	"italic",
+	"strikeThrough",
+	"underline",
+	JRXmlConstants.ATTRIBUTE_pdfEncoding,
+	"pdfEmbedded",
+	JRXmlConstants.ATTRIBUTE_hTextAlign,
+	JRXmlConstants.ATTRIBUTE_vTextAlign,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_box,
+	JRXmlConstants.ELEMENT_paragraph,
+	JRXmlConstants.ELEMENT_expression,
+	JRXmlConstants.ELEMENT_patternExpression,
+	JRXmlConstants.ELEMENT_anchorNameExpression,
+	JRXmlConstants.ELEMENT_bookmarkLevelExpression,
+	JRXmlConstants.ELEMENT_hyperlinkReferenceExpression,
+	JRXmlConstants.ELEMENT_hyperlinkWhenExpression,
+	JRXmlConstants.ELEMENT_hyperlinkAnchorExpression,
+	JRXmlConstants.ELEMENT_hyperlinkPageExpression,
+	JRXmlConstants.ELEMENT_hyperlinkTooltipExpression,
+	JRXmlConstants.ELEMENT_hyperlinkParameter
+	})
 @JsonTypeName("textField")
 @JsonDeserialize(as = JRDesignTextField.class)
 public interface JRTextField extends JRTextElement, JREvaluation, JRAnchor, JRHyperlink

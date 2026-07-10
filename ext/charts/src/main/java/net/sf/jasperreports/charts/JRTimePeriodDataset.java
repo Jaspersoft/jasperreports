@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import net.sf.jasperreports.charts.design.JRDesignTimePeriodDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * The Time Period dataset is very much like the Time Series dataset in that it wraps series 
@@ -38,6 +40,16 @@ import net.sf.jasperreports.charts.design.JRDesignTimePeriodDataset;
  * @author Flavius Sana (flavius_sana@users.sourceforge.net) 
  * @see JRTimeSeriesDataset
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
+	"series"
+	})
 @JsonTypeName("timePeriod")
 @JsonDeserialize(as = JRDesignTimePeriodDataset.class)
 public interface JRTimePeriodDataset extends JRChartDataset {

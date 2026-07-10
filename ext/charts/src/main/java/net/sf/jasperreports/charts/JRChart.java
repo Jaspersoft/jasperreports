@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -47,6 +48,7 @@ import net.sf.jasperreports.engine.JRFont;
 import net.sf.jasperreports.engine.JRHyperlink;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.util.StyleResolver;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.properties.PropertyConstants;
 
 
@@ -56,6 +58,64 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * its own dataset and characteristics. This interface only defines the common properties.
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
+	"removeLineWhenBlank",
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	JRXmlConstants.ATTRIBUTE_evaluationGroup,
+	"showLegend",
+	"chartType",
+	"titlePosition",
+	"titleColor",
+	"subtitleColor",
+	"legendColor",
+	"legendBackgroundColor",
+	"legendPosition",
+	JRXmlConstants.ATTRIBUTE_customizerClass,
+	JRXmlConstants.ATTRIBUTE_renderType,
+	JRXmlConstants.ATTRIBUTE_theme,
+	JRXmlConstants.ATTRIBUTE_bookmarkLevel,
+	JRXmlConstants.ATTRIBUTE_hyperlinkType,
+	JRXmlConstants.ATTRIBUTE_hyperlinkTarget,
+	"linkType",
+	"linkTarget",
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_box,
+	JRXmlConstants.ELEMENT_titleExpression,
+	"titleFont",
+	JRXmlConstants.ELEMENT_subtitleExpression,
+	"subtitleFont",
+	"legendFont",
+	JRXmlConstants.ELEMENT_anchorNameExpression,
+	JRXmlConstants.ELEMENT_bookmarkLevelExpression,
+	JRXmlConstants.ELEMENT_hyperlinkReferenceExpression,
+	JRXmlConstants.ELEMENT_hyperlinkWhenExpression,
+	JRXmlConstants.ELEMENT_hyperlinkAnchorExpression,
+	JRXmlConstants.ELEMENT_hyperlinkPageExpression,
+	JRXmlConstants.ELEMENT_hyperlinkTooltipExpression,
+	JRXmlConstants.ELEMENT_hyperlinkParameter,
+	JRXmlConstants.ELEMENT_dataset,
+	JRXmlConstants.ELEMENT_plot
+	})
 @JsonTypeName("chart")
 @JsonDeserialize(as = JRDesignChart.class)
 public interface JRChart extends JRElement, JREvaluation, JRAnchor, JRHyperlink, JRBoxContainer

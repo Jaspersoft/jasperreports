@@ -27,12 +27,14 @@ import java.awt.Color;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignMeterPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.charts.type.MeterShapeEnum;
 import net.sf.jasperreports.charts.util.JRMeterInterval;
 import net.sf.jasperreports.engine.JRFont;
@@ -46,6 +48,26 @@ import net.sf.jasperreports.engine.JRFont;
  *
  * @author Barry Klawans (bklawans@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	"shape",
+	"meterAngle",
+	"units",
+	"tickInterval",
+	"tickCount",
+	"meterColor",
+	"needleColor",
+	"tickColor",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_dataRange,
+	JRXmlConstants.ELEMENT_valueDisplay,
+	JRXmlConstants.ELEMENT_tickLabelFont,
+	"interval"
+	})
 @JsonTypeName("meter")
 @JsonDeserialize(as = JRDesignMeterPlot.class)
 public interface JRMeterPlot extends JRChartPlot

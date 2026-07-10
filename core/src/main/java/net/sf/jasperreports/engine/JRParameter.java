@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
@@ -108,6 +109,15 @@ import net.sf.jasperreports.repo.RepositoryContext;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	"forPrompting",
+	JRXmlConstants.ATTRIBUTE_class,
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	JRXmlConstants.ATTRIBUTE_nestedType,
+	"description",
+	JRXmlConstants.ELEMENT_defaultValueExpression
+	})
 @JsonDeserialize(as = JRDesignParameter.class)
 public interface JRParameter extends JRPropertiesHolder, JRCloneable
 {

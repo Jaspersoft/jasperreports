@@ -1,4 +1,4 @@
-<jasperReport name="CsvQueryExecuterReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="0ea54dcd-0e74-4b7d-8095-b72206b9a813">
+<jasperReport name="CsvQueryExecuterReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="0ea54dcd-0e74-4b7d-8095-b72206b9a813">
 	<property name="net.sf.jasperreports.csv.column.names" value="city, id, name, address, state"/>
 	<property name="net.sf.jasperreports.csv.source" value="data/CsvDataSource.txt"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="12.0" bold="false" italic="false" underline="false" strikeThrough="false"/>

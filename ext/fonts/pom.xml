@@ -21,7 +21,7 @@
 		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<maven.source.skip>true</maven.source.skip>
-		<dependency-check.skip>true</dependency-check.skip>
+		<dependency-check.skip>true</dependency-check.skip><!-- this is for the owasp check -->
 	</properties>
 	<build>
 		<resources>

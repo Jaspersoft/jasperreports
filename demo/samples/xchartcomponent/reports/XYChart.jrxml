@@ -1,4 +1,4 @@
-<jasperReport name="XYChart" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="a672a9d1-025f-43e7-8b43-800176de42bf">
+<jasperReport name="XYChart" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="a672a9d1-025f-43e7-8b43-800176de42bf">
 	<style name="chartStyle" backcolor="#FFFFFF"/>
 	<dataset name="xyDataset" uuid="098b0755-483e-40aa-8ada-b6eaaa95a155">
 		<parameter name="xyDatasource" class="net.sf.jasperreports.engine.data.JRCsvDataSource"/>

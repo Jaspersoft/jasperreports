@@ -76,7 +76,7 @@ public class ChartCustomizersApp extends AbstractSampleApp
 				reportFile.getAbsolutePath(), 
 				new HashMap<String, Object>(parameters) 
 				);
-			System.err.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class ChartCustomizersApp extends AbstractSampleApp
 			JasperExportManager.exportReportToPdfFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -112,7 +112,7 @@ public class ChartCustomizersApp extends AbstractSampleApp
 			JasperExportManager.exportReportToHtmlFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 

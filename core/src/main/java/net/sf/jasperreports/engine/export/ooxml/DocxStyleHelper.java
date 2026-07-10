@@ -24,7 +24,9 @@
 package net.sf.jasperreports.engine.export.ooxml;
 
 import java.io.Writer;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRStyle;
@@ -88,6 +90,8 @@ public class DocxStyleHelper extends BaseHelper
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 
+		Set<String> exportedStyles = new HashSet<>();
+
 		for(int reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
@@ -95,6 +99,12 @@ public class DocxStyleHelper extends BaseHelper
 			
 			if (reportIndex == 0)
 			{
+				// does not hurt always creating the Header style, even if no background is exported as header
+				write(" <w:style w:type=\"paragraph\" w:styleId=\"Header\">\n");
+				write("  <w:name w:val=\"header\" />\n");
+				write("  <w:qFormat />\n");
+				write(" </w:style>\n");
+
 				JRDesignStyle style = new JRDesignStyle(jasperPrint.getDefaultStyleProvider());
 				style.setName("EMPTY_CELL_STYLE");
 				style.setParentStyle(jasperPrint.getDefaultStyle());
@@ -103,6 +113,7 @@ public class DocxStyleHelper extends BaseHelper
 				paragraphHelper.exportProps(style);
 				runHelper.exportProps(jasperPrint.getDefaultStyleProvider(), style, exporter.getLocale());
 				exportFooter();
+				exportedStyles.add(style.getName());
 			}
 			
 			JRStyle[] styles = jasperPrint.getStyles();
@@ -111,10 +122,13 @@ public class DocxStyleHelper extends BaseHelper
 				for(int i = 0; i < styles.length; i++)
 				{
 					JRStyle style = styles[i];
-					exportHeader(jasperPrint.getDefaultStyleProvider(), style);
-					paragraphHelper.exportProps(style);
-					runHelper.exportProps(jasperPrint.getDefaultStyleProvider(), style, exporter.getLocale());
-					exportFooter();
+					if (exportedStyles.add(style.getName()))
+					{
+						exportHeader(jasperPrint.getDefaultStyleProvider(), style);
+						paragraphHelper.exportProps(style);
+						runHelper.exportProps(jasperPrint.getDefaultStyleProvider(), style, exporter.getLocale());
+						exportFooter();
+					}
 				}
 			}
 		}

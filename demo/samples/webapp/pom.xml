@@ -31,13 +31,19 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.jetty.ee10</groupId>
 				<artifactId>jetty-ee10-maven-plugin</artifactId>
 				<version>${jetty-ee10-maven-plugin.version}</version>
 				<configuration>
-					<webAppSourceDirectory>web</webAppSourceDirectory>
+					<webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
 					<stopPort>9966</stopPort>
 					<stopKey>foo</stopKey>
 					<deployMode>FORK</deployMode>

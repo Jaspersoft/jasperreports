@@ -1,4 +1,4 @@
-<jasperReport name="JRMDbCastSubreport" language="java" pageWidth="245" pageHeight="842" columnWidth="175" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="53617ea3-eaff-4bf5-9461-5f788e40c3f6">
+<jasperReport name="JRMDbCastSubreport" pageWidth="245" pageHeight="842" columnWidth="175" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="53617ea3-eaff-4bf5-9461-5f788e40c3f6">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="8.0" bold="true" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Italic" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="true" underline="false" strikeThrough="false"/>

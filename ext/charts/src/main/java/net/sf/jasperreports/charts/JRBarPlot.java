@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignBarPlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Type of plot used to render Bar, Stacked Bar, and XY Bar charts. 
@@ -36,6 +38,39 @@ import net.sf.jasperreports.charts.design.JRDesignBarPlot;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	"showTickMarks",
+	"showTickLabels",
+	"showLabels",
+	"categoryAxisLabelColor",
+	"categoryAxisTickLabelColor",
+	"categoryAxisTickLabelMask",
+	"categoryAxisVerticalTickLabels",
+	"categoryAxisLineColor",
+	"categoryAxisTickLabelRotation",
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_categoryAxisLabelExpression,
+	"categoryAxisLabelFont",
+	"categoryAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_valueAxisLabelExpression,
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_itemLabel
+	})
 @JsonTypeName("bar")
 @JsonDeserialize(as = JRDesignBarPlot.class)
 public interface JRBarPlot extends JRCategoryPlot

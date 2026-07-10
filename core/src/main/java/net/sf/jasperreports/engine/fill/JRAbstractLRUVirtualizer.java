@@ -552,7 +552,10 @@ public abstract class JRAbstractLRUVirtualizer implements JRVirtualizer
 				}
 				catch (IOException e)
 				{
-					log.error("Error devirtualizing object", e);
+					if (log.isDebugEnabled())
+					{
+						log.debug("Error devirtualizing object", e);
+					}
 					throw new JRRuntimeException(e);
 				}
 
@@ -615,7 +618,10 @@ public abstract class JRAbstractLRUVirtualizer implements JRVirtualizer
 			}
 			catch (IOException e)
 			{
-				log.error("Error virtualizing object", e);
+				if (log.isDebugEnabled())
+				{
+					log.debug("Error virtualizing object", e);
+				}
 				throw new JRRuntimeException(e);
 			}
 
@@ -655,7 +661,10 @@ public abstract class JRAbstractLRUVirtualizer implements JRVirtualizer
 		}
 		catch (IOException e)
 		{
-			log.error("Error virtualizing object", e);
+			if (log.isDebugEnabled())
+			{
+				log.debug("Error virtualizing object", e);
+			}
 			throw new JRRuntimeException(e);
 		}
 	}
@@ -678,7 +687,10 @@ public abstract class JRAbstractLRUVirtualizer implements JRVirtualizer
 		}
 		catch (IOException e)
 		{
-			log.error("Error devirtualizing object", e);
+			if (log.isDebugEnabled())
+			{
+				log.debug("Error devirtualizing object", e);
+			}
 			throw new JRRuntimeException(e);
 		}
 	}

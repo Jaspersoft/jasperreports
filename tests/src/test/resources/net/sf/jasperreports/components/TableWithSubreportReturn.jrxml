@@ -1,4 +1,4 @@
-<jasperReport name="TableWithSubreportReturn" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="d44cffa9-8bf3-4aa2-bb0c-ef6c730b5d13">
+<jasperReport name="TableWithSubreportReturn" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="d44cffa9-8bf3-4aa2-bb0c-ef6c730b5d13">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<dataset name="TableData" uuid="54c46638-5311-4adf-8cdd-1c655aaaa240">
 		<parameter name="subreport" class="net.sf.jasperreports.engine.JasperReport"/>

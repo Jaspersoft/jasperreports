@@ -25,17 +25,30 @@ package net.sf.jasperreports.crosstabs;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.crosstabs.design.JRDesignCrosstabColumnGroup;
 import net.sf.jasperreports.crosstabs.type.CrosstabColumnPositionEnum;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Crosstab column group interface.
- * 
+ *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	"totalPosition",
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_position,
+	"mergeHeaderCells",
+	"bucket",
+	"header",
+	"totalHeader",
+	"crosstabHeader"
+	})
 @JsonDeserialize(as = JRDesignCrosstabColumnGroup.class)
 public interface JRCrosstabColumnGroup extends JRCrosstabGroup
 {

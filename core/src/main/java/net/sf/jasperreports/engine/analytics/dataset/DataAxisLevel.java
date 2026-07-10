@@ -23,15 +23,22 @@
  */
 package net.sf.jasperreports.engine.analytics.dataset;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ELEMENT_labelExpression,
+	"bucket"
+	})
 @JsonDeserialize(as = DesignDataAxisLevel.class)
 public interface DataAxisLevel extends JRCloneable
 {

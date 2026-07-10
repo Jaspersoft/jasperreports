@@ -1,4 +1,4 @@
-<jasperReport name="ShapesReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="02560bcc-b1b2-464f-90a0-1e56616b66e1">
+<jasperReport name="ShapesReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="02560bcc-b1b2-464f-90a0-1e56616b66e1">
 	<title height="782">
 		<element kind="line" uuid="409fe65d-91f6-4e4d-aba2-a9dad8137acc" x="0" y="50" width="200" height="1"/>
 		<element kind="staticText" uuid="4cb22491-9354-4668-a216-bcf300391ef1" x="210" y="50" width="340" height="40">

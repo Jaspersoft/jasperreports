@@ -70,7 +70,7 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 				fileName.substring(0, fileName.lastIndexOf(".jasper")) + ".jrprint",
 				null
 				);
-			System.err.println(reportFile.getName() + " filling time : " + (System.currentTimeMillis() - start));
+			System.out.println(reportFile.getName() + " filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -90,7 +90,7 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 				fileName, 
 				fileName.substring(0, fileName.indexOf(".jrprint")) + ".pdf"
 				);
-			System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -110,7 +110,7 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 				fileName, 
 				fileName.substring(0, fileName.indexOf(".jrprint")) + ".html"
 				);
-			System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 		
 	}

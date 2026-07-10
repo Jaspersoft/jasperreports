@@ -24,13 +24,45 @@
 package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.engine.design.JRDesignConditionalStyle;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Ionut Nedelcu (ionutned@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_fill,
+	JRXmlConstants.ATTRIBUTE_radius,
+	JRXmlConstants.ATTRIBUTE_scaleImage,
+	JRXmlConstants.ATTRIBUTE_hTextAlign,
+	JRXmlConstants.ATTRIBUTE_vTextAlign,
+	JRXmlConstants.ATTRIBUTE_hImageAlign,
+	JRXmlConstants.ATTRIBUTE_vImageAlign,
+	JRXmlConstants.ATTRIBUTE_rotation,
+	JRXmlConstants.ATTRIBUTE_markup,
+	JRXmlConstants.ATTRIBUTE_pattern,
+	"blankWhenNull",
+	JRXmlConstants.ATTRIBUTE_fontName,
+	JRXmlConstants.ATTRIBUTE_fontSize,
+	"bold",
+	"italic",
+	"underline",
+	"strikeThrough",
+	JRXmlConstants.ATTRIBUTE_pdfFontName,
+	JRXmlConstants.ATTRIBUTE_pdfEncoding,
+	"pdfEmbedded",
+	JRXmlConstants.ELEMENT_conditionExpression,
+	JRXmlConstants.ELEMENT_pen,
+	JRXmlConstants.ELEMENT_box,
+	JRXmlConstants.ELEMENT_paragraph
+	})
 @JsonDeserialize(as = JRDesignConditionalStyle.class)
 public interface JRConditionalStyle extends JRStyle
 {

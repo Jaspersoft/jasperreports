@@ -1,4 +1,4 @@
-<jasperReport name="TextReport" language="java" pageWidth="798" pageHeight="1000" whenNoDataType="AllSectionsNoDetail" columnWidth="714" leftMargin="42" rightMargin="42" topMargin="70" bottomMargin="70" uuid="f120a079-4f45-450c-8e21-7ac5a96f3c9a">
+<jasperReport name="TextReport" pageWidth="798" pageHeight="1000" whenNoDataType="AllSectionsNoDetail" columnWidth="714" leftMargin="42" rightMargin="42" topMargin="70" bottomMargin="70" uuid="f120a079-4f45-450c-8e21-7ac5a96f3c9a">
 	<property name="net.sf.jasperreports.export.text.character.width" value="7.238"/>
 	<property name="net.sf.jasperreports.export.text.character.height" value="13.948"/>
 	<style name="FixSizeFontStyle" default="true" fontName="DejaVu Sans Mono" fontSize="12.0"/>

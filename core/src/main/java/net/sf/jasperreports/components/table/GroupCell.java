@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.table;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -31,6 +32,10 @@ import net.sf.jasperreports.engine.JRCloneable;
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"groupName",
+	"cell"
+	})
 @JsonDeserialize(as = StandardGroupCell.class)
 public interface GroupCell extends JRCloneable
 {

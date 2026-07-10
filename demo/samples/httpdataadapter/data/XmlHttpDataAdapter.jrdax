@@ -5,6 +5,8 @@
 			xsi:type="httpDataLocation">
 		<method>GET</method>
 		<url><![CDATA[http://localhost:58080/data.jsp?type=xml]]></url>
+		<username>jasper</username>
+		<password>r3Ports</password>
 	</dataFile>
 	<useConnection>true</useConnection>
 	<timeZone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 

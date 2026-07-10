@@ -1,4 +1,4 @@
-<jasperReport name="I18nReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" resourceBundle="i18n" uuid="280f7abe-5b19-4e15-8223-612e25a5f66a">
+<jasperReport name="I18nReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" resourceBundle="i18n" uuid="280f7abe-5b19-4e15-8223-612e25a5f66a">
 	<parameter name="number" class="java.lang.Double"/>
 	<title height="552">
 		<element kind="textField" uuid="9e47d16e-496c-46ee-8e1f-7ad49e928d48" positionType="Float" x="20" y="0" width="530" height="20" fontSize="14.0" pattern="EEEE, MMMM dd, yyyy" hTextAlign="Right">

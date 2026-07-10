@@ -68,6 +68,8 @@ public interface PropertyConstants
 	
 	String CATEGORY_WEB_UTIL = PREFIX_CATEGORY + "web.util";
 
+	String CATEGORY_SECURITY = PREFIX_CATEGORY + "security";
+
 	String BOOLEAN_FALSE = "false";
 	
 	String BOOLEAN_TRUE = "true";
@@ -279,5 +281,7 @@ public interface PropertyConstants
 	String VERSION_7_0_6 = "7.0.6";
 	
 	String VERSION_7_0_7 = "7.0.7";
+
+	String VERSION_7_0_8 = "7.0.8";
 
 }

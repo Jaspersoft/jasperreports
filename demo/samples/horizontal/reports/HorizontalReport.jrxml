@@ -1,4 +1,4 @@
-<jasperReport name="HorizontalReport" language="java" columnCount="3" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="175" columnSpacing="5" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="04f5af13-ab16-4921-bb63-039d345db20b">
+<jasperReport name="HorizontalReport" columnCount="3" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="175" columnSpacing="5" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="04f5af13-ab16-4921-bb63-039d345db20b">
 	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" bold="true" italic="false"/>

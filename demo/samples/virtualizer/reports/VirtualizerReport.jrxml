@@ -1,4 +1,4 @@
-<jasperReport name="VirtualizerReport" language="java" pageWidth="595" pageHeight="842" columnWidth="270" columnSpacing="15" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="62072fa9-c37f-416e-8ffc-9ace4ab66ee0">
+<jasperReport name="VirtualizerReport" pageWidth="595" pageHeight="842" columnWidth="270" columnSpacing="15" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="62072fa9-c37f-416e-8ffc-9ace4ab66ee0">
 	<variable name="Value" class="java.lang.Double">
 		<expression><![CDATA[500 + 500 * Math.sin($V{REPORT_COUNT} * Math.log(1 + $V{REPORT_COUNT}))]]></expression>
 	</variable>

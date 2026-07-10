@@ -171,6 +171,10 @@ public class StandardPdfProducer implements PdfProducer
 		{
 			PdfWriter pdfWriter = PdfWriter.getInstance(document.getDocument(), os);
 			pdfWriter.setCloseStream(false);
+			if (context.isTagged())
+			{
+				pdfWriter.setTagged();
+			}
 			
 			PdfWriter imageTesterPdfWriter =
 				PdfWriter.getInstance(
@@ -194,12 +198,6 @@ public class StandardPdfProducer implements PdfProducer
 	public PdfWriter getPdfWriter()
 	{
 		return writer.getPdfWriter();
-	}
-
-	@Override
-	public void setTagged()
-	{
-		writer.getPdfWriter().setTagged();
 	}
 
 	@Override

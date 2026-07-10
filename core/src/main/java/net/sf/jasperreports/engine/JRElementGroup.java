@@ -27,6 +27,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -57,6 +58,10 @@ import net.sf.jasperreports.engine.design.JRDesignElementGroup;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	"elements"
+	})
 @JsonTypeName("elementGroup")
 @JsonDeserialize(as = JRDesignElementGroup.class)
 public interface JRElementGroup extends JRChild

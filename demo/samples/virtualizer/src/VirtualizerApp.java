@@ -178,7 +178,7 @@ public class VirtualizerApp extends AbstractSampleApp
 		
 		virtualizer.setReadOnly(true);
 
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 		return jasperPrint;
 	}
 
@@ -193,7 +193,7 @@ public class VirtualizerApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 
 	
@@ -201,7 +201,7 @@ public class VirtualizerApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile(jasperPrint, "target/reports/" + jasperPrint.getName() + ".html");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 
 	
@@ -209,7 +209,7 @@ public class VirtualizerApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile(jasperPrint, "target/reports/" + jasperPrint.getName() + ".jrpxml", embedded);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 
 	
@@ -217,7 +217,7 @@ public class VirtualizerApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile(jasperPrint, "target/reports/" + jasperPrint.getName() + ".pdf");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 }

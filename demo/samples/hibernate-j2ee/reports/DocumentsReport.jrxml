@@ -1,4 +1,4 @@
-<jasperReport name="DocumentsReport" language="java" pageWidth="500" pageHeight="842" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="68cf12a7-46cc-4853-8a87-47af86af0d76">
+<jasperReport name="DocumentsReport" pageWidth="500" pageHeight="842" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="68cf12a7-46cc-4853-8a87-47af86af0d76">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="10.0" bold="true"/>
 	<style name="Sans_Italic" fontName="DejaVu Sans" fontSize="10.0" italic="true"/>

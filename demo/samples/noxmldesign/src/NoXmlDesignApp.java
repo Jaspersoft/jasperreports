@@ -114,7 +114,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		File file = new File("target/reports/NoXmlDesignReport.jasper");
 		file.getParentFile().mkdirs();
 		JasperCompileManager.compileReportToFile(jasperDesign, file.getPath());
-		System.err.println("Compile time : " + (System.currentTimeMillis() - start));
+		System.out.println("Compile time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -130,7 +130,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		parameters.put("OrderByClause", "ORDER BY City");
 
 		JasperFillManager.fillReportToFile("target/reports/NoXmlDesignReport.jasper", parameters, getDemoHsqldbConnection());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -141,7 +141,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/NoXmlDesignReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -152,7 +152,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/NoXmlDesignReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -175,7 +175,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -186,7 +186,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/NoXmlDesignReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -197,7 +197,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/NoXmlDesignReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -208,7 +208,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/NoXmlDesignReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -234,7 +234,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -257,7 +257,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -280,7 +280,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -306,7 +306,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -329,7 +329,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -355,7 +355,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -378,7 +378,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -389,7 +389,7 @@ public class NoXmlDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperCompileManager.writeReportToXmlFile("target/reports/NoXmlDesignReport.jasper");
-		System.err.println("XML design creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML design creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

@@ -1,4 +1,4 @@
-<jasperReport name="DateRangeReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f657602-9913-42d7-b4e5-7f28789b1a8e">
+<jasperReport name="DateRangeReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f657602-9913-42d7-b4e5-7f28789b1a8e">
 	<style name="detail" mode="Opaque" backcolor="#FFFFFF">
 		<conditionalStyle backcolor="#EEEEEE">
 			<conditionExpression><![CDATA[$V{CityGroup_COUNT} % 2 == 0]]></conditionExpression>

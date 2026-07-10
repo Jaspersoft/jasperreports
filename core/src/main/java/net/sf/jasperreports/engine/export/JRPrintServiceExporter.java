@@ -173,7 +173,7 @@ import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
  *   exporter.setConfiguration(configuration);
  *   exporter.exportReport();
 
- *   System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+ *   System.out.println("Printing time : " + (System.currentTimeMillis() - start));
  * }</pre>
  * 
  * @see net.sf.jasperreports.export.PrintServiceExporterConfiguration

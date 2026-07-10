@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine.fill;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.jasperreports.engine.util.DeserializationClassFilter;
 import net.sf.jasperreports.engine.util.FilteredObjectInputStream;
 
 /**
@@ -41,7 +42,8 @@ public class VirtualizationObjectInputStream extends FilteredObjectInputStream
 	public VirtualizationObjectInputStream(InputStream in, 
 			JRVirtualizationContext virtualizationContext) throws IOException
 	{
-		super(virtualizationContext.getJasperReportsContext(), in);
+		super(virtualizationContext.getJasperReportsContext(), in,
+				new DeserializationClassFilter(virtualizationContext.getJasperReportsContext()));
 		
 		this.virtualizationContext = virtualizationContext;
 		enableResolveObject(true);

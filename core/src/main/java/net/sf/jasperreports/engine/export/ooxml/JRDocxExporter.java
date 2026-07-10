@@ -390,9 +390,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		String application = configuration.getMetadataApplication();
 		if( application == null )
 		{
-			@SuppressWarnings("deprecation") //this can be replaced only after abandoning Java 8 support 
-			String depApplication = "JasperReports Library version " + Package.getPackage("net.sf.jasperreports.engine").getImplementationVersion();
-			application = depApplication;
+			application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 		}
 		appHelper.exportProperty(PropsAppHelper.PROPERTY_APPLICATION, application);
 
@@ -574,47 +572,50 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		
 		if (configuration.isBackgroundAsHeader())
 		{
-			headerIndex++;
-			ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
-			headerWriter = headerEntry.getWriter();
-
-			headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
-			headerHelper.exportHeader(pageFormat);
-
-			ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
-			headerRelsHelper = new DocxHeaderRelsHelper(jasperReportsContext, headerRelsEntry.getWriter());
-			headerRelsHelper.exportHeader();
-			
-			headerRunHelper = new DocxRunHelper(jasperReportsContext, headerWriter, docxFontHelper);
-			
-			pageAnchor = null;
-
-			crtDocHelper = headerHelper;
-			crtDocWriter = headerWriter;
-			crtRelsHelper = headerRelsHelper;
-			crtRunHelper = headerRunHelper;
-			
-			JRGridLayout backgrounGridLayout =
+			JRGridLayout backgroundGridLayout =
 				new JRGridLayout(
 					backgroundNature,
 					page.getElements(),
 					pageFormat.getPageWidth(),
 					pageFormat.getPageHeight(),
-					configuration.getOffsetX() == null ? 0 : configuration.getOffsetX(), 
+					configuration.getOffsetX() == null ? 0 : configuration.getOffsetX(),
 					configuration.getOffsetY() == null ? 0 : configuration.getOffsetY(),
 					null //address
 					);
 
-			exportGrid(backgrounGridLayout, null);
-			
-			relsHelper.exportHeader(headerIndex);
-			ctHelper.exportHeader(headerIndex);
+			if (backgroundGridLayout.getXCuts().size() > 0)
+			{
+				headerIndex++;
+				ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
+				headerWriter = headerEntry.getWriter();
 
-			headerHelper.exportFooter();
-			headerHelper.close();
+				headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
+				headerHelper.exportHeader(pageFormat);
 
-			headerRelsHelper.exportFooter();
-			headerRelsHelper.close();
+				ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
+				headerRelsHelper = new DocxHeaderRelsHelper(jasperReportsContext, headerRelsEntry.getWriter());
+				headerRelsHelper.exportHeader();
+
+				headerRunHelper = new DocxRunHelper(jasperReportsContext, headerWriter, docxFontHelper);
+
+				pageAnchor = null;
+
+				crtDocHelper = headerHelper;
+				crtDocWriter = headerWriter;
+				crtRelsHelper = headerRelsHelper;
+				crtRunHelper = headerRunHelper;
+
+				exportGrid(backgroundGridLayout, null);
+
+				relsHelper.exportHeader(headerIndex);
+				ctHelper.exportHeader(headerIndex);
+
+				headerHelper.exportFooter();
+				headerHelper.close();
+
+				headerRelsHelper.exportFooter();
+				headerRelsHelper.close();
+			}
 		}
 	}
 
@@ -1776,6 +1777,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	{
 		tableHelper.getCellHelper().exportHeader(frame, gridCell);
 //		tableHelper.getCellHelper().exportProps(gridCell);
+		tableHelper.getParagraphHelper().exportEmptyParagraph();
 
 		boolean appendBackcolor =
 			frame.getMode() == ModeEnum.OPAQUE

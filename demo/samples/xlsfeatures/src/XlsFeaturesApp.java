@@ -81,7 +81,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
 			JasperFillManager.fillReportToFile(sourceFile.getPath(), new HashMap<String, Object>(parameters));
-			System.err.println("Report : " + sourceFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -113,7 +113,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 	
 		}
 	}
@@ -146,7 +146,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". "+ extension.toUpperCase() + " creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". "+ extension.toUpperCase() + " creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	

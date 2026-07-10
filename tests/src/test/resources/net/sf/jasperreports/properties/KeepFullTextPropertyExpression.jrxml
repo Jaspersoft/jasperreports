@@ -1,4 +1,4 @@
-<jasperReport name="KeepFullTextPropertyExpression" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="a1e72e18-b505-459f-819c-09d9fbe3576e">
+<jasperReport name="KeepFullTextPropertyExpression" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="a1e72e18-b505-459f-819c-09d9fbe3576e">
 	<propertyExpression name="net.sf.jasperreports.print.keep.full.text"><![CDATA["true"]]></propertyExpression>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<title height="20">

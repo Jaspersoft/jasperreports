@@ -50,6 +50,7 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.SimpleJasperReportsContext;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
@@ -146,7 +147,9 @@ public class JasperReportsDecompileMojo extends AbstractJasperReportsMojo
 				{
 					Thread.currentThread().setContextClassLoader(newClassLoader);
 				}
-				
+
+				jasperReportsContext = new SimpleJasperReportsContext();
+
 				decompile(sources, mapping);
 			}
 			finally

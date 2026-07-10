@@ -1,4 +1,4 @@
-<jasperReport name="StylesReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="53f914b8-f951-4433-971d-6b1819430c56">
+<jasperReport name="StylesReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="53f914b8-f951-4433-971d-6b1819430c56">
 	<template><![CDATA["styles.jrtx"]]></template>
 	<style name="Right Aligned" style="Regular" hTextAlign="Right" hImageAlign="Right"/>
 	<style name="More Emphasis" style="Emphasis" mode="Opaque" backcolor="#FFC800" fontSize="14.0"/>

@@ -1,4 +1,4 @@
-<jasperReport name="InputStreamImage" language="java" pageWidth="500" pageHeight="150" whenNoDataType="AllSectionsNoDetail" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a7b6791c-02bb-4a13-a253-1573b66205da">
+<jasperReport name="InputStreamImage" pageWidth="500" pageHeight="150" whenNoDataType="AllSectionsNoDetail" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a7b6791c-02bb-4a13-a253-1573b66205da">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<field name="image" class="java.io.InputStream"/>
 	<detail>

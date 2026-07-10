@@ -1,4 +1,4 @@
-<jasperReport name="Barcode4JReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="432a7055-07f0-43d2-8d4c-00337bfe4d0a">
+<jasperReport name="Barcode4JReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="432a7055-07f0-43d2-8d4c-00337bfe4d0a">
 	<style name="Barcode" fontName="DejaVu Sans" fontSize="10.0"/>
 	<title height="742">
 		<element kind="line" uuid="f980135d-c40f-42a7-93cd-d9d82925d5e2" x="0" y="0" width="515" height="1"/>

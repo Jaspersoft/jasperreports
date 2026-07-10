@@ -11,7 +11,7 @@
 	<packaging>pom</packaging>
 	<properties>
 		<jasperreports.root.dir>${basedir}/../../../</jasperreports.root.dir>
-		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
+		<maven.buildNumber.skip>true</maven.buildNumber.skip>
 		<maven.deploy.skip>true</maven.deploy.skip>
 		<maven.install.skip>true</maven.install.skip>
 		<sample.app.name>${sample.base.name}App</sample.app.name>
@@ -154,6 +154,7 @@
 					-->
 					<include>**/*.txt</include>
 					<include>**/*.xsd</include>
+					<include>**/*.jrctx</include>
 				</includes>
 			</resource>
 			<resource>

@@ -777,6 +777,41 @@ export configuration setting. It specifies the path to the ICC profile file for 
   </configProperty>
   
   
+  <!-- net.sf.jasperreports.export.pdf.producer.factory -->
+
+  <configProperty name="net.sf.jasperreports.export.pdf.producer.factory">
+    <description>
+Property that specifies the factory class used to create the PDF producer implementation.
+The value should be the fully qualified name of a class that implements the
+<api href="net/sf/jasperreports/pdf/common/PdfProducerFactory.html">PdfProducerFactory</api> interface.
+<br/>
+By default, this property is set to <code>net.sf.jasperreports.pdf.classic.ClassicPdfProducerFactory</code>.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.pdf.tagger.factory -->
+
+  <configProperty name="net.sf.jasperreports.export.pdf.tagger.factory">
+    <description>
+Property that specifies the factory class used to create the PDF tagger implementation responsible for
+inserting tags into the generated PDF document for accessibility and/or archiving purposes.
+The value should be the fully qualified name of a class that implements the
+<api href="net/sf/jasperreports/pdf/common/PdfTaggerFactory.html">PdfTaggerFactory</api> interface.
+<br/>
+By default, this property is set to <code>net.sf.jasperreports.pdf.common.DefaultPdfTaggerFactory</code>,
+which raises an error if the report is required to produce tagged PDF.
+<br/>
+To avoid the error and thus ignore the tagged PDF export settings, you should set this property to 
+<code>net.sf.jasperreports.pdf.common.SilentPdfTaggerFactory</code>, which produces documents without tags.
+<br/>
+For proper tagged PDF output, please consider upgrading to 
+<a href="https://www.jaspersoft.com/products/jaspersoft-commercial">JasperReports Library Professional</a>, 
+from <a href="https://www.jaspersoft.com/contact-us">Jaspersoft</a>.
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.export.pdf.use.saved.line.breaks -->
 
   <configProperty name="net.sf.jasperreports.export.pdf.use.saved.line.breaks">

@@ -1,4 +1,4 @@
-<jasperReport name="Java5Report" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="8849f79f-592f-45af-b7bf-e72ef13a7b9a">
+<jasperReport name="Java5Report" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="8849f79f-592f-45af-b7bf-e72ef13a7b9a">
 	<parameter name="A" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
 	</parameter>

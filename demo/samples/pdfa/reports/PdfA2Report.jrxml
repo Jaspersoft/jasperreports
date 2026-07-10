@@ -1,4 +1,4 @@
-<jasperReport name="PdfA2Report" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="2d9e0f21-d6dc-4ed3-bf60-109cb8dd4613">
+<jasperReport name="PdfA2Report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="2d9e0f21-d6dc-4ed3-bf60-109cb8dd4613">
 	<title height="520">
 		<element kind="staticText" uuid="739f6943-af78-4e02-b23d-ef8516028089" positionType="Float" x="0" y="0" width="555" height="40" fontName="LiberationSans" fontSize="14.0" hTextAlign="Center">
 			<text><![CDATA[The generated PDF document is a valid PDF/A-2]]></text>

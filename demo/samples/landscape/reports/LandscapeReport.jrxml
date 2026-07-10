@@ -1,4 +1,4 @@
-<jasperReport name="LandscapeReport" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0049a95f-7a7d-4af2-bc2d-1a338bd3ba2d">
+<jasperReport name="LandscapeReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0049a95f-7a7d-4af2-bc2d-1a338bd3ba2d">
 	<title height="595">
 		<element kind="staticText" uuid="91025f3a-509c-469e-a140-4950cd4ade51" mode="Opaque" x="0" y="0" width="50" height="50" backcolor="#333333">
 			<text><![CDATA[.]]></text>

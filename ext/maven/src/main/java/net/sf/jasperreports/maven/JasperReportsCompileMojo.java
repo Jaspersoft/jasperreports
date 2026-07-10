@@ -50,6 +50,7 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.SimpleJasperReportsContext;
 
 
 /**
@@ -162,7 +163,9 @@ public class JasperReportsCompileMojo extends AbstractJasperReportsMojo
 				{
 					Thread.currentThread().setContextClassLoader(newClassLoader);
 				}
-				
+
+				jasperReportsContext = new SimpleJasperReportsContext();
+
 				compile(sources, mapping);
 			}
 			finally

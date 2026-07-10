@@ -72,7 +72,7 @@ public class PdfAApp extends AbstractSampleApp
 		JasperFillManager.fillReportToFile("target/reports/PdfA3Report.jasper", null, new JREmptyDataSource());
 		JasperFillManager.fillReportToFile("target/reports/TaggedPdfA1Report.jasper", null, new JREmptyDataSource());
 		JasperFillManager.fillReportToFile("target/reports/TabularPdfA1Report.jasper", null, new JREmptyDataSource(10));
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -133,7 +133,7 @@ public class PdfAApp extends AbstractSampleApp
 			exporter.setConfiguration(configuration);
 			exporter.exportReport();
 	
-			System.err.println("PDF/A creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("PDF/A creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 

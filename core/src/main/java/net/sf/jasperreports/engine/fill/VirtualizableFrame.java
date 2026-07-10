@@ -30,6 +30,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintElementContainer;
 import net.sf.jasperreports.engine.JRPrintPage;
@@ -39,6 +41,7 @@ import net.sf.jasperreports.engine.base.ElementStore;
 import net.sf.jasperreports.engine.base.JRVirtualPrintPage;
 import net.sf.jasperreports.engine.base.VirtualizableElementList;
 import net.sf.jasperreports.engine.util.VirtualizableElementCounter;
+import net.sf.jasperreports.properties.PropertyConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -48,7 +51,14 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 
 	private static final Log log = LogFactory.getLog(VirtualizableFrame.class);
 	
-	public static final String PROPERTY_FRAME_VIRTUALIZATION_ENABLED = 
+	@Property(
+			category = PropertyConstants.CATEGORY_FILL,
+			defaultValue = PropertyConstants.BOOLEAN_TRUE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_6_12_0,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_FRAME_VIRTUALIZATION_ENABLED =
 			JRPropertiesUtil.PROPERTY_PREFIX + "frame.virtualization.enabled";
 
 	private JRTemplatePrintFrame frame;

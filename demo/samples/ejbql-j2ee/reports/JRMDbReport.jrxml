@@ -1,4 +1,4 @@
-<jasperReport name="JRMDbReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="70f6b13b-4884-4fcf-b46f-1642c5d146e6">
+<jasperReport name="JRMDbReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="70f6b13b-4884-4fcf-b46f-1642c5d146e6">
 	<property name="net.sf.jasperreports.ejbql.query.hint.fetchSize" value="50"/>
 	<property name="net.sf.jasperreports.ejbql.query.page.size" value="100"/>
 	<import>net.sf.jasperreports.engine.data.JRBeanCollectionDataSource</import>

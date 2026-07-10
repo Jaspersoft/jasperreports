@@ -1,4 +1,4 @@
-<jasperReport name="MarkupReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e87dbd0e-2e23-4ece-b475-38f7122440a4">
+<jasperReport name="MarkupReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e87dbd0e-2e23-4ece-b475-38f7122440a4">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<parameter name="RtfText" class="java.lang.String"/>
 	<parameter name="HtmlText" class="java.lang.String"/>

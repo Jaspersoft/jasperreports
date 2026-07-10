@@ -1,4 +1,4 @@
-<jasperReport name="ExcelXlsQeDataAdapterReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="623644de-c1a7-4f9b-a0b8-6cd49534177b">
+<jasperReport name="ExcelXlsQeDataAdapterReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="623644de-c1a7-4f9b-a0b8-6cd49534177b">
 	<property name="net.sf.jasperreports.data.adapter" value="data/ExcelXlsQeDataAdapter.jrdax"/>
 	<property name="net.sf.jasperreports.xls.column.names" value="city,id,name,address,state,date"/>
 	<property name="net.sf.jasperreports.xls.column.indexes" value="0,2,3,4,5,6"/>

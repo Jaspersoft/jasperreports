@@ -32,21 +32,17 @@ import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRPropertiesUtil.PropertySuffix;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
-import net.sf.jasperreports.functions.FunctionsBundle;
-import net.sf.jasperreports.functions.FunctionsUtil;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public abstract class AbstractClassFilter implements ClassLoaderFilter
+public abstract class AbstractClassFilter implements ClassFilter
 {
 	protected abstract String getClassFilterEnabledPropertyName();
 
 	protected abstract String getClassWhitelistPropertyPrefix();
 	
 	protected abstract String getClassNotVisibleExceptionMessageKey();
-	
-	protected abstract void addHardcodedWhitelist(StandardClassWhitelist whitelist);
 	
 	private boolean filterEnabled;
 	private List<ClassWhitelist> whitelists;
@@ -62,15 +58,11 @@ public abstract class AbstractClassFilter implements ClassLoaderFilter
 			whitelists = new ArrayList<>();
 			
 			StandardClassWhitelist whitelist = new StandardClassWhitelist();
-			addHardcodedWhitelist(whitelist);
 			loadPropertiesWhitelist(properties, whitelist);
-			loadFunctionsWhitelist(jasperReportsContext, whitelist);
 			whitelists.add(whitelist);
-			
-			List<DeserializationClassWhitelist> extensionWhitelists = jasperReportsContext.getExtensions(
-					DeserializationClassWhitelist.class);
-			whitelists.addAll(extensionWhitelists);			
-		}		
+
+			addExtraWhitelists(jasperReportsContext, whitelists);
+		}
 	}
 
 	private void loadPropertiesWhitelist(JRPropertiesUtil propertiesUtil, 
@@ -84,20 +76,8 @@ public abstract class AbstractClassFilter implements ClassLoaderFilter
 		}
 	}
 
-	private static void loadFunctionsWhitelist(JasperReportsContext jasperReportsContext, 
-			StandardClassWhitelist whitelist)
-	{
-		FunctionsUtil functionsUtil = FunctionsUtil.getInstance(jasperReportsContext);
-		List<FunctionsBundle> functionBundles = functionsUtil.getAllFunctionBundles();
-		for (FunctionsBundle functionsBundle : functionBundles)
-		{
-			List<Class<?>> functionClasses = functionsBundle.getFunctionClasses();
-			for (Class<?> functionClass : functionClasses)
-			{
-				whitelist.addClass(functionClass.getName());
-			}
-		}
-	}
+	protected abstract void addExtraWhitelists(JasperReportsContext jasperReportsContext,
+			List<ClassWhitelist> whitelists);
 
 	public boolean isFilteringEnabled()
 	{

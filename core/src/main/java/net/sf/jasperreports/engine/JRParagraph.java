@@ -25,6 +25,7 @@ package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -41,6 +42,17 @@ import net.sf.jasperreports.properties.PropertyConstants;
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_lineSpacing,
+	JRXmlConstants.ATTRIBUTE_lineSpacingSize,
+	JRXmlConstants.ATTRIBUTE_firstLineIndent,
+	JRXmlConstants.ATTRIBUTE_leftIndent,
+	JRXmlConstants.ATTRIBUTE_rightIndent,
+	JRXmlConstants.ATTRIBUTE_spacingBefore,
+	JRXmlConstants.ATTRIBUTE_spacingAfter,
+	JRXmlConstants.ATTRIBUTE_tabStopWidth,
+	"tabStops"
+	})
 @JsonDeserialize(as = JRBaseParagraph.class)
 public interface JRParagraph extends JRStyleContainer
 {
