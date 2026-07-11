@@ -181,7 +181,7 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	{
 		if (PdfaConformanceEnum.PDFA_4 == pdfaConformance)
 		{
-			throw new JRRuntimeException("PDF/A-4 is not supported by the classic PDF producer");
+			throw new UnsupportedOperationException("PDF/A-4 is not supported by the classic PDF producer");
 		}
 		
 		this.pdfaConformance = pdfaConformance;
