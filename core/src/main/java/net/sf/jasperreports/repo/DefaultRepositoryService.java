@@ -58,7 +58,7 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	private static final Log log = LogFactory.getLog(DefaultRepositoryService.class);
 	
 	@Property(
-			category = PropertyConstants.CATEGORY_REPOSITORY,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_TRUE,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_6_11_0,
@@ -72,7 +72,7 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	 * When enabled, only URLs matching patterns defined by {@link #PROPERTY_URL_WHITELIST_PREFIX} properties are allowed.
 	 */
 	@Property(
-			category = PropertyConstants.CATEGORY_REPOSITORY,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_FALSE,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_7,
@@ -88,7 +88,7 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	 * via {@link #PROPERTY_URL_FILTER_ENABLED}.
 	 */
 	@Property(
-			category = PropertyConstants.CATEGORY_REPOSITORY,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_7
 			)

@@ -58,7 +58,7 @@ public final class JRXmlUtils
 	public static final String EXCEPTION_MESSAGE_KEY_DOCUMENT_PARSING_FAILURE = "util.xml.document.parsing.failure";
 	
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = PropertyConstants.BOOLEAN_FALSE,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_6_1_2,

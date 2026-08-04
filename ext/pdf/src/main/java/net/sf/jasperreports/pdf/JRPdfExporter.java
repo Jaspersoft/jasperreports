@@ -92,7 +92,6 @@ import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.base.JRBaseFont;
 import net.sf.jasperreports.engine.base.JRBasePen;
-import net.sf.jasperreports.engine.base.JRBasePrintText;
 import net.sf.jasperreports.engine.export.GenericElementHandlerEnviroment;
 import net.sf.jasperreports.engine.export.HyperlinkUtil;
 import net.sf.jasperreports.engine.export.JRExportProgressMonitor;
@@ -136,10 +135,13 @@ import net.sf.jasperreports.pdf.common.PdfProducerContext;
 import net.sf.jasperreports.pdf.common.PdfProducerFactory;
 import net.sf.jasperreports.pdf.common.PdfRadioCheck;
 import net.sf.jasperreports.pdf.common.PdfStructureEntry;
+import net.sf.jasperreports.pdf.common.PdfTagger;
+import net.sf.jasperreports.pdf.common.PdfTaggerFactory;
 import net.sf.jasperreports.pdf.common.PdfTextAlignment;
 import net.sf.jasperreports.pdf.common.PdfTextChunk;
 import net.sf.jasperreports.pdf.common.PdfTextField;
 import net.sf.jasperreports.pdf.common.PdfTextRendererContext;
+import net.sf.jasperreports.pdf.common.SilentPdfTaggerFactory;
 import net.sf.jasperreports.pdf.common.TextDirection;
 import net.sf.jasperreports.pdf.type.PdfFieldBorderStyleEnum;
 import net.sf.jasperreports.pdf.type.PdfFieldCheckTypeEnum;
@@ -355,7 +357,7 @@ import net.sf.jasperreports.renderers.util.RendererUtil;
  * property of the image element in JRXML.
  * <p/>
  * For more information about tagged PDF documents in JasperReports, 
- * please consult the {@link net.sf.jasperreports.pdf.JRPdfExporterTagHelper} class.
+ * please consult the {@link PdfTagger} interface.
  * 
  * @see net.sf.jasperreports.pdf.PdfExporterConfiguration
  * @see net.sf.jasperreports.pdf.PdfReportConfiguration
@@ -541,14 +543,29 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	public static final String PDF_EXPORTER_KEY = JRPropertiesUtil.PROPERTY_PREFIX + "pdf";
 	
+	@Property(
+		category = PropertyConstants.CATEGORY_EXPORT,
+		scopes = {PropertyScope.GLOBAL, PropertyScope.CONTEXT},
+		sinceVersion = PropertyConstants.VERSION_6_20_1
+		)
 	public static final String PDF_PRODUCER_FACTORY_PROPERTY = PDF_EXPORTER_PROPERTIES_PREFIX + "producer.factory";
-	
+
+	@Property(
+		category = PropertyConstants.CATEGORY_EXPORT,
+		scopes = {PropertyScope.GLOBAL, PropertyScope.CONTEXT},
+		sinceVersion = PropertyConstants.VERSION_7_0_8
+		)
+	public static final String PDF_TAGGER_FACTORY_PROPERTY = PDF_EXPORTER_PROPERTIES_PREFIX + "tagger.factory";
+
 	private static final String EMPTY_BOOKMARK_TITLE = "";
 
 	protected static boolean fontsRegistered;
 	
 	private static final JRSingletonCache<PdfProducerFactory> pdfProducerCache = 
 			new JRSingletonCache<>(PdfProducerFactory.class);
+
+	private static final JRSingletonCache<PdfTaggerFactory> pdfTaggerCache =
+			new JRSingletonCache<>(PdfTaggerFactory.class);
 
 	protected class ExporterContext extends BaseExporterContext implements JRPdfExporterContext
 	{
@@ -576,7 +593,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected PdfProducer pdfProducer;
 	protected PdfContent pdfContent;
 	
-	protected JRPdfExporterTagHelper tagHelper = new JRPdfExporterTagHelper(this);
+	protected PdfTagger pdfTagger;
+	protected boolean isTagged;
 	protected ColorSpace cmykColorSpace;
 
 	protected int reportIndex;
@@ -595,6 +613,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected PdfImage pxImage;
 
 	private BookmarkStack bookmarkStack;
+	private boolean firstParagraph;
 
 	private int crtPageOffsetX;
 	private int crtPageOffsetY;
@@ -705,21 +724,22 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		
 		PdfExporterConfiguration configuration = getCurrentConfiguration();
 		
-		Boolean isTagged = configuration.isTagged();
-		if (isTagged != null)
-		{
-			tagHelper.setTagged(isTagged); 
-		}
-
-		tagHelper.setLanguage(configuration.getTagLanguage()); 
-		
 		this.permissions = getIntegerPermissions(configuration.getAllowedPermissions()) & (~getIntegerPermissions(configuration.getDeniedPermissions()));
 		crtDocumentPageNumber = 0;
 		
 		awtIgnoreMissingFont = getPropertiesUtil().getBooleanProperty(
 				JRStyledText.PROPERTY_AWT_IGNORE_MISSING_FONT);//FIXMECONTEXT replace with getPropertiesUtil in all exporters
 		
+		isTagged = configuration.isTagged();
+
+		PdfTaggerFactory taggerFactory = getPdfTaggerFactory(isTagged);
+		pdfTagger = taggerFactory.createTagger(this);
+
+		pdfTagger.setLanguage(configuration.getTagLanguage()); 
+		
 		pdfProducer = createPdfProducer();
+		
+		pdfTagger.setPdfProducer(pdfProducer);
 	}
 
 	@Override
@@ -761,7 +781,30 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			throw new JRRuntimeException(e);
 		}
 	}
-	
+
+	protected PdfTaggerFactory getPdfTaggerFactory(Boolean isTagged)
+	{
+		String taggerFactory = null;
+
+		if (Boolean.TRUE.equals(isTagged))
+		{
+			taggerFactory = propertiesUtil.getProperty(PDF_TAGGER_FACTORY_PROPERTY);
+		}
+		else
+		{
+			taggerFactory = SilentPdfTaggerFactory.class.getName();
+		}
+		
+		try
+		{
+			return pdfTaggerCache.getCachedInstance(taggerFactory);
+		}
+		catch (JRException e)
+		{
+			throw new JRRuntimeException(e);
+		}
+	}
+
 	protected PdfProducerContext createPdfProducerContext()
 	{
 		return new PdfProducerContext()
@@ -799,7 +842,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			@Override
 			public boolean isTagged()
 			{
-				return tagHelper.isTagged;
+				return isTagged;
 			}
 
 			@Override
@@ -911,8 +954,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		{
 			PdfDocumentWriter pdfWriter = pdfProducer.createWriter(os);
 
-			tagHelper.setPdfProducer(pdfProducer);
-			
 			PdfVersionEnum pdfVersion = configuration.getPdfVersion();
 			if (pdfVersion != null)
 			{
@@ -1010,9 +1051,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				gotPdfa = true;
 			}
 
-			if (gotPdfa || tagHelper.isTagged)
+			if (gotPdfa || isTagged)
 			{
-				pdfWriter.createXmpMetadata(title, subject, keywords, tagHelper.isTagged);
+				pdfWriter.createXmpMetadata(title, subject, keywords, isTagged);
 			}
 			if (!gotPdfa)
 			{
@@ -1059,7 +1100,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 			pdfContent = pdfProducer.createPdfContent();
 
-			tagHelper.init();
+			pdfTagger.init();
 
 			List<ExporterInputItem> items = exporterInput.getItems();
 
@@ -1214,14 +1255,14 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	protected void exportPage(JRPrintPage page) throws JRException, IOException
 	{
-		tagHelper.startPage();
+		pdfTagger.startPage();
 		
 		Collection<JRPrintElement> elements = page.getElements();
 		exportElements(elements);
 
 		pdfProducer.endPage();
 		
-		tagHelper.endPage();
+		pdfTagger.endPage();
 
 		JRExportProgressMonitor progressMonitor = getCurrentItemConfiguration().getProgressMonitor();
 		if (progressMonitor != null)
@@ -1242,7 +1283,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 				if (filter == null || filter.isToExport(element))
 				{
-					tagHelper.startElement(element);
+					firstParagraph = true;
+
+					pdfTagger.startElement(element);
 
 					String strFieldType = element.getPropertiesMap().getProperty(PDF_FIELD_TYPE);
 					PdfFieldTypeEnum fieldType = PdfFieldTypeEnum.getByName(strFieldType);
@@ -1294,7 +1337,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 						exportGenericElement((JRGenericPrintElement) element);
 					}
 
-					tagHelper.endElement(element);
+					pdfTagger.endElement(element);
 				}
 			}
 		}
@@ -1312,7 +1355,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		float lineWidth = line.getLinePen().getLineWidth(); 
 		if (lineWidth > 0f)
 		{
-			tagHelper.beginArtifact();
+			pdfTagger.beginArtifact();
 
 			preparePen(line.getLinePen(), LineCapStyle.BUTT);
 
@@ -1451,7 +1494,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			pdfContent.setLineDash(0f);
 			pdfContent.setLineCap(LineCapStyle.PROJECTING_SQUARE);
 			
-			tagHelper.endArtifact();
+			pdfTagger.endArtifact();
 		}
 	}
 
@@ -1461,7 +1504,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	protected void exportRectangle(JRPrintRectangle rectangle)
 	{
-		tagHelper.beginArtifact();
+		pdfTagger.beginArtifact();
 
 		pdfContent.setFillColor(rectangle.getBackcolor());
 		preparePen(rectangle.getLinePen(), LineCapStyle.PROJECTING_SQUARE);
@@ -1517,7 +1560,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfContent.resetFillColor();
 		pdfContent.setLineDash(0f);
 		
-		tagHelper.endArtifact();
+		pdfTagger.endArtifact();
 	}
 
 
@@ -1526,7 +1569,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	protected void exportEllipse(JRPrintEllipse ellipse)
 	{
-		tagHelper.beginArtifact();
+		pdfTagger.beginArtifact();
 
 		pdfContent.setFillColor(ellipse.getBackcolor());
 		preparePen(ellipse.getLinePen(), LineCapStyle.PROJECTING_SQUARE);
@@ -1579,7 +1622,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		
 		pdfContent.setLineDash(0f);
 		
-		tagHelper.endArtifact();
+		pdfTagger.endArtifact();
 	}
 
 
@@ -1590,7 +1633,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	{
 		if (printImage.getMode() == ModeEnum.OPAQUE)
 		{
-			tagHelper.beginArtifact();
+			pdfTagger.beginArtifact();
 			pdfContent.setFillColor(printImage.getBackcolor());
 			pdfContent.fillRectangle(
 				printImage.getX() + getOffsetX(),
@@ -1599,7 +1642,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				- printImage.getHeight()
 				);
 			pdfContent.resetFillColor();
-			tagHelper.endArtifact();
+			pdfTagger.endArtifact();
 		}
 
 		InternalImageProcessor imageProcessor =
@@ -1637,9 +1680,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				float urx = llx + printImage.getWidth();
 				float lly = ury - printImage.getHeight();
 
-				tagHelper.startImage(printImage, llx, lly, urx, ury);
+				pdfTagger.startImage(printImage, llx, lly, urx, ury);
 
-				PdfStructureEntry linkTag = tagHelper.getCurrentLinkTag();
+				PdfStructureEntry linkTag = pdfTagger.getCurrentLinkTag();
 				if (linkTag != null)
 				{
 					String linkContents = printImage.getHyperlinkTooltip();
@@ -1674,7 +1717,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					PdfChunk pxChunk = pdfProducer.createChunk(pxImage);
 
 					boolean wasHyperlinkSet = setHyperlinkInfo(pxChunk, printImage);
-					boolean usePxImage = linkTag == null && ((tagHelper.isTagged && printImage.getHyperlinkTooltip() != null) || wasHyperlinkSet);
+					boolean usePxImage = linkTag == null && ((isTagged && printImage.getHyperlinkTooltip() != null) || wasHyperlinkSet);
 
 					if (usePxImage)
 					{
@@ -1692,12 +1735,12 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					}
 				}
 	
-				tagHelper.endImage();
+				pdfTagger.endImage();
 			}
 		}
 
 
-		tagHelper.beginArtifact();
+		pdfTagger.beginArtifact();
 		if (
 			printImage.getLineBox().getTopPen().getLineWidth() <= 0f &&
 			printImage.getLineBox().getLeftPen().getLineWidth() <= 0f &&
@@ -1718,7 +1761,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				printImage
 				);
 		}
-		tagHelper.endArtifact();
+		pdfTagger.endArtifact();
 	}
 
 	private class InternalImageProcessor
@@ -2334,13 +2377,13 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			Map<Attribute,Object> attributes = iterator.getAttributes();
 			PdfTextChunk chunk = getChunk(attributes, text.substring(iterator.getIndex(), runLimit), locale);
 
-			if (firstChunk && tagHelper.isFirstTextParagraph())
+			if (firstChunk && firstParagraph)
 			{
 				// only set anchor + bookmark for the first chunk in the text
 				setAnchor(chunk, textElement, textElement);
 
-				PdfStructureEntry linkTag = tagHelper.getCurrentLinkTag();
-				if (linkTag != null && tagHelper.isFirstLinkParagraph())
+				PdfStructureEntry linkTag = pdfTagger.getCurrentLinkTag();
+				if (linkTag != null && pdfTagger.isFirstLinkParagraph())
 				{
 					float llx = textElement.getX() + getOffsetX();
 					float ury = pageFormat.getPageHeight() - textElement.getY() - getOffsetY();
@@ -2357,7 +2400,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				hyperlink = (JRPrintHyperlink)attributes.get(JRTextAttribute.HYPERLINK);
 			}
 
-			if (tagHelper.getCurrentLinkTag() == null || (firstChunk && tagHelper.isFirstLinkParagraph()))
+			if (pdfTagger.getCurrentLinkTag() == null || (firstChunk && pdfTagger.isFirstLinkParagraph()))
 			{
 				setHyperlinkInfo(chunk, hyperlink);
 			}
@@ -2366,6 +2409,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			iterator.setIndex(runLimit);
 			firstChunk = false;
 		}
+
+		firstParagraph = false;
 	}
 
 
@@ -2593,7 +2638,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		}
 		
 		AbstractPdfTextRenderer textRenderer = getTextRenderer(text, styledText);
-		textRenderer.initialize(this, pdfProducer, tagHelper, text, styledText, getOffsetX(), getOffsetY());
+		textRenderer.initialize(this, pdfProducer, pdfTagger, text, styledText, getOffsetX(), getOffsetY());
 
 		double angle = 0;
 
@@ -2626,7 +2671,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 		if (text.getMode() == ModeEnum.OPAQUE)
 		{
-			tagHelper.beginArtifact();
+			pdfTagger.beginArtifact();
 			Color backcolor = text.getBackcolor();
 			pdfContent.setFillColor(backcolor);
 			pdfContent.fillRectangle(
@@ -2636,7 +2681,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				- textRenderer.getHeight()
 				);
 			pdfContent.resetFillColor();
-			tagHelper.endArtifact();
+			pdfTagger.endArtifact();
 		}
 		
 		int forecolorAlpha = getSingleForecolorAlpha(styledText);
@@ -2655,12 +2700,12 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfContent.transform(atrans);
 
 		/*   */
-		tagHelper.beginArtifact();
+		pdfTagger.beginArtifact();
 		exportBox(
 			text.getLineBox(),
 			text
 			);
-		tagHelper.endArtifact();
+		pdfTagger.endArtifact();
 	}
 	
 	protected int getSingleForecolorAlpha(JRStyledText styledText)
@@ -3471,7 +3516,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	{
 		if (frame.getMode() == ModeEnum.OPAQUE)
 		{
-			tagHelper.beginArtifact();
+			pdfTagger.beginArtifact();
 			int x = frame.getX() + getOffsetX();
 			int y = frame.getY() + getOffsetY();
 
@@ -3486,7 +3531,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				- frame.getHeight()
 				);
 			pdfContent.resetFillColor();
-			tagHelper.endArtifact();
+			pdfTagger.endArtifact();
 		}
 
 		setFrameElementsOffset(frame, false);
@@ -3499,9 +3544,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			restoreElementOffsets();
 		}
 
-		tagHelper.beginArtifact();
+		pdfTagger.beginArtifact();
 		exportBox(frame.getLineBox(), frame);
-		tagHelper.endArtifact();
+		pdfTagger.endArtifact();
 	}
 
 

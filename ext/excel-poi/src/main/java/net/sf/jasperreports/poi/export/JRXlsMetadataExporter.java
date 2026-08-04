@@ -558,13 +558,13 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					if (columnWidth != null && columnWidth < Integer.MAX_VALUE) {
 						if(columnWidthRatio != null && columnWidthRatio > 1f)
 						{
-							columnWidth =  Math.round(43 * columnWidth * columnWidthRatio);
+							columnWidth =  Math.round(45 * columnWidth * columnWidthRatio);
 						}
 						else
 						{
-							columnWidth =  43 * columnWidth;
+							columnWidth =  45 * columnWidth;
 						}
-						currentSheet.setColumnWidth(columnNamesMap.get(columnName), Math.min(columnWidth, 256*255));
+						currentSheet.setColumnWidth(columnNamesMap.get(columnName), Math.min(columnWidth, 256 * 255));
 					} else {
 						currentSheet.autoSizeColumn(columnNamesMap.get(columnName), false);
 					}

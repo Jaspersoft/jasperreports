@@ -107,6 +107,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_DATA = "fill.dataset.no.such.snapshot.data";
 	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_PARAMETER = "fill.dataset.no.such.snapshot.parameter";
 	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_VARIABLE = "fill.dataset.no.such.variable";
+	public static final String EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_DISABLED = "query.executer.disabled";
 	
 	/**
 	 * The filler that created this object.
@@ -1321,7 +1322,21 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 						+ "Creating " + query.getLanguage() + " query executer");
 			}
 			
-			QueryExecuterFactory queryExecuterFactory = JRQueryExecuterUtils.getInstance(getJasperReportsContext()).getExecuterFactory(query.getLanguage());
+			String language = query.getLanguage();
+			boolean enabled = JRPropertiesUtil.getInstance(getJasperReportsContext())
+					.getBooleanProperty(
+							QueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX
+							+ language
+							+ QueryExecuterFactory.PROPERTY_QUERY_EXECUTER_FACTORY_ENABLED_SUFFIX,
+							true);
+			if (!enabled)
+			{
+				throw new JRRuntimeException(
+						EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_DISABLED,
+						new Object[]{language});
+			}
+
+			QueryExecuterFactory queryExecuterFactory = JRQueryExecuterUtils.getInstance(getJasperReportsContext()).getExecuterFactory(language);
 			SimpleQueryExecutionContext queryExecutionContext = SimpleQueryExecutionContext.of(
 					getJasperReportsContext(), getRepositoryContext());
 			queryExecuter = queryExecuterFactory.createQueryExecuter(queryExecutionContext, this, parametersMap);

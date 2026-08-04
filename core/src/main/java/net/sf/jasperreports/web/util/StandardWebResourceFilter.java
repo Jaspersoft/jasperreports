@@ -44,7 +44,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class StandardWebResourceFilter implements WebResourceFilter
 {
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			defaultValue = "true",
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_6,
@@ -54,7 +54,7 @@ public class StandardWebResourceFilter implements WebResourceFilter
 			JRPropertiesUtil.PROPERTY_PREFIX + "web.resource.filter.enabled";
 	
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_6,
 			name = "net.sf.jasperreports.web.resource.paths.{arbitrary_name}"
@@ -63,7 +63,7 @@ public class StandardWebResourceFilter implements WebResourceFilter
 			JRPropertiesUtil.PROPERTY_PREFIX + "web.resource.paths.";
 	
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_6,
 			name = "net.sf.jasperreports.web.resource.pattern.{arbitrary_name}"
