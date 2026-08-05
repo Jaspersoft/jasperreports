@@ -111,7 +111,7 @@ public class JRBaseCrosstabBucket implements JRCrosstabBucket, Serializable
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{

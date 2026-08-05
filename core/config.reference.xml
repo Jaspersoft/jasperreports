@@ -56,6 +56,10 @@
     <name>Web Util</name>
   </category>
 
+  <category key="net.sf.jasperreports.metadata.property.category:security">
+    <name>Security</name>
+  </category>
+
   <category key="net.sf.jasperreports.metadata.property.category:other">
     <name>Other</name>
   </category>
@@ -351,6 +355,18 @@ in report SQL queries.
     </description>
   </configProperty>
 
+  <!-- net.sf.jasperreports.query.parameter.clause.enabled -->
+
+  <configProperty name="net.sf.jasperreports.query.parameter.clause.enabled">
+    <description>
+Flag property that determines whether query parameter clause text injection ($P!{}) is enabled.
+When set to <code>false</code>, any use of <code>$P!{}</code> parameter clause syntax in a query will result
+in an error. This can be used to prevent parameter values from being directly injected as text into queries.
+The property is enabled by default.
+    </description>
+  </configProperty>
+
+
   <!-- net.sf.jasperreports.query.chunk.token.separators -->
 
   <configProperty name="net.sf.jasperreports.query.chunk.token.separators">
@@ -384,6 +400,18 @@ the optional third parameter of the clause is not provided.
     <description>
 Properties with this prefix associate a query executer factory implementation with a query language.
 To obtain query executer factories, a property having the query language appended to this prefix is used to get the query executer factory name.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.query.executer.factory.{language}.enabled -->
+
+  <configProperty name="net.sf.jasperreports.query.executer.factory.{language}.enabled">
+    <description>
+Flag property that determines whether a query executer factory for a given language is enabled.
+When set to <code>false</code>, any attempt to execute a query in the specified language will result
+in an error. This can be used to restrict the query languages available in a deployment.
+The property is enabled by default for all query languages.
     </description>
   </configProperty>
 
@@ -2947,6 +2975,10 @@ The property itself defaults to the text value of the report element this proper
     <description>
 Flag property that enforces field values containing formula to be escaped in order to be interpreted as pure text. Its value is used as default for the
 <api href="net/sf/jasperreports/export/CsvExporterConfiguration.html#getEscapeFormula()">getEscapeFormula()</api> CSV export configuration setting.
+<br/>
+As a security control against CSV formula injection, enabling formula escaping at context level acts as an enforced floor that cannot be turned off.
+The property can also be set at report level, but only to strengthen the behavior by enabling escaping; a report-level value of <code>false</code>,
+as well as values set on the export configuration setting, cannot disable escaping that is enforced at context level.
     </description>
   </configProperty>
 
@@ -3333,6 +3365,38 @@ The property provides a default value for the <api href="net/sf/jasperreports/ex
   <configProperty name="net.sf.jasperreports.export.html.embedded.svg.use.fonts">
     <description>
 This property specifies whether the HTML embedded SVG should have the font family names replaced with the web fonts coming from font extensions, similar to what we do for text elements.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.html.href.filter.enabled -->
+
+  <configProperty name="net.sf.jasperreports.export.html.href.filter.enabled">
+    <description>
+Flag property that enables whitelist filtering of the hyperlink URLs (<code>href</code> attributes) produced by the HTML exporter.
+<br/>
+When set to <code>true</code>, only the hyperlink URLs that match one of the patterns configured through
+<a href="#net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}">net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}</a>
+are allowed in the output; any non-matching URL causes the export to fail with an exception. If the flag is enabled but no allow patterns are configured, no hyperlink URL is permitted.
+<br/>
+The filtering applies to all resolved hyperlink URLs, including those generated internally by the exporter, such as local anchors and local page links.
+<br/>
+The property can only be set globally and it defaults to <code>false</code>, meaning that no filtering is performed.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name} -->
+
+  <configProperty name="net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}">
+    <description>
+Defines a hyperlink URL pattern that is allowed in the output produced by the HTML exporter.
+<br/>
+The property value should be a Java regular expression pattern that is matched against the entire <code>href</code> URL.
+Multiple patterns can be configured by using different arbitrary suffixes.
+<br/>
+The <a href="#net.sf.jasperreports.export.html.href.filter.enabled">net.sf.jasperreports.export.html.href.filter.enabled</a>
+flag needs to be set in order for the filtering to apply.
     </description>
   </configProperty>
 

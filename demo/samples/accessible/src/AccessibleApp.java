@@ -21,10 +21,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Panel;
-import java.awt.Toolkit;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,7 +32,6 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.JRCsvMetadataExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
@@ -109,28 +104,7 @@ public class AccessibleApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		long start = System.currentTimeMillis();
-		//Preparing parameters
-		Image image = 
-			Toolkit.getDefaultToolkit().createImage(
-				JRLoader.loadBytesFromResource("dukesign.jpg")
-				);
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", 10500);
-		parameters.put("SummaryImage", image);
-		
-		JasperFillManager.fillReportToFile("target/reports/AccessibleReport.jasper", parameters);
+		JasperFillManager.fillReportToFile("target/reports/AccessibleReport.jasper", null);
 		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
@@ -554,35 +528,6 @@ public class AccessibleApp extends AbstractSampleApp
 		exporter.exportReport();
 
 		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	/**
-	 *
-	 */
-	public void run() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		//Preparing parameters
-		Image image = Toolkit.getDefaultToolkit().createImage("dukesign.jpg");
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", 10500);
-		parameters.put("SummaryImage", image);
-		
-		JasperRunManager.runReportToPdfFile("target/reports/AccessibleReport.jasper", parameters, getDemoHsqldbConnection());
-		System.out.println("PDF running time : " + (System.currentTimeMillis() - start));
 	}
 
 

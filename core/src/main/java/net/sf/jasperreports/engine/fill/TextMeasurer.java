@@ -593,6 +593,7 @@ public class TextMeasurer implements JRTextMeasurer
 		StyledTextWriteContext context = new StyledTextWriteContext(true);
 
 		AttributedCharacterIterator allParagraphs = styledText.getAwtAttributedString(fontUtil, ignoreMissingFont, getFontSizeScale()).getIterator();
+		String fullText = styledText.getText();
 
 		isFirstParagraph = true;
 
@@ -613,7 +614,7 @@ public class TextMeasurer implements JRTextMeasurer
 			int paragraphStart = 0;
 			boolean lastTokenWasNewline = false;
 
-			String runText = styledText.getText().substring(runStart, runLimit);
+			String runText = fullText.substring(runStart, runLimit);
 			StringTokenizer tkzer = new StringTokenizer(runText, "\n", true);
 
 			// text is split into paragraphs, using the newline character as delimiter
@@ -668,6 +669,18 @@ public class TextMeasurer implements JRTextMeasurer
 			allParagraphs.setIndex(runStart);
 		}
 		
+		// when text is truncated at a newline, absorb it into the page boundary;
+		// a trailing line break at the bottom of a page does not produce a blank line,
+		// consistent with how browsers and document editors handle page breaks
+		if (
+			measuredState.textOffset > remainingTextStart
+			&& measuredState.textOffset < fullText.length()
+			&& fullText.charAt(measuredState.textOffset) == '\n'
+			)
+		{
+			measuredState.textOffset++;
+		}
+
 		return measuredState;
 	}
 	

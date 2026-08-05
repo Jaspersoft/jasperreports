@@ -35,6 +35,9 @@ import java.nio.charset.CharsetEncoder;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRCommonText;
@@ -59,6 +62,8 @@ import net.sf.jasperreports.export.WriterExporterOutput;
 public abstract class JRAbstractCsvExporter<RC extends CsvReportConfiguration, C extends CsvExporterConfiguration, E extends JRExporterContext> 
 	extends JRAbstractExporter<RC, C, WriterExporterOutput, E>
 {
+	private static final Log log = LogFactory.getLog(JRAbstractCsvExporter.class);
+
 	public static final String BOM_CHARACTER = "\uFEFF";
 	public static final String DEFAULT_ENCLOSURE = "\"";
 	public static final String ESCAPE_FORMULA_CHARACTERS = "=+-@";
@@ -272,7 +277,21 @@ public abstract class JRAbstractCsvExporter<RC extends CsvReportConfiguration, C
 				? DEFAULT_ENCLOSURE 
 				: configuration.getFieldEnclosure().trim().substring(0, 1);
 
-		escapeFormula = configuration.getEscapeFormula();
+		// escape formula is a security control: enabling it at context level acts as an enforced
+		// floor that cannot be turned off, while the exporter configuration can only strengthen it
+		// (turn it on), never disable context-enforced escaping
+		boolean contextEscapeFormula =
+				propertiesUtil.getBooleanProperty(CsvExporterConfiguration.PROPERTY_ESCAPE_FORMULA, false);
+		Boolean configEscapeFormula = configuration.getEscapeFormula();
+		escapeFormula = contextEscapeFormula || Boolean.TRUE.equals(configEscapeFormula);
+
+		if (contextEscapeFormula && Boolean.FALSE.equals(configEscapeFormula))
+		{
+			log.warn("Formula escaping is enforced at context level through the "
+					+ CsvExporterConfiguration.PROPERTY_ESCAPE_FORMULA
+					+ " property and cannot be disabled; the attempt to turn it off through the report "
+					+ "or export configuration is ignored.");
+		}
 	}
 	
 	

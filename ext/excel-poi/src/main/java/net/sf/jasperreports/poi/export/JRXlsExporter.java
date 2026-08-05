@@ -681,7 +681,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		}
 		else
 		{
-			sheet.setColumnWidth(col, Math.min(43 * width * 72 / reportDpi, 256*255));
+			sheet.setColumnWidth(col, Math.min(45 * width * 72 / reportDpi, 256 * 255));
 		}
 	}
 

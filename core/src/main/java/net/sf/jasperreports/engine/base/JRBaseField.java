@@ -121,7 +121,7 @@ public class JRBaseField implements JRField, Serializable, JRChangeEventsSupport
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch(ClassNotFoundException e)
 				{

@@ -2,11 +2,26 @@
 JasperReports Library Change Log
 =============================================
 
-JasperReports 7.0.8
+JasperReports 7.0.8 (2026-07-07)
 ---------------------------------------------
+
+- introducing configuration properties to disable query executers and also disable dynamic 
+queries that make use of $P!{} parameter references;
+
+- introducing HTML hyperlink whitelist filter for controlling remote website access from HTML exports;
+
+- the PDF tagging code has been isolated into a new PdfTagger interface and its latest and 
+most complete implementation has been moved out of the JasperReports Library Community Edition 
+code base and will only be available as part of the JasperReports Library Professional extensions
+provided by Jaspersoft; Note that PDF tagging functionality is used to produce accessible PDF 
+documents (PDF/UA) and PDF documents for archiving (PDF/A);
 
 - JasperReports can now run on stock OpenPDF 1.3.43; the Jaspersoft build of OpenPDF is only
 required for the PDF/UA link annotation /StructParent tagging, which is otherwise skipped;
+
+- various dependencies upgrades including: Spring 6.2.19 and Jackson 2.18.8; 
+
+- minor bug fixes and improvements;
 
 
 
@@ -37,7 +52,6 @@ Jetty 12.0.35 and Apache Log4J 2.25.4;
 
 
 
-
 JasperReports 7.0.6 (2026-03-13)
 ---------------------------------------------
 
@@ -51,7 +65,6 @@ files by implementing multi-threading support;
 and Apache Log4J 2.25.3; 
 
 - minor bug fixes and improvements;
-
 
 
 

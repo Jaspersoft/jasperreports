@@ -36,6 +36,7 @@ import java.text.AttributedCharacterIterator;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -142,6 +143,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	
 	private static final String EXCEPTION_MESSAGE_KEY_INTERNAL_ERROR = "export.html.internal.error";
 	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_ROTATION_VALUE = "export.html.unexpected.rotation.value";
+	private static final String EXCEPTION_MESSAGE_KEY_HREF_NOT_ALLOWED = "export.html.href.not.allowed";
 	
 	/**
 	 * The exporter key, as used in
@@ -177,6 +179,52 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			)
 	public static final String PROPERTY_HTML_ID = HTML_EXPORTER_PROPERTIES_PREFIX + "id";
 
+	/**
+	 * Flag property that enables whitelist filtering of the hyperlink URLs (<code>href</code> attributes)
+	 * produced by the HTML exporter.
+	 * <p>
+	 * When set to <code>true</code>, only the hyperlink URLs that match one of the patterns
+	 * configured through {@link #PROPERTY_PREFIX_HREF_ALLOW_PATTERN} are allowed in the output; any non-matching
+	 * URL causes the export to fail with a {@link JRRuntimeException}. If the flag is enabled but no allow patterns
+	 * are configured, no hyperlink URL is permitted.
+	 * </p>
+	 * <p>
+	 * The filtering applies to all resolved hyperlink URLs, including those generated internally by the exporter,
+	 * such as local anchors and local page links.
+	 * </p>
+	 * <p>
+	 * The property can only be set globally and it defaults to <code>false</code>, meaning that no filtering is performed.
+	 * </p>
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_SECURITY,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_7_0_8,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_HREF_FILTER_ENABLED =
+			HTML_EXPORTER_PROPERTIES_PREFIX + "href.filter.enabled";
+
+	/**
+	 * Property prefix used to define hyperlink URL patterns that are allowed in the output produced by the HTML exporter.
+	 * <p>
+	 * The property value should be a Java regular expression pattern that is matched against the entire <code>href</code> URL.
+	 * Multiple patterns can be configured by using different arbitrary suffixes.
+	 * </p>
+	 * <p>
+	 * The {@link #PROPERTY_HREF_FILTER_ENABLED} flag needs to be set in order for the filtering to apply.
+	 * </p>
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_SECURITY,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_7_0_8,
+			name = "net.sf.jasperreports.export.html.href.allow.pattern.{arbitrary_name}"
+			)
+	public static final String PROPERTY_PREFIX_HREF_ALLOW_PATTERN =
+			HTML_EXPORTER_PROPERTIES_PREFIX + "href.allow.pattern.";
+
 	public static final String REPORT_CONTEXT_PARAMETER_WEB_FONTS = "net.sf.jasperreports.html.webfonts";
 
 	protected JRHyperlinkTargetProducerFactory targetProducerFactory;		
@@ -196,6 +244,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	protected int pointerEventsNoneStack = 0;
 
 	private List<HyperlinkData> hyperlinksData = new ArrayList<>();
+	private boolean hrefFilterEnabled;
+	private List<Pattern> hrefAllowPatterns;
 	
 	private boolean defaultIndentFirstLine;
 	private boolean defaultJustifyLastLine;
@@ -338,6 +388,63 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		super.setJasperReportsContext(jasperReportsContext);
 		
 		targetProducerFactory = new DefaultHyperlinkTargetProducerFactory(jasperReportsContext);
+
+		loadHrefAllowPatterns();
+	}
+
+	private void loadHrefAllowPatterns()
+	{
+		hrefFilterEnabled = propertiesUtil.getBooleanProperty(PROPERTY_HREF_FILTER_ENABLED);
+		if (!hrefFilterEnabled)
+		{
+			hrefAllowPatterns = null;
+			return;
+		}
+
+		List<JRPropertiesUtil.PropertySuffix> properties =
+				propertiesUtil.getProperties(PROPERTY_PREFIX_HREF_ALLOW_PATTERN);
+		if (properties.isEmpty())
+		{
+			hrefAllowPatterns = null;
+		}
+		else
+		{
+			hrefAllowPatterns = new ArrayList<>(properties.size());
+			for (JRPropertiesUtil.PropertySuffix propertySuffix : properties)
+			{
+				String patternValue = propertySuffix.getValue();
+				if (patternValue != null && patternValue.trim().length() > 0)
+				{
+					hrefAllowPatterns.add(Pattern.compile(patternValue));
+				}
+			}
+			if (hrefAllowPatterns.isEmpty())
+			{
+				hrefAllowPatterns = null;
+			}
+		}
+	}
+
+	private void checkHrefAllowed(String href)
+	{
+		if (!hrefFilterEnabled || href == null)
+		{
+			return;
+		}
+
+		if (hrefAllowPatterns != null)
+		{
+			for (Pattern pattern : hrefAllowPatterns)
+			{
+				if (pattern.matcher(href).matches())
+				{
+					return;
+				}
+			}
+		}
+		throw new JRRuntimeException(
+				EXCEPTION_MESSAGE_KEY_HREF_NOT_ALLOWED,
+				new Object[]{href});
 	}
 
 	
@@ -2698,6 +2805,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			}
 		}
 		
+		checkHrefAllowed(href);
 		return href;
 	}
 

@@ -31,6 +31,7 @@ import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.type.RunDirectionEnum;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.pdf.common.PdfPhrase;
+import net.sf.jasperreports.pdf.common.PdfTagger;
 import net.sf.jasperreports.pdf.common.PdfProducer;
 import net.sf.jasperreports.pdf.common.PdfTextAlignment;
 import net.sf.jasperreports.pdf.common.PdfTextRendererContext;
@@ -91,7 +92,7 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 	public void initialize(
 		JRPdfExporter pdfExporter, 
 		PdfProducer pdfProducer,
-		JRPdfExporterTagHelper tagHelper,
+		PdfTagger pdfTagger,
 		JRPrintText text, 
 		JRStyledText styledText, 
 		int offsetX,
@@ -101,7 +102,7 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 		super.initialize(
 			pdfExporter, 
 			pdfProducer,
-			tagHelper,
+			pdfTagger,
 			text, 
 			styledText, 
 			offsetX,
@@ -132,7 +133,7 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 		String paragraphText
 		)
 	{
-		tagHelper.startText(text);
+		pdfTagger.startText(text);
 
 		if (bulletChunk != null)
 		{
@@ -184,7 +185,7 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 			createParagraphPhrase(paragraph, paragraphText);
 		}
 		
-		tagHelper.endText();
+		pdfTagger.endText();
 	}
 	
 	protected abstract void createParagraphPhrase(AttributedString paragraph, String paragraphText);
