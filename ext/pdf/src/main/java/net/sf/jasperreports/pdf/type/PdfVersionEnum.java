@@ -35,32 +35,37 @@ public enum PdfVersionEnum implements NamedEnum
 	/**
 	 * 
 	 */
-	VERSION_1_2("2"),
+	VERSION_1_2("1.2"),
 
 	/**
 	 * 
 	 */
-	VERSION_1_3("3"),
+	VERSION_1_3("1.3"),
 
 	/**
 	 * 
 	 */
-	VERSION_1_4("4"),
+	VERSION_1_4("1.4"),
 
 	/**
 	 * 
 	 */
-	VERSION_1_5("5"),
+	VERSION_1_5("1.5"),
 
 	/**
 	 * 
 	 */
-	VERSION_1_6("6"),
+	VERSION_1_6("1.6"),
 
 	/**
 	 * 
 	 */
-	VERSION_1_7("7");
+	VERSION_1_7("1.7"),
+
+	/**
+	 *
+	 */
+	VERSION_2_0("2.0");
 	
 	/**
 	 *
@@ -83,6 +88,11 @@ public enum PdfVersionEnum implements NamedEnum
 	 */
 	public static PdfVersionEnum getByName(String name)
 	{
-		return EnumUtil.getEnumByName(values(), name);
+		PdfVersionEnum version = EnumUtil.getEnumByName(values(), name);
+		if (version == null && name != null && name.length() == 1)
+		{
+			version = EnumUtil.getEnumByName(values(), "1." + name);
+		}
+		return version;
 	}
 }

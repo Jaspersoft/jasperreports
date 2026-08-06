@@ -53,13 +53,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
@@ -85,7 +83,6 @@ import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
-import net.sf.jasperreports.engine.JRPropertiesUtil.PropertySuffix;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -119,7 +116,6 @@ import net.sf.jasperreports.engine.util.JRTypeSniffer;
 import net.sf.jasperreports.engine.util.Pair;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.OutputStreamExporterOutput;
-import net.sf.jasperreports.pdf.classic.ClassicPdfProducer;
 import net.sf.jasperreports.pdf.common.FontRecipient;
 import net.sf.jasperreports.pdf.common.LineCapStyle;
 import net.sf.jasperreports.pdf.common.PdfChunk;
@@ -146,7 +142,6 @@ import net.sf.jasperreports.pdf.common.TextDirection;
 import net.sf.jasperreports.pdf.type.PdfFieldBorderStyleEnum;
 import net.sf.jasperreports.pdf.type.PdfFieldCheckTypeEnum;
 import net.sf.jasperreports.pdf.type.PdfFieldTypeEnum;
-import net.sf.jasperreports.pdf.type.PdfPermissionsEnum;
 import net.sf.jasperreports.pdf.type.PdfPrintScalingEnum;
 import net.sf.jasperreports.pdf.type.PdfVersionEnum;
 import net.sf.jasperreports.pdf.type.PdfaConformanceEnum;
@@ -538,6 +533,44 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	public static final String LEGACY_TEXT_MEASURING_FIX = PDF_EXPORTER_PROPERTIES_PREFIX + "legacy.text.measuring.fix";
 	
 	/**
+	 * Flag that determines whether glyph substitution based on Apache FOP is enabled.
+	 * 
+	 * @see PatchedPdfLibraryUnavailableException
+	 * @see #PROPERTY_DOCUMENT_LANGUAGE
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_6_20_5,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED = JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.classic.fop.glyph.substitution.enabled";
+	
+	/**
+	 * The language of PDF the document, used for glyph substitution when Apache FOP is present and the 
+	 * {@link #PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED} property is set. 
+	 * 
+	 * @see #PROPERTY_FOP_GLYPH_SUBSTITUTION_ENABLED
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_6_20_5
+			)
+	public static final String PROPERTY_DOCUMENT_LANGUAGE = JRPropertiesUtil.PROPERTY_PREFIX + "export.pdf.classic.document.language";
+	
+	@Property(
+			category = PropertyConstants.CATEGORY_EXPORT,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.TEXT_ELEMENT},
+			sinceVersion = PropertyConstants.VERSION_7_0_4,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_USE_SAVED_LINE_BREAKS = JRPropertiesUtil.PROPERTY_PREFIX 
+			+ "export.pdf.use.saved.line.breaks";
+	
+	/**
 	 * The exporter key, as used in
 	 * {@link GenericElementHandlerEnviroment#getElementHandler(JRGenericElementType, String)}.
 	 */
@@ -556,10 +589,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		sinceVersion = PropertyConstants.VERSION_7_0_8
 		)
 	public static final String PDF_TAGGER_FACTORY_PROPERTY = PDF_EXPORTER_PROPERTIES_PREFIX + "tagger.factory";
-
+	
 	private static final String EMPTY_BOOKMARK_TITLE = "";
 
-	protected static boolean fontsRegistered;
 	
 	private static final JRSingletonCache<PdfProducerFactory> pdfProducerCache = 
 			new JRSingletonCache<>(PdfProducerFactory.class);
@@ -569,17 +601,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 	protected class ExporterContext extends BaseExporterContext implements JRPdfExporterContext
 	{
-		@Override
-		public PdfWriter getPdfWriter()
-		{
-			if (pdfProducer instanceof ClassicPdfProducer)
-			{
-				return ((ClassicPdfProducer) pdfProducer).getPdfWriter();
-			}
-			
-			throw new JRRuntimeException("Not using the classic PDF producer");
-		}
-
 		@Override
 		public PdfProducer getPdfProducer()
 		{
@@ -602,8 +623,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected int crtDocumentPageNumber;
 	protected int crtReportStartPageIndex;
 	protected int crtReportPdfPageStart;
-	
-	protected int permissions;
 
 	/**
 	 *
@@ -693,8 +712,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	@Override
 	public void exportReport() throws JRException
 	{
-		registerFonts();
-
 		/*   */
 		ensureJasperReportsContext();
 		ensureInput();
@@ -724,7 +741,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		
 		PdfExporterConfiguration configuration = getCurrentConfiguration();
 		
-		this.permissions = getIntegerPermissions(configuration.getAllowedPermissions()) & (~getIntegerPermissions(configuration.getDeniedPermissions()));
 		crtDocumentPageNumber = 0;
 		
 		awtIgnoreMissingFont = getPropertiesUtil().getBooleanProperty(
@@ -772,14 +788,24 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected PdfProducerFactory getPdfProducerFactory()
 	{
 		String producerFactory = propertiesUtil.getProperty(PDF_PRODUCER_FACTORY_PROPERTY);
-		try
+		if (producerFactory != null)
 		{
-			return pdfProducerCache.getCachedInstance(producerFactory);
+			try
+			{
+				return pdfProducerCache.getCachedInstance(producerFactory);
+			}
+			catch (JRException e)
+			{
+				throw new JRRuntimeException(e);
+			}
 		}
-		catch (JRException e)
+		
+		Iterator<PdfProducerFactory> factories = ServiceLoader.load(PdfProducerFactory.class).iterator();
+		if (!factories.hasNext())
 		{
-			throw new JRRuntimeException(e);
+			throw new JRRuntimeException("No PDF producer implementation found.");
 		}
+		return factories.next();
 	}
 
 	protected PdfTaggerFactory getPdfTaggerFactory(Boolean isTagged)
@@ -874,6 +900,24 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			public ColorSpace getCMYKColorSpace()
 			{
 				return cmykColorSpace;
+			}
+
+			@Override
+			public int getOffsetX()
+			{
+				return JRPdfExporter.this.getOffsetX();
+			}
+
+			@Override
+			public int getOffsetY()
+			{
+				return JRPdfExporter.this.getOffsetY();
+			}
+
+			@Override
+			public PrintPageFormat getCurrentPageFormat()
+			{
+				return JRPdfExporter.this.pageFormat;
 			}
 		};
 	}
@@ -971,18 +1015,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			}
 			if (configuration.isEncrypted())
 			{
-				int perms = configuration.isOverrideHints() == null || configuration.isOverrideHints()
-					? (configuration.getPermissions() != null 
-						? (Integer)configuration.getPermissions() 
-						: permissions) 
-					: (permissions != 0 
-						? permissions 
-						:(configuration.getPermissions() != null 
-							? (Integer)configuration.getPermissions() 
-							: 0));
-				
-						pdfWriter.setEncryption(configuration.getUserPassword(), configuration.getOwnerPassword(), 
-								perms, configuration.is128BitKey());
+				pdfWriter.setEncryption(configuration);
 			}
 			
 
@@ -1129,7 +1162,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 						if( isCreatingBatchModeBookmarks )
 						{
 							//add a new level to our outline for this report
-							addBookmark(0, jasperPrint.getName(), 0, 0);
+							addBookmark(0, jasperPrint.getName(), 0, 0, null);//FIXME structure entry is required for PDF/UA-2
 						}
 					}
 					
@@ -1673,14 +1706,14 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 			if (imageProcessorResult != null)
 			{
-				setAnchor(imageProcessorResult.chunk, printImage, printImage);
-
 				float llx = printImage.getX() + getOffsetX();
 				float ury = pageFormat.getPageHeight() - printImage.getY() - getOffsetY();
 				float urx = llx + printImage.getWidth();
 				float lly = ury - printImage.getHeight();
 
 				pdfTagger.startImage(printImage, llx, lly, urx, ury);
+
+				setAnchor(imageProcessorResult.chunk, printImage, printImage);
 
 				PdfStructureEntry linkTag = pdfTagger.getCurrentLinkTag();
 				if (linkTag != null)
@@ -2252,7 +2285,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 							int pdfPage = crtReportPdfPageStart + (link.getHyperlinkPage() - 1 - crtReportStartPageIndex);
 							int targetPageIndex = link.getHyperlinkPage() - 1;
 							float targetPageHeight = jasperPrint.getPageFormat(targetPageIndex).getPageHeight();
-							chunk.setLocalGotoPage(pdfPage, targetPageHeight);
+							chunk.setLocalGotoPage(pdfPage, targetPageHeight, () -> pdfTagger.getPageStructureEntry(pdfPage));
 							wasHyperlinkSet = true;
 						}
 						break;
@@ -2344,9 +2377,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	}
 	
 	@Override
-	protected Locale getTextLocale(JRPrintText text)
+	public Locale getTextLocale(JRPrintText text)
 	{
-		// only overriding for package access
+		// only overriding for public access
 		return super.getTextLocale(text);
 	}
 
@@ -3352,53 +3385,15 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfContent.resetStrokeColor();
 	}
 
-	protected static synchronized void registerFonts ()
-	{
-		//TODO lucian
-		if (!fontsRegistered)
-		{
-			List<PropertySuffix> fontFiles = JRPropertiesUtil.getInstance(DefaultJasperReportsContext.getInstance()).getProperties(PDF_FONT_FILES_PREFIX);//FIXMECONTEXT no default here and below
-			if (!fontFiles.isEmpty())
-			{
-				for (Iterator<PropertySuffix> i = fontFiles.iterator(); i.hasNext();)
-				{
-					JRPropertiesUtil.PropertySuffix font = i.next();
-					String file = font.getValue();
-					if (file.toLowerCase().endsWith(".ttc"))
-					{
-						FontFactory.register(file);
-					}
-					else
-					{
-						String alias = font.getSuffix();
-						FontFactory.register(file, alias);
-					}
-				}
-			}
-
-			List<PropertySuffix> fontDirs = JRPropertiesUtil.getInstance(DefaultJasperReportsContext.getInstance()).getProperties(PDF_FONT_DIRS_PREFIX);
-			if (!fontDirs.isEmpty())
-			{
-				for (Iterator<PropertySuffix> i = fontDirs.iterator(); i.hasNext();)
-				{
-					JRPropertiesUtil.PropertySuffix dir = i.next();
-					FontFactory.registerDirectory(dir.getValue());
-				}
-			}
-
-			fontsRegistered = true;
-		}
-	}
-
 
 	static protected class Bookmark
 	{
 		final PdfOutlineEntry pdfOutline;
 		final int level;
 
-		Bookmark(Bookmark parent, int x, int top, String title)
+		Bookmark(Bookmark parent, int x, int top, String title, PdfStructureEntry structureEntry)
 		{
-			this.pdfOutline = parent.pdfOutline.createChild(title, x, top);
+			this.pdfOutline = parent.pdfOutline.createChild(title, x, top, structureEntry);
 			this.level = parent.level + 1;
 		}
 
@@ -3451,7 +3446,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	}
 
 
-	protected void addBookmark(int level, String title, int x, int y)
+	protected void addBookmark(int level, String title, int x, int y, PdfStructureEntry structureEntry)
 	{
 		if (!bookmarksEnabled)
 		{
@@ -3479,7 +3474,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		int height = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 				? y 
 				: pageFormat.getPageHeight() - y;
-		Bookmark bookmark = new Bookmark(parent, x, height, title);
+		Bookmark bookmark = new Bookmark(parent, x, height, title, structureEntry);
 		bookmarkStack.push(bookmark);
 	}
 
@@ -3487,10 +3482,11 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected void setAnchor(PdfChunk chunk, JRPrintAnchor anchor, JRPrintElement element)
 	{
 		String anchorName = anchor.getAnchorName();
+		PdfStructureEntry structureEntry = isTagged ? pdfTagger.getCurrentContentEntry() : null;
 		
 		if (anchorName != null)
 		{
-			chunk.setLocalDestination(anchorName);
+			chunk.setLocalDestination(anchorName, structureEntry);
 		}
 		
 		
@@ -3507,7 +3503,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			int y = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 					? getOffsetX() + element.getX()
 					: getOffsetY() + element.getY(); 
-			addBookmark(anchor.getBookmarkLevel(), anchorName, x, y);
+			addBookmark(anchor.getBookmarkLevel(), anchorName, x, y, structureEntry);
 		}
 	}
 
@@ -3553,7 +3549,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	/**
 	 *
 	 */
-	protected PrintPageFormat getCurrentPageFormat()
+	public PrintPageFormat getCurrentPageFormat()
 	{
 		return pageFormat;
 	}
@@ -3622,22 +3618,5 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	public String getExporterPropertiesPrefix()
 	{
 		return PDF_EXPORTER_PROPERTIES_PREFIX;
-	}
-	
-	public static int getIntegerPermissions(String permissions) {
-		int permission = 0;
-		if(permissions != null && permissions.length() > 0) {
-			String[] perms = permissions.split("\\|");
-			for(String perm : perms) {
-				if(PdfPermissionsEnum.ALL.equals(PdfPermissionsEnum.getByName(perm))) {
-					permission = PdfExporterConfiguration.ALL_PERMISSIONS;
-					break;
-				}
-				if(perm != null && perm.length()>0) {
-					permission |= PdfPermissionsEnum.getByName(perm).getPdfPermission();
-				}
-			}
-		}
-		return permission;
 	}
 }

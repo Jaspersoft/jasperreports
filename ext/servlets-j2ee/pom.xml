@@ -34,7 +34,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports-pdf</artifactId>
+			<artifactId>jasperreports-pdf-core</artifactId>
 			<version>${revision}</version>
 			<scope>compile</scope>
 			<optional>false</optional>

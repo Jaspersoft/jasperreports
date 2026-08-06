@@ -314,7 +314,7 @@ public interface PdfReportConfiguration extends ReportExportConfiguration
 	 * {@link #PROPERTY_FORCE_LINEBREAK_POLICY PROPERTY_FORCE_LINEBREAK_POLICY} property.
 	 *
 	 * @see #PROPERTY_FORCE_LINEBREAK_POLICY
-	 * @see net.sf.jasperreports.pdf.util.BreakIteratorSplitCharacter
+	 * @see net.sf.jasperreports.openpdf.producer.BreakIteratorSplitCharacter
 	 */
 	@ExporterProperty(
 		value=PROPERTY_FORCE_LINEBREAK_POLICY,

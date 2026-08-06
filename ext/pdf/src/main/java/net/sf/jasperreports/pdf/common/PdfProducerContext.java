@@ -32,6 +32,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.fonts.FontUtil;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.pdf.JRPdfExporter;
@@ -66,5 +67,11 @@ public interface PdfProducerContext
 	JRException handleDocumentException(Exception e);
 	
 	ColorSpace getCMYKColorSpace();
+	
+	int getOffsetX();
+	
+	int getOffsetY();
+	
+	PrintPageFormat getCurrentPageFormat();
 
 }

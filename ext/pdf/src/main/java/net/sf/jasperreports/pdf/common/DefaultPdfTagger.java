@@ -143,4 +143,16 @@ public class DefaultPdfTagger implements PdfTagger
 	{
 		return null;
 	}
+
+	@Override
+	public PdfStructureEntry getCurrentContentEntry()
+	{
+		return null;
+	}
+
+	@Override
+	public PdfStructureEntry getPageStructureEntry(int pdfPage)
+	{
+		return null;
+	}
 }

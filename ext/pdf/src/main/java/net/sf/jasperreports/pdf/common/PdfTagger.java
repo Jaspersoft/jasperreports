@@ -305,4 +305,8 @@ public interface PdfTagger
 	
 	StyledTextListWriter getListWriter();
 
+	PdfStructureEntry getCurrentContentEntry();
+
+	PdfStructureEntry getPageStructureEntry(int pdfPage);
+
 }

@@ -76,7 +76,12 @@ public enum PdfaConformanceEnum implements NamedEnum
 	/**
 	 * 
 	 */
-	PDFA_3U("pdfa3u");
+	PDFA_3U("pdfa3u"),
+	
+	/**
+	 * 
+	 */
+	PDFA_4("pdfa4");
 	
 	/**
 	 *

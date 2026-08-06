@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.pdf.PdfExporterConfiguration;
 import net.sf.jasperreports.pdf.type.PdfPrintScalingEnum;
 import net.sf.jasperreports.pdf.type.PdfVersionEnum;
 import net.sf.jasperreports.pdf.type.PdfaConformanceEnum;
@@ -44,8 +45,7 @@ public interface PdfDocumentWriter
 
 	void setFullCompression();
 	
-	void setEncryption(String userPassword, String ownerPassword, 
-			int permissions, boolean is128BitKey) throws JRException;
+	void setEncryption(PdfExporterConfiguration configuration) throws JRException;
 
 	void setPrintScaling(PdfPrintScalingEnum printScaling);
 

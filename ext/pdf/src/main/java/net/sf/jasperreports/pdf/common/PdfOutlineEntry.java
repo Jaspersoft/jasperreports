@@ -32,6 +32,6 @@ public interface PdfOutlineEntry
 
 	PdfOutlineEntry createChild(String title);
 	
-	PdfOutlineEntry createChild(String title, float left, float top);
+	PdfOutlineEntry createChild(String title, float left, float top, PdfStructureEntry structureEntry);
 	
 }

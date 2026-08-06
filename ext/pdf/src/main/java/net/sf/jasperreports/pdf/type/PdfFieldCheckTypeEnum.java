@@ -23,64 +23,55 @@
  */
 package net.sf.jasperreports.pdf.type;
 
-import com.lowagie.text.pdf.RadioCheckField;
-
 import net.sf.jasperreports.engine.type.EnumUtil;
+import net.sf.jasperreports.engine.type.NamedEnum;
 import net.sf.jasperreports.engine.type.NamedValueEnum;
 
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public enum PdfFieldCheckTypeEnum implements NamedValueEnum<Integer>
+public enum PdfFieldCheckTypeEnum implements NamedEnum
 {
 	/**
 	 * Constant useful for specifying the checkbox type for the check input field in PDF form.
 	 */
-	CHECK(RadioCheckField.TYPE_CHECK, "Check"),
+	CHECK("Check"),
 
 	/**
 	 * Constant useful for specifying the circle type for the check input field in PDF form.
 	 */
-	CIRCLE(RadioCheckField.TYPE_CIRCLE, "Circle"),
+	CIRCLE("Circle"),
 
 	/**
 	 * Constant useful for specifying the cross type for the check input field in PDF form.
 	 */
-	CROSS(RadioCheckField.TYPE_CROSS, "Cross"),
+	CROSS("Cross"),
 
 	/**
 	 * Constant useful for specifying the diamond type for the check input field in PDF form.
 	 */
-	DIAMOND(RadioCheckField.TYPE_DIAMOND, "Diamond"),
+	DIAMOND("Diamond"),
 
 	/**
 	 * Constant useful for specifying the square type for the check input field in PDF form.
 	 */
-	SQUARE(RadioCheckField.TYPE_SQUARE, "Square"),
+	SQUARE("Square"),
 
 	/**
 	 * Constant useful for specifying the star type for the check input field in PDF form.
 	 */
-	STAR(RadioCheckField.TYPE_STAR, "Star");
+	STAR("Star");
 	
 	
 	/**
 	 *
 	 */
-	private final transient int value;
 	private final transient String name;
 
-	private PdfFieldCheckTypeEnum(int value, String name)
+	private PdfFieldCheckTypeEnum(String name)
 	{
-		this.value = value;
 		this.name = name;
-	}
-
-	@Override
-	public final Integer getValue()
-	{
-		return value;
 	}
 	
 	@Override
