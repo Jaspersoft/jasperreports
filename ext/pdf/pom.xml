@@ -9,8 +9,8 @@
 	</parent>
 	<artifactId>jasperreports-pdf</artifactId>
 	<packaging>jar</packaging>
-	<name>JasperReports PDF</name>
-	<description>JasperReports PDF</description>
+	<name>JasperReports OpenPDF</name>
+	<description>JasperReports OpenPDF</description>
 	<url>http://jasperreports.sourceforge.net</url>
 	<scm>
 		<connection>${scmConnection}</connection>
@@ -18,6 +18,13 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<dependencies>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-pdf-core</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -28,7 +35,7 @@
 		<dependency>
 			<groupId>com.github.librepdf</groupId>
 			<artifactId>openpdf</artifactId>
-			<version>${openpdf.version}</version>
+			<version>${openpdf.classic.version}</version>
  			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>

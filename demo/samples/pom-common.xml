@@ -16,6 +16,7 @@
 		<maven.install.skip>true</maven.install.skip>
 		<sample.app.name>${sample.base.name}App</sample.app.name>
 		<sample.report.name>${sample.base.name}Report</sample.report.name>
+		<pdf.producer>classic</pdf.producer>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,20 +40,7 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports-pdf</artifactId>
-			<version>${revision}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-			<!-- to allow switching to jasperreports-javaflow -->
-			<exclusions>
-				<exclusion>
-					<groupId>net.sf.jasperreports</groupId>
-					<artifactId>jasperreports</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- PDF producer dependency is in profiles below -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-excel-poi</artifactId>
@@ -82,6 +70,58 @@
 			<optional>false</optional>
 		</dependency>
 	</dependencies>
+	<profiles>
+		<profile>
+			<id>openpdf-classic</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.jasperreports</groupId>
+					<artifactId>jasperreports-pdf</artifactId>
+					<version>${revision}</version>
+					<scope>compile</scope>
+					<optional>false</optional>
+					<!-- to allow switching to jasperreports-javaflow -->
+					<exclusions>
+						<exclusion>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>openpdf3</id>
+			<activation>
+				<property>
+					<name>pdf.producer</name>
+					<value>openpdf3</value>
+				</property>
+			</activation>
+			<properties>
+				<pdf.producer>openpdf3</pdf.producer>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.jasperreports</groupId>
+					<artifactId>jasperreports-openpdf</artifactId>
+					<version>${revision}</version>
+					<scope>compile</scope>
+					<optional>false</optional>
+					<!-- to allow switching to jasperreports-javaflow -->
+					<exclusions>
+						<exclusion>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -202,6 +242,7 @@
 							<executable>mvn</executable>
 							<arguments>
 								<argument>exec:java</argument>
+								<argument>-Dpdf.producer=${pdf.producer}</argument>
 							</arguments>
 							<workingDirectory>${project.basedir}</workingDirectory>
 						</configuration>
