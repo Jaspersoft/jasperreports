@@ -159,14 +159,18 @@ public class StandardChunk implements PdfChunk
 		if (targetStructureEntry != null
 				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
 		{
-			PdfStructureElement element = ((StandardStructureEntry) targetStructureEntry.get()).getElement();
-			PdfArray sd = new PdfArray();
-			sd.add(element.getReference());
-			sd.add(dest.getPdfObject(1));
-			sd.add(dest.getPdfObject(2));
-			sd.add(dest.getPdfObject(3));
-			sd.add(dest.getPdfObject(4));
-			action.put(new PdfName("SD"), sd);
+			StandardStructureEntry targetStructure = (StandardStructureEntry) targetStructureEntry.get();
+			if (targetStructure != null)
+			{
+				PdfStructureElement element = targetStructure.getElement();
+				PdfArray sd = new PdfArray();
+				sd.add(element.getReference());
+				sd.add(dest.getPdfObject(1));
+				sd.add(dest.getPdfObject(2));
+				sd.add(dest.getPdfObject(3));
+				sd.add(dest.getPdfObject(4));
+				action.put(new PdfName("SD"), sd);
+			}
 		}
 		if (linkTag != null)
 		{
