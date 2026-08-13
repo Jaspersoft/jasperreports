@@ -101,6 +101,9 @@
 					<value>openpdf3</value>
 				</property>
 			</activation>
+			<properties>
+				<pdf.producer>openpdf3</pdf.producer>
+			</properties>
 			<dependencies>
 				<dependency>
 					<groupId>net.sf.jasperreports</groupId>
