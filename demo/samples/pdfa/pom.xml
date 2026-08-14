@@ -13,13 +13,39 @@
 		<sample.base.name>PdfA</sample.base.name>
 		<sample.report.name>PdfA1Report</sample.report.name>
 	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>com.github.librepdf</groupId>
-			<artifactId>openpdf-fonts-extra</artifactId>
-			<version>${openpdf.version}</version>
-			<scope>runtime</scope>
-			<optional>false</optional>
-		</dependency>
-	</dependencies>
+	<profiles>
+		<profile>
+			<id>openpdf-classic</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>com.github.librepdf</groupId>
+					<artifactId>openpdf-fonts-extra</artifactId>
+					<version>${openpdf.classic.version}</version>
+					<scope>runtime</scope>
+					<optional>false</optional>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>openpdf3</id>
+			<activation>
+				<property>
+					<name>pdf.producer</name>
+					<value>openpdf3</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>com.github.librepdf</groupId>
+					<artifactId>openpdf-fonts-extra</artifactId>
+					<version>${openpdf.version}</version>
+					<scope>runtime</scope>
+					<optional>false</optional>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>
