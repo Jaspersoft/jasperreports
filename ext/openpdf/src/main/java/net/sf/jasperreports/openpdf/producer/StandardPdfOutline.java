@@ -45,18 +45,20 @@ public class StandardPdfOutline implements PdfOutlineEntry
 	
 	private PdfOutline pdfOutline;
 	private PdfWriter pdfWriter;
+	private boolean pdf2;
 
-	public StandardPdfOutline(PdfOutline pdfOutline, PdfWriter pdfWriter)
+	public StandardPdfOutline(PdfOutline pdfOutline, PdfWriter pdfWriter, boolean pdf2)
 	{
 		this.pdfOutline = pdfOutline;
 		this.pdfWriter = pdfWriter;
+		this.pdf2 = pdf2;
 	}
 
 	@Override
 	public PdfOutlineEntry createChild(String title)
 	{
 		PdfOutline childOutline = new PdfOutline(pdfOutline, pdfOutline.getPdfDestination(), title, false);
-		return new StandardPdfOutline(childOutline, pdfWriter);
+		return new StandardPdfOutline(childOutline, pdfWriter, pdf2);
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class StandardPdfOutline implements PdfOutlineEntry
 	{
 		PdfDestination destination = new PdfDestination(PdfDestination.XYZ, left, top, 0);
 		PdfOutline childOutline;
-		if (structureEntry == null || !pdfWriter.getPdfVersionString().startsWith("2."))
+		if (structureEntry == null || !pdf2)
 		{
 			childOutline = new PdfOutline(pdfOutline, destination, title, false);
 		}
@@ -83,7 +85,7 @@ public class StandardPdfOutline implements PdfOutlineEntry
 
 			childOutline = new PdfOutline(pdfOutline, action, title, false);
 		}
-		return new StandardPdfOutline(childOutline, pdfWriter);
+		return new StandardPdfOutline(childOutline, pdfWriter, pdf2);
 	}
 
 }

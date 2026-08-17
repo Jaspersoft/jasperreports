@@ -75,7 +75,7 @@ public class StandardChunk implements PdfChunk
 	{
 		chunk.setLocalDestination(anchorName);
 		if (structureEntry != null
-				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
+				&& pdfProducer.isPdf2())
 		{
 			chunk.setLocalDestinationStructElement(
 					((StandardStructureEntry) structureEntry).getElement().getReference());
@@ -157,7 +157,7 @@ public class StandardChunk implements PdfChunk
 		PdfDestination dest = new PdfDestination(PdfDestination.XYZ, 0, top, 0);
 		PdfAction action = PdfAction.gotoLocalPage(page, dest, pdfProducer.getPdfWriter());
 		if (targetStructureEntry != null
-				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
+				&& pdfProducer.isPdf2())
 		{
 			StandardStructureEntry targetStructure = (StandardStructureEntry) targetStructureEntry.get();
 			if (targetStructure != null)

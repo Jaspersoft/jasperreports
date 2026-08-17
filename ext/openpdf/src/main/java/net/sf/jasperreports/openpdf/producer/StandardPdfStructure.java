@@ -72,7 +72,7 @@ public class StandardPdfStructure implements PdfStructure
 		
 		PdfStructureElement documentTag = new PdfStructureElement(root, PdfName.DOCUMENT);
 		
-		if (pdfWriter.getPdfVersionString().startsWith("2."))
+		if (pdfProducer.isPdf2())
 		{
 			setPDF2Namespace(pdfWriter, documentTag);
 		}
