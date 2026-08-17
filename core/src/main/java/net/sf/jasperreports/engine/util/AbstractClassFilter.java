@@ -96,13 +96,7 @@ public abstract class AbstractClassFilter implements ClassFilter
 	
 	public boolean isClassVisible(String className)
 	{
-		Boolean visible = visibilityCache.get(className);
-		if (visible == null)
-		{
-			visible = visible(className);
-			visibilityCache.put(className, visible);
-		}
-		return visible;
+		return visibilityCache.computeIfAbsent(className, key -> visible(key));
 	}
 
 	protected boolean visible(String className)

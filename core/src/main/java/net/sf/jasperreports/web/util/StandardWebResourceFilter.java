@@ -168,13 +168,7 @@ public class StandardWebResourceFilter implements WebResourceFilter
 	@Override
 	public boolean isResourceVisible(String resource)
 	{
-		Boolean visible = visibilityCache.get(resource);
-		if (visible == null)
-		{
-			visible = visible(resource);
-			visibilityCache.put(resource, visible);
-		}
-		return visible;
+		return visibilityCache.computeIfAbsent(resource, key -> visible(key));
 	}
 
 	protected boolean visible(String resource)

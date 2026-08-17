@@ -147,26 +147,13 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 				
 				if (crtXySeries.getLabelExpression() != null)
 				{
-					Map<Number, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(crtXySeries.getXValue(), crtXySeries.getLabel());
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(crtXySeries.getXValue(), crtXySeries.getLabel());
 				}
 				
 				if (crtXySeries.hasItemHyperlinks())
 				{
-					Map<Pair, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					Pair<Number,Number> xyKey = new Pair<>(crtXySeries.getXValue(), crtXySeries.getYValue());
-					seriesLinks.put(xyKey, crtXySeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>())
+						.put(new Pair<>(crtXySeries.getXValue(), crtXySeries.getYValue()), crtXySeries.getPrintItemHyperlink());
 				}
 			}
 		}

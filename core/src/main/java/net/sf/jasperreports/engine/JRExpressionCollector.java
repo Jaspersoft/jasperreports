@@ -626,21 +626,10 @@ public class JRExpressionCollector
 	 */
 	public JRExpressionCollector getCollector(JRCrosstab crosstab)
 	{
-		JRExpressionCollector collector;
-		if (parent == null)
-		{
-			collector = crosstabCollectors.get(crosstab);
-			if (collector == null)
-			{
-				collector = new JRExpressionCollector(jasperReportsContext, this, report, new CrosstabExpressionVerifier(crosstab));
-				crosstabCollectors.put(crosstab, collector);
-			}
-		}
-		else
-		{
-			collector = parent.getCollector(crosstab);	
-		}
-		return collector;
+		return
+			parent == null
+			? crosstabCollectors.computeIfAbsent(crosstab, k -> new JRExpressionCollector(jasperReportsContext, this, report, new CrosstabExpressionVerifier(crosstab)))
+			: parent.getCollector(crosstab);
 	}
 
 

@@ -122,14 +122,8 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 				
 				if (crtXyzSeries.hasItemHyperlinks())
 				{
-					Map<Pair, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(crtXyzSeries.getSeries());
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(crtXyzSeries.getSeries(), seriesLinks);
-					}
-					Pair<Number,Number> xyKey = new Pair<>(crtXyzSeries.getXValue(), crtXyzSeries.getYValue());
-					seriesLinks.put(xyKey, crtXyzSeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(crtXyzSeries.getSeries(), k -> new HashMap<>())
+						.put(new Pair<>(crtXyzSeries.getXValue(), crtXyzSeries.getYValue()), crtXyzSeries.getPrintItemHyperlink());
 				}
 			}
 		}

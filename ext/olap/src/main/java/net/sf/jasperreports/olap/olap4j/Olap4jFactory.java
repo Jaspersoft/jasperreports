@@ -44,22 +44,7 @@ public class Olap4jFactory
 	
 	public Olap4jMember createMember(Member member)
 	{
-		Olap4jMember mondrianMember;
-		if (member == null)
-		{
-			mondrianMember = null;
-		}
-		else
-		{
-			String key = member.getUniqueName();
-			mondrianMember = members.get(key);
-			if (mondrianMember == null)
-			{
-				mondrianMember = new Olap4jMember(member, this);
-				members.put(key, mondrianMember);
-			}
-		}
-		return mondrianMember;
+		return member == null ? null : members.computeIfAbsent(member.getUniqueName(), k -> new Olap4jMember(member, this));
 	}
 	
 }

@@ -115,15 +115,7 @@ public abstract class BaseFontHelper extends BaseHelper
 	
 	private String getFontPathId(String fontPath)
 	{
-		String rIdf = fontPaths.get(fontPath);
-
-		if (rIdf == null)
-		{
-			rIdf = "rIdf" + Integer.valueOf(fontPaths.size() + 1);
-			fontPaths.put(fontPath, rIdf);
-		}
-		
-		return rIdf;
+		return fontPaths.computeIfAbsent(fontPath, k -> "rIdf" + Integer.valueOf(fontPaths.size() + 1));
 	}
 			
 	private void embedFont(String id, String path) 
@@ -338,16 +330,11 @@ public abstract class BaseFontHelper extends BaseHelper
 			isFirstLocale = firstLocale.equals(localeCode);
 		}
 		
-		String ooxmlFontId = name + (isFirstLocale ? "" : (" " + localeCode));
-
-		OoxmlFont ooxmlFont = ooxmlFonts.get(ooxmlFontId);
-		if (ooxmlFont == null)
-		{
-			ooxmlFont = OoxmlFont.getInstance(ooxmlFontId);
-			ooxmlFonts.put(ooxmlFontId, ooxmlFont);
-		}
-		
-		return ooxmlFont;
+		return 
+			ooxmlFonts.computeIfAbsent(
+				name + (isFirstLocale ? "" : (" " + localeCode)),
+				key -> OoxmlFont.getInstance(key)
+				);
 	}
 
 	protected abstract String getExporterKey();

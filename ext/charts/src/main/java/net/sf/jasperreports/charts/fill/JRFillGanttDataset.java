@@ -172,31 +172,20 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 
 				if (crtGanttSeries.getLabelExpression() != null)
 				{
-					Map<Comparable<?>, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(crtGanttSeries.getTask(), crtGanttSeries.getLabel());
 
 					// TODO: is it OK like this?
 					//seriesLabels.put(crtXySeries.getXValue(), crtXySeries.getLabel());
-					seriesLabels.put(crtGanttSeries.getTask(), crtGanttSeries.getLabel());
 				}
 
 				if (crtGanttSeries.hasItemHyperlinks())
 				{
-					Map<Pair, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>())
+						.put(new Pair<>(crtGanttSeries.getTask(), crtGanttSeries.getSubtask()), crtGanttSeries.getPrintItemHyperlink());
+
 					// TODO: ?? not sure how to do
 					//Pair xyKey = new Pair(crtXySeries.getXValue(), crtXySeries.getYValue());
 					//seriesLinks.put(xyKey, crtXySeries.getPrintItemHyperlink());
-					Pair<String,String> taskSubtaskKey = new Pair<>(crtGanttSeries.getTask(), crtGanttSeries.getSubtask());
-					seriesLinks.put(taskSubtaskKey, crtGanttSeries.getPrintItemHyperlink());
 				}
 			}
 		}

@@ -221,14 +221,7 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	{
 		if (parentFiller == null)
 		{
-			List<JRStyleSetter> setters = delayedStyleSettersByName.get(styleName);
-			if (setters == null)
-			{
-				setters = new ArrayList<>();
-				delayedStyleSettersByName.put(styleName, setters);
-			}
-			
-			setters.add(delayedSetter);
+			delayedStyleSettersByName.computeIfAbsent(styleName, k -> new ArrayList<>()).add(delayedSetter);
 		}
 		else
 		{
@@ -754,18 +747,10 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	
 	protected List<JRFillElementDataset> getElementDatasetsList(String datasetName)
 	{
-		if (parentFiller != null)
-		{
-			return parentFiller.getElementDatasetsList(datasetName);
-		}
-		
-		List<JRFillElementDataset> elementDatasetsList = elementDatasetMap.get(datasetName);
-		if (elementDatasetsList == null)
-		{
-			elementDatasetsList = new ArrayList<>();
-			elementDatasetMap.put(datasetName, elementDatasetsList);
-		}
-		return elementDatasetsList;
+		return
+			parentFiller == null
+				? elementDatasetMap.computeIfAbsent(datasetName, k -> new ArrayList<>())
+				: parentFiller.getElementDatasetsList(datasetName);
 	}
 
 	public void trackDatasetRuns()

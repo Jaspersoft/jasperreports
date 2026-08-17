@@ -73,13 +73,7 @@ public class SimpleTextEvaluators implements DirectExpressionEvaluators
 	{
 		if (expression.getType() == ExpressionTypeEnum.SIMPLE_TEXT)
 		{
-			Evaluator evaluator = evaluators.get(expression);
-			if (evaluator == null)
-			{
-				evaluator = new Evaluator(expression);
-				evaluators.put(expression, evaluator);
-			}
-			return evaluator;
+			return evaluators.computeIfAbsent(expression, key -> new Evaluator(key));
 		}
 		
 		return null;

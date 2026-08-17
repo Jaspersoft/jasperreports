@@ -1420,13 +1420,7 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 
 	private DelayedEvaluations getDelayedEvaluations(JREvaluationTime time)
 	{
-		DelayedEvaluations delayedEvaluations = delayedEvaluationsMap.get(time);
-		if (delayedEvaluations == null)
-		{
-			delayedEvaluations = new DelayedEvaluations();
-			delayedEvaluationsMap.put(time, delayedEvaluations);
-		}
-		return delayedEvaluations;
+		return delayedEvaluationsMap.computeIfAbsent(time, k -> new DelayedEvaluations());
 	}
 
 

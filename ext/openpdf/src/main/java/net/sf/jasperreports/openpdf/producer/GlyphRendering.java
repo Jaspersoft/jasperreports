@@ -182,13 +182,7 @@ public class GlyphRendering
 				return false;
 			}
 			
-			Boolean canUse = glyphRendererFonts.get(fontKey);
-			if (canUse == null)
-			{
-				canUse = canUseGlyphRendering(fontKey, awtIgnoreMissingFont);
-				glyphRendererFonts.put(fontKey, canUse);
-			}
-			
+			Boolean canUse = glyphRendererFonts.computeIfAbsent(fontKey, key -> canUseGlyphRendering(key, awtIgnoreMissingFont));
 			if (!canUse)
 			{
 				return false;

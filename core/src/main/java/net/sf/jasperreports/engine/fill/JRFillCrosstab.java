@@ -36,7 +36,6 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -726,12 +725,10 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 				false//hasFormatFactory
 				);
 		
-		ResourceBundle resBdl = (ResourceBundle) parameterValues.get(JRParameter.REPORT_RESOURCE_BUNDLE);
-		if (resBdl == null)
-		{
-			JRFillParameter resourceBundleParam = filler.getParametersMap().get(JRParameter.REPORT_RESOURCE_BUNDLE);
-			parameterValues.put(JRParameter.REPORT_RESOURCE_BUNDLE, resourceBundleParam.getValue());
-		}
+		parameterValues.computeIfAbsent(
+			JRParameter.REPORT_RESOURCE_BUNDLE,
+			k -> filler.getParametersMap().get(JRParameter.REPORT_RESOURCE_BUNDLE).getValue()
+			);
 		
 		parameterValues.put(JRParameter.REPORT_PARAMETERS_MAP, parameterValues);
 

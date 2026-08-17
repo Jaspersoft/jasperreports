@@ -249,16 +249,11 @@ public abstract class JRFillTextElement extends JRFillElement implements JRTextE
 		currentFillStyle = evaluatedStyle;
 		
 		// search cached per style
-		fillStyleObjects = fillStyleObjectsMap.get(evaluatedStyle);
-		if (fillStyleObjects == null)
-		{
-			// create fill style objects
-			CachingLineBox cachedLineBox = new CachingLineBox(initLineBox);
-			CachingParagraph cachedParagraph = new CachingParagraph(initParagraph);
-			fillStyleObjects = new FillStyleObjects(cachedLineBox, cachedParagraph);
-			
-			fillStyleObjectsMap.put(evaluatedStyle, fillStyleObjects);
-		}
+		fillStyleObjects =
+			fillStyleObjectsMap.computeIfAbsent(
+				evaluatedStyle, 
+				k -> new FillStyleObjects(new CachingLineBox(initLineBox), new CachingParagraph(initParagraph))
+				);
 	}
 
 

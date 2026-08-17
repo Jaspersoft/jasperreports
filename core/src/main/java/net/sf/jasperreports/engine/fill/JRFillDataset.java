@@ -675,12 +675,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		
 		reportMaxCount = (Integer) parameterValues.get(JRParameter.REPORT_MAX_COUNT);
 
-		locale = (Locale) parameterValues.get(JRParameter.REPORT_LOCALE);
-		if (locale == null)
-		{
-			locale = defaultLocale();
-			parameterValues.put(JRParameter.REPORT_LOCALE, locale);
-		}
+		locale = (Locale) parameterValues.computeIfAbsent(JRParameter.REPORT_LOCALE, k -> defaultLocale());
 		
 		resourceBundle = (ResourceBundle) parameterValues.get(JRParameter.REPORT_RESOURCE_BUNDLE);
 		if (resourceBundle == null)
@@ -692,12 +687,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 			}
 		}
 		
-		timeZone = (TimeZone) parameterValues.get(JRParameter.REPORT_TIME_ZONE);
-		if (timeZone == null)
-		{
-			timeZone = defaultTimeZone();
-			parameterValues.put(JRParameter.REPORT_TIME_ZONE, timeZone);
-		}
+		timeZone = (TimeZone) parameterValues.computeIfAbsent(JRParameter.REPORT_TIME_ZONE, k -> defaultTimeZone());
 		
 		scriptlets = createScriptlets(parameterValues);
 		delegateScriptlet.setData(this);//FIXMESCRIPTLET use some context

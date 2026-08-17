@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -1331,19 +1330,7 @@ public class JRDesignDataset extends JRBaseDataset
 	
 	private void sortSystemParamsFirst()
 	{
-		Collections.sort(parametersList, new Comparator<JRParameter>()
-				{
-					@Override
-					public int compare(JRParameter p1, JRParameter p2)
-					{
-//						JRParameter p1 = (JRParameter) o1;
-//						JRParameter p2 = (JRParameter) o2;
-						boolean s1 = p1.isSystemDefined();
-						boolean s2 = p2.isSystemDefined();
-						
-						return s1 ? (s2 ? 0 : -1) : (s2 ? 1 : 0);
-					}
-				});
+		parametersList.sort(Comparator.comparing(JRParameter::isSystemDefined, Comparator.reverseOrder()));
 	}
 
 	private void removeBuiltinParameters(Object[] builtinParameters)

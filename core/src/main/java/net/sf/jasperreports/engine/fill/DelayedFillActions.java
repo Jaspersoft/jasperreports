@@ -32,6 +32,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintPage;
@@ -46,9 +49,6 @@ import net.sf.jasperreports.engine.base.VirtualizablePageElements;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.util.LinkedMap;
 import net.sf.jasperreports.engine.util.UniformPrintElementVisitor;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -389,16 +389,10 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 			@Override
 			public void collect(JRPrintElement printElement, JRFillElement fillElement, JREvaluationTime evaluationTime)
 			{
-				Map<JRPrintElement, Integer> elementEvaluations = evaluations.get(evaluationTime);
-				if (elementEvaluations == null)
-				{
-					// collection delayed evaluations for elements that are about to be externalized.
-					// the evaluations store the ID of the fill elements in order to serialize the data.
-					elementEvaluations = new LinkedHashMap<>();
-					evaluations.put(evaluationTime, elementEvaluations);
-				}
-				
-				elementEvaluations.put(printElement, fillElement.printElementOriginator.getSourceElementId());
+				// collection delayed evaluations for elements that are about to be externalized.
+				// the evaluations store the ID of the fill elements in order to serialize the data.
+				evaluations.computeIfAbsent(evaluationTime, k -> new LinkedHashMap<>())
+					.put(printElement, fillElement.printElementOriginator.getSourceElementId());
 			}
 		};
 		

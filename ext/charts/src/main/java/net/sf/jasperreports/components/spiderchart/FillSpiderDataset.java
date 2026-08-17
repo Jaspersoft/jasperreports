@@ -146,25 +146,18 @@ public class FillSpiderDataset extends JRFillElementDataset implements SpiderDat
 
 				if (crtCategorySeries.getLabelExpression() != null)
 				{
-					Map<Comparable<?>, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(crtCategorySeries.getCategory(), crtCategorySeries.getLabel());
+					labelsMap.computeIfAbsent(
+						seriesName,
+						k -> new HashMap<>()
+						).put(crtCategorySeries.getCategory(), crtCategorySeries.getLabel());
 				}
 				
 				if (crtCategorySeries.hasItemHyperlinks())
 				{
-					Map<Comparable<?>,JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					seriesLinks.put(crtCategorySeries.getCategory(), crtCategorySeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(
+						seriesName,
+						k -> new HashMap<>()
+						).put(crtCategorySeries.getCategory(), crtCategorySeries.getPrintItemHyperlink());
 				}
 			}
 		}

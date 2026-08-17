@@ -672,12 +672,11 @@ public abstract class BaseReportFiller implements ReportFiller
 
 	protected final void setFormatFactory(Map<String,Object> parameterValues)
 	{
-		formatFactory = (FormatFactory)parameterValues.get(JRParameter.REPORT_FORMAT_FACTORY);
-		if (formatFactory == null)
-		{
-			formatFactory = DefaultFormatFactory.createFormatFactory(jasperReport.getFormatFactoryClass());
-			parameterValues.put(JRParameter.REPORT_FORMAT_FACTORY, formatFactory);
-		}
+		formatFactory =
+			(FormatFactory)parameterValues.computeIfAbsent(
+				JRParameter.REPORT_FORMAT_FACTORY,
+				k -> DefaultFormatFactory.createFormatFactory(jasperReport.getFormatFactoryClass())
+				);
 	}
 
 	/**

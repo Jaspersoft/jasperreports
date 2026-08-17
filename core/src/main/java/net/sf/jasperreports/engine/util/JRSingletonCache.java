@@ -117,14 +117,7 @@ public class JRSingletonCache<T>
 
 	protected Map<String,T> getContextInstanceCache()
 	{
-		Object contextKey = getContextKey();
-		Map<String,T> contextCache = cache.get(contextKey);
-		if (contextCache == null)
-		{
-			contextCache = new ReferenceMap<>();
-			cache.put(contextKey, contextCache);
-		}
-		return contextCache;
+		return cache.computeIfAbsent(getContextKey(), k -> new ReferenceMap<>());
 	}
 	
 	protected Object getContextKey()

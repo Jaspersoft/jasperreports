@@ -115,14 +115,11 @@ public class XlsxFontHelper extends BaseHelper
 	protected String exportFont(JRFont font, Locale locale)
 	{
 		String fontName = font.getFontName();
-		Pair<String, Locale> cacheKey = new Pair<>(fontName, locale);
-		String exportFont = exportFontCache.get(cacheKey);
-		if (exportFont == null)
-		{
-			exportFont = fontUtil.getExportFontFamily(fontName, locale, exporterKey);
-			exportFontCache.put(cacheKey, exportFont);
-		}
-		return exportFont;
+		return 
+			exportFontCache.computeIfAbsent(
+				new Pair<>(fontName, locale),
+				k -> fontUtil.getExportFontFamily(fontName, locale, exporterKey)
+				);
 	}
 
 	/**

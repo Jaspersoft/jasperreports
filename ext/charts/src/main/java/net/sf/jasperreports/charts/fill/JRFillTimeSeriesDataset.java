@@ -156,25 +156,12 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 
 				if (crtTimeSeries.getLabelExpression() != null)
 				{
-					Map<RegularTimePeriod, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(tp, crtTimeSeries.getLabel());
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(tp, crtTimeSeries.getLabel());
 				}
 				
 				if (crtTimeSeries.hasItemHyperlink())
 				{
-					Map<RegularTimePeriod, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					seriesLinks.put(tp, crtTimeSeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>()).put(tp, crtTimeSeries.getPrintItemHyperlink());
 				}
 			}
 		}

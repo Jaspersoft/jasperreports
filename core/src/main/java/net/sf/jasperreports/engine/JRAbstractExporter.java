@@ -53,7 +53,6 @@ import net.sf.jasperreports.engine.export.data.StringTextValue;
 import net.sf.jasperreports.engine.export.data.TextValue;
 import net.sf.jasperreports.engine.fonts.FontUtil;
 import net.sf.jasperreports.engine.util.DefaultFormatFactory;
-import net.sf.jasperreports.engine.util.FormatFactory;
 import net.sf.jasperreports.engine.util.FormatUtils;
 import net.sf.jasperreports.engine.util.JRClassLoader;
 import net.sf.jasperreports.engine.util.JRDataUtils;
@@ -1030,14 +1029,12 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 			+ "|" + pattern 
 			+ "|" + (lc == null ? "" : JRDataUtils.getLocaleCode(lc)) 
 			+ "|" + (tz == null ? "" : JRDataUtils.getTimeZoneId(tz));
-		DateFormat dateFormat = dateFormatCache.get(key);
-		if (dateFormat == null)
-		{
-			FormatFactory formatFactory = DefaultFormatFactory.createFormatFactory(formatFactoryClass);//FIXMEFORMAT cache this too
-			dateFormat = formatFactory.createDateFormat(pattern, lc, tz);
-			dateFormatCache.put(key, dateFormat);
-		}
-		return dateFormat;
+		return 
+			dateFormatCache.computeIfAbsent(
+				key, 
+				k -> DefaultFormatFactory.createFormatFactory(formatFactoryClass)//FIXMEFORMAT cache this too
+					.createDateFormat(pattern, lc, tz)
+				);
 	}
 
 	protected NumberFormat getNumberFormat(String formatFactoryClass, String pattern, Locale lc)
@@ -1045,14 +1042,12 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 		String key = formatFactoryClass 
 			+ "|" + pattern 
 			+ "|" + (lc == null ? "" : JRDataUtils.getLocaleCode(lc)); 
-		NumberFormat numberFormat = numberFormatCache.get(key);
-		if (numberFormat == null)
-		{
-			FormatFactory formatFactory = DefaultFormatFactory.createFormatFactory(formatFactoryClass);//FIXMEFORMAT cache this too
-			numberFormat = formatFactory.createNumberFormat(pattern, lc);
-			numberFormatCache.put(key, numberFormat);
-		}
-		return numberFormat;
+		return 
+			numberFormatCache.computeIfAbsent(
+				key, 
+				k -> DefaultFormatFactory.createFormatFactory(formatFactoryClass)//FIXMEFORMAT cache this too
+					.createNumberFormat(pattern, lc)
+				);
 	}
 	
 	/**

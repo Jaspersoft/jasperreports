@@ -654,12 +654,7 @@ public class JRFillContext
 	public synchronized <T> T getFillCache(String key, Supplier<T> cacheCreator)
 	{
 		@SuppressWarnings("unchecked")
-		T cachedValue = (T) fillCaches.get(key);
-		if (cachedValue == null)
-		{
-			cachedValue = cacheCreator.get();
-			fillCaches.put(key, cachedValue);
-		}
+		T cachedValue = (T) fillCaches.computeIfAbsent(key, k -> cacheCreator.get());
 		return cachedValue;
 	}
 

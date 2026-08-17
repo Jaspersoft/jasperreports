@@ -44,22 +44,7 @@ public class JRMondrianFactory
 	
 	public JRMondrianMember createMember(Member member)
 	{
-		JRMondrianMember mondrianMember;
-		if (member == null)
-		{
-			mondrianMember = null;
-		}
-		else
-		{
-			String key = member.getUniqueName();
-			mondrianMember = members.get(key);
-			if (mondrianMember == null)
-			{
-				mondrianMember = new JRMondrianMember(member, this);
-				members.put(key, mondrianMember);
-			}
-		}
-		return mondrianMember;
+		return member == null ? null : members.computeIfAbsent(member.getUniqueName(), k -> new JRMondrianMember(member, this));
 	}
 	
 }

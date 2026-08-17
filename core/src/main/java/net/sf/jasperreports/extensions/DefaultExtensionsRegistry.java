@@ -271,13 +271,7 @@ public class DefaultExtensionsRegistry implements ExtensionsRegistry
 	{
 		synchronized (registryCache)
 		{
-			Map<URL, URLRegistries> registries = registryCache.get(classLoader);
-			if (registries == null)
-			{
-				registries = new HashMap<>();
-				registryCache.put(classLoader, registries);
-			}
-			return registries;
+			return registryCache.computeIfAbsent(classLoader, k -> new HashMap<>());
 		}
 	}
 	

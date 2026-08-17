@@ -103,13 +103,7 @@ public class StandardPdfStructure implements PdfStructure
 	
 	protected PdfName pdfName(String name)
 	{
-		PdfName pdfName = pdfNames.get(name);
-		if (pdfName == null)
-		{
-			pdfName = new PdfName(name);
-			pdfNames.put(name, pdfName);
-		}
-		return pdfName;
+		return pdfNames.computeIfAbsent(name, key -> new PdfName(key));
 	}
 
 	protected StandardStructureEntry createElement(PdfStructureEntry parent, String name)
