@@ -24,12 +24,14 @@
 package net.sf.jasperreports.compilers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
@@ -233,15 +235,10 @@ public class ReportSourceCompilation<P extends JRParameter>
 			return original;
 		}
 		
-		List<JRVariable> sourceVars = new ArrayList<>();
-		for (JRVariable variable : original)
-		{
-			if (included.contains(variable.getName()))
-			{
-				sourceVars.add(variable);
-			}
-		}
-		return sourceVars.size() == original.length ? original 
+		List<JRVariable> sourceVars = 
+			Arrays.stream(original).filter(v -> included.contains(v.getName())).collect(Collectors.toList());
+		return 
+			sourceVars.size() == original.length ? original 
 				: sourceVars.toArray(new JRVariable[sourceVars.size()]);
 	}
 	

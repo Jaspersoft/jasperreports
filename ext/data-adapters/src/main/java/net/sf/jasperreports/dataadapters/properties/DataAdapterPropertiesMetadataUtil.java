@@ -208,16 +208,7 @@ public class DataAdapterPropertiesMetadataUtil
 	
 	public List<PropertyMetadata> getElementProperties(JRElement element)
 	{
-		Collection<PropertyMetadata> allProperties = allProperties();
-		List<PropertyMetadata> elementProperties = new ArrayList<>();
-		for (PropertyMetadata propertyMetadata : allProperties)
-		{
-			if (inScope(propertyMetadata, element))
-			{
-				elementProperties.add(propertyMetadata);
-			}
-		}
-		return elementProperties;
+		return allProperties().stream().filter(v -> inScope(v, element)).collect(Collectors.toList());
 	}
 	
 	protected boolean inScope(PropertyMetadata property, JRElement element)

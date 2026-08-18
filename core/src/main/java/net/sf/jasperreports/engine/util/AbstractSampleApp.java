@@ -70,12 +70,10 @@ public abstract class AbstractSampleApp
 				tasks.add(method.getName());
 			}
 		}
-		for (String task:tasks)
-		{
-			sb.append(task).append(" | ");
-		}
+
+		sb.append(String.join(" | ", tasks));
 		
-		return sb.toString().substring(0, sb.length() - 3);
+		return sb.toString();
 	}
 
 	

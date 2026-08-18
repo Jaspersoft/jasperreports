@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -593,24 +595,14 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			SchemaNode node = null;
 
 			for (int i = 0; i < objectPathSegments.length; i++) {
-				StringBuilder objectPath = new StringBuilder(objectPathSegments[0]);
-				for (int j = 1; j <= i; j++) {
-					objectPath.append(".").append(objectPathSegments[j]);
-				}
+				String objectPath = String.join(".", Arrays.copyOfRange(objectPathSegments, 0, i + 1));
 
-				if (!pathToObjectNode.containsKey(objectPath.toString())) {
-					String schemaNodePath = "";
-
-					for (int k = 0; k < i; k++) {
-						schemaNodePath += schemaNodePath.length() > 0 ? "." + objectPathSegments[k] : objectPathSegments[k];
-					}
-
+				if (!pathToObjectNode.containsKey(objectPath)) {
+					String schemaNodePath = String.join(".", Arrays.copyOfRange(objectPathSegments, 0, i));
 					node = new SchemaNode(i, objectPathSegments[i], NodeTypeEnum.ARRAY, schemaNodePath);
-
-
-					pathToObjectNode.put(objectPath.toString(), node);
+					pathToObjectNode.put(objectPath, node);
 				} else {
-					node = pathToObjectNode.get(objectPath.toString());
+					node = pathToObjectNode.get(objectPath);
 				}
 
 				if (i < objectPathSegments.length - 1 && node.getMember(objectPathSegments[i+1]) == null) {
@@ -862,12 +854,8 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 
 	private void closeExtraPathSegments(String[] prevSegments, int lastCommonIndex) throws IOException {
 		for (int i = prevSegments.length - 1; i > lastCommonIndex; i--) {
-			StringBuilder sb = new StringBuilder(prevSegments[0]);
-			for (int j=1; j <= i; j++) {
-				sb.append(".").append(prevSegments[j]);
-			}
-
-			SchemaNode toClose = pathToObjectNode.get(sb.toString());
+			String path = String.join(".", Arrays.copyOfRange(prevSegments, 0, i + 1));
+			SchemaNode toClose = pathToObjectNode.get(path);
 
 			if (openedSchemaNodes.get(openedSchemaNodes.size() - 1).equals(toClose)) {
 				openedSchemaNodes.remove(openedSchemaNodes.size() - 1);
@@ -893,7 +881,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			}
 
 			if (log.isDebugEnabled()) {
-				log.debug("\t\tclosing " + toClose.getType().getName() + " path: " + sb.toString());
+				log.debug("\t\tclosing " + toClose.getType().getName() + " path: " + path);
 			}
 		}
 	}
@@ -1172,12 +1160,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			if (isArray) {
 				out.append("{");
 			}
-			for (int i=0, ln = members.size(); i < ln; i++) {
-				out.append("\"").append(members.get(i).getName()).append("\"");
-				if (i < ln-1) {
-					out.append(", ");
-				}
-			}
+			out.append(members.stream().map(m -> "\"" + m.getName() + "\"").collect(Collectors.joining(", ")));
 			if (isArray) {
 				out.append("}");
 			}

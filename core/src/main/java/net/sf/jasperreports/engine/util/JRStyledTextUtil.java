@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -406,15 +405,7 @@ public class JRStyledTextUtil
 				codePoint = textChar;
 			}
 
-			for (ListIterator<Face> fontIt = validFonts.listIterator(); fontIt.hasNext();)
-			{
-				Face face = fontIt.next();
-				
-				if (!face.supports(codePoint))
-				{
-					fontIt.remove();
-				}
-			}
+			validFonts.removeIf(face -> !face.supports(codePoint));
 			
 			if (validFonts.isEmpty())
 			{

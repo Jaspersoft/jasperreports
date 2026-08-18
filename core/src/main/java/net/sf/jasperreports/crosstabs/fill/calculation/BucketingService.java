@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
@@ -963,15 +964,7 @@ public abstract class BucketingService
 		{
 			StringBuilder sb = new StringBuilder();
 			sb.append('{');
-			for (Iterator<Map.Entry<Bucket, Object>> it = entries.iterator(); it.hasNext();)
-			{
-				Map.Entry<Bucket, Object> entry = it.next();
-				sb.append(entry);
-				if (it.hasNext())
-				{
-					sb.append(", ");
-				}
-			}
+			sb.append(entries.stream().map(Object::toString).collect(Collectors.joining(", ")));
 			sb.append('}');
 			return sb.toString();
 		}

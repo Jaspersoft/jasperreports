@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.tools.Diagnostic.Kind;
@@ -418,16 +419,7 @@ public class PropertiesDocReader
 
 	protected String getScopesText(List<PropertyScope> scopes)
 	{
-		StringBuilder scopesText = new StringBuilder();
-		for (PropertyScope scope : scopes)
-		{
-			if (scopesText.length() > 0)
-			{
-				scopesText.append(" | ");
-			}
-			scopesText.append(scope.toString());
-		}
-		return scopesText.toString();
+		return scopes.stream().map(PropertyScope::toString).collect(Collectors.joining(" | "));
 	}
 
 	protected void writeRefDoc(String refFile, Document refDoc)

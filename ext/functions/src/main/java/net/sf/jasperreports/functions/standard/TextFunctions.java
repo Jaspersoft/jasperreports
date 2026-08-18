@@ -163,11 +163,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			}
 			return null;
 		}
-		StringBuilder sb=new StringBuilder();
-		for (int i=0;i<strings.length;i++){
-			sb.append(strings[i]);
-		}
-		return sb.toString();
+		return String.join("", strings);
 	}
 	
 	// ===================== EXACT function ===================== //

@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.map.LinkedMap;
 import org.apache.commons.logging.Log;
@@ -998,18 +999,10 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	{
 		if (!delayedStyleSettersByName.isEmpty())
 		{
-			StringBuilder errorMsg = new StringBuilder();
-			for (Iterator<String> it = delayedStyleSettersByName.keySet().iterator(); it.hasNext();)
-			{
-				String name = it.next();
-				errorMsg.append(name);
-				errorMsg.append(", ");
-			}
-			
 			throw 
 				new JRRuntimeException(
 					EXCEPTION_MESSAGE_KEY_UNRESOLVED_STYLE,  
-					new Object[]{errorMsg.substring(0, errorMsg.length() - 2)} 
+					new Object[]{delayedStyleSettersByName.keySet().stream().collect(Collectors.joining(", "))} 
 					);
 		}
 	}
