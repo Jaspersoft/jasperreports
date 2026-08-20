@@ -44,7 +44,22 @@ public class Olap4jFactory
 	
 	public Olap4jMember createMember(Member member)
 	{
-		return member == null ? null : members.computeIfAbsent(member.getUniqueName(), k -> new Olap4jMember(member, this));
+		Olap4jMember olap4jMember;
+		if (member == null)
+		{
+			olap4jMember = null;
+		}
+		else
+		{
+			String key = member.getUniqueName();
+			olap4jMember = members.get(key);
+			if (olap4jMember == null) // computeIfAbsent is not appropriate due to recursiveness in Olap4jMember constructor
+			{
+				olap4jMember = new Olap4jMember(member, this);
+				members.put(key, olap4jMember);
+			}
+		}
+		return olap4jMember;
 	}
 	
 }

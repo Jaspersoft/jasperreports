@@ -44,7 +44,22 @@ public class JRMondrianFactory
 	
 	public JRMondrianMember createMember(Member member)
 	{
-		return member == null ? null : members.computeIfAbsent(member.getUniqueName(), k -> new JRMondrianMember(member, this));
+		JRMondrianMember mondrianMember;
+		if (member == null)
+		{
+			mondrianMember = null;
+		}
+		else
+		{
+			String key = member.getUniqueName();
+			mondrianMember = members.get(key);
+			if (mondrianMember == null) // computeIfAbsent is not appropriate due to recursiveness in JRMondrianMember constructor
+			{
+				mondrianMember = new JRMondrianMember(member, this);
+				members.put(key, mondrianMember);
+			}
+		}
+		return mondrianMember;
 	}
 	
 }

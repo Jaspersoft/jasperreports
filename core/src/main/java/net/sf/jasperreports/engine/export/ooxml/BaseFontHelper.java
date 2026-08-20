@@ -115,7 +115,15 @@ public abstract class BaseFontHelper extends BaseHelper
 	
 	private String getFontPathId(String fontPath)
 	{
-		return fontPaths.computeIfAbsent(fontPath, k -> "rIdf" + Integer.valueOf(fontPaths.size() + 1));
+		String rIdf = fontPaths.get(fontPath);
+
+		if (rIdf == null) // computeIfAbsent is not appropriate due to fontPaths self-reference making it fragile
+		{
+			rIdf = "rIdf" + Integer.valueOf(fontPaths.size() + 1);
+			fontPaths.put(fontPath, rIdf);
+		}
+		
+		return rIdf;
 	}
 			
 	private void embedFont(String id, String path) 

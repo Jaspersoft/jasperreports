@@ -96,7 +96,13 @@ public abstract class AbstractClassFilter implements ClassFilter
 	
 	public boolean isClassVisible(String className)
 	{
-		return visibilityCache.computeIfAbsent(className, key -> visible(key));
+		Boolean visible = visibilityCache.get(className);
+		if (visible == null) // computeIfAbsent is not appropriate due to performance reasons with ConcurrentHashMap
+		{
+			visible = visible(className);
+			visibilityCache.put(className, visible);
+		}
+		return visible;
 	}
 
 	protected boolean visible(String className)
