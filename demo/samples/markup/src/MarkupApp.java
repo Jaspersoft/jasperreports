@@ -381,7 +381,7 @@ public class MarkupApp extends AbstractSampleApp
 	public void csvMetadata() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = new File("target/reports/MarkupReport.jrprint");
@@ -408,7 +408,7 @@ public class MarkupApp extends AbstractSampleApp
 	public void xlsMetadata() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -435,7 +435,7 @@ public class MarkupApp extends AbstractSampleApp
 	public void xlsxMetadata() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -462,7 +462,7 @@ public class MarkupApp extends AbstractSampleApp
 	public void jsonMetadata() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];

@@ -77,7 +77,7 @@ public class FillSpiderDataset extends JRFillElementDataset implements SpiderDat
 		if (srcCategorySeries != null && srcCategorySeries.length > 0)
 		{
 			categorySeries = new JRFillCategorySeries[srcCategorySeries.length];
-			for(int i = 0; i < srcCategorySeries.length; i++)
+			for (int i = 0; i < srcCategorySeries.length; i++)
 			{
 				categorySeries[i] = (JRFillCategorySeries)factory.getCategorySeries(srcCategorySeries[i]);
 			}
@@ -105,7 +105,7 @@ public class FillSpiderDataset extends JRFillElementDataset implements SpiderDat
 	{
 		if (categorySeries != null && categorySeries.length > 0)
 		{
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				categorySeries[i].evaluate(calculator);
 			}
@@ -124,7 +124,7 @@ public class FillSpiderDataset extends JRFillElementDataset implements SpiderDat
 				itemHyperlinks = new HashMap<>();
 			}
 			
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				JRFillCategorySeries crtCategorySeries = categorySeries[i];
 				

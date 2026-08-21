@@ -32,33 +32,33 @@ import net.sf.jasperreports.json.expression.member.MemberExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class JsonQLExpression {
-    private List<MemberExpression> memberExpressionList = new ArrayList<>();
-    private boolean isAbsolute;
+	private List<MemberExpression> memberExpressionList = new ArrayList<>();
+	private boolean isAbsolute;
 
-    public void addMemberExpression(MemberExpression memberExpression) {
-        memberExpressionList.add(memberExpression);
-    }
+	public void addMemberExpression(MemberExpression memberExpression) {
+		memberExpressionList.add(memberExpression);
+	}
 
-    public List<MemberExpression> getMemberExpressionList() {
-        return memberExpressionList;
-    }
+	public List<MemberExpression> getMemberExpressionList() {
+		return memberExpressionList;
+	}
 
-    public boolean isAbsolute() {
-        return isAbsolute;
-    }
+	public boolean isAbsolute() {
+		return isAbsolute;
+	}
 
-    public void setIsAbsolute(boolean isAbsolute) {
-        this.isAbsolute = isAbsolute;
-    }
+	public void setIsAbsolute(boolean isAbsolute) {
+		this.isAbsolute = isAbsolute;
+	}
 
-    @Override
-    public String toString() {
-        String result = (isAbsolute ? "" : "NON ") + "absolute pathExpression: \n";
+	@Override
+	public String toString() {
+		String result = (isAbsolute ? "" : "NON ") + "absolute pathExpression: \n";
 
-        for(MemberExpression me: memberExpressionList) {
-            result += me + "\n";
-        }
+		for (MemberExpression me: memberExpressionList) {
+			result += me + "\n";
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

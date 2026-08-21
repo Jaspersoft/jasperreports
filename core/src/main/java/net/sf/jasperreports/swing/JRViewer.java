@@ -339,7 +339,7 @@ public class JRViewer extends javax.swing.JPanel implements JRViewerListener
 
 		if (components != null)
 		{
-			for(int i = 0; i < components.length; i++)
+			for (int i = 0; i < components.length; i++)
 			{
 				if (components[i] instanceof Container)
 				{

@@ -77,7 +77,7 @@ public class JRBaseElementGroup implements JRElementGroup, Serializable
 		List<JRChild> list = elementGrp.getChildren();
 		if (list != null && list.size() > 0)
 		{
-			for(int i = 0; i < list.size(); i++)
+			for (int i = 0; i < list.size(); i++)
 			{
 				JRChild child = list.get(i);
 				child = (JRChild)factory.getVisitResult(child);
@@ -115,7 +115,7 @@ public class JRBaseElementGroup implements JRElementGroup, Serializable
 			List<JRElement> allElements = new ArrayList<>();
 			Object child = null;
 			JRElement[] childElementArray = null;
-			for(int i = 0; i < children.size(); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
 				child = children.get(i);
 				if (child instanceof JRElement)
@@ -219,7 +219,7 @@ public class JRBaseElementGroup implements JRElementGroup, Serializable
 		if (children != null)
 		{
 			clone.children = new ArrayList<>(children.size());
-			for(int i = 0; i < children.size(); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
 				clone.children.add((JRChild)(children.get(i).clone(clone)));
 			}

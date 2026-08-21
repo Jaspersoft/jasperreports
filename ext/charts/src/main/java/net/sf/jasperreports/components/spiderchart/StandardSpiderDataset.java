@@ -62,7 +62,7 @@ public class StandardSpiderDataset extends JRDesignElementDataset implements Spi
 		JRCategorySeries[] srcCategorySeries = dataset.getSeries();
 		if (srcCategorySeries != null && srcCategorySeries.length > 0)
 		{
-			for(int i = 0; i < srcCategorySeries.length; i++)
+			for (int i = 0; i < srcCategorySeries.length; i++)
 			{
 				addCategorySeries(factory.getCategorySeries(srcCategorySeries[i]));
 			}
@@ -119,7 +119,7 @@ public class StandardSpiderDataset extends JRDesignElementDataset implements Spi
 	 */
 	public void addCategorySeries(int index, JRCategorySeries categorySeries)
 	{
-		if(index >=0 && index < categorySeriesList.size())
+		if (index >=0 && index < categorySeriesList.size())
 			categorySeriesList.add(index, categorySeries);
 		else{
 			categorySeriesList.add(categorySeries);

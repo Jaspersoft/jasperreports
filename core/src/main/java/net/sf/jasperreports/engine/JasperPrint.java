@@ -886,7 +886,7 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 			anchorIndexes = new HashMap<>();
 			
 			int i = 0;
-			for(Iterator<JRPrintPage> itp = pages.iterator(); itp.hasNext(); i++)
+			for (Iterator<JRPrintPage> itp = pages.iterator(); itp.hasNext(); i++)
 			{
 				JRPrintPage page = itp.next();
 				Collection<JRPrintElement> elements = page.getElements();
@@ -902,7 +902,7 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 		if (elements != null && elements.size() > 0)
 		{
 			JRPrintElement element = null;
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				element = it.next();
 				if (element instanceof JRPrintAnchor)

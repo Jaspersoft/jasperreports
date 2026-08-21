@@ -71,7 +71,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 		super( timeSeriesDataset, factory.getParent() );
 		
 		JRTimeSeries[] srcTimeSeries = timeSeriesDataset.getSeries();
-		if( srcTimeSeries != null && srcTimeSeries.length > 0)
+		if ( srcTimeSeries != null && srcTimeSeries.length > 0)
 		{
 			timeSeries = new JRFillTimeSeries[srcTimeSeries.length];
 			for (int i = 0; i < timeSeries.length; i++)
@@ -99,7 +99,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 	@Override
 	protected void customEvaluate(JRCalculator calculator) throws JRExpressionEvalException 
 	{
-		if(timeSeries != null && timeSeries.length > 0)
+		if (timeSeries != null && timeSeries.length > 0)
 		{
 			for (int i = 0; i < timeSeries.length; i++)
 			{
@@ -137,7 +137,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 				}
 
 				TimeSeries series = seriesMap.get(seriesName);
-				if(series == null)
+				if (series == null)
 				{
 					series = new TimeSeries(seriesName.toString());
 					seriesNames.add(seriesName);
@@ -173,7 +173,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 		TimeSeriesCollection dataset = new TimeSeriesCollection(getTimeZone());
 		if (seriesNames != null)
 		{
-			for(int i = 0; i < seriesNames.size(); i++)
+			for (int i = 0; i < seriesNames.size(); i++)
 			{
 				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));

@@ -273,7 +273,7 @@ public class JROriginExporterFilter implements ResetableExporterFilter
 		{
 			filter = (filter == null ? new JROriginExporterFilter(): filter);
 				
-			for(Iterator<PropertySuffix> it = properties.iterator(); it.hasNext();)
+			for (Iterator<PropertySuffix> it = properties.iterator(); it.hasNext();)
 			{
 				PropertySuffix propertySuffix = it.next();
 				String suffix = propertySuffix.getSuffix();

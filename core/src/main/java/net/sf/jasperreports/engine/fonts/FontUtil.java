@@ -106,7 +106,7 @@ public final class FontUtil
 	 */
 	public static void copyNonNullOwnProperties(JRFont srcFont, JRFont destFont)
 	{
-		if(srcFont != null && destFont != null)
+		if (srcFont != null && destFont != null)
 		{
 			if (srcFont.getOwnFontName() != null)
 			{

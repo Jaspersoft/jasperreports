@@ -465,7 +465,7 @@ public class PropertyStyleProvider implements StyleProvider
 		
 		if (stylePropertyExpressions != null)
 		{
-			for(JRPropertyExpression stylePropertyExpression : stylePropertyExpressions.values())
+			for (JRPropertyExpression stylePropertyExpression : stylePropertyExpressions.values())
 			{
 				JRExpression expression = stylePropertyExpression.getValueExpression();
 				if (expression != null)

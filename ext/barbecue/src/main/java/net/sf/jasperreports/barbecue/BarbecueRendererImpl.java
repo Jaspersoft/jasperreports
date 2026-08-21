@@ -63,7 +63,7 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 	{
 		if (rotation != null) 
 		{
-			switch(rotation)
+			switch (rotation)
 			{
 				case LEFT:
 				case RIGHT:

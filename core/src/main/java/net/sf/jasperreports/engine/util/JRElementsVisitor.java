@@ -93,7 +93,7 @@ public class JRElementsVisitor extends JRDelegationVisitor implements ElementsVi
 		JRGroup[] groups = report.getGroups();
 		if (groups != null)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (int i = 0; i < groups.length; i++)
 			{
 				JRGroup group = groups[i];
 				visitSection(group.getGroupHeaderSection());
@@ -109,7 +109,7 @@ public class JRElementsVisitor extends JRDelegationVisitor implements ElementsVi
 			JRBand[] bands = section.getBands();
 			if (bands != null)
 			{
-				for(int i = 0; i < bands.length; i++)
+				for (int i = 0; i < bands.length; i++)
 				{
 					visitBand(bands[i]);
 				}

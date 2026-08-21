@@ -1214,7 +1214,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		parameterContributors = getParameterContributors(contributorContext);
 		if (parameterContributors != null)
 		{
-			for(ParameterContributor contributor : parameterContributors)
+			for (ParameterContributor contributor : parameterContributors)
 			{
 				contributor.contributeParameters(parameterValues);
 			}
@@ -1258,7 +1258,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (parameterContributors != null)
 		{
-			for(ParameterContributor contributor : parameterContributors)
+			for (ParameterContributor contributor : parameterContributors)
 			{
 				contributor.dispose();
 			}
@@ -1546,7 +1546,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 					}
 				}
 			}
-			while(hasNext && !includeRow);
+			while (hasNext && !includeRow);
 			
 			if (hasNext)
 			{

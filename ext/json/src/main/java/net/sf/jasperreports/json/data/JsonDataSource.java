@@ -224,7 +224,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 	 */
 	@Override
 	public boolean next() {
-		if(jsonNodesIterator == null || !jsonNodesIterator.hasNext()) {
+		if (jsonNodesIterator == null || !jsonNodesIterator.hasNext()) {
 			return false;
 		}
 		++currentNodeIndex;
@@ -286,7 +286,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 	@Override
 	public Object getFieldValue(JRField jrField) throws JRException 
 	{
-		if(currentJsonNode == null) {
+		if (currentJsonNode == null) {
 			return null;
 		}
 		
@@ -310,7 +310,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 		Class<?> valueClass = jrField.getValueClass();
 		JsonNode selectedObject = getJsonData(currentJsonNode, expression);
 		
-		if(Object.class != valueClass) 
+		if (Object.class != valueClass) 
 		{
 			boolean hasValue = selectedObject != null 
 					&& !selectedObject.isMissingNode() && !selectedObject.isNull();
@@ -318,11 +318,11 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 			{
 				try {
 					if (valueClass.equals(String.class)) {
-                        if (selectedObject.isArray()) {
-                            value = selectedObject.toString();
-                        } else {
-                            value = selectedObject.asText();
-                        }
+						if (selectedObject.isArray()) {
+							value = selectedObject.toString();
+						} else {
+							value = selectedObject.asText();
+						}
 
 					} else if (valueClass.equals(Boolean.class)) {
 						value = selectedObject.booleanValue();
@@ -384,7 +384,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 		JsonNode tempNode = rootNode;
 		StringTokenizer tokenizer = new StringTokenizer(jsonExpression, PROPERTY_SEPARATOR);
 		
-		while(tokenizer.hasMoreTokens()) {
+		while (tokenizer.hasMoreTokens()) {
 			String currentToken = tokenizer.nextToken();
 			int currentTokenLength = currentToken.length();
 			int indexOfLeftSquareBracket = currentToken.indexOf(ARRAY_LEFT);
@@ -392,7 +392,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 			// got Left Square Bracket - LSB
 			if (indexOfLeftSquareBracket != -1) {
 				// a Right Square Bracket must be the last character in the current token
-				if(currentToken.lastIndexOf(ARRAY_RIGHT) != (currentTokenLength-1)) {
+				if (currentToken.lastIndexOf(ARRAY_RIGHT) != (currentTokenLength-1)) {
 					throw 
 						new JRException(
 							EXCEPTION_MESSAGE_KEY_INVALID_EXPRESSION,
@@ -408,7 +408,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 
 				String arrayOperators = currentToken.substring(indexOfLeftSquareBracket);
 				StringTokenizer arrayOpsTokenizer = new StringTokenizer(arrayOperators,ARRAY_RIGHT);
-				while(arrayOpsTokenizer.hasMoreTokens()) {
+				while (arrayOpsTokenizer.hasMoreTokens()) {
 					if (tempNode == null || tempNode.isMissingNode() || !tempNode.isArray()) {
 						return null;
 					}
@@ -438,14 +438,14 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 		if (indexOfLeftRoundBracket != -1) {
 			
 			// a Right Round Bracket must be the last character in the current pathWithAttribute
-			if(pathWithAttributeExpression.indexOf(ATTRIBUTE_RIGHT) != (pathWithAttributeExpression.length() - 1)) {
+			if (pathWithAttributeExpression.indexOf(ATTRIBUTE_RIGHT) != (pathWithAttributeExpression.length() - 1)) {
 				throw 
 					new JRException(
 						EXCEPTION_MESSAGE_KEY_INVALID_ATTRIBUTE_SELECTION,
 						new Object[]{pathWithAttributeExpression});
 			}
 			
-			if(rootNode != null && !rootNode.isMissingNode()) {
+			if (rootNode != null && !rootNode.isMissingNode()) {
 				
 				String path = pathWithAttributeExpression.substring(0, indexOfLeftRoundBracket);
 				
@@ -475,7 +475,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 						JsonNode deeperNode = node.path(path);
 						if (!deeperNode.isMissingNode()) {
 							if (deeperNode.isArray()) {
-								for(JsonNode arrayNode: deeperNode) {
+								for (JsonNode arrayNode: deeperNode) {
 									if (isValidExpression(arrayNode, attributeExpression)) {
 										((ArrayNode)result).add(arrayNode);
 									}
@@ -503,7 +503,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 	 * @param simplePath - a simple field name, with no selection by attribute
 	 */
 	protected JsonNode goDownPath(JsonNode rootNode, String simplePath) {
-		if(rootNode != null && !rootNode.isMissingNode()) {
+		if (rootNode != null && !rootNode.isMissingNode()) {
 			JsonNode result = null;
 			if (rootNode.isObject()) {
 				result = rootNode.path(simplePath);
@@ -513,7 +513,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 					JsonNode deeperNode = node.path(simplePath);
 					if (!deeperNode.isMissingNode()) {
 						if (deeperNode.isArray()) {
-							for(JsonNode arrayNode: deeperNode) {
+							for (JsonNode arrayNode: deeperNode) {
 								((ArrayNode)result).add(arrayNode);
 							}
 						} else {
@@ -563,7 +563,7 @@ public class JsonDataSource extends JRAbstractTextDataSource implements JsonData
 	 */
 	@Override
 	public JsonDataSource subDataSource(String selectExpression) throws JRException {
-		if(currentJsonNode == null)
+		if (currentJsonNode == null)
 		{
 			throw 
 				new JRException(

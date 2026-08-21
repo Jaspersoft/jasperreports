@@ -85,7 +85,7 @@ public class XlsxWorkbookHelper extends BaseHelper
 	public void exportFooter()
 	{
 		write("</sheets>\n");
-		if(definedNames != null && definedNames.length() > 0) {
+		if (definedNames != null && definedNames.length() > 0) {
 			write("<definedNames>\n");
 			write(definedNames.toString());
 			write("</definedNames>\n");

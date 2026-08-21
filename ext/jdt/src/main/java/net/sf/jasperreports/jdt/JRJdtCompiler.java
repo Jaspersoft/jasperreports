@@ -656,7 +656,7 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 									)
 								);
 							problemBuilder.append("\n");
-							for(int j = problemStartIndex; j < problem.getSourceStart(); j++)
+							for (int j = problemStartIndex; j < problem.getSourceStart(); j++)
 							{
 								problemBuilder.append(" ");
 							}
@@ -667,7 +667,7 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 							else
 							{
 								problemBuilder.append("<");
-								for(int j = problem.getSourceStart() + 1; j < problem.getSourceEnd(); j++)
+								for (int j = problem.getSourceStart() + 1; j < problem.getSourceEnd(); j++)
 								{
 									problemBuilder.append("-");
 								}

@@ -279,7 +279,7 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 				fillContext.unlockVirtualizationContext();
 			}
 		}
-		while(hasEntry);
+		while (hasEntry);
 	}
 	
 	public boolean hasDelayedActions(JRPrintPage page)

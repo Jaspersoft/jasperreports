@@ -52,7 +52,7 @@ public class SpiderChartCompiler implements ComponentCompiler
 
 	public static void collectExpressions(SpiderDataset dataset, JRExpressionCollector collector)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			collector.collect(dataset);
 	
@@ -60,7 +60,7 @@ public class SpiderChartCompiler implements ComponentCompiler
 			if (categorySeries != null && categorySeries.length > 0)
 			{
 				JRExpressionCollector seriesCollector = collector.getCollector(dataset);
-				for(int j = 0; j < categorySeries.length; j++)
+				for (int j = 0; j < categorySeries.length; j++)
 				{
 					seriesCollector.addExpression(categorySeries[j].getSeriesExpression());
 					seriesCollector.addExpression(categorySeries[j].getCategoryExpression());
@@ -76,7 +76,7 @@ public class SpiderChartCompiler implements ComponentCompiler
 
 	public static void collectExpressions(SpiderPlot spiderPlot, JRExpressionCollector collector)
 	{
-		if(spiderPlot != null)
+		if (spiderPlot != null)
 		{
 			collector.addExpression(spiderPlot.getMaxValueExpression());
 		}
@@ -84,7 +84,7 @@ public class SpiderChartCompiler implements ComponentCompiler
 
 	public static void collectExpressions(ChartSettings chart, JRExpressionCollector collector)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			collector.addExpression(chart.getTitleExpression());
 			collector.addExpression(chart.getSubtitleExpression());

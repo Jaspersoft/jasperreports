@@ -616,7 +616,7 @@ public class TextMeasurer implements JRTextMeasurer
 			StringTokenizer tkzer = new StringTokenizer(runText, "\n", true);
 
 			// text is split into paragraphs, using the newline character as delimiter
-			while(tkzer.hasMoreTokens() && verticalSpaceRemaining) 
+			while (tkzer.hasMoreTokens() && verticalSpaceRemaining) 
 			{
 				String paragraphText = tkzer.nextToken();
 

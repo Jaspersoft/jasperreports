@@ -300,7 +300,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -308,7 +308,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			
 			defaultFont = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
 
-			if(!hasGlobalSheetNames())
+			if (!hasGlobalSheetNames())
 			{
 				sheetNamesIndex = 0;
 			}
@@ -326,10 +326,10 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 				if (Boolean.TRUE.equals(configuration.isOnePagePerSheet()))
 				{
 
-					for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+					for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 					{
 						checkInterrupted();
-						if(pageExported)
+						if (pageExported)
 						{
 							closeSheet();
 						}
@@ -343,7 +343,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 						sheetIndex++;
 						sheetNamesIndex++;
 						rowIndex = 0;
-						for(String key : rowSpanStartIndexesMap.keySet())
+						for (String key : rowSpanStartIndexesMap.keySet())
 						{
 							rowSpanStartIndexesMap.put(key, 0);
 						}
@@ -376,7 +376,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 					{
 						((ResetableExporterFilter)filter).reset();
 					}
-					for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+					for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 					{
 						checkInterrupted();
 						JRPrintPage page = pages.get(pageIndex);
@@ -388,7 +388,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 				}
 				
 			}
-			else if(reportIndex == items.size() -1 && !pageExported)
+			else if (reportIndex == items.size() -1 && !pageExported)
 			{
 				exportEmptyReport();
 			}
@@ -428,17 +428,17 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		}
 		
 		XlsxMetadataReportConfiguration configuration = getCurrentItemConfiguration();
-		if(currentRow == null)
+		if (currentRow == null)
 		{
 			currentRow = new HashMap<>();
 		}
-		else if(!currentRow.isEmpty()) 
+		else if (!currentRow.isEmpty()) 
 		{
 			writeCurrentRow(currentRow, repeatedValues);
 		}
 		exportElements(page.getElements(), null);
 		
-		if(columnNames.size() > maxColumnIndex+1)
+		if (columnNames.size() > maxColumnIndex+1)
 		{
 			throw 
 				new JRException(
@@ -453,11 +453,11 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			writeCurrentRow(currentRow, repeatedValues);
 		}
 
-		if(autoFilterStart != null)
+		if (autoFilterStart != null)
 		{
 			setAutoFilter(autoFilterStart + ":" + (autoFilterEnd != null ? autoFilterEnd : autoFilterStart));
 		}
-		else if(autoFilterEnd != null)
+		else if (autoFilterEnd != null)
 		{
 			setAutoFilter(autoFilterEnd + ":" + autoFilterEnd);
 		}
@@ -534,7 +534,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			element = frame.getElements().get(elementIndexes[i]);
 		}
 
-		if(element instanceof JRGenericPrintElement)
+		if (element instanceof JRGenericPrintElement)
 		{
 			JRGenericPrintElement genericPrintElement = (JRGenericPrintElement)element;
 			return ((GenericElementXlsxMetadataHandler)GenericElementHandlerEnviroment.getInstance(jasperReportsContext).getElementHandler(
@@ -562,7 +562,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			
 			AttributedCharacterIterator iterator = styledText.getAttributedString().getIterator();
 			
-			while(runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
+			while (runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
 			{
 				runHelper.export(
 						style, iterator.getAttributes(), 
@@ -640,7 +640,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 	protected String getHyperlinkTarget(JRPrintHyperlink link)
 	{
 		String target = null;
-		switch(link.getHyperlinkTarget())
+		switch (link.getHyperlinkTarget())
 		{
 			case SELF :
 			{
@@ -678,11 +678,11 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			{
 				boolean includeAnchors = !Boolean.TRUE.equals(configuration.isIgnoreAnchors());
 				boolean onePagePerSheet = Boolean.TRUE.equals(configuration.isOnePagePerSheet());
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{
-						if(link.getHyperlinkReference() != null) 
+						if (link.getHyperlinkReference() != null) 
 						{
 							try
 							{
@@ -750,7 +750,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 
 	protected void insertPageAnchor()
 	{
-		if(!Boolean.TRUE.equals(getCurrentItemConfiguration().isIgnoreAnchors()) && startPage)
+		if (!Boolean.TRUE.equals(getCurrentItemConfiguration().isIgnoreAnchors()) && startPage)
 		{
 			String anchorPage = JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (sheetIndex - sheetsBeforeCurrentReport);
 			String ref = "'" + JRStringUtil.xmlEncode(currentSheetName) + "'!$A$1";	
@@ -763,17 +763,17 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 	@Override
 	protected void closeWorkbook(OutputStream os) throws JRException //FIXMEXLSX could throw IOException here, as other implementations do
 	{
-		if(sheetMapping != null && definedNamesMap != null && !definedNamesMap.isEmpty())
+		if (sheetMapping != null && definedNamesMap != null && !definedNamesMap.isEmpty())
 		{
-			for(Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
+			for (Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
 			{
 				String name = entry.getKey().getName();
 				String localSheetId = "";
-				if(name != null && entry.getValue() != null) 
+				if (name != null && entry.getValue() != null) 
 				{
 					String scope = entry.getKey().getScope();
 					// name and name scope are ignoring case in Excel
-					if(scope != null && !scope.equalsIgnoreCase(DEFAULT_DEFINED_NAME_SCOPE) && sheetMapping.containsKey(scope))
+					if (scope != null && !scope.equalsIgnoreCase(DEFAULT_DEFINED_NAME_SCOPE) && sheetMapping.containsKey(scope))
 					{
 						localSheetId = " localSheetId=\"" + sheetMapping.get(scope) + "\"";
 					}
@@ -893,7 +893,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		{
 			// merged cells generate accessibility warnings in Excel documents:
 			
-//			for(String columnName: columnNames)
+//			for (String columnName: columnNames)
 //			{
 //				int rowSpanStartIndex = rowSpanStartIndexesMap.get(columnName);
 //				sheetHelper.exportMergedCells(rowSpanStartIndex, columnNamesMap.get(columnName), maxColumnIndex, rowIndex - rowSpanStartIndex, 1);
@@ -905,7 +905,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			boolean isIgnorePageMargins = configuration.isIgnorePageMargins();
 			String password = configuration.getPassword();
 			
-			if(currentSheetFirstPageNumber != null && currentSheetFirstPageNumber > 0)
+			if (currentSheetFirstPageNumber != null && currentSheetFirstPageNumber > 0)
 			{
 				sheetHelper.exportFooter(
 						sheetIndex, 
@@ -924,7 +924,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			else
 			{
 				Integer documentFirstPageNumber = configuration.getFirstPageNumber();
-				if(documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet)
+				if (documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet)
 				{
 					sheetHelper.exportFooter(
 						sheetIndex, 
@@ -956,7 +956,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 						);
 				}
 			}
-			if(sheetAutoFilter != null)
+			if (sheetAutoFilter != null)
 			{
 				int index = Math.max(0, sheetIndex-1);
 				definedNames.append("<definedName name=\"_xlnm._FilterDatabase\" localSheetId=\"" + index + "\">'" + JRStringUtil.xmlEncode(currentSheetName) +"'!"+sheetAutoFilter+"</definedName>\n");
@@ -1486,7 +1486,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 				
 				drawingHelper.write("<xdr:pic>\n");
 				String altText = image.getHyperlinkTooltip() == null ? "" : image.getHyperlinkTooltip();
-				if(!altText.isEmpty())
+				if (!altText.isEmpty())
 				{
 					altText = " descr=\"" + altText +"\"";
 				}
@@ -1783,7 +1783,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			sheetHelper.write("<f>" + JRStringUtil.xmlEncode(textFormula) + "</f>\n");
 		}
 
-		if(!Boolean.TRUE.equals(configuration.isIgnoreAnchors()))
+		if (!Boolean.TRUE.equals(configuration.isIgnoreAnchors()))
 		{
 			insertPageAnchor();
 			if (text.getAnchorName() != null)
@@ -1820,17 +1820,17 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		cellHelper.exportFooter();
 	}
 
-    protected TextValueHandler getTextValueHandler(final JRPrintText text, final String convertedPattern, String currentData)
-    {
+	protected TextValueHandler getTextValueHandler(final JRPrintText text, final String convertedPattern, String currentData)
+	{
 		final JRStyledText styledText = getStyledText(text);
 		final String textStr = currentData == null ? styledText.getText() : currentData;
 		
-    	return new TextValueHandler() 
+		return new TextValueHandler() 
 		{
 			@Override
 			public void handle(BooleanTextValue textValue) throws JRException 
 			{
-				if(textValue.getValue() != null)
+				if (textValue.getValue() != null)
 				{
 					sheetHelper.write("<v>" + textValue.getValue() + "</v>");
 				}
@@ -1840,7 +1840,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			public void handle(DateTextValue textValue) throws JRException 
 			{
 				Date date = textValue.getValue();
-				if(date != null)
+				if (date != null)
 				{
 					sheetHelper.write(
 						"<v>" 
@@ -1884,34 +1884,34 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 				}
 			}
 		};
-    }
-    
-    protected TextValue getTextValue(JRPrintText text, String textStr, boolean useCurrentData)
-    {
-    	boolean isDetectCellType = Boolean.TRUE.equals(getCurrentItemConfiguration().isDetectCellType());
-    	if(!useCurrentData)
-    	{
-    		if(isDetectCellType)
-    		{
-    			return super.getTextValue(text, textStr);
-    		}
-    		else
-    		{
-    			return super.getTextValueString(text, textStr);
-    		}
-    	}
-    	if (currentDataElement == null)
-    	{
-    		currentDataElement = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
-    	}
-    	currentDataElement.setValueClassName(isDetectCellType ? text.getValueClassName() : null);
-    	currentDataElement.setPattern(text.getPattern());
-    	currentDataElement.setLocaleCode(text.getLocaleCode());
-    	currentDataElement.setTimeZoneId(text.getTimeZoneId());
-    	return super.getTextValue(currentDataElement, textStr);
-    }
-    
-    protected void exportElement(final JRPrintElement element, final JRStyle parentStyle) throws JRException 
+	}
+	
+	protected TextValue getTextValue(JRPrintText text, String textStr, boolean useCurrentData)
+	{
+		boolean isDetectCellType = Boolean.TRUE.equals(getCurrentItemConfiguration().isDetectCellType());
+		if (!useCurrentData)
+		{
+			if (isDetectCellType)
+			{
+				return super.getTextValue(text, textStr);
+			}
+			else
+			{
+				return super.getTextValueString(text, textStr);
+			}
+		}
+		if (currentDataElement == null)
+		{
+			currentDataElement = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
+		}
+		currentDataElement.setValueClassName(isDetectCellType ? text.getValueClassName() : null);
+		currentDataElement.setPattern(text.getPattern());
+		currentDataElement.setLocaleCode(text.getLocaleCode());
+		currentDataElement.setTimeZoneId(text.getTimeZoneId());
+		return super.getTextValue(currentDataElement, textStr);
+	}
+	
+	protected void exportElement(final JRPrintElement element, final JRStyle parentStyle) throws JRException 
 	{
 		String currentColumnName = element.getPropertiesMap().getProperty(PROPERTY_COLUMN_NAME);
 		if (currentColumnName != null && currentColumnName.length() > 0) 
@@ -1937,11 +1937,11 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 
 	protected void adjustRowHeight(int rowHeight, Boolean isAutofit) 
 	{
-		if(isAutofit != null || !Boolean.TRUE.equals(currentRow.get(CURRENT_ROW_AUTOFIT)))
+		if (isAutofit != null || !Boolean.TRUE.equals(currentRow.get(CURRENT_ROW_AUTOFIT)))
 		{
 			currentRow.put(CURRENT_ROW_AUTOFIT, isAutofit);
 		} 
-		if(!currentRow.containsKey(CURRENT_ROW_HEIGHT) || (Integer)currentRow.get(CURRENT_ROW_HEIGHT) < rowHeight) 
+		if (!currentRow.containsKey(CURRENT_ROW_HEIGHT) || (Integer)currentRow.get(CURRENT_ROW_HEIGHT) < rowHeight) 
 		{
 			currentRow.put(CURRENT_ROW_HEIGHT, rowHeight);
 		}
@@ -1963,7 +1963,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 				addElement(currentRow, element, currentColumnName, parentStyle, currentData);
 			}
 			// set auto fill columns
-			if(repeatValue) {
+			if (repeatValue) {
 				if (currentColumnName != null && !currentColumnName.isEmpty()) {
 					addElement(repeatedValues, element, currentColumnName, parentStyle, currentData);
 				}
@@ -1978,12 +1978,12 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 	protected void addElement(Map<String, Object> currentMap, final JRPrintElement element, String currentColumnName, final JRStyle parentStyle, String currentData) 
 	{
 		currentMap.put(currentColumnName, element);
-		if(currentData != null)
+		if (currentData != null)
 		{
 			currentMap.put(currentColumnName + CURRENT_DATA, currentData);
 		}
 		XlsxMetadataReportConfiguration configuration = getCurrentItemConfiguration();
-		if(parentStyle != null 
+		if (parentStyle != null 
 				&& !(Boolean.TRUE.equals(configuration.isIgnoreTextFormatting()) 
 						&& (Boolean.TRUE.equals(configuration.isIgnoreCellBorder()) 
 						|| Boolean.TRUE.equals(configuration.isIgnoreGraphics()))))
@@ -2031,7 +2031,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			// merged cells generate accessibility warnings in Excel documents:
 			
 //			JRPrintElement element = (JRPrintElement)currentRow.get(columnName);
-//			if(element != null)
+//			if (element != null)
 //			{
 //				int rowSpanStartIndex = getPropertiesUtil().getBooleanProperty(element, PROPERTY_REPEAT_VALUE, false) ? rowIndex : rowSpanStartIndexesMap.get(columnName);
 //				sheetHelper.exportMergedCells(rowSpanStartIndex, columnNamesMap.get(columnName), maxColumnIndex, rowIndex - rowSpanStartIndex, 1);
@@ -2219,7 +2219,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			XlsxMetadataExporterConfiguration configuration = getCurrentConfiguration();
 			
 			String macro = macroTemplate == null ? configuration.getMacroTemplate() : macroTemplate;
-			if(macro != null)
+			if (macro != null)
 			{
 				xlsxZip.addMacro(macro);
 				relsHelper.setContainsMacro(true);
@@ -2231,7 +2231,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			appHelper.exportHeader();
 			
 			String application = configuration.getMetadataApplication();
-			if( application == null )
+			if ( application == null )
 			{
 				application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 			}
@@ -2409,7 +2409,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		sheetInfo.sheetName = getSheetName(name);
 		sheetInfo.sheetFirstPageIndex = pageIndex;
 		sheetInfo.printSettings = new JRXlsAbstractExporter.SheetInfo().new SheetPrintSettings();	
-		if(configuration == null)
+		if (configuration == null)
 		{
 			sheetInfo.printSettings.setPageHeight(0);
 			sheetInfo.printSettings.setPageWidth(0);

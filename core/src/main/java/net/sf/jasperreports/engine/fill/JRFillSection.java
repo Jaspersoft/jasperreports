@@ -157,7 +157,7 @@ public class JRFillSection implements JRSection, JROriginProvider
 
 	protected void setNewPageColumn(boolean isNew)
 	{
-		for(int i = 0; i < bands.length; i++)
+		for (int i = 0; i < bands.length; i++)
 		{
 			bands[i].setNewPageColumn(isNew);
 		}
@@ -166,7 +166,7 @@ public class JRFillSection implements JRSection, JROriginProvider
 
 	protected void setNewGroup(JRGroup group, boolean isNew)
 	{
-		for(int i = 0; i < bands.length; i++)
+		for (int i = 0; i < bands.length; i++)
 		{
 			bands[i].setNewGroup(group, isNew);
 		}
@@ -175,7 +175,7 @@ public class JRFillSection implements JRSection, JROriginProvider
 
 	protected void addNowEvaluationTime(JREvaluationTime evaluationTime)
 	{
-		for(int i = 0; i < bands.length; i++)
+		for (int i = 0; i < bands.length; i++)
 		{
 			bands[i].addNowEvaluationTime(evaluationTime);
 		}

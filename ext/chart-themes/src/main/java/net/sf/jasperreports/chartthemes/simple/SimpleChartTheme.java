@@ -359,7 +359,7 @@ public class SimpleChartTheme implements ChartTheme
 		
 		JFreeChart jfreeChart = null;
 		
-		switch(getChart().getChartType()) {
+		switch (getChart().getChartType()) {
 			case AREA:
 				jfreeChart = createAreaChart();
 				break;
@@ -1143,7 +1143,7 @@ public class SimpleChartTheme implements ChartTheme
 		BarRenderer categoryRenderer = (BarRenderer)categoryPlot.getRenderer();
 		categoryRenderer.setDefaultItemLabelsVisible( isShowLabels );
 		Comparable<?> rangeAxisMaxValue = (Comparable<?>)evaluateExpression(barPlot.getRangeAxisMaxValueExpression());
-		if(isShowLabels)
+		if (isShowLabels)
 		{
 			if (rangeAxisMaxValue == null)
 			{
@@ -1152,7 +1152,7 @@ public class SimpleChartTheme implements ChartTheme
 				Axis axis = categoryPlot.getRangeAxis();
 				if (axis instanceof ValueAxis)
 				{
-					if(!(axis instanceof DateAxis))
+					if (!(axis instanceof DateAxis))
 					{
 						float rangeAxisMaxRatio = 1f;
 						
@@ -1185,9 +1185,9 @@ public class SimpleChartTheme implements ChartTheme
 					)
 				);
 			
-			if(itemLabel != null)
+			if (itemLabel != null)
 			{
-				if(itemLabel.getColor() != null)
+				if (itemLabel.getColor() != null)
 				{
 					categoryRenderer.setDefaultItemLabelPaint(itemLabel.getColor());
 				}
@@ -1196,7 +1196,7 @@ public class SimpleChartTheme implements ChartTheme
 					categoryRenderer.setDefaultItemLabelPaint(getChart().getForecolor());
 				}
 //				categoryRenderer.setDefaultFillPaint(itemLabel.getBackgroundColor());
-//				if(itemLabel.getMask() != null)
+//				if (itemLabel.getMask() != null)
 //				{
 //					categoryRenderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator(
 //							StandardCategoryItemLabelGenerator.DEFAULT_LABEL_FORMAT_STRING, 

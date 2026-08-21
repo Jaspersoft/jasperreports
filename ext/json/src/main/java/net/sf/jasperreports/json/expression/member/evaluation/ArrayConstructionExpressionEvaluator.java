@@ -44,106 +44,106 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ArrayConstructionExpressionEvaluator extends AbstractMemberExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(ArrayConstructionExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(ArrayConstructionExpressionEvaluator.class);
 
-    private ArrayConstructionExpression expression;
+	private ArrayConstructionExpression expression;
 
-    public ArrayConstructionExpressionEvaluator(EvaluationContext evaluationContext, ArrayConstructionExpression expression) {
-        super(evaluationContext);
-        this.expression = expression;
-    }
+	public ArrayConstructionExpressionEvaluator(EvaluationContext evaluationContext, ArrayConstructionExpression expression) {
+		super(evaluationContext);
+		this.expression = expression;
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
-        if (log.isDebugEnabled()) {
-            log.debug("---> evaluating arrayIndex expression [" + expression +
-                    "] on a node with (size: " + contextNode.getSize() +
-                    ", cSize: " + contextNode.getContainerSize() + ")");
-        }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
+		if (log.isDebugEnabled()) {
+			log.debug("---> evaluating arrayIndex expression [" + expression +
+					"] on a node with (size: " + contextNode.getSize() +
+					", cSize: " + contextNode.getContainerSize() + ")");
+		}
 
-        JsonNodeContainer result = new JsonNodeContainer();
+		JsonNodeContainer result = new JsonNodeContainer();
 
-        switch(expression.getDirection()) {
-            case DOWN:
-                List<JRJsonNode> containerNodes = contextNode.getContainerNodes();
-                int containerSize = contextNode.getContainerSize();
+		switch (expression.getDirection()) {
+			case DOWN:
+				List<JRJsonNode> containerNodes = contextNode.getContainerNodes();
+				int containerSize = contextNode.getContainerSize();
 
-                for (Integer idx: expression.getIndexes()) {
-                    if (idx >= 0 && idx < containerSize) {
-                        JRJsonNode nodeAtIndex = containerNodes.get(idx);
+				for (Integer idx: expression.getIndexes()) {
+					if (idx >= 0 && idx < containerSize) {
+						JRJsonNode nodeAtIndex = containerNodes.get(idx);
 
-                        if (applyFilter(nodeAtIndex)) {
-                            result.add(nodeAtIndex);
-                        }
-                    }
-                }
+						if (applyFilter(nodeAtIndex)) {
+							result.add(nodeAtIndex);
+						}
+					}
+				}
 
-                break;
-            case ANYWHERE_DOWN:
-                List<JRJsonNode> nodes = contextNode.getContainerNodes();
+				break;
+			case ANYWHERE_DOWN:
+				List<JRJsonNode> nodes = contextNode.getContainerNodes();
 
-                for (JRJsonNode node: nodes) {
-                    result.addNodes(goAnywhereDown(node));
-                }
+				for (JRJsonNode node: nodes) {
+					result.addNodes(goAnywhereDown(node));
+				}
 
-                break;
-        }
+				break;
+		}
 
-        if (result.getSize() > 0) {
-            return result;
-        }
+		if (result.getSize() > 0) {
+			return result;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public MemberExpression getMemberExpression() {
-        return expression;
-    }
+	@Override
+	public MemberExpression getMemberExpression() {
+		return expression;
+	}
 
-    private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
-        List<JRJsonNode> result = new ArrayList<>();
-        Deque<JRJsonNode> stack = new ArrayDeque<>();
-        JsonNode initialDataNode = jrJsonNode.getDataNode();
+	private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
+		List<JRJsonNode> result = new ArrayList<>();
+		Deque<JRJsonNode> stack = new ArrayDeque<>();
+		JsonNode initialDataNode = jrJsonNode.getDataNode();
 
-        if (log.isDebugEnabled()) {
-            log.debug("initial stack population with: " + initialDataNode);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("initial stack population with: " + initialDataNode);
+		}
 
-        // populate the stack initially
-        stack.push(jrJsonNode);
+		// populate the stack initially
+		stack.push(jrJsonNode);
 
-        while (!stack.isEmpty()) {
-            JRJsonNode stackNode = stack.pop();
-            JsonNode stackDataNode = stackNode.getDataNode();
+		while (!stack.isEmpty()) {
+			JRJsonNode stackNode = stack.pop();
+			JsonNode stackDataNode = stackNode.getDataNode();
 
-            addChildrenToStack(stackNode, stack);
+			addChildrenToStack(stackNode, stack);
 
-            // process the current stack item
-            if (stackDataNode.isArray()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("processing stack element: " + stackDataNode);
-                }
+			// process the current stack item
+			if (stackDataNode.isArray()) {
+				if (log.isDebugEnabled()) {
+					log.debug("processing stack element: " + stackDataNode);
+				}
 
-                ArrayNode newNode = getEvaluationContext().getObjectMapper().createArrayNode();
+				ArrayNode newNode = getEvaluationContext().getObjectMapper().createArrayNode();
 
-                for (Integer idx: expression.getIndexes()) {
-                    if (idx >= 0 && idx < stackDataNode.size()) {
-                        JRJsonNode nodeAtIndex = stackNode.createChild(stackDataNode.get(idx));
+				for (Integer idx: expression.getIndexes()) {
+					if (idx >= 0 && idx < stackDataNode.size()) {
+						JRJsonNode nodeAtIndex = stackNode.createChild(stackDataNode.get(idx));
 
-                        if (applyFilter(nodeAtIndex)) {
-                            newNode.add(nodeAtIndex.getDataNode());
-                        }
-                    }
-                }
+						if (applyFilter(nodeAtIndex)) {
+							newNode.add(nodeAtIndex.getDataNode());
+						}
+					}
+				}
 
-                if (newNode.size() > 0) {
-                    result.add(stackNode.createChild(newNode));
-                }
-            }
-        }
+				if (newNode.size() > 0) {
+					result.add(stackNode.createChild(newNode));
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

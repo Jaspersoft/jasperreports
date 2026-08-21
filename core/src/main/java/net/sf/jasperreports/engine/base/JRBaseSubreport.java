@@ -102,7 +102,7 @@ public class JRBaseSubreport extends JRBaseElement implements JRSubreport
 		if (jrSubreportParameters != null && jrSubreportParameters.length > 0)
 		{
 			parameters = new JRSubreportParameter[jrSubreportParameters.length];
-			for(int i = 0; i < parameters.length; i++)
+			for (int i = 0; i < parameters.length; i++)
 			{
 				parameters[i] = factory.getSubreportParameter(jrSubreportParameters[i]);
 			}

@@ -104,7 +104,7 @@ public abstract class FillItemData
 	{
 		if (itemsList != null)
 		{
-			for(FillItem item : itemsList)
+			for (FillItem item : itemsList)
 			{
 				item.evaluateProperties(evaluator, evaluation);
 			}
@@ -146,7 +146,7 @@ public abstract class FillItemData
 				evaluatedItems = new ArrayList<>();
 			}
 
-			for(FillItem item : itemsList)
+			for (FillItem item : itemsList)
 			{
 				evaluatedItems.add(item.getEvaluatedProperties());
 			}

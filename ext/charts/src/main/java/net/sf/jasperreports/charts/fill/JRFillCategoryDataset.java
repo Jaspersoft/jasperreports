@@ -73,7 +73,7 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 		if (srcCategorySeries != null && srcCategorySeries.length > 0)
 		{
 			categorySeries = new JRFillCategorySeries[srcCategorySeries.length];
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				categorySeries[i] = (JRFillCategorySeries)factory.getCategorySeries(srcCategorySeries[i]);
 			}
@@ -101,7 +101,7 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 	{
 		if (categorySeries != null && categorySeries.length > 0)
 		{
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				categorySeries[i].evaluate(calculator);
 			}
@@ -120,7 +120,7 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 				itemHyperlinks = new HashMap<>();
 			}
 			
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				JRFillCategorySeries crtCategorySeries = categorySeries[i];
 				

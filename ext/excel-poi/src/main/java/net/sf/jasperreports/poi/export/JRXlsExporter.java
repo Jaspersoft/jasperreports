@@ -320,7 +320,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 					}
 					else
 					{
-						for(int i = 0; i < workbook.getNumberOfSheets(); i++)
+						for (int i = 0; i < workbook.getNumberOfSheets(); i++)
 						{
 							workbook.removeSheetAt(i);
 						}
@@ -364,7 +364,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		}
 		
 		String application = configuration.getMetadataApplication();
-		if( application == null )
+		if ( application == null )
 		{
 			application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 		}
@@ -402,7 +402,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		printSetup.setLandscape(pageFormat.getOrientation() == OrientationEnum.LANDSCAPE);
 		short paperSize = getSuitablePaperSize(sheetInfo.printSettings);
 
-		if(paperSize != -1)
+		if (paperSize != -1)
 		{
 			printSetup.setPaperSize(paperSize);
 		}
@@ -410,7 +410,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		XlsReportConfiguration configuration = getCurrentItemConfiguration();
 		
 		String password = configuration.getPassword();
-		if(password != null)
+		if (password != null)
 		{
 			sheet.protectSheet(password);
 		}
@@ -422,37 +422,37 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(printSettings.getBottomMargin()));
 
 		String sheetHeaderLeft = printSettings.getHeaderLeft();
-		if(sheetHeaderLeft != null)
+		if (sheetHeaderLeft != null)
 		{
 			sheet.getHeader().setLeft(sheetHeaderLeft);
 		}
 		
 		String sheetHeaderCenter = printSettings.getHeaderCenter();
-		if(sheetHeaderCenter != null)
+		if (sheetHeaderCenter != null)
 		{
 			sheet.getHeader().setCenter(sheetHeaderCenter);
 		}
 		
 		String sheetHeaderRight = printSettings.getHeaderRight();
-		if(sheetHeaderRight != null)
+		if (sheetHeaderRight != null)
 		{
 			sheet.getHeader().setRight(sheetHeaderRight);
 		}
 		
 		String sheetFooterLeft = printSettings.getFooterLeft();
-		if(sheetFooterLeft != null)
+		if (sheetFooterLeft != null)
 		{
 			sheet.getFooter().setLeft(sheetFooterLeft);
 		}
 		
 		String sheetFooterCenter = printSettings.getFooterCenter();
-		if(sheetFooterCenter != null)
+		if (sheetFooterCenter != null)
 		{
 			sheet.getFooter().setCenter(sheetFooterCenter);
 		}
 		
 		String sheetFooterRight = printSettings.getFooterRight();
-		if(sheetFooterRight != null)
+		if (sheetFooterRight != null)
 		{
 			sheet.getFooter().setRight(sheetFooterRight);
 		}
@@ -461,13 +461,13 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		printSetup.setFooterMargin(LengthUtil.inch(printSettings.getFooterMargin()));	
 		
 		RunDirectionEnum sheetDirection = configuration.getSheetDirection();
-		if(sheetDirection != null)
+		if (sheetDirection != null)
 		{
 			printSetup.setLeftToRight(sheetDirection == RunDirectionEnum.LTR);
 			sheet.setRightToLeft(sheetDirection == RunDirectionEnum.RTL);
 		}
 		
-		if(sheetInfo.sheetFirstPageNumber != null && sheetInfo.sheetFirstPageNumber > 0)
+		if (sheetInfo.sheetFirstPageNumber != null && sheetInfo.sheetFirstPageNumber > 0)
 		{
 			printSetup.setPageStart((short)sheetInfo.sheetFirstPageNumber.intValue());
 			printSetup.setUsePage(true);
@@ -476,14 +476,14 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		else
 		{
 			Integer documentFirstPageNumber = configuration.getFirstPageNumber();
-			if(documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet)
+			if (documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet)
 			{
 				printSetup.setPageStart((short)documentFirstPageNumber.intValue());
 				printSetup.setUsePage(true);
 				firstPageNotSet = false;
 			}
 		}
-		if(!firstPageNotSet && (sheet.getFooter().getCenter() == null || sheet.getFooter().getCenter().length() == 0))
+		if (!firstPageNotSet && (sheet.getFooter().getCenter() == null || sheet.getFooter().getCenter().length() == 0))
 		{
 			sheet.getFooter().setCenter("Page " + HeaderFooter.page());
 		}
@@ -566,18 +566,18 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				List<Hyperlink> linkList = anchorLinks.get(anchorName);
 				anchor.setRefersToFormula("'" + workbook.getSheetName(anchor.getSheetIndex()) + "'!"+ anchor.getRefersToFormula());
 				
-				if(linkList != null && !linkList.isEmpty())
+				if (linkList != null && !linkList.isEmpty())
 				{
-					for(Hyperlink link : linkList)
+					for (Hyperlink link : linkList)
 					{
 						link.setAddress(anchor.getRefersToFormula());
 					}
 				}
 			}
 			
-			if(!definedNamesMap.isEmpty()) 
+			if (!definedNamesMap.isEmpty()) 
 			{
-				for(Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
+				for (Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
 				{
 					HSSFName name = workbook.createName();
 					NameScope nameScope = entry.getKey();
@@ -585,7 +585,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 					name.setRefersToFormula(entry.getValue());
 					int scopeIndex = workbook.getSheetIndex(nameScope.getScope());
 					// name and name scope are ignoring case in Excel
-					if(nameScope.getScope() != null 
+					if (nameScope.getScope() != null 
 							&& !DEFAULT_DEFINED_NAME_SCOPE.equalsIgnoreCase(nameScope.getScope())
 							&& scopeIndex >= 0)
 					{
@@ -595,9 +595,9 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			}
 			
 			// applying formulas
-			if(formulaCellsMap != null && !formulaCellsMap.isEmpty())
+			if (formulaCellsMap != null && !formulaCellsMap.isEmpty())
 			{
-				for(Map.Entry<HSSFCell, String> formulaCell: formulaCellsMap.entrySet())
+				for (Map.Entry<HSSFCell, String> formulaCell: formulaCellsMap.entrySet())
 				{
 					try
 					{
@@ -608,7 +608,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 						// usually an org.apache.poi.ss.formula.FormulaParseException 
 						// or a java.lang.IllegalArgumentException
 						// or a java.lang.IllegalStateException
-						if(log.isWarnEnabled())
+						if (log.isWarnEnabled())
 						{
 							log.warn(e.getMessage());
 						}
@@ -621,8 +621,8 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			for (Entry<Integer, List<Hyperlink>> entry : pageLinks.entrySet()) {		// the pageLinks map contains no entries for reports with ignore hyperlinks == true
 				Integer linkPage = entry.getKey();
 				List<Hyperlink> linkList = entry.getValue();
-				if(linkList != null && !linkList.isEmpty()) {
-					for(Hyperlink link : linkList) {
+				if (linkList != null && !linkList.isEmpty()) {
+					for (Hyperlink link : linkList) {
 						index = onePagePerSheetMap.get(linkPage-1)!= null 
 							? (onePagePerSheetMap.get(linkPage-1)
 								? Math.max(0, linkPage - 1)
@@ -633,14 +633,14 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				}
 			}
 			
-			for(int i=0; i < workbook.getNumberOfSheets(); i++)
+			for (int i=0; i < workbook.getNumberOfSheets(); i++)
 			{
 				HSSFSheet currentSheet = workbook.getSheetAt(i);
 				currentSheet.setForceFormulaRecalculation(true);
 				List<Integer> autofitList= autofitColumns.get(currentSheet);
-				if(autofitList != null)
+				if (autofitList != null)
 				{
-					for(Integer j : autofitList) 
+					for (Integer j : autofitList) 
 					{
 						currentSheet.autoSizeColumn(j, false);
 					}
@@ -707,7 +707,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	@Override
 	protected void addRowBreak(int rowIndex)
 	{
-		if(rowIndex >= 0 && rowIndex <= SpreadsheetVersion.EXCEL97.getLastRowIndex())
+		if (rowIndex >= 0 && rowIndex <= SpreadsheetVersion.EXCEL97.getLastRowIndex())
 		{
 			sheet.setRowBreak(rowIndex);
 		}
@@ -967,7 +967,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			}
 			catch(Exception e)//FIXMENOW what exceptions could we get here?
 			{
-				if(log.isWarnEnabled())
+				if (log.isWarnEnabled())
 				{
 					log.warn(e.getMessage());
 				}
@@ -1067,10 +1067,10 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			endCreateCell(cellStyle);
 		}
 		
-		if(!ignoreAnchors)
+		if (!ignoreAnchors)
 		{
 			String anchorName = textElement.getAnchorName();
-			if(anchorName != null)
+			if (anchorName != null)
 			{
 				HSSFName aName = workbook.createName();
 				aName.setNameName(toExcelName(anchorName));
@@ -1106,7 +1106,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	
 	protected final void setRichTextStringCellValue(JRStyledText styledText, short forecolor, JRFont defaultFont, Locale locale)
 	{	
-		if(styledText != null)
+		if (styledText != null)
 		{
 			cell.setCellValue(getRichTextString(styledText, forecolor, defaultFont, locale));
 		}
@@ -1144,14 +1144,14 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			sheet.addMergedRegion(new CellRangeAddress(rowIndex, (rowIndex + rowSpan - 1), 
 					colIndex, (colIndex + gridCell.getColSpan() - 1)));
 
-			for(int i = 0; i < rowSpan; i++)
+			for (int i = 0; i < rowSpan; i++)
 			{
 				HSSFRow spanRow = sheet.getRow(rowIndex + i);
 				if (spanRow == null)
 				{
 					spanRow = sheet.createRow(rowIndex + i);
 				}
-				for(int j = 0; j < gridCell.getColSpan(); j++)
+				for (int j = 0; j < gridCell.getColSpan(); j++)
 				{
 					HSSFCell spanCell = spanRow.getCell((colIndex + j));
 					if (spanCell == null)
@@ -1231,7 +1231,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			}
 			catch(Exception e)
 			{
-				if(customColorIndex < MAX_COLOR_INDEX)
+				if (customColorIndex < MAX_COLOR_INDEX)
 				{
 					palette.setColorAtIndex(customColorIndex, red, green, blue);
 					color = palette.getColor(customColorIndex++);
@@ -1285,14 +1285,14 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		
 		short superscriptType = HSSFFont.SS_NONE;
 		
-		if( attributes != null && attributes.get(TextAttribute.SUPERSCRIPT) != null)
+		if ( attributes != null && attributes.get(TextAttribute.SUPERSCRIPT) != null)
 		{
 			Object value = attributes.get(TextAttribute.SUPERSCRIPT);
-			if(TextAttribute.SUPERSCRIPT_SUPER.equals(value))
+			if (TextAttribute.SUPERSCRIPT_SUPER.equals(value))
 			{
 				superscriptType = HSSFFont.SS_SUPER;
 			}
-			else if(TextAttribute.SUPERSCRIPT_SUB.equals(value))
+			else if (TextAttribute.SUPERSCRIPT_SUB.equals(value))
 			{
 				superscriptType = HSSFFont.SS_SUB;
 			}
@@ -1375,7 +1375,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			cellStyle.setAlignment(style.horizontalAlignment);
 			cellStyle.setVerticalAlignment(style.verticalAlignment);
 			cellStyle.setRotation(style.rotation);
-			if(style.font != null)
+			if (style.font != null)
 			{
 				cellStyle.setFont(style.font);
 			}
@@ -1581,7 +1581,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 
 					short forecolor = getWorkbookColor(element.getLineBox().getPen().getLineColor()).getIndex();
 
-					if(element.getMode() == ModeEnum.OPAQUE )
+					if (element.getMode() == ModeEnum.OPAQUE )
 					{
 						backcolor = getWorkbookColor(element.getBackcolor()).getIndex();
 					}
@@ -2314,7 +2314,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		
 		int cumulativeColWidth = 0;
 		int colIndex = 0;
-		while(cumulativeColWidth < offset)
+		while (cumulativeColWidth < offset)
 		{
 			int colWidth = layout.getColumnWidth(col + colIndex);
 			if (cumulativeColWidth + colWidth < offset)
@@ -2341,7 +2341,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		//isCollapseRowSpan
 		int cumulativeRowHeight = 0;
 		int rowIndex = 0;
-		while(cumulativeRowHeight < offset)
+		while (cumulativeRowHeight < offset)
 		{
 			int rowHeight = collapseRowSpan ? layout.getMaxRowHeight(row + rowIndex) : layout.getRowHeight(row + rowIndex);
 			if (cumulativeRowHeight + rowHeight < offset)
@@ -2531,13 +2531,13 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 					case LOCAL_ANCHOR :
 					{
 						//test for ignore anchors done here
-						if(!ignoreAnchors)
+						if (!ignoreAnchors)
 						{
 							String href = hyperlink.getHyperlinkAnchor();
 							if (href != null)
 							{
 								link = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
-								if(anchorLinks.containsKey(href))
+								if (anchorLinks.containsKey(href))
 								{
 									(anchorLinks.get(href)).add(link);
 								}
@@ -2558,7 +2558,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 						if (hrefPage != null)
 						{
 							link = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
-							if(pageLinks.containsKey(sheetsBeforeCurrentReport+hrefPage))
+							if (pageLinks.containsKey(sheetsBeforeCurrentReport+hrefPage))
 							{
 								pageLinks.get(sheetsBeforeCurrentReport + hrefPage).add(link);
 							}
@@ -2612,10 +2612,10 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 					link.setAddress(href);
 				}
 			}
-			if(link != null)
+			if (link != null)
 			{
 				//TODO: make tooltips functional
-//				if(hyperlink.getHyperlinkTooltip() != null)
+//				if (hyperlink.getHyperlinkTooltip() != null)
 //				{
 //					link.setLabel(hyperlink.getHyperlinkTooltip());
 //				}
@@ -2657,7 +2657,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	@Override
 	protected void setFreezePane(int rowIndex, int colIndex)
 	{
-		if(rowIndex > 0 || colIndex > 0)
+		if (rowIndex > 0 || colIndex > 0)
 		{
 			sheet.createFreezePane(Math.max(0, colIndex), Math.max(0, rowIndex));
 		}
@@ -2681,7 +2681,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	protected void setRowLevels(XlsRowLevelInfo levelInfo, String level) 
 	{
 		Map<String, Integer> levelMap = levelInfo.getLevelMap();
-		if(levelMap != null && levelMap.size() > 0)
+		if (levelMap != null && levelMap.size() > 0)
 		{
 			for (Entry<String, Integer> entry : levelMap.entrySet())
 			{
@@ -2689,7 +2689,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				if (level == null || l.compareTo(level) >= 0)
 				{
 					Integer startIndex = entry.getValue();
-					if(levelInfo.getEndIndex() >= startIndex)
+					if (levelInfo.getEndIndex() >= startIndex)
 					{
 						sheet.groupRow(startIndex, levelInfo.getEndIndex());
 					}
@@ -2739,7 +2739,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 
 		public BoxStyle(JRExporterGridCell gridCell)
 		{
-			if(gridCell != null)
+			if (gridCell != null)
 			{
 				JRLineBox lineBox = gridCell.getBox();
 				if (lineBox != null)

@@ -2764,7 +2764,7 @@ public class JRVerticalFiller extends JRBaseFiller
 
 		if (groups != null && groups.length > 0)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (int i = 0; i < groups.length; i++)
 			{
 				((JRFillSection)groups[i].getGroupHeaderSection()).setNewPageColumn(true);
 				((JRFillSection)groups[i].getGroupFooterSection()).setNewPageColumn(true);
@@ -2790,7 +2790,7 @@ public class JRVerticalFiller extends JRBaseFiller
 
 		if (groups != null && groups.length > 0)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (int i = 0; i < groups.length; i++)
 			{
 				((JRFillSection)groups[i].getGroupHeaderSection()).setNewGroup(group, true);
 				((JRFillSection)groups[i].getGroupFooterSection()).setNewGroup(group, true);

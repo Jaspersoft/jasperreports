@@ -125,7 +125,7 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -145,7 +145,7 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();

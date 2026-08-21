@@ -119,7 +119,7 @@ public class StandardItemData implements Serializable, ItemData, JRChangeEventsS
 	 */
 	public void addItem(int index, Item item)
 	{
-		if(index >=0 && index < itemsList.size())
+		if (index >=0 && index < itemsList.size())
 			itemsList.add(index, item);
 		else{
 			itemsList.add(item);

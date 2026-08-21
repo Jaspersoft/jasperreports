@@ -254,10 +254,10 @@ public class JRQueryParser
 		{
 			StringBuilder sb = new StringBuilder();
 
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				JRQueryChunk queryChunk = chunks[i];
-				switch(queryChunk.getType())
+				switch (queryChunk.getType())
 				{
 					case JRQueryChunk.TYPE_PARAMETER :
 					{

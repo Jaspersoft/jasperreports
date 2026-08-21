@@ -83,7 +83,7 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		JRPieSeries[] pieSeries = pieDataset.getSeries();
 		if (pieSeries != null && pieSeries.length > 0)
 		{
-			for(int j = 0; j < pieSeries.length; j++)
+			for (int j = 0; j < pieSeries.length; j++)
 			{
 				datasetChartsCollector.collect(pieSeries[j]);
 			}
@@ -106,7 +106,7 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(categoryDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for(int j = 0; j < categorySeries.length; j++)
+			for (int j = 0; j < categorySeries.length; j++)
 			{
 				datasetChartsCollector.collect(categorySeries[j]);
 			}
@@ -125,7 +125,7 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(xyDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for(int j = 0; j < xySeries.length; j++)
+			for (int j = 0; j < xySeries.length; j++)
 			{
 				datasetChartsCollector.collect(xySeries[j]);
 			}
@@ -139,10 +139,10 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		parent.collect(timeSeriesDataset);
 
 		JRTimeSeries[] timeSeries = timeSeriesDataset.getSeries();
-		if( timeSeries != null && timeSeries.length > 0 ){
+		if ( timeSeries != null && timeSeries.length > 0 ){
 			JRExpressionCollector datasetCollector = parent.getCollector(timeSeriesDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for( int i = 0; i <  timeSeries.length; i++ ){
+			for ( int i = 0; i <  timeSeries.length; i++ ){
 				datasetChartsCollector.collect(timeSeries[i]);
 			}
 		}
@@ -155,10 +155,10 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		parent.collect(timePeriodDataset);
 
 		JRTimePeriodSeries[] timePeriodSeries = timePeriodDataset.getSeries();
-		if( timePeriodSeries != null && timePeriodSeries.length > 0 ){
+		if ( timePeriodSeries != null && timePeriodSeries.length > 0 ){
 			JRExpressionCollector datasetCollector = parent.getCollector(timePeriodDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for( int i = 0; i < timePeriodSeries.length; i++ ){
+			for ( int i = 0; i < timePeriodSeries.length; i++ ){
 				datasetChartsCollector.collect(timePeriodSeries[i]);
 			}
 		}
@@ -176,7 +176,7 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(ganttDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for(int j = 0; j < ganttSeries.length; j++)
+			for (int j = 0; j < ganttSeries.length; j++)
 			{
 				datasetChartsCollector.collect(ganttSeries[j]);
 			}
@@ -355,7 +355,7 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(xyzDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for(int j = 0; j < xyzSeries.length; j++)
+			for (int j = 0; j < xyzSeries.length; j++)
 			{
 				datasetChartsCollector.collect(xyzSeries[j]);
 			}

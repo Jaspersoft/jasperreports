@@ -94,7 +94,7 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (jrSubreportParameters != null && jrSubreportParameters.length > 0)
 		{
 			parametersMap = new HashMap<>(jrSubreportParameters.length);
-			for(JRSubreportParameter jrSubreportParameter : jrSubreportParameters)
+			for (JRSubreportParameter jrSubreportParameter : jrSubreportParameters)
 			{
 				parametersMap.put(jrSubreportParameter.getName(), factory.getSubreportParameter(jrSubreportParameter));
 			}
@@ -307,7 +307,7 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (parametersMap != null)
 		{
 			clone.parametersMap = new LinkedHashMap<>();
-			for(Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
+			for (Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
 			{
 				String name = it.next();
 				clone.parametersMap.put(name, JRCloneUtils.nullSafeClone(parametersMap.get(name)));

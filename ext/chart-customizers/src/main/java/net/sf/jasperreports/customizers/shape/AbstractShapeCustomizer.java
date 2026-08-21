@@ -176,7 +176,7 @@ public abstract class AbstractShapeCustomizer extends JRAbstractChartCustomizer
 			Integer left = null;
 			Integer right = null;
 
-			for(int i = 0; i < points.size(); i++)
+			for (int i = 0; i < points.size(); i++)
 			{
 				Point point = points.get(i);
 

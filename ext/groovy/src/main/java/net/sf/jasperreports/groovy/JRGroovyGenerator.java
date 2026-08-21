@@ -348,7 +348,7 @@ public class JRGroovyGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    void initParams");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -363,7 +363,7 @@ public class JRGroovyGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(parameterName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initParams");
 			sb.append(index + 1);
@@ -373,7 +373,7 @@ public class JRGroovyGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitParamsMethod(sb, it, index + 1);
 		}
@@ -389,7 +389,7 @@ public class JRGroovyGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    void initFields");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -404,7 +404,7 @@ public class JRGroovyGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(fieldName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initFields");
 			sb.append(index + 1);
@@ -414,7 +414,7 @@ public class JRGroovyGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitFieldsMethod(sb, it, index + 1);
 		}
@@ -430,7 +430,7 @@ public class JRGroovyGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    void initVars");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -445,7 +445,7 @@ public class JRGroovyGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(variableName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initVars");
 			sb.append(index + 1);
@@ -455,7 +455,7 @@ public class JRGroovyGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitVarsMethod(sb, it, index + 1);
 		}
@@ -615,7 +615,7 @@ public class JRGroovyGenerator
 		JRExpressionChunk[] chunks = expression.getChunks();
 		if (chunks != null && chunks.length > 0)
 		{
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				JRExpressionChunk chunk = chunks[i];
 

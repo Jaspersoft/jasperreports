@@ -135,7 +135,7 @@ public class JRFillBand extends JRFillElementContainer implements JRBand, JROrig
 
 		if (deepElements.length > 0)
 		{
-			for(int i = 0; i < deepElements.length; i++)
+			for (int i = 0; i < deepElements.length; i++)
 			{
 				deepElements[i].setBand(this);
 			}
@@ -254,7 +254,7 @@ public class JRFillBand extends JRFillElementContainer implements JRBand, JROrig
 				&& elements != null && elements.length > 0
 				)
 			{
-				for(int i = 0; i < elements.length; i++)
+				for (int i = 0; i < elements.length; i++)
 				{
 					JRElement element = elements[i];
 					int bottom = element.getY() + element.getHeight();

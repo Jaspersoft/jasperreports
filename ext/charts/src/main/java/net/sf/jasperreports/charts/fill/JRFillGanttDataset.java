@@ -75,7 +75,7 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 		if (srcGanttSeries != null && srcGanttSeries.length > 0)
 		{
 			ganttSeries = new JRFillGanttSeries[srcGanttSeries.length];
-			for(int i = 0; i < ganttSeries.length; i++)
+			for (int i = 0; i < ganttSeries.length; i++)
 			{
 				ganttSeries[i] = (JRFillGanttSeries)factory.getGanttSeries(srcGanttSeries[i]);
 			}
@@ -105,7 +105,7 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 	{
 		if (ganttSeries != null && ganttSeries.length > 0)
 		{
-			for(int i = 0; i < ganttSeries.length; i++)
+			for (int i = 0; i < ganttSeries.length; i++)
 			{
 				ganttSeries[i].evaluate(calculator);
 			}
@@ -126,7 +126,7 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for(int i = 0; i < ganttSeries.length; i++)
+			for (int i = 0; i < ganttSeries.length; i++)
 			{
 				JRFillGanttSeries crtGanttSeries = ganttSeries[i];
 
@@ -141,7 +141,7 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 
 				// create task
 				Task task = taskSrs.get(crtGanttSeries.getTask());
-				if(task == null) {
+				if (task == null) {
 					task = new Task(crtGanttSeries.getTask(),
 							crtGanttSeries.getStartDate(),
 							crtGanttSeries.getEndDate());
@@ -157,10 +157,10 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 				//       is set as startvalue for the whole task, and the
 				//       latest subtask endvalue set as endvalue for the
 				//       whole task.
-				if(subtask.getDuration().getStart().before(task.getDuration().getStart())) {
+				if (subtask.getDuration().getStart().before(task.getDuration().getStart())) {
 					task.setDuration(new SimpleTimePeriod(subtask.getDuration().getStart(), task.getDuration().getEnd()));
 				}
-				if(subtask.getDuration().getEnd().after(task.getDuration().getEnd())) {
+				if (subtask.getDuration().getEnd().after(task.getDuration().getEnd())) {
 					task.setDuration(new SimpleTimePeriod(task.getDuration().getStart(), subtask.getDuration().getEnd()));
 				}
 				Number percent = crtGanttSeries.getPercent();
@@ -198,7 +198,7 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 		TaskSeriesCollection dataset = new TaskSeriesCollection();
 		if (seriesNames != null)
 		{
-			for(int i = 0; i < seriesNames.size(); i++)
+			for (int i = 0; i < seriesNames.size(); i++)
 			{
 				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.add(seriesMap.get(seriesName));

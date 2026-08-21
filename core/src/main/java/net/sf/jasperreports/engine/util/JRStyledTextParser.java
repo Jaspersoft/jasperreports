@@ -533,7 +533,7 @@ public class JRStyledTextParser implements ErrorHandler
 	private void parseStyle(JRStyledText styledText, Node parentNode) throws SAXException
 	{
 		NodeList nodeList = parentNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.TEXT_NODE)
@@ -1153,7 +1153,7 @@ public class JRStyledTextParser implements ErrorHandler
 	
 	@Override
 	public void error(SAXParseException e) {
-		if(log.isErrorEnabled())
+		if (log.isErrorEnabled())
 		{
 			log.error("Error parsing styled text.", e);
 		}
@@ -1161,7 +1161,7 @@ public class JRStyledTextParser implements ErrorHandler
 
 	@Override
 	public void fatalError(SAXParseException e) {
-		if(log.isFatalEnabled())
+		if (log.isFatalEnabled())
 		{
 			log.fatal("Error parsing styled text.", e);
 		}
@@ -1169,7 +1169,7 @@ public class JRStyledTextParser implements ErrorHandler
 
 	@Override
 	public void warning(SAXParseException e) {
-		if(log.isWarnEnabled())
+		if (log.isWarnEnabled())
 		{
 			log.warn("Error parsing styled text.", e);
 		}

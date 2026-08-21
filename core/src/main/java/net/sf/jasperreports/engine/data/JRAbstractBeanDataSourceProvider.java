@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
- package net.sf.jasperreports.engine.data;
+package net.sf.jasperreports.engine.data;
 
 import java.beans.BeanInfo;
 import java.beans.IndexedPropertyDescriptor;
@@ -90,7 +90,7 @@ public abstract class JRAbstractBeanDataSourceProvider implements JRDataSourcePr
 		}
 
 		PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
-		if(descriptors != null) 
+		if (descriptors != null) 
 		{
 			ArrayList<JRField> fields = new ArrayList<>(descriptors.length);
 			
@@ -117,37 +117,37 @@ public abstract class JRAbstractBeanDataSourceProvider implements JRDataSourcePr
 	 * Converts a primitive class to its object counterpart
 	 */
 	private static Class<?> normalizeClass(Class<?> clazz) {
-		if(clazz.isPrimitive()) 
+		if (clazz.isPrimitive()) 
 		{
-			if(clazz == boolean.class)
+			if (clazz == boolean.class)
 			{
 				return Boolean.class;
 			}
-			if(clazz == byte.class)
+			if (clazz == byte.class)
 			{
 				return Byte.class;
 			}
-			if(clazz == char.class)
+			if (clazz == char.class)
 			{
 				return Character.class;
 			}
-			if(clazz == short.class)
+			if (clazz == short.class)
 			{
 				return Short.class;
 			}
-			if(clazz == int.class)
+			if (clazz == int.class)
 			{
 				return Integer.class;
 			}
-			if(clazz == long.class)
+			if (clazz == long.class)
 			{
 				return Long.class;
 			}
-			if(clazz == float.class)
+			if (clazz == float.class)
 			{
 				return Float.class;
 			}
-			if(clazz == double.class)
+			if (clazz == double.class)
 			{
 				return Double.class;
 			}

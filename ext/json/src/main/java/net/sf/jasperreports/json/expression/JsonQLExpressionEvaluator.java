@@ -42,53 +42,53 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JsonQLExpressionEvaluator {
 
-    private EvaluationContext evaluationContext;
+	private EvaluationContext evaluationContext;
 
 
-    public JsonQLExpressionEvaluator() {
-        evaluationContext = new EvaluationContext() {
-            @Override
-            public FilterExpressionEvaluatorVisitor getFilterExpressionEvaluatorVisitor() {
-                return new DefaultFilterExpressionEvaluatorVisitor(this);
-            }
+	public JsonQLExpressionEvaluator() {
+		evaluationContext = new EvaluationContext() {
+			@Override
+			public FilterExpressionEvaluatorVisitor getFilterExpressionEvaluatorVisitor() {
+				return new DefaultFilterExpressionEvaluatorVisitor(this);
+			}
 
-            @Override
-            public MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitor() {
-                return new DefaultMemberExpressionEvaluatorVisitor(this);
-            }
+			@Override
+			public MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitor() {
+				return new DefaultMemberExpressionEvaluatorVisitor(this);
+			}
 
-            @Override
-            public MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitorForFilter() {
-                return new DefaultMemberExpressionEvaluatorVisitorForFilter(this);
-            }
+			@Override
+			public MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitorForFilter() {
+				return new DefaultMemberExpressionEvaluatorVisitorForFilter(this);
+			}
 
-            @Override
-            public ObjectMapper getObjectMapper() {
-                return JsonUtil.createObjectMapper();
-            }
-        };
-    }
+			@Override
+			public ObjectMapper getObjectMapper() {
+				return JsonUtil.createObjectMapper();
+			}
+		};
+	}
 
-    public JsonNodeContainer evaluate(JsonQLExpression expression, JRJsonNode contextNode) {
+	public JsonNodeContainer evaluate(JsonQLExpression expression, JRJsonNode contextNode) {
 
-        List<MemberExpression> memberExpressionList = expression.getMemberExpressionList();
-        JsonNodeContainer result = new JsonNodeContainer(contextNode);
+		List<MemberExpression> memberExpressionList = expression.getMemberExpressionList();
+		JsonNodeContainer result = new JsonNodeContainer(contextNode);
 
-        if (memberExpressionList != null) {
-            for (MemberExpression me: memberExpressionList) {
-                result = me.evaluate(result, evaluationContext.getMemberExpressionEvaluatorVisitor());
+		if (memberExpressionList != null) {
+			for (MemberExpression me: memberExpressionList) {
+				result = me.evaluate(result, evaluationContext.getMemberExpressionEvaluatorVisitor());
 
-                if (result == null) {
-                    return null;
-                }
-            }
-        }
+				if (result == null) {
+					return null;
+				}
+			}
+		}
 
-        return result;
+		return result;
 
-    }
+	}
 
-    public EvaluationContext getEvaluationContext() {
-        return evaluationContext;
-    }
+	public EvaluationContext getEvaluationContext() {
+		return evaluationContext;
+	}
 }

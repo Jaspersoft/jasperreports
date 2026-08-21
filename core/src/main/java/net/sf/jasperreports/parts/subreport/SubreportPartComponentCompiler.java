@@ -49,7 +49,7 @@ public class SubreportPartComponentCompiler implements PartComponentCompiler
 		JRSubreportParameter[] parameters = subreport.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int j = 0; j < parameters.length; j++)
+			for (int j = 0; j < parameters.length; j++)
 			{
 				collector.addExpression(parameters[j].getExpression());
 			}
@@ -76,7 +76,7 @@ public class SubreportPartComponentCompiler implements PartComponentCompiler
 		JRSubreportParameter[] parameters = subreportComponent.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int index = 0; index < parameters.length; index++)
+			for (int index = 0; index < parameters.length; index++)
 			{
 				JRSubreportParameter parameter = parameters[index];
 

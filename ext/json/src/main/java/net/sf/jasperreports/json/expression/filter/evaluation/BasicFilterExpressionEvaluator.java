@@ -43,222 +43,222 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class BasicFilterExpressionEvaluator implements FilterExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(BasicFilterExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(BasicFilterExpressionEvaluator.class);
 
-    private EvaluationContext evaluationContext;
-    private BasicFilterExpression expression;
+	private EvaluationContext evaluationContext;
+	private BasicFilterExpression expression;
 
 
-    public BasicFilterExpressionEvaluator(EvaluationContext evaluationContext, BasicFilterExpression expression) {
-        this.evaluationContext = evaluationContext;
-        this.expression = expression;
-    }
+	public BasicFilterExpressionEvaluator(EvaluationContext evaluationContext, BasicFilterExpression expression) {
+		this.evaluationContext = evaluationContext;
+		this.expression = expression;
+	}
 
-    @Override
-    public boolean evaluate(JRJsonNode jsonNode) {
-        JsonNodeContainer memberEval = new JsonNodeContainer(jsonNode);
-        boolean result = false;
+	@Override
+	public boolean evaluate(JRJsonNode jsonNode) {
+		JsonNodeContainer memberEval = new JsonNodeContainer(jsonNode);
+		boolean result = false;
 
-        if (log.isDebugEnabled()) {
-            log.debug("filtering (" + this.expression + ") to: " + jsonNode);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("filtering (" + this.expression + ") to: " + jsonNode);
+		}
 
-        // traverse the members
-        outer: for (MemberExpression me: expression.getMemberExpressionList()) {
-            memberEval = me.evaluate(memberEval, evaluationContext.getMemberExpressionEvaluatorVisitorForFilter());
+		// traverse the members
+		outer: for (MemberExpression me: expression.getMemberExpressionList()) {
+			memberEval = me.evaluate(memberEval, evaluationContext.getMemberExpressionEvaluatorVisitorForFilter());
 
-            // exit on first null
-            if (memberEval == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("result is null");
-                }
-                return false;
-            }
+			// exit on first null
+			if (memberEval == null) {
+				if (log.isDebugEnabled()) {
+					log.debug("result is null");
+				}
+				return false;
+			}
 
-            // break when hitting a missing node; this will allow filtering for missing keys
-            if (memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isMissingNode()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("hit missing node");
-                }
-                break outer;
-            }
-        }
+			// break when hitting a missing node; this will allow filtering for missing keys
+			if (memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isMissingNode()) {
+				if (log.isDebugEnabled()) {
+					log.debug("hit missing node");
+				}
+				break outer;
+			}
+		}
 
-        if (log.isDebugEnabled()) {
-            log.debug("done filter members' eval => node with (size: " + memberEval.getSize() +
-                    ", cSize: " + memberEval.getContainerSize() + ")");
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("done filter members' eval => node with (size: " + memberEval.getSize() +
+					", cSize: " + memberEval.getContainerSize() + ")");
+		}
 
-        // check for null first
-        if (expression.isNullFunction()) {
-            if (log.isDebugEnabled()) {
-                log.debug("expression isNullFunction");
-            }
+		// check for null first
+		if (expression.isNullFunction()) {
+			if (log.isDebugEnabled()) {
+				log.debug("expression isNullFunction");
+			}
 
-            if (memberEval.getSize() == 1 &&
-                    (memberEval.getFirst().getDataNode().isNull() ||
-                            memberEval.getFirst().getDataNode().isMissingNode())) {
-                result = true;
-            }
-        }
-        // check for not null on everything except null and missing nodes
-        else if (expression.isNotNullFunction()) {
-            if (log.isDebugEnabled()) {
-                log.debug("expression isNotNullFunction");
-            }
+			if (memberEval.getSize() == 1 &&
+					(memberEval.getFirst().getDataNode().isNull() ||
+							memberEval.getFirst().getDataNode().isMissingNode())) {
+				result = true;
+			}
+		}
+		// check for not null on everything except null and missing nodes
+		else if (expression.isNotNullFunction()) {
+			if (log.isDebugEnabled()) {
+				log.debug("expression isNotNullFunction");
+			}
 
-            if (memberEval.getSize() > 1 ||
-                    memberEval.getSize() == 1 &&
-                            !(memberEval.getFirst().getDataNode().isNull() ||
-                                    memberEval.getFirst().getDataNode().isMissingNode())) {
-                result = true;
-            }
-        }
-        else if (expression.isArrayFunction()) {
-            if (log.isDebugEnabled()) {
-                log.debug("expression isArrayFunction");
-            }
+			if (memberEval.getSize() > 1 ||
+					memberEval.getSize() == 1 &&
+							!(memberEval.getFirst().getDataNode().isNull() ||
+									memberEval.getFirst().getDataNode().isMissingNode())) {
+				result = true;
+			}
+		}
+		else if (expression.isArrayFunction()) {
+			if (log.isDebugEnabled()) {
+				log.debug("expression isArrayFunction");
+			}
 
-            if (memberEval.getSize() > 1 ||
-                    memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isArray()) {
-                return true;
-            }
-        }
-        else if (expression.isObjectFunction()) {
-            if (log.isDebugEnabled()) {
-                log.debug("expression isObjectFunction");
-            }
+			if (memberEval.getSize() > 1 ||
+					memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isArray()) {
+				return true;
+			}
+		}
+		else if (expression.isObjectFunction()) {
+			if (log.isDebugEnabled()) {
+				log.debug("expression isObjectFunction");
+			}
 
-            if (memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isObject()) {
-                return true;
-            }
-        }
-        else if (expression.isValueFunction()) {
-            if (log.isDebugEnabled()) {
-                log.debug("expression isValueFunction");
-            }
+			if (memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isObject()) {
+				return true;
+			}
+		}
+		else if (expression.isValueFunction()) {
+			if (log.isDebugEnabled()) {
+				log.debug("expression isValueFunction");
+			}
 
-            if (memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isValueNode()) {
-                return true;
-            }
-        }
-        // the size is only checked on an array object
-        else if (expression.isSizeFunction()) {
-            if (log.isDebugEnabled()) {
-                log.debug("expression isSizeFunction");
-            }
+			if (memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isValueNode()) {
+				return true;
+			}
+		}
+		// the size is only checked on an array object
+		else if (expression.isSizeFunction()) {
+			if (log.isDebugEnabled()) {
+				log.debug("expression isSizeFunction");
+			}
 
-            if (memberEval.getSize() > 1 ||
-                    memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isArray()) {
-                result = applySizeOperator(memberEval.getContainerSize());
-            }
-        }
-        // else perform the filtering only for value/missing nodes
-        else if (memberEval.getSize() == 1 &&
-                (memberEval.getFirst().getDataNode().isValueNode() || memberEval.getFirst().getDataNode().isMissingNode())) {
+			if (memberEval.getSize() > 1 ||
+					memberEval.getSize() == 1 && memberEval.getFirst().getDataNode().isArray()) {
+				result = applySizeOperator(memberEval.getContainerSize());
+			}
+		}
+		// else perform the filtering only for value/missing nodes
+		else if (memberEval.getSize() == 1 &&
+				(memberEval.getFirst().getDataNode().isValueNode() || memberEval.getFirst().getDataNode().isMissingNode())) {
 
-            result = applyOperator(memberEval.getFirst().getDataNode());
-        }
+			result = applyOperator(memberEval.getFirst().getDataNode());
+		}
 
-        if (log.isDebugEnabled()) {
-            log.debug("filter result is: " + result);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("filter result is: " + result);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    protected boolean applySizeOperator(int size) {
-        if (expression.getValueDescriptor().getType() == FilterExpression.VALUE_TYPE.INTEGER) {
-            int operand = Integer.parseInt(expression.getValueDescriptor().getValue());
+	protected boolean applySizeOperator(int size) {
+		if (expression.getValueDescriptor().getType() == FilterExpression.VALUE_TYPE.INTEGER) {
+			int operand = Integer.parseInt(expression.getValueDescriptor().getValue());
 
-            switch(expression.getOperator()) {
-                case EQ:
-                    return size == operand;
-                case NE:
-                    return size != operand;
-                case GT:
-                    return size > operand;
-                case GE:
-                    return size >= operand;
-                case LT:
-                    return size < operand;
-                case LE:
-                    return size <= operand;
-                default:
-            }
-        }
+			switch (expression.getOperator()) {
+				case EQ:
+					return size == operand;
+				case NE:
+					return size != operand;
+				case GT:
+					return size > operand;
+				case GE:
+					return size >= operand;
+				case LT:
+					return size < operand;
+				case LE:
+					return size <= operand;
+				default:
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    protected boolean applyOperator(JsonNode valueNode) {
-        ValueDescriptor valueDescriptor = expression.getValueDescriptor();
-        JsonOperatorEnum operator = expression.getOperator();
-        FilterExpression.VALUE_TYPE type = valueDescriptor.getType();
+	protected boolean applyOperator(JsonNode valueNode) {
+		ValueDescriptor valueDescriptor = expression.getValueDescriptor();
+		JsonOperatorEnum operator = expression.getOperator();
+		FilterExpression.VALUE_TYPE type = valueDescriptor.getType();
 
-        // do null comparison first
-        if (FilterExpression.VALUE_TYPE.NULL.equals(type)) {
-            switch (operator) {
-                case EQ:
-                    return valueNode.isNull() || valueNode.isMissingNode();
-                case NE:
-                    return !(valueNode.isNull() || valueNode.isMissingNode());
-                default:
-            }
-        } else {
-            // compare numbers with numbers
-            if (valueNode.isNumber() &&
-                    (FilterExpression.VALUE_TYPE.INTEGER.equals(type) || FilterExpression.VALUE_TYPE.DOUBLE.equals(type))) {
+		// do null comparison first
+		if (FilterExpression.VALUE_TYPE.NULL.equals(type)) {
+			switch (operator) {
+				case EQ:
+					return valueNode.isNull() || valueNode.isMissingNode();
+				case NE:
+					return !(valueNode.isNull() || valueNode.isMissingNode());
+				default:
+			}
+		} else {
+			// compare numbers with numbers
+			if (valueNode.isNumber() &&
+					(FilterExpression.VALUE_TYPE.INTEGER.equals(type) || FilterExpression.VALUE_TYPE.DOUBLE.equals(type))) {
 
-                BigDecimal opRight = new BigDecimal(valueDescriptor.getValue());
-                BigDecimal opLeft;
+				BigDecimal opRight = new BigDecimal(valueDescriptor.getValue());
+				BigDecimal opLeft;
 
-                if (valueNode.isBigDecimal()) {
-                    opLeft = valueNode.decimalValue();
-                } else {
-                    opLeft = new BigDecimal(valueNode.asText());
-                }
+				if (valueNode.isBigDecimal()) {
+					opLeft = valueNode.decimalValue();
+				} else {
+					opLeft = new BigDecimal(valueNode.asText());
+				}
 
-                switch (operator) {
-                    case EQ:
-                        return opLeft.compareTo(opRight) == 0;
-                    case NE:
-                        return opLeft.compareTo(opRight) != 0;
-                    case GT:
-                        return opLeft.compareTo(opRight) > 0;
-                    case GE:
-                        return opLeft.compareTo(opRight) >= 0;
-                    case LT:
-                        return opLeft.compareTo(opRight) < 0;
-                    case LE:
-                        return opLeft.compareTo(opRight) <= 0;
-                    default:
-                }
-            }
-            // compare strings with strings
-            else if (valueNode.isTextual() && FilterExpression.VALUE_TYPE.STRING.equals(type)) {
-                switch (operator) {
-                    case EQ:
-                        return valueNode.textValue().equals(valueDescriptor.getValue());
-                    case NE:
-                        return !valueNode.textValue().equals(valueDescriptor.getValue());
-                    case CONTAINS:
-                        return valueNode.textValue().contains(valueDescriptor.getValue());
-                    default:
-                }
-            }
-            // compare booleans with booleans
-            else if (valueNode.isBoolean() && FilterExpression.VALUE_TYPE.BOOLEAN.equals(type)) {
-                switch (operator) {
-                    case EQ:
-                        return valueNode.booleanValue() == Boolean.parseBoolean(valueDescriptor.getValue());
-                    case NE:
-                        return valueNode.booleanValue() != Boolean.parseBoolean(valueDescriptor.getValue());
-                    default:
-                }
-            }
-        }
+				switch (operator) {
+					case EQ:
+						return opLeft.compareTo(opRight) == 0;
+					case NE:
+						return opLeft.compareTo(opRight) != 0;
+					case GT:
+						return opLeft.compareTo(opRight) > 0;
+					case GE:
+						return opLeft.compareTo(opRight) >= 0;
+					case LT:
+						return opLeft.compareTo(opRight) < 0;
+					case LE:
+						return opLeft.compareTo(opRight) <= 0;
+					default:
+				}
+			}
+			// compare strings with strings
+			else if (valueNode.isTextual() && FilterExpression.VALUE_TYPE.STRING.equals(type)) {
+				switch (operator) {
+					case EQ:
+						return valueNode.textValue().equals(valueDescriptor.getValue());
+					case NE:
+						return !valueNode.textValue().equals(valueDescriptor.getValue());
+					case CONTAINS:
+						return valueNode.textValue().contains(valueDescriptor.getValue());
+					default:
+				}
+			}
+			// compare booleans with booleans
+			else if (valueNode.isBoolean() && FilterExpression.VALUE_TYPE.BOOLEAN.equals(type)) {
+				switch (operator) {
+					case EQ:
+						return valueNode.booleanValue() == Boolean.parseBoolean(valueDescriptor.getValue());
+					case NE:
+						return valueNode.booleanValue() != Boolean.parseBoolean(valueDescriptor.getValue());
+					default:
+				}
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

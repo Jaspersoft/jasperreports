@@ -287,7 +287,7 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 				newName = name + suf;
 				++suf;
 			}
-			while(stylesMap.containsStyle(newName));
+			while (stylesMap.containsStyle(newName));
 			
 			style.rename(newName);
 			stylesMap.renamed(name, newName);

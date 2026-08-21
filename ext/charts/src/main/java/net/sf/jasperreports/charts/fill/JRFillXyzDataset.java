@@ -60,10 +60,10 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 		super( xyzDataset, factory.getParent() );
 		
 		JRXyzSeries[] srcXyzSeries = xyzDataset.getSeries();
-		if(srcXyzSeries != null && srcXyzSeries.length > 0)
+		if (srcXyzSeries != null && srcXyzSeries.length > 0)
 		{
 			xyzSeries = new JRFillXyzSeries[srcXyzSeries.length];
-			for(int i = 0; i < xyzSeries.length; i++)
+			for (int i = 0; i < xyzSeries.length; i++)
 			{
 				xyzSeries[i] = (JRFillXyzSeries)factory.getXyzSeries( srcXyzSeries[i]);
 			}

@@ -44,131 +44,131 @@ import net.sf.jasperreports.json.expression.member.ObjectConstructionExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ObjectConstructionExpressionEvaluator extends AbstractMemberExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(ObjectConstructionExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(ObjectConstructionExpressionEvaluator.class);
 
-    private ObjectConstructionExpression expression;
+	private ObjectConstructionExpression expression;
 
-    public ObjectConstructionExpressionEvaluator(EvaluationContext evaluationContext, ObjectConstructionExpression expression) {
-        super(evaluationContext);
-        this.expression = expression;
-    }
+	public ObjectConstructionExpressionEvaluator(EvaluationContext evaluationContext, ObjectConstructionExpression expression) {
+		super(evaluationContext);
+		this.expression = expression;
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
-        if (log.isDebugEnabled()) {
-            log.debug("---> evaluating expression [" + expression +
-                    "] on a node with (size: " + contextNode.getSize() +
-                    ", cSize: " + contextNode.getContainerSize() + ")");
-        }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
+		if (log.isDebugEnabled()) {
+			log.debug("---> evaluating expression [" + expression +
+					"] on a node with (size: " + contextNode.getSize() +
+					", cSize: " + contextNode.getContainerSize() + ")");
+		}
 
-        JsonNodeContainer result = new JsonNodeContainer();
+		JsonNodeContainer result = new JsonNodeContainer();
 
-        switch(expression.getDirection()) {
-            case DOWN:
-                for (JRJsonNode node: contextNode.getNodes()) {
-                    result.addNodes(goDown(node));
-                }
+		switch (expression.getDirection()) {
+			case DOWN:
+				for (JRJsonNode node: contextNode.getNodes()) {
+					result.addNodes(goDown(node));
+				}
 
-                break;
-            case ANYWHERE_DOWN:
-                for (JRJsonNode node: contextNode.getNodes()) {
-                    result.addNodes(goAnywhereDown(node));
-                }
+				break;
+			case ANYWHERE_DOWN:
+				for (JRJsonNode node: contextNode.getNodes()) {
+					result.addNodes(goAnywhereDown(node));
+				}
 
-                break;
-        }
+				break;
+		}
 
-        if (result.getSize() > 0) {
-            return result;
-        }
+		if (result.getSize() > 0) {
+			return result;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public MemberExpression getMemberExpression() {
-        return expression;
-    }
+	@Override
+	public MemberExpression getMemberExpression() {
+		return expression;
+	}
 
-    private List<JRJsonNode> goDown(JRJsonNode jrJsonNode) {
-        List<JRJsonNode> result = new ArrayList<>();
-        JsonNode dataNode = jrJsonNode.getDataNode();
+	private List<JRJsonNode> goDown(JRJsonNode jrJsonNode) {
+		List<JRJsonNode> result = new ArrayList<>();
+		JsonNode dataNode = jrJsonNode.getDataNode();
 
-        // advance into object
-        if (dataNode.isObject()) {
-            JRJsonNode deeperNode = constructNewObjectNodeWithKeys(jrJsonNode);
-            if (deeperNode != null) {
-                result.add(deeperNode);
-            }
-        }
-        // advance into array
-        else if (dataNode.isArray()) {
-            for (JsonNode node : dataNode) {
-                JRJsonNode childWithKeys = constructNewObjectNodeWithKeys(jrJsonNode.createChild(node));
+		// advance into object
+		if (dataNode.isObject()) {
+			JRJsonNode deeperNode = constructNewObjectNodeWithKeys(jrJsonNode);
+			if (deeperNode != null) {
+				result.add(deeperNode);
+			}
+		}
+		// advance into array
+		else if (dataNode.isArray()) {
+			for (JsonNode node : dataNode) {
+				JRJsonNode childWithKeys = constructNewObjectNodeWithKeys(jrJsonNode.createChild(node));
 
-                if (childWithKeys != null) {
-                    result.add(childWithKeys);
-                }
-            }
-        }
+				if (childWithKeys != null) {
+					result.add(childWithKeys);
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    private JRJsonNode constructNewObjectNodeWithKeys(JRJsonNode from) {
-        ObjectNode newNode = getEvaluationContext().getObjectMapper().createObjectNode();
+	private JRJsonNode constructNewObjectNodeWithKeys(JRJsonNode from) {
+		ObjectNode newNode = getEvaluationContext().getObjectMapper().createObjectNode();
 
-        for (String objectKey: expression.getObjectKeys()) {
-            JsonNode deeperNode = from.getDataNode().get(objectKey);
+		for (String objectKey: expression.getObjectKeys()) {
+			JsonNode deeperNode = from.getDataNode().get(objectKey);
 
-            if (deeperNode != null && (deeperNode.isObject() || deeperNode.isValueNode() || deeperNode.isArray())) {
-                JRJsonNode deeperChild = from.createChild(deeperNode);
+			if (deeperNode != null && (deeperNode.isObject() || deeperNode.isValueNode() || deeperNode.isArray())) {
+				JRJsonNode deeperChild = from.createChild(deeperNode);
 
-                if (applyFilter(deeperChild)) {
-                    newNode.set(objectKey, deeperNode);
-                }
-            }
-        }
+				if (applyFilter(deeperChild)) {
+					newNode.set(objectKey, deeperNode);
+				}
+			}
+		}
 
-        if (newNode.size() > 0) {
-            return from.createChild(newNode);
-        }
+		if (newNode.size() > 0) {
+			return from.createChild(newNode);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
-        List<JRJsonNode> result = new ArrayList<>();
-        Deque<JRJsonNode> stack = new ArrayDeque<>();
+	private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
+		List<JRJsonNode> result = new ArrayList<>();
+		Deque<JRJsonNode> stack = new ArrayDeque<>();
 
-        if (log.isDebugEnabled()) {
-            log.debug("initial stack population with: " + jrJsonNode.getDataNode());
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("initial stack population with: " + jrJsonNode.getDataNode());
+		}
 
-        // populate the stack initially
-        stack.push(jrJsonNode);
+		// populate the stack initially
+		stack.push(jrJsonNode);
 
-        while (!stack.isEmpty()) {
-            JRJsonNode stackNode = stack.pop();
-            JsonNode stackDataNode = stackNode.getDataNode();
+		while (!stack.isEmpty()) {
+			JRJsonNode stackNode = stack.pop();
+			JsonNode stackDataNode = stackNode.getDataNode();
 
-            addChildrenToStack(stackNode, stack);
+			addChildrenToStack(stackNode, stack);
 
-            if (log.isDebugEnabled()) {
-                log.debug("processing stack element: " + stackDataNode);
-            }
+			if (log.isDebugEnabled()) {
+				log.debug("processing stack element: " + stackDataNode);
+			}
 
-            // process the current stack item
-            if (stackDataNode.isObject()) {
-                JRJsonNode childWithKeys = constructNewObjectNodeWithKeys(stackNode);
+			// process the current stack item
+			if (stackDataNode.isObject()) {
+				JRJsonNode childWithKeys = constructNewObjectNodeWithKeys(stackNode);
 
-                if (childWithKeys != null) {
-                    result.add(childWithKeys);
-                }
-            }
-        }
+				if (childWithKeys != null) {
+					result.add(childWithKeys);
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

@@ -64,7 +64,7 @@ public class JRBaseGanttDataset extends JRBaseChartDataset implements JRGanttDat
 		if (srcGanttSeries != null && srcGanttSeries.length > 0)
 		{
 			ganttSeries = new JRGanttSeries[srcGanttSeries.length];
-			for(int i = 0; i < ganttSeries.length; i++)
+			for (int i = 0; i < ganttSeries.length; i++)
 			{
 				ganttSeries[i] = factory.getGanttSeries(srcGanttSeries[i]);
 			}

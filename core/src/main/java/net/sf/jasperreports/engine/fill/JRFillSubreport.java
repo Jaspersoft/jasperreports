@@ -747,7 +747,7 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 			JRScriptlet[] scriptlets = filler.getJasperReport().getScriptlets();
 			if (scriptlets != null)
 			{
-				for(int i = 0; i < scriptlets.length; i++)
+				for (int i = 0; i < scriptlets.length; i++)
 				{
 					parameterValues.remove(scriptlets[i].getName() 
 							+ JRScriptlet.SCRIPTLET_PARAMETER_NAME_SUFFIX);
@@ -770,7 +770,7 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 		if (subreportParameters != null && subreportParameters.length > 0)
 		{
 			Object parameterValue = null;
-			for(int i = 0; i < subreportParameters.length; i++)
+			for (int i = 0; i < subreportParameters.length; i++)
 			{
 				JRExpression expression = subreportParameters[i].getExpression();
 				if (expression != null || !ignoreNullExpressions)
@@ -1030,7 +1030,7 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 
 		if (getConnectionExpression() == null && dataSource != null)
 		{
-			if(dataSource instanceof JRRewindableDataSource)
+			if (dataSource instanceof JRRewindableDataSource)
 			{
 				((JRRewindableDataSource) dataSource).moveFirst();
 			}

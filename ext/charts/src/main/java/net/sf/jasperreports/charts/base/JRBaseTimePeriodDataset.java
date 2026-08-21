@@ -53,9 +53,9 @@ public class JRBaseTimePeriodDataset extends JRBaseChartDataset implements JRTim
 		
 		JRTimePeriodSeries[] srcTimePeriodSeries = dataset.getSeries();
 		
-		if( srcTimePeriodSeries != null && srcTimePeriodSeries.length > 0 ){
+		if ( srcTimePeriodSeries != null && srcTimePeriodSeries.length > 0 ){
 			timePeriodSeries = new JRTimePeriodSeries[srcTimePeriodSeries.length];
-			for( int i = 0; i < timePeriodSeries.length; i++ ){
+			for ( int i = 0; i < timePeriodSeries.length; i++ ){
 				timePeriodSeries[i] = factory.getTimePeriodSeries( srcTimePeriodSeries[i] );
 			}
 		}

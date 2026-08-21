@@ -175,7 +175,7 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 		TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
 		if (seriesNames != null)
 		{
-			for(int i = 0; i < seriesNames.size(); i++)
+			for (int i = 0; i < seriesNames.size(); i++)
 			{
 				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));

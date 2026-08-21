@@ -802,7 +802,7 @@ public class JRExpressionCollector
 	{
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int i = 0; i < parameters.length; i++)
+			for (int i = 0; i < parameters.length; i++)
 			{
 				addExpression(parameters[i].getDefaultValueExpression());
 			}
@@ -830,7 +830,7 @@ public class JRExpressionCollector
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for(int i = 0; i < variables.length; i++)
+			for (int i = 0; i < variables.length; i++)
 			{
 				JRVariable variable = variables[i];
 				addExpression(variable.getExpression());
@@ -846,7 +846,7 @@ public class JRExpressionCollector
 	{
 		if (groups != null && groups.length > 0)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (int i = 0; i < groups.length; i++)
 			{
 				JRGroup group = groups[i];
 				addExpression(group.getExpression());
@@ -893,7 +893,7 @@ public class JRExpressionCollector
 			JRBand[] bands = section.getBands();
 			if (bands != null && bands.length > 0)
 			{
-				for(int i = 0; i < bands.length; i++)
+				for (int i = 0; i < bands.length; i++)
 				{
 					collect(bands[i]);
 				}
@@ -902,7 +902,7 @@ public class JRExpressionCollector
 			JRPart[] parts = section.getParts();
 			if (parts != null && parts.length > 0)
 			{
-				for(int i = 0; i < parts.length; i++)
+				for (int i = 0; i < parts.length; i++)
 				{
 					collect(parts[i]);
 				}
@@ -922,7 +922,7 @@ public class JRExpressionCollector
 			JRElement[] elements = band.getElements();
 			if (elements != null && elements.length > 0)
 			{
-				for(int i = 0; i < elements.length; i++)
+				for (int i = 0; i < elements.length; i++)
 				{
 					elements[i].collectExpressions(this);
 				}
@@ -1099,7 +1099,7 @@ public class JRExpressionCollector
 		JRSubreportParameter[] parameters = subreport.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int j = 0; j < parameters.length; j++)
+			for (int j = 0; j < parameters.length; j++)
 			{
 				addExpression(parameters[j].getExpression());
 			}
@@ -1318,7 +1318,7 @@ public class JRExpressionCollector
 			JRElement[] elements = cell.getElements();
 			if (elements != null && elements.length > 0)
 			{
-				for(int i = 0; i < elements.length; i++)
+				for (int i = 0; i < elements.length; i++)
 				{
 					elements[i].collectExpressions(this);
 				}

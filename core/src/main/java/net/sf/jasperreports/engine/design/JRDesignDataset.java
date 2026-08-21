@@ -1534,7 +1534,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.parametersList = new ArrayList<>(parametersList.size());
 			clone.parametersMap = new HashMap<>(parametersList.size());
-			for(int i = 0; i < parametersList.size(); i++)
+			for (int i = 0; i < parametersList.size(); i++)
 			{
 				JRParameter parameter = JRCloneUtils.nullSafeClone(parametersList.get(i));
 				clone.parametersList.add(parameter);
@@ -1546,7 +1546,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.fieldsList = new ArrayList<>(fieldsList.size());
 			clone.fieldsMap = new HashMap<>(fieldsList.size());
-			for(int i = 0; i < fieldsList.size(); i++)
+			for (int i = 0; i < fieldsList.size(); i++)
 			{
 				JRField field = JRCloneUtils.nullSafeClone(fieldsList.get(i));
 				clone.fieldsList.add(field);
@@ -1558,7 +1558,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.sortFieldsList = new ArrayList<>(sortFieldsList.size());
 			clone.sortFieldsMap = new HashMap<>(sortFieldsList.size());
-			for(int i = 0; i < sortFieldsList.size(); i++)
+			for (int i = 0; i < sortFieldsList.size(); i++)
 			{
 				JRSortField sortField = JRCloneUtils.nullSafeClone(sortFieldsList.get(i));
 				clone.sortFieldsList.add(sortField);
@@ -1572,7 +1572,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.variablesList = new ArrayList<>(variablesList.size());
 			clone.variablesMap = new HashMap<>(variablesList.size());
-			for(int i = 0; i < variablesList.size(); i++)
+			for (int i = 0; i < variablesList.size(); i++)
 			{
 				JRVariable variable = cloneStore.clone(variablesList.get(i));
 				clone.variablesList.add(variable);
@@ -1584,7 +1584,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.groupsList = new ArrayList<>(groupsList.size());
 			clone.groupsMap = new HashMap<>(groupsList.size());
-			for(int i = 0; i < groupsList.size(); i++)
+			for (int i = 0; i < groupsList.size(); i++)
 			{
 				JRGroup group = cloneStore.clone(groupsList.get(i));
 				clone.groupsList.add(group);

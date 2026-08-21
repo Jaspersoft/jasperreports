@@ -295,7 +295,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					if (keepSheets) {
 						sheetIndex += workbook.getNumberOfSheets();
 					} else {
-						for(int i = 0; i < workbook.getNumberOfSheets(); i++) {
+						for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
 							workbook.removeSheetAt(i);
 						}
 					}
@@ -335,12 +335,12 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		
 		XlsReportConfiguration configuration = getCurrentItemConfiguration();
 
-		if(paperSize != -1)	{
+		if (paperSize != -1)	{
 			printSetup.setPaperSize(paperSize);
 		}
 
 		String password = configuration.getPassword();
-		if(password != null) {
+		if (password != null) {
 			sheet.protectSheet(password);
 		}
 		
@@ -349,32 +349,32 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(configuration.getPrintPageTopMargin()));
 		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(configuration.getPrintPageBottomMargin()));
 
-		if(configuration.getSheetHeaderLeft() != null)
+		if (configuration.getSheetHeaderLeft() != null)
 		{
 			sheet.getHeader().setLeft(configuration.getSheetHeaderLeft());
 		}
 		
-		if(configuration.getSheetHeaderCenter() != null)
+		if (configuration.getSheetHeaderCenter() != null)
 		{
 			sheet.getHeader().setCenter(configuration.getSheetHeaderCenter());
 		}
 		
-		if(configuration.getSheetHeaderRight() != null)
+		if (configuration.getSheetHeaderRight() != null)
 		{
 			sheet.getHeader().setRight(configuration.getSheetHeaderRight());
 		}
 		
-		if(configuration.getSheetFooterLeft() != null)
+		if (configuration.getSheetFooterLeft() != null)
 		{
 			sheet.getFooter().setLeft(configuration.getSheetFooterLeft());
 		}
 		
-		if(configuration.getSheetFooterCenter() != null)
+		if (configuration.getSheetFooterCenter() != null)
 		{
 			sheet.getFooter().setCenter(configuration.getSheetFooterCenter());
 		}
 		
-		if(configuration.getSheetFooterRight() != null)
+		if (configuration.getSheetFooterRight() != null)
 		{
 			sheet.getFooter().setRight(configuration.getSheetFooterRight());
 		}
@@ -383,12 +383,12 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		printSetup.setFooterMargin(LengthUtil.inch(configuration.getPrintFooterMargin()));	
 		
 		RunDirectionEnum sheetDirection = configuration.getSheetDirection();
-		if(sheetDirection != null) {
+		if (sheetDirection != null) {
 			printSetup.setLeftToRight(sheetDirection == RunDirectionEnum.LTR);
 			sheet.setRightToLeft(sheetDirection == RunDirectionEnum.RTL);
 		}
 		
-		if(sheetInfo.sheetFirstPageNumber != null && sheetInfo.sheetFirstPageNumber > 0) 
+		if (sheetInfo.sheetFirstPageNumber != null && sheetInfo.sheetFirstPageNumber > 0) 
 		{
 			printSetup.setPageStart((short)sheetInfo.sheetFirstPageNumber.intValue());
 			printSetup.setUsePage(true);
@@ -397,14 +397,14 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		else 
 		{
 			Integer documentFirstPageNumber = configuration.getFirstPageNumber();
-			if(documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet) 
+			if (documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet) 
 			{
 				printSetup.setPageStart((short)documentFirstPageNumber.intValue());
 				printSetup.setUsePage(true);
 				firstPageNotSet = false;
 			}
 		}
-		if(!firstPageNotSet && (sheet.getFooter().getCenter() == null || sheet.getFooter().getCenter().length() == 0)) {
+		if (!firstPageNotSet && (sheet.getFooter().getCenter() == null || sheet.getFooter().getCenter().length() == 0)) {
 			sheet.getFooter().setCenter("Page " + HeaderFooter.page());
 		}
 		
@@ -484,16 +484,16 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				List<Hyperlink> linkList = anchorLinks.get(anchorName);
 				anchor.setRefersToFormula("'" + workbook.getSheetName(anchor.getSheetIndex()) + "'!"+ anchor.getRefersToFormula());
 				
-				if(linkList != null && !linkList.isEmpty())	{
-					for(Hyperlink link : linkList) {
+				if (linkList != null && !linkList.isEmpty())	{
+					for (Hyperlink link : linkList) {
 						link.setAddress(anchor.getRefersToFormula());
 					}
 				}
 			}
 			
-			if(!definedNamesMap.isEmpty()) 
+			if (!definedNamesMap.isEmpty()) 
 			{
-				for(Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
+				for (Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
 				{
 					HSSFName name = workbook.createName();
 					NameScope nameScope = entry.getKey();
@@ -501,7 +501,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					name.setRefersToFormula(entry.getValue());
 					int scopeIndex = workbook.getSheetIndex(nameScope.getScope());
 					// name and name scope are ignoring case in Excel
-					if(nameScope.getScope() != null 
+					if (nameScope.getScope() != null 
 							&& !DEFAULT_DEFINED_NAME_SCOPE.equalsIgnoreCase(nameScope.getScope())
 							&& scopeIndex >= 0)
 					{
@@ -511,9 +511,9 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			}
 			
 			// applying formulas
-			if(formulaCellsMap != null && !formulaCellsMap.isEmpty())
+			if (formulaCellsMap != null && !formulaCellsMap.isEmpty())
 			{
-				for(Map.Entry<HSSFCell, String> formulaCell: formulaCellsMap.entrySet())
+				for (Map.Entry<HSSFCell, String> formulaCell: formulaCellsMap.entrySet())
 				{
 					try
 					{
@@ -524,7 +524,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 						// usually an org.apache.poi.ss.formula.FormulaParseException 
 						// or a java.lang.IllegalArgumentException
 						// or a java.lang.IllegalStateException
-						if(log.isWarnEnabled())
+						if (log.isWarnEnabled())
 						{
 							log.warn(e.getMessage());
 						}
@@ -537,8 +537,8 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			for (Entry<Integer, List<Hyperlink>> entry : pageLinks.entrySet()) {
 				Integer linkPage = entry.getKey();
 				List<Hyperlink> linkList = entry.getValue();
-				if(linkList != null && !linkList.isEmpty()) {
-					for(Hyperlink link : linkList) {
+				if (linkList != null && !linkList.isEmpty()) {
+					for (Hyperlink link : linkList) {
 						index = onePagePerSheetMap.get(linkPage-1)!= null 
 							? (onePagePerSheetMap.get(linkPage-1)
 								? Math.max(0, linkPage - 1)
@@ -549,14 +549,14 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				}
 			}
 			
-			for(int i=0; i < workbook.getNumberOfSheets(); i++)	{
+			for (int i=0; i < workbook.getNumberOfSheets(); i++)	{
 				HSSFSheet currentSheet = workbook.getSheetAt(i);
 				currentSheet.setForceFormulaRecalculation(true);
-				for(String columnName : columnNames) {
+				for (String columnName : columnNames) {
 					Integer columnWidth = columnWidths.get(columnName);
 					Float columnWidthRatio = columnWidthRatios.get(columnName);
 					if (columnWidth != null && columnWidth < Integer.MAX_VALUE) {
-						if(columnWidthRatio != null && columnWidthRatio > 1f)
+						if (columnWidthRatio != null && columnWidthRatio > 1f)
 						{
 							columnWidth =  Math.round(45 * columnWidth * columnWidthRatio);
 						}
@@ -604,9 +604,9 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	}
 	
 	protected void adjustRowHeight(int rowHeight, Boolean isAutofit) {
-		if(isAutofit != null && isAutofit) {
+		if (isAutofit != null && isAutofit) {
 			currentRow.put(CURRENT_ROW_HEIGHT, Integer.MAX_VALUE);
-		} else if(!currentRow.containsKey(CURRENT_ROW_HEIGHT) || (Integer)currentRow.get(CURRENT_ROW_HEIGHT) < rowHeight) {
+		} else if (!currentRow.containsKey(CURRENT_ROW_HEIGHT) || (Integer)currentRow.get(CURRENT_ROW_HEIGHT) < rowHeight) {
 			currentRow.put(CURRENT_ROW_HEIGHT, rowHeight);
 		}
 	}
@@ -619,11 +619,11 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		} 
 		else 
 		{
-			if(!columnWidths.containsKey(columnName) || columnWidths.get(columnName) < columnWidth) 
+			if (!columnWidths.containsKey(columnName) || columnWidths.get(columnName) < columnWidth) 
 			{
 				columnWidths.put(columnName, columnWidth);
 			}
-			if(!columnWidthRatios.containsKey(columnName) && sheetInfo.columnWidthRatio != null) 
+			if (!columnWidthRatios.containsKey(columnName) && sheetInfo.columnWidthRatio != null) 
 			{
 				columnWidthRatios.put(columnName, sheetInfo.columnWidthRatio);
 			}
@@ -642,7 +642,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		row = sheet.createRow(sheet.getPhysicalNumberOfRows());
 		setRowHeight(row);
 		
-		for(int i = 0; i< columnNames.size(); i++) {
+		for (int i = 0; i< columnNames.size(); i++) {
 			String columnName = columnNames.get(i);
 			CellSettings cellSettings = (CellSettings)currentRow.get(columnName) == null 
 				? (repeatedValues.get(columnName) != null 
@@ -650,20 +650,20 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				: null)
 				: (CellSettings)currentRow.get(columnName);
 			cell = row.createCell(i);
-			if(cellSettings != null) {
+			if (cellSettings != null) {
 				CellType type = cellSettings.getCellType() == null ? CellType.BLANK : cellSettings.getCellType();
 				cell.setCellType(type);
 				Object cellValue = cellSettings.getCellValue();
-				if(cellValue != null) {
-					if(cellValue instanceof RichTextString) {
+				if (cellValue != null) {
+					if (cellValue instanceof RichTextString) {
 						cell.setCellValue((RichTextString)cellSettings.getCellValue());
 					} else if (cellValue instanceof Number) {
 						cell.setCellValue(((Number)cellSettings.getCellValue()).doubleValue());
 					} else if (cellValue instanceof Date) {
 						cell.setCellValue((Date)cellSettings.getCellValue());
-					} else if(cellValue instanceof Boolean) {
+					} else if (cellValue instanceof Boolean) {
 						cell.setCellValue((Boolean)cellSettings.getCellValue());
-					}else if(cellValue instanceof ImageSettings){
+					}else if (cellValue instanceof ImageSettings){
 						ImageSettings imageSettings = (ImageSettings)cellValue;
 						try {
 							HSSFClientAnchor anchor = 
@@ -695,15 +695,15 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					}
 				}
 				
-				if(cellSettings.getCellStyle() != null) {
+				if (cellSettings.getCellStyle() != null) {
 					cell.setCellStyle(cellSettings.getCellStyle());
 				}
-				if(cellSettings.getFormula() != null) {
+				if (cellSettings.getFormula() != null) {
 					// the formula text will be stored in formulaCellsMap in order to be applied only after 
 					// all defined names are created and available in the workbook (see #closeWorkbook())
 					formulaCellsMap.put(cell, cellSettings.getFormula());
 				}
-				if(cellSettings.getLink() != null) {
+				if (cellSettings.getLink() != null) {
 					cell.setHyperlink(cellSettings.getLink());
 				}
 			}
@@ -978,9 +978,9 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				}
 			}
 			
-			if(!ignoreAnchors) {
+			if (!ignoreAnchors) {
 				String anchorName = textElement.getAnchorName();
-				if(anchorName != null) {
+				if (anchorName != null) {
 					HSSFName aName = workbook.createName();
 					aName.setNameName(toExcelName(anchorName));
 					aName.setSheetIndex(workbook.getSheetIndex(sheet));
@@ -1017,11 +1017,11 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 						break;
 					}
 					case LOCAL_ANCHOR : {
-						if(!ignoreAnchors) {
+						if (!ignoreAnchors) {
 							String href = hyperlink.getHyperlinkAnchor();
 							if (href != null) {
 								link = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
-								if(anchorLinks.containsKey(href)) {
+								if (anchorLinks.containsKey(href)) {
 									(anchorLinks.get(href)).add(link);
 								} else {
 									List<Hyperlink> hrefList = new ArrayList<>();
@@ -1037,7 +1037,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 						Integer hrefPage = (onePagePerSheet ? hyperlink.getHyperlinkPage() : 0);
 						if (hrefPage != null) {
 							link = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
-							if(pageLinks.containsKey(sheetsBeforeCurrentReport+hrefPage)) {
+							if (pageLinks.containsKey(sheetsBeforeCurrentReport+hrefPage)) {
 								pageLinks.get(sheetsBeforeCurrentReport + hrefPage).add(link);
 							} else {
 								List<Hyperlink> hrefList = new ArrayList<>();
@@ -1079,9 +1079,9 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				}
 			}
 			
-			if(link != null) {
+			if (link != null) {
 				//TODO: make tooltips functional
-//				if(hyperlink.getHyperlinkTooltip() != null)
+//				if (hyperlink.getHyperlinkTooltip() != null)
 //				{
 //					link.setLabel(hyperlink.getHyperlinkTooltip());
 //				}
@@ -1097,7 +1097,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			} else if ( (columnNames.contains(currentColumnName) && !currentRow.containsKey(currentColumnName) && !isColumnReadOnTime(currentRow, currentColumnName)) // the column is for export, was not read yet, but it is read after it should be
 					|| (columnNames.contains(currentColumnName) && currentRow.containsKey(currentColumnName)) ) {	// the column is for export and was already read
 
-				if(rowIndex == 1 && getCurrentItemConfiguration().isWriteHeader()) {
+				if (rowIndex == 1 && getCurrentItemConfiguration().isWriteHeader()) {
 					writeReportHeader();
 				}
 				writeCurrentRow(currentRow, repeatedValues);
@@ -1105,7 +1105,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				addCell(cellSettings, currentRow, currentColumnName);
 			}
 			// set auto fill columns
-			if(repeatValue) {
+			if (repeatValue) {
 				if ( currentColumnName != null && currentColumnName.length() > 0 && textStr.length() > 0) {
 					addCell(cellSettings, repeatedValues, currentColumnName);
 				}
@@ -1122,7 +1122,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			} else if ( (columnNames.contains(currentColumnName) && !currentRow.containsKey(currentColumnName) && !isColumnReadOnTime(currentRow, currentColumnName)) 	// the column is for export, was not read yet, but it is read after it should be
 					|| (columnNames.contains(currentColumnName) && currentRow.containsKey(currentColumnName)) ) {	// the column is for export and was already read
 				
-				if(rowIndex == 1 && getCurrentItemConfiguration().isWriteHeader()) {
+				if (rowIndex == 1 && getCurrentItemConfiguration().isWriteHeader()) {
 					writeReportHeader();
 				}
 				
@@ -1132,7 +1132,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			}
 			
 			// set auto fill columns
-			if(repeatValue) {
+			if (repeatValue) {
 				if (repeatValue && currentColumnName != null && currentColumnName.length() > 0 && cellStyle != null) {
 					addBlankCell(cellStyle, repeatedValues, currentColumnName);
 				}
@@ -1237,7 +1237,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 
 					short forecolor = getWorkbookColor(element.getLineBox().getPen().getLineColor()).getIndex();
 
-					if(element.getMode() == ModeEnum.OPAQUE ) {
+					if (element.getMode() == ModeEnum.OPAQUE ) {
 						backcolor = getWorkbookColor(element.getBackcolor()).getIndex();
 					}
 
@@ -1289,7 +1289,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 						patriarch.createPicture(anchor, imgIndex).setRotationDegree(imageProcessorResult.angle);
 						
 						// set auto fill columns
-						if(repeatValue) {
+						if (repeatValue) {
 							CellSettings cellSettings = new CellSettings(cellStyle);
 							cellSettings.setCellValue(new ImageSettings(imgIndex, anchor.getAnchorType()));
 							addCell(cellSettings, repeatedValues, currentColumnName);
@@ -1710,7 +1710,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			cellStyle.setAlignment(style.horizontalAlignment);
 			cellStyle.setVerticalAlignment(style.verticalAlignment);
 			cellStyle.setRotation(style.rotation);
-			if(style.font != null)
+			if (style.font != null)
 			{
 				cellStyle.setFont(style.font);
 			}
@@ -1822,7 +1822,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	@Override
 	protected void exportGenericElement(JRGenericPrintElement element) throws JRException {
 		String currentColumnName = element.getPropertiesMap().getProperty(PROPERTY_COLUMN_NAME);
-		if(currentColumnName != null && currentColumnName.length() > 0) {
+		if (currentColumnName != null && currentColumnName.length() > 0) {
 			boolean repeatValue = getPropertiesUtil().getBooleanProperty(element, PROPERTY_REPEAT_VALUE, false);
 			int colIndex = columnNamesMap.get(currentColumnName);
 			
@@ -1893,7 +1893,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	@Override
 	protected void writeReportHeader() throws JRException {
 		row = sheet.createRow(0);
-		for(int i = 0; i< columnNames.size(); i++) {
+		for (int i = 0; i< columnNames.size(); i++) {
 			String columnName = columnNames.get(i);
 			cell = row.createCell(i);
 			cell.setCellType(CellType.STRING);
@@ -1908,7 +1908,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	
 	@Override
 	protected void setFreezePane(int rowIndex, int colIndex) {
-		if(rowIndex > 0 || colIndex > 0)
+		if (rowIndex > 0 || colIndex > 0)
 		{
 			sheet.createFreezePane(Math.max(0, colIndex), Math.max(0, rowIndex));
 		}
@@ -1924,13 +1924,13 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	@Override
 	protected void setRowLevels(XlsRowLevelInfo levelInfo, String level) {
 		//TODO: recalculate row levels depending on exported columns
-//		if(levelInfo != null) {
+//		if (levelInfo != null) {
 //			Map<String, Integer> levelMap = levelInfo.getLevelMap();
-//			if(levelMap != null && levelMap.size() > 0) {
-//				for(String l : levelMap.keySet()) {
+//			if (levelMap != null && levelMap.size() > 0) {
+//				for (String l : levelMap.keySet()) {
 //					if (level == null || l.compareTo(level) >= 0) {
 //						Integer startIndex = levelMap.get(l);
-//						if(levelInfo.getEndIndex() >= startIndex) {
+//						if (levelInfo.getEndIndex() >= startIndex) {
 //							sheet.groupRow(startIndex, levelInfo.getEndIndex());
 //						}
 //					}
@@ -2051,7 +2051,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	 */
 	protected HSSFColor getWorkbookColor(Color awtColor) {
 		HSSFColor color = null;
-		if(awtColor != null) {
+		if (awtColor != null) {
 			byte red = (byte)awtColor.getRed();
 			byte green = (byte)awtColor.getGreen();
 			byte blue = (byte)awtColor.getBlue();
@@ -2064,7 +2064,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 						? palette.findColor(red,green, blue)
 						: palette.addColor(red,green, blue);
 				} catch(Exception e) {
-					if(customColorIndex < MAX_COLOR_INDEX) {
+					if (customColorIndex < MAX_COLOR_INDEX) {
 						palette.setColorAtIndex(customColorIndex, red, green, blue);
 						color = palette.getColor(customColorIndex++);
 					} else {
@@ -2121,11 +2121,11 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		
 		short superscriptType = HSSFFont.SS_NONE;
 		
-		if( attributes != null && attributes.get(TextAttribute.SUPERSCRIPT) != null) {
+		if ( attributes != null && attributes.get(TextAttribute.SUPERSCRIPT) != null) {
 			Object value = attributes.get(TextAttribute.SUPERSCRIPT);
-			if(TextAttribute.SUPERSCRIPT_SUPER.equals(value)) {
+			if (TextAttribute.SUPERSCRIPT_SUPER.equals(value)) {
 				superscriptType = HSSFFont.SS_SUPER;
-			} else if(TextAttribute.SUPERSCRIPT_SUB.equals(value)) {
+			} else if (TextAttribute.SUPERSCRIPT_SUB.equals(value)) {
 				superscriptType = HSSFFont.SS_SUB;
 			}
 		}
@@ -2212,38 +2212,38 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 
 		HSSFHeader header = sheet.getHeader();
 		String sheetHeaderLeft = xlsNature.getSheetHeaderLeft(element);
-		if(sheetHeaderLeft != null)
+		if (sheetHeaderLeft != null)
 		{
 			header.setLeft(sheetHeaderLeft);
 		}
 		
 		String sheetHeaderCenter = xlsNature.getSheetHeaderCenter(element);
-		if(sheetHeaderCenter != null)
+		if (sheetHeaderCenter != null)
 		{
 			header.setCenter(sheetHeaderCenter);
 		}
 		
 		String sheetHeaderRight = xlsNature.getSheetHeaderRight(element);
-		if(sheetHeaderRight != null)
+		if (sheetHeaderRight != null)
 		{
 			header.setRight(sheetHeaderRight);
 		}
 		
 		HSSFFooter footer = sheet.getFooter();
 		String sheetFooterLeft = xlsNature.getSheetFooterLeft(element);
-		if(sheetFooterLeft != null)
+		if (sheetFooterLeft != null)
 		{
 			footer.setLeft(sheetFooterLeft);
 		}
 		
 		String sheetFooterCenter = xlsNature.getSheetFooterCenter(element);
-		if(sheetFooterCenter != null)
+		if (sheetFooterCenter != null)
 		{
 			footer.setCenter(sheetFooterCenter);
 		}
 		
 		String sheetFooterRight = xlsNature.getSheetFooterRight(element);
-		if(sheetFooterRight != null)
+		if (sheetFooterRight != null)
 		{
 			footer.setRight(sheetFooterRight);
 		}
@@ -2251,10 +2251,10 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 
 	private void updatePageMargin(Integer marginValue, PageMargin marginType)
 	{
-		if(marginValue != null)
+		if (marginValue != null)
 		{
 			double margin = LengthUtil.inch(marginValue);
-			if(margin > sheet.getMargin(marginType))
+			if (margin > sheet.getMargin(marginType))
 			{
 				sheet.setMargin(marginType, margin);
 			}
@@ -2263,20 +2263,20 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	
 	private void updateHeaderFooterMargin(Integer marginValue, boolean isHeaderMargin)
 	{
-		if(marginValue != null)
+		if (marginValue != null)
 		{
 			HSSFPrintSetup printSetup = sheet.getPrintSetup();
 			double margin = LengthUtil.inch(marginValue);
-			if(isHeaderMargin)
+			if (isHeaderMargin)
 			{
-				if(margin > printSetup.getHeaderMargin())
+				if (margin > printSetup.getHeaderMargin())
 				{
 					printSetup.setHeaderMargin(margin);
 				}
 			}
 			else
 			{
-				if(margin > printSetup.getFooterMargin())
+				if (margin > printSetup.getFooterMargin())
 				{
 					printSetup.setFooterMargin(margin);
 				}
@@ -2304,7 +2304,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		}
 
 		public BoxStyle(JRPrintElement element) {
-			if(element != null)
+			if (element != null)
 			{
 				if (element instanceof JRBoxContainer) {
 					setBox(((JRBoxContainer)element).getLineBox());
@@ -2626,7 +2626,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			Hyperlink link
 			) 
 		{
-			if(!CellType.FORMULA.equals(cellType))
+			if (!CellType.FORMULA.equals(cellType))
 			{
 				this.cellType = cellType;
 			}

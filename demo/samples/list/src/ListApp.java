@@ -87,7 +87,7 @@ public class ListApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -107,7 +107,7 @@ public class ListApp extends AbstractSampleApp
 	public void print() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -126,7 +126,7 @@ public class ListApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -144,7 +144,7 @@ public class ListApp extends AbstractSampleApp
 	public void xml() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -163,7 +163,7 @@ public class ListApp extends AbstractSampleApp
 	public void xmlEmbed() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -182,7 +182,7 @@ public class ListApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -200,7 +200,7 @@ public class ListApp extends AbstractSampleApp
 	public void rtf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -227,7 +227,7 @@ public class ListApp extends AbstractSampleApp
 	public void xls() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -257,7 +257,7 @@ public class ListApp extends AbstractSampleApp
 	public void csv() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -284,7 +284,7 @@ public class ListApp extends AbstractSampleApp
 	public void odt() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -311,7 +311,7 @@ public class ListApp extends AbstractSampleApp
 	public void ods() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -341,7 +341,7 @@ public class ListApp extends AbstractSampleApp
 	public void docx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -368,7 +368,7 @@ public class ListApp extends AbstractSampleApp
 	public void xlsx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -398,7 +398,7 @@ public class ListApp extends AbstractSampleApp
 	public void pptx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];

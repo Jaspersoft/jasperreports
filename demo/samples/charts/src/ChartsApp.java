@@ -67,7 +67,7 @@ public class ChartsApp extends AbstractSampleApp
 		parameters.put("MaxOrderID", 12500);
 		
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class ChartsApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();
@@ -105,7 +105,7 @@ public class ChartsApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			File reportFile = files[i];
 			long start = System.currentTimeMillis();

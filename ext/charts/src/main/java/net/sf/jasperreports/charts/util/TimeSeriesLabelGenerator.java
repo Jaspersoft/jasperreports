@@ -63,7 +63,7 @@ public class TimeSeriesLabelGenerator extends StandardXYItemLabelGenerator
 	{
 		Comparable<?> seriesName = dataset.getSeriesKey(series);
 		Map<RegularTimePeriod, String> labels = labelsMap.get(seriesName);
-		if(labels != null)
+		if (labels != null)
 		{
 			return labels.get(((TimeSeriesCollection)dataset).getSeries(series).getTimePeriod(item));
 		}

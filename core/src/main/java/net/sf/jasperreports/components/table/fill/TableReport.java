@@ -1005,7 +1005,7 @@ public class TableReport implements JRReport
 					JRSortField[] sortFields = TableReport.this.mainDataset.getSortFields();
 					if (sortFields != null)
 					{
-						for(JRSortField sortField : sortFields)
+						for (JRSortField sortField : sortFields)
 						{
 							if (
 								sortField.getName().equals(fieldOrVariableName)
@@ -1198,7 +1198,7 @@ public class TableReport implements JRReport
 		
 		protected void addColumnLabelParameters(JRDesignGenericElement element, TableComponent table) {
 			List<BaseColumn> columns = TableUtil.getAllColumns(table);
-			for(int i = 0, ln = columns.size(); i < ln; i++) {
+			for (int i = 0, ln = columns.size(); i < ln; i++) {
 				BaseColumn column = columns.get(i);
 				JRExpression columnHeaderExpression = getColumnHeaderLabelExpression(column.getColumnHeader());
 				boolean interactiveColumn = columnInteractivityMapping.get(column).first() && (TableUtil.getCellElement(JRTextField.class, ((Column)column).getDetailCell(), true) != null);

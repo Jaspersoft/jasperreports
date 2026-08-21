@@ -76,7 +76,7 @@ public class JRJavacCompiler extends JRAbstractMultiClassCompiler
 				}
 			} while (count >= 0);
 			
-			if( baos.toString().indexOf("error") != -1 ) 
+			if ( baos.toString().indexOf("error") != -1 ) 
 			{
 				return baos.toString();
 			}

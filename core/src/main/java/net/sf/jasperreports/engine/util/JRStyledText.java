@@ -247,7 +247,7 @@ public class JRStyledText implements Cloneable
 			ensureText();
 			attributedString = new AttributedString(text);
 
-			for(int i = runs.size() - 1; i >= 0; i--)
+			for (int i = runs.size() - 1; i >= 0; i--)
 			{
 				Run run = runs.get(i);
 				if (run.startIndex != run.endIndex && run.attributes != null)
@@ -306,7 +306,7 @@ public class JRStyledText implements Cloneable
 			ensureText();
 			awtAttributedString = new AttributedString(text);
 
-			for(int i = runs.size() - 1; i >= 0; i--)
+			for (int i = runs.size() - 1; i >= 0; i--)
 			{
 				Run run = runs.get(i);
 				if (run.startIndex != run.endIndex && run.attributes != null)
@@ -338,7 +338,7 @@ public class JRStyledText implements Cloneable
 			int runLimit = 0;
 			AffineTransform atrans = null;
 
-			while(runLimit < iterator.getEndIndex() && (runLimit = iterator.getRunLimit(FONT_ATTRS)) <= iterator.getEndIndex())
+			while (runLimit < iterator.getEndIndex() && (runLimit = iterator.getRunLimit(FONT_ATTRS)) <= iterator.getEndIndex())
 			{
 				Map<Attribute,Object> attrs = iterator.getAttributes();
 					

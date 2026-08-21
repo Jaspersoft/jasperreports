@@ -317,7 +317,7 @@ public class JRStyledTextUtil
 			}
 			index = fontMatch.endIndex;
 		}
-		while(index < endIndex);
+		while (index < endIndex);
 		
 		if (hadUnmatched)
 		{

@@ -384,7 +384,7 @@ public class HtmlEditorKitMarkupProcessor extends EditorKitMarkupProcessor
 	protected static String getOLBulletChars(int index, boolean isUpperCase)
 	{
 		// max 3-letter index is 18277
-		if(index < 0 || index > 18277)	
+		if (index < 0 || index > 18277)	
 		{
 			throw 
 				new JRRuntimeException(

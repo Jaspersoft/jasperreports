@@ -194,7 +194,7 @@ public class ContentBuilder
 		writer.write("<office:forms form:automatic-focus=\"false\" form:apply-design-mode=\"false\"/>\n");
 		writer.flush();
 		bodyEntry.writeData(contentEntry.getOutputStream());
-		if(namedExpressions != null){
+		if (namedExpressions != null){
 			writer.write(namedExpressions.toString());
 		}
 		writer.write("</office:" + mimeType + ">\n</office:body>\n");

@@ -628,7 +628,7 @@ public class JRVerifier
 			JRBand[] detailBands = detailSection.getBands();
 			if (detailBands != null && detailBands.length > 0)
 			{
-				for(int i = 0; i< detailBands.length; i++)
+				for (int i = 0; i< detailBands.length; i++)
 				{
 					JRBand detailBand = detailBands[i];
 					if (
@@ -717,7 +717,7 @@ public class JRVerifier
 			{
 				Map<String, JRParameter> parametersMap = dataset.getParametersMap();
 
-				for(int j = 0; j < chunks.length; j++)
+				for (int j = 0; j < chunks.length; j++)
 				{
 					JRQueryChunk queryChunk = chunks[j];
 					switch (queryChunk.getType())
@@ -779,7 +779,7 @@ public class JRVerifier
 	{
 		if (expressions != null && expressions.size() > 0)
 		{
-			for(Iterator<JRExpression> it = expressions.iterator(); it.hasNext();)
+			for (Iterator<JRExpression> it = expressions.iterator(); it.hasNext();)
 			{
 				JRExpression expression = it.next();
 				verifyExpression(expression, parametersMap, fieldsMap, variablesMap, brokenRules);
@@ -802,7 +802,7 @@ public class JRVerifier
 		JRExpressionChunk[] chunks = expression.getChunks();
 		if (chunks != null && chunks.length > 0)
 		{
-			for(int j = 0; j < chunks.length; j++)
+			for (int j = 0; j < chunks.length; j++)
 			{
 				JRExpressionChunk expressionChunk = chunks[j];
 				switch (expressionChunk.getType())
@@ -884,7 +884,7 @@ public class JRVerifier
 		JRStyle[] styles = jasperDesign.getStyles();
 		if (styles != null && styles.length > 0)
 		{
-			for(int index = 0; index < styles.length; index++)
+			for (int index = 0; index < styles.length; index++)
 			{
 				JRStyle style = styles[index];
 
@@ -906,7 +906,7 @@ public class JRVerifier
 		JRConditionalStyle[] condStyles = style.getConditionalStyles();
 		if (condStyles != null && condStyles.length > 0)
 		{
-			for(int index = 0; index < condStyles.length; index++)
+			for (int index = 0; index < condStyles.length; index++)
 			{
 				JRConditionalStyle condStyle = condStyles[index];
 
@@ -935,7 +935,7 @@ public class JRVerifier
 		JRParameter[] parameters = dataset.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int index = 0; index < parameters.length; index++)
+			for (int index = 0; index < parameters.length; index++)
 			{
 				JRParameter parameter = parameters[index];
 
@@ -967,7 +967,7 @@ public class JRVerifier
 		JRField[] fields = dataset.getFields();
 		if (fields != null && fields.length > 0)
 		{
-			for(int index = 0; index < fields.length; index++)
+			for (int index = 0; index < fields.length; index++)
 			{
 				JRField field = fields[index];
 
@@ -1005,7 +1005,7 @@ public class JRVerifier
 		JRSortField[] sortFields = dataset.getSortFields();
 		if (sortFields != null && sortFields.length > 0)
 		{
-			for(int index = 0; index < sortFields.length; index++)
+			for (int index = 0; index < sortFields.length; index++)
 			{
 				JRSortField sortField = sortFields[index];
 				String sortFieldName = sortField.getName();
@@ -1061,7 +1061,7 @@ public class JRVerifier
 		JRVariable[] variables = dataset.getVariables();
 		if (variables != null && variables.length > 0)
 		{
-			for(int index = 0; index < variables.length; index++)
+			for (int index = 0; index < variables.length; index++)
 			{
 				JRVariable variable = variables[index];
 
@@ -1132,7 +1132,7 @@ public class JRVerifier
 		if (groups != null && groups.length > 0)
 		{
 			boolean isMainDataset = dataset.isMainDataset();
-			for(int index = 0; index < groups.length; index++)
+			for (int index = 0; index < groups.length; index++)
 			{
 				JRGroup group = groups[index];
 
@@ -1180,7 +1180,7 @@ public class JRVerifier
 				JRBand[] groupHeaderBands = groupHeaderSection.getBands();
 				if (groupHeaderBands != null && groupHeaderBands.length > 0)
 				{
-					for(int i = 0; i< groupHeaderBands.length; i++)
+					for (int i = 0; i< groupHeaderBands.length; i++)
 					{
 						JRBand groupHeaderBand = groupHeaderBands[i];
 						if (
@@ -1206,7 +1206,7 @@ public class JRVerifier
 				JRBand[] groupFooterBands = groupFooterSection.getBands();
 				if (groupFooterBands != null && groupFooterBands.length > 0)
 				{
-					for(int i = 0; i< groupFooterBands.length; i++)
+					for (int i = 0; i< groupFooterBands.length; i++)
 					{
 						JRBand groupFooterBand = groupFooterBands[i];
 						if (
@@ -1234,7 +1234,7 @@ public class JRVerifier
 				JRBand[] groupHeaderBands = groupHeaderSection.getBands();
 				if (groupHeaderBands != null && groupHeaderBands.length > 0)
 				{
-					for(int i = 0; i< groupHeaderBands.length; i++)
+					for (int i = 0; i< groupHeaderBands.length; i++)
 					{
 						JRBand groupHeaderBand = groupHeaderBands[i];
 						if (
@@ -1261,7 +1261,7 @@ public class JRVerifier
 				JRBand[] groupFooterBands = groupFooterSection.getBands();
 				if (groupFooterBands != null && groupFooterBands.length > 0)
 				{
-					for(int i = 0; i< groupFooterBands.length; i++)
+					for (int i = 0; i< groupFooterBands.length; i++)
 					{
 						JRBand groupFooterBand = groupFooterBands[i];
 						if (
@@ -1356,7 +1356,7 @@ public class JRVerifier
 			return;
 		}
 		
-		for(int index = 1; index < elements.length; index++)
+		for (int index = 1; index < elements.length; index++)
 		{
 			JRElement element = elements[index];
 			if (!isAllowedToOverlap(element))
@@ -1389,7 +1389,7 @@ public class JRVerifier
 				}
 				else
 				{
-					for(int i = 0; i< bands.length; i++)
+					for (int i = 0; i< bands.length; i++)
 					{
 						verifyBand(bands[i]);
 					}
@@ -1431,7 +1431,7 @@ public class JRVerifier
 			JRElement[] elements = band.getElements();
 			if (elements != null && elements.length > 0)
 			{
-				for(int index = 0; index < elements.length; index++)
+				for (int index = 0; index < elements.length; index++)
 				{
 					JRElement element = elements[index];
 
@@ -1577,7 +1577,7 @@ public class JRVerifier
 			JRSubreportParameter[] parameters = subreport.getParameters();
 			if (parameters != null && parameters.length > 0)
 			{
-				for(int index = 0; index < parameters.length; index++)
+				for (int index = 0; index < parameters.length; index++)
 				{
 					JRSubreportParameter parameter = parameters[index];
 
@@ -1843,12 +1843,12 @@ public class JRVerifier
 		JRCrosstabColumnGroup[] columnGroups = crosstab.getColumnGroups();
 
 		JRCrosstabCell baseCell = cells[rowGroups.length][columnGroups.length];
-		if(baseCell == null || baseCell.getWidth() == null)
+		if (baseCell == null || baseCell.getWidth() == null)
 		{
 			addBrokenRule("Crosstab base cell width not specified.", crosstab);
 		}
 
-		if(baseCell == null || baseCell.getHeight() == null)
+		if (baseCell == null || baseCell.getHeight() == null)
 		{
 			addBrokenRule("Crosstab base cell height not specified.", crosstab);
 		}
@@ -2145,7 +2145,7 @@ public class JRVerifier
 		JRDatasetParameter[] parameters = datasetRun.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int index = 0; index < parameters.length; index++)
+			for (int index = 0; index < parameters.length; index++)
 			{
 				JRDatasetParameter parameter = parameters[index];
 
@@ -2470,7 +2470,7 @@ public class JRVerifier
 				&& elements != null && elements.length > 0
 				)
 			{
-				for(int i = 0; i < elements.length; i++)
+				for (int i = 0; i < elements.length; i++)
 				{
 					JRElement element = elements[i];
 					int bottom = element.getY() + element.getHeight();

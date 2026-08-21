@@ -618,7 +618,7 @@ public class JRDesignChart extends JRDesignElement implements JRChart
 		ChartTypeEnum old = this.chartType;
 		this.chartType = chartType;
 		
-		switch(chartType) {
+		switch (chartType) {
 			case AREA:
 				dataset = new JRDesignCategoryDataset(dataset);
 				plot = new JRDesignAreaPlot(plot, this);

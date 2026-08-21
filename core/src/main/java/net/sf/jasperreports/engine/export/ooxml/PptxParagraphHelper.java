@@ -145,7 +145,7 @@ public class PptxParagraphHelper extends BaseHelper
 		{
 			write("        <a:pStyle a:val=\"" + styleNameReference + "\"/>\n");
 		}
-		if(paragraph != null)
+		if (paragraph != null)
 		{
 			write("      <a:ind");
 			if (paragraph.getOwnFirstLineIndent() != null)

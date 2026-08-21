@@ -177,7 +177,7 @@ public class JRBaseChart extends JRBaseElement implements JRChart
 
 		chartType = chart.getChartType();
 
-		switch(chartType) {
+		switch (chartType) {
 			case AREA:
 				dataset = factory.getCategoryDataset((JRCategoryDataset) chart.getDataset());
 				plot = factory.getAreaPlot((JRAreaPlot) chart.getPlot());

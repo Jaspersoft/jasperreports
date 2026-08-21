@@ -387,7 +387,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 	{
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)//FIXMEJSONMETA deal with batch export
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)//FIXMEJSONMETA deal with batch export
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -426,7 +426,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 				int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
 				JRPrintPage page = null;
-				for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 
@@ -474,7 +474,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 	{
 		if (elements != null && elements.size() > 0)
 		{
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				checkInterrupted();
 				JRPrintElement element = it.next();
@@ -728,7 +728,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			}
 			// just write the value for property, no repeat
 			else {
-                writePathProperty(currentNode, valueProperty, value, false);
+				writePathProperty(currentNode, valueProperty, value, false);
 			}
 		}
 
@@ -901,15 +901,15 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			String currentProperty = pathSegments[i];
 			boolean foundPreviousRepeated = false;
 
-            ArrayList<String> vizMembers = visitedMembers.get(parent);
-            String lastVisitedProp = null;
-            int lastVisitedPropIdx = -1;
-            int currentPropIdx = parent.indexOfMember(currentProperty);
+			ArrayList<String> vizMembers = visitedMembers.get(parent);
+			String lastVisitedProp = null;
+			int lastVisitedPropIdx = -1;
+			int currentPropIdx = parent.indexOfMember(currentProperty);
 
-            if (vizMembers != null && vizMembers.size() > 0) {
-                lastVisitedProp = vizMembers.get(vizMembers.size() - 1);
-                lastVisitedPropIdx = parent.indexOfMember(lastVisitedProp);
-            }
+			if (vizMembers != null && vizMembers.size() > 0) {
+				lastVisitedProp = vizMembers.get(vizMembers.size() - 1);
+				lastVisitedPropIdx = parent.indexOfMember(lastVisitedProp);
+			}
 
 			// before opening new path, check if previous has repeated values to be written
 			if (parent.isArray()) {
@@ -924,8 +924,8 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			}
 
 			if (foundPreviousRepeated ||
-                    // got another property of the same object
-                    (lastVisitedPropIdx != -1 && currentPropIdx > lastVisitedPropIdx)) {
+					// got another property of the same object
+					(lastVisitedPropIdx != -1 && currentPropIdx > lastVisitedPropIdx)) {
 				writer.write(",");
 			}
 

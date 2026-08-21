@@ -304,7 +304,7 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 	{
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		for(int reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (int reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -317,7 +317,7 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 				int startPageIndex = (pageRange == null || pageRange.getStartPageIndex() == null) ? 0 : pageRange.getStartPageIndex();
 				int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
-				for(int pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (int pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 
@@ -460,11 +460,11 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 		label:while (lfTokenizer.hasMoreTokens()) {
 			String line = lfTokenizer.nextToken();
 			// if text starts with a new line:
-			if(isFirstLine && line.equals("\n"))
+			if (isFirstLine && line.equals("\n"))
 			{
 				rows[rowIndex].append("");
 				rowIndex++;
-				if(rowIndex == rowSpan || !lfTokenizer.hasMoreTokens())
+				if (rowIndex == rowSpan || !lfTokenizer.hasMoreTokens())
 				{
 					break label;
 				}
@@ -477,33 +477,33 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 			
 			// if there is a series of new lines:
 			int emptyLinesCount = 0;
-			while(line.equals("\n") && lfTokenizer.hasMoreTokens())
+			while (line.equals("\n") && lfTokenizer.hasMoreTokens())
 			{
 				emptyLinesCount ++;
 				line = lfTokenizer.nextToken();
 			}
 				
-			if(emptyLinesCount > 1)
+			if (emptyLinesCount > 1)
 			{
-				for(int i = 0; i < emptyLinesCount-1; i++)
+				for (int i = 0; i < emptyLinesCount-1; i++)
 				{
 					rows[rowIndex].append("");
 					rowIndex++;
-					if(rowIndex == rowSpan)
+					if (rowIndex == rowSpan)
 					{
 						break label;
 					}
 					rowPosition = 0;
 					rows[rowIndex] = new StringBuilder();
 					//if this is the last empty line:
-					if(!lfTokenizer.hasMoreTokens() && line.equals("\n"))
+					if (!lfTokenizer.hasMoreTokens() && line.equals("\n"))
 					{
 						rows[rowIndex].append("");
 						break label;
 					}
 				}
 			}
-			if(!line.equals("\n"))
+			if (!line.equals("\n"))
 			{
 				
 				StringTokenizer spaceTokenizer = new StringTokenizer(line, " ", true);
@@ -518,7 +518,7 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 						rows[rowIndex].append(word.substring(0, colSpan - rowPosition));
 						word = word.substring(colSpan - rowPosition, word.length());
 						rowIndex++;
-						if(rowIndex == rowSpan)
+						if (rowIndex == rowSpan)
 						{
 							break label;
 						}
@@ -553,7 +553,7 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 	
 	
 				rowIndex++;
-				if(rowIndex == rowSpan)
+				if (rowIndex == rowSpan)
 				{
 					break;
 				}

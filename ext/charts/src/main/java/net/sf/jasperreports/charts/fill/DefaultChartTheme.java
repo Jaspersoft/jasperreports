@@ -314,7 +314,7 @@ public class DefaultChartTheme implements ChartTheme
 		
 		JFreeChart jfreeChart = null;
 		
-		switch(getChart().getChartType()) {
+		switch (getChart().getChartType()) {
 			case AREA:
 				jfreeChart = createAreaChart();
 				break;
@@ -1909,7 +1909,7 @@ public class DefaultChartTheme implements ChartTheme
 			{
 				colorStep = 255 / size;
 			}
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 			{
 				JRMeterInterval interval = intervals.get(i);
 				Range intervalRange = convertRange(interval.getDataRange());
@@ -1961,7 +1961,7 @@ public class DefaultChartTheme implements ChartTheme
 			JRFont displayFont = display == null ? null : display.getFont();
 			
 			String[] textLines = label.split("\\n");
-			for(int i = 0; i < textLines.length; i++)
+			for (int i = 0; i < textLines.length; i++)
 			{
 				DialTextAnnotation dialAnnotation = new DialTextAnnotation(textLines[i]);
 				if (displayFont != null)

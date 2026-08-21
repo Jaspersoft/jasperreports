@@ -89,7 +89,7 @@ public class JRPropertiesMap implements Serializable, Cloneable, JRChangeEventsS
 		String[] propertyNames = propertiesMap.getPropertyNames();
 		if (propertyNames != null && propertyNames.length > 0)
 		{
-			for(int i = 0; i < propertyNames.length; i++)
+			for (int i = 0; i < propertyNames.length; i++)
 			{
 				setProperty(propertyNames[i], propertiesMap.getProperty(propertyNames[i]));
 			}

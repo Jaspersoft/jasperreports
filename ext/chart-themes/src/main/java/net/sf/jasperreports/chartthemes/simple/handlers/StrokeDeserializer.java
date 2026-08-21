@@ -71,5 +71,5 @@ public class StrokeDeserializer extends StdDeserializer<Stroke>
 		}
 
 		return stroke;
-    }
+	}
 }

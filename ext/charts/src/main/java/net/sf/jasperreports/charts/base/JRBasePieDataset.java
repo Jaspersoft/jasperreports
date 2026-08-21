@@ -87,7 +87,7 @@ public class JRBasePieDataset extends JRBaseChartDataset implements JRPieDataset
 		if (srcPieSeries != null && srcPieSeries.length > 0)
 		{
 			pieSeries = new JRPieSeries[srcPieSeries.length];
-			for(int i = 0; i < pieSeries.length; i++)
+			for (int i = 0; i < pieSeries.length; i++)
 			{
 				pieSeries[i] = factory.getPieSeries(srcPieSeries[i]);
 			}

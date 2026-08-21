@@ -210,7 +210,7 @@ public class JRBaseReport implements JRReport, Serializable, JRChangeEventsSuppo
 		if (jrStyles != null && jrStyles.length > 0)
 		{
 			styles = new JRStyle[jrStyles.length];
-			for(int i = 0; i < styles.length; i++)
+			for (int i = 0; i < styles.length; i++)
 			{
 				styles[i] = factory.getStyle(jrStyles[i]);
 			}

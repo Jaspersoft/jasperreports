@@ -43,83 +43,83 @@ import org.apache.commons.logging.LogFactory;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class DefaultJsonQLExecuter implements JsonQLExecuter {
-    private static final Log log = LogFactory.getLog(DefaultJsonQLExecuter.class);
+	private static final Log log = LogFactory.getLog(DefaultJsonQLExecuter.class);
 
-    private JsonQLExpressionEvaluator evaluator;
+	private JsonQLExpressionEvaluator evaluator;
 
-    public DefaultJsonQLExecuter() {
-        evaluator = new JsonQLExpressionEvaluator();
-    }
+	public DefaultJsonQLExecuter() {
+		evaluator = new JsonQLExpressionEvaluator();
+	}
 
-    @Override
-    public List<JRJsonNode> selectNodes(JRJsonNode rootNode, String expression) throws JRException {
-        JsonNodeContainer container;
+	@Override
+	public List<JRJsonNode> selectNodes(JRJsonNode rootNode, String expression) throws JRException {
+		JsonNodeContainer container;
 
-        if (expression != null && expression.trim().length() > 0) {
-            container = evaluator.evaluate(getJsonQLExpression(expression), rootNode);
+		if (expression != null && expression.trim().length() > 0) {
+			container = evaluator.evaluate(getJsonQLExpression(expression), rootNode);
 
-            if (container != null) {
-                return container.getContainerNodes();
-            }
-        } else {
-            container = new JsonNodeContainer(rootNode);
+			if (container != null) {
+				return container.getContainerNodes();
+			}
+		} else {
+			container = new JsonNodeContainer(rootNode);
 
-            return container.getContainerNodes();
-        }
+			return container.getContainerNodes();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public JRJsonNode selectNode(JRJsonNode contextNode, JRJsonNode rootNode, String expression) throws JRException {
-        if (expression != null  && expression.trim().length() > 0) {
-            JsonQLExpression jsonQLExpression = getJsonQLExpression(expression);
-            JRJsonNode node = contextNode;
+	@Override
+	public JRJsonNode selectNode(JRJsonNode contextNode, JRJsonNode rootNode, String expression) throws JRException {
+		if (expression != null  && expression.trim().length() > 0) {
+			JsonQLExpression jsonQLExpression = getJsonQLExpression(expression);
+			JRJsonNode node = contextNode;
 
-            if (jsonQLExpression.isAbsolute()) {
-                node = rootNode;
-            }
+			if (jsonQLExpression.isAbsolute()) {
+				node = rootNode;
+			}
 
-            JsonNodeContainer container = evaluator.evaluate(jsonQLExpression, node);
+			JsonNodeContainer container = evaluator.evaluate(jsonQLExpression, node);
 
-            if (container != null) {
-                return container.getNodes().get(0);
-            }
-        } else {
-            return contextNode;
-        }
+			if (container != null) {
+				return container.getNodes().get(0);
+			}
+		} else {
+			return contextNode;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public JsonNodeContainer evaluateExpression(JRJsonNode jrJsonNode, String expression) {
-        if (expression != null && expression.trim().length() > 0) {
-            return evaluator.evaluate(getJsonQLExpression(expression), jrJsonNode);
-        }
+	public JsonNodeContainer evaluateExpression(JRJsonNode jrJsonNode, String expression) {
+		if (expression != null && expression.trim().length() > 0) {
+			return evaluator.evaluate(getJsonQLExpression(expression), jrJsonNode);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public JsonQLExpressionEvaluator getEvaluator() {
-        return evaluator;
-    }
+	public JsonQLExpressionEvaluator getEvaluator() {
+		return evaluator;
+	}
 
-    protected JsonQLExpression getJsonQLExpression(String expression) {
-        try {
-            JsonQueryLexer lexer = new JsonQueryLexer(new StringReader(expression.trim()));
+	protected JsonQLExpression getJsonQLExpression(String expression) {
+		try {
+			JsonQueryLexer lexer = new JsonQueryLexer(new StringReader(expression.trim()));
 
-            JsonQueryParser parser = new JsonQueryParser(lexer);
-            parser.pathExpr();
+			JsonQueryParser parser = new JsonQueryParser(lexer);
+			parser.pathExpr();
 
-            JsonQueryWalker walker = new JsonQueryWalker();
-            return walker.jsonQLExpression(parser.getAST());
+			JsonQueryWalker walker = new JsonQueryWalker();
+			return walker.jsonQLExpression(parser.getAST());
 
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Exception is of type: " + e.getClass());
-            }
-            throw new JRRuntimeException(e);
-        }
-    }
+		} catch (Exception e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Exception is of type: " + e.getClass());
+			}
+			throw new JRRuntimeException(e);
+		}
+	}
 
 }

@@ -31,17 +31,17 @@ import net.sf.jasperreports.json.expression.filter.NotFilterExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class NotFilterExpressionEvaluator implements FilterExpressionEvaluator {
-    private EvaluationContext evaluationContext;
-    private NotFilterExpression expression;
+	private EvaluationContext evaluationContext;
+	private NotFilterExpression expression;
 
 
-    public NotFilterExpressionEvaluator(EvaluationContext evaluationContext, NotFilterExpression expression) {
-        this.evaluationContext = evaluationContext;
-        this.expression = expression;
-    }
+	public NotFilterExpressionEvaluator(EvaluationContext evaluationContext, NotFilterExpression expression) {
+		this.evaluationContext = evaluationContext;
+		this.expression = expression;
+	}
 
-    @Override
-    public boolean evaluate(JRJsonNode contextNode) {
-        return !expression.getFilterExpression().evaluate(contextNode, evaluationContext.getFilterExpressionEvaluatorVisitor());
-    }
+	@Override
+	public boolean evaluate(JRJsonNode contextNode) {
+		return !expression.getFilterExpression().evaluate(contextNode, evaluationContext.getFilterExpressionEvaluatorVisitor());
+	}
 }

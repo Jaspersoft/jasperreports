@@ -306,7 +306,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 					writeAnchor(JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (pageIndex + 1));
 
 					boolean lastPageFlag = false;
-					if(pageIndex == endPageIndex && reportIndex == (items.size() - 1)){
+					if (pageIndex == endPageIndex && reportIndex == (items.size() - 1)){
 						lastPageFlag = true;
 					}
 					exportPage(page, lastPageFlag);
@@ -378,7 +378,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 
 		int fontIndex = fonts.indexOf(fontName);
 
-		if(fontIndex < 0) {
+		if (fontIndex < 0) {
 			fontIndex = fonts.size();
 			fonts.add(fontName);
 			fontWriter.write("{\\f"  + fontIndex + "\\fnil " + fontName + ";}");
@@ -397,7 +397,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 	{
 		exportElements(page.getElements());
 
-		if(!lastPage)
+		if (!lastPage)
 		{
 			contentWriter.write("\\page\n");
 		}
@@ -651,8 +651,8 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 
 		int textHeight = (int)text.getTextHeight();
 
-		if(textHeight <= 0) {
-			if(height <= 0 ){
+		if (textHeight <= 0) {
+			if (height <= 0 ){
 				throw 
 					new JRException(
 						EXCEPTION_MESSAGE_KEY_INVALID_TEXT_HEIGHT,  
@@ -1030,18 +1030,18 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 	{
 		StringBuilder unicodeText = new StringBuilder();
 		
-		for(int i = 0; i < sourceText.length(); i++ )
+		for (int i = 0; i < sourceText.length(); i++ )
 		{
 			long ch = sourceText.charAt(i);
-			if(ch > 127)
+			if (ch > 127)
 			{
 				unicodeText.append("\\u" + ch + '?');
 			}
-			else if(ch == '\n')
+			else if (ch == '\n')
 			{
 				unicodeText.append("\\line ");
 			}
-			else if(ch == '\\' || ch =='{' || ch =='}')
+			else if (ch == '\\' || ch =='{' || ch =='}')
 			{
 				unicodeText.append('\\').append((char)ch);
 			}
@@ -1426,7 +1426,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 				
 				writeShapeHyperlink(printImage);
 
-				if(printImage.getAnchorName() != null)
+				if (printImage.getAnchorName() != null)
 				{
 					writeAnchor(printImage.getAnchorName());
 				}
@@ -1792,7 +1792,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 				case REFERENCE :
 				{
@@ -1880,7 +1880,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{
@@ -1973,7 +1973,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 
 	protected void endHyperlink(boolean startedHyperlink) throws IOException
 	{
-		if(startedHyperlink)
+		if (startedHyperlink)
 		{
 			contentWriter.write("}}");
 		}

@@ -143,7 +143,7 @@ public class HorizontalFillList extends BaseFillList
 			int columnIndex = 0;
 			
 			// also breaks when there are no more records, see below
-			while(!overflow)
+			while (!overflow)
 			{
 				boolean refillOverflowed = columnIndex < overflowColumnIndex;
 				int contentsAvailableHeight = availableHeight 

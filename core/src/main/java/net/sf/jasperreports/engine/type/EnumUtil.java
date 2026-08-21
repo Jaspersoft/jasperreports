@@ -36,7 +36,7 @@ public final class EnumUtil
 	{
 		if (values != null && value != null)
 		{
-			for(T e:values)
+			for (T e:values)
 			{
 				if (value.equals(e.getValue()))
 				{
@@ -54,7 +54,7 @@ public final class EnumUtil
 	{
 		if (values != null && name != null)
 		{
-			for(T e:values)
+			for (T e:values)
 			{
 				if (name.equals(e.getName()))
 				{
@@ -72,7 +72,7 @@ public final class EnumUtil
 	{
 		if (values != null && name != null)
 		{
-			for(T e:values)
+			for (T e:values)
 			{
 				if (name.equals(e.name()))
 				{

@@ -100,7 +100,7 @@ public class FunctionsInfo
 		for (FunctionsBundle bundle : bundles) 
 		{
 			List<Class<?>> functionClasses = bundle.getFunctionClasses();
-			if(functionClasses != null && !functionClasses.isEmpty()) 
+			if (functionClasses != null && !functionClasses.isEmpty()) 
 			{
 				for (Class<?> functionClass : functionClasses) 
 				{
@@ -136,10 +136,10 @@ public class FunctionsInfo
 	protected Set<String> addCategories(FunctionCategories categories)
 	{
 		Set<String> categoryIds = null;
-		if(categories != null) 
+		if (categories != null) 
 		{
 			categoryIds = new HashSet<>();
-			for(Class<?> categoryClass : categories.value()) 
+			for (Class<?> categoryClass : categories.value()) 
 			{
 				String categoryId = addCategoryClass(categoryClass);
 				categoryIds.add(categoryId);
@@ -154,7 +154,7 @@ public class FunctionsInfo
 	protected void addFunction(Method functionMethod, MessageProvider provider, Set<String> categoryIds, Method[] boundaryMethods)
 	{
 		Function function = functionMethod.getAnnotation(Function.class);
-		if(function != null) 
+		if (function != null) 
 		{
 			String functionId = functionMethod.getDeclaringClass().getName() + "." + function.value();
 			
@@ -173,7 +173,7 @@ public class FunctionsInfo
 			int params = 0, requiredParams = minParameters.length;
 			if (functionParameters != null && functionParameters.value().length > 0) 
 			{
-				for(FunctionParameter functionParameter : functionParameters.value()) 
+				for (FunctionParameter functionParameter : functionParameters.value()) 
 				{
 					addFunctionParameter(functionBean, functionParameter, provider, maxParameters[params], params < requiredParams);
 					++params;
@@ -181,7 +181,7 @@ public class FunctionsInfo
 			} 
 
 			FunctionParameter functionParameter = functionMethod.getAnnotation(FunctionParameter.class);
-			if(functionParameter != null) 
+			if (functionParameter != null) 
 			{
 				addFunctionParameter(functionBean, functionParameter, provider, maxParameters[params], params < requiredParams);
 			}
@@ -193,7 +193,7 @@ public class FunctionsInfo
 				categoryIds = functionCategoryIds;
 			}
 
-			for(String categoryId : categoryIds) 
+			for (String categoryId : categoryIds) 
 			{
 				FunctionCategoryBean categoryBean = categories.get(categoryId);
 				categoryBean.addFunction(functionBean);
@@ -229,7 +229,7 @@ public class FunctionsInfo
 		
 		String categoryId = categoryClass.getName();
 		FunctionCategory category = categoryClass.getAnnotation(FunctionCategory.class);
-		if(category != null && category.value() != null && category.value().trim().length() > 0) 
+		if (category != null && category.value() != null && category.value().trim().length() > 0) 
 		{
 			categoryId = category.value();
 		}
@@ -292,13 +292,13 @@ public class FunctionsInfo
 		int minParams = method.getParameterTypes().length;
 		int maxParams = method.getParameterTypes().length;
 		String name = method.getName();
-		for(Method m : methods) {
-			if(name.equals(m.getName())) {
+		for (Method m : methods) {
+			if (name.equals(m.getName())) {
 				int params = m.getParameterTypes().length;
-				if(params < minParams) {
+				if (params < minParams) {
 					minParams = params;
 					minMethod = m;
-				} else if(params > maxParams){
+				} else if (params > maxParams){
 					maxParams = params;
 					maxMethod = m;
 				}

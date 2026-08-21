@@ -185,7 +185,7 @@ public class OsgiApp
 			System.out.println("Filling reports via bundle-loaded JasperFillManager...");
 
 			File[] files = getFiles(new File("target/reports"), "jasper");
-			for(int i = 0; i < files.length; i++)
+			for (int i = 0; i < files.length; i++)
 			{
 				File reportFile = files[i];
 				long start = System.currentTimeMillis();
@@ -321,7 +321,7 @@ public class OsgiApp
 		String[] files = parentFile.list();
 		if (files != null)
 		{
-			for(int i = 0; i < files.length; i++)
+			for (int i = 0; i < files.length; i++)
 			{
 				String reportFile = files[i];
 				if (reportFile.endsWith("." + extension))

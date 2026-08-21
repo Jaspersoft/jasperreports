@@ -171,19 +171,19 @@ public class JasperReportsDecompileMojo extends AbstractJasperReportsMojo
 
 		for (File srcFile : sources)
 		{
-            File destFile = null;
-            try
-            {
-                destFile =
-                	mapping.getTargetFiles(
-                		outputDirectory, 
-                		sourceDirectory.toPath().relativize(srcFile.toPath()).toString()
-                		).iterator().next();
-            }
-            catch (InclusionScanException e)
-            {
-            	throw new MojoExecutionException("Error determining destination file for source file : " + srcFile.getAbsolutePath(), e);
-            }
+			File destFile = null;
+			try
+			{
+				destFile =
+					mapping.getTargetFiles(
+						outputDirectory, 
+						sourceDirectory.toPath().relativize(srcFile.toPath()).toString()
+						).iterator().next();
+			}
+			catch (InclusionScanException e)
+			{
+				throw new MojoExecutionException("Error determining destination file for source file : " + srcFile.getAbsolutePath(), e);
+			}
 			File destFileParent = destFile.getParentFile();
 			if (!destFileParent.exists())
 			{
@@ -209,14 +209,14 @@ public class JasperReportsDecompileMojo extends AbstractJasperReportsMojo
 		executorService.shutdown();
 		try 
 		{
-		    if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) 
-		    {
-		        executorService.shutdownNow();
-		    } 
+			if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) 
+			{
+				executorService.shutdownNow();
+			} 
 		}
 		catch (InterruptedException e) 
 		{
-		    executorService.shutdownNow();
+			executorService.shutdownNow();
 		}
 		
 		if (isError())

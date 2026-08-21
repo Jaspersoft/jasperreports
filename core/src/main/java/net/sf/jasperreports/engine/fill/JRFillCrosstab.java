@@ -1757,7 +1757,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			
 			if (lastIndex < headersData[0].length)
 			{
-				while(lastIndex > firstIndex && !breakable[lastIndex])
+				while (lastIndex > firstIndex && !breakable[lastIndex])
 				{
 					--lastIndex;
 					headers.remove(headers.size() - 1);

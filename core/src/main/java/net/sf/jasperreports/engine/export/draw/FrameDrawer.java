@@ -201,7 +201,7 @@ public class FrameDrawer extends ElementDrawer<JRPrintFrame>
 		if (elements != null && elements.size() > 0)
 		{
 			Shape clipArea = grx.getClip();
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				JRPrintElement element = it.next();
 				boolean isGenericElement = element instanceof JRGenericPrintElement;
@@ -223,7 +223,7 @@ public class FrameDrawer extends ElementDrawer<JRPrintFrame>
 				{
 					continue;
 				}
-				else if(isGenericElementToExport)
+				else if (isGenericElementToExport)
 				{
 					handler.exportElement(exporterContext, genericElement, grx, elementOffset);
 				}

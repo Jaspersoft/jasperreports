@@ -311,7 +311,7 @@ public class XlsxStyleHelper extends BaseHelper
 		
 		if (rotation != null)
 		{
-			switch(rotation)
+			switch (rotation)
 			{
 				case LEFT:
 				{

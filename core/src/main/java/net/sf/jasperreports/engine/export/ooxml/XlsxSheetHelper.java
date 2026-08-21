@@ -109,7 +109,7 @@ public class XlsxSheetHelper extends BaseHelper
 		write(" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\">\n");
 		
 		write("<sheetPr>\n");
-		if(tabColor != null)
+		if (tabColor != null)
 		{
 			write("<tabColor rgb=\"FF" + JRColorUtil.getColorHexa(tabColor) + "\"/>\n");
 		}
@@ -130,12 +130,12 @@ public class XlsxSheetHelper extends BaseHelper
 		
 		write("</sheetPr><dimension ref=\"A1\"/><sheetViews><sheetView workbookViewId=\"0\"");
 		
-		if(!showGridlines)
+		if (!showGridlines)
 		{
 			write(" showGridLines=\"0\"");
 		}
 		
-		if(rowFreezeIndex > 0 || columnFreezeIndex > 0)
+		if (rowFreezeIndex > 0 || columnFreezeIndex > 0)
 		{
 			write(">\n<pane" + (columnFreezeIndex > 0 ? (" xSplit=\"" + columnFreezeIndex + "\"") : "") + (rowFreezeIndex > 0 ? (" ySplit=\"" + rowFreezeIndex + "\"") : ""));
 			String columnFreezeName = columnFreezeIndex < 0 
@@ -203,7 +203,7 @@ public class XlsxSheetHelper extends BaseHelper
 			write("\" spinCount=\"" + spinCount + "\" sheet=\"1\" objects=\"1\" scenarios=\"1\"/>\n");
 		}
 
-		if(autoFilter != null)
+		if (autoFilter != null)
 		{
 			write("<autoFilter ref=\"" + autoFilter + "\"/>\n");
 		}
@@ -240,7 +240,7 @@ public class XlsxSheetHelper extends BaseHelper
 		write(" orientation=\"" + OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()).getName().toLowerCase() + "\"");	
 		
 		/* the scale factor takes precedence over fitWidth and fitHeight properties */
-		if(scale != null && scale > 9 && scale < 401)
+		if (scale != null && scale > 9 && scale < 401)
 		{
 			write(" scale=\"" + scale + "\"");	
 		}
@@ -265,7 +265,7 @@ public class XlsxSheetHelper extends BaseHelper
 		String paperSize = pSize == PaperSizeEnum.UNDEFINED ? "" : " paperSize=\"" + pSize.getOoxmlValue() + "\"";
 		write(paperSize);	
 		
-		if(firstPageNumber!= null && firstPageNumber > 0)
+		if (firstPageNumber!= null && firstPageNumber > 0)
 		{
 			write(" firstPageNumber=\"" + firstPageNumber + "\"");
 			write(" useFirstPageNumber=\"1\"/>\n");
@@ -320,7 +320,7 @@ public class XlsxSheetHelper extends BaseHelper
 			}
 			write("</headerFooter>\n");
 		}
-		else if(!firstPageNotSet)
+		else if (!firstPageNotSet)
 		{
 			write("<headerFooter><oddFooter>&amp;CPage &amp;P</oddFooter></headerFooter>\n");
 		}
@@ -469,7 +469,7 @@ public class XlsxSheetHelper extends BaseHelper
 		
 		try
 		{
-			if(isLocal){
+			if (isLocal){
 				hyperlinksWriter.write("<hyperlink ref=\"" + ref + "\" location=\"" + getDefinedName(href) + "\"/>\n");
 			} else {
 				hyperlinksWriter.write("<hyperlink ref=\"" + ref + "\" r:id=\"rIdLnk" + sheetRelsHelper.getHyperlink(href) + "\"/>\n");

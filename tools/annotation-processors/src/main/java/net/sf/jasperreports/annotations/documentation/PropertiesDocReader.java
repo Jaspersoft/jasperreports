@@ -206,7 +206,7 @@ public class PropertiesDocReader
 			
 			Element descriptionElem = (Element) descriptionElems.item(0);
 			String constantDeclarationClassName = docPropElement.getAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME);
-			if(Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
+			if (Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
 			{
 				descriptionElem.setAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME, constantDeclarationClassName);
 			}
@@ -340,7 +340,7 @@ public class PropertiesDocReader
 			propElem.setAttribute(ATTR_CATEGORY_PROPERTY_REF, propMetadata.getName());
 			String constantDeclarationClassName=propMetadata.getConstantDeclarationClass().trim();
 			
-			if(Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
+			if (Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
 			{
 				propElem.setAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME,constantDeclarationClassName);
 			}
@@ -360,7 +360,7 @@ public class PropertiesDocReader
 		refProp.setAttribute(ATTR_CONFIG_PROP_NAME, propName);
 		
 		String constantDeclarationClass = propertyMetadata.getConstantDeclarationClass();
-		if(Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClass.substring(constantDeclarationClass.lastIndexOf('.')+1)) >= 0)
+		if (Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClass.substring(constantDeclarationClass.lastIndexOf('.')+1)) >= 0)
 		{
 			refProp.setAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME, constantDeclarationClass.trim());
 		}

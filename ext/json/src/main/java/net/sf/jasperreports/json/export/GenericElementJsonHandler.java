@@ -33,7 +33,7 @@ import net.sf.jasperreports.engine.export.GenericElementHandler;
  */
 public interface GenericElementJsonHandler extends GenericElementHandler
 {
-    String PARAMETER_CLEAR_CONTEXT_CACHE = "net.sf.jasperreports.engine.export.clear.json.cache";
+	String PARAMETER_CLEAR_CONTEXT_CACHE = "net.sf.jasperreports.engine.export.clear.json.cache";
 
 	/**
 	 * Returns an JSON fragment that is to be inserted in the export output.

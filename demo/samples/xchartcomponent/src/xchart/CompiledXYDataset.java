@@ -44,10 +44,10 @@ public class CompiledXYDataset extends JRBaseElementDataset implements XYDataset
 		super(dataset, factory);
 		
 		XYSeries[] seriesArray = dataset.getSeries();
-		if(seriesArray != null && seriesArray.length > 0)
+		if (seriesArray != null && seriesArray.length > 0)
 		{
 			xySeries = new DesignXYSeries[seriesArray.length];
-			for(int i = 0; i < seriesArray.length; i++)
+			for (int i = 0; i < seriesArray.length; i++)
 			{
 				xySeries[i] = new DesignXYSeries(seriesArray[i], factory);
 			}

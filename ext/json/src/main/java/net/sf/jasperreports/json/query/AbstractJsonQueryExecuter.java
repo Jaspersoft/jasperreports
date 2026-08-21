@@ -128,12 +128,12 @@ public abstract class AbstractJsonQueryExecuter<T extends JRAbstractTextDataSour
 	{
 		TextDataSourceAttributes attributes = new TextDataSourceAttributes();
 		String dateFormatPattern = getStringParameterOrProperty(JsonQueryExecuterFactory.JSON_DATE_PATTERN);
-		if(dateFormatPattern != null){
+		if (dateFormatPattern != null){
 			attributes.setDatePattern(dateFormatPattern);
 		}
 		
 		String numberFormatPattern = getStringParameterOrProperty(JsonQueryExecuterFactory.JSON_NUMBER_PATTERN);
-		if(numberFormatPattern != null){
+		if (numberFormatPattern != null){
 			attributes.setNumberPattern(numberFormatPattern);
 		}
 		

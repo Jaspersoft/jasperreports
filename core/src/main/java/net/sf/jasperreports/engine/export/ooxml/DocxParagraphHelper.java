@@ -152,7 +152,7 @@ public class DocxParagraphHelper extends BaseHelper
 		{
 			write("        <w:pStyle w:val=\"" + styleNameReference + "\"/>\n");
 		}
-		if(paragraph != null)
+		if (paragraph != null)
 		{
 			write("      <w:ind");
 			if (paragraph.getOwnFirstLineIndent() != null)
@@ -298,7 +298,7 @@ public class DocxParagraphHelper extends BaseHelper
 			pageBreak = false;
 		}
 		write("     </w:pPr>");
-		if(startPage)
+		if (startPage)
 		{
 			write("<w:bookmarkStart w:id=\"" + bookmarkIndex);
 			write("\" w:name=\"" + pageAnchor);

@@ -65,14 +65,14 @@ public final class TextFunctions  extends AbstractFunctionSupport
 		// java.lang.Character.MIN_RADIX and java.lang.Character.MAX_RADIX are already 2 and 36 respectively
 		// However we should check the parameter specified because the method we rely on uses 10 radix
 		// as fallback when a smaller/greater radix is specified.
-		if(number==null){
-			if(log.isDebugEnabled()){
+		if (number==null){
+			if (log.isDebugEnabled()){
 				log.debug("The number can not be null.");
 			}
 			return null;
 		}
-		if(radix==null || radix>BASE_MAX_RADIX || radix<BASE_MIN_RADIX) {
-			if(log.isDebugEnabled()) {
+		if (radix==null || radix>BASE_MAX_RADIX || radix<BASE_MIN_RADIX) {
+			if (log.isDebugEnabled()) {
 				log.debug("The radix parameter must be an integer number between 2 and 36.");
 			}
 			return null;
@@ -82,9 +82,9 @@ public final class TextFunctions  extends AbstractFunctionSupport
 
 	public static String BASE(Integer number, Integer radix, Integer minlength){
 		String base = BASE(number, radix);
-		if(base!=null) {
-			if(minlength == null){
-				if(log.isDebugEnabled()) {
+		if (base!=null) {
+			if (minlength == null){
+				if (log.isDebugEnabled()) {
 					log.debug("The minimum length can not be null.");
 				}
 				return null;
@@ -105,8 +105,8 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("number")})
 	public static String CHAR(Integer number){
-		if(number==null || (number <1 || number>255)){
-			if(log.isDebugEnabled()) {
+		if (number==null || (number <1 || number>255)){
+			if (log.isDebugEnabled()) {
 				log.debug("The number must be an integer number between 1 and 255.");
 			}
 			return null;
@@ -122,7 +122,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("text")})
 	public static String CLEAN(String text){
-		if(text==null){
+		if (text==null){
 			logNullTextString();
 			return null;
 		}
@@ -138,12 +138,12 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("textString")})
 	public static Integer CODE(String textString){
-		if(textString==null){
+		if (textString==null){
 			logNullTextString();
 			return null;
 		}
 		int firstCharAsNum = textString.charAt(0);
-		if(firstCharAsNum<0 || firstCharAsNum>255){
+		if (firstCharAsNum<0 || firstCharAsNum>255){
 			throw new JRRuntimeException("The first character of the text can not be converted to a valid numeric ASCII code.");
 		}
 		return firstCharAsNum;
@@ -157,8 +157,8 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("strings")})
 	public static String CONCATENATE(String ...strings){
-		if(strings.length==0) {
-			if(log.isDebugEnabled()) {
+		if (strings.length==0) {
+			if (log.isDebugEnabled()) {
 				log.debug("No arguments were specified.");
 			}
 			return null;
@@ -175,14 +175,14 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			@FunctionParameter("text1"),
 			@FunctionParameter("text2")})
 	public static Boolean EXACT(String text1, String text2){
-		if(text1!=null){
+		if (text1!=null){
 			return text1.equals(text2);
 		}
-		else if(text2!=null){
+		else if (text2!=null){
 			return text2.equals(text1);
 		}
 		else {
-			if(log.isDebugEnabled()){
+			if (log.isDebugEnabled()){
 				log.debug("The texts to be compared are both null.");
 			}
 			return null;
@@ -197,7 +197,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("textNumber")})
 	public static Double DOUBLE_VALUE(String textNumber){
-		if(textNumber==null) {
+		if (textNumber==null) {
 			logNullTextString();
 			return null;
 		}
@@ -218,7 +218,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}
 	
 	public static Integer FIND(String findText, String searchText, Integer startPosition){
-		if(findText==null || searchText==null || startPosition == null) {
+		if (findText==null || searchText==null || startPosition == null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -240,7 +240,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}
 
 	public String FIXED(Number number, Integer decimals, Boolean omitSeparators){
-		if(number==null || decimals==null || omitSeparators==null) {
+		if (number==null || decimals==null || omitSeparators==null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -249,11 +249,11 @@ public final class TextFunctions  extends AbstractFunctionSupport
 		// 123456.789	###.##	123456.79
 		// 123.78	000000.000	000123.780
 		StringBuilder patternBuf=new StringBuilder("###");
-		if(!omitSeparators){
+		if (!omitSeparators){
 			patternBuf.append(",###");
 		}
 		patternBuf.append(".");
-		for(int i=0;i<decimals;i++){
+		for (int i=0;i<decimals;i++){
 			patternBuf.append("0");
 		}
 		DecimalFormat myFormatter = getDecimalFormat();
@@ -269,7 +269,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("textNumber")})
 	public static Float FLOAT_VALUE(String textNumber){
-		if(textNumber==null) {
+		if (textNumber==null) {
 			logNullTextString();
 			return null;
 		}
@@ -284,7 +284,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 		@FunctionParameter("textNumber")})
 	public static Integer INTEGER_VALUE(String textNumber){
-		if(textNumber==null) {
+		if (textNumber==null) {
 			logNullTextString();
 			return null;
 		}
@@ -305,7 +305,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}
 	
 	public static String LEFT(String text, Integer charactersNum){
-		if(text==null || charactersNum==null) {
+		if (text==null || charactersNum==null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -320,7 +320,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("text")})
 	public static Integer LEN(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -335,7 +335,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 		@FunctionParameter("textNumber")})
 	public static Long LONG_VALUE(String textNumber){
-		if(textNumber==null) {
+		if (textNumber==null) {
 			logNullTextString();
 			return null;
 		}
@@ -350,7 +350,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 		@FunctionParameter("text")})
 	public static String LOWER(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -365,7 +365,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 		@FunctionParameter("text")})
 	public static String LTRIM(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -382,7 +382,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			@FunctionParameter("startPosition"),
 			@FunctionParameter("charactersNum")})
 	public static String MID(String text, Integer startPosition) {
-		if(text == null || startPosition == null) {
+		if (text == null || startPosition == null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -392,7 +392,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}
 
 	public static String MID(String text, Integer startPosition, Integer charactersNum){
-		if(text==null || startPosition==null || charactersNum==null) {
+		if (text==null || startPosition==null || charactersNum==null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -409,7 +409,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 		@FunctionParameter("text")})
 	public static String PROPER(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -421,8 +421,8 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			
 			for (int i=1; i<lowerCaseString.length(); i++){
 				char c = lowerCaseString.charAt(i);
-				if(!isDelimiter(c)){
-					if(capitalizeNext){
+				if (!isDelimiter(c)){
+					if (capitalizeNext){
 						result.append(Character.toTitleCase(c));
 					}
 					else{
@@ -451,7 +451,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			@FunctionParameter("charsNum"),
 			@FunctionParameter("newText")})
 	public static String REPLACE(String originalText, Integer startPosition, Integer charsNum, String newText){
-		if(originalText==null || startPosition==null || charsNum==null || newText==null) {
+		if (originalText==null || startPosition==null || charsNum==null || newText==null) {
 			logHavingNullArguments();
 			return null;		
 		}
@@ -473,13 +473,13 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			@FunctionParameter("originalText"),
 			@FunctionParameter("numberOfTimes")})
 	public static String REPT(String originalText, Integer numberOfTimes){
-		if(originalText==null || numberOfTimes==null) {
+		if (originalText==null || numberOfTimes==null) {
 			logHavingNullArguments();
 			return null;
 		}
 		else{
 			StringBuilder output=new StringBuilder();
-			for(int i=0;i<numberOfTimes;i++){
+			for (int i=0;i<numberOfTimes;i++){
 				output.append(originalText);
 			}
 			return output.toString();
@@ -499,7 +499,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}
 	
 	public static String RIGHT(String text, Integer charactersNum){
-		if(text==null || charactersNum==null) {
+		if (text==null || charactersNum==null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -517,7 +517,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("text")})
 	public static String RTRIM(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -540,7 +540,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}	
 	
 	public static Integer SEARCH(String findText, String textToSearch, Integer startPosition){
-		if(findText==null || textToSearch==null || startPosition==null) {
+		if (findText==null || textToSearch==null || startPosition==null) {
 			logHavingNullArguments();
 			return null;
 		}
@@ -564,11 +564,11 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}	
 	
 	public static String SUBSTITUTE(String originalText, String oldText, String newText, Integer occurrenceNum){
-		if(originalText==null || oldText==null || newText==null) {
+		if (originalText==null || oldText==null || newText==null) {
 			logHavingNullArguments();
 			return null;
 		}
-		else if(occurrenceNum==null){
+		else if (occurrenceNum==null){
 			// Replace all occurrences
 			return originalText.replaceAll(Pattern.quote(oldText), Matcher.quoteReplacement(newText));
 		}
@@ -580,7 +580,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			while (startIdx<originalText.length()-1){
 				// Locate the next index position of the occurrence of the old text
 				int foundPosition = originalText.indexOf(oldText,startIdx);
-				if(counter==occurrenceNum){
+				if (counter==occurrenceNum){
 					return REPLACE(originalText,foundPosition+1,oldText.length(),newText);
 				}
 				else{
@@ -601,7 +601,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("value")})
 	public static String T(Object value){
-		if(value instanceof String) {
+		if (value instanceof String) {
 			return (String)value;
 		}
 		else{
@@ -618,7 +618,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 			@FunctionParameter("number"),
 			@FunctionParameter("numberFormat")})
 	public String TEXT(Number number, String numberFormat){
-		if(number==null || numberFormat==null) {
+		if (number==null || numberFormat==null) {
 			logNullTextString();
 			return null;
 		}
@@ -637,7 +637,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 			@FunctionParameter("text")})
 	public static String TRIM(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -654,7 +654,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	@FunctionParameters({
 		@FunctionParameter("text")})
 	public static String UPPER(String text){
-		if(text==null) {
+		if (text==null) {
 			logNullTextString();
 			return null;
 		}
@@ -669,13 +669,13 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	}
 	
 	private static void logNullTextString() {
-		if(log.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			log.debug("The text string can not be null.");
 		}
 	}
 	
 	private static void logHavingNullArguments() {
-		if(log.isDebugEnabled()){
+		if (log.isDebugEnabled()){
 			log.debug("None of the arguments can be null.");
 		}
 	}
@@ -693,7 +693,7 @@ public final class TextFunctions  extends AbstractFunctionSupport
 	 */
 	private Locale getReportLocale() {
 		Locale reportLocale = Locale.getDefault(); 
-		if(getContext()!=null) {
+		if (getContext()!=null) {
 			reportLocale = (Locale) getContext().getParameterValue(JRParameter.REPORT_LOCALE);
 		}
 		return reportLocale;

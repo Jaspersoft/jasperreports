@@ -222,7 +222,7 @@ public class XalanXmlDataSource extends AbstractXmlDataSource<XalanXmlDataSource
 
 	protected void checkMoveFirst() throws JRException
 	{
-		if(mustBeMovedFirst) 
+		if (mustBeMovedFirst) 
 		{
 			moveFirst();
 			mustBeMovedFirst = false;
@@ -238,7 +238,7 @@ public class XalanXmlDataSource extends AbstractXmlDataSource<XalanXmlDataSource
 	public boolean next() throws JRException 
 	{
 		checkMoveFirst();
-		if(currentNodeIndex == nodeListLength - 1)
+		if (currentNodeIndex == nodeListLength - 1)
 		{
 			return false;
 		}
@@ -277,7 +277,7 @@ public class XalanXmlDataSource extends AbstractXmlDataSource<XalanXmlDataSource
 	@Override
 	public Document subDocument() throws JRException
 	{
-		if(currentNode == null)
+		if (currentNode == null)
 		{
 			throw 
 				new JRException(

@@ -90,7 +90,7 @@ public class TableDesignConverter implements ComponentDesignConverter
 			if (children != null && children.size() > 0)
 			{
 				ConvertVisitor convertVisitor = new ConvertVisitor(reportConverter, cellFrame);
-				for(int i = 0; i < children.size(); i++)
+				for (int i = 0; i < children.size(); i++)
 				{
 					(children.get(i)).visit(convertVisitor);
 				}

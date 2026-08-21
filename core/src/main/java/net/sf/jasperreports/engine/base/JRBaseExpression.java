@@ -100,7 +100,7 @@ public class JRBaseExpression implements JRExpression, Serializable
 		if (jrChunks != null && jrChunks.length > 0)
 		{
 			chunks = new JRExpressionChunk[jrChunks.length];
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				chunks[i] = factory.getExpressionChunk(jrChunks[i]);
 			}
@@ -166,9 +166,9 @@ public class JRBaseExpression implements JRExpression, Serializable
 		{
 			StringBuilder sb = new StringBuilder();
 
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
-				switch(chunks[i].getType())
+				switch (chunks[i].getType())
 				{
 					case JRExpressionChunk.TYPE_PARAMETER :
 					{

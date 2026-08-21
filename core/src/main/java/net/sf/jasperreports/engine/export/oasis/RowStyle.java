@@ -59,7 +59,7 @@ public class RowStyle extends Style
 		styleWriter.write(" <style:style style:name=\"" + rowStyleName + "\"");
 		styleWriter.write(" style:family=\"table-row\">\n");
 		styleWriter.write("   <style:table-row-properties");		
-		if(rowHeight < 0)
+		if (rowHeight < 0)
 		{
 			styleWriter.write(" style:use-optimal-row-height=\"true\"");
 		}

@@ -56,7 +56,7 @@ public class XYChartCompiler implements ComponentCompiler
 		if (xySeries != null && xySeries.length > 0)
 		{
 			JRExpressionCollector seriesCollector = collector.getCollector(dataset);
-			for(int i = 0; i < xySeries.length; i++)
+			for (int i = 0; i < xySeries.length; i++)
 			{
 				seriesCollector.addExpression(xySeries[i].getSeriesExpression());
 				seriesCollector.addExpression(xySeries[i].getXValueExpression());
@@ -117,22 +117,22 @@ public class XYChartCompiler implements ComponentCompiler
 		verifier.verifyElementDataset(dataset);
 		
 		XYSeries[] xySeries = dataset.getSeries();
-		if(xySeries != null && xySeries.length > 0)
+		if (xySeries != null && xySeries.length > 0)
 		{
-			for(XYSeries series : xySeries)
+			for (XYSeries series : xySeries)
 			{
 				JRExpression seriesExpression = series.getSeriesExpression();
-				if(seriesExpression == null)
+				if (seriesExpression == null)
 				{
 					verifier.addBrokenRule("No series expression for XY series", dataset);
 				}
 				JRExpression xValueExpression = series.getXValueExpression();
-				if(xValueExpression == null)
+				if (xValueExpression == null)
 				{
 					verifier.addBrokenRule("No X value expression for XY series", dataset);
 				}
 				JRExpression yValueExpression = series.getYValueExpression();
-				if(yValueExpression == null)
+				if (yValueExpression == null)
 				{
 					verifier.addBrokenRule("No Y value expression for XY series", dataset);
 				}

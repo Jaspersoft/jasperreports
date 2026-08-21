@@ -273,7 +273,7 @@ public class GenericChartTheme implements ChartTheme
 		
 		JFreeChart jfreeChart = null;
 		
-		switch(getChart().getChartType()) {
+		switch (getChart().getChartType()) {
 			case AREA:
 				jfreeChart = createAreaChart();
 				break;
@@ -1010,7 +1010,7 @@ public class GenericChartTheme implements ChartTheme
 		BarRenderer categoryRenderer = (BarRenderer)categoryPlot.getRenderer();
 		categoryRenderer.setDefaultItemLabelsVisible( isShowLabels );
 		Comparable<?> rangeAxisMaxValue = (Comparable<?>)evaluateExpression(barPlot.getRangeAxisMaxValueExpression());
-		if(isShowLabels)
+		if (isShowLabels)
 		{
 			if (rangeAxisMaxValue == null)
 			{
@@ -1019,7 +1019,7 @@ public class GenericChartTheme implements ChartTheme
 				Axis axis = categoryPlot.getRangeAxis();
 				if (axis instanceof ValueAxis)
 				{
-					if(!(axis instanceof DateAxis))
+					if (!(axis instanceof DateAxis))
 					{
 						float rangeAxisMaxRatio = 1f;
 						
@@ -1052,9 +1052,9 @@ public class GenericChartTheme implements ChartTheme
 					)
 				);
 			
-			if(itemLabel != null)
+			if (itemLabel != null)
 			{
-				if(itemLabel.getColor() != null)
+				if (itemLabel.getColor() != null)
 				{
 					categoryRenderer.setDefaultItemLabelPaint(itemLabel.getColor());
 				}
@@ -1063,7 +1063,7 @@ public class GenericChartTheme implements ChartTheme
 					categoryRenderer.setDefaultItemLabelPaint(getChart().getForecolor());
 				}
 //				categoryRenderer.setDefaultFillPaint(itemLabel.getBackgroundColor());
-//				if(itemLabel.getMask() != null)
+//				if (itemLabel.getMask() != null)
 //				{
 //					categoryRenderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator(
 //							StandardCategoryItemLabelGenerator.DEFAULT_LABEL_FORMAT_STRING, 
@@ -1457,7 +1457,7 @@ public class GenericChartTheme implements ChartTheme
 		// Set the shape
 		MeterShapeEnum shape = jrPlot.getShape() == null ? MeterShapeEnum.PIE : jrPlot.getShape();
 		
-		switch(shape)
+		switch (shape)
 		{
 			case CHORD:
 				chartPlot.setDialShape(DialShape.CHORD);
@@ -2184,7 +2184,7 @@ public class GenericChartTheme implements ChartTheme
 		// Handle rotation of the category labels.
 		CategoryAxis axis = p.getDomainAxis();
 		boolean hasRotation = jrPlot.getLabelRotation() != null || defaultPlotLabelRotation != null;
-		if(hasRotation)
+		if (hasRotation)
 		{
 			double labelRotation = jrPlot.getLabelRotation() != null ? 
 					jrPlot.getLabelRotation() :
@@ -2571,7 +2571,7 @@ public class GenericChartTheme implements ChartTheme
 			
 						//preferably multiple of 5 values should be used as tick units lengths:
 						int i = 1;
-						while(tickUnitSize > 9)
+						while (tickUnitSize > 9)
 						{
 							tickUnitSize /= 10;
 							i *= 10;

@@ -316,7 +316,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	{
 		super.initReport();
 		
-		if(jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
+		if (jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
 			// allows null values for the property
 			invalidCharReplacement = jasperPrint.getProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS);
@@ -357,7 +357,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 		
 		pageFormatIndex = -1;
 
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 			rowStyles.clear();
@@ -374,7 +374,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 
 				PrintPageFormat oldPageFormat = null;
 				JRPrintPage page = null;
-				for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 
@@ -476,7 +476,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 		tableBuilder.buildTableStyle(gridLayout.getWidth());
 		tableBuilder.buildTableHeader();
 
-		for(int col = 1; col < xCuts.size(); col++)
+		for (int col = 1; col < xCuts.size(); col++)
 		{
 			tableBuilder.buildColumnStyle(
 					col - 1,
@@ -487,7 +487,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 		}
 
 		int rowCount = grid.getRowCount();
-		for(int row = 0; row < rowCount; row++)
+		for (int row = 0; row < rowCount; row++)
 		{
 			int emptyCellColSpan = 0;
 			//int emptyCellWidth = 0;
@@ -498,7 +498,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 
 			GridRow gridRow = grid.getRow(row);
 			int rowSize = gridRow.size();
-			for(int col = 0; col < rowSize; col++)
+			for (int col = 0; col < rowSize; col++)
 			{
 				JRExporterGridCell gridCell = gridRow.get(col);
 				if (gridCell.getType() == JRExporterGridCell.TYPE_OCCUPIED_CELL)
@@ -517,7 +517,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 //					exportOccupiedCells(elementGridCell);
 //					col += elementGridCell.getColSpan() - 1;
 				}
-				else if(gridCell.getType() == JRExporterGridCell.TYPE_ELEMENT_CELL)
+				else if (gridCell.getType() == JRExporterGridCell.TYPE_ELEMENT_CELL)
 				{
 					if (emptyCellColSpan > 0)
 					{
@@ -585,7 +585,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	 */
 	private void exportOccupiedCells(int count)
 	{
-		for(int i = 0; i < count; i++)
+		for (int i = 0; i < count; i++)
 		{
 			tempBodyWriter.write("<table:covered-table-cell/>\n");
 		}
@@ -808,7 +808,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 				tempBodyWriter.write("</draw:frame>\n");
 				tempBodyWriter.write("</draw:text-box>\n");
 				tempBodyWriter.write("</draw:frame>\n");
-				if(startedHyperlink)
+				if (startedHyperlink)
 				{
 					tableBuilder.endHyperlink(false);
 				}
@@ -1310,7 +1310,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	 */
 	protected void insertPageAnchor(TableBuilder tableBuilder)
 	{
-		if(startPage)
+		if (startPage)
 		{
 			tableBuilder.exportAnchor(DocumentBuilder.JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (pageIndex + 1));
 			startPage = false;

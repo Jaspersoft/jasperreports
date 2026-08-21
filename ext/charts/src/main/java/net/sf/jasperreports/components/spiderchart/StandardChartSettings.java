@@ -216,7 +216,7 @@ public class StandardChartSettings implements ChartSettings, JRChangeEventsSuppo
 		JRHyperlinkParameter[] hyperlinkParams = chart.getHyperlinkParameters();
 		if (hyperlinkParams != null && hyperlinkParams.length > 0)
 		{
-			for(int i = 0; i < hyperlinkParams.length; i++)
+			for (int i = 0; i < hyperlinkParams.length; i++)
 			{
 				addHyperlinkParameter(factory.getHyperlinkParameter(hyperlinkParams[i]));
 			}

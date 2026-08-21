@@ -74,7 +74,7 @@ public class JRBaseQuery implements JRQuery, Serializable
 		if (jrChunks != null && jrChunks.length > 0)
 		{
 			chunks = new JRQueryChunk[jrChunks.length];
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				chunks[i] = factory.getQueryChunk(jrChunks[i]);
 			}

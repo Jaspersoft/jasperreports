@@ -76,7 +76,7 @@ public class JRFillElementGroup implements JRElementGroup, JRFillCloneable
 			List<JRChild> list = elementGrp.getChildren();
 			if (list != null && list.size() > 0)
 			{
-				for(int i = 0; i < list.size(); i++)
+				for (int i = 0; i < list.size(); i++)
 				{
 					JRChild child = list.get(i);
 					child = (JRChild)factory.getVisitResult(child);
@@ -137,7 +137,7 @@ public class JRFillElementGroup implements JRElementGroup, JRFillCloneable
 				List<JRElement> allElements = new ArrayList<>();
 				Object child = null;
 				JRElement[] childElementArray = null;
-				for(int i = 0; i < this.children.size(); i++)
+				for (int i = 0; i < this.children.size(); i++)
 				{
 					child = this.children.get(i);
 					if (child instanceof JRFillElement)
@@ -197,7 +197,7 @@ public class JRFillElementGroup implements JRElementGroup, JRFillCloneable
 				JRFillElement topElem = null;
 				JRFillElement bottomElem = null;
 
-				for(int i = 0; i < allElements.length; i++)
+				for (int i = 0; i < allElements.length; i++)
 				{
 					JRFillElement element = (JRFillElement)allElements[i];
 					//if (element != this && element.isToPrint())

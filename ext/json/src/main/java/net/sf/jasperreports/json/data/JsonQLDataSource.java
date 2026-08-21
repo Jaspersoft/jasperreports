@@ -60,14 +60,14 @@ import net.sf.jasperreports.repo.SimpleRepositoryContext;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class JsonQLDataSource extends JRAbstractTextDataSource implements JsonData<JsonQLDataSource>, RandomAccessDataSource {
-    private static final Log log = LogFactory.getLog(JsonQLDataSource.class);
+	private static final Log log = LogFactory.getLog(JsonQLDataSource.class);
 
-    public static final String EXCEPTION_MESSAGE_KEY_NO_DATA = "data.json.no.data";
-    public static final String EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED = "data.json.field.value.not.retrieved";
+	public static final String EXCEPTION_MESSAGE_KEY_NO_DATA = "data.json.no.data";
+	public static final String EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED = "data.json.field.value.not.retrieved";
 
-    /**
-     * Property specifying the JSONQL expression for the dataset field.
-     */
+	/**
+	 * Property specifying the JSONQL expression for the dataset field.
+	 */
 	@Property (
 			category = PropertyConstants.CATEGORY_DATA_SOURCE,
 			scopes = {PropertyScope.FIELD},
@@ -75,81 +75,81 @@ public class JsonQLDataSource extends JRAbstractTextDataSource implements JsonDa
 					DataAdapterServiceConstants.JSONQL_DESIGNATION},
 			sinceVersion = PropertyConstants.VERSION_6_3_1
 	)
-    public static final String PROPERTY_FIELD_EXPRESSION = JRPropertiesUtil.PROPERTY_PREFIX + "jsonql.field.expression";
+	public static final String PROPERTY_FIELD_EXPRESSION = JRPropertiesUtil.PROPERTY_PREFIX + "jsonql.field.expression";
 
-    private JRJsonNode root;
-    private String selectExpression;
+	private JRJsonNode root;
+	private String selectExpression;
 
-    private JRJsonNode currentJsonNode;
-    private List<JRJsonNode> nodes;
-    private int currentNodeIndex = - 1;
+	private JRJsonNode currentJsonNode;
+	private List<JRJsonNode> nodes;
+	private int currentNodeIndex = - 1;
 
-    private JsonQLExecuter jsonQLExecuter;
+	private JsonQLExecuter jsonQLExecuter;
 
-    private Map<String, String> fieldExpressions = new HashMap<>();
+	private Map<String, String> fieldExpressions = new HashMap<>();
 
 
-    public JsonQLDataSource(File file, String selectExpression) throws JRException {
-        this(JsonUtil.parseJson(file), selectExpression);
-    }
+	public JsonQLDataSource(File file, String selectExpression) throws JRException {
+		this(JsonUtil.parseJson(file), selectExpression);
+	}
 
-    public JsonQLDataSource(File file) throws JRException {
-        this(file, null);
-    }
+	public JsonQLDataSource(File file) throws JRException {
+		this(file, null);
+	}
 
-    public JsonQLDataSource(InputStream jsonInputStream, String selectExpression) throws JRException {
-        this(JsonUtil.parseJson(jsonInputStream), selectExpression);
-    }
+	public JsonQLDataSource(InputStream jsonInputStream, String selectExpression) throws JRException {
+		this(JsonUtil.parseJson(jsonInputStream), selectExpression);
+	}
 
-    public JsonQLDataSource(InputStream jsonInputStream) throws JRException {
-        this(jsonInputStream, null);
-    }
+	public JsonQLDataSource(InputStream jsonInputStream) throws JRException {
+		this(jsonInputStream, null);
+	}
 
-    public JsonQLDataSource(JasperReportsContext jasperReportsContext, String jsonSource, String selectExpression) throws JRException {
-        this(SimpleRepositoryContext.of(jasperReportsContext), jsonSource, selectExpression);
-    }
+	public JsonQLDataSource(JasperReportsContext jasperReportsContext, String jsonSource, String selectExpression) throws JRException {
+		this(SimpleRepositoryContext.of(jasperReportsContext), jsonSource, selectExpression);
+	}
 
-    public JsonQLDataSource(RepositoryContext repositoryContext, String jsonSource, String selectExpression) throws JRException {
-        this(JsonUtil.parseJson(repositoryContext, jsonSource), selectExpression);
-    }
+	public JsonQLDataSource(RepositoryContext repositoryContext, String jsonSource, String selectExpression) throws JRException {
+		this(JsonUtil.parseJson(repositoryContext, jsonSource), selectExpression);
+	}
 
-    protected JsonQLDataSource(JsonNode jacksonJsonTree, String selectExpression) throws JRException {
-        this(new JRJsonNode(null, jacksonJsonTree), selectExpression);
-    }
+	protected JsonQLDataSource(JsonNode jacksonJsonTree, String selectExpression) throws JRException {
+		this(new JRJsonNode(null, jacksonJsonTree), selectExpression);
+	}
 
-    protected JsonQLDataSource(JRJsonNode root, String selectExpression) throws JRException {
-        this.root = root;
-        this.selectExpression = selectExpression;
-        this.jsonQLExecuter = new DefaultJsonQLExecuter();
+	protected JsonQLDataSource(JRJsonNode root, String selectExpression) throws JRException {
+		this.root = root;
+		this.selectExpression = selectExpression;
+		this.jsonQLExecuter = new DefaultJsonQLExecuter();
 
-        if (log.isDebugEnabled()) {
-            log.debug("The JsonQL expression is: " + selectExpression);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("The JsonQL expression is: " + selectExpression);
+		}
 
-        moveFirst();
-    }
+		moveFirst();
+	}
 
-    @Override
-    public void moveFirst() throws JRException {
-        if (root.getDataNode() == null || root.getDataNode().isMissingNode()) {
-            throw new JRException(EXCEPTION_MESSAGE_KEY_NO_DATA, (Object[]) null);
-        }
+	@Override
+	public void moveFirst() throws JRException {
+		if (root.getDataNode() == null || root.getDataNode().isMissingNode()) {
+			throw new JRException(EXCEPTION_MESSAGE_KEY_NO_DATA, (Object[]) null);
+		}
 
-        currentJsonNode = null;
-        nodes = jsonQLExecuter.selectNodes(root, selectExpression);
-        currentNodeIndex = -1;
-    }
+		currentJsonNode = null;
+		nodes = jsonQLExecuter.selectNodes(root, selectExpression);
+		currentNodeIndex = -1;
+	}
 
-    @Override
-    public boolean next() throws JRException {
-        if (nodes != null && currentNodeIndex < nodes.size() - 1) {
-            currentJsonNode = nodes.get(++currentNodeIndex);
+	@Override
+	public boolean next() throws JRException {
+		if (nodes != null && currentNodeIndex < nodes.size() - 1) {
+			currentJsonNode = nodes.get(++currentNodeIndex);
 
-            return true;
-        }
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
 	@Override
 	public int recordCount() {
@@ -171,118 +171,118 @@ public class JsonQLDataSource extends JRAbstractTextDataSource implements JsonDa
 		}
 	}
 
-    @Override
-    public Object getFieldValue(JRField jrField) throws JRException {
-        if(currentJsonNode == null) {
-            return null;
-        }
+	@Override
+	public Object getFieldValue(JRField jrField) throws JRException {
+		if (currentJsonNode == null) {
+			return null;
+		}
 
-        String expression;
-        if (fieldExpressions.containsKey(jrField.getName())) {
-            expression = fieldExpressions.get(jrField.getName());
-        } else {
-            expression = getFieldExpression(jrField);
-            fieldExpressions.put(jrField.getName(), expression);
-        }
+		String expression;
+		if (fieldExpressions.containsKey(jrField.getName())) {
+			expression = fieldExpressions.get(jrField.getName());
+		} else {
+			expression = getFieldExpression(jrField);
+			fieldExpressions.put(jrField.getName(), expression);
+		}
 
-        if (expression == null || expression.length() == 0) {
-            return null;
-        }
+		if (expression == null || expression.length() == 0) {
+			return null;
+		}
 
-        JRJsonNode selectedNode = jsonQLExecuter.selectNode(currentJsonNode, root, expression);
-        if (selectedNode != null) {
-            return getConvertedValue(selectedNode, jrField);
-        }
+		JRJsonNode selectedNode = jsonQLExecuter.selectNode(currentJsonNode, root, expression);
+		if (selectedNode != null) {
+			return getConvertedValue(selectedNode, jrField);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public JsonQLDataSource subDataSource() throws JRException {
-        return subDataSource(null);
-    }
+	@Override
+	public JsonQLDataSource subDataSource() throws JRException {
+		return subDataSource(null);
+	}
 
-    @Override
-    public JsonQLDataSource subDataSource(String selectExpression) throws JRException {
-        if(currentJsonNode == null) {
-            throw new JRException(EXCEPTION_MESSAGE_KEY_NO_DATA, (Object[])null);
-        }
+	@Override
+	public JsonQLDataSource subDataSource(String selectExpression) throws JRException {
+		if (currentJsonNode == null) {
+			throw new JRException(EXCEPTION_MESSAGE_KEY_NO_DATA, (Object[])null);
+		}
 
-        JsonQLDataSource subDataSource = new JsonQLDataSource(currentJsonNode, selectExpression);
-        subDataSource.setTextAttributes(this);
+		JsonQLDataSource subDataSource = new JsonQLDataSource(currentJsonNode, selectExpression);
+		subDataSource.setTextAttributes(this);
 
-        return subDataSource;
-    }
+		return subDataSource;
+	}
 
-    protected Object getConvertedValue(JRJsonNode node, JRField jrField) throws JRException {
-        JsonNode dataNode = node.getDataNode();
-        Class<?> valueClass = jrField.getValueClass();
+	protected Object getConvertedValue(JRJsonNode node, JRField jrField) throws JRException {
+		JsonNode dataNode = node.getDataNode();
+		Class<?> valueClass = jrField.getValueClass();
 
-        if (log.isDebugEnabled()) {
-            log.debug("attempting to convert: " + dataNode + " to class: " + valueClass);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("attempting to convert: " + dataNode + " to class: " + valueClass);
+		}
 
-        if (Object.class.equals(valueClass)) {
-            return dataNode;
-        }
+		if (Object.class.equals(valueClass)) {
+			return dataNode;
+		}
 
-        Object result = null;
+		Object result = null;
 
-        if (!dataNode.isNull())  {
-            try {
-                if (Boolean.class.equals(valueClass) && dataNode.isBoolean()) {
-                    result = dataNode.booleanValue();
+		if (!dataNode.isNull())  {
+			try {
+				if (Boolean.class.equals(valueClass) && dataNode.isBoolean()) {
+					result = dataNode.booleanValue();
 
-                } else if (BigDecimal.class.equals(valueClass) && dataNode.isBigDecimal()) {
-                    result = dataNode.decimalValue();
+				} else if (BigDecimal.class.equals(valueClass) && dataNode.isBigDecimal()) {
+					result = dataNode.decimalValue();
 
-                } else if (BigInteger.class.equals(valueClass) && dataNode.isBigInteger()) {
-                    result = dataNode.bigIntegerValue();
+				} else if (BigInteger.class.equals(valueClass) && dataNode.isBigInteger()) {
+					result = dataNode.bigIntegerValue();
 
-                } else if (Double.class.equals(valueClass) && dataNode.isDouble()) {
-                    result = dataNode.doubleValue();
+				} else if (Double.class.equals(valueClass) && dataNode.isDouble()) {
+					result = dataNode.doubleValue();
 
-                } else if (Integer.class.equals(valueClass) && dataNode.isInt()) {
-                    result = dataNode.intValue();
+				} else if (Integer.class.equals(valueClass) && dataNode.isInt()) {
+					result = dataNode.intValue();
 
-                } else if (Number.class.isAssignableFrom(valueClass) && dataNode.isNumber()) {
-                    result = convertNumber(dataNode.numberValue(), valueClass);
+				} else if (Number.class.isAssignableFrom(valueClass) && dataNode.isNumber()) {
+					result = convertNumber(dataNode.numberValue(), valueClass);
 
-                } else {
-                    result = convertStringValue(dataNode.asText(), valueClass);
-                }
+				} else {
+					result = convertStringValue(dataNode.asText(), valueClass);
+				}
 
-                if (result == null) {
-                    throw new JRException(EXCEPTION_MESSAGE_KEY_CANNOT_CONVERT_FIELD_TYPE,
-                            new Object[]{jrField.getName(), valueClass.getName()});
-                }
+				if (result == null) {
+					throw new JRException(EXCEPTION_MESSAGE_KEY_CANNOT_CONVERT_FIELD_TYPE,
+							new Object[]{jrField.getName(), valueClass.getName()});
+				}
 
-            } catch (Exception e) {
-                throw new JRException(EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED,
-                        new Object[]{jrField.getName(), valueClass.getName()}, e);
-            }
-        }
+			} catch (Exception e) {
+				throw new JRException(EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED,
+						new Object[]{jrField.getName(), valueClass.getName()}, e);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    protected String getFieldExpression(JRField field) {
-        String fieldExpression = null;
+	protected String getFieldExpression(JRField field) {
+		String fieldExpression = null;
 
-        if (field.hasProperties()) {
-            fieldExpression = field.getPropertiesMap().getProperty(PROPERTY_FIELD_EXPRESSION);
-        }
+		if (field.hasProperties()) {
+			fieldExpression = field.getPropertiesMap().getProperty(PROPERTY_FIELD_EXPRESSION);
+		}
 
-        if (fieldExpression == null) {
-            fieldExpression = field.getDescription();
+		if (fieldExpression == null) {
+			fieldExpression = field.getDescription();
 
-            if (fieldExpression == null || fieldExpression.length() == 0) {
-                fieldExpression = field.getName();
-            }
-        }
+			if (fieldExpression == null || fieldExpression.length() == 0) {
+				fieldExpression = field.getName();
+			}
+		}
 
-        return fieldExpression;
-    }
+		return fieldExpression;
+	}
 
 }
 

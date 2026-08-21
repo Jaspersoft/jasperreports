@@ -33,28 +33,28 @@ import net.sf.jasperreports.json.expression.filter.NotFilterExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class DefaultFilterExpressionEvaluatorVisitor implements FilterExpressionEvaluatorVisitor {
-    private EvaluationContext evaluationContext;
+	private EvaluationContext evaluationContext;
 
 
-    public DefaultFilterExpressionEvaluatorVisitor(EvaluationContext evaluationContext) {
-        this.evaluationContext = evaluationContext;
-    }
+	public DefaultFilterExpressionEvaluatorVisitor(EvaluationContext evaluationContext) {
+		this.evaluationContext = evaluationContext;
+	}
 
-    @Override
-    public boolean evaluateBasicFilter(BasicFilterExpression expression, JRJsonNode contextNode) {
-        FilterExpressionEvaluator evaluator = new BasicFilterExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public boolean evaluateBasicFilter(BasicFilterExpression expression, JRJsonNode contextNode) {
+		FilterExpressionEvaluator evaluator = new BasicFilterExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public boolean evaluateCompoundFilter(CompoundFilterExpression expression, JRJsonNode contextNode) {
-        FilterExpressionEvaluator evaluator = new CompoundFilterExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public boolean evaluateCompoundFilter(CompoundFilterExpression expression, JRJsonNode contextNode) {
+		FilterExpressionEvaluator evaluator = new CompoundFilterExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public boolean evaluateNotFilter(NotFilterExpression expression, JRJsonNode contextNode) {
-        FilterExpressionEvaluator evaluator = new NotFilterExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public boolean evaluateNotFilter(NotFilterExpression expression, JRJsonNode contextNode) {
+		FilterExpressionEvaluator evaluator = new NotFilterExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 }

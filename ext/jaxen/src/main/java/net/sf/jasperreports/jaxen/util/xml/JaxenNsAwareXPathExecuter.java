@@ -204,7 +204,7 @@ public class JaxenNsAwareXPathExecuter extends JaxenXPathExecuter
 			for (int i = 0; i < nlist.size(); i++) 
 			{
 				Node node = nlist.get(i);
-				if(node.getParentNode() != null && node.getParentNode().getPrefix() != null)
+				if (node.getParentNode() != null && node.getParentNode().getPrefix() != null)
 				{
 					if (!namespaces.containsKey(node.getParentNode().getPrefix()))
 					{

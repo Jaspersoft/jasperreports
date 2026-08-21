@@ -110,23 +110,23 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( chartName + ".setShowLegend({0});\n", parent.getBooleanText(chart.getShowLegend()));
 			parent.write( chartName + ".setEvaluationTime({0});\n", chart.getEvaluationTime(), EvaluationTimeEnum.NOW);
 			parent.write( chartName + ".setEvaluationGroup(\"{0}\");\n", chart.getEvaluationGroup());
 	
-			if(chart.getLinkType() != null)
+			if (chart.getLinkType() != null)
 			{
 				parent.write( chartName + ".setLinkType(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(chart.getLinkType()), HyperlinkTypeEnum.NONE.getName());
 			}
-			if(chart.getLinkTarget() != null)
+			if (chart.getLinkTarget() != null)
 			{
 				parent.write( chartName + ".setLinkTarget(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(chart.getLinkTarget()), HyperlinkTargetEnum.SELF.getName());
 			}
 			parent.write( chartName + ".setBookmarkLevel({0, number, #});\n", chart.getBookmarkLevel(), JRAnchor.NO_BOOKMARK);
 
-			if(chart.getCustomizerClass() != null)
+			if (chart.getCustomizerClass() != null)
 			{
 				parent.write( chartName + ".setCustomizerClass(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(chart.getCustomizerClass()));
 			}
@@ -138,7 +138,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	
 			parent.write( chartName + ".setTitlePosition({0});\n", chart.getTitlePosition());
 			parent.write( chartName + ".setTitleColor({0});\n", chart.getOwnTitleColor());
-			if(chart.getTitleFont() != null)
+			if (chart.getTitleFont() != null)
 			{
 				parent.write( chartName + ".setTitleFont(new JRBaseFont());\n");
 				parent.writeFont( chart.getTitleFont(), chartName + ".getTitleFont()");
@@ -146,7 +146,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			parent.writeExpression( chart.getTitleExpression(), chartName, "TitleExpression");
 			parent.write( chartName + ".setSubtitleColor({0});\n", chart.getOwnSubtitleColor());
 			
-			if(chart.getSubtitleFont() != null)
+			if (chart.getSubtitleFont() != null)
 			{
 				parent.write( chartName + ".setSubtitleFont(new JRBaseFont());\n");
 				parent.writeFont( chart.getSubtitleFont(), chartName + ".getSubtitleFont()");
@@ -157,7 +157,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			parent.write( chartName + ".setLegendBackgroundColor({0});\n", chart.getOwnLegendBackgroundColor());
 			parent.write( chartName + ".setLegendPosition({0});\n", chart.getLegendPosition());
 
-			if(chart.getLegendFont() != null)
+			if (chart.getLegendFont() != null)
 			{
 				parent.write( chartName + ".setLegendFont(new JRBaseFont());\n");
 				parent.writeFont( chart.getLegendFont(), chartName + ".getLegendFont()");
@@ -182,7 +182,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeCategoryDataSet( JRCategoryDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignCategoryDataset " + datasetName + " = new JRDesignCategoryDataset("+ parentName + ".getDataset());\n");
@@ -192,7 +192,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			JRCategorySeries[] categorySeries = dataset.getSeries();
 			if (categorySeries != null && categorySeries.length > 0)
 			{
-				for(int i = 0; i < categorySeries.length; i++)
+				for (int i = 0; i < categorySeries.length; i++)
 				{
 					writeCategorySeries( categorySeries[i], datasetName, i);
 				}
@@ -209,7 +209,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeTimeSeriesDataset( JRTimeSeriesDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignTimeSeriesDataset " + datasetName + " =  new JRDesignTimeSeriesDataset(" + parentName + ".getDataset());\n");
@@ -222,9 +222,9 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			parent.writeElementDataset( dataset, datasetName);
 	
 			JRTimeSeries[] timeSeries = dataset.getSeries();
-			if( timeSeries != null && timeSeries.length > 0 )
+			if ( timeSeries != null && timeSeries.length > 0 )
 			{
-				for( int i = 0; i < timeSeries.length; i++ )
+				for ( int i = 0; i < timeSeries.length; i++ )
 			{
 					writeTimeSeries( timeSeries[i], datasetName, i  );
 				}
@@ -241,7 +241,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeGanttDataset( JRGanttDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignGanttDataset " + datasetName + " = new JRDesignGanttDataset(" + parentName + ".getDataset());\n");
@@ -250,7 +250,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			JRGanttSeries[] ganttSeries = dataset.getSeries();
 			if (ganttSeries != null && ganttSeries.length > 0)
 			{
-				for(int i = 0; i < ganttSeries.length; i++)
+				for (int i = 0; i < ganttSeries.length; i++)
 				{
 					writeGanttSeries( ganttSeries[i], datasetName, i);
 				}
@@ -266,16 +266,16 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeTimePeriodDataset( JRTimePeriodDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignTimePeriodDataset " + datasetName + " = new JRDesignTimePeriodDataset(" + parentName + ".getDataset());\n");
 			parent.writeElementDataset( dataset, datasetName);
 	
 			JRTimePeriodSeries[] timePeriodSeries = dataset.getSeries();
-			if( timePeriodSeries != null && timePeriodSeries.length > 0 )
+			if ( timePeriodSeries != null && timePeriodSeries.length > 0 )
 			{
-				for( int i = 0; i < timePeriodSeries.length; i++ )
+				for ( int i = 0; i < timePeriodSeries.length; i++ )
 				{
 					writeTimePeriodSeries( timePeriodSeries[i], datasetName, i);
 				}
@@ -291,7 +291,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writePieSeries( JRPieSeries pieSeries, String parentName, int index)
 	{
-		if(pieSeries != null)
+		if (pieSeries != null)
 		{
 			String pieSeriesName = parentName + "PieSeries" + index;
 			parent.write( "JRDesignPieSeries " + pieSeriesName + " = new JRDesignPieSeries();\n");
@@ -311,7 +311,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeCategorySeries( JRCategorySeries categorySeries, String parentName, int index)
 	{
-		if(categorySeries != null)
+		if (categorySeries != null)
 		{
 			String categorySeriesName = parentName + "CategorySeries" + index;
 
@@ -332,7 +332,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeXyzDataset( JRXyzDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignXyzDataset " + datasetName + " = new JRDesignXyzDataset(" + parentName + ".getDataset());\n");
@@ -340,9 +340,9 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			parent.writeElementDataset( dataset, datasetName);
 	
 			JRXyzSeries[] series = dataset.getSeries();
-			if( series != null && series.length > 0 )
+			if ( series != null && series.length > 0 )
 			{
-				for( int i = 0; i < series.length; i++ )
+				for ( int i = 0; i < series.length; i++ )
 				{
 					writeXyzSeries( series[i], datasetName, i);
 				}
@@ -358,7 +358,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeXyzSeries( JRXyzSeries series, String parentName, int index)
 	{
-		if(series != null)
+		if (series != null)
 		{
 			String xyzSeriesName = parentName + "XyzSeries" + index;
 
@@ -380,11 +380,11 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeXySeries( JRXySeries xySeries, String parentName, int index)
 	{
-		if(xySeries != null)
+		if (xySeries != null)
 		{
 			String xySeriesName = parentName + "XySeries" + index;
 			parent.write( "JRDesignXySeries " + xySeriesName + " = new JRDesignXySeries();\n");
-			if(xySeries.getAutoSort() != null)
+			if (xySeries.getAutoSort() != null)
 			{
 				parent.write( xySeriesName + ".setAutoSort({0});\n", xySeries.getAutoSort());
 			}
@@ -404,7 +404,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeXyDataset( JRXyDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignXyDataset " + datasetName + " = new JRDesignXyDataset(" + parentName + ".getDataset());\n");
@@ -414,7 +414,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			JRXySeries[] xySeries = dataset.getSeries();
 			if (xySeries != null && xySeries.length > 0)
 			{
-				for(int i = 0; i < xySeries.length; i++)
+				for (int i = 0; i < xySeries.length; i++)
 				{
 					writeXySeries( xySeries[i], datasetName, i);
 				}
@@ -429,7 +429,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeTimeSeries( JRTimeSeries timeSeries, String parentName, int index)
 	{
-		if(timeSeries != null)
+		if (timeSeries != null)
 		{
 			String timeSeriesName = parentName + "TimeSeries" + index;
 			parent.write( "JRDesignTimeSeries " + timeSeriesName + " = new JRDesignTimeSeries();\n");
@@ -449,7 +449,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeGanttSeries( JRGanttSeries ganttSeries, String parentName, int index)
 	{
-		if(ganttSeries != null)
+		if (ganttSeries != null)
 		{
 			String ganttSeriesName = parentName + "GanttSeries" + index;
 			parent.write( "JRDesignGanttSeries " + ganttSeriesName + " = new JRDesignGanttSeries();\n");
@@ -472,7 +472,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeTimePeriodSeries( JRTimePeriodSeries timePeriodSeries, String parentName, int index)
 	{
-		if(timePeriodSeries != null)
+		if (timePeriodSeries != null)
 		{
 			String timePeriodSeriesName = parentName + "TimePeriodSeries" + index;
 			parent.write( "JRDesignTimePeriodSeries " + timePeriodSeriesName + " = new JRDesignTimePeriodSeries();\n");
@@ -494,7 +494,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writePieDataset( JRPieDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignPieDataset " + datasetName + " = new JRDesignPieDataset(" + parentName + ".getDataset());\n");
@@ -508,7 +508,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			{
 				if (pieSeries.length > 1)
 				{
-					for(int i = 0; i < pieSeries.length; i++)
+					for (int i = 0; i < pieSeries.length; i++)
 					{
 						writePieSeries( pieSeries[i], datasetName, i);
 					}
@@ -534,7 +534,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeValueDataset( JRValueDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			parent.write( "JRDesignValueDataset " + datasetName + " = new JRDesignValueDataset(" + parentName + ".getDataset());\n");
@@ -553,7 +553,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeValueDisplay( JRValueDisplay valueDisplay, String parentName)
 	{
-		if(valueDisplay != null)
+		if (valueDisplay != null)
 		{
 			String valueDisplayName = parentName + "ValueDisplay";
 
@@ -562,7 +562,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			parent.write( valueDisplayName + ".setColor({0});\n", valueDisplay.getColor());
 			parent.write( valueDisplayName + ".setMask(\"{0}\");\n", valueDisplay.getMask());
 			parent.write( valueDisplayName + ".setFont(new JRBaseFont());\n");
-			if(valueDisplay.getFont() != null)
+			if (valueDisplay.getFont() != null)
 			{
 				parent.write( valueDisplayName + ".setFont(new JRBaseFont());\n");
 				parent.writeFont( valueDisplay.getFont(), valueDisplayName + ".getFont()");
@@ -581,13 +581,13 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeItemLabel( JRItemLabel itemLabel, String parentName, String itemLabelSuffix)
 	{
-		if(itemLabel != null)
+		if (itemLabel != null)
 		{
 			String itemLabelName = parentName + itemLabelSuffix;
 			parent.write( "JRDesignItemLabel " + itemLabelName + " = new JRDesignItemLabel("+ parentName + ".getItemLabel(), " + parentName + ".getChart());\n");
 			parent.write( itemLabelName + ".setColor({0});\n", itemLabel.getColor());
 			parent.write( itemLabelName + ".setBackgroundColor({0});\n", itemLabel.getBackgroundColor());
-			if(itemLabel.getFont() != null)
+			if (itemLabel.getFont() != null)
 			{
 				parent.write( itemLabelName + ".setFont(new JRBaseFont());\n");
 				parent.writeFont( itemLabel.getFont(), itemLabelName + ".getFont()");
@@ -606,7 +606,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeDataRange( JRDataRange dataRange, String parentName, String dataRangeSuffix)
 	{
-		if(dataRange != null)
+		if (dataRange != null)
 		{
 			String dataRangeName = parentName + dataRangeSuffix;
 			parent.write( "JRDesignDataRange " + dataRangeName + " = new JRDesignDataRange(" + parentName + ".get" + dataRangeSuffix + "());\n");
@@ -625,7 +625,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeMeterInterval( JRMeterInterval interval, String parentName, String meterIntervalName)
 	{
-		if(interval != null)
+		if (interval != null)
 		{
 			parent.write( "JRMeterInterval " + meterIntervalName + " = new JRMeterInterval();\n");
 			parent.write( meterIntervalName + ".setLabel(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(interval.getLabel()));
@@ -668,7 +668,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeChartAxis( JRChartAxis chartAxis, String parentName, String axisName, String chartName)
 	{
-		if(chartAxis != null)
+		if (chartAxis != null)
 		{
 			// Let the nested chart describe itself
 			writeChartTag( chartAxis.getChart(), axisName +"Chart");
@@ -689,7 +689,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writePlot( JRChartPlot plot, String plotName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			parent.write( plotName + ".setBackcolor({0});\n", plot.getOwnBackcolor());
 
@@ -712,14 +712,14 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writePieChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.PIE);\n");
 			writeChart( chart, chartName);
 			writePieDataset( (JRPieDataset)chart.getDataset(), chartName, "PieDataset");
 			// write plot
 			JRPiePlot plot = (JRPiePlot) chart.getPlot();
-			if(plot != null)
+			if (plot != null)
 			{
 				String plotName = chartName + "PiePlot";
 				parent.write( "JRDesignPiePlot " + plotName + " = (JRDesignPiePlot)" + chartName + ".getPlot();\n");
@@ -742,14 +742,14 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writePie3DChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.PIE3D);\n");
 			writeChart( chart, chartName);
 			writePieDataset( (JRPieDataset)chart.getDataset(), chartName, "PieDataset");
 			// write plot
 			net.sf.jasperreports.charts.JRPie3DPlot plot = (net.sf.jasperreports.charts.JRPie3DPlot) chart.getPlot();
-			if(plot != null)
+			if (plot != null)
 			{
 				String plotName = chartName + "Pie3DPlot";
 				parent.write( "JRDesignPie3DPlot " + plotName + " = (JRDesignPie3DPlot)" + chartName + ".getPlot();\n");
@@ -859,7 +859,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			return;
 		}
 		String axisName = parentName + axisNameSuffix;
-		if(isToSet)
+		if (isToSet)
 		{
 			parent.write( "JRAxisFormat " + axisName + " = new JRAxisFormat();\n");
 		}
@@ -881,7 +881,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 			parent.write( axisName + ".setTickLabelFont(new JRBaseFont());\n");
 			parent.writeFont( axisTickLabelFont, axisName + ".getTickLabelFont()");
 		}
-		if(isToSet)//FIXMEAPIWRITER check this
+		if (isToSet)//FIXMEAPIWRITER check this
 		{
 			parent.write( parentName + ".set" + axisNameSuffix + "(" + axisName + ");\n");
 		}
@@ -894,7 +894,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeBarPlot( JRBarPlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "BarPlot";
 			parent.write( "JRDesignBarPlot " + plotName + " = (JRDesignBarPlot)" + chartName + ".getPlot();\n");
@@ -940,7 +940,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeBubblePlot( JRBubblePlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "BubblePlot";
 			parent.write( "JRDesignBubblePlot " + plotName + " = (JRDesignBubblePlot)" + chartName + ".getPlot();\n");
@@ -977,7 +977,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeLinePlot( JRLinePlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "LinePlot";
 			parent.write( "JRDesignLinePlot " + plotName + " = (JRDesignLinePlot)" + chartName + ".getPlot();\n");
@@ -1019,7 +1019,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeTimeSeriesPlot( JRTimeSeriesPlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "TimeSeriesPlot";
 			parent.write( "JRDesignTimeSeriesPlot " + plotName + " = (JRDesignTimeSeriesPlot)" + chartName + ".getPlot();\n");
@@ -1059,7 +1059,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeBar3DPlot( net.sf.jasperreports.charts.JRBar3DPlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "Bar3DPlot";
 			parent.write( "JRDesignBar3DPlot " + plotName + " = (JRDesignBar3DPlot)" + chartName + ".getPlot();\n");
@@ -1104,7 +1104,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeBarChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.BAR);\n");
 			writeChart( chart, chartName);
@@ -1120,7 +1120,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeBar3DChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.BAR3D);\n");
 			writeChart( chart, chartName);
@@ -1136,7 +1136,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeBubbleChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.BUBBLE);\n");
 			writeChart( chart, chartName);
@@ -1152,7 +1152,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeStackedBarChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.STACKEDBAR);\n");
 			writeChart( chart, chartName);
@@ -1168,7 +1168,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeStackedBar3DChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.STACKEDBAR3D);\n");
 			writeChart( chart, chartName);
@@ -1184,7 +1184,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeLineChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.LINE);\n");
 			writeChart( chart, chartName);
@@ -1200,7 +1200,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeTimeSeriesChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.TIMESERIES);\n");
 			writeChart( chart, chartName);
@@ -1215,7 +1215,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeHighLowDataset( JRHighLowDataset dataset, String parentName, String datasetNameSuffix)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			String datasetName = parentName + datasetNameSuffix;
 			
@@ -1242,14 +1242,14 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeHighLowChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.HIGHLOW);\n");
 			writeChart( chart, chartName);
 			writeHighLowDataset( (JRHighLowDataset) chart.getDataset(), chartName, "HighLowDataset");
 			
 			JRHighLowPlot plot = (JRHighLowPlot) chart.getPlot();
-			if(plot != null)
+			if (plot != null)
 			{
 				String plotName = chartName + "HighLowPlot";
 				parent.write( "JRDesignHighLowPlot " + plotName + " = (JRDesignHighLowPlot)" + chartName + ".getPlot();\n");
@@ -1289,7 +1289,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeGanttChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.GANTT);\n");
 			writeChart( chart, chartName);
@@ -1305,14 +1305,14 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeCandlestickChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.CANDLESTICK);\n");
 			writeChart( chart, chartName);
 			writeHighLowDataset( (JRHighLowDataset) chart.getDataset(), chartName, "HighLowDataset");
 			
 			JRCandlestickPlot plot = (JRCandlestickPlot) chart.getPlot();
-			if(plot != null)
+			if (plot != null)
 			{
 				String plotName = chartName + "CandlestickPlot";
 				
@@ -1350,7 +1350,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeAreaPlot( JRAreaPlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "AreaPlot";
 			
@@ -1391,7 +1391,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeAreaChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.AREA);\n");
 			writeChart( chart, chartName);
@@ -1407,7 +1407,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	private void writeScatterPlot( JRScatterPlot plot, String chartName)
 	{
-		if(plot != null)
+		if (plot != null)
 		{
 			String plotName = chartName + "ScatterPlot";
 			parent.write( "JRDesignScatterPlot " + plotName + " = (JRDesignScatterPlot)" + chartName + ".getPlot();\n");
@@ -1449,7 +1449,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeScatterChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.SCATTER);\n");
 			writeChart( chart, chartName);
@@ -1465,7 +1465,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeXyAreaChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.XYAREA);\n");
 			writeChart( chart, chartName);
@@ -1481,20 +1481,20 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeXyBarChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.XYBAR);\n");
 			writeChart( chart, chartName);
 			JRChartDataset dataset = chart.getDataset();
 
-			if( dataset.getDatasetType() == JRChartDataset.TIMESERIES_DATASET )
+			if ( dataset.getDatasetType() == JRChartDataset.TIMESERIES_DATASET )
 			{
 				writeTimeSeriesDataset( (JRTimeSeriesDataset)dataset, chartName, "TimeSeriesDataset");
 			}
-			else if( dataset.getDatasetType() == JRChartDataset.TIMEPERIOD_DATASET ){
+			else if ( dataset.getDatasetType() == JRChartDataset.TIMEPERIOD_DATASET ){
 				writeTimePeriodDataset( (JRTimePeriodDataset)dataset, chartName, "XyDataset");
 			}
-			else if( dataset.getDatasetType() == JRChartDataset.XY_DATASET ){
+			else if ( dataset.getDatasetType() == JRChartDataset.XY_DATASET ){
 				writeXyDataset( (JRXyDataset) chart.getDataset(), chartName, "XyDataset");
 			}
 			writeBarPlot( (JRBarPlot) chart.getPlot(), chartName);
@@ -1508,7 +1508,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeXyLineChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.XYLINE);\n");
 			writeChart( chart, chartName);
@@ -1526,13 +1526,13 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeMeterChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.METER);\n");
 			writeChart( chart, chartName);
 			writeValueDataset( (JRValueDataset) chart.getDataset(), chartName, "ValueDataset");
 			JRMeterPlot plot = (JRMeterPlot) chart.getPlot();
-			if(plot != null)
+			if (plot != null)
 			{
 				String plotName = chartName + "MeterPlot";
 				
@@ -1560,7 +1560,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 				List<JRMeterInterval> intervals = plot.getIntervals();
 				if (intervals != null && intervals.size() > 0)
 				{
-					for(int i = 0; i < intervals.size(); i++)
+					for (int i = 0; i < intervals.size(); i++)
 					{
 						JRMeterInterval meterInterval = intervals.get(i);
 						writeMeterInterval( meterInterval, plotName, plotName+"Interval"+i);
@@ -1581,13 +1581,13 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeThermometerChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.THERMOMETER);\n");
 			writeChart( chart, chartName);
 			writeValueDataset( (JRValueDataset) chart.getDataset(), chartName, "ValueDataset");
 			JRThermometerPlot plot = (JRThermometerPlot) chart.getPlot();
-			if(plot != null)
+			if (plot != null)
 			{
 				String plotName = chartName + "ThermometerPlot";
 				parent.write( "JRDesignThermometerPlot " + plotName + " = (JRDesignThermometerPlot)" + chartName + ".getPlot();\n");
@@ -1626,7 +1626,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeMultiAxisChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.MULTI_AXIS);\n");
 			writeChart( chart, chartName);
@@ -1654,7 +1654,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeStackedAreaChart( JRChart chart, String chartName)
 	{
-		if(chart != null)
+		if (chart != null)
 		{
 			parent.write( "JRDesignChart " + chartName + " = new JRDesignChart(jasperDesign, ChartTypeEnum.STACKEDAREA);\n");
 			writeChart( chart, chartName);
@@ -1670,7 +1670,7 @@ public class ChartsApiWriter implements ChartVisitor // extends JRApiWriter
 	 */
 	public void writeChartTag( JRChart chart, String chartName)
 	{
-		switch(chart.getChartType()) {
+		switch (chart.getChartType()) {
 			case AREA:
 				writeAreaChart( chart, chartName);
 				break;

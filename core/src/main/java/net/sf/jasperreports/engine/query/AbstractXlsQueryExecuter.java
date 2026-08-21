@@ -97,7 +97,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 				columnNames = getStringParameterOrProperty(AbstractXlsQueryExecuterFactory.XLS_COLUMN_NAMES);
 			}
 			
-			if(columnNames != null) {
+			if (columnNames != null) {
 				columnNamesList = new ArrayList<>();
 				columnNamesList.add(columnNames);
 			} else {
@@ -107,7 +107,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 				{
 					columnNamesArray = (String[]) getParameterValue(AbstractXlsQueryExecuterFactory.XLS_COLUMN_NAMES_ARRAY, true);
 				}
-				if(columnNamesArray != null) {
+				if (columnNamesArray != null) {
 					columnNamesList = Arrays.asList(columnNamesArray);
 				} else {
 					@SuppressWarnings("deprecation")
@@ -116,7 +116,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 					if (properties != null && !properties.isEmpty()) 
 					{
 						columnNamesList = new ArrayList<>();
-						for(int i = 0; i < properties.size(); i++) {
+						for (int i = 0; i < properties.size(); i++) {
 							PropertySuffix property = properties.get(i);
 							columnNamesList.add(property.getValue());
 						}
@@ -128,7 +128,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 						if (properties != null && !properties.isEmpty()) 
 						{
 							columnNamesList = new ArrayList<>();
-							for(int i = 0; i < properties.size(); i++) {
+							for (int i = 0; i < properties.size(); i++) {
 								PropertySuffix property = properties.get(i);
 								columnNamesList.add(property.getValue());
 							}
@@ -151,9 +151,9 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 			List<String> splitColumnNamesList = null;
 			if (columnNamesList != null && columnNamesList.size() > 0) {
 				splitColumnNamesList = new ArrayList<>();
-				for(int i = 0; i < columnNamesList.size(); i++) {
+				for (int i = 0; i < columnNamesList.size(); i++) {
 					String names = columnNamesList.get(i);
-					for(String token: names.split(",")){
+					for (String token: names.split(",")){
 						splitColumnNamesList.add(token.trim());
 					}
 				}
@@ -189,7 +189,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 					if (properties != null && !properties.isEmpty()) 
 					{
 						columnIndexesList = new ArrayList<>();
-						for(int i = 0; i < properties.size(); i++) {
+						for (int i = 0; i < properties.size(); i++) {
 							String propertyValue = properties.get(i).getValue();
 							for (String colIndex: propertyValue.split(",")){
 								columnIndexesList.add(Integer.valueOf(colIndex.trim()));
@@ -203,7 +203,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 						if (properties != null && !properties.isEmpty()) 
 						{
 							columnIndexesList = new ArrayList<>();
-							for(int i = 0; i < properties.size(); i++) {
+							for (int i = 0; i < properties.size(); i++) {
 								String propertyValue = properties.get(i).getValue();
 								for (String colIndex: propertyValue.split(",")){
 									columnIndexesList.add(Integer.valueOf(colIndex.trim()));
@@ -249,7 +249,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 				{
 					dateFormatPattern = getStringParameterOrProperty(AbstractXlsQueryExecuterFactory.XLS_DATE_PATTERN);
 				}
-				if(dateFormatPattern != null){
+				if (dateFormatPattern != null){
 					datasource.setDatePattern(dateFormatPattern);
 				}
 			}
@@ -269,7 +269,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 				{
 					numberFormatPattern = getStringParameterOrProperty(AbstractXlsQueryExecuterFactory.XLS_NUMBER_PATTERN);
 				}
-				if(numberFormatPattern != null){
+				if (numberFormatPattern != null){
 					datasource.setNumberPattern(numberFormatPattern);
 				}
 			}
@@ -342,7 +342,7 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 
 	@Override
 	public void close() {
-		if(datasource != null){
+		if (datasource != null){
 			datasource.close();
 		}
 	}

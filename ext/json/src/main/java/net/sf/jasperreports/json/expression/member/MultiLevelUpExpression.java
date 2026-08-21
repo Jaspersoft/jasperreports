@@ -30,28 +30,28 @@ import net.sf.jasperreports.json.expression.member.evaluation.MemberExpressionEv
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class MultiLevelUpExpression extends AbstractMemberExpression {
-    private int level;
+	private int level;
 
 
-    public MultiLevelUpExpression(int level) {
-        this.level = level;
-    }
+	public MultiLevelUpExpression(int level) {
+		this.level = level;
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode, MemberExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateMultiLevelUp(this, contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode, MemberExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateMultiLevelUp(this, contextNode);
+	}
 
-    public int getLevel() {
-        return level;
-    }
+	public int getLevel() {
+		return level;
+	}
 
-    @Override
-    public String toString() {
-        String result = "Up by " + level + " level(s)";
-        if (getFilterExpression() != null) {
-            result += "(" + getFilterExpression() + ")";
-        }
-        return result;
-    }
+	@Override
+	public String toString() {
+		String result = "Up by " + level + " level(s)";
+		if (getFilterExpression() != null) {
+			result += "(" + getFilterExpression() + ")";
+		}
+		return result;
+	}
 }

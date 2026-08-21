@@ -318,7 +318,7 @@ public class StyleCache
 	 */
 	public String getTextSpanStyle(Map<Attribute,Object> attributes, String text, Locale locale, boolean isIgnoreTextFormatting)
 	{
-		if(isIgnoreTextFormatting)
+		if (isIgnoreTextFormatting)
 		{
 			String textSpanStyleName = textSpanStyles.get("");
 			if (textSpanStyleName == null)

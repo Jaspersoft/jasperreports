@@ -76,7 +76,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 		parameters.put("DataFile", "CsvDataSource.txt - CSV query executer");
 
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i< files.length; i++)
+		for (int i = 0; i< files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -92,7 +92,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 	public void xls() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];
@@ -125,7 +125,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 	public void xlsx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++)
 		{
 			long start = System.currentTimeMillis();
 			File sourceFile = files[i];

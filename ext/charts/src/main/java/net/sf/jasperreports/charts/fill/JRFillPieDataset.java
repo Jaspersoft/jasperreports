@@ -93,7 +93,7 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 		if (srcPieSeries != null && srcPieSeries.length > 0)
 		{
 			pieSeries = new JRFillPieSeries[srcPieSeries.length];
-			for(int i = 0; i < pieSeries.length; i++)
+			for (int i = 0; i < pieSeries.length; i++)
 			{
 				pieSeries[i] = (JRFillPieSeries)factory.getPieSeries(srcPieSeries[i]);
 			}
@@ -169,7 +169,7 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 	{
 		if (pieSeries != null && pieSeries.length > 0)
 		{
-			for(int i = 0; i < pieSeries.length; i++)
+			for (int i = 0; i < pieSeries.length; i++)
 			{
 				pieSeries[i].evaluate(calculator);
 			}
@@ -206,7 +206,7 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 	{
 		if (pieSeries != null && pieSeries.length > 0)
 		{
-			for(int i = 0; i < pieSeries.length; i++)
+			for (int i = 0; i < pieSeries.length; i++)
 			{
 				JRFillPieSeries crtPieSeries = pieSeries[i];
 				
@@ -252,7 +252,7 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 	{
 		double total = 0;
 		List<Double> sortedValues = new ArrayList<>();
-		for(Number nv: values.values())
+		for (Number nv: values.values())
 		{
 			double dvalue = nv.doubleValue();
 			total += dvalue;
@@ -277,7 +277,7 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 		double otherTotal = 0;
 		
 		DefaultPieDataset dataset = new DefaultPieDataset();
-		for(Iterator<Comparable<?>> it = values.keySet().iterator(); it.hasNext();)
+		for (Iterator<Comparable<?>> it = values.keySet().iterator(); it.hasNext();)
 		{
 			Comparable<?> key = it.next();
 			Number value = values.get(key);

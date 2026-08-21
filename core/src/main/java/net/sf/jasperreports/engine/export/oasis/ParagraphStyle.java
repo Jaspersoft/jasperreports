@@ -91,13 +91,13 @@ public class ParagraphStyle extends Style
 				text.getVerticalTextAlign(), 
 				(isIgnoreTextFormatting ? RotationEnum.NONE : text.getRotation()));
 		
-		if(isIgnoreTextFormatting)
+		if (isIgnoreTextFormatting)
 		{
 			textRotation = "0";
 		}
 		else 
 		{
-			switch(text.getRotation())
+			switch (text.getRotation())
 			{
 				case LEFT:
 				{
@@ -136,7 +136,7 @@ public class ParagraphStyle extends Style
 		RotationEnum rotation
 		)
 	{
-		switch(rotation)
+		switch (rotation)
 		{
 			case LEFT:
 			{
@@ -196,7 +196,7 @@ public class ParagraphStyle extends Style
 		RotationEnum rotation
 		)
 	{
-		switch(rotation)
+		switch (rotation)
 		{
 			case LEFT:
 			{

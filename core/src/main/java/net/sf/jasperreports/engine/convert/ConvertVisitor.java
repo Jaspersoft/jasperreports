@@ -129,7 +129,7 @@ public class ConvertVisitor implements JRVisitor
 		List<JRChild> children = elementGroup.getChildren();
 		if (children != null && children.size() > 0)
 		{
-			for(int i = 0; i < children.size(); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
 				children.get(i).visit(this);
 			}

@@ -288,17 +288,17 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	public static int getIntegerPermissions(String permissions)
 	{
 		int permission = 0;
-		if(permissions != null && permissions.length() > 0)
+		if (permissions != null && permissions.length() > 0)
 		{
 			String[] perms = permissions.split("\\|");
-			for(String perm : perms)
+			for (String perm : perms)
 			{
-				if(PdfPermissionsEnum.ALL.equals(PdfPermissionsEnum.getByName(perm)))
+				if (PdfPermissionsEnum.ALL.equals(PdfPermissionsEnum.getByName(perm)))
 				{
 					permission = ALL_PERMISSIONS;
 					break;
 				}
-				if(perm != null && perm.length()>0)
+				if (perm != null && perm.length()>0)
 				{
 					permission |= toIntegerPermission(PdfPermissionsEnum.getByName(perm));
 				}

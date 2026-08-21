@@ -60,7 +60,7 @@ public final class PropertyStyleProviderFactory implements StyleProviderFactory
 		JRPropertyExpression[] propertyExpressions = context.getElement().getPropertyExpressions();
 		if (propertyExpressions != null)
 		{
-			for(JRPropertyExpression propertyExpression : propertyExpressions)
+			for (JRPropertyExpression propertyExpression : propertyExpressions)
 			{
 				if (propertyExpression.getName().startsWith(PropertyStyleProvider.STYLE_PROPERTY_PREFIX))
 				{

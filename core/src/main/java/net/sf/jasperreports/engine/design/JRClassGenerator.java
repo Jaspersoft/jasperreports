@@ -354,7 +354,7 @@ public class JRClassGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    private void initParams");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -369,7 +369,7 @@ public class JRClassGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(parameterName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initParams");
 			sb.append(index + 1);
@@ -379,7 +379,7 @@ public class JRClassGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitParamsMethod(sb, it, index + 1);
 		}
@@ -395,7 +395,7 @@ public class JRClassGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    private void initFields");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -410,7 +410,7 @@ public class JRClassGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(fieldName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initFields");
 			sb.append(index + 1);
@@ -420,7 +420,7 @@ public class JRClassGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitFieldsMethod(sb, it, index + 1);
 		}
@@ -436,7 +436,7 @@ public class JRClassGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    private void initVars");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -451,7 +451,7 @@ public class JRClassGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(variableName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initVars");
 			sb.append(index + 1);
@@ -461,7 +461,7 @@ public class JRClassGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitVarsMethod(sb, it, index + 1);
 		}
@@ -618,7 +618,7 @@ public class JRClassGenerator
 		String chunkText = null;
 		if (chunks != null && chunks.length > 0)
 		{
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				chunk = chunks[i];
 

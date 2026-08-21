@@ -141,7 +141,7 @@ public class JRCsvExporter extends JRAbstractCsvExporter<CsvReportConfiguration,
 		
 		boolean isFirstColumn = true;
 		int rowCount = grid.getRowCount();
-		for(int y = 0; y < rowCount; y++)
+		for (int y = 0; y < rowCount; y++)
 		{
 			Cut yCut = yCuts.getCut(y);
 
@@ -152,10 +152,10 @@ public class JRCsvExporter extends JRAbstractCsvExporter<CsvReportConfiguration,
 				isFirstColumn = true;
 				GridRow row = grid.getRow(y);
 				int rowSize = row.size();
-				for(int x = 0; x < rowSize; x++)
+				for (int x = 0; x < rowSize; x++)
 				{
 					JRPrintElement element = row.get(x).getElement();
-					if(element != null)
+					if (element != null)
 					{
 						String text = null;
 						if (element instanceof JRPrintText)

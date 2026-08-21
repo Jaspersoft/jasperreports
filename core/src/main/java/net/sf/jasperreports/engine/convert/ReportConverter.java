@@ -389,7 +389,7 @@ public class ReportConverter
 			JRBand[] bands = section.getBands();
 			if (bands != null && bands.length > 0)
 			{
-				for(int i = 0; i< bands.length; i++)
+				for (int i = 0; i< bands.length; i++)
 				{
 					addBand(bands[i], isColumnSection);
 				}

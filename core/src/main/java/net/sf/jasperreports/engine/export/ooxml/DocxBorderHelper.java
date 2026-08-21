@@ -61,7 +61,7 @@ public class DocxBorderHelper extends BaseHelper
 	 */
 	private void exportBorder(DocxBorderInfo info)
 	{
-		if(info.hasBorder())
+		if (info.hasBorder())
 		{
 			write("      <w:tcBorders>\n");
 			exportBorder(info, DocxBorderInfo.TOP_BORDER);

@@ -51,14 +51,14 @@ public final class LogicalFunctions
 	@FunctionParameters({
 		@FunctionParameter("arguments")})
 	public static Boolean AND(Boolean ... arguments){
-		if(arguments.length==0) {
-			if(log.isDebugEnabled()){
+		if (arguments.length==0) {
+			if (log.isDebugEnabled()){
 				log.debug("No arguments were specified.");
 			}
 			return null;
 		}
 		boolean result=true;
-		for(Boolean arg : arguments){
+		for (Boolean arg : arguments){
 			result=result && arg;
 			// Stops at first false argument
 			if (!result) return false;
@@ -93,7 +93,7 @@ public final class LogicalFunctions
 		@FunctionParameter("boolValue")})
 	public static Boolean NOT(Boolean boolValue){
 		if (boolValue==null){
-			if(log.isDebugEnabled()){
+			if (log.isDebugEnabled()){
 				log.debug("Argument can not be null.");
 			}
 			return null;
@@ -111,14 +111,14 @@ public final class LogicalFunctions
 	@FunctionParameters({
 		@FunctionParameter("arguments")})
 	public static Boolean OR(Boolean ... arguments){
-		if(arguments.length==0) {
-			if(log.isDebugEnabled()){
+		if (arguments.length==0) {
+			if (log.isDebugEnabled()){
 				log.debug("No arguments were specified.");
 			}
 			return null;
 		}
 		boolean result=false;
-		for(Boolean arg : arguments){
+		for (Boolean arg : arguments){
 			result=result || arg;
 			// Stops at first true argument
 			if (result) return true;
@@ -136,8 +136,8 @@ public final class LogicalFunctions
 		@FunctionParameter("value1"),
 		@FunctionParameter("value2")})
 	public static Object IF(Boolean test, Object value1, Object value2){
-		if(test==null) {
-			if(log.isDebugEnabled()){
+		if (test==null) {
+			if (log.isDebugEnabled()){
 				log.debug("Test condition can not be null.");
 			}
 			return null;
@@ -154,7 +154,7 @@ public final class LogicalFunctions
 		@FunctionParameter("obj1"),
 		@FunctionParameter("obj2")})
 	public static Boolean EQUALS(Object obj1, Object obj2){
-		if(obj1!=null){
+		if (obj1!=null){
 			return obj1.equals(obj2);
 		}
 		else if (obj2!=null){

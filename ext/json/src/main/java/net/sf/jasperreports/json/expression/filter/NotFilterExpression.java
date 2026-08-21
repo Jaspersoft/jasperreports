@@ -30,23 +30,23 @@ import net.sf.jasperreports.json.expression.filter.evaluation.FilterExpressionEv
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class NotFilterExpression implements FilterExpression {
-    private FilterExpression filterExpression;
+	private FilterExpression filterExpression;
 
-    public NotFilterExpression(FilterExpression filterExpression) {
-        this.filterExpression = filterExpression;
-    }
+	public NotFilterExpression(FilterExpression filterExpression) {
+		this.filterExpression = filterExpression;
+	}
 
-    @Override
-    public boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateNotFilter(this, jsonNode);
-    }
+	@Override
+	public boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateNotFilter(this, jsonNode);
+	}
 
-    public FilterExpression getFilterExpression() {
-        return filterExpression;
-    }
+	public FilterExpression getFilterExpression() {
+		return filterExpression;
+	}
 
-    @Override
-    public String toString() {
-        return "not( " + filterExpression + " )";
-    }
+	@Override
+	public String toString() {
+		return "not( " + filterExpression + " )";
+	}
 }

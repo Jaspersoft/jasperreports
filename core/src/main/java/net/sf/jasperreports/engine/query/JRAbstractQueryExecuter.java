@@ -388,7 +388,7 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 			if (chunks != null && chunks.length > 0)
 			{
 				StringBuffer sbuffer = new StringBuffer();
-				for(int i = 0; i < chunks.length; i++)
+				for (int i = 0; i < chunks.length; i++)
 				{
 					JRQueryChunk chunk = chunks[i];
 					appendQueryChunk(sbuffer, chunk);

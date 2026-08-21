@@ -164,9 +164,9 @@ public class FormatUtils {
 		char[] chars = pozPart.toCharArray();
 
 		/*
-         Although ICU4j only looks at the last two groups, we consider the second group(from right to left)
-         to be closed when a second comma is found.
-        */
+		Although ICU4j only looks at the last two groups, we consider the second group(from right to left)
+		to be closed when a second comma is found.
+		*/
 		int[] groupSizes = new int[2];
 
 		int groupIndex = 0;

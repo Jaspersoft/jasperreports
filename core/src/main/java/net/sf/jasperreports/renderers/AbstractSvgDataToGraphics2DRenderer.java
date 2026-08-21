@@ -273,7 +273,7 @@ public abstract class AbstractSvgDataToGraphics2DRenderer extends AbstractRender
 		lp.setLengthHandler(lh);
 		lp.parse(attrValue);
 		return value[0];
-    }
+	}
 
 	/**
 	 * 

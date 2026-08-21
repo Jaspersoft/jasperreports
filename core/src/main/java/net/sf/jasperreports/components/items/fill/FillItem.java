@@ -71,10 +71,10 @@ public abstract class FillItem implements Item
 	{
 		List<ItemProperty> itemProperties = getProperties();
 		Map<String, Object> result = null;
-		if(itemProperties != null && !itemProperties.isEmpty())
+		if (itemProperties != null && !itemProperties.isEmpty())
 		{
 			result = new HashMap<>();
-			for(ItemProperty property : itemProperties)
+			for (ItemProperty property : itemProperties)
 			{
 				result.put(property.getName(), getEvaluatedValue(property, evaluator, evaluation));
 			}
@@ -106,7 +106,7 @@ public abstract class FillItem implements Item
 	public Object getEvaluatedValue(ItemProperty property, JRFillExpressionEvaluator evaluator, byte evaluation) throws JRException
 	{
 		Object result = null;
-		if(
+		if (
 			property.getValueExpression() == null 
 			|| property.getValueExpression().getText() == null
 			|| property.getValueExpression().getText().trim().length() == 0

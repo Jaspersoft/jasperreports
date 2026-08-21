@@ -44,162 +44,162 @@ import net.sf.jasperreports.json.util.JsonUtil;
  */
 public class JsonQLExpressionsTest {
 
-    private JRJsonNode jrJsonNode;
-    private JsonNode expectedResult;
-    private DefaultJsonQLExecuter jsonQLExecuter;
+	private JRJsonNode jrJsonNode;
+	private JsonNode expectedResult;
+	private DefaultJsonQLExecuter jsonQLExecuter;
 
-    @BeforeClass
-    public void readJson() throws JRException {
-        JsonNode tree = JsonUtil.parseJson(DefaultJasperReportsContext.getInstance(), "net/sf/jasperreports/jsonql/orders.json");
+	@BeforeClass
+	public void readJson() throws JRException {
+		JsonNode tree = JsonUtil.parseJson(DefaultJasperReportsContext.getInstance(), "net/sf/jasperreports/jsonql/orders.json");
 
-        jrJsonNode = new JRJsonNode(null, tree);
-        jsonQLExecuter = new DefaultJsonQLExecuter();
-    }
+		jrJsonNode = new JRJsonNode(null, tree);
+		jsonQLExecuter = new DefaultJsonQLExecuter();
+	}
 
-    @BeforeMethod
-    public void expectedResult(Method method) throws JRException {
-        expectedResult = JsonUtil.parseJson(DefaultJasperReportsContext.getInstance(),
-                "net/sf/jasperreports/jsonql/" + method.getName() + "_result.json");
-    }
+	@BeforeMethod
+	public void expectedResult(Method method) throws JRException {
+		expectedResult = JsonUtil.parseJson(DefaultJasperReportsContext.getInstance(),
+				"net/sf/jasperreports/jsonql/" + method.getName() + "_result.json");
+	}
 
-    @Test
-    public void customerXorders() throws JRException {
-        String jsonQL_1 = "customerXorders";
-        JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
+	@Test
+	public void customerXorders() throws JRException {
+		String jsonQL_1 = "customerXorders";
+		JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
 
-        // the customerXorders key points to an array
-        assert jsonQL_1_result.getNodes().size() == 1;
-        assert jsonQL_1_result.getFirst().getDataNode().isArray();
-        assert jsonQL_1_result.getFirst().getDataNode().equals(expectedResult);
+		// the customerXorders key points to an array
+		assert jsonQL_1_result.getNodes().size() == 1;
+		assert jsonQL_1_result.getFirst().getDataNode().isArray();
+		assert jsonQL_1_result.getFirst().getDataNode().equals(expectedResult);
 
-        String jsonQL_2 = "customerXorders.*";
-        JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
+		String jsonQL_2 = "customerXorders.*";
+		JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
 
-        // customerXorders has 2 object children
-        assert jsonQL_2_result.getNodes().size() == 2;
-        assert jsonQL_2_result.getNodes().get(0).getDataNode().isObject();
-        assert jsonQL_2_result.getNodes().get(1).getDataNode().isObject();
-        assert toArrayNode(jsonQL_2_result).equals(expectedResult);
-    }
+		// customerXorders has 2 object children
+		assert jsonQL_2_result.getNodes().size() == 2;
+		assert jsonQL_2_result.getNodes().get(0).getDataNode().isObject();
+		assert jsonQL_2_result.getNodes().get(1).getDataNode().isObject();
+		assert toArrayNode(jsonQL_2_result).equals(expectedResult);
+	}
 
-    @Test
-    public void allOrders() throws JRException {
-        String jsonQL_1 = ".*.*.*";
-        JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
+	@Test
+	public void allOrders() throws JRException {
+		String jsonQL_1 = ".*.*.*";
+		JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
 
-        assert toArrayNode(jsonQL_1_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_1_result).equals(expectedResult);
 
-        String jsonQL_2 = "..*(orderId != null)";
-        JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
+		String jsonQL_2 = "..*(orderId != null)";
+		JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
 
-        assert toArrayNode(jsonQL_2_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_2_result).equals(expectedResult);
 
-        String jsonQL_3 = "..[orderId, orderDate, shipped, shippedOn, products]";
-        JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
+		String jsonQL_3 = "..[orderId, orderDate, shipped, shippedOn, products]";
+		JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
 
-        assert toArrayNode(jsonQL_3_result).equals(expectedResult);
-    }
+		assert toArrayNode(jsonQL_3_result).equals(expectedResult);
+	}
 
-    @Test
-    public void customerXproducts() throws JRException {
-        String jsonQL_1 = "customerXorders.products.*.*";
-        JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
+	@Test
+	public void customerXproducts() throws JRException {
+		String jsonQL_1 = "customerXorders.products.*.*";
+		JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
 
-        assert toArrayNode(jsonQL_1_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_1_result).equals(expectedResult);
 
-        String jsonQL_2 = "customerXorders..[prodId, prodQty]";
-        JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
+		String jsonQL_2 = "customerXorders..[prodId, prodQty]";
+		JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
 
-        assert toArrayNode(jsonQL_2_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_2_result).equals(expectedResult);
 
-        String jsonQL_3 = "customerXorders.products..[prodId, prodQty]";
-        JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
+		String jsonQL_3 = "customerXorders.products..[prodId, prodQty]";
+		JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
 
-        assert toArrayNode(jsonQL_3_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_3_result).equals(expectedResult);
 
-        String jsonQL_4 = "..products[0,1].*.*";
-        JsonNodeContainer jsonQL_4_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_4);
+		String jsonQL_4 = "..products[0,1].*.*";
+		JsonNodeContainer jsonQL_4_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_4);
 
-        assert toArrayNode(jsonQL_4_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_4_result).equals(expectedResult);
 
-        String jsonQL_5 = "..*(prodId != null && (^{2}.orderId == 1001 || ^^.orderId == 1002))";
-        JsonNodeContainer jsonQL_5_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_5);
+		String jsonQL_5 = "..*(prodId != null && (^{2}.orderId == 1001 || ^^.orderId == 1002))";
+		JsonNodeContainer jsonQL_5_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_5);
 
-        assert toArrayNode(jsonQL_5_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_5_result).equals(expectedResult);
 
-        String jsonQL_6 = "*[0]..[prodId, prodQty]";
-        JsonNodeContainer jsonQL_6_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_6);
+		String jsonQL_6 = "*[0]..[prodId, prodQty]";
+		JsonNodeContainer jsonQL_6_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_6);
 
-        assert toArrayNode(jsonQL_6_result).equals(expectedResult);
-    }
+		assert toArrayNode(jsonQL_6_result).equals(expectedResult);
+	}
 
-    @Test
-    public void allProducts() throws JRException {
-        String jsonQL_1 = "..[prodId, prodQty]";
-        JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
+	@Test
+	public void allProducts() throws JRException {
+		String jsonQL_1 = "..[prodId, prodQty]";
+		JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
 
-        assert toArrayNode(jsonQL_1_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_1_result).equals(expectedResult);
 
-        String jsonQL_2 = "..*(prodId != null)";
-        JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
+		String jsonQL_2 = "..*(prodId != null)";
+		JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
 
-        assert toArrayNode(jsonQL_2_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_2_result).equals(expectedResult);
 
-        String jsonQL_3 = "..prodId(@isNotNull)^";
-        JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
+		String jsonQL_3 = "..prodId(@isNotNull)^";
+		JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
 
-        assert toArrayNode(jsonQL_3_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_3_result).equals(expectedResult);
 
-        String jsonQL_4 = "..prodId(!@isNull)^";
-        JsonNodeContainer jsonQL_4_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_4);
+		String jsonQL_4 = "..prodId(!@isNull)^";
+		JsonNodeContainer jsonQL_4_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_4);
 
-        assert toArrayNode(jsonQL_4_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_4_result).equals(expectedResult);
 
-        String jsonQL_5 = "..prodId(@val != null)^";
-        JsonNodeContainer jsonQL_5_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_5);
+		String jsonQL_5 = "..prodId(@val != null)^";
+		JsonNodeContainer jsonQL_5_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_5);
 
-        assert toArrayNode(jsonQL_5_result).equals(expectedResult);
-    }
+		assert toArrayNode(jsonQL_5_result).equals(expectedResult);
+	}
 
-    @Test
-    public void productsOfShippedOrders() throws JRException {
-        String jsonQL_1 = "..[prodId, prodQty](^^^.shipped == null)";
-        JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
+	@Test
+	public void productsOfShippedOrders() throws JRException {
+		String jsonQL_1 = "..[prodId, prodQty](^^^.shipped == null)";
+		JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
 
-        assert toArrayNode(jsonQL_1_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_1_result).equals(expectedResult);
 
-        String jsonQL_2 = "..*(prodId != null && ^^.shippedOn != null)";
-        JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
+		String jsonQL_2 = "..*(prodId != null && ^^.shippedOn != null)";
+		JsonNodeContainer jsonQL_2_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_2);
 
-        assert toArrayNode(jsonQL_2_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_2_result).equals(expectedResult);
 
-        String jsonQL_3 = "..shippedOn(@val != null)^..[prodId, prodQty]";
-        JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
+		String jsonQL_3 = "..shippedOn(@val != null)^..[prodId, prodQty]";
+		JsonNodeContainer jsonQL_3_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_3);
 
-        assert toArrayNode(jsonQL_3_result).equals(expectedResult);
+		assert toArrayNode(jsonQL_3_result).equals(expectedResult);
 
-        String jsonQL_4 = "..products(^.shippedOn != null)..[prodId, prodQty]";
-        JsonNodeContainer jsonQL_4_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_4);
+		String jsonQL_4 = "..products(^.shippedOn != null)..[prodId, prodQty]";
+		JsonNodeContainer jsonQL_4_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_4);
 
-        assert toArrayNode(jsonQL_4_result).equals(expectedResult);
-    }
+		assert toArrayNode(jsonQL_4_result).equals(expectedResult);
+	}
 
-    @Test
-    public void productsOfOrdersWithAtLeast2products() throws JRException {
-        String jsonQL_1 = "..products(*@size >=2)..*(prodId != null)";
-        JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
+	@Test
+	public void productsOfOrdersWithAtLeast2products() throws JRException {
+		String jsonQL_1 = "..products(*@size >=2)..*(prodId != null)";
+		JsonNodeContainer jsonQL_1_result = jsonQLExecuter.evaluateExpression(jrJsonNode, jsonQL_1);
 
-        assert toArrayNode(jsonQL_1_result).equals(expectedResult);
-    }
+		assert toArrayNode(jsonQL_1_result).equals(expectedResult);
+	}
 
-    private ArrayNode toArrayNode(JsonNodeContainer container) {
-        ArrayNode result = jsonQLExecuter.getEvaluator().getEvaluationContext().getObjectMapper().createArrayNode();
+	private ArrayNode toArrayNode(JsonNodeContainer container) {
+		ArrayNode result = jsonQLExecuter.getEvaluator().getEvaluationContext().getObjectMapper().createArrayNode();
 
-        for (JRJsonNode node: container.getContainerNodes()) {
-            result.add(node.getDataNode());
-        }
+		for (JRJsonNode node: container.getContainerNodes()) {
+			result.add(node.getDataNode());
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

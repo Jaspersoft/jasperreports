@@ -398,7 +398,7 @@ public class JRDesignSubreport extends JRDesignElement implements JRSubreport
 		if (parametersMap != null)
 		{
 			clone.parametersMap = new LinkedHashMap<>();
-			for(Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
+			for (Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
 			{
 				String name = it.next();
 				clone.parametersMap.put(name, JRCloneUtils.nullSafeClone(parametersMap.get(name)));

@@ -216,7 +216,7 @@ public class JRResultSetDataSource implements JRDataSource
 				if (clazz.equals(java.lang.Boolean.class))
 				{
 					objValue = resultSet.getBoolean(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -224,7 +224,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.lang.Byte.class))
 				{
 					objValue = resultSet.getByte(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -247,7 +247,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.lang.Double.class))
 				{
 					objValue = resultSet.getDouble(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -255,7 +255,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.lang.Float.class))
 				{
 					objValue = resultSet.getFloat(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -263,7 +263,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.lang.Integer.class))
 				{
 					objValue = resultSet.getInt(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -272,7 +272,7 @@ public class JRResultSetDataSource implements JRDataSource
 				{
 					byte[] bytes = readBytes(columnIndex);
 					
-					if(bytes == null)
+					if (bytes == null)
 					{
 						objValue = null;
 					}
@@ -284,7 +284,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.lang.Long.class))
 				{
 					objValue = resultSet.getLong(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -292,7 +292,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.lang.Short.class))
 				{
 					objValue = resultSet.getShort(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -300,7 +300,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(java.math.BigDecimal.class))
 				{
 					objValue = resultSet.getBigDecimal(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -324,7 +324,7 @@ public class JRResultSetDataSource implements JRDataSource
 							
 						default:
 							objValue = resultSet.getString(columnIndex);
-							if(resultSet.wasNull())
+							if (resultSet.wasNull())
 							{
 								objValue = null;
 							}
@@ -334,7 +334,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(Clob.class))
 				{
 					objValue = resultSet.getClob(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -376,7 +376,7 @@ public class JRResultSetDataSource implements JRDataSource
 				else if (clazz.equals(Blob.class))
 				{
 					objValue = resultSet.getBlob(columnIndex);
-					if(resultSet.wasNull())
+					if (resultSet.wasNull())
 					{
 						objValue = null;
 					}
@@ -385,7 +385,7 @@ public class JRResultSetDataSource implements JRDataSource
 				{
 					byte[] bytes = readBytes(columnIndex);
 					
-					if(bytes == null)
+					if (bytes == null)
 					{
 						objValue = null;
 					}
@@ -463,7 +463,7 @@ public class JRResultSetDataSource implements JRDataSource
 		Calendar calendar = getFieldCalendar(field);
 		java.sql.Date objValue = calendar == null ? resultSet.getDate(columnIndex)
 				: resultSet.getDate(columnIndex, calendar);
-		if(resultSet.wasNull())
+		if (resultSet.wasNull())
 		{
 			objValue = null;
 		} 
@@ -482,7 +482,7 @@ public class JRResultSetDataSource implements JRDataSource
 		Calendar calendar = getFieldCalendar(field);
 		java.sql.Timestamp objValue = calendar == null ? resultSet.getTimestamp(columnIndex)
 				: resultSet.getTimestamp(columnIndex, calendar);
-		if(resultSet.wasNull())
+		if (resultSet.wasNull())
 		{
 			objValue = null;
 		}
@@ -501,7 +501,7 @@ public class JRResultSetDataSource implements JRDataSource
 		Calendar calendar = getFieldCalendar(field);
 		java.sql.Time objValue = calendar == null ? resultSet.getTime(columnIndex)
 				: resultSet.getTime(columnIndex, calendar);
-		if(resultSet.wasNull())
+		if (resultSet.wasNull())
 		{
 			objValue = null;
 		}

@@ -87,17 +87,17 @@ public class XlsxStyleInfo
 		this.isLocked = isLocked;
 		this.isShrinkToFit = isShrinkToFit;
 		this.rotation = rotation;
-		if(sheetInfo != null)
+		if (sheetInfo != null)
 		{
-			if(sheetInfo.whitePageBackground != null)
+			if (sheetInfo.whitePageBackground != null)
 			{
 				this.whitePageBackground = sheetInfo.whitePageBackground;
 			}
-			if(sheetInfo.ignoreCellBackground != null)
+			if (sheetInfo.ignoreCellBackground != null)
 			{
 				this.ignoreCellBackground = sheetInfo.ignoreCellBackground;
 			}
-			if(sheetInfo.ignoreCellBorder != null)
+			if (sheetInfo.ignoreCellBorder != null)
 			{
 				this.ignoreCellBorder = sheetInfo.ignoreCellBorder;
 			}
