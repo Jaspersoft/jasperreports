@@ -265,15 +265,18 @@ public class JRFillCellContents extends JRFillElementContainer implements JRCell
 					);
 		}
 		
-		return 
-			transformedContentsCache.computeIfAbsent(
-				new StretchedContents(newWidth, newHeight, xPosition, yPosition),
-				k -> {
-					JRFillCellContents cell = (JRFillCellContents) createClone();
-					cell.transform(newWidth, newHeight, xPosition, yPosition);
-					return cell;
-					}
-				);
+		StretchedContents key = new StretchedContents(newWidth, newHeight, xPosition, yPosition);
+		
+		JRFillCellContents transformedCell = transformedContentsCache.get(key);
+		if (transformedCell == null)
+		{
+			transformedCell = (JRFillCellContents) createClone();
+			transformedCell.transform(newWidth, newHeight, xPosition, yPosition);
+			
+			transformedContentsCache.put(key, transformedCell);
+		}
+		
+		return transformedCell;
 	}
 	
 	

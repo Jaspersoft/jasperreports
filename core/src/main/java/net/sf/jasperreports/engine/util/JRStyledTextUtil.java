@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -405,7 +406,15 @@ public class JRStyledTextUtil
 				codePoint = textChar;
 			}
 
-			validFonts.removeIf(face -> !face.supports(codePoint));
+			for (ListIterator<Face> fontIt = validFonts.listIterator(); fontIt.hasNext();)
+			{
+				Face face = fontIt.next();
+				
+				if (!face.supports(codePoint))
+				{
+					fontIt.remove();
+				}
+			}
 			
 			if (validFonts.isEmpty())
 			{
@@ -430,7 +439,14 @@ public class JRStyledTextUtil
 	
 	protected FamilyFonts getFamilyFonts(String name, Locale locale)
 	{
-		return familyFonts.computeIfAbsent(new Pair<>(name, locale), k -> loadFamilyFonts(name, locale));
+		Pair<String, Locale> key = new Pair<>(name, locale);
+		FamilyFonts fonts = familyFonts.get(key);
+		if (fonts == null) // computeIfAbsent is not appropriate due to performance reasons with ConcurrentHashMap
+		{
+			fonts = loadFamilyFonts(name, locale);
+			familyFonts.put(key, fonts);
+		}
+		return fonts;
 	}
 	
 	protected FamilyFonts loadFamilyFonts(String name, Locale locale)

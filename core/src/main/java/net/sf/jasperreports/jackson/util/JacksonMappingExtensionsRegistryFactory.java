@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.jackson.util;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
@@ -51,7 +52,8 @@ public class JacksonMappingExtensionsRegistryFactory implements ExtensionsRegist
 			new ListExtensionRegistry<JacksonMapping>(
 				JacksonMapping.class, 
 				JRPropertiesUtil.getProperties(properties, JACKSON_MAPPING_PROPERTY_PREFIX)
-					.stream().map(p -> new JacksonMapping(p.getSuffix(), p.getValue())).collect(Collectors.toList())
+					.stream().map(p -> new JacksonMapping(p.getSuffix(), p.getValue()))
+					.collect(Collectors.toCollection(ArrayList::new))
 				);
 	}
 

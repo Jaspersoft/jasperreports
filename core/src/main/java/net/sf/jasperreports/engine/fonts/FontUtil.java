@@ -448,8 +448,15 @@ public final class FontUtil
 
 	protected void collectFontFamilyNames(Collection<String> names)
 	{
-		jasperReportsContext.getExtensions(FontFamily.class).stream()
-			.filter(family -> family.isVisible()).forEach(family -> names.add(family.getName()));
+		List<FontFamily> families = jasperReportsContext.getExtensions(FontFamily.class);
+		for (Iterator<FontFamily> itf = families.iterator(); itf.hasNext();)
+		{
+			FontFamily family = itf.next();
+			if (family.isVisible())
+			{
+				names.add(family.getName());
+			}
+		}
 	}
 
 	/**
@@ -468,8 +475,12 @@ public final class FontUtil
 
 	protected void collectFontSetNames(Collection<String> names)
 	{
-		jasperReportsContext.getExtensions(FontSet.class)
-			.stream().map(FontSet::getName).forEach(names::add);
+		List<FontSet> fontSets = jasperReportsContext.getExtensions(FontSet.class);
+		for (Iterator<FontSet> itf = fontSets.iterator(); itf.hasNext();)
+		{
+			FontSet fontSet = itf.next();
+			names.add(fontSet.getName());
+		}
 	}
 
 

@@ -145,7 +145,7 @@ public class LocalJasperReportsContext extends SimpleJasperReportsContext
 		return
 			repoServices
 				.stream().map(s -> s instanceof DefaultRepositoryService ? localRepository : s)
-				.collect(Collectors.toList()); //TODO unmodifiable?
+				.collect(Collectors.toCollection(ArrayList::new)); //TODO unmodifiable?
 	}
 	
 }
