@@ -203,12 +203,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 			}
 		});
 
-		pnlTabs.addChangeListener(new javax.swing.event.ChangeListener() {
-			@Override
-			public void stateChanged(javax.swing.event.ChangeEvent evt) {
-				pnlTabsStateChanged(evt);
-			}
-		});
+		pnlTabs.addChangeListener(this::pnlTabsStateChanged);
 		add(pnlTabs, java.awt.BorderLayout.CENTER);
 
 		scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -534,14 +529,10 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 			pageError = true;
 			
 			paintPageError(grx);
-			SwingUtilities.invokeLater(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					JOptionPane.showMessageDialog(JRViewerPanel.this, viewerContext.getBundleString("error.displaying"));
-				}
-			});
+			
+			SwingUtilities.invokeLater(
+				() -> JOptionPane.showMessageDialog(JRViewerPanel.this, viewerContext.getBundleString("error.displaying"))
+				);
 		}
 
 	}

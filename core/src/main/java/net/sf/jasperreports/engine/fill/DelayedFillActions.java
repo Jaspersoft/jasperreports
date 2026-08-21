@@ -384,16 +384,12 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 		VirtualElementsData virtualData = object.getVirtualData();
 		
 		final Map<JREvaluationTime, Map<JRPrintElement, Integer>> evaluations = new LinkedHashMap<>();
-		ElementEvaluationsCollector collector = new ElementEvaluationsCollector()
+		ElementEvaluationsCollector collector = (printElement, fillElement, evaluationTime) ->
 		{
-			@Override
-			public void collect(JRPrintElement printElement, JRFillElement fillElement, JREvaluationTime evaluationTime)
-			{
-				// collection delayed evaluations for elements that are about to be externalized.
-				// the evaluations store the ID of the fill elements in order to serialize the data.
-				evaluations.computeIfAbsent(evaluationTime, k -> new LinkedHashMap<>())
-					.put(printElement, fillElement.printElementOriginator.getSourceElementId());
-			}
+			// collection delayed evaluations for elements that are about to be externalized.
+			// the evaluations store the ID of the fill elements in order to serialize the data.
+			evaluations.computeIfAbsent(evaluationTime, k -> new LinkedHashMap<>())
+				.put(printElement, fillElement.printElementOriginator.getSourceElementId());
 		};
 		
 		doCollectElementEvaluations(page, virtualData.getElements(), collector, false);

@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -39,6 +38,7 @@ import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -470,11 +470,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			}
 		}
 		
-		Set<String> measureVars = new HashSet<>();
-		for (JRFillCrosstabMeasure measure : measures)
-		{
-			measureVars.add(measure.getFillVariable().getName());
-		}
+		Set<String> measureVars = Arrays.stream(measures).map(m -> m.getFillVariable().getName()).collect(Collectors.toSet());
 
 		retrieveTotal = new boolean[rowGroups.length + 1][columnGroups.length + 1];
 		

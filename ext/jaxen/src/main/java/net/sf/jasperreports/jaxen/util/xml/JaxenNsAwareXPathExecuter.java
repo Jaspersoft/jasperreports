@@ -233,14 +233,9 @@ public class JaxenNsAwareXPathExecuter extends JaxenXPathExecuter
 		
 		if (xmlNamespaceMap != null && xmlNamespaceMap.size() > 0)
 		{
-			if (context == null) {
-				context = new NamespaceContext() {
-					
-					@Override
-					public String translateNamespacePrefixToUri(String prefix) {
-						return xmlNamespaceMap.get(prefix);
-					}
-				};
+			if (context == null) 
+			{
+				context = prefix -> xmlNamespaceMap.get(prefix);
 			}
 			xPath.setNamespaceContext(context);
 		}

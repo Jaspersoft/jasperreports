@@ -23,10 +23,9 @@
  */
 package net.sf.jasperreports.util;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
@@ -51,12 +50,7 @@ public class IdentitySecretsProviderExtensionsRegistryFactory implements Extensi
 	public ExtensionsRegistry createRegistry(String registryId, JRPropertiesMap properties) 
 	{
 		List<PropertySuffix> categoryProperties = JRPropertiesUtil.getProperties(properties, IDENTITY_SECTRETS_PROVIDER_CATEGORY_PROPERTY_PREFIX);
-		Set<String> categories = new HashSet<>();
-		for (Iterator<PropertySuffix> it = categoryProperties.iterator(); it.hasNext();) {
-			PropertySuffix categoryProp = it.next();
-			categories.add(categoryProp.getValue());
-		}
-		
+		Set<String> categories = categoryProperties.stream().map(PropertySuffix::getValue).collect(Collectors.toSet());
 		return new SingletonExtensionRegistry<SecretsProviderFactory>(SecretsProviderFactory.class, new IdentitySecretsProviderFactory(categories));
 	}
 }

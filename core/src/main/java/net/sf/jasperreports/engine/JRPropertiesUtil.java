@@ -26,7 +26,6 @@ package net.sf.jasperreports.engine;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +33,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle.Control;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.util.JRLoader;
 
@@ -420,12 +420,7 @@ public final class JRPropertiesUtil
 		{
 			if (!global.isEmpty())
 			{
-				Set<String> ownSuffixes = new HashSet<>();
-				for (Iterator<PropertySuffix> it = own.iterator(); it.hasNext();)
-				{
-					PropertySuffix prop = it.next();
-					ownSuffixes.add(prop.getSuffix());
-				}
+				Set<String> ownSuffixes = own.stream().map(PropertySuffix::getSuffix).collect(Collectors.toSet());
 				
 				for (Iterator<PropertySuffix> it = global.iterator(); it.hasNext();)
 				{

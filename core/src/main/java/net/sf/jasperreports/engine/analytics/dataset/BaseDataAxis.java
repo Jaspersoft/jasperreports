@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine.analytics.dataset;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRRuntimeException;
@@ -56,11 +57,9 @@ public class BaseDataAxis implements DataAxis, Serializable
 		this.axis = dataAxis.getAxis();
 		
 		List<DataAxisLevel> dataLevels = dataAxis.getLevels();
-		this.levels = new ArrayList<>(dataLevels.size());
-		for (DataAxisLevel level : dataLevels)
-		{
-			this.levels.add(factory.getDataAxisLevel(level));
-		}
+		this.levels = 
+			dataLevels.stream().map(factory::getDataAxisLevel)
+				.collect(Collectors.toCollection(() -> new ArrayList<>(dataLevels.size())));
 	}
 
 	@Override

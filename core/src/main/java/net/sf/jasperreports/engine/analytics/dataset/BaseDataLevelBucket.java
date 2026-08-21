@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine.analytics.dataset;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRExpression;
@@ -72,11 +73,9 @@ public class BaseDataLevelBucket implements DataLevelBucket, Serializable
 		this.comparatorExpression = factory.getExpression(bucket.getComparatorExpression());
 		
 		List<DataLevelBucketProperty> properties = bucket.getBucketProperties();
-		this.bucketProperties = new ArrayList<>(properties.size());
-		for (DataLevelBucketProperty property : properties)
-		{
-			this.bucketProperties.add(factory.getDataLevelBucketProperty(property));
-		}
+		this.bucketProperties = 
+			properties.stream().map(factory::getDataLevelBucketProperty)
+				.collect(Collectors.toCollection(() -> new ArrayList<>(properties.size())));
 	}
 
 	@Override

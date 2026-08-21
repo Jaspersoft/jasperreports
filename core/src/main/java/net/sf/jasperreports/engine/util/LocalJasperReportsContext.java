@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -136,23 +137,15 @@ public class LocalJasperReportsContext extends SimpleJasperReportsContext
 
 	protected List<RepositoryService> getRepositoryServices(DefaultRepositoryService localRepository)
 	{
-		List<RepositoryService> localServices = new ArrayList<>();
 		List<RepositoryService> repoServices = super.getExtensions(RepositoryService.class);
-		if (repoServices != null && repoServices.size() > 0)
+		if (repoServices == null)
 		{
-			for (RepositoryService repoService : repoServices)
-			{
-				if (repoService instanceof DefaultRepositoryService)
-				{
-					localServices.add(localRepository);
-				}
-				else
-				{
-					localServices.add(repoService);
-				}
-			}
+			return new ArrayList<>();
 		}
-		return localServices;//TODO unmodifiable?
+		return
+			repoServices
+				.stream().map(s -> s instanceof DefaultRepositoryService ? localRepository : s)
+				.collect(Collectors.toList()); //TODO unmodifiable?
 	}
 	
 }

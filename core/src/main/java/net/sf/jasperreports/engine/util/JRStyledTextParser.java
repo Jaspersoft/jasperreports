@@ -35,7 +35,6 @@ import java.text.AttributedString;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,11 +84,7 @@ public class JRStyledTextParser implements ErrorHandler
 			//FIXMEFONT do some cache
 			//FIXME these should be taken from the current JasperReportsContext
 			List<FontFamily> families = ExtensionsEnvironment.getExtensionsRegistry().getExtensions(FontFamily.class);
-			for (Iterator<FontFamily> itf = families.iterator(); itf.hasNext();)
-			{
-				FontFamily family =itf.next();
-				AVAILABLE_FONT_FACE_NAMES.add(family.getName());
-			}
+			families.forEach(f -> AVAILABLE_FONT_FACE_NAMES.add(f.getName()));
 			
 			//FIXME use JRGraphEnvInitializer
 			AVAILABLE_FONT_FACE_NAMES.addAll(
