@@ -192,6 +192,11 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	{
 		this.pdfaConformance = pdfaConformance;
 		
+		if (pdfaConformance != null && pdfaConformance.getPdfVersion() != null)
+		{
+			this.pdfVersion = pdfaConformance.getPdfVersion();
+		}
+
 		// there is an incompatibility regarding font handling, 
 		// specifically concerning the CIDSet entry for subsetted CIDFonts, 
 		// when attempting to comply with PDF/A-1a and PDF/UA-1 simultaneously.

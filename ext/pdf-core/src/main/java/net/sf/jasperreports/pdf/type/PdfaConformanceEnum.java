@@ -35,62 +35,64 @@ public enum PdfaConformanceEnum implements NamedEnum
 	/**
 	 * 
 	 */
-	NONE("none"),
+	NONE("none", null),
 
 	/**
 	 * 
 	 */
-	PDFA_1A("pdfa1a"),
+	PDFA_1A("pdfa1a", PdfVersionEnum.VERSION_1_4),
 
 	/**
 	 * 
 	 */
-	PDFA_1B("pdfa1b"),
+	PDFA_1B("pdfa1b", PdfVersionEnum.VERSION_1_4),
 	
 	
 	/**
 	 * 
 	 */
-	PDFA_2A("pdfa2a"),
+	PDFA_2A("pdfa2a", PdfVersionEnum.VERSION_1_7),
 	
 	/**
 	 * 
 	 */
-	PDFA_2B("pdfa2b"),
+	PDFA_2B("pdfa2b", PdfVersionEnum.VERSION_1_7),
 	
 	/**
 	 * 
 	 */
-	PDFA_2U("pdfa2u"),
+	PDFA_2U("pdfa2u", PdfVersionEnum.VERSION_1_7),
 	
 	/**
 	 * 
 	 */
-	PDFA_3A("pdfa3a"),
+	PDFA_3A("pdfa3a", PdfVersionEnum.VERSION_1_7),
 	
 	/**
 	 * 
 	 */
-	PDFA_3B("pdfa3b"),
+	PDFA_3B("pdfa3b", PdfVersionEnum.VERSION_1_7),
 	
 	/**
 	 * 
 	 */
-	PDFA_3U("pdfa3u"),
+	PDFA_3U("pdfa3u", PdfVersionEnum.VERSION_1_7),
 	
 	/**
 	 * 
 	 */
-	PDFA_4("pdfa4");
+	PDFA_4("pdfa4", PdfVersionEnum.VERSION_2_0);
 	
 	/**
 	 *
 	 */
 	private final transient String name;
+	private final transient PdfVersionEnum pdfVersion;
 
-	private PdfaConformanceEnum(String name)
+	private PdfaConformanceEnum(String name, PdfVersionEnum pdfVersion)
 	{
 		this.name = name;
+		this.pdfVersion = pdfVersion;
 	}
 	
 	@Override
@@ -99,6 +101,11 @@ public enum PdfaConformanceEnum implements NamedEnum
 		return name;
 	}
 	
+	public PdfVersionEnum getPdfVersion()
+	{
+		return pdfVersion;
+	}
+
 	/**
 	 *
 	 */
