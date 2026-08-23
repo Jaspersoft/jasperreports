@@ -1212,9 +1212,9 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 		JRVariable[] variables = getVariables();
 		Map<String, JRVariable> variablesMap = new HashMap<>();
 		
-		for (int i = 0; i < variables.length; i++)
+		for (JRVariable variable : variables)
 		{
-			variablesMap.put(variables[i].getName(), variables[i]);
+			variablesMap.put(variable.getName(), variable);
 		}
 		
 		return variablesMap;

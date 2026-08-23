@@ -106,9 +106,9 @@ public class AdditionalEntryMapTest
 	public void containsKeyTest(Object[][] pairs, Object addKey, Object addValue)
 	{
 		AdditionalEntryMap<Object, Object> map = createAdditionalMap(pairs, addKey, addValue, false);
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert map.containsKey(pairs[i][0]);
+			assert map.containsKey(pair[0]);
 		}
 		assert map.containsKey(addKey);
 		assert !map.containsKey(INEXISTING);
@@ -118,9 +118,9 @@ public class AdditionalEntryMapTest
 	public void containsValueTest(Object[][] pairs, Object addKey, Object addValue)
 	{
 		AdditionalEntryMap<Object, Object> map = createAdditionalMap(pairs, addKey, addValue, false);
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert map.containsValue(pairs[i][1]);
+			assert map.containsValue(pair[1]);
 		}
 		assert map.containsValue(addValue);
 		assert !map.containsValue(INEXISTING);
@@ -130,9 +130,9 @@ public class AdditionalEntryMapTest
 	public void getValueTest(Object[][] pairs, Object addKey, Object addValue)
 	{
 		AdditionalEntryMap<Object, Object> map = createAdditionalMap(pairs, addKey, addValue, false);
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert nullSafeEquals(pairs[i][1], map.get(pairs[i][0]));
+			assert nullSafeEquals(pair[1], map.get(pair[0]));
 		}
 		assert addValue.equals(map.get(addKey));
 		assert map.get(INEXISTING) == null;
@@ -146,18 +146,18 @@ public class AdditionalEntryMapTest
 		assert !keys.isEmpty();
 		assert keys.size() == pairs.length + 1;
 		
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert keys.contains(pairs[i][0]);
+			assert keys.contains(pair[0]);
 		}
 		assert keys.contains(addKey);
 		assert !keys.contains(INEXISTING);
 		
 		Iterator<Object> keyIterator = keys.iterator();
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
 			assert keyIterator.hasNext();
-			assert nullSafeEquals(pairs[i][0], keyIterator.next());
+			assert nullSafeEquals(pair[0], keyIterator.next());
 		}
 		assert keyIterator.hasNext();
 		assert addKey.equals(keyIterator.next());
@@ -180,18 +180,18 @@ public class AdditionalEntryMapTest
 		assert !values.isEmpty();
 		assert values.size() == pairs.length + 1;
 		
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert values.contains(pairs[i][1]);
+			assert values.contains(pair[1]);
 		}
 		assert values.contains(addValue);
 		assert !values.contains(INEXISTING);
 		
 		Iterator<Object> valuesIterator = values.iterator();
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
 			assert valuesIterator.hasNext();
-			assert nullSafeEquals(pairs[i][1], valuesIterator.next());
+			assert nullSafeEquals(pair[1], valuesIterator.next());
 		}
 		assert valuesIterator.hasNext();
 		assert addValue.equals(valuesIterator.next());
@@ -214,9 +214,9 @@ public class AdditionalEntryMapTest
 		assert !entries.isEmpty();
 		assert entries.size() == pairs.length + 1;
 		
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert entries.contains(entry(pairs[i][0], pairs[i][1]));
+			assert entries.contains(entry(pair[0], pair[1]));
 		}
 		assert entries.contains(entry(addKey, addValue));
 		assert !entries.contains(INEXISTING);
@@ -256,21 +256,21 @@ public class AdditionalEntryMapTest
 		assert !entries.isEmpty();
 		assert entries.size() == pairs.length + 1;
 		
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert entries.contains(entry(pairs[i][0], pairs[i][1]));
+			assert entries.contains(entry(pair[0], pair[1]));
 		}
 		assert entries.contains(entry(addKey, addValue));
 		assert !entries.contains(INEXISTING);
 		
 		Iterator<Entry<Object, Object>> entryIterator = entries.iterator();
 		Entry<Object, Object> entry;
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
 			assert entryIterator.hasNext();
 			entry = entryIterator.next();
-			assert nullSafeEquals(pairs[i][0], entry.getKey());
-			assert nullSafeEquals(pairs[i][1], entry.getValue());
+			assert nullSafeEquals(pair[0], entry.getKey());
+			assert nullSafeEquals(pair[1], entry.getValue());
 		}
 		assert entryIterator.hasNext();
 		entry = entryIterator.next();
@@ -296,10 +296,10 @@ public class AdditionalEntryMapTest
 	private Map<Object, Object> createBaseMap(Object[][] pairs, boolean linked)
 	{
 		Map<Object, Object> map = linked ? new LinkedHashMap<>() : new HashMap<>();
-		for (int i = 0; i < pairs.length; i++)
+		for (Object[] pair : pairs)
 		{
-			assert pairs[i].length == 2;
-			map.put(pairs[i][0], pairs[i][1]);
+			assert pair.length == 2;
+			map.put(pair[0], pair[1]);
 		}
 		assert map.size() == pairs.length;
 		return map;

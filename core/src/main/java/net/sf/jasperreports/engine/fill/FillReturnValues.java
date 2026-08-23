@@ -141,9 +141,9 @@ public class FillReturnValues
 		
 		if (returnValues != null && band != null)
 		{
-			for (int i = 0; i < returnValues.length; i++)
+			for (JRFillCommonReturnValue returnValue : returnValues)
 			{
-				String varName = returnValues[i].getToVariable();
+				String varName = returnValue.getToVariable();
 				band.saveVariable(varName);
 			}
 		}
@@ -179,9 +179,9 @@ public class FillReturnValues
 	{
 		if (returnValues != null && returnValues.length > 0)
 		{
-			for (int i = 0; i < returnValues.length; i++)
+			for (JRFillCommonReturnValue returnValue : returnValues)
 			{
-				copyValue(returnValues[i], sourceContext);
+				copyValue(returnValue, sourceContext);
 			}
 		}
 	}

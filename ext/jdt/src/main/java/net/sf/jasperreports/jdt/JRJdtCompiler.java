@@ -592,9 +592,9 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 			else
 			{
 				ClassFile[] resultClassFiles = result.getClassFiles();
-				for (int i = 0; i < resultClassFiles.length; i++) 
+				for (ClassFile resultClassFile : resultClassFiles) 
 				{
-					units[classIdx].setCompileData(resultClassFiles[i].getBytes());
+					units[classIdx].setCompileData(resultClassFile.getBytes());
 				}
 			}
 		}

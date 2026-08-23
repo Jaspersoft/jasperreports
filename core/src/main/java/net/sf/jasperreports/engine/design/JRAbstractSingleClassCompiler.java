@@ -52,9 +52,9 @@ public abstract class JRAbstractSingleClassCompiler extends JRAbstractClassCompi
 		}
 		
 		StringBuilder errors = new StringBuilder();
-		for (int i = 0; i < sourceFiles.length; ++i)
+		for (File sourceFile : sourceFiles)
 		{
-			String classErrors = compileClass(sourceFiles[i], classpath);
+			String classErrors = compileClass(sourceFile, classpath);
 			if (classErrors != null)
 			{
 				errors.append(classErrors);

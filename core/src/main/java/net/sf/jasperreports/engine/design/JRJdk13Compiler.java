@@ -117,9 +117,9 @@ public class JRJdk13Compiler extends JRAbstractMultiClassCompiler
 			| IllegalAccessException | InstantiationException e)
 		{
 			StringBuilder files = new StringBuilder();
-			for (int i = 0; i < sourceFiles.length; ++i)
+			for (File sourceFile : sourceFiles)
 			{
-				files.append(sourceFiles[i].getPath());
+				files.append(sourceFile.getPath());
 				files.append(' ');
 			}
 			throw 

@@ -49,9 +49,9 @@ public class SubreportPartComponentCompiler implements PartComponentCompiler
 		JRSubreportParameter[] parameters = subreport.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int j = 0; j < parameters.length; j++)
+			for (JRSubreportParameter parameter : parameters)
 			{
-				collector.addExpression(parameters[j].getExpression());
+				collector.addExpression(parameter.getExpression());
 			}
 		}
 

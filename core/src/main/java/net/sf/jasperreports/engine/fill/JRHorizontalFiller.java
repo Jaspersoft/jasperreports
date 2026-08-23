@@ -2586,10 +2586,10 @@ public class JRHorizontalFiller extends JRBaseFiller
 
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				((JRFillSection)groups[i].getGroupHeaderSection()).setNewPageColumn(true);
-				((JRFillSection)groups[i].getGroupFooterSection()).setNewPageColumn(true);
+				((JRFillSection)group.getGroupHeaderSection()).setNewPageColumn(true);
+				((JRFillSection)group.getGroupFooterSection()).setNewPageColumn(true);
 			}
 		}
 	}

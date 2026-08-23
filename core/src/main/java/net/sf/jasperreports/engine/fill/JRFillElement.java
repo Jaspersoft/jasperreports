@@ -1344,10 +1344,10 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		// collect delayed evaluations from conditional style expressions
 		if (conditionalStyles != null && conditionalStyles.length > 0)
 		{
-			for (int i = 0; i < conditionalStyles.length; i++)
+			for (JRConditionalStyle conditionalStyle : conditionalStyles)
 			{
 				collectDelayedEvaluations(
-						conditionalStyles[i].getConditionExpression());
+						conditionalStyle.getConditionExpression());
 			}
 		}
 	}

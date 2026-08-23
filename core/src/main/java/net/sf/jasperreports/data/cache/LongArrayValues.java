@@ -54,9 +54,9 @@ public class LongArrayValues implements ColumnValues, Serializable
 		out.writeLong(linearOffset);
 		
 		out.writeInt(values.length);
-		for (int i = 0; i < values.length; i++)
+		for (long value : values)
 		{
-			out.writeLong(values[i]);
+			out.writeLong(value);
 		}
 	}
 	

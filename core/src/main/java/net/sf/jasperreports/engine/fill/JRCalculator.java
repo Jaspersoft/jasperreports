@@ -318,19 +318,19 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				incrementVariable(variables[i], incrementType);
-				initializeVariable(variables[i], resetType);
+				incrementVariable(variable, incrementType);
+				initializeVariable(variable, resetType);
 			}
 		}
 
 		if (datasets != null && datasets.length > 0)
 		{
-			for (int i = 0; i < datasets.length; i++)
+			for (JRFillElementDataset dataset : datasets)
 			{
-				incrementDataset(datasets[i], incrementType);
-				initializeDataset(datasets[i], resetType);
+				incrementDataset(dataset, incrementType);
+				initializeDataset(dataset, resetType);
 			}
 		}
 	}

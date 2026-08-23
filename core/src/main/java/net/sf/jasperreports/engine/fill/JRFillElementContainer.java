@@ -723,15 +723,15 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 						JRFillSubreport subreport = (JRFillSubreport)element;
 						
 						List<JRStyle> styles = subreport.subreportFiller.getJasperPrint().getStylesList();
-						for (int j = 0; j < styles.size(); j++)
+						for (JRStyle style : styles)
 						{
-							filler.addPrintStyle(styles.get(j));
+							filler.addPrintStyle(style);
 						}
 						
 						List<JROrigin> origins = subreport.subreportFiller.getJasperPrint().getOriginsList();
-						for (int j = 0; j < origins.size(); j++)
+						for (JROrigin origin : origins)
 						{
-							filler.getJasperPrint().addOrigin(origins.get(j));
+							filler.getJasperPrint().addOrigin(origin);
 						}
 						
 						Collection<JRPrintElement> printElements = subreport.getPrintElements();
@@ -839,17 +839,17 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		filler.addDefaultStyleListener(this::collectConditionalStyle);
 		
-		for (int i = 0; i < deepElements.length; i++)
+		for (JRFillElement deepElement : deepElements)
 		{
-			JRStyle style = deepElements[i].initStyle;
+			JRStyle style = deepElement.initStyle;
 			collectConditionalStyle(style);
 		}
 		
 		if (deepElements.length > 0)
 		{
-			for (int i = 0; i < deepElements.length; i++)
+			for (JRFillElement deepElement : deepElements)
 			{
-				deepElements[i].setConditionalStylesContainer(this);
+				deepElement.setConditionalStylesContainer(this);
 			}
 		}
 	}
@@ -961,9 +961,9 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (originProvider != null)
 		{
-			for (int i = 0; i < deepElements.length; i++)
+			for (JRFillElement deepElement : deepElements)
 			{
-				deepElements[i].setOriginProvider(originProvider);
+				deepElement.setOriginProvider(originProvider);
 			}
 		}
 	}

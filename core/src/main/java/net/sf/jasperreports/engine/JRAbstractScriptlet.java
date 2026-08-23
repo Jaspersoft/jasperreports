@@ -181,9 +181,9 @@ public abstract class JRAbstractScriptlet
 			{
 				JRPropertiesMap propertiesMap = scriptletDefinition.getPropertiesMap();
 				String[] names = propertiesMap.getPropertyNames();
-				for (int i = 0; i < names.length; i++)
+				for (String name : names)
 				{
-					properties.put(names[i], propertiesMap.getProperty(names[i]));
+					properties.put(name, propertiesMap.getProperty(name));
 				}
 			}
 			
@@ -211,9 +211,9 @@ public abstract class JRAbstractScriptlet
 
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				this.beforeGroupInit( groups[i].getName() );
+				this.beforeGroupInit( group.getName() );
 			}
 		}
 	}

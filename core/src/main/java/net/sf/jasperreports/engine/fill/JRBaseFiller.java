@@ -613,9 +613,9 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			/*   */
 			if (styles != null && styles.length > 0)
 			{
-				for (int i = 0; i < styles.length; i++)
+				for (JRStyle style : styles)
 				{
-					addPrintStyle(styles[i]);
+					addPrintStyle(style);
 				}
 			}
 
@@ -943,9 +943,9 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 
 		if (groups != null)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				createBoundElementMaps(JREvaluationTime.getGroupEvaluationTime(groups[i].getName()));
+				createBoundElementMaps(JREvaluationTime.getGroupEvaluationTime(group.getName()));
 			}
 		}
 
@@ -992,11 +992,11 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			isSummaryNewPage = false;
 			if (groups != null)
 			{
-				for (int i = 0; i < groups.length; i++)
+				for (JRFillGroup group : groups)
 				{
-					groups[i].setStartNewPage(false);
-					groups[i].setResetPageNumber(false);
-					groups[i].setStartNewColumn(false);
+					group.setStartNewPage(false);
+					group.setResetPageNumber(false);
+					group.setStartNewColumn(false);
 				}
 			}
 			

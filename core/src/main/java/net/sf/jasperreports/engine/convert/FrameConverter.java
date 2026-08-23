@@ -80,9 +80,9 @@ public class FrameConverter extends ElementConverter
 		if (children != null && children.size() > 0)
 		{
 			ConvertVisitor convertVisitor = new ConvertVisitor(reportConverter, printFrame);
-			for (int i = 0; i < children.size(); i++)
+			for (JRChild child : children)
 			{
-				children.get(i).visit(convertVisitor);
+				child.visit(convertVisitor);
 			}
 		}
 		

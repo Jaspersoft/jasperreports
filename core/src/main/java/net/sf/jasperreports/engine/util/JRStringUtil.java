@@ -624,18 +624,18 @@ public final class JRStringUtil
 		if (srcArray != null)
 		{
 			tokens = new ArrayList<>();
-			for (int i = 0; i < srcArray.length; i++)
+			for (String src : srcArray)
 			{
-				if (srcArray[i] == null)
+				if (src == null)
 				{
 					tokens.add(null);
 				}
 				else
 				{
-					String[] currentTokensArray = srcArray[i].split(delimiterRegExp);
-					for (int j = 0; j < currentTokensArray.length; j++)
+					String[] currentTokensArray = src.split(delimiterRegExp);
+					for (String currentToken : currentTokensArray)
 					{
-						tokens.add(currentTokensArray[j].trim());
+						tokens.add(currentToken.trim());
 					}
 				}
 			}

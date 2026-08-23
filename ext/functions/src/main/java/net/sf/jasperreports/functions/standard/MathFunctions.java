@@ -155,8 +155,8 @@ public final class MathFunctions
 			return null;
 		}
 		double result=1;
-		for (int i=0;i<numbers.length;i++){
-			result*=numbers[i].doubleValue();
+		for (Number number : numbers){
+			result*=number.doubleValue();
 		}
 		return result;
 	}
@@ -235,8 +235,8 @@ public final class MathFunctions
 			return null;
 		}
 		double result=0;
-		for (int i=0;i<numbers.length;i++){
-			result+=numbers[i].doubleValue();
+		for (Number number : numbers){
+			result+=number.doubleValue();
 		}
 		return result;
 	}
@@ -445,8 +445,8 @@ public final class MathFunctions
 	 * No null element must be contained.
 	 */
 	private static boolean isNumberListValid(Number ...numbers){
-		for (int i=0;i<numbers.length;i++){
-			if (numbers[i]==null) return false;
+		for (Number number : numbers){
+			if (number==null) return false;
 		}
 		return true;
 	}
@@ -466,8 +466,8 @@ public final class MathFunctions
 	 */
 	private static boolean haveSameType(
 			Class<? extends Number> clazz, Number ...numbers){
-		for (int i=0; i<numbers.length; i++){
-			if (numbers[i].getClass() != clazz){
+		for (Number number : numbers){
+			if (number.getClass() != clazz){
 				return false;
 			}
 		}

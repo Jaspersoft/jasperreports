@@ -747,9 +747,9 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 			JRScriptlet[] scriptlets = filler.getJasperReport().getScriptlets();
 			if (scriptlets != null)
 			{
-				for (int i = 0; i < scriptlets.length; i++)
+				for (JRScriptlet scriptlet : scriptlets)
 				{
-					parameterValues.remove(scriptlets[i].getName() 
+					parameterValues.remove(scriptlet.getName() 
 							+ JRScriptlet.SCRIPTLET_PARAMETER_NAME_SUFFIX);
 				}
 			}
@@ -770,19 +770,19 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 		if (subreportParameters != null && subreportParameters.length > 0)
 		{
 			Object parameterValue = null;
-			for (int i = 0; i < subreportParameters.length; i++)
+			for (JRDatasetParameter subreportParameter : subreportParameters)
 			{
-				JRExpression expression = subreportParameters[i].getExpression();
+				JRExpression expression = subreportParameter.getExpression();
 				if (expression != null || !ignoreNullExpressions)
 				{
 					parameterValue = expressionEvaluator.evaluate(expression, evaluation);
 					if (parameterValue == null)
 					{
-						parameterValues.remove(subreportParameters[i].getName());
+						parameterValues.remove(subreportParameter.getName());
 					}
 					else
 					{
-						parameterValues.put(subreportParameters[i].getName(), parameterValue);
+						parameterValues.put(subreportParameter.getName(), parameterValue);
 					}
 				}
 			}

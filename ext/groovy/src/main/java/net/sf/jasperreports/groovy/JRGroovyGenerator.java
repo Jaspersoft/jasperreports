@@ -281,10 +281,10 @@ public class JRGroovyGenerator
 		
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRVariable variable : variables)
 			{
 				sb.append("    private JRFillVariable variable_");
-				sb.append(JRStringUtil.getJavaIdentifier(variables[i].getName()));
+				sb.append(JRStringUtil.getJavaIdentifier(variable.getName()));
 				sb.append(" = null;\n");
 			}
 		}

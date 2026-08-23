@@ -118,9 +118,9 @@ public class JRViewerToolbar extends JPanel implements JRViewerListener
 		btnZoomOut = new javax.swing.JButton();
 		cmbZoom = new javax.swing.JComboBox();
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
-		for (int i = 0; i < zooms.length; i++)
+		for (int zoom : zooms)
 		{
-			model.addElement("" + zooms[i] + "%");
+			model.addElement("" + zoom + "%");
 		}
 		cmbZoom.setModel(model);
 		
@@ -289,9 +289,9 @@ public class JRViewerToolbar extends JPanel implements JRViewerListener
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setLocale(this.getLocale());
 		fileChooser.updateUI();
-		for (int i = 0; i < saveContributors.size(); i++)
+		for (JRSaveContributor saveContributor : saveContributors)
 		{
-			fileChooser.addChoosableFileFilter(saveContributors.get(i));
+			fileChooser.addChoosableFileFilter(saveContributor);
 		}
 
 		if (saveContributors.contains(lastSaveContributor))

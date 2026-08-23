@@ -380,22 +380,22 @@ public class JRApiWriter
 		{	
 			write( "//styles\n");
 
-			for (int i = 0; i < styles.length; i++)
+			for (JRStyle style : styles)
 			{
-				String styleName = JRStringUtil.getJavaIdentifier(styles[i].getName());
-				writeStyle( styles[i], styleName);
+				String styleName = JRStringUtil.getJavaIdentifier(style.getName());
+				writeStyle( style, styleName);
 				write( "jasperDesign.addStyle(" + styleName + ");\n\n");
 
 				if (toWriteConditionalStyles())
 				{
-					JRConditionalStyle[] conditionalStyles = styles[i].getConditionalStyles();
-					if (!(styles[i] instanceof JRConditionalStyle) && conditionalStyles != null)
+					JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
+					if (!(style instanceof JRConditionalStyle) && conditionalStyles != null)
 					{
 						for (int j = 0; j < conditionalStyles.length; j++)
 						{
 							String conditionalStyleName = styleName + "Conditional" + j;
 							writeConditionalStyle( conditionalStyles[j],conditionalStyleName);
-							write( styles[i].getName() + ".addConditionalStyle(" + conditionalStyleName + ");\n\n");
+							write( style.getName() + ".addConditionalStyle(" + conditionalStyleName + ");\n\n");
 						}
 						flush();
 					}
@@ -523,12 +523,12 @@ public class JRApiWriter
 			if (propertyNames != null && propertyNames.length > 0)
 			{
 				write( "//properties\n");
-				for (int i = 0; i < propertyNames.length; i++)
+				for (String propertyName : propertyNames)
 				{
-					String value = propertiesMap.getProperty(propertyNames[i]);
+					String value = propertiesMap.getProperty(propertyName);
 					if (value != null)
 					{
-						write( propertiesHolderName + ".setProperty(\"" + propertyNames[i] + "\", \"" + JRStringUtil.escapeJavaStringLiteral(value) + "\");\n");
+						write( propertiesHolderName + ".setProperty(\"" + propertyName + "\", \"" + JRStringUtil.escapeJavaStringLiteral(value) + "\");\n");
 					}
 				}
 				write("\n");

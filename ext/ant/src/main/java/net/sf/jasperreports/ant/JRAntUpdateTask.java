@@ -300,11 +300,11 @@ public class JRAntUpdateTask extends JRBaseAntTask
 		
 		if (newFiles != null && newFiles.length > 0) 
 		{
-			for (int i = 0; i < newFiles.length; i++)
+			for (String newFile : newFiles)
 			{
 				reportFilesMap.put(
-					(new File(srcdir, newFiles[i])).getAbsolutePath(), 
-					(new File(destdir, mapper.mapFileName(newFiles[i])[0])).getAbsolutePath()
+					(new File(srcdir, newFile)).getAbsolutePath(), 
+					(new File(destdir, mapper.mapFileName(newFile)[0])).getAbsolutePath()
 					);
 			}
 		}

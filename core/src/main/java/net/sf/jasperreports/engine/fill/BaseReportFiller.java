@@ -219,12 +219,12 @@ public abstract class BaseReportFiller implements ReportFiller
 		JRDataset[] datasets = jasperReport.getDatasets();
 		if (datasets != null && datasets.length > 0)
 		{
-			for (int i = 0; i < datasets.length; i++)
+			for (JRDataset dataset : datasets)
 			{
-				JRFillDataset fillDataset = factory.getDataset(datasets[i]);
+				JRFillDataset fillDataset = factory.getDataset(dataset);
 				fillDataset.createCalculator(jasperReport);
 
-				datasetMap.put(datasets[i].getName(), fillDataset);
+				datasetMap.put(dataset.getName(), fillDataset);
 			}
 		}
 	}

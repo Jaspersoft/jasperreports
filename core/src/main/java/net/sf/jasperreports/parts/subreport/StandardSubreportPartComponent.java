@@ -103,9 +103,9 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (subrepReturnValues != null && subrepReturnValues.length > 0)
 		{
 			returnValues = new ArrayList<>(subrepReturnValues.length);
-			for (int i = 0; i < subrepReturnValues.length; i++)
+			for (JRSubreportReturnValue subrepReturnValue : subrepReturnValues)
 			{
-				returnValues.add(factory.getSubreportReturnValue(subrepReturnValues[i]));
+				returnValues.add(factory.getSubreportReturnValue(subrepReturnValue));
 			}
 		}
 	}

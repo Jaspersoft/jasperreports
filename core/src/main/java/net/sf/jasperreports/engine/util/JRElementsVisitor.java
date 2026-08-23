@@ -108,9 +108,9 @@ public class JRElementsVisitor extends JRDelegationVisitor implements ElementsVi
 			JRBand[] bands = section.getBands();
 			if (bands != null)
 			{
-				for (int i = 0; i < bands.length; i++)
+				for (JRBand band : bands)
 				{
-					visitBand(bands[i]);
+					visitBand(band);
 				}
 			}
 		}

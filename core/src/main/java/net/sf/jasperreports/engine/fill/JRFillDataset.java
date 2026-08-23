@@ -368,9 +368,9 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 			List<JRFillVariable> variableList = new ArrayList<>(jrVariables.length * 3);
 
 			variablesMap = new HashMap<>();
-			for (int i = 0; i < jrVariables.length; i++)
+			for (JRVariable jrVariable : jrVariables)
 			{
-				addVariable(jrVariables[i], variableList, factory);
+				addVariable(jrVariable, variableList, factory);
 			}
 
 			setVariables(variableList);
@@ -487,9 +487,9 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		variables = new JRFillVariable[variableList.size()];
 		variables = variableList.toArray(variables);
 
-		for (int i = 0; i < variables.length; i++)
+		for (JRFillVariable variable : variables)
 		{
-			variablesMap.put(variables[i].getName(), variables[i]);
+			variablesMap.put(variable.getName(), variable);
 		}
 	}
 

@@ -424,9 +424,9 @@ public class JRVerifier
 			if (elements != null && elements.length > 0)
 			{
 				boolean foundContent = false;
-				for (int i = 0; i < elements.length; i++)
+				for (JRElement element : elements)
 				{
-					if (elements[i].getWidth() > 0 && elements[i].getHeight() > 0)
+					if (element.getWidth() > 0 && element.getHeight() > 0)
 					{
 						foundContent = true;
 						break;
@@ -1366,9 +1366,9 @@ public class JRVerifier
 				}
 				else
 				{
-					for (int i = 0; i< bands.length; i++)
+					for (JRBand band : bands)
 					{
-						verifyBand(bands[i]);
+						verifyBand(band);
 					}
 				}
 			}
@@ -1382,9 +1382,9 @@ public class JRVerifier
 				}
 				else
 				{
-					for (int i = 0; i < parts.length; i++)
+					for (JRPart part : parts)
 					{
-						verifyPart(parts[i]);
+						verifyPart(part);
 					}
 				}
 			}
@@ -1695,9 +1695,9 @@ public class JRVerifier
 		}
 		else
 		{
-			for (int i = 0; i < measures.length; i++)
+			for (JRCrosstabMeasure measure : measures)
 			{
-				verifyCrosstabMeasure(measures[i]);
+				verifyCrosstabMeasure(measure);
 			}
 		}
 
@@ -2290,9 +2290,9 @@ public class JRVerifier
 	{
 		if (propertyExpressions != null)
 		{
-			for (int i = 0; i < propertyExpressions.length; i++)
+			for (JRPropertyExpression propertyExpression : propertyExpressions)
 			{
-				verifyPropertyExpression(propertyExpressions[i]);
+				verifyPropertyExpression(propertyExpression);
 			}
 		}
 	}

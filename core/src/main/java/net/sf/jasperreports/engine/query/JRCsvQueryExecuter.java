@@ -159,9 +159,9 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 						if (fields != null && fields.length > 0)
 						{
 							columnNamesList = new ArrayList<>();
-							for (int i = 0; i < fields.length; i++)
+							for (JRField field : fields)
 							{
-								columnNamesList.add(fields[i].getName());
+								columnNamesList.add(field.getName());
 							}
 						}
 					}

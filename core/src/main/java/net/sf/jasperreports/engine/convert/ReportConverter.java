@@ -195,9 +195,9 @@ public class ReportConverter
 			JRGroup[] groups = report.getGroups();
 			if (groups != null)
 			{
-				for (int i = 0; i < groups.length ; i++)
+				for (JRGroup group : groups)
 				{
-					addSection(groups[i].getGroupHeaderSection(), isColumnGroupBands);
+					addSection(group.getGroupHeaderSection(), isColumnGroupBands);
 				}
 			}
 			
@@ -207,9 +207,9 @@ public class ReportConverter
 
 			if (groups != null)
 			{
-				for (int i = 0; i < groups.length ; i++)
+				for (JRGroup group : groups)
 				{
-					addSection(groups[i].getGroupFooterSection(), isColumnGroupBands);
+					addSection(group.getGroupFooterSection(), isColumnGroupBands);
 				}
 			}
 			
@@ -294,9 +294,9 @@ public class ReportConverter
 		if (templates != null)
 		{
 			Set<String> loadedLocations = new HashSet<>();
-			for (int i = 0; i < templates.length; i++)
+			for (JRReportTemplate template : templates)
 			{
-				loadReportTemplateStyles(templates[i], loadedLocations);
+				loadReportTemplateStyles(template, loadedLocations);
 			}
 		}
 		
@@ -384,9 +384,9 @@ public class ReportConverter
 			JRBand[] bands = section.getBands();
 			if (bands != null && bands.length > 0)
 			{
-				for (int i = 0; i< bands.length; i++)
+				for (JRBand band : bands)
 				{
-					addBand(bands[i], isColumnSection);
+					addBand(band, isColumnSection);
 				}
 			}
 		}

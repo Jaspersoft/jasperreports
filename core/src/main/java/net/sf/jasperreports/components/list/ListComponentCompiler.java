@@ -53,9 +53,9 @@ public class ListComponentCompiler implements ComponentCompiler
 		JRElement[] elements = listComponent.getContents().getElements();
 		if (elements != null)
 		{
-			for (int i = 0; i < elements.length; i++)
+			for (JRElement element : elements)
 			{
-				elements[i].collectExpressions(datasetCollector);
+				element.collectExpressions(datasetCollector);
 			}
 		}
 	}

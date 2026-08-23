@@ -398,19 +398,19 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		JROrigin[] origins = jasperPrint.getOrigins();
 		if (origins != null && origins.length > 0)
 		{
-			for (int i = 0; i < origins.length; i++)
+			for (JROrigin origin : origins)
 			{
-				exportOrigin(origins[i]);
+				exportOrigin(origin);
 			}
 		}
 
 		JRStyle[] styles = jasperPrint.getStyles();
 		if (styles != null && styles.length > 0)
 		{
-			for (int i = 0; i < styles.length; i++)
+			for (JRStyle style : styles)
 			{
-				stylesMap.put(styles[i].getName(), styles[i]);
-				exportStyle(styles[i]);
+				stylesMap.put(style.getName(), style);
+				exportStyle(style);
 			}
 		}
 
@@ -455,11 +455,11 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 			String[] propertyNames = propertiesMap.getPropertyNames();
 			if (propertyNames != null && propertyNames.length > 0)
 			{
-				for (int i = 0; i < propertyNames.length; i++)
+				for (String propertyName : propertyNames)
 				{
 					xmlWriter.startElement(JRXmlConstants.ELEMENT_property);
-					xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, propertyNames[i]);
-					String value = propertiesMap.getProperty(propertyNames[i]);
+					xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, propertyName);
+					String value = propertiesMap.getProperty(propertyName);
 					if (value != null)
 					{
 						String encodedValue = JRStringUtil.encodeXmlAttribute(value);
@@ -1114,9 +1114,9 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 			TabStop[] tabStops = paragraph.getTabStops();
 			if (tabStops != null && tabStops.length > 0)
 			{
-				for (int i = 0; i < tabStops.length; i++)
+				for (TabStop tabStop : tabStops)
 				{
-					exportTabStop(tabStops[i]);
+					exportTabStop(tabStop);
 				}
 			}
 
