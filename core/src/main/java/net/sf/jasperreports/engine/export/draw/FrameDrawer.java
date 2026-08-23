@@ -35,7 +35,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import net.sf.jasperreports.engine.JRException;
@@ -201,9 +200,8 @@ public class FrameDrawer extends ElementDrawer<JRPrintFrame>
 		if (elements != null && elements.size() > 0)
 		{
 			Shape clipArea = grx.getClip();
-			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (JRPrintElement element : elements)
 			{
-				JRPrintElement element = it.next();
 				boolean isGenericElement = element instanceof JRGenericPrintElement;
 				JRGenericPrintElement genericElement =  isGenericElement ? (JRGenericPrintElement)element : null;
 				GenericElementGraphics2DHandler handler = isGenericElement 

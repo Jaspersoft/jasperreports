@@ -120,10 +120,8 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 				itemHyperlinks = new HashMap<>();
 			}
 			
-			for (int i = 0; i < categorySeries.length; i++)
+			for (JRFillCategorySeries crtCategorySeries : categorySeries)
 			{
-				JRFillCategorySeries crtCategorySeries = categorySeries[i];
-				
 				Comparable<?> seriesName = crtCategorySeries.getSeries();
 				if (seriesName == null)
 				{

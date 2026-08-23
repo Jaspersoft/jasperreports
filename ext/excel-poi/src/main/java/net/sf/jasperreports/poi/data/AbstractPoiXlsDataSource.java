@@ -28,7 +28,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -446,9 +445,8 @@ public abstract class AbstractPoiXlsDataSource extends AbstractXlsDataSource
 		else
 		{
 			Map<String, Integer> newColumnNames = new LinkedHashMap<>();
-			for (Iterator<Integer> it = columnNames.values().iterator(); it.hasNext();)
+			for (Integer columnIndex : columnNames.values())
 			{
-				Integer columnIndex = it.next();
 				Row row = sheet.getRow(recordIndex) ;
 				Cell cell = row.getCell(columnIndex);
 				if (cell != null)

@@ -31,7 +31,6 @@ package net.sf.jasperreports.engine.export;
 
 import java.awt.Color;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -299,9 +298,8 @@ public class JRGridLayout
 
 	protected void createCuts(List<JRPrintElement> elements, int elementOffsetX, int elementOffsetY, boolean createXCuts)
 	{
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			if (nature.isToExport(element))
 			{
 				if (createXCuts)
@@ -329,9 +327,8 @@ public class JRGridLayout
 
 	protected void setMargins(List<JRPrintElement> elements)
 	{
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			if (nature.isToExport(element))
 			{
 				if (hasLeftMargin && element.getX() <= 0)
@@ -820,10 +817,8 @@ public class JRGridLayout
 	 */
 	protected static void addXCuts(ExporterNature nature, List<JRPrintElement> elementsList, int elementOffsetX, CutsInfo xCuts)
 	{
-		for (Iterator<JRPrintElement> it = elementsList.iterator(); it.hasNext();)
+		for (JRPrintElement element : elementsList)
 		{
-			JRPrintElement element = it.next();
-
 			if (nature.isToExport(element))
 			{
 				xCuts.addCutOffset(element.getX() + elementOffsetX);

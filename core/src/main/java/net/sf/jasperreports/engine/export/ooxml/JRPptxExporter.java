@@ -1711,10 +1711,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	protected JRPrintElementIndex getElementIndex()
 	{
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < frameIndexStack.size(); i++)
+		for (Integer frameIndex : frameIndexStack)
 		{
-			Integer frameIndex = frameIndexStack.get(i);
-
 			sb.append(frameIndex).append("_");
 		}
 		

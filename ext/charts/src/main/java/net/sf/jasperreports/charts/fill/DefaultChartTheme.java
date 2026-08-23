@@ -32,7 +32,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -1722,10 +1721,8 @@ public class DefaultChartTheme implements ChartTheme
 		List<JRMeterInterval> intervals = jrPlot.getIntervals();
 		if (intervals != null)
 		{
-			Iterator<JRMeterInterval> iter = intervals.iterator();
-			while (iter.hasNext())
+			for (JRMeterInterval interval : intervals)
 			{
-				JRMeterInterval interval = iter.next();
 				chartPlot.addInterval(convertInterval(interval));
 			}
 		}

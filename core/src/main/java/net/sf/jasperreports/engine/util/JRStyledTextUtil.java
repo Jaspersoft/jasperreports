@@ -803,9 +803,8 @@ public class JRStyledTextUtil
 
 	public static void resizeRuns(List<Run> runs, int startIndex, int count)
 	{
-		for (int j = 0; j < runs.size(); j++)
+		for (JRStyledText.Run run : runs)
 		{
-			JRStyledText.Run run = runs.get(j);
 			if (startIndex < run.startIndex)
 			{
 				run.startIndex += count;

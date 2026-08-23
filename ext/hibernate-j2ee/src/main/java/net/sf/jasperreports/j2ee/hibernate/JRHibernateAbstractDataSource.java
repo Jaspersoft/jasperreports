@@ -99,9 +99,8 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		{
 			if (returnTypes[0].isEntityType() || returnTypes[0].isComponentType())
 			{
-				for (int i = 0; i < fields.length; i++)
+				for (JRField field : fields)
 				{
-					JRField field = fields[i];
 					readers.put(field.getName(), getFieldReaderSingleReturn(aliasesMap, field, useIndexOnSingleReturn));
 				}
 			}
@@ -131,9 +130,8 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		}
 		else
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRField field : fields)
 			{
-				JRField field = fields[i];
 				readers.put(field.getName(), getFieldReader(returnTypes, aliasesMap, field));				
 			}
 		}

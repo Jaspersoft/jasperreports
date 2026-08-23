@@ -1305,10 +1305,8 @@ public class JRFillChart extends JRFillElement implements JRChart
 
 		if (seriesColors != null)
 		{
-			Iterator<JRSeriesColor> iter = seriesColors.iterator();
-			while (iter.hasNext())
+			for (JRSeriesColor seriesColor : seriesColors)
 			{
-				JRSeriesColor seriesColor = iter.next();
 				renderer.setSeriesPaint(seriesColor.getSeriesOrder(), seriesColor.getColor());
 			}
 		}
@@ -1333,10 +1331,8 @@ public class JRFillChart extends JRFillElement implements JRChart
 
 		if (seriesColors != null)
 		{
-			Iterator<JRSeriesColor> iter = seriesColors.iterator();
-			while (iter.hasNext())
+			for (JRSeriesColor seriesColor : seriesColors)
 			{
-				JRSeriesColor seriesColor = iter.next();
 				renderer.setSeriesPaint(seriesColor.getSeriesOrder(), seriesColor.getColor());
 			}
 		}

@@ -343,10 +343,8 @@ public class Olap4jXmlaQueryExecuter extends JRAbstractQueryExecuter
 		JRXmlaMemberTuple tuple = new JRXmlaMemberTuple(p.getMembers().size());
 		int memNum = 0;
 
-		Iterator<Member> it = p.getMembers().iterator();
-		while (it.hasNext())
+		for (Member m : p.getMembers())
 		{
-			Member m = it.next();
 			String hierName = m.getHierarchy().getName();
 			String uName = m.getUniqueName();
 			/* the OLAP4J API changed between 0.9.7 and 1.1.0 - deal with it */

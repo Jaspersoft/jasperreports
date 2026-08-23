@@ -24,7 +24,6 @@
 package net.sf.jasperreports.charts.fill;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.charts.JRChartAxis;
@@ -45,10 +44,8 @@ public class JRFillMultiAxisPlot extends JRFillChartPlot implements JRMultiAxisP
 
 		List<JRChartAxis> parentAxes = multiAxisPlot.getAxes();
 		this.axes = new ArrayList<>(parentAxes.size());
-		Iterator<JRChartAxis> iter = parentAxes.iterator();
-		while (iter.hasNext())
+		for (JRChartAxis axis : parentAxes)
 		{
-			JRChartAxis axis = iter.next();
 			this.axes.add(factory.getChartAxis(axis));
 		}
 	}

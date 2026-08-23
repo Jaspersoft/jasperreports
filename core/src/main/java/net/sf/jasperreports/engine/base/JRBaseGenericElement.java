@@ -67,9 +67,8 @@ public class JRBaseGenericElement extends JRBaseElement implements JRGenericElem
 		
 		JRGenericElementParameter[] elementParameters = element.getParameters();
 		this.parameters = new ArrayList<>(elementParameters.length);
-		for (int i = 0; i < elementParameters.length; i++)
+		for (JRGenericElementParameter elementParameter : elementParameters)
 		{
-			JRGenericElementParameter elementParameter = elementParameters[i];
 			JRGenericElementParameter parameter = factory.getGenericElementParameter(
 					elementParameter);
 			this.parameters.add(parameter);

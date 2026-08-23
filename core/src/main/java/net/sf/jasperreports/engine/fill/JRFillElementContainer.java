@@ -124,9 +124,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 
 	private static void collectDeepElements(JRElement[] elements, List<JRFillElement> deepElementsList)
 	{
-		for (int i = 0; i < elements.length; i++)
+		for (JRElement element : elements)
 		{
-			JRElement element = elements[i];
 			deepElementsList.add((JRFillElement)element);
 			
 			if (element instanceof JRFillFrame)
@@ -293,10 +292,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (ySortedElements != null && ySortedElements.length > 0)
 		{
-			for (int i = 0; i < ySortedElements.length; i++)
+			for (JRFillElement element : ySortedElements)
 			{
-				JRFillElement element = ySortedElements[i];
-
 				element.reset();
 				
 				if (!isOverflow)
@@ -522,10 +519,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (stretchElements != null && stretchElements.length > 0)
 		{
-			for (int i = 0; i < stretchElements.length; i++)
+			for (JRFillElement element : stretchElements)
 			{
-				JRFillElement element = stretchElements[i];
-
 				if (element.isToPrint())
 				{
 					boolean applied = element.stretchElementToElementGroup();
@@ -548,10 +543,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		{
 			int containerStretch = stretchHeight - getContainerHeight();
 			
-			for (int i = 0; i < stretchElements.length; i++)
+			for (JRFillElement element : stretchElements)
 			{
-				JRFillElement element = stretchElements[i];
-
 				if (element.isToPrint())
 				{
 					boolean applied = element.stretchElementToContainer(containerStretch);
@@ -581,10 +574,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		//{
 			if (bandBottomElements != null && bandBottomElements.length > 0)
 			{
-				for (int i = 0; i < bandBottomElements.length; i++)
+				for (JRFillElement element : bandBottomElements)
 				{
-					JRFillElement element = bandBottomElements[i];
-
 					if (element.isToPrint())
 					{
 						// band bottom elements do not print if there will be an overflow
@@ -788,9 +779,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		{
 			if (printElements != null && printElements.size() > 0)
 			{
-				for (Iterator<? extends JRPrintElement> it = printElements.iterator(); it.hasNext();)
+				for (JRPrintElement printElement : printElements)
 				{
-					JRPrintElement printElement =it.next();
 					printElement.setX(element.getX() + printElement.getX());
 					printElement.setY(element.getRelativeY() + printElement.getY());
 					printContainer.addElement(printElement);
@@ -807,10 +797,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (ySortedElements != null && ySortedElements.length > 0)
 		{
-			for (int i = 0; i < ySortedElements.length; i++)
+			for (JRFillElement element : ySortedElements)
 			{
-				JRFillElement element = ySortedElements[i];
-
 				element.rewind();
 
 				element.setAlreadyPrinted(false);
@@ -926,9 +914,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
 		if (conditionalStyles != null && conditionalStyles.length > 0)
 		{
-			for (int j = 0; j < conditionalStyles.length; j++) 
+			for (JRConditionalStyle conditionalStyle : conditionalStyles) 
 			{
-				JRConditionalStyle conditionalStyle = conditionalStyles[j];
 				Boolean expressionValue = 
 					(Boolean) expressionEvaluator.evaluate(
 						conditionalStyle.getConditionExpression(),

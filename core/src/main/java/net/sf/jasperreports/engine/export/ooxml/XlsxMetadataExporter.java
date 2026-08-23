@@ -477,9 +477,8 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 	{
 		if (elements != null) 
 		{
-			for (int i = 0; i < elements.size(); ++i) 
+			for (JRPrintElement element : elements) 
 			{
-				JRPrintElement element = elements.get(i);
 				if (element instanceof JRPrintFrame) 
 				{
 					exportElements(((JRPrintFrame) element).getElements(), element.getStyle());

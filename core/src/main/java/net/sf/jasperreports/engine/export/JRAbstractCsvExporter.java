@@ -160,10 +160,8 @@ public abstract class JRAbstractCsvExporter<RC extends CsvReportConfiguration, C
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 		
-		for (int reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (ExporterInputItem item : items)
 		{
-			ExporterInputItem item = items.get(reportIndex);
-
 			setCurrentExporterInputItem(item);
 
 			List<JRPrintPage> pages = jasperPrint.getPages();

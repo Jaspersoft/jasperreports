@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,9 +152,8 @@ public class DefaultExtensionsRegistry implements ExtensionsRegistry
 	{
 		List<ExtensionsRegistry> registries = getRegistries();
 		List<T> extensions = new ArrayList<>(registries.size());
-		for (Iterator<ExtensionsRegistry> it = registries.iterator(); it.hasNext();)
+		for (ExtensionsRegistry registry : registries)
 		{
-			ExtensionsRegistry registry = it.next();
 			List<T> registryExtensions = registry.getExtensions(extensionType);
 			if (registryExtensions != null && !registryExtensions.isEmpty())
 			{
@@ -281,9 +279,8 @@ public class DefaultExtensionsRegistry implements ExtensionsRegistry
 		List<LoadedRegistry> registries = new ArrayList<>();
 		List<PropertySuffix> factoryProps = JRPropertiesUtil.getProperties(properties, 
 				PROPERTY_REGISTRY_FACTORY_PREFIX);
-		for (Iterator<PropertySuffix> it = factoryProps.iterator(); it.hasNext();)
+		for (PropertySuffix factoryProp : factoryProps)
 		{
-			PropertySuffix factoryProp = it.next();
 			String registryId = factoryProp.getSuffix();
 			String factoryClass = factoryProp.getValue();
 			

@@ -97,9 +97,8 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 			boolean managedType = isManagedType(element);
 			if (managedType)
 			{
-				for (int i = 0; i < fields.length; i++)
+				for (JRField field : fields)
 				{
-					JRField field = fields[i];
 					readers.put(field.getName(), getFieldReaderSingleReturn(aliasesMap, field));
 				}
 			}
@@ -122,9 +121,8 @@ public abstract class JRHibernateAbstractDataSource implements JRDataSource
 		}
 		else
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRField field : fields)
 			{
-				JRField field = fields[i];
 				readers.put(field.getName(), getFieldReader(elements, aliasesMap, field));				
 			}
 		}

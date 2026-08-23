@@ -205,19 +205,13 @@ public class JRMondrianQueryExecuter extends JRAbstractQueryExecuter
 				for (int i = 0; i < axis.getTupleCount(); i++)
 				{
 					JROlapMemberTuple memberTuple = axis.getTuple(i);
-					// StringBuilder sb = new StringBuilder();
-					for (int j = 0; j < memberTuple.getMembers().length; j++)
+					for (JROlapMember member : memberTuple.getMembers())
 					{
-						// if (j > 0) { sb.append(", "); }
-						JROlapMember member = memberTuple.getMembers()[j];
-/*							sb.append(member.getName())
-							.append("-")
-							.append(member.getUniqueName())
-							.append("-")
-							.append(member.getDepth());
-*/							
-						if (foundMeasuresLevel && isMeasureMember(member.getUniqueName()) 
-								&& !measureNames.contains(member.getUniqueName())) 
+						if (
+							foundMeasuresLevel 
+							&& isMeasureMember(member.getUniqueName()) 
+							&& !measureNames.contains(member.getUniqueName())
+							) 
 						{
 							measureNames.add(member.getUniqueName());
 						}

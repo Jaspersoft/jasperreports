@@ -99,10 +99,8 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 	{
 		if (xyzSeries != null && xyzSeries .length > 0)
 		{
-			for (int i = 0; i < xyzSeries.length; i++)
+			for (JRFillXyzSeries crtXyzSeries : xyzSeries)
 			{
-				JRFillXyzSeries crtXyzSeries = xyzSeries[i];
-				
 				Comparable<?> seriesName = crtXyzSeries.getSeries();
 				if (seriesName == null)
 				{

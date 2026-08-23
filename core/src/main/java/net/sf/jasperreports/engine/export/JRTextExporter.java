@@ -382,9 +382,8 @@ public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, 
 
 	protected void exportElements(List<JRPrintElement> elements)
 	{
-		for (int i = 0; i < elements.size();i++)
+		for (Object element : elements)
 		{
-			Object element = elements.get(i);
 			if (element instanceof JRPrintText)
 			{
 				exportText((JRPrintText) element);

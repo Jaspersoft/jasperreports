@@ -615,10 +615,8 @@ public class JRGroovyGenerator
 		JRExpressionChunk[] chunks = expression.getChunks();
 		if (chunks != null && chunks.length > 0)
 		{
-			for (int i = 0; i < chunks.length; i++)
+			for (JRExpressionChunk chunk : chunks)
 			{
-				JRExpressionChunk chunk = chunks[i];
-
 				String chunkText = chunk.getText();
 				if (chunkText == null)
 				{

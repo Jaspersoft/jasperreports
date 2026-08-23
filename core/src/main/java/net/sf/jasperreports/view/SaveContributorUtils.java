@@ -24,7 +24,6 @@
 package net.sf.jasperreports.view;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -44,9 +43,8 @@ public class SaveContributorUtils
 		ServiceLoader<SaveContributorFactory> loader = ServiceLoader.load(SaveContributorFactory.class);
 		
 		ArrayList<JRSaveContributor> contributors = new ArrayList<>();
-		for (Iterator<SaveContributorFactory> it = loader.iterator(); it.hasNext();)
+		for (SaveContributorFactory factory : loader)
 		{
-			SaveContributorFactory factory = it.next();
 			JRSaveContributor saveContrib = (JRSaveContributor) factory.create(context, locale, resourceBundle);
 			contributors.add(saveContrib);
 		}

@@ -26,7 +26,6 @@ package net.sf.jasperreports.engine.design;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -628,9 +627,8 @@ public class JRVerifier
 			JRBand[] detailBands = detailSection.getBands();
 			if (detailBands != null && detailBands.length > 0)
 			{
-				for (int i = 0; i< detailBands.length; i++)
+				for (JRBand detailBand : detailBands)
 				{
-					JRBand detailBand = detailBands[i];
 					if (
 						topMargin +
 						(report.getPageHeader() != null ? report.getPageHeader().getHeight() : 0) +
@@ -717,9 +715,8 @@ public class JRVerifier
 			{
 				Map<String, JRParameter> parametersMap = dataset.getParametersMap();
 
-				for (int j = 0; j < chunks.length; j++)
+				for (JRQueryChunk queryChunk : chunks)
 				{
-					JRQueryChunk queryChunk = chunks[j];
 					switch (queryChunk.getType())
 					{
 						case JRQueryChunk.TYPE_PARAMETER :
@@ -779,9 +776,8 @@ public class JRVerifier
 	{
 		if (expressions != null && expressions.size() > 0)
 		{
-			for (Iterator<JRExpression> it = expressions.iterator(); it.hasNext();)
+			for (JRExpression expression : expressions)
 			{
-				JRExpression expression = it.next();
 				verifyExpression(expression, parametersMap, fieldsMap, variablesMap, brokenRules);
 			}
 		}
@@ -802,9 +798,8 @@ public class JRVerifier
 		JRExpressionChunk[] chunks = expression.getChunks();
 		if (chunks != null && chunks.length > 0)
 		{
-			for (int j = 0; j < chunks.length; j++)
+			for (JRExpressionChunk expressionChunk : chunks)
 			{
-				JRExpressionChunk expressionChunk = chunks[j];
 				switch (expressionChunk.getType())
 				{
 					case JRExpressionChunk.TYPE_VARIABLE :
@@ -857,9 +852,8 @@ public class JRVerifier
 		JRReportTemplate[] templates = jasperDesign.getTemplates();
 		if (templates != null)
 		{
-			for (int i = 0; i < templates.length; i++)
+			for (JRReportTemplate template : templates)
 			{
-				JRReportTemplate template = templates[i];
 				verifyTemplate(template);
 			}
 		}
@@ -884,10 +878,8 @@ public class JRVerifier
 		JRStyle[] styles = jasperDesign.getStyles();
 		if (styles != null && styles.length > 0)
 		{
-			for (int index = 0; index < styles.length; index++)
+			for (JRStyle style : styles)
 			{
-				JRStyle style = styles[index];
-
 				if (style.getName() == null || style.getName().trim().length() == 0)
 				{
 					addBrokenRule("Report style name missing.", style);
@@ -906,10 +898,8 @@ public class JRVerifier
 		JRConditionalStyle[] condStyles = style.getConditionalStyles();
 		if (condStyles != null && condStyles.length > 0)
 		{
-			for (int index = 0; index < condStyles.length; index++)
+			for (JRConditionalStyle condStyle : condStyles)
 			{
-				JRConditionalStyle condStyle = condStyles[index];
-
 				if (log.isWarnEnabled())
 				{
 					if (condStyle.getName() != null)
@@ -935,10 +925,8 @@ public class JRVerifier
 		JRParameter[] parameters = dataset.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int index = 0; index < parameters.length; index++)
+			for (JRParameter parameter : parameters)
 			{
-				JRParameter parameter = parameters[index];
-
 				Object errorSource = parameter;
 				if (parameter.isSystemDefined())
 				{
@@ -967,10 +955,8 @@ public class JRVerifier
 		JRField[] fields = dataset.getFields();
 		if (fields != null && fields.length > 0)
 		{
-			for (int index = 0; index < fields.length; index++)
+			for (JRField field : fields)
 			{
-				JRField field = fields[index];
-
 				if (field.getName() == null || field.getName().trim().length() == 0)
 				{
 					addBrokenRule("Field name missing.", field);
@@ -1005,9 +991,8 @@ public class JRVerifier
 		JRSortField[] sortFields = dataset.getSortFields();
 		if (sortFields != null && sortFields.length > 0)
 		{
-			for (int index = 0; index < sortFields.length; index++)
+			for (JRSortField sortField : sortFields)
 			{
-				JRSortField sortField = sortFields[index];
 				String sortFieldName = sortField.getName();
 
 				if (sortFieldName == null || sortFieldName.trim().length() == 0)
@@ -1061,10 +1046,8 @@ public class JRVerifier
 		JRVariable[] variables = dataset.getVariables();
 		if (variables != null && variables.length > 0)
 		{
-			for (int index = 0; index < variables.length; index++)
+			for (JRVariable variable : variables)
 			{
-				JRVariable variable = variables[index];
-
 				if (variable.getName() == null || variable.getName().trim().length() == 0)
 				{
 					addBrokenRule("Variable name missing.", variable);
@@ -1132,10 +1115,8 @@ public class JRVerifier
 		if (groups != null && groups.length > 0)
 		{
 			boolean isMainDataset = dataset.isMainDataset();
-			for (int index = 0; index < groups.length; index++)
+			for (JRGroup group : groups)
 			{
-				JRGroup group = groups[index];
-
 				if (group.getName() == null || group.getName().trim().length() == 0)
 				{
 					addBrokenRule("Group name missing.", group);
@@ -1180,9 +1161,8 @@ public class JRVerifier
 				JRBand[] groupHeaderBands = groupHeaderSection.getBands();
 				if (groupHeaderBands != null && groupHeaderBands.length > 0)
 				{
-					for (int i = 0; i< groupHeaderBands.length; i++)
+					for (JRBand groupHeaderBand : groupHeaderBands)
 					{
-						JRBand groupHeaderBand = groupHeaderBands[i];
 						if (
 							jasperDesign.getTopMargin() +
 							(jasperDesign.getPageHeader() != null ? jasperDesign.getPageHeader().getHeight() : 0) +
@@ -1206,9 +1186,8 @@ public class JRVerifier
 				JRBand[] groupFooterBands = groupFooterSection.getBands();
 				if (groupFooterBands != null && groupFooterBands.length > 0)
 				{
-					for (int i = 0; i< groupFooterBands.length; i++)
+					for (JRBand groupFooterBand : groupFooterBands)
 					{
-						JRBand groupFooterBand = groupFooterBands[i];
 						if (
 							jasperDesign.getTopMargin() +
 							(jasperDesign.getPageHeader() != null ? jasperDesign.getPageHeader().getHeight() : 0) +
@@ -1234,9 +1213,8 @@ public class JRVerifier
 				JRBand[] groupHeaderBands = groupHeaderSection.getBands();
 				if (groupHeaderBands != null && groupHeaderBands.length > 0)
 				{
-					for (int i = 0; i< groupHeaderBands.length; i++)
+					for (JRBand groupHeaderBand : groupHeaderBands)
 					{
-						JRBand groupHeaderBand = groupHeaderBands[i];
 						if (
 							jasperDesign.getTopMargin() +
 							(jasperDesign.getTitle() != null ? jasperDesign.getTitle().getHeight() : 0) +
@@ -1261,9 +1239,8 @@ public class JRVerifier
 				JRBand[] groupFooterBands = groupFooterSection.getBands();
 				if (groupFooterBands != null && groupFooterBands.length > 0)
 				{
-					for (int i = 0; i< groupFooterBands.length; i++)
+					for (JRBand groupFooterBand : groupFooterBands)
 					{
-						JRBand groupFooterBand = groupFooterBands[i];
 						if (
 							jasperDesign.getTopMargin() +
 							(jasperDesign.getTitle() != null ? jasperDesign.getTitle().getHeight() : 0) +
@@ -1431,10 +1408,8 @@ public class JRVerifier
 			JRElement[] elements = band.getElements();
 			if (elements != null && elements.length > 0)
 			{
-				for (int index = 0; index < elements.length; index++)
+				for (JRElement element : elements)
 				{
-					JRElement element = elements[index];
-
 					/*
 					if (element.getY() < 0)
 					{
@@ -1531,9 +1506,8 @@ public class JRVerifier
 			JRHyperlinkParameter[] parameters = hyperlink.getHyperlinkParameters();
 			if (parameters != null)
 			{
-				for (int i = 0; i < parameters.length; i++)
+				for (JRHyperlinkParameter parameter : parameters)
 				{
-					JRHyperlinkParameter parameter = parameters[i];
 					verifyHyperlinkParameter(parameter);
 				}
 			}
@@ -1577,10 +1551,8 @@ public class JRVerifier
 			JRSubreportParameter[] parameters = subreport.getParameters();
 			if (parameters != null && parameters.length > 0)
 			{
-				for (int index = 0; index < parameters.length; index++)
+				for (JRSubreportParameter parameter : parameters)
 				{
-					JRSubreportParameter parameter = parameters[index];
-
 					if (parameter.getName() == null || parameter.getName().trim().length() == 0)
 					{
 						addBrokenRule("Subreport parameter name missing.", parameter);
@@ -1599,10 +1571,8 @@ public class JRVerifier
 			JRSubreportReturnValue[] returnValues = subreport.getReturnValues();
 			if (returnValues != null && returnValues.length > 0)
 			{
-				for (int i = 0; i < returnValues.length; i++)
+				for (JRSubreportReturnValue returnValue : returnValues)
 				{
-					JRSubreportReturnValue returnValue = returnValues[i];
-
 					if (returnValue.getFromVariable() == null || returnValue.getFromVariable().trim().length() == 0)
 					{
 						addBrokenRule("Subreport return value variable name missing.", returnValue);
@@ -1753,10 +1723,8 @@ public class JRVerifier
 		JRCrosstabParameter[] parameters = crosstab.getParameters();
 		if (parameters != null)
 		{
-			for (int i = 0; i < parameters.length; i++)
+			for (JRCrosstabParameter parameter : parameters)
 			{
-				JRCrosstabParameter parameter = parameters[i];
-
 				String paramName = parameter.getName();
 				if (paramName == null || paramName.length() == 0)
 				{
@@ -2023,10 +1991,8 @@ public class JRVerifier
 				boolean heightCalculated = cellHeight != JRCellContents.NOT_CALCULATED;
 				int avlblHeight = cellHeight - topPadding - bottomPadding;
 
-				for (int i = 0; i < elements.length; i++)
+				for (JRElement element : elements)
 				{
-					JRElement element = elements[i];
-
 					if (widthCalculated && element.getX() + element.getWidth() > avlblWidth)
 					{
 						addBrokenRule("Element reaches outside " + cellText + " width: x=" + element.getX() + ", width="
@@ -2145,10 +2111,8 @@ public class JRVerifier
 		JRDatasetParameter[] parameters = datasetRun.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int index = 0; index < parameters.length; index++)
+			for (JRDatasetParameter parameter : parameters)
 			{
-				JRDatasetParameter parameter = parameters[index];
-
 				String paramName = parameter.getName();
 				if (paramName == null || paramName.trim().length() == 0)
 				{
@@ -2239,10 +2203,8 @@ public class JRVerifier
 
 			int avlblWidth = frame.getWidth() - leftPadding - rightPadding;
 
-			for (int i = 0; i < elements.length; i++)
+			for (JRElement element : elements)
 			{
-				JRElement element = elements[i];
-
 				if (element.getX() + element.getWidth() > avlblWidth)
 				{
 					addBrokenRule("Element reaches outside frame width: x=" + element.getX() + ", width="
@@ -2446,10 +2408,8 @@ public class JRVerifier
 		}
 		
 		JRGenericElementParameter[] parameters = element.getParameters();
-		for (int i = 0; i < parameters.length; i++)
+		for (JRGenericElementParameter parameter : parameters)
 		{
-			JRGenericElementParameter parameter = parameters[i];
-			
 			if (parameter.getName() == null)
 			{
 				addBrokenRule("No name set for generic element parameter", parameter);
@@ -2470,9 +2430,8 @@ public class JRVerifier
 				&& elements != null && elements.length > 0
 				)
 			{
-				for (int i = 0; i < elements.length; i++)
+				for (JRElement element : elements)
 				{
-					JRElement element = elements[i];
 					int bottom = element.getY() + element.getHeight();
 					breakHeight = bottom < breakHeight ? bottom : breakHeight;
 				}

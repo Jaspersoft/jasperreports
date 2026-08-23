@@ -166,9 +166,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				Object expressionValue = evaluate(variable.getExpression());
 				Object newValue = variable.getIncrementer().increment(variable, expressionValue, AbstractValueProvider.getCurrentValueProvider());
 				variable.setValue(newValue);
@@ -184,9 +183,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 
 		if (incrementDatasets && datasets != null && datasets.length > 0)
 		{
-			for (int i = 0; i < datasets.length; i++)
+			for (JRFillElementDataset elementDataset : datasets)
 			{
-				JRFillElementDataset elementDataset = datasets[i];
 				elementDataset.evaluate(this);
 
 				if (elementDataset.getIncrementType() == IncrementTypeEnum.NONE)
@@ -219,9 +217,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				Object expressionValue = evaluateEstimated(variable.getExpression());
 				Object newValue = variable.getIncrementer().increment(variable, expressionValue,  AbstractValueProvider.getEstimatedValueProvider());
 				variable.setEstimatedValue(newValue);
@@ -270,9 +267,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 			// into the group expression of outer groups
 			if (variables != null && variables.length > 0)
 			{
-				for (int i = 0; i < variables.length; i++)
+				for (JRFillVariable variable : variables)
 				{
-					JRFillVariable variable = variables[i];
 					if (variable.getIncrementType() == IncrementTypeEnum.GROUP)
 					{
 						JRFillGroup group = grpsm.get(variable.getIncrementGroup());
@@ -289,10 +285,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 			estimateVariables();
 
 			boolean groupHasChanged = false;
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				JRFillGroup group = groups[i];
-				
 				boolean isTopLevelChange = false;
 
 				if (!groupHasChanged)

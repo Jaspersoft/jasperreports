@@ -170,8 +170,7 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 
 			if (columnNamesList != null && columnNamesList.size() > 0) {
 				List<String> splitColumnNamesList = new ArrayList<>();
-				for (int i = 0; i < columnNamesList.size(); i++) {
-					String names = columnNamesList.get(i);
+				for (String names : columnNamesList) {
 					for (String token: names.split(",")){
 						splitColumnNamesList.add(token.trim());
 					}

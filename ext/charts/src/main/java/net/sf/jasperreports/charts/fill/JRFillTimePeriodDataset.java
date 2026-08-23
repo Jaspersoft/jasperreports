@@ -126,10 +126,8 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for (int i = 0; i < timePeriodSeries.length; i++)
+			for (JRFillTimePeriodSeries crtTimePeriodSeries : timePeriodSeries)
 			{
-				JRFillTimePeriodSeries crtTimePeriodSeries = timePeriodSeries[i];
-
 				Comparable<?> seriesName = crtTimePeriodSeries.getSeries();
 				if (seriesName == null)
 				{
@@ -175,9 +173,8 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 		TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
 		if (seriesNames != null)
 		{
-			for (int i = 0; i < seriesNames.size(); i++)
+			for (Comparable<?> seriesName : seriesNames)
 			{
-				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));
 			}
 		}

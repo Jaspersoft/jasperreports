@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -741,9 +740,8 @@ public class JRExpressionCollector
 		JRReportTemplate[] templates = report.getTemplates();
 		if (templates != null)
 		{
-			for (int i = 0; i < templates.length; i++)
+			for (JRReportTemplate template : templates)
 			{
-				JRReportTemplate template = templates[i];
 				collect(template);
 			}
 		}
@@ -830,9 +828,8 @@ public class JRExpressionCollector
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRVariable variable : variables)
 			{
-				JRVariable variable = variables[i];
 				addExpression(variable.getExpression());
 				addExpression(variable.getInitialValueExpression());
 			}
@@ -846,9 +843,8 @@ public class JRExpressionCollector
 	{
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRGroup group : groups)
 			{
-				JRGroup group = groups[i];
 				addExpression(group.getExpression());
 
 				collect(group.getGroupHeaderSection());
@@ -861,9 +857,8 @@ public class JRExpressionCollector
 	{
 		if (scriptlets != null && scriptlets.length > 0)
 		{
-			for (int i = 0; i < scriptlets.length; i++)
+			for (JRScriptlet scriptlet : scriptlets)
 			{
-				JRScriptlet scriptlet = scriptlets[i];
 				collectPropertyExpressions(scriptlet.getPropertyExpressions());
 			}
 		}
@@ -1008,9 +1003,8 @@ public class JRExpressionCollector
 			JRHyperlinkParameter[] hyperlinkParameters = hyperlink.getHyperlinkParameters();
 			if (hyperlinkParameters != null)
 			{
-				for (int i = 0; i < hyperlinkParameters.length; i++)
+				for (JRHyperlinkParameter parameter : hyperlinkParameters)
 				{
-					JRHyperlinkParameter parameter = hyperlinkParameters[i];
 					collectHyperlinkParameter(parameter);
 				}
 			}
@@ -1150,9 +1144,8 @@ public class JRExpressionCollector
 		JRCrosstabRowGroup[] rowGroups = crosstab.getRowGroups();
 		if (rowGroups != null)
 		{
-			for (int i = 0; i < rowGroups.length; i++)
+			for (JRCrosstabRowGroup rowGroup : rowGroups)
 			{
-				JRCrosstabRowGroup rowGroup = rowGroups[i];
 				JRCrosstabBucket bucket = rowGroup.getBucket();
 				datasetCollector.addExpression(bucket.getExpression());
 				
@@ -1169,9 +1162,8 @@ public class JRExpressionCollector
 		JRCrosstabColumnGroup[] colGroups = crosstab.getColumnGroups();
 		if (colGroups != null)
 		{
-			for (int i = 0; i < colGroups.length; i++)
+			for (JRCrosstabColumnGroup columnGroup : colGroups)
 			{
-				JRCrosstabColumnGroup columnGroup = colGroups[i];
 				JRCrosstabBucket bucket = columnGroup.getBucket();
 				datasetCollector.addExpression(bucket.getExpression());
 				
@@ -1215,9 +1207,8 @@ public class JRExpressionCollector
 
 			if (cellsList != null)
 			{
-				for (Iterator<JRCrosstabCell> iter = cellsList.iterator(); iter.hasNext();)
+				for (JRCrosstabCell cell : cellsList)
 				{
-					JRCrosstabCell cell = iter.next();
 					crosstabCollector.collect(cell.getContents());
 				}
 			}
@@ -1370,9 +1361,8 @@ public class JRExpressionCollector
 		collectElement(element);
 		
 		JRGenericElementParameter[] parameters = element.getParameters();
-		for (int i = 0; i < parameters.length; i++)
+		for (JRGenericElementParameter parameter : parameters)
 		{
-			JRGenericElementParameter parameter = parameters[i];
 			addExpression(parameter.getValueExpression());
 		}
 	}

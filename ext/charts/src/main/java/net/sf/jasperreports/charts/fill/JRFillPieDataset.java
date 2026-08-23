@@ -26,7 +26,6 @@ package net.sf.jasperreports.charts.fill;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -206,10 +205,8 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 	{
 		if (pieSeries != null && pieSeries.length > 0)
 		{
-			for (int i = 0; i < pieSeries.length; i++)
+			for (JRFillPieSeries crtPieSeries : pieSeries)
 			{
-				JRFillPieSeries crtPieSeries = pieSeries[i];
-				
 				Comparable<?> key = crtPieSeries.getKey();
 				if (key == null)
 				{
@@ -277,9 +274,8 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 		double otherTotal = 0;
 		
 		DefaultPieDataset dataset = new DefaultPieDataset();
-		for (Iterator<Comparable<?>> it = values.keySet().iterator(); it.hasNext();)
+		for (Comparable<?> key : values.keySet())
 		{
-			Comparable<?> key = it.next();
 			Number value = values.get(key);
 			
 			if (

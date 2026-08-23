@@ -2838,9 +2838,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 					List<JRPrintHyperlinkParameter> parameters = link.getHyperlinkParameters() == null ? null : link.getHyperlinkParameters().getParameters();
 					if (parameters != null)
 					{
-						for (Iterator<JRPrintHyperlinkParameter> it = parameters.iterator(); it.hasNext();)
+						for (JRPrintHyperlinkParameter parameter : parameters)
 						{
-							JRPrintHyperlinkParameter parameter = it.next();
 							if (link.getLinkTarget().equals(parameter.getName()))
 							{
 								target = parameter.getValue() == null ? null : parameter.getValue().toString();

@@ -473,9 +473,8 @@ public class PropertyStyleProvider implements StyleProvider
 					JRExpressionChunk[] chunks = expression.getChunks();
 					if (chunks != null)
 					{
-						for (int i = 0; i < chunks.length; i++)
+						for (JRExpressionChunk chunk : chunks)
 						{
-							JRExpressionChunk chunk = chunks[i];
 							switch (chunk.getType())
 							{
 								case JRExpressionChunk.TYPE_FIELD:

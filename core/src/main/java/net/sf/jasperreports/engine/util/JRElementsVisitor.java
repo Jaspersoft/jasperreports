@@ -93,9 +93,8 @@ public class JRElementsVisitor extends JRDelegationVisitor implements ElementsVi
 		JRGroup[] groups = report.getGroups();
 		if (groups != null)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRGroup group : groups)
 			{
-				JRGroup group = groups[i];
 				visitSection(group.getGroupHeaderSection());
 				visitSection(group.getGroupFooterSection());
 			}

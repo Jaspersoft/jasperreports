@@ -25,7 +25,6 @@ package net.sf.jasperreports.engine.base;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRChild;
@@ -63,9 +62,8 @@ public class JRBaseFrame extends JRBaseElement implements JRFrame
 		if (frameChildren != null)
 		{
 			children = new ArrayList<>(frameChildren.size());
-			for (Iterator<JRChild> it = frameChildren.iterator(); it.hasNext();)
+			for (JRChild child : frameChildren)
 			{
-				JRChild child = it.next();
 				children.add((JRChild)factory.getVisitResult(child));
 			}
 		}

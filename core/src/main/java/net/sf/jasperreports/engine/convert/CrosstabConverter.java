@@ -32,7 +32,6 @@
 package net.sf.jasperreports.engine.convert;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.crosstabs.JRCellContents;
@@ -180,9 +179,8 @@ public final class CrosstabConverter extends FrameConverter
 	 */
 	private void mirrorElements(List<JRPrintElement> elements, int x, int width)
 	{
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			int mirrorX = width - element.getX() - element.getWidth();
 			element.setX(mirrorX);
 		}

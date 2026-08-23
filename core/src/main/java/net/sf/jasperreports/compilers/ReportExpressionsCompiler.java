@@ -25,7 +25,6 @@ package net.sf.jasperreports.compilers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -75,9 +74,8 @@ public class ReportExpressionsCompiler
 		
 		Map<Integer, DirectExpressionEvaluation> directEvaluations = new HashMap<>();
 		List<JRExpression> expressions = expressionCollector.getExpressions();
-		for (Iterator<JRExpression> it = expressions.iterator(); it.hasNext();)
+		for (JRExpression expression : expressions)
 		{
-			JRExpression expression = it.next();
 			DirectExpressionEvaluation directEvaluation = directEvaluation(expression);
 			if (directEvaluation == null)
 			{

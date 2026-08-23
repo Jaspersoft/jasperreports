@@ -178,9 +178,8 @@ public class JROlapDataSource implements JRDataSource, MappingMetadata
 			}
 
 			resetMaxDepths();
-			for (Iterator<Map.Entry<Object, FieldMatcher>> it = fieldMatchers.entrySet().iterator(); it.hasNext();)
+			for (Map.Entry<Object, FieldMatcher> entry : fieldMatchers.entrySet())
 			{
-				Map.Entry<Object, FieldMatcher> entry = it.next();
 				Object fieldName = entry.getKey();
 				FieldMatcher matcher = entry.getValue();
 				if (matcher.matches())
@@ -344,9 +343,8 @@ public class JROlapDataSource implements JRDataSource, MappingMetadata
 		JRField[] fields = dataset.getFields();
 		if (fields != null)
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRField field : fields)
 			{
-				JRField field = fields[i];
 				String fieldMapping = getFieldMapping(field);
 				if (log.isDebugEnabled())
 				{
@@ -532,9 +530,8 @@ public class JROlapDataSource implements JRDataSource, MappingMetadata
 		JROlapHierarchy hierarchy = axes[pos.getAxis().getIdx()].getHierarchiesOnAxis()[pos.getIdx()];
 		JROlapHierarchyLevel[] levels = hierarchy.getLevels();
 		int levelIndex = -1;
-		for (int i = 0; i < levels.length; i++)
+		for (JROlapHierarchyLevel level : levels)
 		{
-			JROlapHierarchyLevel level = levels[i];
 			if (level != null && level.getName().equals(levelName))
 			{
 				levelIndex = level.getDepth();
@@ -704,9 +701,8 @@ public class JROlapDataSource implements JRDataSource, MappingMetadata
 			boolean matches = true;
 			if (members != null)
 			{
-				for (int i = 0; i < members.length; i++)
+				for (Member memberInfo : members)
 				{
-					Member memberInfo = members[i];
 					JROlapMember member = member(memberInfo, positions);
 					setMatchMemberDepth(memberInfo, member);
 					if (!memberInfo.matches(member))

@@ -188,9 +188,8 @@ public class JRCsvMetadataExporter extends JRAbstractCsvExporter<CsvMetadataRepo
 			boolean hasDefinedColumns)  throws IOException
 	{
 		
-		for (int i = 0; i < elements.size(); ++i) 
+		for (Object element : elements) 
 		{
-			Object element = elements.get(i);
 			if (element instanceof JRPrintText) 
 			{
 				exportText((JRPrintText) element, configuration, currentRow, repeatedValues, hasDefinedColumns);

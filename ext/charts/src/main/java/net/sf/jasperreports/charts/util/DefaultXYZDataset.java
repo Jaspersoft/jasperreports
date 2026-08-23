@@ -24,7 +24,6 @@
 package net.sf.jasperreports.charts.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.data.xy.AbstractXYZDataset;
@@ -56,8 +55,7 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	 */
 	public void addValue( Comparable<?> series, Number xValue, Number yValue, Number zValue ){
 		boolean found = false;
-		for ( Iterator<XYZElement> it = dataset.iterator(); it.hasNext(); ){
-			XYZElement element = it.next();
+		for (XYZElement element : dataset){
 			if ( element.getSeries().equals( series )){
 				element.addElement( xValue, yValue, zValue );
 				found = true;

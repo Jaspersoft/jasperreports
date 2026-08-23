@@ -1197,9 +1197,8 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		JRPrintHyperlinkParameters hyperlinkParameters = hyperlink.getHyperlinkParameters();
 		if (hyperlinkParameters != null)
 		{
-			for (Iterator<JRPrintHyperlinkParameter> it = hyperlinkParameters.getParameters().iterator(); it.hasNext();)
+			for (JRPrintHyperlinkParameter parameter : hyperlinkParameters.getParameters())
 			{
-				JRPrintHyperlinkParameter parameter = it.next();
 				exportHyperlinkParameter(parameter);
 			}
 		}
@@ -1249,9 +1248,8 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 			xmlWriter.closeElement();//genericElementType
 			
 			Set<String> names = element.getParameterNames();
-			for (Iterator<String> it = names.iterator(); it.hasNext();)
+			for (String name : names)
 			{
-				String name = it.next();
 				Object value = element.getParameterValue(name);
 				xmlWriter.startElement(JRXmlConstants.ELEMENT_genericElementParameter);
 				xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_name, name);

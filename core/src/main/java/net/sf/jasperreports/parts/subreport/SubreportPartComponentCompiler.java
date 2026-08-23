@@ -76,10 +76,8 @@ public class SubreportPartComponentCompiler implements PartComponentCompiler
 		JRSubreportParameter[] parameters = subreportComponent.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int index = 0; index < parameters.length; index++)
+			for (JRSubreportParameter parameter : parameters)
 			{
-				JRSubreportParameter parameter = parameters[index];
-
 				if (parameter.getName() == null || parameter.getName().trim().length() == 0)
 				{
 					verifier.addBrokenRule("Subreport part parameter name missing.", parameter);
@@ -90,10 +88,8 @@ public class SubreportPartComponentCompiler implements PartComponentCompiler
 		JRSubreportReturnValue[] returnValues = subreportComponent.getReturnValues();
 		if (returnValues != null && returnValues.length > 0)
 		{
-			for (int i = 0; i < returnValues.length; i++)
+			for (JRSubreportReturnValue returnValue : returnValues)
 			{
-				JRSubreportReturnValue returnValue = returnValues[i];
-
 				if (returnValue.getFromVariable() == null || returnValue.getFromVariable().trim().length() == 0)
 				{
 					verifier.addBrokenRule("Subreport part return value variable name missing.", returnValue);

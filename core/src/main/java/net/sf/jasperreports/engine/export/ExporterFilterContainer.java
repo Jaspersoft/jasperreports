@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.engine.export;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRPrintElement;
@@ -68,9 +67,8 @@ public class ExporterFilterContainer implements ResetableExporterFilter
 	public boolean isToExport(JRPrintElement element)
 	{
 		boolean export = true;
-		for (Iterator<ExporterFilter> it = filters.iterator(); it.hasNext();)
+		for (ExporterFilter filter : filters)
 		{
-			ExporterFilter filter = it.next();
 			if (!filter.isToExport(element))
 			{
 				export = false;

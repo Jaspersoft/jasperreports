@@ -185,9 +185,8 @@ public class OsgiApp
 			System.out.println("Filling reports via bundle-loaded JasperFillManager...");
 
 			File[] files = getFiles(new File("target/reports"), "jasper");
-			for (int i = 0; i < files.length; i++)
+			for (File reportFile : files)
 			{
-				File reportFile = files[i];
 				long start = System.currentTimeMillis();
 				fillMethod.invoke(
 					null,
@@ -223,9 +222,8 @@ public class OsgiApp
 			System.out.println("Exporting reports via bundle-loaded JasperExportManager...");
 
 			File[] files = getFiles(new File("target/reports"), "jrprint");
-			for (int i = 0; i < files.length; i++)
+			for (File reportFile : files)
 			{
-				File reportFile = files[i];
 				long start = System.currentTimeMillis();
 				exportMethod.invoke(null, reportFile.getAbsolutePath(), false);
 				System.out.println("Report : " + reportFile + ". XML export time : " + (System.currentTimeMillis() - start));
@@ -257,9 +255,8 @@ public class OsgiApp
 			System.out.println("Exporting reports to PDF via bundle-loaded JasperExportManager...");
 
 			File[] files = getFiles(new File("target/reports"), "jrprint");
-			for (int i = 0; i < files.length; i++)
+			for (File reportFile : files)
 			{
-				File reportFile = files[i];
 				long start = System.currentTimeMillis();
 				exportMethod.invoke(null, reportFile.getAbsolutePath());
 				System.out.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
@@ -321,9 +318,8 @@ public class OsgiApp
 		String[] files = parentFile.list();
 		if (files != null)
 		{
-			for (int i = 0; i < files.length; i++)
+			for (String reportFile : files)
 			{
-				String reportFile = files[i];
 				if (reportFile.endsWith("." + extension))
 				{
 					fileList.add(new File(parentFile, reportFile)); 

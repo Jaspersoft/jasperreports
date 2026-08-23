@@ -173,9 +173,8 @@ public class XalanXPathQueryExecuter extends JRAbstractQueryExecuter
 		String xmlnsPrefix = XalanXPathQueryExecuterFactory.XML_NAMESPACE_PREFIX;
 		List<PropertySuffix> nsProperties = JRPropertiesUtil.getProperties(dataset, xmlnsPrefix);
 		
-		for (int i=0; i < nsProperties.size(); ++i) 
+		for (PropertySuffix prop : nsProperties) 
 		{
-			PropertySuffix prop = nsProperties.get(i);
 			String nsPrefix = prop.getKey().substring(xmlnsPrefix.length());
 			if (nsPrefix.length() > 0) 
 			{

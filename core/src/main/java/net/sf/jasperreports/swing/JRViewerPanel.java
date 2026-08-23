@@ -918,10 +918,8 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	{
 		if (elements != null && elements.size() > 0)
 		{
-			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (JRPrintElement element : elements)
 			{
-				JRPrintElement element = it.next();
-
 				AreaHyperlinksRenderable imageMap = null;
 				if (element instanceof JRPrintImage)
 				{

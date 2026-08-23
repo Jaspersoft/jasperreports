@@ -565,10 +565,8 @@ public class JRVerticalFiller extends JRBaseFiller
 	{
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				JRFillGroup group = groups[i];
-
 				if (isFillAll || group.hasChanged())
 				{
 					fillGroupHeader(group);
@@ -739,10 +737,8 @@ public class JRVerticalFiller extends JRBaseFiller
 		JRFillSection groupHeaderSection = (JRFillSection)group.getGroupHeaderSection();
 
 		JRFillBand[] groupHeaderBands = groupHeaderSection.getFillBands();
-		for (int i = 0; i < groupHeaderBands.length; i++)
+		for (JRFillBand groupHeaderBand : groupHeaderBands)
 		{
-			JRFillBand groupHeaderBand = groupHeaderBands[i];
-
 			groupHeaderBand.evaluatePrintWhenExpression(evaluation);
 
 			if (groupHeaderBand.isToPrint())
@@ -782,10 +778,8 @@ public class JRVerticalFiller extends JRBaseFiller
 		}
 
 		JRFillBand[] detailBands = detailSection.getFillBands();
-		for (int i = 0; i < detailBands.length; i++)
+		for (JRFillBand detailBand : detailBands)
 		{
-			JRFillBand detailBand = detailBands[i];
-			
 			detailBand.evaluatePrintWhenExpression(JRExpression.EVALUATION_ESTIMATED);
 
 			if (detailBand.isToPrint())
@@ -813,10 +807,8 @@ public class JRVerticalFiller extends JRBaseFiller
 		boolean keepDetailElementRangeForOrphanFooter = true;
 		boolean atLeastOneDetailBandPrinted = false;
 		
-		for (int i = 0; i < detailBands.length; i++)
+		for (JRFillBand detailBand : detailBands)
 		{
-			JRFillBand detailBand = detailBands[i];
-					
 			detailBand.evaluatePrintWhenExpression(JRExpression.EVALUATION_DEFAULT);
 
 			if (detailBand.isToPrint())
@@ -978,10 +970,8 @@ public class JRVerticalFiller extends JRBaseFiller
 		}
 
 		JRFillBand[] groupFooterBands = groupFooterSection.getFillBands();
-		for (int i = 0; i < groupFooterBands.length; i++)
+		for (JRFillBand groupFooterBand : groupFooterBands)
 		{
-			JRFillBand groupFooterBand = groupFooterBands[i];
-			
 			groupFooterBand.evaluatePrintWhenExpression(evaluation);
 
 			if (groupFooterBand.isToPrint())

@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.charts;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.charts.type.ChartTypeEnum;
@@ -419,10 +418,8 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		List<JRMeterInterval> intervals = meterPlot.getIntervals();
 		if (intervals != null)
 		{
-			Iterator<JRMeterInterval> iter = intervals.iterator();
-			while (iter.hasNext())
+			for (JRMeterInterval interval : intervals)
 			{
-				JRMeterInterval interval = iter.next();
 				collect(interval.getDataRange());
 			}
 		}

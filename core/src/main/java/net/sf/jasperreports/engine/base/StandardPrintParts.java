@@ -111,10 +111,8 @@ public class StandardPrintParts implements PrintParts, Serializable
 	{
 		//FIXMEBOOK faster implementation?
 		int partIndex = 0;
-		Iterator<Integer> it = parts.keySet().iterator();
-		while (it.hasNext())
+		for (Integer pgIdx : parts.keySet())
 		{
-			Integer pgIdx = it.next(); 
 			if (pageIndex < pgIdx)
 			{
 				break;

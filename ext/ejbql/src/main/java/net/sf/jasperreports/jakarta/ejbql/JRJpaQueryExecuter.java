@@ -24,7 +24,6 @@
 package net.sf.jasperreports.jakarta.ejbql;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -208,8 +207,7 @@ public class JRJpaQueryExecuter extends JRAbstractQueryExecuter
 		if (!parameterNames.isEmpty()) {
 			// Use set to prevent the parameter to be set multiple times.
 			Set<String> namesSet = new HashSet<>();
-			for (Iterator<String> iter = parameterNames.iterator(); iter.hasNext();) {
-				String parameterName = iter.next();
+			for (String parameterName : parameterNames) {
 				if (namesSet.add(parameterName)) {
 					JRValueParameter parameter = getValueParameter(parameterName);
 					String ejbParamName = getEjbqlParameterName(parameterName);
@@ -229,8 +227,7 @@ public class JRJpaQueryExecuter extends JRAbstractQueryExecuter
 		// First, set query hints supplied by the JPA_QUERY_HINTS_MAP parameter.
 		Map<String,Object> queryHintsMap = (Map<String,Object>)getParameterValue(EjbqlConstants.PARAMETER_JPA_QUERY_HINTS_MAP);
 		if (queryHintsMap != null) {
-			for (Iterator<Map.Entry<String,Object>> i = queryHintsMap.entrySet().iterator(); i.hasNext(); ) {
-				Map.Entry<String,Object> pairs = i.next();
+			for (Map.Entry<String,Object> pairs : queryHintsMap.entrySet()) {
 				if (log.isDebugEnabled()) {
 					log.debug("EJBQL query hint [" + pairs.getKey() + "] set.");
 				}
@@ -242,8 +239,7 @@ public class JRJpaQueryExecuter extends JRAbstractQueryExecuter
 		// This property will result in a query hint set with the name: fetchSize
 		List<PropertySuffix> properties = JRPropertiesUtil.getProperties(dataset, 
 				PROPERTY_JPA_QUERY_HINT_PREFIX);
-		for (Iterator<PropertySuffix> it = properties.iterator(); it.hasNext();) {
-			PropertySuffix property = it.next();
+		for (PropertySuffix property : properties) {
 			String queryHint = property.getSuffix();
 			if (queryHint.length() > 0) {
 				String value = property.getValue();

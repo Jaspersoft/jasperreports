@@ -77,9 +77,8 @@ public class JRBaseElementGroup implements JRElementGroup, Serializable
 		List<JRChild> list = elementGrp.getChildren();
 		if (list != null && list.size() > 0)
 		{
-			for (int i = 0; i < list.size(); i++)
+			for (JRChild child : list)
 			{
-				JRChild child = list.get(i);
 				child = (JRChild)factory.getVisitResult(child);
 				children.add(child);
 			}

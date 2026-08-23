@@ -126,10 +126,8 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for (int i = 0; i < xySeries.length; i++)
+			for (JRFillXySeries crtXySeries : xySeries)
 			{
-				JRFillXySeries crtXySeries = xySeries[i];
-
 				Comparable<?> seriesName = crtXySeries.getSeries();
 				XYSeries xySrs = seriesMap.get(seriesName);
 				if (xySrs == null)
@@ -166,9 +164,8 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		if (seriesNames != null)
 		{
-			for (int i = 0; i < seriesNames.size(); i++)
+			for (Comparable<?> seriesName : seriesNames)
 			{
-				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));
 			}
 		}

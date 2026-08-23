@@ -448,14 +448,12 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	{
 		addVariable(rowGroup.getVariable());
 		
-		for (Iterator<JRCrosstabMeasure> measureIt = measures.iterator(); measureIt.hasNext();)
+		for (JRCrosstabMeasure measure : measures)
 		{
-			JRCrosstabMeasure measure = measureIt.next();
 			addTotalVar(measure, rowGroup, null);
 			
-			for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+			for (JRCrosstabColumnGroup colGroup : columnGroups)
 			{
-				JRCrosstabColumnGroup colGroup = colIt.next();
 				addTotalVar(measure, rowGroup, colGroup);
 			}
 		}
@@ -535,14 +533,12 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	{
 		addVariable(colGroup.getVariable());
 		
-		for (Iterator<JRCrosstabMeasure> measureIt = measures.iterator(); measureIt.hasNext();)
+		for (JRCrosstabMeasure measure : measures)
 		{
-			JRCrosstabMeasure measure = measureIt.next();
 			addTotalVar(measure, null, colGroup);
 
-			for (Iterator<JRCrosstabRowGroup> rowIt = rowGroups.iterator(); rowIt.hasNext();)
+			for (JRCrosstabRowGroup rowGroup : rowGroups)
 			{
-				JRCrosstabRowGroup rowGroup = rowIt.next();
 				addTotalVar(measure, rowGroup, colGroup);
 			}
 		}
@@ -616,20 +612,17 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	{
 		addVariable(measure.getVariable());
 		
-		for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+		for (JRCrosstabColumnGroup colGroup : columnGroups)
 		{
-			JRCrosstabColumnGroup colGroup = colIt.next();
 			addTotalVar(measure, null, colGroup);
 		}
 		
-		for (Iterator<JRCrosstabRowGroup> rowIt = rowGroups.iterator(); rowIt.hasNext();)
+		for (JRCrosstabRowGroup rowGroup : rowGroups)
 		{
-			JRCrosstabRowGroup rowGroup = rowIt.next();
 			addTotalVar(measure, rowGroup, null);
 			
-			for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+			for (JRCrosstabColumnGroup colGroup : columnGroups)
 			{
-				JRCrosstabColumnGroup colGroup = colIt.next();
 				addTotalVar(measure, rowGroup, colGroup);
 			}
 		}
@@ -718,14 +711,12 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	{
 		removeVariable(rowGroup.getVariable());
 		
-		for (Iterator<JRCrosstabMeasure> measureIt = measures.iterator(); measureIt.hasNext();)
+		for (JRCrosstabMeasure measure : measures)
 		{
-			JRCrosstabMeasure measure = measureIt.next();
 			removeTotalVar(measure, rowGroup, null);
 			
-			for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+			for (JRCrosstabColumnGroup colGroup : columnGroups)
 			{
-				JRCrosstabColumnGroup colGroup = colIt.next();
 				removeTotalVar(measure, rowGroup, colGroup);
 			}
 		}
@@ -790,14 +781,12 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	{
 		removeVariable(colGroup.getVariable());
 		
-		for (Iterator<JRCrosstabMeasure> measureIt = measures.iterator(); measureIt.hasNext();)
+		for (JRCrosstabMeasure measure : measures)
 		{
-			JRCrosstabMeasure measure = measureIt.next();
 			removeTotalVar(measure, null, colGroup);
 
-			for (Iterator<JRCrosstabRowGroup> rowIt = rowGroups.iterator(); rowIt.hasNext();)
+			for (JRCrosstabRowGroup rowGroup : rowGroups)
 			{
-				JRCrosstabRowGroup rowGroup = rowIt.next();
 				removeTotalVar(measure, rowGroup, colGroup);
 			}
 		}
@@ -851,20 +840,17 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	{
 		removeVariable(measure.getVariable());
 		
-		for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+		for (JRCrosstabColumnGroup colGroup : columnGroups)
 		{
-			JRCrosstabColumnGroup colGroup = colIt.next();
 			removeTotalVar(measure, null, colGroup);
 		}
 		
-		for (Iterator<JRCrosstabRowGroup> rowIt = rowGroups.iterator(); rowIt.hasNext();)
+		for (JRCrosstabRowGroup rowGroup : rowGroups)
 		{
-			JRCrosstabRowGroup rowGroup = rowIt.next();
 			removeTotalVar(measure, rowGroup, null);
 			
-			for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+			for (JRCrosstabColumnGroup colGroup : columnGroups)
 			{
-				JRCrosstabColumnGroup colGroup = colIt.next();
 				removeTotalVar(measure, rowGroup, colGroup);
 			}
 		}
@@ -1686,20 +1672,17 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 	
 	protected void measureClassChanged(JRDesignCrosstabMeasure measure, String valueClassName)
 	{
-		for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+		for (JRCrosstabColumnGroup colGroup : columnGroups)
 		{
-			JRCrosstabColumnGroup colGroup = colIt.next();
 			setTotalVarClass(measure, null, colGroup, valueClassName);
 		}
 		
-		for (Iterator<JRCrosstabRowGroup> rowIt = rowGroups.iterator(); rowIt.hasNext();)
+		for (JRCrosstabRowGroup rowGroup : rowGroups)
 		{
-			JRCrosstabRowGroup rowGroup = rowIt.next();
 			setTotalVarClass(measure, rowGroup, null, valueClassName);
 			
-			for (Iterator<JRCrosstabColumnGroup> colIt = columnGroups.iterator(); colIt.hasNext();)
+			for (JRCrosstabColumnGroup colGroup : columnGroups)
 			{
-				JRCrosstabColumnGroup colGroup = colIt.next();
 				setTotalVarClass(measure, rowGroup, colGroup, valueClassName);
 			}
 		}
@@ -1879,9 +1862,8 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 		if (variablesList != null)
 		{
 			clone.variablesList = new LinkedMap<>(variablesList.size());
-			for (Iterator<?> it = variablesList.values().iterator(); it.hasNext();)
+			for (JRVariable variable : variablesList.values())
 			{
-				JRVariable variable = (JRVariable) it.next();
 				// check whether the variable was already cloned as part of a group or measure
 				JRVariable variableClone = clonedVariables.get(variable);
 				if (variableClone == null)

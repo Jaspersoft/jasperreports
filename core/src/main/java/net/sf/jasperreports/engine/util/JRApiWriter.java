@@ -362,9 +362,8 @@ public class JRApiWriter
 		String[] imports = report.getImports();
 		if (imports != null && imports.length > 0)
 		{
-			for (int i = 0; i < imports.length; i++)
+			for (String value : imports)
 			{
-				String value = imports[i];
 				if (value != null)
 				{
 					write("jasperDesign.addImport(\"{0}\");\n", value);

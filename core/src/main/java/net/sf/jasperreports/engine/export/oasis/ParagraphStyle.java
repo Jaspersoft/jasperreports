@@ -279,9 +279,8 @@ public class ParagraphStyle extends Style
 		TabStop[] tabStops = paragraph.getTabStops();
 		if (tabStops != null && tabStops.length > 0)
 		{
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				sb.append("|").append(tabStop.getPosition())
 					.append("|").append(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment()).getName());
 			}
@@ -352,9 +351,8 @@ public class ParagraphStyle extends Style
 		if (tabStops != null && tabStops.length > 0)
 		{
 			styleWriter.write("<style:tab-stops>");
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				styleWriter.write(
 					"<style:tab-stop style:type=\"" 
 						+ getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 

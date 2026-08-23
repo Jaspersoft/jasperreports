@@ -99,9 +99,8 @@ public class SpiderChartCompiler implements ComponentCompiler
 			JRHyperlinkParameter[] hyperlinkParameters = chart.getHyperlinkParameters();
 			if (hyperlinkParameters != null)
 			{
-				for (int i = 0; i < hyperlinkParameters.length; i++)
+				for (JRHyperlinkParameter parameter : hyperlinkParameters)
 				{
-					JRHyperlinkParameter parameter = hyperlinkParameters[i];
 					if (parameter != null)
 					{
 						collector.addExpression(parameter.getValueExpression());

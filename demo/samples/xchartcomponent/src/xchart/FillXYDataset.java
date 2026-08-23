@@ -88,10 +88,8 @@ public class FillXYDataset extends JRFillElementDataset implements XYDataset
 				xySeriesNames = new ArrayList<Comparable<?>>();
 			}
 
-			for (int i = 0; i < xySeries.length; i++)
+			for (FillXYSeries crtXySeries : xySeries)
 			{
-				FillXYSeries crtXySeries = xySeries[i];
-
 				Comparable<?> seriesName = crtXySeries.getSeries();
 				XYSeriesData xySeriesData = xySeriesMap.get(seriesName);
 				if (xySeriesData == null)

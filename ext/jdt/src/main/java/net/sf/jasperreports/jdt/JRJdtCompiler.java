@@ -31,7 +31,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -392,9 +391,8 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 //		}
 		
 		List<JRPropertiesUtil.PropertySuffix> properties = JRPropertiesUtil.getInstance(jasperReportsContext).getProperties(JDT_PROPERTIES_PREFIX);
-		for (Iterator<JRPropertiesUtil.PropertySuffix> it = properties.iterator(); it.hasNext();)
+		for (JRPropertiesUtil.PropertySuffix property : properties)
 		{
-			JRPropertiesUtil.PropertySuffix property = it.next();
 			String propVal = property.getValue();
 			if (propVal != null && propVal.length() > 0)
 			{
@@ -566,10 +564,8 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 
 				String sourceCode = units[classIdx].getSourceCode();
 				
-				for (int i = 0; i < problems.length; i++) 
+				for (IProblem problem : problems) 
 				{
-					IProblem problem = problems[i];
-
 					if (IProblem.UndefinedMethod == problem.getID())
 					{
 						if (

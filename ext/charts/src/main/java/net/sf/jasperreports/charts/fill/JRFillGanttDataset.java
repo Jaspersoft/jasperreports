@@ -126,10 +126,8 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for (int i = 0; i < ganttSeries.length; i++)
+			for (JRFillGanttSeries crtGanttSeries : ganttSeries)
 			{
-				JRFillGanttSeries crtGanttSeries = ganttSeries[i];
-
 				Comparable<?> seriesName = crtGanttSeries.getSeries();
 				TaskSeries taskSrs = seriesMap.get(seriesName);
 				if (taskSrs == null)
@@ -198,9 +196,8 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 		TaskSeriesCollection dataset = new TaskSeriesCollection();
 		if (seriesNames != null)
 		{
-			for (int i = 0; i < seriesNames.size(); i++)
+			for (Comparable<?> seriesName : seriesNames)
 			{
-				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.add(seriesMap.get(seriesName));
 			}
 		}

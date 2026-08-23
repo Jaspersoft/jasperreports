@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -219,9 +218,8 @@ public final class FontUtil
 		FontInfo awtFamilyMatchFontInfo = null;
 
 		List<FontFamily> families = jasperReportsContext.getExtensions(FontFamily.class);
-		for (Iterator<FontFamily> itf = families.iterator(); itf.hasNext();)
+		for (FontFamily family : families)
 		{
-			FontFamily family = itf.next();
 			if (locale == null || family.supportsLocale(locale))
 			{
 				if (equals(name, family.getName(), ignoreCase))
@@ -449,9 +447,8 @@ public final class FontUtil
 	protected void collectFontFamilyNames(Collection<String> names)
 	{
 		List<FontFamily> families = jasperReportsContext.getExtensions(FontFamily.class);
-		for (Iterator<FontFamily> itf = families.iterator(); itf.hasNext();)
+		for (FontFamily family : families)
 		{
-			FontFamily family = itf.next();
 			if (family.isVisible())
 			{
 				names.add(family.getName());
@@ -476,9 +473,8 @@ public final class FontUtil
 	protected void collectFontSetNames(Collection<String> names)
 	{
 		List<FontSet> fontSets = jasperReportsContext.getExtensions(FontSet.class);
-		for (Iterator<FontSet> itf = fontSets.iterator(); itf.hasNext();)
+		for (FontSet fontSet : fontSets)
 		{
-			FontSet fontSet = itf.next();
 			names.add(fontSet.getName());
 		}
 	}

@@ -119,9 +119,8 @@ public class DocxStyleHelper extends BaseHelper
 			JRStyle[] styles = jasperPrint.getStyles();
 			if (styles != null)
 			{
-				for (int i = 0; i < styles.length; i++)
+				for (JRStyle style : styles)
 				{
-					JRStyle style = styles[i];
 					if (exportedStyles.add(style.getName()))
 					{
 						exportHeader(jasperPrint.getDefaultStyleProvider(), style);

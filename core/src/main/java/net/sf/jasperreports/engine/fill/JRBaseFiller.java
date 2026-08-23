@@ -430,9 +430,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				JRFillGroup group = groups[i];
 				if (group.getGroupHeaderSection().getBands() != null)
 				{
 					bands.addAll(Arrays.asList(group.getGroupHeaderSection().getBands()));
@@ -701,9 +700,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	{
 		defaultStyle = style;
 
-		for (Iterator<DefaultStyleListener> it = defaultStyleListeners.iterator(); it.hasNext();)
+		for (DefaultStyleListener listener : defaultStyleListeners)
 		{
-			DefaultStyleListener listener = it.next();
 			listener.defaultStyleSet(style);
 		}
 	}
@@ -770,9 +768,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		{
 			styles = new JRStyle[reportStyles.length];//FIXME remove this
 
-			for (int i = 0; i < reportStyles.length; i++)
+			for (JRStyle style : reportStyles)
 			{
-				JRStyle style = reportStyles[i];
 				styleList.add(style);
 
 				//add dummy style requester so that report styles are always included
@@ -861,9 +858,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		JRStyle[] templateStyles = templateSource.getTemplate().getStyles();
 		if (templateStyles != null)
 		{
-			for (int i = 0; i < templateStyles.length; i++)
+			for (JRStyle style : templateStyles)
 			{
-				JRStyle style = templateStyles[i];
 				String styleName = style.getName();
 				if (styleName == null)
 				{
@@ -893,9 +889,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			RepositoryContext templateRepositoryContext = SimpleRepositoryContext.of(repositoryContext.getJasperReportsContext(), 
 					templateResourceContext);
 			
-			for (int i = 0; i < includedTemplates.length; i++)
+			for (JRTemplateReference reference : includedTemplates)
 			{
-				JRTemplateReference reference = includedTemplates[i];
 				String location = reference.getLocation();
 				
 				ReportTemplateSource includedTemplate = JRFillReportTemplate.loadTemplate(
@@ -909,9 +904,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	protected void lookupExternalDefaultStyle(Collection<JRStyle> styleList)
 	{
 		JRStyle defStyle = null;
-		for (Iterator<JRStyle> it = styleList.iterator(); it.hasNext();)
+		for (JRStyle style : styleList)
 		{
-			JRStyle style = it.next();
 			if (style.isDefault())
 			{
 				defStyle = style;
@@ -1253,10 +1247,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	{
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				JRFillGroup group = groups[i];
-
 				if ((group.hasChanged() && group.isFooterPrinted()) || isFinal)
 				{
 					String groupName = group.getName();

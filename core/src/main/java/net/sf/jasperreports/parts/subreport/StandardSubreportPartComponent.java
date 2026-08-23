@@ -26,7 +26,6 @@ package net.sf.jasperreports.parts.subreport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -307,9 +306,8 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (parametersMap != null)
 		{
 			clone.parametersMap = new LinkedHashMap<>();
-			for (Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
+			for (String name : parametersMap.keySet())
 			{
-				String name = it.next();
 				clone.parametersMap.put(name, JRCloneUtils.nullSafeClone(parametersMap.get(name)));
 			}
 		}

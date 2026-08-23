@@ -470,9 +470,8 @@ public class JRTemplatePrintElement implements JRPrintElement, Serializable, Vir
 				//FIXME property name sets usually repeat, store in memory?
 				String[] names = properties.getOwnPropertyNames();
 				out.writeIntCompressed(names.length);
-				for (int i = 0; i < names.length; i++)
+				for (String propName : names)
 				{
-					String propName = names[i];
 					out.writeJRObject(propName);
 					String value = properties.getProperty(propName);
 					out.writeJRObject(value);

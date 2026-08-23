@@ -190,9 +190,8 @@ public abstract class JRAbstractScriptlet
 			JRPropertyExpression[] propertyExpressions = scriptletDefinition.getPropertyExpressions();
 			if (propertyExpressions != null && propertyExpressions.length > 0)
 			{
-				for (int i = 0; i < propertyExpressions.length; i++)
+				for (JRPropertyExpression propertyExpression : propertyExpressions)
 				{
-					JRPropertyExpression propertyExpression = propertyExpressions[i];
 					Object value = dataset.evaluateExpression(propertyExpression.getValueExpression(), evaluation);
 					properties.put(propertyExpression.getName(), value);
 				}

@@ -298,9 +298,8 @@ public class JRXmlaQueryExecuter extends JRAbstractQueryExecuter
 		{
 			return;
 		}
-		for (Iterator<Map.Entry<String, String>> entryIt = params.entrySet().iterator(); entryIt.hasNext();)
+		for (Map.Entry<String, String> entry : params.entrySet())
 		{
-			Map.Entry<String, String> entry = entryIt.next();
 			String tag = entry.getKey();
 			String value = entry.getValue();
 			nPara = envelope.createName(tag, "", XMLA_URI);

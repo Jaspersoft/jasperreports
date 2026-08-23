@@ -25,7 +25,6 @@ package net.sf.jasperreports.engine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -120,8 +119,7 @@ public class JRSimpleTemplate implements JRTemplate, Serializable, JRChangeEvent
 	 */
 	public JRStyle getStyle(String name) {
 		JRStyle style = null;
-		for (Iterator<JRStyle> it = styles.iterator(); it.hasNext();) {
-			JRStyle itStyle = it.next();
+		for (JRStyle itStyle : styles) {
 			if (nameMatches(itStyle, name)) {
 				style = itStyle;
 				break;

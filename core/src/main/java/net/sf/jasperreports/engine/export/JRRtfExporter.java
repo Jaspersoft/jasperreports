@@ -794,10 +794,8 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 		TabStop[] tabStops = text.getParagraph().getTabStops();
 		if (tabStops != null && tabStops.length > 0)
 		{
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
-
 				String tabStopAlign = "";
 				
 				switch (TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment()))

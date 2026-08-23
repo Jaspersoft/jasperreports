@@ -34,7 +34,6 @@ package net.sf.jasperreports.engine.export.oasis;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
-import java.util.Iterator;
 
 import net.sf.jasperreports.engine.export.zip.ExportZipEntry;
 
@@ -166,9 +165,8 @@ public class ContentBuilder
 		writer.write(" <office:font-face-decls>\n");
 		if (fontFaces != null)
 		{
-			for (Iterator<String> it = fontFaces.iterator(); it.hasNext();)
+			for (String fontFace : fontFaces)
 			{
-				String fontFace = it.next();
 				writer.write("<style:font-face style:name=\"" + fontFace + "\"");
 				writer.write(" svg:font-family=\"" + fontFace + "\"");
 				writer.write("/>\n");

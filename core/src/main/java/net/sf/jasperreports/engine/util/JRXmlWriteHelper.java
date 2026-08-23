@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.regex.Matcher;
@@ -355,9 +354,8 @@ public class JRXmlWriteHelper
 		builder.append(getIndent(level));
 		builder.append('<');
 		builder.append(element.qName);
-		for (Iterator<Attribute> i = element.atts.iterator(); i.hasNext();)
+		for (Attribute att : element.atts)
 		{
-			Attribute att = i.next();
 			builder.append(' ');
 			builder.append(att.name);
 			builder.append("=\"");

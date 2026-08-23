@@ -194,9 +194,8 @@ public final class ChartUtil
 		}
 
 		List<ChartThemeBundle> themeBundles = jasperReportsContext.getExtensions(ChartThemeBundle.class);
-		for (Iterator<ChartThemeBundle> it = themeBundles.iterator(); it.hasNext();)
+		for (ChartThemeBundle bundle : themeBundles)
 		{
-			ChartThemeBundle bundle = it.next();
 			ChartTheme chartTheme = bundle.getChartTheme(themeName);
 			if (chartTheme != null)
 			{

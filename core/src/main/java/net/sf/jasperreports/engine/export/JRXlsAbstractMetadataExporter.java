@@ -256,9 +256,8 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 		currentRow = new HashMap<>();
 		rowIndex += configuration.isWriteHeader() ? 1 : 0;
 		
-		for (int i = 0; i < elements.size(); ++i) 
+		for (JRPrintElement element : elements) 
 		{
-			JRPrintElement element = elements.get(i);
 			updateSheet(element);
 			
 			String sheetName = element.getPropertiesMap().getProperty(PROPERTY_SHEET_NAME);

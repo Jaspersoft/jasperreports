@@ -487,9 +487,8 @@ public class JRFillCellContents extends JRFillElementContainer implements JRCell
 			
 			if (!outside)
 			{
-				for (Iterator<JRPrintElement> it = printElements.iterator(); it.hasNext();)
+				for (JRPrintElement element : printElements)
 				{
-					JRPrintElement element = it.next();
 					element.setY(element.getY() + positionOffset);
 				}
 			}

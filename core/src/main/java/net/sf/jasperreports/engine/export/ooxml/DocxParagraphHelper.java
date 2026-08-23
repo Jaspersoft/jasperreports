@@ -196,9 +196,8 @@ public class DocxParagraphHelper extends BaseHelper
 		if (tabStops != null && tabStops.length > 0)
 		{
 			write("   <w:tabs>\n");
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				write(
 					"   <w:tab w:pos=\"" + LengthUtil.twip(tabStop.getPosition()) 
 					+ "\" w:val=\"" + getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 

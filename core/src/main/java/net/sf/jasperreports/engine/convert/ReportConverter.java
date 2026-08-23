@@ -32,7 +32,6 @@ package net.sf.jasperreports.engine.convert;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -255,9 +254,8 @@ public class ReportConverter
 		
 		try
 		{
-			for (Iterator<JRStyle> it = stylesMap.values().iterator(); it.hasNext();)
+			for (JRStyle style : stylesMap.values())
 			{
-				JRStyle style = it.next();
 				jasperPrint.addStyle(style);
 			}
 		}
@@ -271,9 +269,8 @@ public class ReportConverter
 		if (reportDefault == null)
 		{
 			//search for the last default style
-			for (Iterator<JRStyle> it = stylesMap.values().iterator(); it.hasNext();)
+			for (JRStyle style : stylesMap.values())
 			{
-				JRStyle style = it.next();
 				if (style.isDefault())
 				{
 					printDefault = style;
@@ -357,9 +354,8 @@ public class ReportConverter
 		JRTemplateReference[] includedTemplates = template.getIncludedTemplates();
 		if (includedTemplates != null)
 		{
-			for (int i = 0; i < includedTemplates.length; i++)
+			for (JRTemplateReference reference : includedTemplates)
 			{
-				JRTemplateReference reference = includedTemplates[i];
 				loadTemplateStyles(reference.getLocation(), loadedLocations, parentLocations);
 			}
 		}
@@ -371,9 +367,8 @@ public class ReportConverter
 	{
 		if (styles != null)
 		{
-			for (int i = 0; i < styles.length; i++)
+			for (JRStyle style : styles)
 			{
-				JRStyle style = styles[i];
 				stylesMap.put(style.getName(), style);
 			}
 		}

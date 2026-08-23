@@ -201,9 +201,8 @@ public class JaxenNsAwareXPathExecuter extends JaxenXPathExecuter
 			XPath xpath = new DOMXPath(namespaceXPathString);
 			nlist = xpath.selectNodes(contextNode);
 			
-			for (int i = 0; i < nlist.size(); i++) 
+			for (Node node : nlist) 
 			{
-				Node node = nlist.get(i);
 				if (node.getParentNode() != null && node.getParentNode().getPrefix() != null)
 				{
 					if (!namespaces.containsKey(node.getParentNode().getPrefix()))

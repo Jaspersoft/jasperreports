@@ -478,17 +478,15 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		//FIXME avoid this
 		JRExpressionCollector collector = JRExpressionCollector.collector(filler.getJasperReportsContext(), filler.getJasperReport(), crosstab);
 		List<JRExpression> expressions = collector.getExpressions(crosstab);
-		for (Iterator<JRExpression> iter = expressions.iterator(); iter.hasNext();)
+		for (JRExpression expression : expressions)
 		{
-			JRExpression expression = iter.next();
 			Object expressionContext = collector.getExpressionContext(expression);
 			boolean groupHeaderExpression = expressionContext instanceof JRCrosstabGroup;
 			JRExpressionChunk[] chunks = expression.getChunks();
 			if (chunks != null)
 			{
-				for (int i = 0; i < chunks.length; i++)
+				for (JRExpressionChunk chunk : chunks)
 				{
-					JRExpressionChunk chunk = chunks[i];
 					if (chunk.getType() == JRExpressionChunk.TYPE_VARIABLE)
 					{
 						String varName = chunk.getText();
@@ -888,9 +886,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 		int xLimit = Integer.MIN_VALUE;
 		int yLimit = Integer.MIN_VALUE;
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			if (element.getX() + element.getWidth() > xLimit)
 			{
 				xLimit = element.getX() + element.getWidth();
@@ -1171,9 +1168,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 	protected void mirrorPrintElements(List<JRPrintElement> printElements, int width)
 	{
-		for (Iterator<JRPrintElement> it = printElements.iterator(); it.hasNext();)
+		for (JRPrintElement element : printElements)
 		{
-			JRPrintElement element = it.next();
 			int mirrorX = width - element.getX() - element.getWidth();
 			element.setX(mirrorX);
 		}
@@ -1713,9 +1709,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		protected void addFilledRows()
 		{
 			List<JRPrintElement> prints = new ArrayList<>();
-			for (Iterator<List<JRPrintElement>> it = printRows.iterator(); it.hasNext();)
+			for (List<JRPrintElement> rowPrints : printRows)
 			{
-				List<JRPrintElement> rowPrints = it.next();
 				prints.addAll(rowPrints);
 			}
 			
@@ -2445,10 +2440,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			int rowY = rowYs.get(rowIdx);
 			
 			int rowStretchHeight = 0;
-			for (int j = 0; j < headers.length; j++)
+			for (JRFillCellContents contents : headers)
 			{
-				JRFillCellContents contents = headers[j];
-				
 				if (contents != null)
 				{
 					int startRowY = rowY;
@@ -2466,10 +2459,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 				}
 			}
 			
-			for (int j = 0; j < headers.length; j++)
+			for (JRFillCellContents contents : headers)
 			{
-				JRFillCellContents contents = headers[j];
-				
 				if (contents != null)
 				{
 					int startRowY = rowY;
@@ -2585,9 +2576,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 		private void releasePreparedRow() throws JRException
 		{
-			for (Iterator<JRFillCellContents> it = preparedRow.iterator(); it.hasNext();)
+			for (JRFillCellContents cell : preparedRow)
 			{
-				JRFillCellContents cell = it.next();
 				cell.rewind();
 				cell.releaseWorkingClone();
 			}
@@ -2600,10 +2590,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			int rowY = rowYs.get(rowIdx);
 			
 			List<JRPrintElement> rowPrints = new ArrayList<>(preparedRow.size());
-			for (Iterator<JRFillCellContents> it = preparedRow.iterator(); it.hasNext();)
+			for (JRFillCellContents cell : preparedRow)
 			{
-				JRFillCellContents cell = it.next();
-				
 				int spanHeight = 0;
 				if (cell.getVerticalSpan() > 1)
 				{
@@ -2918,10 +2906,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			int nextToLastHeaderY = rowYs.get(rowIdx - 1);
 			List<JRPrintElement> lastPrintRow = getLastPrintRow();
 			
-			for (int j = 0; j < preparedRow.size(); ++j)
+			for (JRFillCellContents contents : preparedRow)
 			{
-				JRFillCellContents contents = preparedRow.get(j);
-				
 				int headerY = rowYs.get(rowIdx - contents.getVerticalSpan());
 				
 				contents.stretchTo(nextToLastHeaderY - headerY + lastRowHeight);

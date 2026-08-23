@@ -26,7 +26,6 @@ package net.sf.jasperreports.engine.fill;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -243,9 +242,8 @@ public abstract class BaseReportFiller implements ReportFiller
 
 	private void initDatasets(JRFillObjectFactory factory)
 	{
-		for (Iterator<JRFillDataset> it = datasetMap.values().iterator(); it.hasNext();)
+		for (JRFillDataset dataset : datasetMap.values())
 		{
-			JRFillDataset dataset = it.next();
 			dataset.inheritFromMain();
 			dataset.initElementDatasets(factory);
 		}

@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -570,9 +569,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		scriptlets = new ArrayList<>();
 		
 		List<ScriptletFactory> factories = getJasperReportsContext().getExtensions(ScriptletFactory.class);
-		for (Iterator<ScriptletFactory> it = factories.iterator(); it.hasNext();)
+		for (ScriptletFactory factory : factories)
 		{
-			ScriptletFactory factory = it.next();
 			List<JRAbstractScriptlet> tmpScriptlets = factory.getScriplets(context);
 			if (tmpScriptlets != null)
 			{
@@ -1085,9 +1083,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		if (parameters != null && parameters.length > 0)
 		{
 			ParameterEvaluationTimeEnum defaultEvaluationTime = getDefaultParameterEvaluationTime();
-			for (int i = 0; i < parameters.length; i++)
+			for (JRFillParameter parameter : parameters)
 			{
-				JRFillParameter parameter = parameters[i];
 				String paramName = parameter.getName();
 				ParameterEvaluationTimeEnum paramEvalTime = parameter.getEvaluationTime() == null ? defaultEvaluationTime : parameter.getEvaluationTime();
 				
@@ -1117,9 +1114,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int i = 0; i < parameters.length; i++)
+			for (JRFillParameter parameter : parameters)
 			{
-				JRFillParameter parameter = parameters[i];
 				String paramName = parameter.getName();
 				
 				Object value = null;
@@ -1147,9 +1143,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int i = 0; i < parameters.length; i++)
+			for (JRFillParameter parameter : parameters)
 			{
-				JRFillParameter parameter = parameters[i];
 				String paramName = parameter.getName();
 				
 				if (
@@ -1272,13 +1267,12 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	private List<ParameterContributor> getParameterContributors(ParameterContributorContext context) throws JRException
 	{
 		List<ParameterContributor> allContributors = null;
-		List<?> factories = getJasperReportsContext().getExtensions(ParameterContributorFactory.class);
+		List<ParameterContributorFactory> factories = getJasperReportsContext().getExtensions(ParameterContributorFactory.class);
 		if (factories != null && factories.size() > 0)
 		{
 			allContributors = new ArrayList<>();
-			for (Iterator<?> it = factories.iterator(); it.hasNext();)
+			for (ParameterContributorFactory factory : factories)
 			{
-				ParameterContributorFactory factory = (ParameterContributorFactory)it.next();
 				List<ParameterContributor> contributors = factory.getContributors(context);
 				if (contributors != null)
 				{
@@ -1587,9 +1581,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (fields != null && fields.length > 0)
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRFillField field : fields)
 			{
-				JRFillField field = fields[i];
 				field.setPreviousOldValue(field.getOldValue());
 				field.setOldValue(field.getValue());
 				field.setValue(dataSource.getFieldValue(field));
@@ -1598,9 +1591,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				variable.setPreviousOldValue(variable.getOldValue());
 				variable.setOldValue(variable.getValue());
 			}
@@ -1612,9 +1604,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (fields != null && fields.length > 0)
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRFillField field : fields)
 			{
-				JRFillField field = fields[i];
 				field.setValue(field.getOldValue());
 				field.setOldValue(field.getPreviousOldValue());
 			}
@@ -1628,9 +1619,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				variable.setValue(variable.getOldValue());
 				variable.setOldValue(variable.getPreviousOldValue());
 			}
@@ -1879,9 +1869,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		{
 			List<JRFillVariable> variableList = new ArrayList<>(variables.length * 2);
 
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				checkVariableCalculationReq(variable, variableList, factory);
 			}
 
