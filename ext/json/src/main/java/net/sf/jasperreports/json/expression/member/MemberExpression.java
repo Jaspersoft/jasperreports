@@ -32,15 +32,15 @@ import net.sf.jasperreports.json.expression.member.evaluation.MemberExpressionEv
  */
 public interface MemberExpression {
 
-    enum DIRECTION {
-        DOWN,
-        ANYWHERE_DOWN
-    }
+	enum DIRECTION {
+		DOWN,
+		ANYWHERE_DOWN
+	}
 
-    JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator);
+	JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator);
 
-    FilterExpression getFilterExpression();
+	FilterExpression getFilterExpression();
 
-    void setFilterExpression(FilterExpression filterExpression);
+	void setFilterExpression(FilterExpression filterExpression);
 
 }

@@ -295,9 +295,8 @@ public class JRHibernateQueryExecuter extends JRAbstractQueryExecuter
 		{
 			Set<String> namesSet = new HashSet<>();
 			
-			for (Iterator<String> iter = parameterNames.iterator(); iter.hasNext();)
+			for (String parameterName : parameterNames)
 			{
-				String parameterName = iter.next();
 				if (namesSet.add(parameterName))
 				{
 					JRValueParameter parameter = getValueParameter(parameterName);

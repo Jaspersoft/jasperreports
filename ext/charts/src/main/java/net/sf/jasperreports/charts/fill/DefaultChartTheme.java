@@ -32,7 +32,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -314,7 +313,7 @@ public class DefaultChartTheme implements ChartTheme
 		
 		JFreeChart jfreeChart = null;
 		
-		switch(getChart().getChartType()) {
+		switch (getChart().getChartType()) {
 			case AREA:
 				jfreeChart = createAreaChart();
 				break;
@@ -1722,10 +1721,8 @@ public class DefaultChartTheme implements ChartTheme
 		List<JRMeterInterval> intervals = jrPlot.getIntervals();
 		if (intervals != null)
 		{
-			Iterator<JRMeterInterval> iter = intervals.iterator();
-			while (iter.hasNext())
+			for (JRMeterInterval interval : intervals)
 			{
-				JRMeterInterval interval = iter.next();
 				chartPlot.addInterval(convertInterval(interval));
 			}
 		}
@@ -1909,7 +1906,7 @@ public class DefaultChartTheme implements ChartTheme
 			{
 				colorStep = 255 / size;
 			}
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 			{
 				JRMeterInterval interval = intervals.get(i);
 				Range intervalRange = convertRange(interval.getDataRange());
@@ -1961,7 +1958,7 @@ public class DefaultChartTheme implements ChartTheme
 			JRFont displayFont = display == null ? null : display.getFont();
 			
 			String[] textLines = label.split("\\n");
-			for(int i = 0; i < textLines.length; i++)
+			for (int i = 0; i < textLines.length; i++)
 			{
 				DialTextAnnotation dialAnnotation = new DialTextAnnotation(textLines[i]);
 				if (displayFont != null)

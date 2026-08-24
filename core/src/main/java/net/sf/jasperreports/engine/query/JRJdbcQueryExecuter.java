@@ -322,7 +322,7 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 					log.debug("Query execution done");
 				}
 				
-				if(isCachedRowSet)
+				if (isCachedRowSet)
 				{
 					CachedRowSet cachedRowSet;
 					try
@@ -466,7 +466,7 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 				int maxFieldSize = getPropertiesUtil().getIntegerProperty(dataset,
 						JRJdbcQueryExecuterFactory.PROPERTY_JDBC_MAX_FIELD_SIZE,
 						0);//FIXMENOW check the default of all zero default properties
-				if(maxFieldSize != 0)
+				if (maxFieldSize != 0)
 				{
 					statement.setMaxFieldSize(maxFieldSize);
 				}
@@ -613,7 +613,7 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 			for (count = 0; count < arrayCount; ++count)
 			{
 				Object value = Array.get(paramValue, count);
-				if(!ignoreNulls || value != null)
+				if (!ignoreNulls || value != null)
 				{
 					setStatementMultiParameter(parameterIndex + index, parameterName, count, value, parameter);
 					++index;
@@ -628,7 +628,7 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 			{
 				Object value = it.next();
 				
-				if(!ignoreNulls || value != null)
+				if (!ignoreNulls || value != null)
 				{
 					setStatementMultiParameter(parameterIndex + index, parameterName, count, value, parameter);
 					++index;

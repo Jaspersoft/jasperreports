@@ -174,7 +174,7 @@ public class PptxBorderHelper extends BaseHelper
 	protected String getLineStyle(LineStyleEnum lineStyleEnum)
 	{
 		String lineStyle = null;
-		switch(lineStyleEnum)
+		switch (lineStyleEnum)
 		{
 			case DASHED :
 			{

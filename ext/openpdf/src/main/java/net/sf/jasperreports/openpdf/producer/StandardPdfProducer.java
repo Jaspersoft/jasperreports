@@ -200,6 +200,11 @@ public class StandardPdfProducer implements PdfProducer
 		return writer.getPdfWriter();
 	}
 
+	public boolean isPdf2()
+	{
+		return writer.isPdf2();
+	}
+
 	@Override
 	public PdfContent createPdfContent()
 	{
@@ -595,7 +600,7 @@ public class StandardPdfProducer implements PdfProducer
 	public PdfOutlineEntry getRootOutline()
 	{
 		PdfOutline rootOutline = pdfContent.getPdfContentByte().getRootOutline();
-		return new StandardPdfOutline(rootOutline, pdfContent.getPdfWriter());
+		return new StandardPdfOutline(rootOutline, pdfContent.getPdfWriter(), isPdf2());
 	}
 
 	@Override

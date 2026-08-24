@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -247,7 +246,7 @@ public class JRStyledText implements Cloneable
 			ensureText();
 			attributedString = new AttributedString(text);
 
-			for(int i = runs.size() - 1; i >= 0; i--)
+			for (int i = runs.size() - 1; i >= 0; i--)
 			{
 				Run run = runs.get(i);
 				if (run.startIndex != run.endIndex && run.attributes != null)
@@ -314,7 +313,7 @@ public class JRStyledText implements Cloneable
 			ensureText();
 			awtAttributedString = new AttributedString(text);
 
-			for(int i = runs.size() - 1; i >= 0; i--)
+			for (int i = runs.size() - 1; i >= 0; i--)
 			{
 				Run run = runs.get(i);
 				if (run.startIndex != run.endIndex && run.attributes != null)
@@ -363,7 +362,7 @@ public class JRStyledText implements Cloneable
 			int runLimit = 0;
 			AffineTransform atrans = null;
 
-			while(runLimit < iterator.getEndIndex() && (runLimit = iterator.getRunLimit(FONT_ATTRS)) <= iterator.getEndIndex())
+			while (runLimit < iterator.getEndIndex() && (runLimit = iterator.getRunLimit(FONT_ATTRS)) <= iterator.getEndIndex())
 			{
 				Map<Attribute,Object> attrs = iterator.getAttributes();
 
@@ -527,9 +526,8 @@ public class JRStyledText implements Cloneable
 			else
 			{
 				clone.runs = new ArrayList<>(runsCount);
-				for (Iterator<Run> it = runs.iterator(); it.hasNext();)
+				for (Run run : runs)
 				{
-					Run run = it.next();
 					Run runClone = run.cloneRun();
 					clone.runs.add(runClone);
 				}
@@ -585,9 +583,8 @@ public class JRStyledText implements Cloneable
 			
 			//adjust runs
 			//TODO optimize this?
-			for (Iterator<Run> it = runs.iterator(); it.hasNext();)
+			for (Run run : runs)
 			{
-				Run run = it.next();
 				if (run.startIndex >= offset)
 				{
 					//inserted before run

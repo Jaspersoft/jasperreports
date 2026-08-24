@@ -1037,36 +1037,36 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			// Add meta-data parameters to generated PDF document
 			// mtclough@users.sourceforge.net 2005-12-05
 			String title = configuration.getMetadataTitle();
-			if( title != null )
+			if ( title != null )
 			{
 				document.addTitle(title);
-				if(configuration.isDisplayMetadataTitle()){
+				if (configuration.isDisplayMetadataTitle()){
 					pdfWriter.setDisplayMetadataTitle();
 				}
 			}
 			String author = configuration.getMetadataAuthor();
-			if( author != null )
+			if ( author != null )
 			{
 				document.addAuthor(author);
 			}
 			String subject = configuration.getMetadataSubject();
-			if( subject != null )
+			if ( subject != null )
 			{
 				document.addSubject(subject);
 			}
 			String keywords = configuration.getMetadataKeywords();
-			if( keywords != null )
+			if ( keywords != null )
 			{
 				document.addKeywords(keywords);
 			}
 			String creator = configuration.getMetadataCreator();
-			if( creator == null )
+			if ( creator == null )
 			{
 				creator = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 			}
 			document.addCreator(creator);
 			String producer = configuration.getMetadataProducer();
-			if( producer != null )
+			if ( producer != null )
 			{
 				document.addProducer(producer);
 			}
@@ -1076,7 +1076,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			
 			//accessibility check: setting the document primary language
 			String language = configuration.getTagLanguage();
-			if(language != null){
+			if (language != null){
 				pdfWriter.setLanguage(language);
 			}
 
@@ -1131,7 +1131,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			}
 			
 			String pdfJavaScript = configuration.getPdfJavaScript();
-			if(pdfJavaScript != null)
+			if (pdfJavaScript != null)
 			{
 				pdfWriter.addJavaScript(pdfJavaScript);
 			}
@@ -1164,7 +1164,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					{
 						pdfProducer.newPage();
 
-						if( isCreatingBatchModeBookmarks )
+						if ( isCreatingBatchModeBookmarks )
 						{
 							//add a new level to our outline for this report
 							addBookmark(0, jasperPrint.getName(), 0, 0, null);//FIXME structure entry is required for PDF/UA-2
@@ -1313,7 +1313,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	{
 		if (elements != null && elements.size() > 0)
 		{
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				checkInterrupted();
 				
@@ -1861,7 +1861,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				}
 				else
 				{
-					switch(printImage.getScaleImage())
+					switch (printImage.getScaleImage())
 					{
 						case CLIP :
 						{
@@ -2202,7 +2202,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			
 			InternalImageProcessorResult imageProcessorResult = null;
 
-			switch(printImage.getScaleImage())
+			switch (printImage.getScaleImage())
 			{
 				case CLIP :
 				{
@@ -2267,7 +2267,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			
 			if (!ignoreHyperlink)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{
@@ -2355,7 +2355,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 		if (referenceURL != null)
 		{
-			switch(link.getHyperlinkTarget())
+			switch (link.getHyperlinkTarget())
 			{
 				case BLANK :
 				{
@@ -3060,7 +3060,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			{
 				// PDF fields do not support side borders
 				// in case side borders are defined for the report element, ensure that all 4 are declared and all of them come with the same settings
-				if(
+				if (
 					((JRBasePen)box.getTopPen()).isIdentical(box.getLeftPen())
 					&& ((JRBasePen)box.getTopPen()).isIdentical(box.getBottomPen())
 					&& ((JRBasePen)box.getTopPen()).isIdentical(box.getRightPen())
@@ -3464,7 +3464,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		
 		Bookmark parent = bookmarkStack.peek();
 		// searching for parent
-		while(parent.level >= level)
+		while (parent.level >= level)
 		{
 			bookmarkStack.pop();
 			parent = bookmarkStack.peek();

@@ -160,10 +160,8 @@ public abstract class JRAbstractCsvExporter<RC extends CsvReportConfiguration, C
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 		
-		for(int reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (ExporterInputItem item : items)
 		{
-			ExporterInputItem item = items.get(reportIndex);
-
 			setCurrentExporterInputItem(item);
 
 			List<JRPrintPage> pages = jasperPrint.getPages();
@@ -173,7 +171,7 @@ public abstract class JRAbstractCsvExporter<RC extends CsvReportConfiguration, C
 				int startPageIndex = (pageRange == null || pageRange.getStartPageIndex() == null) ? 0 : pageRange.getStartPageIndex();
 				int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
-				for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 				
@@ -226,7 +224,7 @@ public abstract class JRAbstractCsvExporter<RC extends CsvReportConfiguration, C
 			StringBuilder sb = new StringBuilder();
 			StringTokenizer tkzer = new StringTokenizer(source, quotes+"\n", true);
 			String token = null;
-			while(tkzer.hasMoreTokens())
+			while (tkzer.hasMoreTokens())
 			{
 				token = tkzer.nextToken();
 				if (quotes.equals(token))

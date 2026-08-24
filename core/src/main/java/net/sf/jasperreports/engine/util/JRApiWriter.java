@@ -362,9 +362,8 @@ public class JRApiWriter
 		String[] imports = report.getImports();
 		if (imports != null && imports.length > 0)
 		{
-			for(int i = 0; i < imports.length; i++)
+			for (String value : imports)
 			{
-				String value = imports[i];
 				if (value != null)
 				{
 					write("jasperDesign.addImport(\"{0}\");\n", value);
@@ -381,22 +380,22 @@ public class JRApiWriter
 		{	
 			write( "//styles\n");
 
-			for(int i = 0; i < styles.length; i++)
+			for (JRStyle style : styles)
 			{
-				String styleName = JRStringUtil.getJavaIdentifier(styles[i].getName());
-				writeStyle( styles[i], styleName);
+				String styleName = JRStringUtil.getJavaIdentifier(style.getName());
+				writeStyle( style, styleName);
 				write( "jasperDesign.addStyle(" + styleName + ");\n\n");
 
 				if (toWriteConditionalStyles())
 				{
-					JRConditionalStyle[] conditionalStyles = styles[i].getConditionalStyles();
-					if (!(styles[i] instanceof JRConditionalStyle) && conditionalStyles != null)
+					JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
+					if (!(style instanceof JRConditionalStyle) && conditionalStyles != null)
 					{
 						for (int j = 0; j < conditionalStyles.length; j++)
 						{
 							String conditionalStyleName = styleName + "Conditional" + j;
 							writeConditionalStyle( conditionalStyles[j],conditionalStyleName);
-							write( styles[i].getName() + ".addConditionalStyle(" + conditionalStyleName + ");\n\n");
+							write( style.getName() + ".addConditionalStyle(" + conditionalStyleName + ");\n\n");
 						}
 						flush();
 					}
@@ -412,7 +411,7 @@ public class JRApiWriter
 			for (int i = 0; i < datasets.length; ++i)
 			{
 				writeDataset( datasets[i], "reportDataset" + i);
-				if(datasets[i] != null)
+				if (datasets[i] != null)
 				{
 					write( "jasperDesign.addDataset(reportDataset" + i + ");\n");
 				}
@@ -421,7 +420,7 @@ public class JRApiWriter
 			flush();
 		}
 
-		if(report.getMainDataset() != null)
+		if (report.getMainDataset() != null)
 		{
 			writeDataset( report.getMainDataset(), "reportMainDataset");
 			write( "jasperDesign.setMainDataset(reportMainDataset);\n");
@@ -524,12 +523,12 @@ public class JRApiWriter
 			if (propertyNames != null && propertyNames.length > 0)
 			{
 				write( "//properties\n");
-				for(int i = 0; i < propertyNames.length; i++)
+				for (String propertyName : propertyNames)
 				{
-					String value = propertiesMap.getProperty(propertyNames[i]);
+					String value = propertiesMap.getProperty(propertyName);
 					if (value != null)
 					{
-						write( propertiesHolderName + ".setProperty(\"" + propertyNames[i] + "\", \"" + JRStringUtil.escapeJavaStringLiteral(value) + "\");\n");
+						write( propertiesHolderName + ".setProperty(\"" + propertyName + "\", \"" + JRStringUtil.escapeJavaStringLiteral(value) + "\");\n");
 					}
 				}
 				write("\n");
@@ -576,7 +575,7 @@ public class JRApiWriter
 	 */
 	private void writeScriptlet( JRScriptlet scriptlet, String scriptletName)
 	{
-		if(scriptlet != null)
+		if (scriptlet != null)
 		{
 			write( "JRDesignScriptlet " + scriptletName + " = new JRDesignScriptlet();\n");
 			write( scriptletName + ".setDescription(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(scriptlet.getDescription()));
@@ -595,7 +594,7 @@ public class JRApiWriter
 	 */
 	private void writeParameter( JRParameter parameter,  String parameterName)
 	{
-		if(parameter != null)
+		if (parameter != null)
 		{
 			write( "JRDesignParameter " + parameterName + " = new JRDesignParameter();\n");
 			write( parameterName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(parameter.getName()));
@@ -621,7 +620,7 @@ public class JRApiWriter
 	 */
 	private void writeQuery( JRQuery query, String queryName)
 	{
-		if(query != null)
+		if (query != null)
 		{
 			write( "JRDesignQuery " + queryName + " = new JRDesignQuery();\n");
 			write( queryName + ".setLanguage(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(query.getLanguage()), JRJdbcQueryExecuterFactory.QUERY_LANGUAGE_SQL);
@@ -636,7 +635,7 @@ public class JRApiWriter
 	 */
 	private void writeField( JRField field, String fieldName)
 	{
-		if(field != null)
+		if (field != null)
 		{
 			write( "JRDesignField " + fieldName + " = new JRDesignField();\n");
 			write( fieldName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(field.getName()));
@@ -654,7 +653,7 @@ public class JRApiWriter
 	 */
 	private void writeSortField( JRSortField sortField, String sortFieldName)
 	{
-		if(sortField != null)
+		if (sortField != null)
 		{
 			write( "JRDesignSortField " + sortFieldName + " = new JRDesignSortField();\n");
 			write( sortFieldName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(sortField.getName()));
@@ -670,7 +669,7 @@ public class JRApiWriter
 	 */
 	private void writeVariable( JRVariable variable, String variableName)
 	{
-		if(variable != null)
+		if (variable != null)
 		{
 			String resetGroupName = variable.getResetGroup();
 			String incrementGroupName = variable.getIncrementGroup();
@@ -750,7 +749,7 @@ public class JRApiWriter
 			if (bands != null && bands.length > 0)
 			{
 				write( "//" + sectionName + "\n\n");
-				for(int i = 0; i < bands.length; i++)
+				for (int i = 0; i < bands.length; i++)
 				{
 					writeBand( bands[i], sectionName + i);
 					write( sectionBandListGetterName + ".add(" + i + ", " + sectionName + i + ");\n\n");
@@ -766,7 +765,7 @@ public class JRApiWriter
 	 */
 	private void writeBand( JRBand band, String bandName)
 	{
-		if(band != null)
+		if (band != null)
 		{
 			
 			write( "//band name = " + bandName +"\n\n");
@@ -804,12 +803,12 @@ public class JRApiWriter
 		List<JRChild> children = elementContainer.getChildren();
 		if (children != null && children.size() > 0)
 		{
-			for(int i = 0; i < children.size(); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
 				String childName = parentName + "_" + i;
 				apiWriterVisitor.setName(childName);
 				children.get(i).visit(apiWriterVisitor);
-				if(children.get(i) instanceof JRElementGroup && !(children.get(i) instanceof JRElement))
+				if (children.get(i) instanceof JRElementGroup && !(children.get(i) instanceof JRElement))
 				{
 					write( parentName +".addElementGroup(" + childName + ");\n\n");
 					
@@ -827,7 +826,7 @@ public class JRApiWriter
 	 */
 	public void writeElementGroup( JRElementGroup elementGroup, String groupName)
 	{ 
-		if(elementGroup != null)
+		if (elementGroup != null)
 		{
 			write( "JRDesignElementGroup " + groupName + " = new JRDesignElementGroup();\n");
 			writeChildElements( elementGroup, groupName);
@@ -841,7 +840,7 @@ public class JRApiWriter
 	 */
 	public void writeBreak( JRBreak breakElement, String breakName)
 	{
-		if(breakElement != null)
+		if (breakElement != null)
 		{
 			write( "JRDesignBreak " + breakName + " = new JRDesignBreak(jasperDesign);\n");
 			write( breakName + ".setType({0});\n", breakElement.getType(), BreakTypeEnum.PAGE);
@@ -856,7 +855,7 @@ public class JRApiWriter
 	 */
 	public void writeLine( JRLine line, String lineName)
 	{
-		if(line != null)
+		if (line != null)
 		{
 			write( "JRDesignLine " + lineName + " = new JRDesignLine(jasperDesign);\n");
 			write( lineName + ".setDirection({0});\n", line.getDirection(), LineDirectionEnum.TOP_DOWN);
@@ -872,7 +871,7 @@ public class JRApiWriter
 	 */
 	public void writeReportElement( JRElement element, String elementName)
 	{
-		if(element != null)
+		if (element != null)
 		{
 			write( elementName + ".setKey(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(element.getKey()));
 			writeStyleReferenceAttr( element, elementName);
@@ -945,7 +944,7 @@ public class JRApiWriter
 	 */
 	protected void writePropertyExpression( JRPropertyExpression propertyExpression, String propertyExpressionName)
 	{
-		if(propertyExpression != null)
+		if (propertyExpression != null)
 		{
 			write( "JRDesignPropertyExpression " + propertyExpressionName + " = new JRDesignPropertyExpression();\n");
 			write( propertyExpressionName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(propertyExpression.getName()));
@@ -961,7 +960,7 @@ public class JRApiWriter
 	 */
 	protected void writePropertyExpression( DatasetPropertyExpression propertyExpression, String propertyExpressionName)
 	{
-		if(propertyExpression != null)
+		if (propertyExpression != null)
 		{
 			write( "DesignDatasetPropertyExpression " + propertyExpressionName + " = new DesignDatasetPropertyExpression();\n");
 			write( propertyExpressionName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(propertyExpression.getName()));
@@ -978,7 +977,7 @@ public class JRApiWriter
 	 */
 	private void writeGraphicElement( JRGraphicElement element, String elementName)
 	{
-		if(element != null)
+		if (element != null)
 		{
 			write( elementName + ".setFill({0});\n", element.getOwnFill());
 			writePen( element.getLinePen(), elementName+".getLinePen()");
@@ -992,7 +991,7 @@ public class JRApiWriter
 	 */
 	public void writeRectangle( JRRectangle rectangle, String rectangleName)
 	{
-		if(rectangle != null)
+		if (rectangle != null)
 		{
 			write( "JRDesignRectangle " + rectangleName + " = new JRDesignRectangle(jasperDesign);\n");
 			write( rectangleName + ".setRadius({0});\n", rectangle.getOwnRadius());
@@ -1008,7 +1007,7 @@ public class JRApiWriter
 	 */
 	public void writeEllipse( JREllipse ellipse, String ellipseName)
 	{
-		if(ellipse != null)
+		if (ellipse != null)
 		{
 			write( "JRDesignEllipse " + ellipseName + " = new JRDesignEllipse(jasperDesign);\n");
 			writeReportElement( ellipse, ellipseName);
@@ -1023,7 +1022,7 @@ public class JRApiWriter
 	 */
 	public void writeImage( JRImage image, String imageName)
 	{
-		if(image != null)
+		if (image != null)
 		{
 			write( "JRDesignImage " + imageName + " = new JRDesignImage(jasperDesign);\n");
 			write( imageName + ".setScaleImage({0});\n", image.getOwnScaleImage());
@@ -1036,11 +1035,11 @@ public class JRApiWriter
 			write( imageName + ".setEvaluationTime({0});\n", image.getEvaluationTime(), EvaluationTimeEnum.NOW);
 			write( imageName + ".setEvaluationGroup(\"{0}\");\n", image.getEvaluationGroup());
 
-			if(image.getLinkType() != null)
+			if (image.getLinkType() != null)
 			{
 				write( imageName + ".setLinkType(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(image.getLinkType()), HyperlinkTypeEnum.NONE.getName());
 			}
-			if(image.getLinkTarget() != null)
+			if (image.getLinkTarget() != null)
 			{
 				write( imageName + ".setLinkTarget(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(image.getLinkTarget()), HyperlinkTargetEnum.SELF.getName());
 			}
@@ -1070,7 +1069,7 @@ public class JRApiWriter
 	 */
 	public void writeStaticText( JRStaticText staticText, String staticTextName)
 	{
-		if(staticText != null)
+		if (staticText != null)
 		{
 			write( "JRDesignStaticText " + staticTextName + " = new JRDesignStaticText(jasperDesign);\n");
 			writeReportElement( staticText, staticTextName);
@@ -1087,7 +1086,7 @@ public class JRApiWriter
 	 */
 	private void writeTextElement( JRTextElement textElement, String textElementName)
 	{
-		if(textElement != null)
+		if (textElement != null)
 		{
 			write( textElementName + ".setHorizontalTextAlign({0});\n", textElement.getOwnHorizontalTextAlign());
 			write( textElementName + ".setVerticalTextAlign({0});\n", textElement.getOwnVerticalTextAlign());
@@ -1192,7 +1191,7 @@ public class JRApiWriter
 	 */
 	public void writeTextField( JRTextField textField, String textFieldName)
 	{
-		if(textField != null)
+		if (textField != null)
 		{
 			write( "JRDesignTextField " + textFieldName + " = new JRDesignTextField(jasperDesign);\n");
 			write( textFieldName + ".setBold({0});\n", textField.isOwnBold());
@@ -1203,11 +1202,11 @@ public class JRApiWriter
 			write( textFieldName + ".setPattern(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(textField.getOwnPattern()));
 			write( textFieldName + ".setBlankWhenNull({0});\n", textField.isOwnBlankWhenNull());
 
-			if(textField.getLinkType() != null)
+			if (textField.getLinkType() != null)
 			{
 				write( textFieldName + ".setLinkType(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(textField.getLinkType()), HyperlinkTypeEnum.NONE.getName());
 			}
-			if(textField.getLinkTarget() != null)
+			if (textField.getLinkTarget() != null)
 			{
 				write( textFieldName + ".setLinkTarget(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(textField.getLinkTarget()), HyperlinkTargetEnum.SELF.getName());
 			}
@@ -1247,7 +1246,7 @@ public class JRApiWriter
 	 */
 	public void writeSubreport( JRSubreport subreport, String subreportName)
 	{
-		if(subreport != null)
+		if (subreport != null)
 		{
 			write( "JRDesignSubreport " + subreportName + " = new JRDesignSubreport(jasperDesign);\n");
 			write( subreportName + ".setUsingCache({0});\n", subreport.getUsingCache());
@@ -1260,7 +1259,7 @@ public class JRApiWriter
 			JRSubreportParameter[] parameters = subreport.getParameters();
 			if (parameters != null && parameters.length > 0)
 			{
-				for(int i = 0; i < parameters.length; i++)
+				for (int i = 0; i < parameters.length; i++)
 				{
 					writeSubreportParameter( parameters[i], subreportName + "Parameter" + i);
 					write( subreportName + ".addParameter(" + subreportName + "Parameter" + i + ");\n");
@@ -1274,7 +1273,7 @@ public class JRApiWriter
 			JRSubreportReturnValue[] returnValues = subreport.getReturnValues();
 			if (returnValues != null && returnValues.length > 0)
 			{
-				for(int i = 0; i < returnValues.length; i++)
+				for (int i = 0; i < returnValues.length; i++)
 				{
 					writeSubreportReturnValue( returnValues[i], subreportName + "ReturnValue" + i);
 					write( subreportName + ".addReturnValue(" + subreportName + "ReturnValue" + i + ");\n");
@@ -1293,7 +1292,7 @@ public class JRApiWriter
 	 */
 	private void writeSubreportParameter( JRSubreportParameter subreportParameter, String subreportParameterName)
 	{
-		if(subreportParameter != null)
+		if (subreportParameter != null)
 		{
 			write( "JRDesignSubreportParameter " + subreportParameterName + " = new JRDesignSubreportParameter();\n");
 			write( subreportParameterName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(subreportParameter.getName()));
@@ -1307,7 +1306,7 @@ public class JRApiWriter
 	 */
 	private void writeDatasetParameter( JRDatasetParameter datasetParameter, String runName, String datasetParameterName)
 	{
-		if(datasetParameter != null)
+		if (datasetParameter != null)
 		{
 			write( "JRDesignDatasetParameter " + datasetParameterName + " = new JRDesignSubreportParameter();\n");
 			write( datasetParameterName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(datasetParameter.getName()));
@@ -1344,7 +1343,7 @@ public class JRApiWriter
 	 */
 	public void writeElementDataset( JRElementDataset dataset, boolean skipIfEmpty, String datasetName)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			write( datasetName + ".setResetType({0});\n", dataset.getDatasetResetType(), DatasetResetTypeEnum.REPORT);
 	
@@ -1379,7 +1378,7 @@ public class JRApiWriter
 	 */
 	private void writeSubreportReturnValue(JRSubreportReturnValue returnValue, String returnValueName)
 	{
-		if(returnValue != null)
+		if (returnValue != null)
 		{
 			write( "JRDesignSubreportReturnValue " + returnValueName + " = new JRDesignSubreportReturnValue();\n");
 			write( returnValueName + ".setSubreportVariable(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(returnValue.getFromVariable()));
@@ -1392,7 +1391,7 @@ public class JRApiWriter
 
 	private void writeReturnValue(ReturnValue returnValue, String returnValueName)
 	{
-		if(returnValue != null)
+		if (returnValue != null)
 		{
 			write("DesignReturnValue " + returnValueName + " = new DesignReturnValue();\n");
 			write(returnValueName + ".setFromVariable(\"{0}\");\n", 
@@ -1409,7 +1408,7 @@ public class JRApiWriter
 
 	private void writeReturnValue(ExpressionReturnValue returnValue, String returnValueName)
 	{
-		if(returnValue != null)
+		if (returnValue != null)
 		{
 			write("DesignExpressionReturnValue " + returnValueName + " = new DesignExpressionReturnValue();\n");
 			writeExpression( returnValue.getExpression(), returnValueName, "Expression");
@@ -1428,7 +1427,7 @@ public class JRApiWriter
 	 */
 	public void writeCrosstab( JRCrosstab crosstab, String crosstabName)
 	{
-		if(crosstab != null)
+		if (crosstab != null)
 		{
 			write( "JRDesignCrosstab " + crosstabName + " = new JRDesignCrosstab(jasperDesign);\n");
 			write( crosstabName + ".setRepeatColumnHeaders({0});\n", crosstab.isRepeatColumnHeaders(), true);
@@ -1548,7 +1547,7 @@ public class JRApiWriter
 	 */
 	private void writeCrosstabDataset( JRCrosstab crosstab, String crosstabName)
 	{
-		if(crosstab != null)
+		if (crosstab != null)
 		{
 			String datasetName = crosstabName + "Dataset";
 			JRCrosstabDataset dataset = crosstab.getDataset();
@@ -1597,7 +1596,7 @@ public class JRApiWriter
 	 */
 	protected void writeCrosstabRowGroup( JRCrosstabRowGroup group, String groupName)
 	{
-		if(group != null)
+		if (group != null)
 		{
 			write( "JRDesignCrosstabRowGroup " + groupName + " = new JRDesignCrosstabRowGroup();\n");
 			write( groupName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(group.getName()));
@@ -1608,14 +1607,14 @@ public class JRApiWriter
 			writeBucket( group.getBucket(), groupName);
 	
 			JRCellContents header = group.getHeader();
-			if(header != null)
+			if (header != null)
 			{
 				writeCellContents( header, groupName + "HeaderContents");
 				write( groupName + ".setHeader(" + groupName + "HeaderContents);\n");
 			}
 			
 			JRCellContents totalHeader = group.getTotalHeader();
-			if(totalHeader != null)
+			if (totalHeader != null)
 			{
 				writeCellContents( totalHeader, groupName + "TotalHeaderContents");
 				write( groupName + ".setTotalHeader(" + groupName + "TotalHeaderContents);\n");
@@ -1631,7 +1630,7 @@ public class JRApiWriter
 	 */
 	protected void writeCrosstabColumnGroup( JRCrosstabColumnGroup group, String groupName)
 	{
-		if(group != null)
+		if (group != null)
 		{
 			write( "JRDesignCrosstabColumnGroup " + groupName + " = new JRDesignCrosstabColumnGroup();\n");
 
@@ -1643,21 +1642,21 @@ public class JRApiWriter
 			writeBucket( group.getBucket(), groupName);
 			
 			JRCellContents crosstabHeader = group.getCrosstabHeader();
-			if(crosstabHeader != null)
+			if (crosstabHeader != null)
 			{
 				writeCellContents( crosstabHeader, groupName + "CrosstabHeaderContents");
 				write( groupName + ".setCrosstabHeader(" + groupName + "CrosstabHeaderContents);\n");
 			}
 			
 			JRCellContents header = group.getHeader();
-			if(header != null)
+			if (header != null)
 			{
 				writeCellContents( header, groupName + "HeaderContents");
 				write( groupName + ".setHeader(" + groupName + "HeaderContents);\n");
 			}
 			
 			JRCellContents totalHeader = group.getTotalHeader();
-			if(totalHeader != null)
+			if (totalHeader != null)
 			{
 				writeCellContents( totalHeader, groupName + "TotalHeaderContents");
 				write( groupName + ".setTotalHeader(" + groupName + "TotalHeaderContents);\n");
@@ -1673,7 +1672,7 @@ public class JRApiWriter
 	 */
 	protected void writeBucket( JRCrosstabBucket bucket, String parentName)
 	{
-		if(bucket != null)
+		if (bucket != null)
 		{
 			String bucketName = parentName + "Bucket";
 			write( "JRDesignCrosstabBucket " + bucketName + " = new JRDesignCrosstabBucket();\n");
@@ -1697,7 +1696,7 @@ public class JRApiWriter
 	 */
 	protected void writeCrosstabMeasure( JRCrosstabMeasure measure, String measureName)
 	{
-		if(measure != null)
+		if (measure != null)
 		{
 			write( "JRDesignCrosstabMeasure " + measureName + " = new JRDesignCrosstabMeasure();\n");
 			write( measureName + ".setName(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(measure.getName()));
@@ -1720,7 +1719,7 @@ public class JRApiWriter
 	 */
 	protected void writeCrosstabCell( JRCrosstabCell cell, String cellName)
 	{
-		if(cell != null)
+		if (cell != null)
 		{
 			write( "JRDesignCrosstabCell " + cellName + " = new JRDesignCrosstabCell();\n");
 			write( cellName + ".setWidth({0, number, #});\n", cell.getWidth());
@@ -1762,7 +1761,7 @@ public class JRApiWriter
 	 */
 	protected void writeCrosstabParameter( JRCrosstabParameter parameter, String parameterName)
 	{
-		if(parameter != null)
+		if (parameter != null)
 		{
 			write( "JRDesignCrosstabParameter " + parameterName + " = new JRDesignCrosstabParameter();\n");
 			write( parameterName + ".setDescription(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(parameter.getDescription()));
@@ -1781,7 +1780,7 @@ public class JRApiWriter
 	 */
 	public void writeDataset( JRDataset dataset, String datasetName)
 	{
-		if(dataset != null)
+		if (dataset != null)
 		{
 			write( "JRDesignDataset " + datasetName + " = new JRDesignDataset(" + dataset.isMainDataset() + ");\n");	
 			
@@ -1807,7 +1806,7 @@ public class JRApiWriter
 		JRScriptlet[] scriptlets = dataset.getScriptlets();
 		if (scriptlets != null && scriptlets.length > 0)
 		{
-			for(int i = 0; i < scriptlets.length; i++)
+			for (int i = 0; i < scriptlets.length; i++)
 			{
 				writeScriptlet( scriptlets[i], datasetName + "Scriptlet" + i);
 				write( datasetName +".addScriptlet(" + datasetName + "Scriptlet" + i + ");\n");
@@ -1817,7 +1816,7 @@ public class JRApiWriter
 		JRParameter[] parameters = dataset.getParameters();
 		if (parameters != null && parameters.length > 0)
 		{
-			for(int i = 0; i < parameters.length; i++)
+			for (int i = 0; i < parameters.length; i++)
 			{
 				if (!parameters[i].isSystemDefined())
 				{
@@ -1827,7 +1826,7 @@ public class JRApiWriter
 			}
 		}
 
-		if(dataset.getQuery() != null)
+		if (dataset.getQuery() != null)
 		{
 			writeQuery( dataset.getQuery(), datasetName + "Query");
 			write( datasetName +".setQuery(" + datasetName + "Query);\n");
@@ -1836,7 +1835,7 @@ public class JRApiWriter
 		JRField[] fields = dataset.getFields();
 		if (fields != null && fields.length > 0)
 		{
-			for(int i = 0; i < fields.length; i++)
+			for (int i = 0; i < fields.length; i++)
 			{
 				writeField( fields[i], datasetName + "Field" + i);
 				write( datasetName +".addField(" + datasetName + "Field" + i + ");\n");
@@ -1846,7 +1845,7 @@ public class JRApiWriter
 		JRSortField[] sortFields = dataset.getSortFields();
 		if (sortFields != null && sortFields.length > 0)
 		{
-			for(int i = 0; i < sortFields.length; i++)
+			for (int i = 0; i < sortFields.length; i++)
 			{
 				writeSortField( sortFields[i], datasetName + "SortField" + i);
 				write( datasetName +".addSortField(" + datasetName + "SortField" + i + ");\n");
@@ -1856,7 +1855,7 @@ public class JRApiWriter
 		JRVariable[] variables = dataset.getVariables();
 		if (variables != null && variables.length > 0)
 		{
-			for(int i = 0; i < variables.length; i++)
+			for (int i = 0; i < variables.length; i++)
 			{
 				if (!variables[i].isSystemDefined())
 				{
@@ -1871,7 +1870,7 @@ public class JRApiWriter
 		JRGroup[] groups = dataset.getGroups();
 		if (groups != null && groups.length > 0)
 		{
-			for(JRGroup group : groups)
+			for (JRGroup group : groups)
 			{
 				writeGroup(group);
 				write(datasetName +".addGroup(" + group.getName() + ");\n");
@@ -1888,7 +1887,7 @@ public class JRApiWriter
 	 */
 	public void writeDatasetRun( JRDatasetRun datasetRun, String parentName)
 	{
-		if(datasetRun != null)
+		if (datasetRun != null)
 		{
 			String runName = parentName + "Run";
 			write( "JRDesignDatasetRun " + runName + " = new JRDesignDatasetRun();\n");
@@ -1898,7 +1897,7 @@ public class JRApiWriter
 			JRDatasetParameter[] parameters = datasetRun.getParameters();
 			if (parameters != null && parameters.length > 0)
 			{
-				for(int i = 0; i < parameters.length; i++)
+				for (int i = 0; i < parameters.length; i++)
 				{
 					writeDatasetParameter( parameters[i], runName, runName + "Parameter" + i);
 				}
@@ -1931,7 +1930,7 @@ public class JRApiWriter
 	 */
 	public void writeFrame( JRFrame frame, String frameName)
 	{
-		if(frame != null)
+		if (frame != null)
 		{
 			write( "JRDesignFrame " + frameName + " = new JRDesignFrame(jasperDesign);\n");
 			write(frameName + ".setBorderSplitType({0});\n", frame.getBorderSplitType());
@@ -2025,11 +2024,11 @@ public class JRApiWriter
 			String hyperlinkName = parentName + hyperlinkSuffix;
 			write( "JRDesignHyperlink " + hyperlinkName + " = new JRDesignHyperlink();\n");
 
-			if(hyperlink.getLinkType() != null)
+			if (hyperlink.getLinkType() != null)
 			{
 				write( hyperlinkName + ".setLinkType(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(hyperlink.getLinkType()), HyperlinkTypeEnum.NONE.getName());
 			}
-			if(hyperlink.getLinkTarget() != null)
+			if (hyperlink.getLinkTarget() != null)
 			{
 				write( hyperlinkName + ".setLinkTarget(\"{0}\");\n", JRStringUtil.escapeJavaStringLiteral(hyperlink.getLinkTarget()), HyperlinkTargetEnum.SELF.getName());
 			}
@@ -2062,7 +2061,7 @@ public class JRApiWriter
 	 */
 	protected void writeConditionalStyle( JRConditionalStyle style, String styleName)
 	{
-		if(style != null)
+		if (style != null)
 		{
 			write( "JRDesignConditionalStyle " + styleName + " = new JRDesignConditionalStyle();\n");
 			writeExpression( style.getConditionExpression(), styleName, "ConditionExpression");
@@ -2192,7 +2191,7 @@ public class JRApiWriter
 	 */
 	private void writePen( JRPen pen, String penHolder)
 	{
-		if(pen != null)
+		if (pen != null)
 		{
 			write( penHolder + ".setLineWidth({0});\n", pen.getOwnLineWidth());
 			write( penHolder + ".setLineStyle({0});\n", pen.getOwnLineStyle());
@@ -2245,7 +2244,7 @@ public class JRApiWriter
 			TabStop[] tabStops = paragraph.getTabStops();
 			if (tabStops != null && tabStops.length > 0)
 			{
-				for(int i = 0; i < tabStops.length; i++)
+				for (int i = 0; i < tabStops.length; i++)
 				{
 					writeTabStop( tabStops[i], paragraphName + "TabStop" + i);
 					write( paragraphName +".addTabStop(" + paragraphName + "TabStop" + i + ");\n");
@@ -2534,7 +2533,7 @@ public class JRApiWriter
 	 */
 	public static void main(String[] args) 
 	{
-		if(args.length < 2)
+		if (args.length < 2)
 		{
 			System.out.println( "JRApiWriter usage:" );
 			System.out.println( "\tjava JRApiWriter reportCreatorClassName file" );

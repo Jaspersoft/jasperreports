@@ -60,10 +60,10 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 		super( xyzDataset, factory.getParent() );
 		
 		JRXyzSeries[] srcXyzSeries = xyzDataset.getSeries();
-		if(srcXyzSeries != null && srcXyzSeries.length > 0)
+		if (srcXyzSeries != null && srcXyzSeries.length > 0)
 		{
 			xyzSeries = new JRFillXyzSeries[srcXyzSeries.length];
-			for(int i = 0; i < xyzSeries.length; i++)
+			for (int i = 0; i < xyzSeries.length; i++)
 			{
 				xyzSeries[i] = (JRFillXyzSeries)factory.getXyzSeries( srcXyzSeries[i]);
 			}
@@ -87,9 +87,9 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 	{
 		if (xyzSeries != null && xyzSeries.length > 0)
 		{
-			for (int i = 0; i < xyzSeries.length; i++)
+			for (JRFillXyzSeries crtXyzSeries : xyzSeries)
 			{
-				xyzSeries[i].evaluate( calculator );
+				crtXyzSeries.evaluate( calculator );
 			}
 		}
 	}
@@ -99,10 +99,8 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 	{
 		if (xyzSeries != null && xyzSeries .length > 0)
 		{
-			for (int i = 0; i < xyzSeries.length; i++)
+			for (JRFillXyzSeries crtXyzSeries : xyzSeries)
 			{
-				JRFillXyzSeries crtXyzSeries = xyzSeries[i];
-				
 				Comparable<?> seriesName = crtXyzSeries.getSeries();
 				if (seriesName == null)
 				{
@@ -122,14 +120,8 @@ public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset
 				
 				if (crtXyzSeries.hasItemHyperlinks())
 				{
-					Map<Pair, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(crtXyzSeries.getSeries());
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(crtXyzSeries.getSeries(), seriesLinks);
-					}
-					Pair<Number,Number> xyKey = new Pair<>(crtXyzSeries.getXValue(), crtXyzSeries.getYValue());
-					seriesLinks.put(xyKey, crtXyzSeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(crtXyzSeries.getSeries(), k -> new HashMap<>())
+						.put(new Pair<>(crtXyzSeries.getXValue(), crtXyzSeries.getYValue()), crtXyzSeries.getPrintItemHyperlink());
 				}
 			}
 		}

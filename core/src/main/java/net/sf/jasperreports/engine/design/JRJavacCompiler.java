@@ -76,7 +76,7 @@ public class JRJavacCompiler extends JRAbstractMultiClassCompiler
 				}
 			} while (count >= 0);
 			
-			if( baos.toString().indexOf("error") != -1 ) 
+			if ( baos.toString().indexOf("error") != -1 ) 
 			{
 				return baos.toString();
 			}
@@ -86,9 +86,9 @@ public class JRJavacCompiler extends JRAbstractMultiClassCompiler
 		catch (Exception e) 
 		{
 			StringBuilder files = new StringBuilder();
-			for (int i = 0; i < sourceFiles.length; ++i)
+			for (File sourceFile : sourceFiles)
 			{
-				files.append(sourceFiles[i].getPath());
+				files.append(sourceFile.getPath());
 				files.append(' ');
 			}
 			throw 

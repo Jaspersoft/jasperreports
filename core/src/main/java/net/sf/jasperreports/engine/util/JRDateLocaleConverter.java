@@ -87,13 +87,13 @@ public class JRDateLocaleConverter extends DateLocaleConverter<Date>
 	 */
 	private SimpleDateFormat getFormatter(String pattern, Locale locale) 
 	{
-		if(pattern == null) {
+		if (pattern == null) {
 			pattern = localizedPattern ? 
 				new SimpleDateFormat().toLocalizedPattern() : new SimpleDateFormat().toPattern();
 			log.warn("Null pattern was provided, defaulting to: " + pattern);
 		}
 		SimpleDateFormat format = new SimpleDateFormat(pattern, locale);
-		if(timeZone != null)
+		if (timeZone != null)
 		{
 			format.setTimeZone(timeZone);
 		}

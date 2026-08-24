@@ -82,7 +82,17 @@ public enum PdfVersionEnum implements NamedEnum
 	{
 		return name;
 	}
-	
+
+	/**
+	 * Determines whether this version is greater than or equal to the given version.
+	 * The constants are declared in ascending version order, so the enum's natural
+	 * ordering (see {@link Enum#compareTo(Enum)}) reflects the PDF version order.
+	 */
+	public boolean isAtLeast(PdfVersionEnum version)
+	{
+		return compareTo(version) >= 0;
+	}
+
 	/**
 	 *
 	 */

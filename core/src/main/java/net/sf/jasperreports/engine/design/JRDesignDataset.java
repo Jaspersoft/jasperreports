@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -1331,19 +1330,7 @@ public class JRDesignDataset extends JRBaseDataset
 	
 	private void sortSystemParamsFirst()
 	{
-		Collections.sort(parametersList, new Comparator<JRParameter>()
-				{
-					@Override
-					public int compare(JRParameter p1, JRParameter p2)
-					{
-//						JRParameter p1 = (JRParameter) o1;
-//						JRParameter p2 = (JRParameter) o2;
-						boolean s1 = p1.isSystemDefined();
-						boolean s2 = p2.isSystemDefined();
-						
-						return s1 ? (s2 ? 0 : -1) : (s2 ? 1 : 0);
-					}
-				});
+		parametersList.sort(Comparator.comparing(JRParameter::isSystemDefined, Comparator.reverseOrder()));
 	}
 
 	private void removeBuiltinParameters(Object[] builtinParameters)
@@ -1547,7 +1534,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.parametersList = new ArrayList<>(parametersList.size());
 			clone.parametersMap = new HashMap<>(parametersList.size());
-			for(int i = 0; i < parametersList.size(); i++)
+			for (int i = 0; i < parametersList.size(); i++)
 			{
 				JRParameter parameter = JRCloneUtils.nullSafeClone(parametersList.get(i));
 				clone.parametersList.add(parameter);
@@ -1559,7 +1546,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.fieldsList = new ArrayList<>(fieldsList.size());
 			clone.fieldsMap = new HashMap<>(fieldsList.size());
-			for(int i = 0; i < fieldsList.size(); i++)
+			for (int i = 0; i < fieldsList.size(); i++)
 			{
 				JRField field = JRCloneUtils.nullSafeClone(fieldsList.get(i));
 				clone.fieldsList.add(field);
@@ -1571,7 +1558,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.sortFieldsList = new ArrayList<>(sortFieldsList.size());
 			clone.sortFieldsMap = new HashMap<>(sortFieldsList.size());
-			for(int i = 0; i < sortFieldsList.size(); i++)
+			for (int i = 0; i < sortFieldsList.size(); i++)
 			{
 				JRSortField sortField = JRCloneUtils.nullSafeClone(sortFieldsList.get(i));
 				clone.sortFieldsList.add(sortField);
@@ -1585,7 +1572,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.variablesList = new ArrayList<>(variablesList.size());
 			clone.variablesMap = new HashMap<>(variablesList.size());
-			for(int i = 0; i < variablesList.size(); i++)
+			for (int i = 0; i < variablesList.size(); i++)
 			{
 				JRVariable variable = cloneStore.clone(variablesList.get(i));
 				clone.variablesList.add(variable);
@@ -1597,7 +1584,7 @@ public class JRDesignDataset extends JRBaseDataset
 		{
 			clone.groupsList = new ArrayList<>(groupsList.size());
 			clone.groupsMap = new HashMap<>(groupsList.size());
-			for(int i = 0; i < groupsList.size(); i++)
+			for (int i = 0; i < groupsList.size(); i++)
 			{
 				JRGroup group = cloneStore.clone(groupsList.get(i));
 				clone.groupsList.add(group);

@@ -104,7 +104,7 @@ public class AegeanChartTheme extends GenericChartTheme
 		super.configureChart(jfreeChart, jrPlot);
 		TextTitle title = jfreeChart.getTitle();
 
-		if(title != null)
+		if (title != null)
 		{
 			
 			RectangleInsets padding = title.getPadding();
@@ -119,14 +119,14 @@ public class AegeanChartTheme extends GenericChartTheme
 
 		super.configurePlot(plot, jrPlot);
 
-		if(plot instanceof CategoryPlot)
+		if (plot instanceof CategoryPlot)
 		{
 			CategoryPlot categoryPlot = (CategoryPlot)plot;
 			CategoryItemRenderer categoryRenderer = categoryPlot.getRenderer();
 			CategoryDataset categoryDataset = categoryPlot.getDataset();
-			if(categoryDataset != null)
+			if (categoryDataset != null)
 			{
-				for(int i = 0; i < categoryDataset.getRowCount(); i++)
+				for (int i = 0; i < categoryDataset.getRowCount(); i++)
 				{
 					categoryRenderer.setSeriesOutlinePaint(i, ChartThemesConstants.TRANSPARENT_PAINT);
 				}
@@ -136,14 +136,14 @@ public class AegeanChartTheme extends GenericChartTheme
 			categoryPlot.setDomainGridlinesVisible(false);
 			categoryPlot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
 		}
-		else if(plot instanceof XYPlot)
+		else if (plot instanceof XYPlot)
 		{
 			XYPlot xyPlot = (XYPlot)plot;
 			XYItemRenderer xyItemRenderer = xyPlot.getRenderer();
 			XYDataset xyDataset = xyPlot.getDataset();
-			if(xyDataset != null)
+			if (xyDataset != null)
 			{
-				for(int i = 0; i < xyDataset.getSeriesCount(); i++)
+				for (int i = 0; i < xyDataset.getSeriesCount(); i++)
 				{
 					xyItemRenderer.setSeriesOutlinePaint(i, ChartThemesConstants.TRANSPARENT_PAINT);
 				}
@@ -176,7 +176,7 @@ public class AegeanChartTheme extends GenericChartTheme
 		JRPiePlot jrPiePlot = (JRPiePlot)getPlot();
 		boolean isShowLabels = jrPiePlot.getShowLabels() == null ? true : jrPiePlot.getShowLabels();
 
-		if(isShowLabels && piePlot.getLabelGenerator() != null)
+		if (isShowLabels && piePlot.getLabelGenerator() != null)
 		{
 			piePlot.setLabelBackgroundPaint(ChartThemesConstants.TRANSPARENT_PAINT);
 			piePlot.setLabelShadowPaint(ChartThemesConstants.TRANSPARENT_PAINT);
@@ -185,9 +185,9 @@ public class AegeanChartTheme extends GenericChartTheme
 		piePlot.setShadowXOffset(0);
 		piePlot.setShadowYOffset(0);
 		PieDataset pieDataset = piePlot.getDataset();
-		if(pieDataset != null)
+		if (pieDataset != null)
 		{
-			for(int i = 0; i < pieDataset.getItemCount(); i++)
+			for (int i = 0; i < pieDataset.getItemCount(); i++)
 			{
 				piePlot.setSectionOutlinePaint(pieDataset.getKey(i), ChartThemesConstants.TRANSPARENT_PAINT);
 				
@@ -228,9 +228,9 @@ public class AegeanChartTheme extends GenericChartTheme
 		XYPlot xyPlot = (XYPlot)jfreeChart.getPlot();
 		XYBubbleRenderer bubbleRenderer = (XYBubbleRenderer)xyPlot.getRenderer();
 		XYDataset xyDataset = xyPlot.getDataset();
-		if(xyDataset != null)
+		if (xyDataset != null)
 		{
-			for(int i = 0; i < xyDataset.getSeriesCount(); i++)
+			for (int i = 0; i < xyDataset.getSeriesCount(); i++)
 			{
 				bubbleRenderer.setSeriesOutlinePaint(i, ChartThemesConstants.TRANSPARENT_PAINT);
 			}
@@ -284,9 +284,9 @@ public class AegeanChartTheme extends GenericChartTheme
 		barRenderer.setSeriesPaint(0, seriesPaints.get(3));
 		barRenderer.setSeriesPaint(1, seriesPaints.get(0));
 		CategoryDataset categoryDataset = categoryPlot.getDataset();
-		if(categoryDataset != null)
+		if (categoryDataset != null)
 		{
-			for(int i = 0; i < categoryDataset.getRowCount(); i++)
+			for (int i = 0; i < categoryDataset.getRowCount(); i++)
 			{
 				barRenderer.setSeriesItemLabelFont(i, categoryPlot.getDomainAxis().getTickLabelFont());
 				barRenderer.setSeriesItemLabelsVisible(i, true);
@@ -312,7 +312,7 @@ public class AegeanChartTheme extends GenericChartTheme
 		// Set the shape
 		MeterShapeEnum shape = jrPlot.getShape() == null ? MeterShapeEnum.DIAL : jrPlot.getShape();
 		
-		switch(shape)
+		switch (shape)
 		{
 			case CHORD:
 				chartPlot.setDialShape(DialShape.CHORD);
@@ -350,13 +350,13 @@ public class AegeanChartTheme extends GenericChartTheme
 		chartPlot.setTickPaint(tickColor);
 		int dialUnitScale = 1;
 		Range range = convertRange(jrPlot.getDataRange());
-		if(range != null)
+		if (range != null)
 		{
 			// Set the meter's range
 			chartPlot.setRange(range);
 			double bound = Math.max(Math.abs(range.getUpperBound()), Math.abs(range.getLowerBound()));
 			dialUnitScale = ChartThemesUtilities.getScale(bound);
-			if((range.getLowerBound() == (int)range.getLowerBound() &&
+			if ((range.getLowerBound() == (int)range.getLowerBound() &&
 					range.getUpperBound() == (int)range.getUpperBound() &&
 					tickInterval == (int)tickInterval) ||
 					dialUnitScale > 1
@@ -364,11 +364,11 @@ public class AegeanChartTheme extends GenericChartTheme
 			{
 				chartPlot.setTickLabelFormat(new DecimalFormat("#,##0", DecimalFormatSymbols.getInstance(getLocale())));
 			}
-			else if(dialUnitScale == 1)
+			else if (dialUnitScale == 1)
 			{
 				chartPlot.setTickLabelFormat(new DecimalFormat("#,##0.0", DecimalFormatSymbols.getInstance(getLocale())));
 			}
-			else if(dialUnitScale <= 0)
+			else if (dialUnitScale <= 0)
 			{
 				chartPlot.setTickLabelFormat(new DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(getLocale())));
 			}
@@ -386,7 +386,7 @@ public class AegeanChartTheme extends GenericChartTheme
 				false
 				);
 		
-		if(jrPlot.getMeterBackgroundColor() != null)
+		if (jrPlot.getMeterBackgroundColor() != null)
 		{
 			chartPlot.setDialBackgroundPaint(jrPlot.getMeterBackgroundColor());
 		}
@@ -399,12 +399,12 @@ public class AegeanChartTheme extends GenericChartTheme
 		chartPlot.setNeedlePaint(needlePaint);
 
 		JRValueDisplay display = jrPlot.getValueDisplay();
-		if(display != null)
+		if (display != null)
 		{
 			Color valueColor = display.getColor() == null ? Color.BLACK : display.getColor();
 			chartPlot.setValuePaint(valueColor);
 			String pattern = display.getMask() != null ? display.getMask() : "#,##0.####";
-			if(pattern != null)
+			if (pattern != null)
 				chartPlot.setTickLabelFormat( new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(getLocale())));
 			JRFont displayFont = display.getFont();
 			Font themeDisplayFont = getFont((JRFont)getDefaultValue(defaultPlotPropertiesMap, ChartThemesConstants.PLOT_DISPLAY_FONT), displayFont, defaultBaseFontSize);
@@ -417,11 +417,11 @@ public class AegeanChartTheme extends GenericChartTheme
 		String label = getChart().hasProperties() ?
 				getChart().getPropertiesMap().getProperty(DefaultChartTheme.PROPERTY_DIAL_LABEL) : null;
 		
-		if(label != null)
+		if (label != null)
 		{ 
-			if(dialUnitScale < 0)
+			if (dialUnitScale < 0)
 				label = new MessageFormat(label).format(new Object[]{String.valueOf(Math.pow(10, dialUnitScale))});
-			else if(dialUnitScale < 3)
+			else if (dialUnitScale < 3)
 				label = new MessageFormat(label).format(new Object[]{"1"});
 			else
 				label = new MessageFormat(label).format(new Object[]{String.valueOf((int)Math.pow(10, dialUnitScale-2))});
@@ -443,10 +443,10 @@ public class AegeanChartTheme extends GenericChartTheme
 			int size = Math.min(3, intervals.size());
 			
 			int colorStep = 0;
-			if(size > 3)
+			if (size > 3)
 				colorStep = 255 / (size - 3);
 			
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 			{
 				JRMeterInterval interval = intervals.get(i);
 				Color color = i < 3 
@@ -503,7 +503,7 @@ public class AegeanChartTheme extends GenericChartTheme
 
 		Range range = convertRange(jrPlot.getDataRange());
 
-		if(range != null)
+		if (range != null)
 		{
 			// Set the boundary of the thermomoter
 			chartPlot.setLowerBound(range.getLowerBound());
@@ -520,7 +520,7 @@ public class AegeanChartTheme extends GenericChartTheme
 		List<Paint> seriesPaints = (List<Paint>)getDefaultValue(defaultChartPropertiesMap, ChartThemesConstants.SERIES_COLORS);
 		
 		Paint paint = jrPlot.getMercuryColor();
-		if(paint != null)
+		if (paint != null)
 		{
 			chartPlot.setUseSubrangePaint(false);
 		}
@@ -609,7 +609,7 @@ public class AegeanChartTheme extends GenericChartTheme
 
 		// get data for diagrams
 		DialPlot dialPlot = new DialPlot();
-		if(getDataset() != null)
+		if (getDataset() != null)
 		{
 			dialPlot.setDataset((ValueDataset)getDataset());
 		}
@@ -624,7 +624,7 @@ public class AegeanChartTheme extends GenericChartTheme
 		ScaledDialScale scale = null;
 		int dialUnitScale = 1;
 		Range range = convertRange(jrPlot.getDataRange());
-		if(range != null)
+		if (range != null)
 		{
 			double bound = Math.max(Math.abs(range.getUpperBound()), Math.abs(range.getLowerBound()));
 			dialUnitScale = ChartThemesUtilities.getScale(bound);
@@ -641,7 +641,7 @@ public class AegeanChartTheme extends GenericChartTheme
 					(upperBound - lowerBound)/(tickCount-1),
 					1
 					);
-			if((lowerBound == (int)lowerBound &&
+			if ((lowerBound == (int)lowerBound &&
 					upperBound == (int)upperBound &&
 					scale.getMajorTickIncrement() == (int)scale.getMajorTickIncrement()) ||
 					dialUnitScale > 1
@@ -649,12 +649,12 @@ public class AegeanChartTheme extends GenericChartTheme
 			{
 				scale.setTickLabelFormatter(new DecimalFormat("#,##0", DecimalFormatSymbols.getInstance(getLocale())));
 			}
-			else if(dialUnitScale == 1)
+			else if (dialUnitScale == 1)
 			{
 
 				scale.setTickLabelFormatter(new DecimalFormat("#,##0.0", DecimalFormatSymbols.getInstance(getLocale())));
 			}
-			else if(dialUnitScale <= 0)
+			else if (dialUnitScale <= 0)
 			{
 				scale.setTickLabelFormatter(new DecimalFormat("#,##0.00", DecimalFormatSymbols.getInstance(getLocale())));
 			}
@@ -693,10 +693,10 @@ public class AegeanChartTheme extends GenericChartTheme
 			int size = Math.min(3, intervals.size());
 			
 			int colorStep = 0;
-			if(size > 3)
+			if (size > 3)
 				colorStep = 255 / (size - 3);
 			
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 			{
 				JRMeterInterval interval = intervals.get(i);
 				Range intervalRange = convertRange(interval.getDataRange());
@@ -735,7 +735,7 @@ public class AegeanChartTheme extends GenericChartTheme
 			dvi.setPaint(Color.WHITE);
 
 			String pattern = display.getMask() != null ? display.getMask() : "#,##0.####";
-			if(pattern != null)
+			if (pattern != null)
 				dvi.setNumberFormat( new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(getLocale())));
 			dvi.setRadius(0.15);
 			dvi.setValueAnchor(RectangleAnchor.CENTER);
@@ -747,11 +747,11 @@ public class AegeanChartTheme extends GenericChartTheme
 		String label = getChart().hasProperties() ?
 				getChart().getPropertiesMap().getProperty(DefaultChartTheme.PROPERTY_DIAL_LABEL) : null;
 
-		if(label != null)
+		if (label != null)
 		{
-			if(dialUnitScale < 0)
+			if (dialUnitScale < 0)
 				label = new MessageFormat(label).format(new Object[]{String.valueOf(Math.pow(10, dialUnitScale))});
-			else if(dialUnitScale < 3)
+			else if (dialUnitScale < 3)
 				label = new MessageFormat(label).format(new Object[]{"1"});
 			else
 				label = new MessageFormat(label).format(new Object[]{String.valueOf((int)Math.pow(10, dialUnitScale-2))});
@@ -760,7 +760,7 @@ public class AegeanChartTheme extends GenericChartTheme
 			Font themeDisplayFont = getFont((JRFont)getDefaultValue(defaultPlotPropertiesMap, ChartThemesConstants.PLOT_DISPLAY_FONT), displayFont, defaultBaseFontSize);
 			
 			String[] textLines = label.split("\\n");
-			for(int i = 0; i < textLines.length; i++)
+			for (int i = 0; i < textLines.length; i++)
 			{
 				DialTextAnnotation dialAnnotation = new DialTextAnnotation(textLines[i]);
 				dialAnnotation.setFont(themeDisplayFont);
@@ -811,7 +811,7 @@ public class AegeanChartTheme extends GenericChartTheme
 		@SuppressWarnings("unchecked")
 		List<Paint> seriesPaints = (List<Paint>)getDefaultValue(defaultChartPropertiesMap, ChartThemesConstants.SERIES_COLORS);
 
-		for(int i = 0; i < dataset.getSeriesCount(); i++)
+		for (int i = 0; i < dataset.getSeriesCount(); i++)
 		{
 			
 			renderer.setSeriesFillPaint(i, seriesPaints.get(i));

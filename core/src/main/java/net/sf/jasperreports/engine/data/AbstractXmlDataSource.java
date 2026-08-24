@@ -157,7 +157,7 @@ public abstract class AbstractXmlDataSource<T extends AbstractXmlDataSource<?>> 
 	@Override
 	public Object getFieldValue(JRField jrField) throws JRException 
 	{
-		if(getCurrentNode() == null)
+		if (getCurrentNode() == null)
 		{
 			return null;
 		}
@@ -182,7 +182,7 @@ public abstract class AbstractXmlDataSource<T extends AbstractXmlDataSource<?>> 
 		Class<?> valueClass = jrField.getValueClass();
 		Object selectedObject = getSelectObject(getCurrentNode(), expression);
 
-		if(Object.class != valueClass) 
+		if (Object.class != valueClass) 
 		{
 			if (selectedObject != null) 
 			{
@@ -305,7 +305,7 @@ public abstract class AbstractXmlDataSource<T extends AbstractXmlDataSource<?>> 
 			if (subnode.getNodeType() == Node.TEXT_NODE) 
 			{
 				String value = subnode.getNodeValue();
-				if(value != null)
+				if (value != null)
 				{
 					result.append(value);
 				}
@@ -313,7 +313,7 @@ public abstract class AbstractXmlDataSource<T extends AbstractXmlDataSource<?>> 
 			else if (subnode.getNodeType() == Node.CDATA_SECTION_NODE) 
 			{
 				String value = subnode.getNodeValue();
-				if(value != null)
+				if (value != null)
 				{
 					result.append(value);
 				}
@@ -321,7 +321,7 @@ public abstract class AbstractXmlDataSource<T extends AbstractXmlDataSource<?>> 
 				// Recurse into the subtree for text
 				// (and ignore comments)
 				String value = getText(subnode);
-				if(value != null)
+				if (value != null)
 				{
 					result.append(value);
 				}

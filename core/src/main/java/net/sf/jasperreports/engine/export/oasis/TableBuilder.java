@@ -231,7 +231,7 @@ public class TableBuilder
 	
 	public void buildRowFooter() 
 	{
-		if(rowTagOpen)
+		if (rowTagOpen)
 		{
 			bodyWriter.write("</table:table-row>\n");
 			rowTagOpen = false;
@@ -440,7 +440,7 @@ public class TableBuilder
 
 		AttributedCharacterIterator iterator = styledText.getAttributedString().getIterator();
 
-		while(runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
+		while (runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
 		{
 			Map<Attribute,Object> attributes = iterator.getAttributes();
 
@@ -512,7 +512,7 @@ public class TableBuilder
 	protected void startTextSpan(Map<AttributedCharacterIterator.Attribute, Object> attributes, String text, Locale locale, boolean isIgnoreTextFormatting)
 	{
 		bodyWriter.write("<text:span");
-		if(attributes != null)
+		if (attributes != null)
 		{
 			String textSpanStyleName = styleCache.getTextSpanStyle(attributes, text, locale, isIgnoreTextFormatting);
 			bodyWriter.write(" text:style-name=\"" + textSpanStyleName + "\"");
@@ -604,7 +604,7 @@ public class TableBuilder
 	 */
 	protected void writeHyperlink(JRPrintHyperlink link, String href, boolean isText)
 	{
-		if(isText)
+		if (isText)
 		{
 			bodyWriter.write("<text:a xlink:href=\"");
 		}
@@ -622,7 +622,7 @@ public class TableBuilder
 			bodyWriter.write(" office:target-frame-name=\"");
 			bodyWriter.write(target);
 			bodyWriter.write("\"");
-			if(target.equals("_blank"))
+			if (target.equals("_blank"))
 			{
 				bodyWriter.write(" xlink:show=\"new\"");
 			}
@@ -646,7 +646,7 @@ public class TableBuilder
 	 */
 	protected void endHyperlink(boolean isText)
 	{
-		if(isText)
+		if (isText)
 		{
 			bodyWriter.write("</text:a>");
 		}
@@ -663,7 +663,7 @@ public class TableBuilder
 	protected String getHyperlinkTarget(JRPrintHyperlink link)
 	{
 		String target = null;
-		switch(link.getHyperlinkTarget())
+		switch (link.getHyperlinkTarget())
 		{
 			case SELF :
 			{

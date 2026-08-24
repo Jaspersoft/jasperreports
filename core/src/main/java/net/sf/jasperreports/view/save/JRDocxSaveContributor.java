@@ -74,7 +74,7 @@ public class JRDocxSaveContributor extends JRSaveContributor
 	@Override
 	public boolean accept(File file)
 	{
-		if(file.isDirectory()){
+		if (file.isDirectory()){
 			return true;
 		}
 		return file.getName().toLowerCase().endsWith(EXTENSION_DOCX);
@@ -90,7 +90,7 @@ public class JRDocxSaveContributor extends JRSaveContributor
 	@Override
 	public void save(JasperPrint jasperPrint, File file) throws JRException
 	{
-		if(!file.getName().toLowerCase().endsWith(EXTENSION_DOCX))
+		if (!file.getName().toLowerCase().endsWith(EXTENSION_DOCX))
 		{
 			file = new File(file.getAbsolutePath() + EXTENSION_DOCX);
 		}

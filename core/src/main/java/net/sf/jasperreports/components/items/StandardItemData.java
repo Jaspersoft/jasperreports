@@ -25,7 +25,6 @@ package net.sf.jasperreports.components.items;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRConstants;
@@ -70,9 +69,8 @@ public class StandardItemData implements Serializable, ItemData, JRChangeEventsS
 		}
 		
 		List<Item> compiledItems = new ArrayList<>(items.size());
-		for (Iterator<Item> it = items.iterator(); it.hasNext();)
+		for (Item item : items)
 		{
-			Item item = it.next();
 			Item compiledItem = new StandardItem(getCompiledProperties(item.getProperties(), factory));
 			compiledItems.add(compiledItem);
 		}
@@ -87,9 +85,8 @@ public class StandardItemData implements Serializable, ItemData, JRChangeEventsS
 		}
 		
 		List<ItemProperty> compiledProperties = new ArrayList<>(properties.size());
-		for (Iterator<ItemProperty> it = properties.iterator(); it.hasNext();)
+		for (ItemProperty property : properties)
 		{
-			ItemProperty property = it.next();
 			ItemProperty compiledProperty = new StandardItemProperty(property.getName(), property.getValue(), factory.getExpression(property.getValueExpression()));
 			compiledProperties.add(compiledProperty);
 		}
@@ -119,7 +116,7 @@ public class StandardItemData implements Serializable, ItemData, JRChangeEventsS
 	 */
 	public void addItem(int index, Item item)
 	{
-		if(index >=0 && index < itemsList.size())
+		if (index >=0 && index < itemsList.size())
 			itemsList.add(index, item);
 		else{
 			itemsList.add(item);

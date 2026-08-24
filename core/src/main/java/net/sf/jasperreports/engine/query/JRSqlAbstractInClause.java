@@ -160,12 +160,12 @@ public abstract class JRSqlAbstractInClause implements JRClauseFunction
 				int idx = 0;
 				List<Object> notNullQueryParameters = new ArrayList<>();
 				
-				while(it.hasNext())
+				while (it.hasNext())
 				{
 					Object element = it.next();
-					if(element == null)
+					if (element == null)
 					{
-						if(!nullFound)
+						if (!nullFound)
 						{
 							nullFound = true;
 							nullSbuffer.append(col);
@@ -175,7 +175,7 @@ public abstract class JRSqlAbstractInClause implements JRClauseFunction
 					}
 					else
 					{
-						if(!notNullFound)
+						if (!notNullFound)
 						{
 							notNullFound = true;
 							notNullSbuffer.append(col);
@@ -194,10 +194,10 @@ public abstract class JRSqlAbstractInClause implements JRClauseFunction
 						idx++;
 					}
 				}
-				if(nullFound)
+				if (nullFound)
 				{
 					
-					if(notNullFound)
+					if (notNullFound)
 					{
 						sbuffer.append("( ");
 						sbuffer.append(nullSbuffer);
@@ -208,11 +208,11 @@ public abstract class JRSqlAbstractInClause implements JRClauseFunction
 						sbuffer.append(nullSbuffer);
 					}
 				}
-				if(notNullFound)
+				if (notNullFound)
 				{
 					notNullSbuffer.append(')');
 					
-					if(nullFound)
+					if (nullFound)
 					{
 						notNullSbuffer.append(" )");
 					}

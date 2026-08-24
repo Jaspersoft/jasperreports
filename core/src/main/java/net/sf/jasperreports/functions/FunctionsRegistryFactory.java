@@ -24,7 +24,6 @@
 package net.sf.jasperreports.functions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
@@ -63,10 +62,8 @@ public class FunctionsRegistryFactory  implements ExtensionsRegistryFactory
 	private void addFunctionClasses(List<String> classNames, JRPropertiesMap properties, String propertyPrefix)
 	{
 		List<PropertySuffix> functionClassProperties = JRPropertiesUtil.getProperties(properties, propertyPrefix);
-		for (Iterator<PropertySuffix> it = functionClassProperties.iterator(); it.hasNext();)
+		for (PropertySuffix functionsClassesProp : functionClassProperties)
 		{
-			PropertySuffix functionsClassesProp = it.next(); 
-
 			// We assume this property value is a comma-separated class names list like: a.b.c.ClassA, a.b.d.ClassB
 			
 			String[] classes = functionsClassesProp.getValue().split(",");

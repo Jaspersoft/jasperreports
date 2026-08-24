@@ -75,6 +75,9 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	private PdfWriter pdfWriter;
 	private PdfaConformanceEnum pdfaConformance;
 
+	// initialized to OpenPDF's default (PDF 2.0)
+	private PdfVersionEnum pdfVersion = PdfVersionEnum.VERSION_2_0;
+
 	public StandardPdfWriter(StandardPdfProducer pdfProducer, PdfWriter pdfWriter)
 	{
 		this.pdfProducer = pdfProducer;
@@ -85,16 +88,29 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	{
 		return pdfWriter;
 	}
-	
+
+	public boolean isPdf2()
+	{
+		// true when the effective version is 2.0 or later
+		return pdfVersion.isAtLeast(PdfVersionEnum.VERSION_2_0);
+	}
+
 	@Override
 	public void setPdfVersion(PdfVersionEnum pdfVersion)
 	{
+		this.pdfVersion = pdfVersion;
 		pdfWriter.setPdfVersion(toPdfVersion(pdfVersion));
 	}
 
 	@Override
 	public void setMinimalPdfVersion(PdfVersionEnum minimalVersion)
 	{
+		// mirror OpenPDF's setAtLeastPdfVersion which only raises the version
+		// (assigning an equal version is a harmless no-op)
+		if (minimalVersion.isAtLeast(pdfVersion))
+		{
+			pdfVersion = minimalVersion;
+		}
 		pdfWriter.setAtLeastPdfVersion(toPdfVersion(minimalVersion));
 	}
 	
@@ -176,6 +192,11 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	{
 		this.pdfaConformance = pdfaConformance;
 		
+		if (pdfaConformance != null && pdfaConformance.getPdfVersion() != null)
+		{
+			this.pdfVersion = pdfaConformance.getPdfVersion();
+		}
+
 		// there is an incompatibility regarding font handling, 
 		// specifically concerning the CIDSet entry for subsetted CIDFonts, 
 		// when attempting to comply with PDF/A-1a and PDF/UA-1 simultaneously.
@@ -222,7 +243,7 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	{
 		if (PdfXmpCreator.supported())
 		{
-			byte[] metadata = PdfXmpCreator.createXmpMetadata(pdfWriter, pdfaConformance, isTagged);
+			byte[] metadata = PdfXmpCreator.createXmpMetadata(pdfWriter, pdfaConformance, isTagged, isPdf2());
 			pdfWriter.setXmpMetadata(metadata);
 		}
 		else
@@ -272,17 +293,17 @@ public class StandardPdfWriter implements PdfDocumentWriter
 	public static int getIntegerPermissions(String permissions)
 	{
 		int permission = 0;
-		if(permissions != null && permissions.length() > 0)
+		if (permissions != null && permissions.length() > 0)
 		{
 			String[] perms = permissions.split("\\|");
-			for(String perm : perms)
+			for (String perm : perms)
 			{
-				if(PdfPermissionsEnum.ALL.equals(PdfPermissionsEnum.getByName(perm)))
+				if (PdfPermissionsEnum.ALL.equals(PdfPermissionsEnum.getByName(perm)))
 				{
 					permission = ALL_PERMISSIONS;
 					break;
 				}
-				if(perm != null && perm.length()>0)
+				if (perm != null && perm.length()>0)
 				{
 					permission |= toIntegerPermission(PdfPermissionsEnum.getByName(perm));
 				}

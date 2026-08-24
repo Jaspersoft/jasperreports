@@ -52,7 +52,7 @@ public class JRSqlNotEqualClause extends JRSqlAbstractEqualClause
 	protected void handleEqualOperator(StringBuffer sbuffer, String param, JRQueryClauseContext queryContext)
 	{
 		Object paramValue = queryContext.getValueParameter(param).getValue();
-		if(paramValue == null)
+		if (paramValue == null)
 		{
 			sbuffer.append(OPERATOR_IS_NOT_NULL);
 		}

@@ -31,7 +31,6 @@ package net.sf.jasperreports.engine.export;
 
 import java.awt.Color;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -216,24 +215,24 @@ public class JRGridLayout
 		xCuts = createXCuts ? new CutsInfo() : xCuts;
 		yCuts = nature.isIgnoreLastRow() ? new CutsInfo(0) : new CutsInfo(height);
 
-		if(!isNested && nature.isIgnorePageMargins()) //FIXMEXLS left and right margins are not ignored when all pages on a single sheet
+		if (!isNested && nature.isIgnorePageMargins()) //FIXMEXLS left and right margins are not ignored when all pages on a single sheet
 		{
 			// TODO lucianc this is an extra virtualization iteration
 			setMargins(elements);
 
-			if(createXCuts)
+			if (createXCuts)
 			{
-				if(hasLeftMargin)
+				if (hasLeftMargin)
 				{
 					xCuts.removeCutOffset(0);
 				}
 			}
 
-			if(hasTopMargin)
+			if (hasTopMargin)
 			{
 				yCuts.removeCutOffset(0);
 			}
-			if(hasBottomMargin)
+			if (hasBottomMargin)
 			{
 				yCuts.removeCutOffset(height);
 			}
@@ -258,9 +257,9 @@ public class JRGridLayout
 
 		grid = new Grid(rowCount, colCount);
 
-		for(int row = 0; row < rowCount; row++)
+		for (int row = 0; row < rowCount; row++)
 		{
-			for(int col = 0; col < colCount; col++)
+			for (int col = 0; col < colCount; col++)
 			{
 				GridCellSize size = cellSize(
 					xCuts.getCutOffset(col + 1) - xCuts.getCutOffset(col),
@@ -299,9 +298,8 @@ public class JRGridLayout
 
 	protected void createCuts(List<JRPrintElement> elements, int elementOffsetX, int elementOffsetY, boolean createXCuts)
 	{
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			if (nature.isToExport(element))
 			{
 				if (createXCuts)
@@ -329,27 +327,26 @@ public class JRGridLayout
 
 	protected void setMargins(List<JRPrintElement> elements)
 	{
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			if (nature.isToExport(element))
 			{
-				if(hasLeftMargin && element.getX() <= 0)
+				if (hasLeftMargin && element.getX() <= 0)
 				{
 					hasLeftMargin = false;
 				}
 
-				if(hasRightMargin && element.getX() >= width - element.getWidth())
+				if (hasRightMargin && element.getX() >= width - element.getWidth())
 				{
 					hasRightMargin = false;
 				}
 
-				if(hasTopMargin && element.getY() <= 0)
+				if (hasTopMargin && element.getY() <= 0)
 				{
 					hasTopMargin = false;
 				}
 
-				if(hasBottomMargin && element.getY() >= height - element.getHeight())
+				if (hasBottomMargin && element.getY() >= height - element.getHeight())
 				{
 					hasBottomMargin = false;
 				}
@@ -820,10 +817,8 @@ public class JRGridLayout
 	 */
 	protected static void addXCuts(ExporterNature nature, List<JRPrintElement> elementsList, int elementOffsetX, CutsInfo xCuts)
 	{
-		for (Iterator<JRPrintElement> it = elementsList.iterator(); it.hasNext();)
+		for (JRPrintElement element : elementsList)
 		{
-			JRPrintElement element = it.next();
-
 			if (nature.isToExport(element))
 			{
 				xCuts.addCutOffset(element.getX() + elementOffsetX);

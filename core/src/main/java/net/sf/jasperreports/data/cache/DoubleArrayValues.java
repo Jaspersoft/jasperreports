@@ -47,9 +47,9 @@ public class DoubleArrayValues implements ColumnValues, Serializable
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException
 	{
 		out.writeInt(values.length);
-		for (int i = 0; i < values.length; i++)
+		for (double value : values)
 		{
-			out.writeDouble(values[i]);
+			out.writeDouble(value);
 		}
 	}
 	

@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.engine.util;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRException;
@@ -74,9 +73,8 @@ public final class JRQueryExecuterUtils
 	{
 		List<JRQueryExecuterFactoryBundle> bundles = jasperReportsContext.getExtensions(
 				JRQueryExecuterFactoryBundle.class);
-		for (Iterator<JRQueryExecuterFactoryBundle> it = bundles.iterator(); it.hasNext();)
+		for (JRQueryExecuterFactoryBundle bundle : bundles)
 		{
-			JRQueryExecuterFactoryBundle bundle = it.next();
 			QueryExecuterFactory factory = bundle.getQueryExecuterFactory(language);
 			if (factory != null)
 			{

@@ -354,7 +354,7 @@ public class BucketDefinition
 		@Override
 		public String toString()
 		{
-			switch(type)
+			switch (type)
 			{
 				case VALUE_TYPE_NULL:
 					return "NULL";

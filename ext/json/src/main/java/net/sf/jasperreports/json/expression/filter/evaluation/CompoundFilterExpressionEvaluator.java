@@ -31,28 +31,28 @@ import net.sf.jasperreports.json.expression.filter.CompoundFilterExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class CompoundFilterExpressionEvaluator implements FilterExpressionEvaluator {
-    private EvaluationContext evaluationContext;
-    private CompoundFilterExpression expression;
+	private EvaluationContext evaluationContext;
+	private CompoundFilterExpression expression;
 
 
-    public CompoundFilterExpressionEvaluator(EvaluationContext evaluationContext, CompoundFilterExpression expression) {
-        this.evaluationContext = evaluationContext;
-        this.expression = expression;
-    }
+	public CompoundFilterExpressionEvaluator(EvaluationContext evaluationContext, CompoundFilterExpression expression) {
+		this.evaluationContext = evaluationContext;
+		this.expression = expression;
+	}
 
-    @Override
-    public boolean evaluate(JRJsonNode contextNode) {
-        FilterExpressionEvaluatorVisitor evaluatorVisitor = evaluationContext.getFilterExpressionEvaluatorVisitor();
+	@Override
+	public boolean evaluate(JRJsonNode contextNode) {
+		FilterExpressionEvaluatorVisitor evaluatorVisitor = evaluationContext.getFilterExpressionEvaluatorVisitor();
 
-        switch (expression.getLogicalOperator()) {
-            case AND:
-                return expression.getLeft().evaluate(contextNode, evaluatorVisitor)
-                        && expression.getRight().evaluate(contextNode, evaluatorVisitor);
-            case OR:
-                return expression.getLeft().evaluate(contextNode, evaluatorVisitor)
-                        || expression.getRight().evaluate(contextNode, evaluatorVisitor);
-        }
+		switch (expression.getLogicalOperator()) {
+			case AND:
+				return expression.getLeft().evaluate(contextNode, evaluatorVisitor)
+						&& expression.getRight().evaluate(contextNode, evaluatorVisitor);
+			case OR:
+				return expression.getLeft().evaluate(contextNode, evaluatorVisitor)
+						|| expression.getRight().evaluate(contextNode, evaluatorVisitor);
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

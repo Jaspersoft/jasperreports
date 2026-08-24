@@ -197,9 +197,8 @@ public class MondrianApp extends AbstractSampleApp
 	public void print() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperPrintManager.printReport(
 				reportFile.getAbsolutePath(), 
@@ -216,9 +215,8 @@ public class MondrianApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToPdfFile(
 				reportFile.getAbsolutePath()
@@ -234,9 +232,8 @@ public class MondrianApp extends AbstractSampleApp
 	public void xml() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToXmlFile(
 				reportFile.getAbsolutePath(),
@@ -253,9 +250,8 @@ public class MondrianApp extends AbstractSampleApp
 	public void xmlEmbed() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToXmlFile(
 				reportFile.getAbsolutePath(), 
@@ -272,9 +268,8 @@ public class MondrianApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToHtmlFile(
 				reportFile.getAbsolutePath()
@@ -290,10 +285,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void rtf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -317,10 +311,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void xls() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -347,10 +340,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void csv() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -374,10 +366,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void odt() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -401,10 +392,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void ods() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -431,10 +421,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void docx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -458,10 +447,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void xlsx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -488,10 +476,9 @@ public class MondrianApp extends AbstractSampleApp
 	public void pptx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 

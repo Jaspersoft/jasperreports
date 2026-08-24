@@ -44,22 +44,22 @@ public class Olap4jFactory
 	
 	public Olap4jMember createMember(Member member)
 	{
-		Olap4jMember mondrianMember;
+		Olap4jMember olap4jMember;
 		if (member == null)
 		{
-			mondrianMember = null;
+			olap4jMember = null;
 		}
 		else
 		{
 			String key = member.getUniqueName();
-			mondrianMember = members.get(key);
-			if (mondrianMember == null)
+			olap4jMember = members.get(key);
+			if (olap4jMember == null) // computeIfAbsent is not appropriate due to recursiveness in Olap4jMember constructor
 			{
-				mondrianMember = new Olap4jMember(member, this);
-				members.put(key, mondrianMember);
+				olap4jMember = new Olap4jMember(member, this);
+				members.put(key, olap4jMember);
 			}
 		}
-		return mondrianMember;
+		return olap4jMember;
 	}
 	
 }

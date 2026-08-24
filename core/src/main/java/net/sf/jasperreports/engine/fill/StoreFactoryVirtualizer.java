@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.fill;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.apache.commons.collections4.map.ReferenceMap;
 import org.apache.commons.logging.Log;
@@ -184,9 +183,8 @@ public class StoreFactoryVirtualizer extends JRAbstractLRUVirtualizer
 
 		synchronized (contextStores)
 		{
-			for (Iterator<?> it = contextStores.values().iterator(); it.hasNext();)
+			for (VirtualizerStore store : contextStores.values())
 			{
-				VirtualizerStore store = (VirtualizerStore) it.next();
 				store.dispose();
 			}
 

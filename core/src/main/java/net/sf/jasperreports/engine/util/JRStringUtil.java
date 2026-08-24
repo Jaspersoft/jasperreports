@@ -124,15 +124,15 @@ public final class JRStringUtil
 		for (int i = 0; i < length; i++)
 		{
 			char c = text.charAt(i);
-			if(Character.isISOControl(c) && c!='\t' && c!='\r' && c!='\n')
+			if (Character.isISOControl(c) && c!='\t' && c!='\r' && c!='\n')
 			{
 				last = appendText(text, ret, i, last);
-				if(invalidCharReplacement == null)
+				if (invalidCharReplacement == null)
 				{
 					//the invalid character is preserved
 					ret.append(c);
 				}
-				else if(invalidCharReplacement.length() == 0)
+				else if (invalidCharReplacement.length() == 0)
 				{
 					//the invalid character is removed
 					continue;
@@ -250,7 +250,7 @@ public final class JRStringUtil
 	
 	private static int appendText(String text, StringBuilder ret, int current, int old)
 	{
-		if(old < current)
+		if (old < current)
 		{
 			ret.append(text.substring(old, current));
 		}
@@ -457,7 +457,7 @@ public final class JRStringUtil
 		
 		StringBuilder sb = new StringBuilder();
 		StringTokenizer tkzer = new StringTokenizer(text, "\\\"\n\r\t", true);
-		while(tkzer.hasMoreTokens())
+		while (tkzer.hasMoreTokens())
 		{
 			String token = tkzer.nextToken();
 			//TODO optimize ifs?
@@ -624,18 +624,18 @@ public final class JRStringUtil
 		if (srcArray != null)
 		{
 			tokens = new ArrayList<>();
-			for(int i = 0; i < srcArray.length; i++)
+			for (String src : srcArray)
 			{
-				if (srcArray[i] == null)
+				if (src == null)
 				{
 					tokens.add(null);
 				}
 				else
 				{
-					String[] currentTokensArray = srcArray[i].split(delimiterRegExp);
-					for(int j = 0; j < currentTokensArray.length; j++)
+					String[] currentTokensArray = src.split(delimiterRegExp);
+					for (String currentToken : currentTokensArray)
 					{
-						tokens.add(currentTokensArray[j].trim());
+						tokens.add(currentToken.trim());
 					}
 				}
 			}
@@ -754,7 +754,7 @@ public final class JRStringUtil
 	 */
 	public static String getRomanNumeral(int number, boolean isUpperCase)
 	{
-		if(number < 1 || number > 3999)
+		if (number < 1 || number > 3999)
 		{
 			throw 
 				new JRRuntimeException(

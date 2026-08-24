@@ -51,7 +51,7 @@ public class DesignXYDataset extends JRDesignElementDataset implements XYDataset
 	
 	public void addXYSeries(XYSeries series)
 	{
-		if(xySeriesList == null)
+		if (xySeriesList == null)
 		{
 			xySeriesList = new ArrayList<XYSeries>();
 		}
@@ -61,7 +61,7 @@ public class DesignXYDataset extends JRDesignElementDataset implements XYDataset
 	@Override
 	public XYSeries[] getSeries()
 	{
-		if(xySeriesList != null)
+		if (xySeriesList != null)
 		{
 			return xySeriesList.toArray(new XYSeries[xySeriesList.size()]);
 		}

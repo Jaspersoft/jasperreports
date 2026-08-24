@@ -124,9 +124,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 
 	private static void collectDeepElements(JRElement[] elements, List<JRFillElement> deepElementsList)
 	{
-		for (int i = 0; i < elements.length; i++)
+		for (JRElement element : elements)
 		{
-			JRElement element = elements[i];
 			deepElementsList.add((JRFillElement)element);
 			
 			if (element instanceof JRFillFrame)
@@ -224,12 +223,12 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (ySortedElements != null && ySortedElements.length > 0)
 		{
-			for(int i = 0; i < ySortedElements.length - 1; i++)
+			for (int i = 0; i < ySortedElements.length - 1; i++)
 			{
 				JRFillElement iElem = ySortedElements[i];
 				boolean isBreakElem = iElem instanceof JRFillBreak;
 
-				for(int j = i + 1; j < ySortedElements.length; j++)
+				for (int j = i + 1; j < ySortedElements.length; j++)
 				{
 					JRFillElement jElem = ySortedElements[j];
 					
@@ -275,7 +274,7 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 			JRElement[] allElements = getElements();
 			if (allElements != null && allElements.length > 0)
 			{
-				for(int i = 0; i < allElements.length; i++)
+				for (int i = 0; i < allElements.length; i++)
 				{
 					JRFillElement element = (JRFillElement)allElements[i];
 					element.setCurrentEvaluation(evaluation);
@@ -293,10 +292,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (ySortedElements != null && ySortedElements.length > 0)
 		{
-			for(int i = 0; i < ySortedElements.length; i++)
+			for (JRFillElement element : ySortedElements)
 			{
-				JRFillElement element = ySortedElements[i];
-
 				element.reset();
 				
 				if (!isOverflow)
@@ -522,10 +519,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (stretchElements != null && stretchElements.length > 0)
 		{
-			for (int i = 0; i < stretchElements.length; i++)
+			for (JRFillElement element : stretchElements)
 			{
-				JRFillElement element = stretchElements[i];
-
 				if (element.isToPrint())
 				{
 					boolean applied = element.stretchElementToElementGroup();
@@ -548,10 +543,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		{
 			int containerStretch = stretchHeight - getContainerHeight();
 			
-			for (int i = 0; i < stretchElements.length; i++)
+			for (JRFillElement element : stretchElements)
 			{
-				JRFillElement element = stretchElements[i];
-
 				if (element.isToPrint())
 				{
 					boolean applied = element.stretchElementToContainer(containerStretch);
@@ -581,10 +574,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		//{
 			if (bandBottomElements != null && bandBottomElements.length > 0)
 			{
-				for (int i = 0; i < bandBottomElements.length; i++)
+				for (JRFillElement element : bandBottomElements)
 				{
-					JRFillElement element = bandBottomElements[i];
-
 					if (element.isToPrint())
 					{
 						// band bottom elements do not print if there will be an overflow
@@ -694,7 +685,7 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		JRElement[] allElements = getElements();
 		if (allElements != null && allElements.length > 0)
 		{
-			for(int i = 0; i < allElements.length; i++)
+			for (int i = 0; i < allElements.length; i++)
 			{
 				JRFillElement element = (JRFillElement)allElements[i];
 				
@@ -732,15 +723,15 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 						JRFillSubreport subreport = (JRFillSubreport)element;
 						
 						List<JRStyle> styles = subreport.subreportFiller.getJasperPrint().getStylesList();
-						for(int j = 0; j < styles.size(); j++)
+						for (JRStyle style : styles)
 						{
-							filler.addPrintStyle(styles.get(j));
+							filler.addPrintStyle(style);
 						}
 						
 						List<JROrigin> origins = subreport.subreportFiller.getJasperPrint().getOriginsList();
-						for(int j = 0; j < origins.size(); j++)
+						for (JROrigin origin : origins)
 						{
-							filler.getJasperPrint().addOrigin(origins.get(j));
+							filler.getJasperPrint().addOrigin(origin);
 						}
 						
 						int parentDpi = filler.getDpi();
@@ -801,9 +792,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		{
 			if (printElements != null && printElements.size() > 0)
 			{
-				for (Iterator<? extends JRPrintElement> it = printElements.iterator(); it.hasNext();)
+				for (JRPrintElement printElement : printElements)
 				{
-					JRPrintElement printElement = it.next();
 					if (dpiScale != 1d)
 					{
 						printElement.setX(element.getX() + (int) Math.round(printElement.getX() * dpiScale));
@@ -830,10 +820,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (ySortedElements != null && ySortedElements.length > 0)
 		{
-			for(int i = 0; i < ySortedElements.length; i++)
+			for (JRFillElement element : ySortedElements)
 			{
-				JRFillElement element = ySortedElements[i];
-
 				element.rewind();
 
 				element.setAlreadyPrinted(false);
@@ -872,25 +860,19 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	 */
 	protected void initConditionalStyles()
 	{
-		filler.addDefaultStyleListener(new JRBaseFiller.DefaultStyleListener(){
-			@Override
-			public void defaultStyleSet(JRStyle style)
-			{
-				collectConditionalStyle(style);
-			}
-		});
+		filler.addDefaultStyleListener(this::collectConditionalStyle);
 		
-		for (int i = 0; i < deepElements.length; i++)
+		for (JRFillElement deepElement : deepElements)
 		{
-			JRStyle style = deepElements[i].initStyle;
+			JRStyle style = deepElement.initStyle;
 			collectConditionalStyle(style);
 		}
 		
 		if (deepElements.length > 0)
 		{
-			for(int i = 0; i < deepElements.length; i++)
+			for (JRFillElement deepElement : deepElements)
 			{
-				deepElements[i].setConditionalStylesContainer(this);
+				deepElement.setConditionalStylesContainer(this);
 			}
 		}
 	}
@@ -955,9 +937,8 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 		JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
 		if (conditionalStyles != null && conditionalStyles.length > 0)
 		{
-			for (int j = 0; j < conditionalStyles.length; j++) 
+			for (JRConditionalStyle conditionalStyle : conditionalStyles) 
 			{
-				JRConditionalStyle conditionalStyle = conditionalStyles[j];
 				Boolean expressionValue = 
 					(Boolean) expressionEvaluator.evaluate(
 						conditionalStyle.getConditionExpression(),
@@ -1003,9 +984,9 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	{
 		if (originProvider != null)
 		{
-			for (int i = 0; i < deepElements.length; i++)
+			for (JRFillElement deepElement : deepElements)
 			{
-				deepElements[i].setOriginProvider(originProvider);
+				deepElement.setOriginProvider(originProvider);
 			}
 		}
 	}

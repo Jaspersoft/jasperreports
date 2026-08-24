@@ -36,50 +36,50 @@ import net.sf.jasperreports.json.expression.member.ObjectKeyExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class DefaultMemberExpressionEvaluatorVisitor implements MemberExpressionEvaluatorVisitor {
-    private EvaluationContext evaluationContext;
+	private EvaluationContext evaluationContext;
 
 
-    public DefaultMemberExpressionEvaluatorVisitor(EvaluationContext evaluationContext) {
-        this.evaluationContext = evaluationContext;
-    }
+	public DefaultMemberExpressionEvaluatorVisitor(EvaluationContext evaluationContext) {
+		this.evaluationContext = evaluationContext;
+	}
 
-    @Override
-    public JsonNodeContainer evaluateObjectKey(ObjectKeyExpression expression, JsonNodeContainer contextNode) {
-        MemberExpressionEvaluator evaluator = new ObjectKeyExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluateObjectKey(ObjectKeyExpression expression, JsonNodeContainer contextNode) {
+		MemberExpressionEvaluator evaluator = new ObjectKeyExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public JsonNodeContainer evaluateMultiLevelUp(MultiLevelUpExpression expression, JsonNodeContainer contextNode) {
-        MemberExpressionEvaluator evaluator = new MultiLevelUpExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluateMultiLevelUp(MultiLevelUpExpression expression, JsonNodeContainer contextNode) {
+		MemberExpressionEvaluator evaluator = new MultiLevelUpExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public JsonNodeContainer evaluateArrayIndex(ArrayIndexExpression expression, JsonNodeContainer contextNode) {
-        MemberExpressionEvaluator evaluator = new ArrayIndexExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluateArrayIndex(ArrayIndexExpression expression, JsonNodeContainer contextNode) {
+		MemberExpressionEvaluator evaluator = new ArrayIndexExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public JsonNodeContainer evaluateArraySlice(ArraySliceExpression expression, JsonNodeContainer contextNode) {
-        MemberExpressionEvaluator evaluator = new ArraySliceExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluateArraySlice(ArraySliceExpression expression, JsonNodeContainer contextNode) {
+		MemberExpressionEvaluator evaluator = new ArraySliceExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public JsonNodeContainer evaluateObjectConstruction(ObjectConstructionExpression expression, JsonNodeContainer contextNode) {
-        MemberExpressionEvaluator evaluator = new ObjectConstructionExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluateObjectConstruction(ObjectConstructionExpression expression, JsonNodeContainer contextNode) {
+		MemberExpressionEvaluator evaluator = new ObjectConstructionExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    @Override
-    public JsonNodeContainer evaluateArrayConstruction(ArrayConstructionExpression expression, JsonNodeContainer contextNode) {
-        MemberExpressionEvaluator evaluator = new ArrayConstructionExpressionEvaluator(evaluationContext, expression);
-        return evaluator.evaluate(contextNode);
-    }
+	@Override
+	public JsonNodeContainer evaluateArrayConstruction(ArrayConstructionExpression expression, JsonNodeContainer contextNode) {
+		MemberExpressionEvaluator evaluator = new ArrayConstructionExpressionEvaluator(evaluationContext, expression);
+		return evaluator.evaluate(contextNode);
+	}
 
-    public EvaluationContext getEvaluationContext() {
-        return evaluationContext;
-    }
+	public EvaluationContext getEvaluationContext() {
+		return evaluationContext;
+	}
 }

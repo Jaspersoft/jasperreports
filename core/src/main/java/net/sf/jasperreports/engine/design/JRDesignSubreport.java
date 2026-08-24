@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.design;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -398,9 +397,8 @@ public class JRDesignSubreport extends JRDesignElement implements JRSubreport
 		if (parametersMap != null)
 		{
 			clone.parametersMap = new LinkedHashMap<>();
-			for(Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
+			for (String name : parametersMap.keySet())
 			{
-				String name = it.next();
 				clone.parametersMap.put(name, JRCloneUtils.nullSafeClone(parametersMap.get(name)));
 			}
 		}

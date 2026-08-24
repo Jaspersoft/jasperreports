@@ -26,7 +26,6 @@ package net.sf.jasperreports.engine.fill;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -221,14 +220,7 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	{
 		if (parentFiller == null)
 		{
-			List<JRStyleSetter> setters = delayedStyleSettersByName.get(styleName);
-			if (setters == null)
-			{
-				setters = new ArrayList<>();
-				delayedStyleSettersByName.put(styleName, setters);
-			}
-			
-			setters.add(delayedSetter);
+			delayedStyleSettersByName.computeIfAbsent(styleName, k -> new ArrayList<>()).add(delayedSetter);
 		}
 		else
 		{
@@ -294,7 +286,7 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 				newName = name + suf;
 				++suf;
 			}
-			while(stylesMap.containsStyle(newName));
+			while (stylesMap.containsStyle(newName));
 			
 			style.rename(newName);
 			stylesMap.renamed(name, newName);
@@ -754,18 +746,10 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	
 	protected List<JRFillElementDataset> getElementDatasetsList(String datasetName)
 	{
-		if (parentFiller != null)
-		{
-			return parentFiller.getElementDatasetsList(datasetName);
-		}
-		
-		List<JRFillElementDataset> elementDatasetsList = elementDatasetMap.get(datasetName);
-		if (elementDatasetsList == null)
-		{
-			elementDatasetsList = new ArrayList<>();
-			elementDatasetMap.put(datasetName, elementDatasetsList);
-		}
-		return elementDatasetsList;
+		return
+			parentFiller == null
+				? elementDatasetMap.computeIfAbsent(datasetName, k -> new ArrayList<>())
+				: parentFiller.getElementDatasetsList(datasetName);
 	}
 
 	public void trackDatasetRuns()
@@ -921,9 +905,8 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 		//collect used styles
 		Map<JRStyle,Object> usedStylesMap = new LinkedMap<>();
 		Map<String,JRStyle> allStylesMap = new HashMap<>();
-		for (Iterator<JRStyle> it = styles.iterator(); it.hasNext();)
+		for (JRStyle style : styles)
 		{
-			JRStyle style = it.next();
 			if (requestedStyles.contains(style))
 			{
 				collectUsedStyles(style, usedStylesMap, allStylesMap);
@@ -932,9 +915,8 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 		}
 		
 		List<JRStyle> includedStyles = new ArrayList<>();
-		for (Iterator<JRStyle> it = usedStylesMap.keySet().iterator(); it.hasNext();)
+		for (JRStyle style : usedStylesMap.keySet())
 		{
-			JRStyle style = it.next();
 			JRStyle newStyle = getStyle(style);
 			
 			includedStyles.add(newStyle);
@@ -952,9 +934,8 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	protected Set<JRStyle> collectRequestedStyles(List<JRStyle> externalStyles)
 	{
 		Map<String,JRStyle> requestedStylesMap = new HashMap<>();
-		for (Iterator<JRStyle> it = externalStyles.iterator(); it.hasNext();)
+		for (JRStyle style : externalStyles)
 		{
-			JRStyle style = it.next();
 			String name = style.getName();
 			if (delayedStyleSettersByName.containsKey(name))
 			{
@@ -1001,9 +982,8 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 		List<JRStyleSetter> delayedSetters = delayedStyleSettersByName.remove(style.getName());
 		if (delayedSetters != null)
 		{
-			for (Iterator<JRStyleSetter> it = delayedSetters.iterator(); it.hasNext();)
+			for (JRStyleSetter setter : delayedSetters)
 			{
-				JRStyleSetter setter = it.next();
 				setter.setStyle(style);
 			}
 		}
@@ -1013,18 +993,10 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 	{
 		if (!delayedStyleSettersByName.isEmpty())
 		{
-			StringBuilder errorMsg = new StringBuilder();
-			for (Iterator<String> it = delayedStyleSettersByName.keySet().iterator(); it.hasNext();)
-			{
-				String name = it.next();
-				errorMsg.append(name);
-				errorMsg.append(", ");
-			}
-			
 			throw 
 				new JRRuntimeException(
 					EXCEPTION_MESSAGE_KEY_UNRESOLVED_STYLE,  
-					new Object[]{errorMsg.substring(0, errorMsg.length() - 2)} 
+					new Object[]{String.join(", ", delayedStyleSettersByName.keySet())} 
 					);
 		}
 	}

@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.components.list;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRChild;
@@ -72,12 +71,10 @@ public class ListDesignConverter implements ComponentDesignConverter
 			List<JRChild> children = contents.getChildren();
 			if (children != null)
 			{
-				ConvertVisitor contentsVisitor = new ConvertVisitor(reportConverter, 
-						contentsFrame);
-				for (Iterator<JRChild> it = children.iterator(); it
-						.hasNext();)
+				ConvertVisitor contentsVisitor =
+					new ConvertVisitor(reportConverter, contentsFrame);
+				for (JRChild child : children)
 				{
-					JRChild child = it.next();
 					child.visit(contentsVisitor);
 				}
 			}

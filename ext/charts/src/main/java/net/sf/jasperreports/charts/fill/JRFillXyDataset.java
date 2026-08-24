@@ -75,7 +75,7 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 		if (srcXySeries != null && srcXySeries.length > 0)
 		{
 			xySeries = new JRFillXySeries[srcXySeries.length];
-			for(int i = 0; i < xySeries.length; i++)
+			for (int i = 0; i < xySeries.length; i++)
 			{
 				xySeries[i] = (JRFillXySeries)factory.getXySeries(srcXySeries[i]);
 			}
@@ -105,9 +105,9 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 	{
 		if (xySeries != null && xySeries.length > 0)
 		{
-			for(int i = 0; i < xySeries.length; i++)
+			for (JRFillXySeries crtXySeries : xySeries)
 			{
-				xySeries[i].evaluate(calculator);
+				crtXySeries.evaluate(calculator);
 			}
 		}
 	}
@@ -126,10 +126,8 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for(int i = 0; i < xySeries.length; i++)
+			for (JRFillXySeries crtXySeries : xySeries)
 			{
-				JRFillXySeries crtXySeries = xySeries[i];
-
 				Comparable<?> seriesName = crtXySeries.getSeries();
 				XYSeries xySrs = seriesMap.get(seriesName);
 				if (xySrs == null)
@@ -147,26 +145,13 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 				
 				if (crtXySeries.getLabelExpression() != null)
 				{
-					Map<Number, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(crtXySeries.getXValue(), crtXySeries.getLabel());
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(crtXySeries.getXValue(), crtXySeries.getLabel());
 				}
 				
 				if (crtXySeries.hasItemHyperlinks())
 				{
-					Map<Pair, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					Pair<Number,Number> xyKey = new Pair<>(crtXySeries.getXValue(), crtXySeries.getYValue());
-					seriesLinks.put(xyKey, crtXySeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>())
+						.put(new Pair<>(crtXySeries.getXValue(), crtXySeries.getYValue()), crtXySeries.getPrintItemHyperlink());
 				}
 			}
 		}
@@ -179,9 +164,8 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		if (seriesNames != null)
 		{
-			for(int i = 0; i < seriesNames.size(); i++)
+			for (Comparable<?> seriesName : seriesNames)
 			{
-				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));
 			}
 		}

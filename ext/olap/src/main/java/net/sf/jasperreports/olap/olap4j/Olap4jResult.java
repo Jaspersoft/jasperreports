@@ -71,9 +71,9 @@ public class Olap4jResult implements JROlapResult
 	public JROlapCell getCell(int[] axisPositions)
 	{
 		List<Integer> positions = new ArrayList<>(axisPositions.length);
-		for (int index = 0; index < axisPositions.length; index++)
+		for (int axisPosition : axisPositions)
 		{
-			positions.add(axisPositions[index]);
+			positions.add(axisPosition);
 		} 
 		Cell dataCell = cellSet.getCell(positions);
 		return new Olap4jCell(dataCell);

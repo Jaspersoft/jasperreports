@@ -153,9 +153,9 @@ public class ChartsBaseObjectFactory implements ChartsAbstractObjectFactory
 	@Override
 	public JRTimeSeriesDataset getTimeSeriesDataset( JRTimeSeriesDataset timeSeriesDataset ){
 		JRBaseTimeSeriesDataset baseTimeSeriesDataset = null;
-		if( timeSeriesDataset != null ){
+		if ( timeSeriesDataset != null ){
 			baseTimeSeriesDataset = (JRBaseTimeSeriesDataset)parent.get( timeSeriesDataset );
-			if( baseTimeSeriesDataset == null ){
+			if ( baseTimeSeriesDataset == null ){
 				baseTimeSeriesDataset = new JRBaseTimeSeriesDataset( timeSeriesDataset, this );
 			}
 		}
@@ -167,9 +167,9 @@ public class ChartsBaseObjectFactory implements ChartsAbstractObjectFactory
 	@Override
 	public JRTimePeriodDataset getTimePeriodDataset( JRTimePeriodDataset timePeriodDataset ){
 		JRBaseTimePeriodDataset baseTimePeriodDataset = null;
-		if( timePeriodDataset != null ){
+		if ( timePeriodDataset != null ){
 			baseTimePeriodDataset = (JRBaseTimePeriodDataset)parent.get( timePeriodDataset );
-			if( baseTimePeriodDataset == null ){
+			if ( baseTimePeriodDataset == null ){
 				baseTimePeriodDataset = new JRBaseTimePeriodDataset( timePeriodDataset, this );
 			}
 		}
@@ -272,9 +272,9 @@ public class ChartsBaseObjectFactory implements ChartsAbstractObjectFactory
 	@Override
 	public JRTimePeriodSeries getTimePeriodSeries( JRTimePeriodSeries timePeriodSeries ){
 		JRBaseTimePeriodSeries baseTimePeriodSeries = null;
-		if( timePeriodSeries != null ){
+		if ( timePeriodSeries != null ){
 			baseTimePeriodSeries = (JRBaseTimePeriodSeries)parent.get( timePeriodSeries );
-			if( baseTimePeriodSeries == null ){
+			if ( baseTimePeriodSeries == null ){
 				baseTimePeriodSeries = new JRBaseTimePeriodSeries( timePeriodSeries, this );
 			}
 		}
@@ -524,9 +524,9 @@ public class ChartsBaseObjectFactory implements ChartsAbstractObjectFactory
 
 	public JRTimeSeriesPlot getTimeSeriesPlot( JRTimeSeriesPlot plot ){
 		JRBaseTimeSeriesPlot basePlot = null;
-		if( plot != null ){
+		if ( plot != null ){
 			basePlot = (JRBaseTimeSeriesPlot)parent.get( plot );
-			if( basePlot == null ){
+			if ( basePlot == null ){
 				basePlot = new JRBaseTimeSeriesPlot( plot, this );
 			}
 		}

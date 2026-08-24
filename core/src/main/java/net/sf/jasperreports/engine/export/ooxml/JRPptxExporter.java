@@ -392,7 +392,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		appHelper.exportHeader();
 		
 		String application = configuration.getMetadataApplication();
-		if( application == null )
+		if ( application == null )
 		{
 			application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 		}
@@ -526,7 +526,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 
 //		if ((hyperlinksMap != null && hyperlinksMap.size() > 0))
 //		{
-//			for(Iterator it = hyperlinksMap.keySet().iterator(); it.hasNext();)
+//			for (Iterator it = hyperlinksMap.keySet().iterator(); it.hasNext();)
 //			{
 //				String href = (String)it.next();
 //				String id = (String)hyperlinksMap.get(href);
@@ -813,7 +813,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		if (lineWidth > 0)
 		{
 			slideHelper.write("  <a:ln w=\"" + LengthUtil.emu(lineWidth, reportDpi) + "\"");
-			if(LineStyleEnum.DOUBLE.equals(pen.getLineStyle()))
+			if (LineStyleEnum.DOUBLE.equals(pen.getLineStyle()))
 			{
 				slideHelper.write(" cmpd=\"dbl\"");
 			}
@@ -873,7 +873,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(rectangle.getX() + getOffsetX(), reportDpi) + "\" y=\"" + LengthUtil.emu(rectangle.getY() + getOffsetY(), reportDpi) + "\"/>\n");
 		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(rectangle.getWidth(), reportDpi) + "\" cy=\"" + LengthUtil.emu(rectangle.getHeight(), reportDpi) + "\"/>\n");
 		slideHelper.write("    </a:xfrm><a:prstGeom prst=\"" + (radius == 0 ? "rect" : "roundRect") + "\">");
-		if(radius > 0)
+		if (radius > 0)
 		{
 			// a rounded rectangle radius cannot exceed 1/2 of its lower side;
 			int size = Math.min(50000, (radius * 100000)/Math.min(rectangle.getHeight(), rectangle.getWidth()));
@@ -1580,7 +1580,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				slideHelper.write("  </p:spPr>\n");
 				slideHelper.write("  </p:pic>\n");
 
-//				if(startedHyperlink)
+//				if (startedHyperlink)
 //				{
 //					endHyperlink(false);
 //				}
@@ -1717,10 +1717,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	protected JRPrintElementIndex getElementIndex()
 	{
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < frameIndexStack.size(); i++)
+		for (Integer frameIndex : frameIndexStack)
 		{
-			Integer frameIndex = frameIndexStack.get(i);
-
 			sb.append(frameIndex).append("_");
 		}
 		
@@ -2007,7 +2005,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		GridRow crtGridRow = rowCount > 0 ? grid.getRow(0) : null;
 		GridRow nextGridRow = null;
 		
-		for(int row = 0; row < rowCount; row++)
+		for (int row = 0; row < rowCount; row++)
 		{
 			checkInterrupted();
 			
@@ -2021,7 +2019,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 			tableHelper.exportRowHeader(rowHeight);
 
 			int rowSize = crtGridRow.size();
-			for(int col = 0; col < rowSize; col++)
+			for (int col = 0; col < rowSize; col++)
 			{
 				JRExporterGridCell gridCell = crtGridRow.get(col);
 				JRExporterGridCell topGridCell = prevGridRow == null ? null : prevGridRow.get(col);
@@ -2416,7 +2414,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				slideHelper.write("  </a:tcPr>\n");
 				tableHelper.getCellHelper().exportFooter();
 
-//				if(startedHyperlink)
+//				if (startedHyperlink)
 //				{
 //					endHyperlink(false);
 //				}
@@ -2684,7 +2682,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	protected String getHyperlinkTarget(JRPrintHyperlink link)
 	{
 		String target = null;
-		switch(link.getHyperlinkTarget())
+		switch (link.getHyperlinkTarget())
 		{
 			case SELF :
 			{
@@ -2717,7 +2715,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{
@@ -2798,7 +2796,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 
 //	protected void insertPageAnchor()
 //	{
-//		if(startPage)
+//		if (startPage)
 //		{
 //			tempBodyWriter.write("<text:bookmark text:name=\"");
 //			tempBodyWriter.write(JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (pageIndex + 1));
@@ -2841,11 +2839,11 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	{
 		JRBasePen pen = null;
 		Float lineWidth = box.getPen().getLineWidth();
-		if(lineWidth == null || lineWidth == 0)
+		if (lineWidth == null || lineWidth == 0)
 		{
 			// PPTX does not support side borders
 			// in case side borders are defined for the report element, ensure that all 4 are declared and all of them come with the same settings
-			if(
+			if (
 				((JRBasePen)box.getTopPen()).isIdentical(box.getLeftPen())
 				&& ((JRBasePen)box.getTopPen()).isIdentical(box.getBottomPen())
 				&& ((JRBasePen)box.getTopPen()).isIdentical(box.getRightPen())

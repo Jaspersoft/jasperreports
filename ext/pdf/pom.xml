@@ -9,8 +9,8 @@
 	</parent>
 	<artifactId>jasperreports-pdf</artifactId>
 	<packaging>jar</packaging>
-	<name>JasperReports OpenPDF</name>
-	<description>JasperReports OpenPDF</description>
+	<name>JasperReports OpenPDF Classic</name>
+	<description>JasperReports OpenPDF Classic</description>
 	<url>http://jasperreports.sourceforge.net</url>
 	<scm>
 		<connection>${scmConnection}</connection>

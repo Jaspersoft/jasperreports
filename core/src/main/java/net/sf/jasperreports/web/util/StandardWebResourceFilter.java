@@ -169,7 +169,7 @@ public class StandardWebResourceFilter implements WebResourceFilter
 	public boolean isResourceVisible(String resource)
 	{
 		Boolean visible = visibilityCache.get(resource);
-		if (visible == null)
+		if (visible == null) // computeIfAbsent is not appropriate due to performance reasons with ConcurrentHashMap
 		{
 			visible = visible(resource);
 			visibilityCache.put(resource, visible);

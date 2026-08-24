@@ -37,7 +37,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -359,7 +358,7 @@ public class SimpleChartTheme implements ChartTheme
 		
 		JFreeChart jfreeChart = null;
 		
-		switch(getChart().getChartType()) {
+		switch (getChart().getChartType()) {
 			case AREA:
 				jfreeChart = createAreaChart();
 				break;
@@ -1143,7 +1142,7 @@ public class SimpleChartTheme implements ChartTheme
 		BarRenderer categoryRenderer = (BarRenderer)categoryPlot.getRenderer();
 		categoryRenderer.setDefaultItemLabelsVisible( isShowLabels );
 		Comparable<?> rangeAxisMaxValue = (Comparable<?>)evaluateExpression(barPlot.getRangeAxisMaxValueExpression());
-		if(isShowLabels)
+		if (isShowLabels)
 		{
 			if (rangeAxisMaxValue == null)
 			{
@@ -1152,7 +1151,7 @@ public class SimpleChartTheme implements ChartTheme
 				Axis axis = categoryPlot.getRangeAxis();
 				if (axis instanceof ValueAxis)
 				{
-					if(!(axis instanceof DateAxis))
+					if (!(axis instanceof DateAxis))
 					{
 						float rangeAxisMaxRatio = 1f;
 						
@@ -1185,9 +1184,9 @@ public class SimpleChartTheme implements ChartTheme
 					)
 				);
 			
-			if(itemLabel != null)
+			if (itemLabel != null)
 			{
-				if(itemLabel.getColor() != null)
+				if (itemLabel.getColor() != null)
 				{
 					categoryRenderer.setDefaultItemLabelPaint(itemLabel.getColor());
 				}
@@ -1196,7 +1195,7 @@ public class SimpleChartTheme implements ChartTheme
 					categoryRenderer.setDefaultItemLabelPaint(getChart().getForecolor());
 				}
 //				categoryRenderer.setDefaultFillPaint(itemLabel.getBackgroundColor());
-//				if(itemLabel.getMask() != null)
+//				if (itemLabel.getMask() != null)
 //				{
 //					categoryRenderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator(
 //							StandardCategoryItemLabelGenerator.DEFAULT_LABEL_FORMAT_STRING, 
@@ -1686,10 +1685,8 @@ public class SimpleChartTheme implements ChartTheme
 		List<JRMeterInterval> intervals = jrPlot.getIntervals();
 		if (intervals != null)
 		{
-			Iterator<JRMeterInterval> iter = intervals.iterator();
-			while (iter.hasNext())
+			for (JRMeterInterval interval : intervals)
 			{
-				JRMeterInterval interval = iter.next();
 				if (interval != null)
 					chartPlot.addInterval(convertInterval(interval));
 			}

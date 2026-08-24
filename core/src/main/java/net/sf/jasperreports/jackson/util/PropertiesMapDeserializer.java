@@ -91,5 +91,5 @@ public class PropertiesMapDeserializer extends StdDeserializer<JRPropertiesMap>
 	public JRPropertiesMap deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException 
 	{
 		return deserialize(p, ctxt, new JRPropertiesMap());
-    }
+	}
 }

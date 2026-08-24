@@ -292,7 +292,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 			element = frame.getElements().get(elementIndexes[i]);
 		}
 
-		if(element instanceof JRGenericPrintElement)
+		if (element instanceof JRGenericPrintElement)
 		{
 			JRGenericPrintElement genericPrintElement = (JRGenericPrintElement)element;
 			return ((GenericElementXlsxHandler)GenericElementHandlerEnviroment.getInstance(jasperReportsContext).getElementHandler(
@@ -509,7 +509,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 	protected String getHyperlinkTarget(JRPrintHyperlink link)
 	{
 		String target = null;
-		switch(link.getHyperlinkTarget())
+		switch (link.getHyperlinkTarget())
 		{
 			case SELF :
 			{
@@ -543,11 +543,11 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{
-						if(link.getHyperlinkReference() != null) 
+						if (link.getHyperlinkReference() != null) 
 						{
 							try
 							{
@@ -632,7 +632,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 
 	protected void insertPageAnchor(int colIndex, int rowIndex)
 	{
-		if(!ignoreAnchors && startPage)
+		if (!ignoreAnchors && startPage)
 		{
 			String anchorPage = JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (sheetIndex - sheetsBeforeCurrentReport);
 			String ref = "'" + JRStringUtil.xmlEncode(currentSheetName) + "'!$A$1";		// + XlsxCellHelper.getColumIndexLetter(colIndex) + "$" + (rowIndex + 1);
@@ -657,17 +657,17 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 	@Override
 	protected void closeWorkbook(OutputStream os) throws JRException //FIXMEXLSX could throw IOException here, as other implementations do
 	{
-		if(sheetMapping != null && definedNamesMap != null && !definedNamesMap.isEmpty())
+		if (sheetMapping != null && definedNamesMap != null && !definedNamesMap.isEmpty())
 		{
-			for(Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
+			for (Map.Entry<NameScope, String> entry : definedNamesMap.entrySet())
 			{
 				String name = entry.getKey().getName();
 				String localSheetId = "";
-				if(name != null && entry.getValue() != null) 
+				if (name != null && entry.getValue() != null) 
 				{
 					String scope = entry.getKey().getScope();
 					// name and name scope are ignoring case in Excel
-					if(scope != null && !scope.equalsIgnoreCase(DEFAULT_DEFINED_NAME_SCOPE) && sheetMapping.containsKey(scope))
+					if (scope != null && !scope.equalsIgnoreCase(DEFAULT_DEFINED_NAME_SCOPE) && sheetMapping.containsKey(scope))
 					{
 						localSheetId = " localSheetId=\"" + sheetMapping.get(scope) + "\"";
 					}
@@ -689,7 +689,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 
 //			if ((hyperlinksMap != null && hyperlinksMap.size() > 0))
 //			{
-//				for(Iterator it = hyperlinksMap.keySet().iterator(); it.hasNext();)
+//				for (Iterator it = hyperlinksMap.keySet().iterator(); it.hasNext();)
 //				{
 //					String href = (String)it.next();
 //					String id = (String)hyperlinksMap.get(href);
@@ -805,7 +805,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 			boolean isIgnorePageMargins = configuration.isIgnorePageMargins();
 			String password = configuration.getPassword();
 			
-			if(currentSheetFirstPageNumber != null && currentSheetFirstPageNumber > 0)
+			if (currentSheetFirstPageNumber != null && currentSheetFirstPageNumber > 0)
 			{
 				sheetHelper.exportFooter(
 						sheetIndex, 
@@ -824,7 +824,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 			else
 			{
 				Integer documentFirstPageNumber = configuration.getFirstPageNumber();
-				if(documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet)
+				if (documentFirstPageNumber != null && documentFirstPageNumber > 0 && firstPageNotSet)
 				{
 					sheetHelper.exportFooter(
 						sheetIndex, 
@@ -856,7 +856,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 						);
 				}
 			}
-			if(sheetAutoFilter != null)
+			if (sheetAutoFilter != null)
 			{
 				int index = Math.max(0, sheetIndex-1);
 				definedNames.append("<definedName name=\"_xlnm._FilterDatabase\" localSheetId=\"" + index + "\">'" + JRStringUtil.xmlEncode(currentSheetName) +"'!"+sheetAutoFilter+"</definedName>\n");
@@ -1215,7 +1215,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				
 				drawingHelper.write("<xdr:pic>\n");
 				String altText = image.getHyperlinkTooltip() == null ? "" : image.getHyperlinkTooltip();
-				if(!altText.isEmpty())
+				if (!altText.isEmpty())
 				{
 					altText = " descr=\"" + altText +"\"";
 				}
@@ -1254,7 +1254,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				drawingHelper.write("<xdr:clientData/>\n");
 				drawingHelper.write("</xdr:twoCellAnchor>\n");
 
-//				if(startedHyperlink)
+//				if (startedHyperlink)
 //				{
 //					endHyperlink(false);
 //				}
@@ -1540,7 +1540,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 //		writer.write(">");
 		
 //		tableHelper.getParagraphHelper().exportProps(text);
-		if(!ignoreAnchors)
+		if (!ignoreAnchors)
 		{
 			insertPageAnchor(colIndex,rowIndex);
 			if (text.getAnchorName() != null)
@@ -1568,7 +1568,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				@Override
 				public void handle(BooleanTextValue textValue) throws JRException 
 				{
-					if(textValue.getValue() != null)
+					if (textValue.getValue() != null)
 					{
 						sheetHelper.write("<v>" + textValue.getValue() + "</v>");
 					}
@@ -1578,7 +1578,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				public void handle(DateTextValue textValue) throws JRException 
 				{
 					Date date = textValue.getValue();
-					if(date != null)
+					if (date != null)
 					{
 						sheetHelper.write(
 							"<v>" 
@@ -1698,7 +1698,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 			XlsxExporterConfiguration configuration = getCurrentConfiguration();
 			
 			String macro = macroTemplate == null ? configuration.getMacroTemplate() : macroTemplate;
-			if(macro != null)
+			if (macro != null)
 			{
 				xlsxZip.addMacro(macro);
 				relsHelper.setContainsMacro(true);
@@ -1710,7 +1710,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 			appHelper.exportHeader();
 			
 			String application = configuration.getMetadataApplication();
-			if( application == null )
+			if ( application == null )
 			{
 				application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 			}

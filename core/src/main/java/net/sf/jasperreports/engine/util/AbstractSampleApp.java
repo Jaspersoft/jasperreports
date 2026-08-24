@@ -70,12 +70,10 @@ public abstract class AbstractSampleApp
 				tasks.add(method.getName());
 			}
 		}
-		for (String task:tasks)
-		{
-			sb.append(task).append(" | ");
-		}
+
+		sb.append(String.join(" | ", tasks));
 		
-		return sb.toString().substring(0, sb.length() - 3);
+		return sb.toString();
 	}
 
 	
@@ -211,9 +209,8 @@ public abstract class AbstractSampleApp
 
 			System.out.println("Writing API for " + files.length + " report design files.");
 
-			for (int i = 0; i < files.length; i++)
+			for (File srcFile : files)
 			{
-				File srcFile = files[i];
 				String srcFileName = srcFile.getName();
 				String destFileName = srcFileName.substring(0, srcFileName.lastIndexOf(".jasper")) + ".java";
 
@@ -252,9 +249,8 @@ public abstract class AbstractSampleApp
 
 			System.out.println("Running " + files.length + " API report design files.");
 
-			for (int i = 0; i < files.length; i++)
+			for (File srcFile : files)
 			{
-				File srcFile = files[i];
 				String srcFileName = srcFile.getName();
 				String srcClassName = srcFileName.substring(0, srcFileName.lastIndexOf(".jasper"));
 				String destFileName = srcFileName.substring(0, srcFileName.lastIndexOf(".jasper")) + ".api.jrxml";

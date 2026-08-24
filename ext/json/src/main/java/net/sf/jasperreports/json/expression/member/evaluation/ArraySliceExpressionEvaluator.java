@@ -44,153 +44,153 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ArraySliceExpressionEvaluator extends AbstractMemberExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(ArraySliceExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(ArraySliceExpressionEvaluator.class);
 
-    private ArraySliceExpression expression;
+	private ArraySliceExpression expression;
 
-    public ArraySliceExpressionEvaluator(EvaluationContext evaluationContext, ArraySliceExpression expression) {
-        super(evaluationContext);
-        this.expression = expression;
-    }
+	public ArraySliceExpressionEvaluator(EvaluationContext evaluationContext, ArraySliceExpression expression) {
+		super(evaluationContext);
+		this.expression = expression;
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
-        if (log.isDebugEnabled()) {
-            log.debug("---> evaluating expression [" + expression +
-                    "] on a node with (size: " + contextNode.getSize() +
-                    ", cSize: " + contextNode.getContainerSize() + ")");
-        }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
+		if (log.isDebugEnabled()) {
+			log.debug("---> evaluating expression [" + expression +
+					"] on a node with (size: " + contextNode.getSize() +
+					", cSize: " + contextNode.getContainerSize() + ")");
+		}
 
-        JsonNodeContainer result = new JsonNodeContainer();
+		JsonNodeContainer result = new JsonNodeContainer();
 
-        switch(expression.getDirection()) {
-            case DOWN:
-                Integer start = getSliceStart(contextNode.getContainerSize());
-                if (start >= contextNode.getContainerSize()) {
-                    return null;
-                }
+		switch (expression.getDirection()) {
+			case DOWN:
+				Integer start = getSliceStart(contextNode.getContainerSize());
+				if (start >= contextNode.getContainerSize()) {
+					return null;
+				}
 
-                Integer end = getSliceEnd(contextNode.getContainerSize());
-                if (end < 0) {
-                    return null;
-                }
+				Integer end = getSliceEnd(contextNode.getContainerSize());
+				if (end < 0) {
+					return null;
+				}
 
-                if (log.isDebugEnabled()) {
-                    log.debug("start: " + start + ", end: " + end);
-                }
+				if (log.isDebugEnabled()) {
+					log.debug("start: " + start + ", end: " + end);
+				}
 
-                List<JRJsonNode> containerNodes = contextNode.getContainerNodes();
+				List<JRJsonNode> containerNodes = contextNode.getContainerNodes();
 
-                for (int i = start; i < end; i++) {
-                    JRJsonNode nodeAtIndex = containerNodes.get(i);
+				for (int i = start; i < end; i++) {
+					JRJsonNode nodeAtIndex = containerNodes.get(i);
 
-                    if (applyFilter(nodeAtIndex)) {
-                        result.add(nodeAtIndex);
-                    }
-                }
+					if (applyFilter(nodeAtIndex)) {
+						result.add(nodeAtIndex);
+					}
+				}
 
-                break;
-            case ANYWHERE_DOWN:
-                for (JRJsonNode node: contextNode.getContainerNodes()) {
-                    result.addNodes(goAnywhereDown(node));
-                }
+				break;
+			case ANYWHERE_DOWN:
+				for (JRJsonNode node: contextNode.getContainerNodes()) {
+					result.addNodes(goAnywhereDown(node));
+				}
 
-                break;
-        }
+				break;
+		}
 
-        if (result.getSize() > 0) {
-            return result;
-        }
+		if (result.getSize() > 0) {
+			return result;
+		}
 
-        return null;
+		return null;
 
-    }
+	}
 
-    private Integer getSliceStart(int containerSize) {
-        Integer start = expression.getStart();
+	private Integer getSliceStart(int containerSize) {
+		Integer start = expression.getStart();
 
-        if (start == null) {
-            start = 0;
-        } else if (start < 0) {
-            start = containerSize + start;
+		if (start == null) {
+			start = 0;
+		} else if (start < 0) {
+			start = containerSize + start;
 
-            if (start < 0 ) {
-                start = 0;
-            }
-        }
+			if (start < 0 ) {
+				start = 0;
+			}
+		}
 
-        return start;
-    }
+		return start;
+	}
 
-    private Integer getSliceEnd(int containerSize) {
-        Integer end = expression.getEnd();
+	private Integer getSliceEnd(int containerSize) {
+		Integer end = expression.getEnd();
 
-        if (end == null) {
-            end = containerSize;
-        } else if (end < 0) {
-            end = containerSize + end;
-        } else if (end > containerSize) {
-            end = containerSize;
-        }
+		if (end == null) {
+			end = containerSize;
+		} else if (end < 0) {
+			end = containerSize + end;
+		} else if (end > containerSize) {
+			end = containerSize;
+		}
 
-        return end;
-    }
+		return end;
+	}
 
-    private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
-        List<JRJsonNode> result = new ArrayList<>();
-        Deque<JRJsonNode> stack = new ArrayDeque<>();
+	private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
+		List<JRJsonNode> result = new ArrayList<>();
+		Deque<JRJsonNode> stack = new ArrayDeque<>();
 
-        if (log.isDebugEnabled()) {
-            log.debug("initial stack population with: " + jrJsonNode.getDataNode());
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("initial stack population with: " + jrJsonNode.getDataNode());
+		}
 
-        // populate the stack initially
-        stack.push(jrJsonNode);
+		// populate the stack initially
+		stack.push(jrJsonNode);
 
-        while (!stack.isEmpty()) {
-            JRJsonNode stackNode = stack.pop();
-            JsonNode stackDataNode = stackNode.getDataNode();
+		while (!stack.isEmpty()) {
+			JRJsonNode stackNode = stack.pop();
+			JsonNode stackDataNode = stackNode.getDataNode();
 
-            addChildrenToStack(stackNode, stack);
+			addChildrenToStack(stackNode, stack);
 
-            // process the current stack item
-            if (stackDataNode.isArray()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("processing stack element: " + stackDataNode);
-                }
+			// process the current stack item
+			if (stackDataNode.isArray()) {
+				if (log.isDebugEnabled()) {
+					log.debug("processing stack element: " + stackDataNode);
+				}
 
-                ArrayNode newNode = getEvaluationContext().getObjectMapper().createArrayNode();
+				ArrayNode newNode = getEvaluationContext().getObjectMapper().createArrayNode();
 
-                Integer start = getSliceStart(stackDataNode.size());
-                if (start >= stackDataNode.size()) {
-                    continue;
-                }
+				Integer start = getSliceStart(stackDataNode.size());
+				if (start >= stackDataNode.size()) {
+					continue;
+				}
 
-                Integer end = getSliceEnd(stackDataNode.size());
-                if (end < 0) {
-                    continue;
-                }
+				Integer end = getSliceEnd(stackDataNode.size());
+				if (end < 0) {
+					continue;
+				}
 
-                for (int i = start; i < end; i++) {
-                    JRJsonNode nodeAtIndex = stackNode.createChild(stackDataNode.get(i));
+				for (int i = start; i < end; i++) {
+					JRJsonNode nodeAtIndex = stackNode.createChild(stackDataNode.get(i));
 
-                    if (applyFilter(nodeAtIndex)) {
-                        newNode.add(nodeAtIndex.getDataNode());
-                    }
-                }
+					if (applyFilter(nodeAtIndex)) {
+						newNode.add(nodeAtIndex.getDataNode());
+					}
+				}
 
-                if (newNode.size() > 0) {
-                    result.add(stackNode.createChild(newNode));
-                }
-            }
-        }
+				if (newNode.size() > 0) {
+					result.add(stackNode.createChild(newNode));
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public MemberExpression getMemberExpression() {
-        return expression;
-    }
+	@Override
+	public MemberExpression getMemberExpression() {
+		return expression;
+	}
 
 }

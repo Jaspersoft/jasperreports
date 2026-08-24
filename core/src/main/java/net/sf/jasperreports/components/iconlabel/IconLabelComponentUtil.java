@@ -196,7 +196,7 @@ public class IconLabelComponentUtil
 		labelTextField.getLineBox().getTopPen().setLineWidth((Float)0f);
 		labelTextField.getLineBox().getBottomPen().setLineWidth((Float)0f);
 
-		for(String propName : parentElement.getPropertiesMap().getPropertyNames())
+		for (String propName : parentElement.getPropertiesMap().getPropertyNames())
 		{
 			labelTextField.getPropertiesMap().setProperty(
 				propName, 
@@ -206,7 +206,7 @@ public class IconLabelComponentUtil
 		
 		if (parentElement.getPropertyExpressions() != null)
 		{
-			for(JRPropertyExpression propExpr : parentElement.getPropertyExpressions())
+			for (JRPropertyExpression propExpr : parentElement.getPropertyExpressions())
 			{
 				labelTextField.addPropertyExpression(propExpr);
 			}

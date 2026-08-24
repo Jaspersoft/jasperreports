@@ -51,10 +51,10 @@ public class JRBaseXyzDataset extends JRBaseChartDataset implements JRXyzDataset
 		
 		JRXyzSeries[] srcXyzSeries = dataset.getSeries();
 		
-		if( srcXyzSeries != null && srcXyzSeries.length > 0 ){
+		if ( srcXyzSeries != null && srcXyzSeries.length > 0 ){
 			
 			xyzSeries = new JRXyzSeries[ srcXyzSeries.length ];
-			for( int i = 0; i < srcXyzSeries.length; i++ ){
+			for ( int i = 0; i < srcXyzSeries.length; i++ ){
 				xyzSeries[i] = factory.getXyzSeries( srcXyzSeries[i] );
 			}
 		}

@@ -41,7 +41,7 @@ public class VersionComparator implements Comparator<String>
 			throw new IllegalArgumentException("Reference version can't be null.");
 		}
 		
-		if(currentVersion == null || currentVersion.startsWith(oldVersion)) 
+		if (currentVersion == null || currentVersion.startsWith(oldVersion)) 
 		{
 			return 1;
 		}

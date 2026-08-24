@@ -314,7 +314,7 @@ public class JRDesignFrame extends JRDesignElement implements JRFrame
 		if (children != null)
 		{
 			clone.children = new ArrayList<>(children.size());
-			for(int i = 0; i < children.size(); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
 				clone.children.add((JRChild)(children.get(i).clone(clone)));
 			}

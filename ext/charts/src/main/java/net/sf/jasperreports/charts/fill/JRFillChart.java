@@ -187,7 +187,7 @@ public class JRFillChart extends JRFillElement implements JRChart
 		/*   */
 		chartType = chart.getChartType();
 
-		switch(chartType) {
+		switch (chartType) {
 			case AREA:
 				dataset = (JRFillChartDataset) factory.getCategoryDataset((JRCategoryDataset) chart.getDataset());
 				plot = factory.getAreaPlot((JRAreaPlot) chart.getPlot());
@@ -314,7 +314,7 @@ public class JRFillChart extends JRFillElement implements JRChart
 		}
 		
 		renderType = chart.getRenderType();
-		if(renderType == null)
+		if (renderType == null)
 		{
 			renderType = filler.getPropertiesUtil().getProperty(getParentProperties(), JRChart.PROPERTY_CHART_RENDER_TYPE);
 		}
@@ -824,7 +824,7 @@ public class JRFillChart extends JRFillElement implements JRChart
 		if (theme == null)
 		{
 			String themeName = getTheme();
-			if(themeName == null)
+			if (themeName == null)
 			{
 				themeName = filler.getPropertiesUtil().getProperty(getParentProperties(), JRChart.PROPERTY_CHART_THEME);
 			}
@@ -1042,7 +1042,7 @@ public class JRFillChart extends JRFillElement implements JRChart
 	{
 		ChartHyperlinkProvider chartHyperlinkProvider = null;
 		
-		switch(getChartType()) 
+		switch (getChartType()) 
 		{
 			case AREA:
 			case BAR:
@@ -1076,7 +1076,7 @@ public class JRFillChart extends JRFillElement implements JRChart
 				chartHyperlinkProvider = new TimeSeriesChartHyperlinkProvider(((JRFillTimeSeriesDataset)getDataset()).getItemHyperlinks());
 				break;
 			case XYBAR:
-				switch(getDataset().getDatasetType())
+				switch (getDataset().getDatasetType())
 				{
 					case JRChartDataset.TIMESERIES_DATASET :
 						chartHyperlinkProvider = new TimeSeriesChartHyperlinkProvider(((JRFillTimeSeriesDataset)getDataset()).getItemHyperlinks());
@@ -1305,10 +1305,8 @@ public class JRFillChart extends JRFillElement implements JRChart
 
 		if (seriesColors != null)
 		{
-			Iterator<JRSeriesColor> iter = seriesColors.iterator();
-			while (iter.hasNext())
+			for (JRSeriesColor seriesColor : seriesColors)
 			{
-				JRSeriesColor seriesColor = iter.next();
 				renderer.setSeriesPaint(seriesColor.getSeriesOrder(), seriesColor.getColor());
 			}
 		}
@@ -1333,10 +1331,8 @@ public class JRFillChart extends JRFillElement implements JRChart
 
 		if (seriesColors != null)
 		{
-			Iterator<JRSeriesColor> iter = seriesColors.iterator();
-			while (iter.hasNext())
+			for (JRSeriesColor seriesColor : seriesColors)
 			{
-				JRSeriesColor seriesColor = iter.next();
 				renderer.setSeriesPaint(seriesColor.getSeriesOrder(), seriesColor.getColor());
 			}
 		}

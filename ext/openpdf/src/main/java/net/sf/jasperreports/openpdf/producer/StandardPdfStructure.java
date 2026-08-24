@@ -61,18 +61,13 @@ public class StandardPdfStructure implements PdfStructure
 	public PdfStructureEntry createDocumentTag(String language)
 	{
 		PdfWriter pdfWriter = pdfProducer.getPdfWriter();
-		if (StandardPdfUtils.isCustomStructureTreeRootSupported())
-		{
-			StandardPdfStructureTreeRoot.install(pdfWriter);
-		}
-		
 		PdfStructureTreeRoot root = pdfWriter.getStructureTreeRoot();
 		root.mapRole(PdfName.TEXT, PdfName.P);
 		root.mapRole(new PdfName("Anchor"), PdfName.P);
 		
 		PdfStructureElement documentTag = new PdfStructureElement(root, PdfName.DOCUMENT);
 		
-		if (pdfWriter.getPdfVersionString().startsWith("2."))
+		if (pdfProducer.isPdf2())
 		{
 			setPDF2Namespace(pdfWriter, documentTag);
 		}
@@ -103,13 +98,7 @@ public class StandardPdfStructure implements PdfStructure
 	
 	protected PdfName pdfName(String name)
 	{
-		PdfName pdfName = pdfNames.get(name);
-		if (pdfName == null)
-		{
-			pdfName = new PdfName(name);
-			pdfNames.put(name, pdfName);
-		}
-		return pdfName;
+		return pdfNames.computeIfAbsent(name, key -> new PdfName(key));
 	}
 
 	protected StandardStructureEntry createElement(PdfStructureEntry parent, String name)

@@ -306,7 +306,7 @@ public class FileRepositoryService implements StreamRepositoryService
 					Path relativePath = rootRealPath.relativize(filePath);
 					return StandardResourceInfo.from(relativePath);
 				}
-				else if(resolveAbsolutePath)
+				else if (resolveAbsolutePath)
 				{
 					return StandardResourceInfo.from(filePath);
 				}

@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -467,9 +466,8 @@ public class JacksonUtil
 					{
 						ArrayNode paramValues = getObjectMapper().createArrayNode();
 						Collection col = (Collection) hParam.getValue();
-						for (Iterator it = col.iterator(); it.hasNext();)
+						for (Object next : col)
 						{
-							Object next = it.next();
 							paramValues.add(JRValueStringUtils.serialize(next.getClass().getName(), next));
 						}
 						params.set(hParam.getName(), paramValues);

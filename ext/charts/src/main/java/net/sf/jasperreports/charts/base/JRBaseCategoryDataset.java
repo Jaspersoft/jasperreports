@@ -69,7 +69,7 @@ public class JRBaseCategoryDataset extends JRBaseChartDataset implements JRCateg
 		if (srcCategorySeries != null && srcCategorySeries.length > 0)
 		{
 			categorySeries = new JRCategorySeries[srcCategorySeries.length];
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				categorySeries[i] = factory.getCategorySeries(srcCategorySeries[i]);
 			}

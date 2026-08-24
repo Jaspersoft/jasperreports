@@ -26,7 +26,6 @@ package net.sf.jasperreports.javascript;
 import java.security.ProtectionDomain;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -194,18 +193,16 @@ public class JavaScriptEvaluatorScope
 			Map<String, JRFillField> fieldsMap,
 			Map<String, JRFillVariable> variablesMap)
 	{
-		for (Iterator<Map.Entry<String, JRFillParameter>> it = parametersMap.entrySet().iterator(); it.hasNext();)
+		for (Map.Entry<String, JRFillParameter> entry : parametersMap.entrySet())
 		{
-			Map.Entry<String, JRFillParameter> entry = it.next();
 			String name = entry.getKey();
 			JRFillParameter param = entry.getValue();
 			JSParameter jsParam = new JSParameter(param, scope);
 			scope.put(JavaScriptCompiler.getParameterVar(name), scope, jsParam);
 		}
 
-		for (Iterator<Map.Entry<String, JRFillVariable>> it = variablesMap.entrySet().iterator(); it.hasNext();)
+		for (Map.Entry<String, JRFillVariable> entry : variablesMap.entrySet())
 		{
-			Map.Entry<String, JRFillVariable> entry = it.next();
 			String name = entry.getKey();
 			JRFillVariable var = entry.getValue();
 			JSVariable jsVar = new JSVariable(var, scope);
@@ -214,9 +211,8 @@ public class JavaScriptEvaluatorScope
 
 		if (fieldsMap != null)
 		{
-			for (Iterator<Map.Entry<String, JRFillField>> it = fieldsMap.entrySet().iterator(); it.hasNext();)
+			for (Map.Entry<String, JRFillField> entry : fieldsMap.entrySet())
 			{
-				Map.Entry<String, JRFillField> entry = it.next();
 				String name = entry.getKey();
 				JRFillField field = entry.getValue();
 				JSField jsField = new JSField(field, scope);

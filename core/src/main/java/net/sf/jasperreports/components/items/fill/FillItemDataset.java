@@ -62,7 +62,7 @@ public class FillItemDataset extends JRFillElementDataset
 		try
 		{
 			itemData.evaluateItems(calculator, evaluation);
-//			if(markerList != null && ! markerList.isEmpty()) 
+//			if (markerList != null && ! markerList.isEmpty()) 
 //			{
 //				for (FillMarker marker : markerList)
 //				{
@@ -83,13 +83,13 @@ public class FillItemDataset extends JRFillElementDataset
 	@Override
 	protected void customIncrement()
 	{
-//		if(markerList != null && ! markerList.isEmpty()) {
+//		if (markerList != null && ! markerList.isEmpty()) {
 //			for (FillMarker marker : markerList)
 //			{
 //				Map<String,Object> evaluatedProperties = marker.getEvaluatedProperties();
 //				if (evaluatedProperties != null)
 //				{
-//					if(evaluatedMarkers == null) {
+//					if (evaluatedMarkers == null) {
 //						evaluatedMarkers = new ArrayList<Map<String,Object>>();
 //					}
 //					evaluatedMarkers.add(evaluatedProperties);

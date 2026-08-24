@@ -221,7 +221,7 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		tableBuilder.buildTableStyle(xCuts.getLastCutOffset());//FIXMEODS
 		tableBuilder.buildTableHeader();
 
-//		for(int col = 1; col < xCuts.size(); col++)
+//		for (int col = 1; col < xCuts.size(); col++)
 //		{
 //			tableBuilder.buildColumnStyle(
 //					col - 1,
@@ -985,7 +985,7 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	protected String getCellAddress(int row, int col)
 	{
 		String address = null;
-		if(row > -1 && row < 1048577 && col > -1 && col < maxColumnIndex)
+		if (row > -1 && row < 1048577 && col > -1 && col < maxColumnIndex)
 		{
 			address = "$" + getColumIndexName(col, maxColumnIndex) + "$" + (row + 1);
 		}
@@ -1318,7 +1318,7 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 					
 					int runLimit = 0;
 					AttributedCharacterIterator iterator = styledText.getAttributedString().getIterator();
-					while(runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
+					while (runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
 					{
 						// ODS does not like text:span inside text:a
 						// writing one text:a inside text:span for each style run
@@ -1459,7 +1459,7 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	 */
 	protected void insertPageAnchor(TableBuilder tableBuilder)
 	{
-		if(startPage)
+		if (startPage)
 		{
 			String pageName = DocumentBuilder.JR_PAGE_ANCHOR_PREFIX + reportIndex + "_" + (sheetIndex - sheetsBeforeCurrentReport);
 			String cellAddress = "$&apos;" + tableBuilder.getTableName() + "&apos;.$A$1";

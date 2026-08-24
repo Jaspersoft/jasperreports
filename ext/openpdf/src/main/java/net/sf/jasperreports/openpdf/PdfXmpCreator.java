@@ -80,9 +80,9 @@ public class PdfXmpCreator
 		return XMP_LIBRARY;
 	}
 
-	public static byte[] createXmpMetadata(PdfWriter pdfWriter, PdfaConformanceEnum conformance, boolean isTagged)
+	public static byte[] createXmpMetadata(PdfWriter pdfWriter, PdfaConformanceEnum conformance, boolean isTagged, boolean isPdf2)
 	{
-		XmpWriter writer = new XmpWriter(pdfWriter, conformance, isTagged);
+		XmpWriter writer = new XmpWriter(pdfWriter, conformance, isTagged, isPdf2);
 		return writer.createXmpMetadata();
 	}
 
@@ -141,13 +141,15 @@ class XmpWriter
 	private final PdfDictionary info;
 	private final PdfaConformanceEnum conformance;
 	private final boolean isTagged;
+	private final boolean isPdf2;
 
-	XmpWriter(PdfWriter pdfWriter, PdfaConformanceEnum conformance, boolean isTagged)
+	XmpWriter(PdfWriter pdfWriter, PdfaConformanceEnum conformance, boolean isTagged, boolean isPdf2)
 	{
 		this.pdfWriter = pdfWriter;
 		this.info = pdfWriter.getInfo();
 		this.conformance = conformance;
 		this.isTagged = isTagged;
+		this.isPdf2 = isPdf2;
 	}
 	
 	byte[] createXmpMetadata()
@@ -216,7 +218,7 @@ class XmpWriter
 				XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
 				registry.registerNamespace(NS_PDFUA_ID, "pdfuaid");
 
-				if (pdfWriter.getPdfVersionString().startsWith("2."))
+				if (isPdf2)
 				{
 					xmp.setProperty(NS_PDFUA_ID, PDFUA_PART, PDFUA_PART_2);
 					xmp.setProperty(NS_PDFUA_ID, PDFUA_REV, PDFUA_REV_2024);

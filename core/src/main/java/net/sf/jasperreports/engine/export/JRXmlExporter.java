@@ -398,19 +398,19 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		JROrigin[] origins = jasperPrint.getOrigins();
 		if (origins != null && origins.length > 0)
 		{
-			for(int i = 0; i < origins.length; i++)
+			for (JROrigin origin : origins)
 			{
-				exportOrigin(origins[i]);
+				exportOrigin(origin);
 			}
 		}
 
 		JRStyle[] styles = jasperPrint.getStyles();
 		if (styles != null && styles.length > 0)
 		{
-			for(int i = 0; i < styles.length; i++)
+			for (JRStyle style : styles)
 			{
-				stylesMap.put(styles[i].getName(), styles[i]);
-				exportStyle(styles[i]);
+				stylesMap.put(style.getName(), style);
+				exportStyle(style);
 			}
 		}
 
@@ -430,7 +430,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		if (pages != null && pages.size() > 0)
 		{
 			JRPrintPage page = null;
-			for(int i = startPageIndex; i <= endPageIndex; i++)
+			for (int i = startPageIndex; i <= endPageIndex; i++)
 			{
 				checkInterrupted();
 				
@@ -455,11 +455,11 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 			String[] propertyNames = propertiesMap.getPropertyNames();
 			if (propertyNames != null && propertyNames.length > 0)
 			{
-				for(int i = 0; i < propertyNames.length; i++)
+				for (String propertyName : propertyNames)
 				{
 					xmlWriter.startElement(JRXmlConstants.ELEMENT_property);
-					xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, propertyNames[i]);
-					String value = propertiesMap.getProperty(propertyNames[i]);
+					xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, propertyName);
+					String value = propertiesMap.getProperty(propertyName);
 					if (value != null)
 					{
 						String encodedValue = JRStringUtil.encodeXmlAttribute(value);
@@ -495,7 +495,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		if (style.getStyle() != null)
 		{
 			JRStyle baseStyle = stylesMap.get(style.getStyle().getName());
-			if(baseStyle != null)
+			if (baseStyle != null)
 			{
 				xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_style, style.getStyle().getName());
 			}
@@ -564,7 +564,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 	{
 		if (bookmarks != null && bookmarks.size() > 0)
 		{
-			for(PrintBookmark bookmark : bookmarks)
+			for (PrintBookmark bookmark : bookmarks)
 			{
 				exportBookmark(bookmark);
 			}
@@ -636,7 +636,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 	{
 		if (elements != null && elements.size() > 0)
 		{
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				exportElement(it.next());
 			}
@@ -819,7 +819,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 	{
 		xmlWriter.startElement(JRXmlConstants.ELEMENT_image);
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_scaleImage, image.getOwnScaleImage());
-		if(isNewerVersionOrEqual(JRConstants.VERSION_6_10_0))
+		if (isNewerVersionOrEqual(JRConstants.VERSION_6_10_0))
 		{
 			xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_rotation, image.getOwnRotation());
 		}
@@ -1114,9 +1114,9 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 			TabStop[] tabStops = paragraph.getTabStops();
 			if (tabStops != null && tabStops.length > 0)
 			{
-				for(int i = 0; i < tabStops.length; i++)
+				for (TabStop tabStop : tabStops)
 				{
-					exportTabStop(tabStops[i]);
+					exportTabStop(tabStop);
 				}
 			}
 
@@ -1197,9 +1197,8 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		JRPrintHyperlinkParameters hyperlinkParameters = hyperlink.getHyperlinkParameters();
 		if (hyperlinkParameters != null)
 		{
-			for (Iterator<JRPrintHyperlinkParameter> it = hyperlinkParameters.getParameters().iterator(); it.hasNext();)
+			for (JRPrintHyperlinkParameter parameter : hyperlinkParameters.getParameters())
 			{
-				JRPrintHyperlinkParameter parameter = it.next();
 				exportHyperlinkParameter(parameter);
 			}
 		}
@@ -1249,9 +1248,8 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 			xmlWriter.closeElement();//genericElementType
 			
 			Set<String> names = element.getParameterNames();
-			for (Iterator<String> it = names.iterator(); it.hasNext();)
+			for (String name : names)
 			{
-				String name = it.next();
 				Object value = element.getParameterValue(name);
 				xmlWriter.startElement(JRXmlConstants.ELEMENT_genericElementParameter);
 				xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_name, name);

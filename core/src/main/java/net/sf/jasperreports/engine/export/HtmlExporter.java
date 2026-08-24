@@ -481,7 +481,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 		
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -495,7 +495,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 				int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
 				JRPrintPage page = null;
-				for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 
@@ -2015,7 +2015,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			throws IOException
 	{		
 		startCell(line, cell);
-		if(isOblique(line))
+		if (isOblique(line))
 		{
 			finishStartCell();
 			
@@ -2744,7 +2744,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);		
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{
@@ -2815,7 +2815,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		JRHyperlinkTargetProducer producer = targetProducerFactory.getHyperlinkTargetProducer(link.getLinkTarget());		
 		if (producer == null)
 		{
-			switch(link.getHyperlinkTarget())
+			switch (link.getHyperlinkTarget())
 			{
 				case BLANK :
 				{
@@ -2838,9 +2838,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 					List<JRPrintHyperlinkParameter> parameters = link.getHyperlinkParameters() == null ? null : link.getHyperlinkParameters().getParameters();
 					if (parameters != null)
 					{
-						for(Iterator<JRPrintHyperlinkParameter> it = parameters.iterator(); it.hasNext();)
+						for (JRPrintHyperlinkParameter parameter : parameters)
 						{
-							JRPrintHyperlinkParameter parameter = it.next();
 							if (link.getLinkTarget().equals(parameter.getName()))
 							{
 								target = parameter.getValue() == null ? null : parameter.getValue().toString();
@@ -3013,7 +3012,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			StringTokenizer tkzer = new StringTokenizer(allText, "\n", true);
 
 			// text is split into paragraphs, using the newline character as delimiter
-			while(tkzer.hasMoreTokens()) 
+			while (tkzer.hasMoreTokens()) 
 			{
 				String token = tkzer.nextToken();
 
@@ -3219,9 +3218,10 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			writer.write("</span>");
 		}
 		
-		if (firstLineIndent != null || justifyLastLine ||
-                        (leftIndent != null && leftIndent > 0) ||
-                        (rightIndent != null && rightIndent > 0)
+		if (
+			firstLineIndent != null || justifyLastLine
+			|| (leftIndent != null && leftIndent > 0)
+			|| (rightIndent != null && rightIndent > 0)
 			)
 		{
 			writer.write("</div>");
@@ -3261,7 +3261,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		// text is split into paragraphs here because it might have not been split during initial styled text processing
 		// and was processed as a whole because there was no need to do so due to lack of paragraph styling; 
 		// htmlEncode(String) no longer takes care of newline characters, so we do it here
-		while(tkzer.hasMoreTokens()) 
+		while (tkzer.hasMoreTokens()) 
 		{
 			String token = tkzer.nextToken();
 			

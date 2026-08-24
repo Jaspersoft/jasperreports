@@ -32,60 +32,60 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class JsonNodeContainer {
-    private List<JRJsonNode> nodes;
+	private List<JRJsonNode> nodes;
 
-    public JsonNodeContainer() {
-        nodes = new ArrayList<>();
-    }
+	public JsonNodeContainer() {
+		nodes = new ArrayList<>();
+	}
 
-    public JsonNodeContainer(JRJsonNode node) {
-        this();
-        nodes.add(node);
-    }
+	public JsonNodeContainer(JRJsonNode node) {
+		this();
+		nodes.add(node);
+	}
 
-    public void add(JRJsonNode node) {
-        nodes.add(node);
-    }
+	public void add(JRJsonNode node) {
+		nodes.add(node);
+	}
 
-    public void addNodes(List<JRJsonNode> nodes) {
-        this.nodes.addAll(nodes);
-    }
+	public void addNodes(List<JRJsonNode> nodes) {
+		this.nodes.addAll(nodes);
+	}
 
-    public List<JRJsonNode> getNodes() {
-        return nodes;
-    }
+	public List<JRJsonNode> getNodes() {
+		return nodes;
+	}
 
-    public List<JRJsonNode> getContainerNodes() {
-        if (nodes.size() == 1 && nodes.get(0).getDataNode().isArray()) {
-            List<JRJsonNode> result = new ArrayList<>();
+	public List<JRJsonNode> getContainerNodes() {
+		if (nodes.size() == 1 && nodes.get(0).getDataNode().isArray()) {
+			List<JRJsonNode> result = new ArrayList<>();
 
-            JRJsonNode parentNode = nodes.get(0);
-            JsonNode arrayNode = parentNode.getDataNode();
+			JRJsonNode parentNode = nodes.get(0);
+			JsonNode arrayNode = parentNode.getDataNode();
 
-            for (JsonNode deeper: arrayNode) {
-                result.add(parentNode.createChild(deeper));
-            }
+			for (JsonNode deeper: arrayNode) {
+				result.add(parentNode.createChild(deeper));
+			}
 
-            return result;
+			return result;
 
-        }
-        return nodes;
-    }
+		}
+		return nodes;
+	}
 
-    public JRJsonNode getFirst() {
-        return nodes.get(0);
-    }
+	public JRJsonNode getFirst() {
+		return nodes.get(0);
+	}
 
-    public int getSize() {
-        return nodes.size();
-    }
+	public int getSize() {
+		return nodes.size();
+	}
 
-    public int getContainerSize() {
-        if (nodes.size() == 1 && nodes.get(0).getDataNode().isArray()) {
-            return nodes.get(0).getDataNode().size();
-        }
+	public int getContainerSize() {
+		if (nodes.size() == 1 && nodes.get(0).getDataNode().isArray()) {
+			return nodes.get(0).getDataNode().size();
+		}
 
-        return nodes.size();
-    }
+		return nodes.size();
+	}
 
 }

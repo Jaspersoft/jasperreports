@@ -330,14 +330,14 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 			List<ExporterInputItem> items = exporterInput.getItems();
 			
 			PrintRequestAttributeSet printRequestAttributeSet = null;
-			if(displayPrintDialogOnlyOnce || displayPageDialogOnlyOnce)
+			if (displayPrintDialogOnlyOnce || displayPageDialogOnlyOnce)
 			{
 				printRequestAttributeSet = new HashPrintRequestAttributeSet();
 				setDefaultPrintRequestAttributeSet(printRequestAttributeSet);
 				setOrientation(items.get(0).getJasperPrint(), printRequestAttributeSet);
-				if(displayPageDialogOnlyOnce)
+				if (displayPageDialogOnlyOnce)
 				{
-					if(printerJob.pageDialog(printRequestAttributeSet) == null)
+					if (printerJob.pageDialog(printRequestAttributeSet) == null)
 					{
 						return;
 					}
@@ -346,9 +346,9 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 						displayPageDialog = false;
 					}
 				}
-				if(displayPrintDialogOnlyOnce)
+				if (displayPrintDialogOnlyOnce)
 				{
-					if(!printerJob.printDialog(printRequestAttributeSet))
+					if (!printerJob.printDialog(printRequestAttributeSet))
 					{
 						printStatus = new Boolean[]{Boolean.FALSE};
 						return;
@@ -362,7 +362,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 			
 			List<Boolean> status = new ArrayList<>();
 			// fix for bug ID artf1455 from jasperforge.org bug database
-			for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+			for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 			{
 				ExporterInputItem item = items.get(reportIndex);
 
@@ -383,7 +383,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 				grxConfiguration.setExporterFilter(filter);
 				grxConfiguration.setMinimizePrinterJobSize(lcItemConfiguration.isMinimizePrinterJobSize());
 				
-				if(displayPrintDialog || displayPageDialog ||
+				if (displayPrintDialog || displayPageDialog ||
 						(!displayPrintDialogOnlyOnce && !displayPageDialogOnlyOnce))
 				{
 					printRequestAttributeSet = new HashPrintRequestAttributeSet();
@@ -582,11 +582,14 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 	// artf1936
 	public static boolean checkAvailablePrinters() 
 	{
-		PrintService[] ss = java.awt.print.PrinterJob.lookupPrintServices();
-		for (int i=0;i<ss.length;i++) {
-			Attribute[] att = ss[i].getAttributes().toArray();
-			for (int j=0;j<att.length;j++) {
-				if (att[j].equals(PrinterIsAcceptingJobs.ACCEPTING_JOBS)) {
+		PrintService[] printServices = java.awt.print.PrinterJob.lookupPrintServices();
+		for (PrintService printService : printServices)
+		{
+			Attribute[] attributes = printService.getAttributes().toArray();
+			for (Attribute attribute : attributes)
+			{
+				if (attribute.equals(PrinterIsAcceptingJobs.ACCEPTING_JOBS))
+				{
 					return true;
 				}
 			}

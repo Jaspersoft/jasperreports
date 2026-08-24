@@ -24,7 +24,6 @@
 package net.sf.jasperreports.javascript;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
@@ -72,14 +71,12 @@ public class JavaScriptCompiler extends JavaScriptCompilerBase
 		try
 		{
 			Errors errors = new Errors();
-			for (int i = 0; i < units.length; i++)
+			for (JRCompilationUnit unit : units)
 			{
-				JRCompilationUnit unit = units[i];
 				JavaScriptCompileData compileData = new JavaScriptCompileData();
 				JRSourceCompileTask compileTask = unit.getCompileTask();
-				for (Iterator<JRExpression> it = compileTask.getExpressions().iterator(); it.hasNext();)
+				for (JRExpression expr : compileTask.getExpressions())
 				{
-					JRExpression expr = it.next();
 					int id = compileTask.getExpressionId(expr);
 					
 					ScriptExpressionVisitor defaultVisitor = defaultExpressionCreator();

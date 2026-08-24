@@ -82,7 +82,7 @@ public class DataSourceProviderDataAdapterService extends AbstractClasspathAware
 				{
 //					ClassLoader cloader = oldThreadClassLoader;
 //					Object obj = getJasperReportsContext().getValue(CURRENT_CLASS_LOADER);
-//					if(obj != null && obj instanceof ClassLoader)
+//					if (obj != null && obj instanceof ClassLoader)
 //						cloader = (ClassLoader)obj ; 
 //					Thread.currentThread().setContextClassLoader(
 //						new CompositeClassloader(getClassLoader(), cloader)

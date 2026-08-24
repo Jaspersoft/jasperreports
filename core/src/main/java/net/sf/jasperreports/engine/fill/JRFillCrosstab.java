@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -40,6 +39,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -471,28 +471,22 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			}
 		}
 		
-		Set<String> measureVars = new HashSet<>();
-		for (JRFillCrosstabMeasure measure : measures)
-		{
-			measureVars.add(measure.getFillVariable().getName());
-		}
+		Set<String> measureVars = Arrays.stream(measures).map(m -> m.getFillVariable().getName()).collect(Collectors.toSet());
 
 		retrieveTotal = new boolean[rowGroups.length + 1][columnGroups.length + 1];
 		
 		//FIXME avoid this
 		JRExpressionCollector collector = JRExpressionCollector.collector(filler.getJasperReportsContext(), filler.getJasperReport(), crosstab);
 		List<JRExpression> expressions = collector.getExpressions(crosstab);
-		for (Iterator<JRExpression> iter = expressions.iterator(); iter.hasNext();)
+		for (JRExpression expression : expressions)
 		{
-			JRExpression expression = iter.next();
 			Object expressionContext = collector.getExpressionContext(expression);
 			boolean groupHeaderExpression = expressionContext instanceof JRCrosstabGroup;
 			JRExpressionChunk[] chunks = expression.getChunks();
 			if (chunks != null)
 			{
-				for (int i = 0; i < chunks.length; i++)
+				for (JRExpressionChunk chunk : chunks)
 				{
-					JRExpressionChunk chunk = chunks[i];
 					if (chunk.getType() == JRExpressionChunk.TYPE_VARIABLE)
 					{
 						String varName = chunk.getText();
@@ -559,10 +553,10 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 		percentage = false;
 		List<MeasureDefinition> measureList = new ArrayList<>(measures.length);
-		for (int i = 0; i < measures.length; ++i)
+		for (JRFillCrosstabMeasure measure : measures)
 		{
-			measureList.add(createServiceMeasure(measures[i]));
-			percentage |= measures[i].getPercentageType() == CrosstabPercentageEnum.GRAND_TOTAL;
+			measureList.add(createServiceMeasure(measure));
+			percentage |= measure.getPercentageType() == CrosstabPercentageEnum.GRAND_TOTAL;
 		}
 
 		// if a group has order by expression, compute totals as they might be used
@@ -659,10 +653,10 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 	{
 		super.reset();
 
-		for (int i = 0; i < variables.length; i++)
+		for (JRFillVariable variable : variables)
 		{
-			variables[i].setValue(null);
-			variables[i].setInitialized(true);
+			variable.setValue(null);
+			variable.setInitialized(true);
 		}
 		
 		printFrames = null;
@@ -735,10 +729,10 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		
 		parameterValues.put(JRParameter.REPORT_PARAMETERS_MAP, parameterValues);
 
-		for (int i = 0; i < parameters.length; i++)
+		for (JRFillCrosstabParameter parameter : parameters)
 		{
-			Object value = parameterValues.get(parameters[i].getName());
-			parameters[i].setValue(value);
+			Object value = parameterValues.get(parameter.getName());
+			parameter.setValue(value);
 		}
 
 		boolean ignoreNPE = filler.getPropertiesUtil().getBooleanProperty(this,	JREvaluator.PROPERTY_IGNORE_NPE, true);
@@ -892,9 +886,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 		int xLimit = Integer.MIN_VALUE;
 		int yLimit = Integer.MIN_VALUE;
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			if (element.getX() + element.getWidth() > xLimit)
 			{
 				xLimit = element.getX() + element.getWidth();
@@ -1175,9 +1168,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 	protected void mirrorPrintElements(List<JRPrintElement> printElements, int width)
 	{
-		for (Iterator<JRPrintElement> it = printElements.iterator(); it.hasNext();)
+		for (JRPrintElement element : printElements)
 		{
-			JRPrintElement element = it.next();
 			int mirrorX = width - element.getX() - element.getWidth();
 			element.setX(mirrorX);
 		}
@@ -1717,9 +1709,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		protected void addFilledRows()
 		{
 			List<JRPrintElement> prints = new ArrayList<>();
-			for (Iterator<List<JRPrintElement>> it = printRows.iterator(); it.hasNext();)
+			for (List<JRPrintElement> rowPrints : printRows)
 			{
-				List<JRPrintElement> rowPrints = it.next();
 				prints.addAll(rowPrints);
 			}
 			
@@ -1761,7 +1752,7 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			
 			if (lastIndex < headersData[0].length)
 			{
-				while(lastIndex > firstIndex && !breakable[lastIndex])
+				while (lastIndex > firstIndex && !breakable[lastIndex])
 				{
 					--lastIndex;
 					headers.remove(headers.size() - 1);
@@ -2449,10 +2440,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			int rowY = rowYs.get(rowIdx);
 			
 			int rowStretchHeight = 0;
-			for (int j = 0; j < headers.length; j++)
+			for (JRFillCellContents contents : headers)
 			{
-				JRFillCellContents contents = headers[j];
-				
 				if (contents != null)
 				{
 					int startRowY = rowY;
@@ -2470,10 +2459,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 				}
 			}
 			
-			for (int j = 0; j < headers.length; j++)
+			for (JRFillCellContents contents : headers)
 			{
-				JRFillCellContents contents = headers[j];
-				
 				if (contents != null)
 				{
 					int startRowY = rowY;
@@ -2494,14 +2481,14 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		{
 			List<List<JRPrintElement>> headerRows = new ArrayList<>(columnGroups.length);
 			
-			for (int i = 0; i < columnHeaderRows.length; ++i)
+			for (JRFillCellContents[] columnHeaderRow : columnHeaderRows)
 			{
 				List<JRPrintElement> headerRow = new ArrayList<>(lastColumnIndex - startColumnIndex);
 				headerRows.add(headerRow);
 				
-				for (int j = 0; j < columnHeaderRows[i].length; j++)
+				for (int j = 0; j < columnHeaderRow.length; j++)
 				{
-					JRFillCellContents contents = columnHeaderRows[i][j];
+					JRFillCellContents contents = columnHeaderRow[j];
 					
 					if (contents != null)
 					{
@@ -2516,11 +2503,11 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 		private void releaseColumnHeaderCells(JRFillCellContents[][] columnHeaderRows) throws JRException
 		{
-			for (int i = 0; i < columnHeaderRows.length; ++i)
+			for (JRFillCellContents[] columnHeaderRow : columnHeaderRows)
 			{
-				for (int j = 0; j < columnHeaderRows[i].length; j++)
+				for (int j = 0; j < columnHeaderRow.length; j++)
 				{
-					JRFillCellContents contents = columnHeaderRows[i][j];
+					JRFillCellContents contents = columnHeaderRow[j];
 					
 					if (contents != null)
 					{
@@ -2589,9 +2576,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 
 		private void releasePreparedRow() throws JRException
 		{
-			for (Iterator<JRFillCellContents> it = preparedRow.iterator(); it.hasNext();)
+			for (JRFillCellContents cell : preparedRow)
 			{
-				JRFillCellContents cell = it.next();
 				cell.rewind();
 				cell.releaseWorkingClone();
 			}
@@ -2604,10 +2590,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			int rowY = rowYs.get(rowIdx);
 			
 			List<JRPrintElement> rowPrints = new ArrayList<>(preparedRow.size());
-			for (Iterator<JRFillCellContents> it = preparedRow.iterator(); it.hasNext();)
+			for (JRFillCellContents cell : preparedRow)
 			{
-				JRFillCellContents cell = it.next();
-				
 				int spanHeight = 0;
 				if (cell.getVerticalSpan() > 1)
 				{
@@ -2922,10 +2906,8 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 			int nextToLastHeaderY = rowYs.get(rowIdx - 1);
 			List<JRPrintElement> lastPrintRow = getLastPrintRow();
 			
-			for (int j = 0; j < preparedRow.size(); ++j)
+			for (JRFillCellContents contents : preparedRow)
 			{
-				JRFillCellContents contents = preparedRow.get(j);
-				
 				int headerY = rowYs.get(rowIdx - contents.getVerticalSpan());
 				
 				contents.stretchTo(nextToLastHeaderY - headerY + lastRowHeight);
@@ -3134,19 +3116,19 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		
 		protected void resetVariables()
 		{
-			for (int i = 0; i < rowGroups.length; i++)
+			for (JRFillCrosstabRowGroup rowGroup : rowGroups)
 			{
-				rowGroups[i].getFillVariable().setValue(null);
+				rowGroup.getFillVariable().setValue(null);
 			}
 			
-			for (int i = 0; i < columnGroups.length; i++)
+			for (JRFillCrosstabColumnGroup columnGroup : columnGroups)
 			{
-				columnGroups[i].getFillVariable().setValue(null);
+				columnGroup.getFillVariable().setValue(null);
 			}
 			
-			for (int i = 0; i < measures.length; i++)
+			for (JRFillCrosstabMeasure measure : measures)
 			{
-				measures[i].getFillVariable().setValue(null);
+				measure.getFillVariable().setValue(null);
 			}
 			
 			for (int row = 0; row <= rowGroups.length; ++row)

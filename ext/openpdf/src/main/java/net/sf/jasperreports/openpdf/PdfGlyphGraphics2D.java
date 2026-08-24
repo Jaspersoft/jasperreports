@@ -91,21 +91,21 @@ public class PdfGlyphGraphics2D extends PdfGraphics2D
 		org.openpdf.text.Font currentFont = pdfProducer.getFont(fontAttrs, locale);
 		boolean bold = (currentFont.getStyle() & org.openpdf.text.Font.BOLD) != 0;
 		boolean italic = (currentFont.getStyle() & org.openpdf.text.Font.ITALIC) != 0;
-        
-        PdfContentByte text = pdfContentByte.getDuplicate();
-        text.beginText();
-        
-        float[] originalCoords = new float[]{x, y};
-        float[] transformedCoors = new float[2];
-        getTransform().transform(originalCoords, 0, transformedCoors, 0, 1);
-        text.setTextMatrix(1, 0, italic ? ITALIC_ANGLE : 0f, 1,
-        		transformedCoors[0], pdfExporter.toPoints((float) pdfExporter.getCurrentPageFormat().getPageHeight()) - transformedCoors[1]);
-        
-        double scaleX = awtFont.getTransform().getScaleX();
-        double scaleY = awtFont.getTransform().getScaleY();
-        double minScale = Math.min(scaleX, scaleY);
-        text.setFontAndSize(currentFont.getBaseFont(), (float) (minScale * awtFont.getSize2D()));
-        
+		
+		PdfContentByte text = pdfContentByte.getDuplicate();
+		text.beginText();
+		
+		float[] originalCoords = new float[]{x, y};
+		float[] transformedCoors = new float[2];
+		getTransform().transform(originalCoords, 0, transformedCoors, 0, 1);
+		text.setTextMatrix(1, 0, italic ? ITALIC_ANGLE : 0f, 1,
+				transformedCoors[0], pdfExporter.toPoints((float) pdfExporter.getCurrentPageFormat().getPageHeight()) - transformedCoors[1]);
+		
+		double scaleX = awtFont.getTransform().getScaleX();
+		double scaleY = awtFont.getTransform().getScaleY();
+		double minScale = Math.min(scaleX, scaleY);
+		text.setFontAndSize(currentFont.getBaseFont(), (float) (minScale * awtFont.getSize2D()));
+		
 		if (bold)
 		{
 			text.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_STROKE);
@@ -125,9 +125,9 @@ public class PdfGlyphGraphics2D extends PdfGraphics2D
 			text.setLineWidth(1f);
 			text.resetRGBColorStroke();
 		}
-        
-        text.endText();
-        pdfContentByte.add(text);
+		
+		text.endText();
+		pdfContentByte.add(text);
 	}
 
 }

@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -385,7 +387,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 	{
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)//FIXMEJSONMETA deal with batch export
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)//FIXMEJSONMETA deal with batch export
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -424,7 +426,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 				int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
 				JRPrintPage page = null;
-				for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 
@@ -472,7 +474,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 	{
 		if (elements != null && elements.size() > 0)
 		{
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				checkInterrupted();
 				JRPrintElement element = it.next();
@@ -593,24 +595,14 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			SchemaNode node = null;
 
 			for (int i = 0; i < objectPathSegments.length; i++) {
-				StringBuilder objectPath = new StringBuilder(objectPathSegments[0]);
-				for (int j = 1; j <= i; j++) {
-					objectPath.append(".").append(objectPathSegments[j]);
-				}
+				String objectPath = String.join(".", Arrays.copyOfRange(objectPathSegments, 0, i + 1));
 
-				if (!pathToObjectNode.containsKey(objectPath.toString())) {
-					String schemaNodePath = "";
-
-					for (int k = 0; k < i; k++) {
-						schemaNodePath += schemaNodePath.length() > 0 ? "." + objectPathSegments[k] : objectPathSegments[k];
-					}
-
+				if (!pathToObjectNode.containsKey(objectPath)) {
+					String schemaNodePath = String.join(".", Arrays.copyOfRange(objectPathSegments, 0, i));
 					node = new SchemaNode(i, objectPathSegments[i], NodeTypeEnum.ARRAY, schemaNodePath);
-
-
-					pathToObjectNode.put(objectPath.toString(), node);
+					pathToObjectNode.put(objectPath, node);
 				} else {
-					node = pathToObjectNode.get(objectPath.toString());
+					node = pathToObjectNode.get(objectPath);
 				}
 
 				if (i < objectPathSegments.length - 1 && node.getMember(objectPathSegments[i+1]) == null) {
@@ -736,7 +728,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			}
 			// just write the value for property, no repeat
 			else {
-                writePathProperty(currentNode, valueProperty, value, false);
+				writePathProperty(currentNode, valueProperty, value, false);
 			}
 		}
 
@@ -862,12 +854,8 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 
 	private void closeExtraPathSegments(String[] prevSegments, int lastCommonIndex) throws IOException {
 		for (int i = prevSegments.length - 1; i > lastCommonIndex; i--) {
-			StringBuilder sb = new StringBuilder(prevSegments[0]);
-			for (int j=1; j <= i; j++) {
-				sb.append(".").append(prevSegments[j]);
-			}
-
-			SchemaNode toClose = pathToObjectNode.get(sb.toString());
+			String path = String.join(".", Arrays.copyOfRange(prevSegments, 0, i + 1));
+			SchemaNode toClose = pathToObjectNode.get(path);
 
 			if (openedSchemaNodes.get(openedSchemaNodes.size() - 1).equals(toClose)) {
 				openedSchemaNodes.remove(openedSchemaNodes.size() - 1);
@@ -893,7 +881,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			}
 
 			if (log.isDebugEnabled()) {
-				log.debug("\t\tclosing " + toClose.getType().getName() + " path: " + sb.toString());
+				log.debug("\t\tclosing " + toClose.getType().getName() + " path: " + path);
 			}
 		}
 	}
@@ -913,15 +901,15 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			String currentProperty = pathSegments[i];
 			boolean foundPreviousRepeated = false;
 
-            ArrayList<String> vizMembers = visitedMembers.get(parent);
-            String lastVisitedProp = null;
-            int lastVisitedPropIdx = -1;
-            int currentPropIdx = parent.indexOfMember(currentProperty);
+			ArrayList<String> vizMembers = visitedMembers.get(parent);
+			String lastVisitedProp = null;
+			int lastVisitedPropIdx = -1;
+			int currentPropIdx = parent.indexOfMember(currentProperty);
 
-            if (vizMembers != null && vizMembers.size() > 0) {
-                lastVisitedProp = vizMembers.get(vizMembers.size() - 1);
-                lastVisitedPropIdx = parent.indexOfMember(lastVisitedProp);
-            }
+			if (vizMembers != null && vizMembers.size() > 0) {
+				lastVisitedProp = vizMembers.get(vizMembers.size() - 1);
+				lastVisitedPropIdx = parent.indexOfMember(lastVisitedProp);
+			}
 
 			// before opening new path, check if previous has repeated values to be written
 			if (parent.isArray()) {
@@ -936,8 +924,8 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			}
 
 			if (foundPreviousRepeated ||
-                    // got another property of the same object
-                    (lastVisitedPropIdx != -1 && currentPropIdx > lastVisitedPropIdx)) {
+					// got another property of the same object
+					(lastVisitedPropIdx != -1 && currentPropIdx > lastVisitedPropIdx)) {
 				writer.write(",");
 			}
 
@@ -1172,12 +1160,7 @@ public class JsonMetadataExporter extends JRAbstractExporter<JsonMetadataReportC
 			if (isArray) {
 				out.append("{");
 			}
-			for (int i=0, ln = members.size(); i < ln; i++) {
-				out.append("\"").append(members.get(i).getName()).append("\"");
-				if (i < ln-1) {
-					out.append(", ");
-				}
-			}
+			out.append(members.stream().map(m -> "\"" + m.getName() + "\"").collect(Collectors.joining(", ")));
 			if (isArray) {
 				out.append("}");
 			}

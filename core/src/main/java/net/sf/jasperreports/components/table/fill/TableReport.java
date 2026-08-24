@@ -25,7 +25,6 @@ package net.sf.jasperreports.components.table.fill;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -1005,7 +1004,7 @@ public class TableReport implements JRReport
 					JRSortField[] sortFields = TableReport.this.mainDataset.getSortFields();
 					if (sortFields != null)
 					{
-						for(JRSortField sortField : sortFields)
+						for (JRSortField sortField : sortFields)
 						{
 							if (
 								sortField.getName().equals(fieldOrVariableName)
@@ -1198,7 +1197,7 @@ public class TableReport implements JRReport
 		
 		protected void addColumnLabelParameters(JRDesignGenericElement element, TableComponent table) {
 			List<BaseColumn> columns = TableUtil.getAllColumns(table);
-			for(int i = 0, ln = columns.size(); i < ln; i++) {
+			for (int i = 0, ln = columns.size(); i < ln; i++) {
 				BaseColumn column = columns.get(i);
 				JRExpression columnHeaderExpression = getColumnHeaderLabelExpression(column.getColumnHeader());
 				boolean interactiveColumn = columnInteractivityMapping.get(column).first() && (TableUtil.getCellElement(JRTextField.class, ((Column)column).getDetailCell(), true) != null);
@@ -1773,11 +1772,8 @@ public class TableReport implements JRReport
 		footerFrame.setPrintWhenExpression(footerPrintWhen);
 		
 		// clone the contents of the page footer in the frame
-		List<JRChild> footerChildren = pageFooter.getChildren();
-		for (Iterator<JRChild> iterator = footerChildren.iterator(); iterator
-				.hasNext();)
+		for (JRChild child : pageFooter.getChildren())
 		{
-			JRChild child = iterator.next();
 			JRChild childClone = (JRChild) child.clone(footerFrame);
 			if (childClone instanceof JRElement)
 			{
@@ -1855,9 +1851,8 @@ public class TableReport implements JRReport
 		
 		frame.getPropertiesMap().setProperty(JRFrame.PROPERTY_OVERFLOW_ON_STRETCH, Boolean.TRUE.toString());
 		
-		for (Iterator<JRChild> it = cell.getChildren().iterator(); it.hasNext();)
+		for (JRChild child : cell.getChildren())
 		{
-			JRChild child = it.next();
 			if (child instanceof JRElement)
 			{
 				JRElement element = (JRElement) child;

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -388,9 +387,8 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 			if (chunks != null && chunks.length > 0)
 			{
 				StringBuffer sbuffer = new StringBuffer();
-				for(int i = 0; i < chunks.length; i++)
+				for (JRQueryChunk chunk : chunks)
 				{
-					JRQueryChunk chunk = chunks[i];
 					appendQueryChunk(sbuffer, chunk);
 				}
 
@@ -670,9 +668,8 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 	protected List<String> getCollectedParameterNames()
 	{
 		List<String> parameterNames = new ArrayList<>(queryParameters.size());
-		for (Iterator<QueryParameterEntry> it = queryParameters.iterator(); it.hasNext();)
+		for (QueryParameterEntry paramEntry : queryParameters)
 		{
-			QueryParameterEntry paramEntry = it.next();
 			if (!(paramEntry instanceof QueryParameter))
 			{
 				throw 

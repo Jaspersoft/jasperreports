@@ -55,7 +55,7 @@ public class JRJdk13ImageReader implements JRImageReader
 			throw new JRException(e);
 		}
 
-		if(tracker.isErrorID(0)) 
+		if (tracker.isErrorID(0)) 
 		{
 			throw 
 			new JRException(

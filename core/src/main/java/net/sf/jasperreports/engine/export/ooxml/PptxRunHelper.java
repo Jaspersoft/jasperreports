@@ -79,7 +79,7 @@ public class PptxRunHelper extends BaseHelper
 		if (text != null)
 		{
 			StringTokenizer tkzer = new StringTokenizer(text, "\n", true);
-			while(tkzer.hasMoreTokens())
+			while (tkzer.hasMoreTokens())
 			{
 				String token = tkzer.nextToken();
 				if ("\n".equals(token))
@@ -116,7 +116,7 @@ public class PptxRunHelper extends BaseHelper
 		if (text != null)
 		{
 			StringTokenizer tkzer = new StringTokenizer(text, "\n", true);
-			while(tkzer.hasMoreTokens())
+			while (tkzer.hasMoreTokens())
 			{
 				String token = tkzer.nextToken();
 				if ("\n".equals(token))
@@ -162,7 +162,7 @@ public class PptxRunHelper extends BaseHelper
 	{
 		write("       <" + tag + "\n");
 		
-		if(locale != null && "a:rPr".equals(tag))
+		if (locale != null && "a:rPr".equals(tag))
 		{
 			write(" lang=\""+locale.getLanguage()+"\"\n");
 		}

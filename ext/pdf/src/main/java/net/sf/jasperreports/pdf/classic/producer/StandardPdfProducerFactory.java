@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.pdf.classic.producer;
 
-import java.util.Iterator;
 import java.util.List;
 
 import com.lowagie.text.Document;
@@ -65,9 +64,8 @@ public class StandardPdfProducerFactory implements PdfProducerFactory
 			List<PropertySuffix> fontFiles = properties.getProperties(JRPdfExporter.PDF_FONT_FILES_PREFIX);//FIXMECONTEXT no default here and below
 			if (!fontFiles.isEmpty())
 			{
-				for (Iterator<PropertySuffix> i = fontFiles.iterator(); i.hasNext();)
+				for (JRPropertiesUtil.PropertySuffix font : fontFiles)
 				{
-					JRPropertiesUtil.PropertySuffix font = i.next();
 					String file = font.getValue();
 					if (file.toLowerCase().endsWith(".ttc"))
 					{
@@ -84,9 +82,8 @@ public class StandardPdfProducerFactory implements PdfProducerFactory
 			List<PropertySuffix> fontDirs = properties.getProperties(JRPdfExporter.PDF_FONT_DIRS_PREFIX);
 			if (!fontDirs.isEmpty())
 			{
-				for (Iterator<PropertySuffix> i = fontDirs.iterator(); i.hasNext();)
+				for (JRPropertiesUtil.PropertySuffix dir : fontDirs)
 				{
-					JRPropertiesUtil.PropertySuffix dir = i.next();
 					FontFactory.registerDirectory(dir.getValue());
 				}
 			}

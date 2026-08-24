@@ -427,7 +427,7 @@ public class JRClassLoader extends ClassLoader
 		{
 			StringBuilder sb = new StringBuilder();
 			
-			for(int i = 0; i < arrayDimension; i++)
+			for (int i = 0; i < arrayDimension; i++)
 			{
 				sb.append('[');
 			}

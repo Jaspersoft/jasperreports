@@ -33,9 +33,9 @@ import net.sf.jasperreports.json.expression.filter.NotFilterExpression;
  */
 public interface FilterExpressionEvaluatorVisitor {
 
-    boolean evaluateBasicFilter(BasicFilterExpression expression, JRJsonNode contextNode);
+	boolean evaluateBasicFilter(BasicFilterExpression expression, JRJsonNode contextNode);
 
-    boolean evaluateCompoundFilter(CompoundFilterExpression expression, JRJsonNode contextNode);
+	boolean evaluateCompoundFilter(CompoundFilterExpression expression, JRJsonNode contextNode);
 
-    boolean evaluateNotFilter(NotFilterExpression expression, JRJsonNode contextNode);
+	boolean evaluateNotFilter(NotFilterExpression expression, JRJsonNode contextNode);
 }

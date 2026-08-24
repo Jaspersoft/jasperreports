@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.fonts;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
@@ -53,9 +52,8 @@ public class SimpleFontExtensionsRegistryFactory implements ExtensionsRegistryFa
 	{
 		List<PropertySuffix> fontFamiliesProperties = JRPropertiesUtil.getProperties(properties, SIMPLE_FONT_FAMILIES_PROPERTY_PREFIX);
 		List<String> fontFamiliesLocations = new ArrayList<>();
-		for (Iterator<PropertySuffix> it = fontFamiliesProperties.iterator(); it.hasNext();)
+		for (PropertySuffix fontFamiliesProp : fontFamiliesProperties)
 		{
-			PropertySuffix fontFamiliesProp = it.next();
 			//String fontFamiliesName = fontFamiliesProp.getSuffix();
 			String fontFamiliesLocation = fontFamiliesProp.getValue();
 			//fontFamiliesLocations.addAll(SimpleFontExtensionHelper.getInstance().loadFontFamilies(fontFamiliesLocation));

@@ -25,7 +25,6 @@ package net.sf.jasperreports.engine.fill;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -135,9 +134,9 @@ public class JRFillBand extends JRFillElementContainer implements JRBand, JROrig
 
 		if (deepElements.length > 0)
 		{
-			for(int i = 0; i < deepElements.length; i++)
+			for (JRFillElement deepElement : deepElements)
 			{
-				deepElements[i].setBand(this);
+				deepElement.setBand(this);
 			}
 		}
 
@@ -254,9 +253,8 @@ public class JRFillBand extends JRFillElementContainer implements JRBand, JROrig
 				&& elements != null && elements.length > 0
 				)
 			{
-				for(int i = 0; i < elements.length; i++)
+				for (JRElement element : elements)
 				{
-					JRElement element = elements[i];
 					int bottom = element.getY() + element.getHeight();
 					breakHeight = bottom < breakHeight ? bottom : breakHeight;
 				}
@@ -502,9 +500,9 @@ public class JRFillBand extends JRFillElementContainer implements JRBand, JROrig
 
 	protected void addNowEvaluationTimes(JREvaluationTime[] evaluationTimes)
 	{
-		for (int i = 0; i < evaluationTimes.length; i++)
+		for (JREvaluationTime evaluationTime : evaluationTimes)
 		{
-			nowEvaluationTimes.add(evaluationTimes[i]);
+			nowEvaluationTimes.add(evaluationTime);
 		}
 	}
 
@@ -546,9 +544,8 @@ public class JRFillBand extends JRFillElementContainer implements JRBand, JROrig
 	
 	protected void restoreSavedVariables()
 	{
-		for (Iterator<Map.Entry<String,Object>> it = savedVariableValues.entrySet().iterator(); it.hasNext();)
+		for (Map.Entry<String,Object> entry : savedVariableValues.entrySet())
 		{
-			Map.Entry<String,Object> entry = it.next();
 			String variableName = entry.getKey();
 			Object value = entry.getValue();
 			JRFillVariable variable = filler.getVariable(variableName);

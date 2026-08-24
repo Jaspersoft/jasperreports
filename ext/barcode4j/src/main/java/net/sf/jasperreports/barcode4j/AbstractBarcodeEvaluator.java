@@ -236,9 +236,9 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		}
 		
 		Dimension minSymbolDimension = null; 
-		if(dataMatrix.getMinSymbolWidth() != null)
+		if (dataMatrix.getMinSymbolWidth() != null)
 		{
-			if(dataMatrix.getMinSymbolHeight() != null)
+			if (dataMatrix.getMinSymbolHeight() != null)
 			{
 				minSymbolDimension = new Dimension(dataMatrix.getMinSymbolWidth(), dataMatrix.getMinSymbolHeight());
 			}
@@ -247,19 +247,19 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 				minSymbolDimension = new Dimension(dataMatrix.getMinSymbolWidth(), dataMatrix.getMinSymbolWidth());
 			}
 		}
-		else if(dataMatrix.getMinSymbolHeight() != null)
+		else if (dataMatrix.getMinSymbolHeight() != null)
 		{
 			minSymbolDimension = new Dimension(dataMatrix.getMinSymbolHeight(), dataMatrix.getMinSymbolHeight());
 		}
-		if(minSymbolDimension != null)
+		if (minSymbolDimension != null)
 		{
 			dataMatrixBean.setMinSize(minSymbolDimension);
 		}	
 		
 		Dimension maxSymbolDimension = null; 
-		if(dataMatrix.getMaxSymbolWidth() != null)
+		if (dataMatrix.getMaxSymbolWidth() != null)
 		{
-			if(dataMatrix.getMaxSymbolHeight() != null)
+			if (dataMatrix.getMaxSymbolHeight() != null)
 			{
 				maxSymbolDimension = new Dimension(dataMatrix.getMaxSymbolWidth(), dataMatrix.getMaxSymbolHeight());
 			}
@@ -268,11 +268,11 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 				maxSymbolDimension = new Dimension(dataMatrix.getMaxSymbolWidth(), dataMatrix.getMaxSymbolWidth());
 			}
 		}
-		else if(dataMatrix.getMaxSymbolHeight() != null)
+		else if (dataMatrix.getMaxSymbolHeight() != null)
 		{
 			maxSymbolDimension = new Dimension(dataMatrix.getMaxSymbolHeight(), dataMatrix.getMaxSymbolHeight());
 		}
-		if(maxSymbolDimension != null)
+		if (maxSymbolDimension != null)
 		{
 			dataMatrixBean.setMaxSize(maxSymbolDimension);
 		}	

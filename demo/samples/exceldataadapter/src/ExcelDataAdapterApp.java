@@ -125,9 +125,8 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperExportManager.exportReportToPdfFile(
@@ -145,9 +144,8 @@ public class ExcelDataAdapterApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperExportManager.exportReportToHtmlFile(

@@ -181,18 +181,17 @@ public abstract class JRAbstractScriptlet
 			{
 				JRPropertiesMap propertiesMap = scriptletDefinition.getPropertiesMap();
 				String[] names = propertiesMap.getPropertyNames();
-				for (int i = 0; i < names.length; i++)
+				for (String name : names)
 				{
-					properties.put(names[i], propertiesMap.getProperty(names[i]));
+					properties.put(name, propertiesMap.getProperty(name));
 				}
 			}
 			
 			JRPropertyExpression[] propertyExpressions = scriptletDefinition.getPropertyExpressions();
 			if (propertyExpressions != null && propertyExpressions.length > 0)
 			{
-				for (int i = 0; i < propertyExpressions.length; i++)
+				for (JRPropertyExpression propertyExpression : propertyExpressions)
 				{
-					JRPropertyExpression propertyExpression = propertyExpressions[i];
 					Object value = dataset.evaluateExpression(propertyExpression.getValueExpression(), evaluation);
 					properties.put(propertyExpression.getName(), value);
 				}
@@ -210,11 +209,11 @@ public abstract class JRAbstractScriptlet
 		this.beforePageInit();
 		this.beforeColumnInit();
 
-		if(groups != null && groups.length > 0)
+		if (groups != null && groups.length > 0)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				this.beforeGroupInit( groups[i].getName() );
+				this.beforeGroupInit( group.getName() );
 			}
 		}
 	}
@@ -225,9 +224,9 @@ public abstract class JRAbstractScriptlet
 	 */
 	public void callAfterReportInit() throws JRScriptletException
 	{
-		if(groups != null && groups.length > 0)
+		if (groups != null && groups.length > 0)
 		{
-			for(int i = groups.length - 1; i >= 0; i--)
+			for (int i = groups.length - 1; i >= 0; i--)
 			{
 				this.afterGroupInit( groups[i].getName() );
 			}
@@ -282,10 +281,10 @@ public abstract class JRAbstractScriptlet
 	 */
 	public void callBeforeGroupInit() throws JRScriptletException
 	{
-		if(groups != null && groups.length > 0)
+		if (groups != null && groups.length > 0)
 		{
 			JRFillGroup group = null;
-			for(int i = 0; i < groups.length; i++)
+			for (int i = 0; i < groups.length; i++)
 			{
 				group = groups[i];
 				if (group.hasChanged())
@@ -302,10 +301,10 @@ public abstract class JRAbstractScriptlet
 	 */
 	public void callAfterGroupInit() throws JRScriptletException
 	{
-		if(groups != null && groups.length > 0)
+		if (groups != null && groups.length > 0)
 		{
 			JRFillGroup group = null;
-			for(int i = groups.length - 1; i >= 0; i--)
+			for (int i = groups.length - 1; i >= 0; i--)
 			{
 				group = groups[i];
 				if (group.hasChanged())

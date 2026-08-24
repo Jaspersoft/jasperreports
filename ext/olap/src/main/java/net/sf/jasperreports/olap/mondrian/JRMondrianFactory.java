@@ -53,7 +53,7 @@ public class JRMondrianFactory
 		{
 			String key = member.getUniqueName();
 			mondrianMember = members.get(key);
-			if (mondrianMember == null)
+			if (mondrianMember == null) // computeIfAbsent is not appropriate due to recursiveness in JRMondrianMember constructor
 			{
 				mondrianMember = new JRMondrianMember(member, this);
 				members.put(key, mondrianMember);

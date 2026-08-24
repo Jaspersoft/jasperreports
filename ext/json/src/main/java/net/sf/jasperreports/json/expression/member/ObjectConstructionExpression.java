@@ -33,33 +33,33 @@ import net.sf.jasperreports.json.expression.member.evaluation.MemberExpressionEv
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ObjectConstructionExpression extends AbstractMemberExpression {
-    private List<String> objectKeys;
+	private List<String> objectKeys;
 
 
-    public ObjectConstructionExpression() {
-        objectKeys = new ArrayList<>();
-    }
+	public ObjectConstructionExpression() {
+		objectKeys = new ArrayList<>();
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateObjectConstruction(this, nodeContainer);
-    }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateObjectConstruction(this, nodeContainer);
+	}
 
-    public void addKey(String key) {
-        objectKeys.add(key);
-    }
+	public void addKey(String key) {
+		objectKeys.add(key);
+	}
 
-    public List<String> getObjectKeys() {
-        return objectKeys;
-    }
+	public List<String> getObjectKeys() {
+		return objectKeys;
+	}
 
-    @Override
-    public String toString() {
-        String result = getDirection() + " " + objectKeys;
-        if (getFilterExpression() != null) {
-            result += "(" + getFilterExpression() + ")";
-        }
-        return result;
-    }
+	@Override
+	public String toString() {
+		String result = getDirection() + " " + objectKeys;
+		if (getFilterExpression() != null) {
+			result += "(" + getFilterExpression() + ")";
+		}
+		return result;
+	}
 
 }

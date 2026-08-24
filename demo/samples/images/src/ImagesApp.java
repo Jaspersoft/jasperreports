@@ -122,9 +122,8 @@ public class ImagesApp extends AbstractSampleApp
 		parameters.put("ImageFileName", imageFileName);
 
 		File[] files = getFiles(new File("target/reports/scale"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			JasperReport jasperReport = (JasperReport)JRLoader.loadObject(reportFile);
 			jasperReport.getStyles()[0].setRotation(rotation);
 			File destFile = new File(folder, reportFile.getName().substring(0, reportFile.getName().length() - ".jasper".length()) + ".jrprint"); 
@@ -144,9 +143,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void print() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			JasperPrintManager.printReport(reportFile.getAbsolutePath(), true);
 			System.out.println(reportFile);
 		}
@@ -159,9 +157,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			String destFile = JasperExportManager.exportReportToPdfFile(reportFile.getAbsolutePath());
 			System.out.println(destFile);
 		}
@@ -174,9 +171,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void xml() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			String destFile = JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), false);
 			System.out.println(destFile);
 		}
@@ -189,9 +185,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void xmlEmbed() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			String destFile = JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), true);
 			System.out.println(destFile);
 		}
@@ -204,9 +199,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			String destFile = JasperExportManager.exportReportToHtmlFile(reportFile.getAbsolutePath());
 			System.out.println(destFile);
 		}
@@ -219,10 +213,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void rtf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".rtf");
@@ -245,10 +237,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void xls() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xls");
@@ -274,10 +264,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void csv() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".csv");
@@ -300,10 +288,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void odt() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".odt");
@@ -326,10 +312,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void ods() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".ods");
@@ -352,10 +336,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void docx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".docx");
@@ -378,10 +360,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void xlsx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xlsx");
@@ -407,10 +387,8 @@ public class ImagesApp extends AbstractSampleApp
 	public void pptx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
-			File sourceFile = files[i];
-
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
 			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".pptx");

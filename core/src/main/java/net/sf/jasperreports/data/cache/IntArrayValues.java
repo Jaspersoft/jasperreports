@@ -54,9 +54,9 @@ public class IntArrayValues implements ColumnValues, Serializable
 		out.writeLong(linearOffset);
 		
 		out.writeInt(values.length);
-		for (int i = 0; i < values.length; i++)
+		for (int value : values)
 		{
-			out.writeInt(values[i]);
+			out.writeInt(value);
 		}
 	}
 	

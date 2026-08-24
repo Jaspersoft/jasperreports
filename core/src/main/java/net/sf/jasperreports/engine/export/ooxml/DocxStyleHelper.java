@@ -92,7 +92,7 @@ public class DocxStyleHelper extends BaseHelper
 
 		Set<String> exportedStyles = new HashSet<>();
 
-		for(int reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (int reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 			JasperPrint jasperPrint = item.getJasperPrint();
@@ -119,9 +119,8 @@ public class DocxStyleHelper extends BaseHelper
 			JRStyle[] styles = jasperPrint.getStyles();
 			if (styles != null)
 			{
-				for(int i = 0; i < styles.length; i++)
+				for (JRStyle style : styles)
 				{
-					JRStyle style = styles[i];
 					if (exportedStyles.add(style.getName()))
 					{
 						exportHeader(jasperPrint.getDefaultStyleProvider(), style);

@@ -406,9 +406,9 @@ public abstract class JRAbstractCompiler implements JRCompiler
 
 	private void deleteSourceFiles(JRCompilationUnit[] units)
 	{
-		for (int i = 0; i < units.length; i++)
+		for (JRCompilationUnit unit : units)
 		{
-			units[i].getSourceFile().delete();
+			unit.getSourceFile().delete();
 		}
 	}
 

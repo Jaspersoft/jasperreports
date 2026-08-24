@@ -24,6 +24,7 @@
 package net.sf.jasperreports.engine.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRCloneable;
@@ -85,21 +86,13 @@ public final class JRCloneUtils
 	 */
 	public static <T extends JRCloneable> T[] cloneArray(T[] items)
 	{
-		T[] clone;
 		if (items == null)
 		{
-			clone = null;
-		} 
-		else
-		{
-			clone = items.clone();
-			List<T> list = new ArrayList<>(items.length);
-			for (T item : items)
-			{
-				list.add(JRCloneUtils.nullSafeClone(item));
-			}
-			clone = list.toArray(clone);
+			return null;
 		}
+		
+		T[] clone = items.clone();
+		Arrays.setAll(clone, i -> JRCloneUtils.nullSafeClone(items[i]));
 		return clone;
 	}
 	

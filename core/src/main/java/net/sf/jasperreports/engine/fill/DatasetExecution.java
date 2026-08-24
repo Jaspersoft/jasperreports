@@ -79,9 +79,8 @@ public class DatasetExecution
 			runWithParameters(() -> 
 			{
 				JRParameter[] parameters = fillDataset.getParameters();
-				for (int i = 0; i < parameters.length; i++)
+				for (JRParameter param : parameters)
 				{
-					JRParameter param = parameters[i];
 					Object value = fillDataset.getParameterValue(param.getName());
 					parameterConsumer.accept(param, value);
 				}

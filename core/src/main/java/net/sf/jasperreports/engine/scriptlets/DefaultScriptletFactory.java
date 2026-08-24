@@ -79,17 +79,17 @@ public final class DefaultScriptletFactory implements ScriptletFactory
 		JRScriptlet[] scriptletsArray = context.getDataset().getScriptlets();
 		if (scriptletsArray != null)
 		{
-			for (int i = 0; i < scriptletsArray.length; i++)
+			for (JRScriptlet scriptletItem : scriptletsArray)
 			{
-				String paramName = scriptletsArray[i].getName() 
+				String paramName = scriptletItem.getName() 
 						+ JRScriptlet.SCRIPTLET_PARAMETER_NAME_SUFFIX;
 				scriptlet = (JRAbstractScriptlet)context.getParameterValues().get(paramName);
 				if (scriptlet == null)
 				{
-					scriptlet = getScriptlet(scriptletsArray[i].getValueClassName());
+					scriptlet = getScriptlet(scriptletItem.getValueClassName());
 					context.getParameterValues().put(paramName, scriptlet);
 				}
-				scriptlet.setScriptletDefinition(scriptletsArray[i]);
+				scriptlet.setScriptletDefinition(scriptletItem);
 				
 				scriptlets.add(scriptlet);
 			}

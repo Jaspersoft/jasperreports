@@ -73,7 +73,7 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 		if (srcCategorySeries != null && srcCategorySeries.length > 0)
 		{
 			categorySeries = new JRFillCategorySeries[srcCategorySeries.length];
-			for(int i = 0; i < categorySeries.length; i++)
+			for (int i = 0; i < categorySeries.length; i++)
 			{
 				categorySeries[i] = (JRFillCategorySeries)factory.getCategorySeries(srcCategorySeries[i]);
 			}
@@ -101,9 +101,9 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 	{
 		if (categorySeries != null && categorySeries.length > 0)
 		{
-			for(int i = 0; i < categorySeries.length; i++)
+			for (JRFillCategorySeries crtCategorySeries : categorySeries)
 			{
-				categorySeries[i].evaluate(calculator);
+				crtCategorySeries.evaluate(calculator);
 			}
 		}
 	}
@@ -120,10 +120,8 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 				itemHyperlinks = new HashMap<>();
 			}
 			
-			for(int i = 0; i < categorySeries.length; i++)
+			for (JRFillCategorySeries crtCategorySeries : categorySeries)
 			{
-				JRFillCategorySeries crtCategorySeries = categorySeries[i];
-				
 				Comparable<?> seriesName = crtCategorySeries.getSeries();
 				if (seriesName == null)
 				{
@@ -142,25 +140,12 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 
 				if (crtCategorySeries.getLabelExpression() != null)
 				{
-					Map<Comparable<?>, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(crtCategorySeries.getCategory(), crtCategorySeries.getLabel());
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(crtCategorySeries.getCategory(), crtCategorySeries.getLabel());
 				}
 				
 				if (crtCategorySeries.hasItemHyperlinks())
 				{
-					Map<Comparable<?>, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					seriesLinks.put(crtCategorySeries.getCategory(), crtCategorySeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>()).put(crtCategorySeries.getCategory(), crtCategorySeries.getPrintItemHyperlink());
 				}
 			}
 		}

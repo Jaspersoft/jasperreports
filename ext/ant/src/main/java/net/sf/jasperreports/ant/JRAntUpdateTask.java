@@ -27,7 +27,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -254,9 +253,8 @@ public class JRAntUpdateTask extends JRBaseAntTask
 	 */
 	protected void scanSrc() throws BuildException //FIXME put this method in base class
 	{
-		for (Iterator<Resource> it = src.iterator(); it.hasNext();)
+		for (Resource resource : src)
 		{
-			Resource resource = it.next();
 			FileResource fileResource = resource instanceof FileResource ? (FileResource)resource : null;
 			if (fileResource != null)
 			{
@@ -302,11 +300,11 @@ public class JRAntUpdateTask extends JRBaseAntTask
 		
 		if (newFiles != null && newFiles.length > 0) 
 		{
-			for (int i = 0; i < newFiles.length; i++)
+			for (String newFile : newFiles)
 			{
 				reportFilesMap.put(
-					(new File(srcdir, newFiles[i])).getAbsolutePath(), 
-					(new File(destdir, mapper.mapFileName(newFiles[i])[0])).getAbsolutePath()
+					(new File(srcdir, newFile)).getAbsolutePath(), 
+					(new File(destdir, mapper.mapFileName(newFile)[0])).getAbsolutePath()
 					);
 			}
 		}
@@ -398,9 +396,9 @@ public class JRAntUpdateTask extends JRBaseAntTask
 				
 				if (updaters != null)
 				{
-					for (int i = 0; i < updaters.size(); i++)
+					for (UpdaterElement updaterElement : updaters)
 					{
-						ReportUpdater updater = updaters.get(i).getUpdater();
+						ReportUpdater updater = updaterElement.getUpdater();
 						if (updater != null)
 						{
 							jasperDesign = updater.update(jasperDesign);

@@ -122,7 +122,7 @@ public class JRDesignTimePeriodDataset extends JRDesignChartDataset implements J
 	 */
 	public JRTimePeriodSeries removeTimePeriodSeries(JRTimePeriodSeries timePeriodSeries)
 	{
-		if( timePeriodSeries != null)
+		if ( timePeriodSeries != null)
 		{
 			int idx = timePeriodSeriesList.indexOf(timePeriodSeries);
 			if (idx >= 0)

@@ -93,13 +93,13 @@ public class ParagraphStyle extends Style
 				text.getVerticalTextAlign(), 
 				(isIgnoreTextFormatting ? RotationEnum.NONE : text.getRotation()));
 		
-		if(isIgnoreTextFormatting)
+		if (isIgnoreTextFormatting)
 		{
 			textRotation = "0";
 		}
 		else 
 		{
-			switch(text.getRotation())
+			switch (text.getRotation())
 			{
 				case LEFT:
 				{
@@ -138,7 +138,7 @@ public class ParagraphStyle extends Style
 		RotationEnum rotation
 		)
 	{
-		switch(rotation)
+		switch (rotation)
 		{
 			case LEFT:
 			{
@@ -198,7 +198,7 @@ public class ParagraphStyle extends Style
 		RotationEnum rotation
 		)
 	{
-		switch(rotation)
+		switch (rotation)
 		{
 			case LEFT:
 			{
@@ -281,9 +281,8 @@ public class ParagraphStyle extends Style
 		TabStop[] tabStops = paragraph.getTabStops();
 		if (tabStops != null && tabStops.length > 0)
 		{
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				sb.append("|").append(tabStop.getPosition())
 					.append("|").append(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment()).getName());
 			}
@@ -354,9 +353,8 @@ public class ParagraphStyle extends Style
 		if (tabStops != null && tabStops.length > 0)
 		{
 			styleWriter.write("<style:tab-stops>");
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				styleWriter.write(
 					"<style:tab-stop style:type=\"" 
 						+ getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 

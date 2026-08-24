@@ -495,7 +495,7 @@ public class JRHorizontalFiller extends JRBaseFiller
 		isFirstColumnBand = true;
 		atLeastOneElementIsToPrint = false;
 
-		for(columnIndex = 0; columnIndex < columnCount; columnIndex++)
+		for (columnIndex = 0; columnIndex < columnCount; columnIndex++)
 		{
 			setColumnNumberVariable();
 
@@ -557,10 +557,8 @@ public class JRHorizontalFiller extends JRBaseFiller
 	{
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				JRFillGroup group = groups[i];
-
 				if (isFillAll || group.hasChanged())
 				{
 					fillGroupHeader(group);
@@ -732,10 +730,8 @@ public class JRHorizontalFiller extends JRBaseFiller
 		JRFillSection groupHeaderSection = (JRFillSection)group.getGroupHeaderSection();
 
 		JRFillBand[] groupHeaderBands = groupHeaderSection.getFillBands();
-		for (int i = 0; i < groupHeaderBands.length; i++)
+		for (JRFillBand groupHeaderBand : groupHeaderBands)
 		{
-			JRFillBand groupHeaderBand = groupHeaderBands[i];
-
 			groupHeaderBand.evaluatePrintWhenExpression(evaluation);
 
 			if (groupHeaderBand.isToPrint())
@@ -794,10 +790,8 @@ public class JRHorizontalFiller extends JRBaseFiller
 		}
 
 		JRFillBand[] detailBands = detailSection.getFillBands();
-		for (int i = 0; i < detailBands.length; i++)
+		for (JRFillBand detailBand : detailBands)
 		{
-			JRFillBand detailBand = detailBands[i];
-
 			detailBand.evaluatePrintWhenExpression(JRExpression.EVALUATION_ESTIMATED);
 
 			if (detailBand.isToPrint())
@@ -831,10 +825,8 @@ public class JRHorizontalFiller extends JRBaseFiller
 		boolean keepDetailElementRangeForOrphanFooter = true;
 		boolean atLeastOneDetailBandPrinted = false;
 		
-		for (int i = 0; i < detailBands.length; i++)
+		for (JRFillBand detailBand : detailBands)
 		{
-			JRFillBand detailBand = detailBands[i];
-
 			detailBand.evaluatePrintWhenExpression(JRExpression.EVALUATION_DEFAULT);
 
 			if (detailBand.isToPrint())
@@ -995,10 +987,8 @@ public class JRHorizontalFiller extends JRBaseFiller
 		}
 		
 		JRFillBand[] groupFooterBands = groupFooterSection.getFillBands();
-		for (int i = 0; i < groupFooterBands.length; i++)
+		for (JRFillBand groupFooterBand : groupFooterBands)
 		{
-			JRFillBand groupFooterBand = groupFooterBands[i];
-			
 			groupFooterBand.evaluatePrintWhenExpression(evaluation);
 
 			if (groupFooterBand.isToPrint())
@@ -2596,10 +2586,10 @@ public class JRHorizontalFiller extends JRBaseFiller
 
 		if (groups != null && groups.length > 0)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				((JRFillSection)groups[i].getGroupHeaderSection()).setNewPageColumn(true);
-				((JRFillSection)groups[i].getGroupFooterSection()).setNewPageColumn(true);
+				((JRFillSection)group.getGroupHeaderSection()).setNewPageColumn(true);
+				((JRFillSection)group.getGroupFooterSection()).setNewPageColumn(true);
 			}
 		}
 	}
@@ -2621,10 +2611,10 @@ public class JRHorizontalFiller extends JRBaseFiller
 
 		if (groups != null && groups.length > 0)
 		{
-			for(int i = 0; i < groups.length; i++)
+			for (JRFillGroup crtGroup : groups)
 			{
-				((JRFillSection)groups[i].getGroupHeaderSection()).setNewGroup(group, true);
-				((JRFillSection)groups[i].getGroupFooterSection()).setNewGroup(group, true);
+				((JRFillSection)crtGroup.getGroupHeaderSection()).setNewGroup(group, true);
+				((JRFillSection)crtGroup.getGroupFooterSection()).setNewGroup(group, true);
 			}
 		}
 	}

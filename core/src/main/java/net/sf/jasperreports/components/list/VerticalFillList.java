@@ -110,7 +110,7 @@ public class VerticalFillList extends BaseFillList
 				fillStarted = true;
 			}
 			
-			while(!overflow && datasetRun.next())
+			while (!overflow && datasetRun.next())
 			{
 				hadData = true;
 				

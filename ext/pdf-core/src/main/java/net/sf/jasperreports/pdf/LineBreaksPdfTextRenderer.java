@@ -79,7 +79,7 @@ public class LineBreaksPdfTextRenderer extends SimpleAbstractPdfTextRenderer
 				lineStart = lineBreakIndex + 1;
 				lineBreakIndex = paragraphText.indexOf('\u0085', lineBreakIndex + 1);
 			}
-			while(lineBreakIndex >= 0);
+			while (lineBreakIndex >= 0);
 		}
 		
 		//last line

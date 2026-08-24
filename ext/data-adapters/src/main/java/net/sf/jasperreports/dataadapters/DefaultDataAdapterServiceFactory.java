@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.dataadapters;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.data.bean.BeanDataAdapter;
@@ -131,9 +130,8 @@ public class DefaultDataAdapterServiceFactory implements DataAdapterContributorF
 			
 			List<JdbcDataAdapterContributorFactory> bundles = jasperReportsContext.getExtensions(
 					JdbcDataAdapterContributorFactory.class);
-			for (Iterator<JdbcDataAdapterContributorFactory> it = bundles.iterator(); it.hasNext();)
+			for (JdbcDataAdapterContributorFactory factory : bundles)
 			{
-				JdbcDataAdapterContributorFactory factory = it.next();
 				DataAdapterService service = factory.getDataAdapterService(context, (JdbcDataAdapter)dataAdapter);
 				if (service != null)
 				{

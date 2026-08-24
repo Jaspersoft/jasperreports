@@ -125,22 +125,14 @@ public final class GenericElementHandlerEnviroment
 	protected List<GenericElementHandlerBundle> getBundles()
 	{
 		Object cacheKey = ExtensionsEnvironment.getExtensionsCacheKey();
-		List<GenericElementHandlerBundle> handlerBundles;
 		synchronized (handlersCache)
 		{
-			handlerBundles = handlersCache.get(cacheKey);
-			if (handlerBundles == null)
-			{
-				handlerBundles = loadBundles();
-				handlersCache.put(cacheKey, handlerBundles);
-			}
+			return handlersCache.computeIfAbsent(cacheKey, k -> loadBundles());
 		}
-		return handlerBundles;
 	}
 
 	protected List<GenericElementHandlerBundle> loadBundles()
 	{
-		List<GenericElementHandlerBundle> bundleList = jasperReportsContext.getExtensions(GenericElementHandlerBundle.class);
-		return bundleList;
+		return jasperReportsContext.getExtensions(GenericElementHandlerBundle.class);
 	}
 }

@@ -60,9 +60,8 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperFillManager.fillReportToFile(
@@ -81,9 +80,8 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperExportManager.exportReportToPdfFile(
@@ -101,9 +99,8 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperExportManager.exportReportToHtmlFile(

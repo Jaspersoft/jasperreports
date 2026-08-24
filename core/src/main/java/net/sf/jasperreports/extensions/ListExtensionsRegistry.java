@@ -52,14 +52,7 @@ public class ListExtensionsRegistry implements ExtensionsRegistry
 	 */
 	public <T> ListExtensionsRegistry add(Class<T> type, T extension)
 	{
-		List<Object> list = extensions.get(type);
-		if (list == null)
-		{
-			list = new ArrayList<>();
-			extensions.put(type, list);
-		}
-		
-		list.add(extension);
+		extensions.computeIfAbsent(type, k -> new ArrayList<>()).add(extension);
 		return this;
 	}
 	

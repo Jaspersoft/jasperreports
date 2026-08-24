@@ -53,10 +53,10 @@ public abstract class AbstractClasspathAwareDataAdapterService extends AbstractD
 	protected ClassLoader getClassLoader(ClassLoader cloader)
 	{ 
 		Object obj = getJasperReportsContext().getValue(CURRENT_CLASS_LOADER);
-		if(obj != null && obj instanceof ClassLoader)
+		if (obj != null && obj instanceof ClassLoader)
 			cloader = (ClassLoader)obj ; 
 		URL[] localURLs = getPathClassloader();
-		if(localURLs == null || localURLs.length == 0)
+		if (localURLs == null || localURLs.length == 0)
 			return cloader;
 		return new CompositeClassloader(new URLClassLoader(localURLs), cloader); 
 	}
@@ -64,15 +64,15 @@ public abstract class AbstractClasspathAwareDataAdapterService extends AbstractD
 	protected URL[] getPathClassloader() {  
 		ClasspathAwareDataAdapter dataAdapter = (ClasspathAwareDataAdapter)getDataAdapter();
 		List<String> classpath = dataAdapter.getClasspath();
-		if(classpath.isEmpty())
+		if (classpath.isEmpty())
 			return null;
 		List<URL> urls = new ArrayList<>();
 		for (String path : classpath) 
 		{
-			if(path == null || path.isEmpty())
+			if (path == null || path.isEmpty())
 				continue;
 			try { 
-				if(path.startsWith("\\w+?://"))
+				if (path.startsWith("\\w+?://"))
 					urls.add( new URL(path));
 				else
 					urls.add( new URL("file", "", path));
@@ -81,7 +81,7 @@ public abstract class AbstractClasspathAwareDataAdapterService extends AbstractD
 				// We don't care if the entry cannot be found.
 			}
 		} 
-		if(urls.isEmpty())
+		if (urls.isEmpty())
 			return null;
 		return  urls.toArray(new URL[urls.size()]) ;
 	}

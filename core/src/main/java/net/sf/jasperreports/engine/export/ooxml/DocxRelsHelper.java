@@ -67,7 +67,7 @@ public class DocxRelsHelper extends BaseHelper
 	 */
 	public void exportImageLink(String imageId, String url, String targetMode)
 	{
-		if(url != null)
+		if (url != null)
 		{
 			write(" <Relationship Id=\"" + imageId + "\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink\" Target=\"" + url + "\"" + targetMode + "/>\n");
 		}

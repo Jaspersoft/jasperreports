@@ -32,7 +32,6 @@
 package net.sf.jasperreports.engine.convert;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.crosstabs.JRCellContents;
@@ -90,10 +89,10 @@ public final class CrosstabConverter extends FrameConverter
 		if (children != null && children.size() > 0)
 		{
 //			ConvertVisitor convertVisitor = new ConvertVisitor(reportConverter, printFrame);
-			for(int i = 0; i < children.size(); i++)
+			for (JRPrintElement child : children)
 			{
 //				((JRChild)children.get(i)).visit(convertVisitor);
-				printFrame.addElement(children.get(i));
+				printFrame.addElement(child);
 			}
 		}
 		
@@ -120,16 +119,16 @@ public final class CrosstabConverter extends FrameConverter
 		
 		JRCrosstabRowGroup[] rowGroups = crosstab.getRowGroups();
 		int rowHeadersXOffset = 0;
-		for (int i = 0; i < rowGroups.length; i++)
+		for (JRCrosstabRowGroup rowGroup : rowGroups)
 		{
-			rowHeadersXOffset += rowGroups[i].getWidth();
+			rowHeadersXOffset += rowGroup.getWidth();
 		}
 		
 		JRCrosstabColumnGroup[] columnGroups = crosstab.getColumnGroups();
 		int colHeadersYOffset = yOffset;
-		for (int i = 0; i < columnGroups.length; i++)
+		for (JRCrosstabColumnGroup columnGroup : columnGroups)
 		{
-			colHeadersYOffset += columnGroups[i].getHeight();
+			colHeadersYOffset += columnGroup.getHeight();
 		}
 		
 		JRCellContents headerCell = crosstab.getHeaderCell();
@@ -180,9 +179,8 @@ public final class CrosstabConverter extends FrameConverter
 	 */
 	private void mirrorElements(List<JRPrintElement> elements, int x, int width)
 	{
-		for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+		for (JRPrintElement element : elements)
 		{
-			JRPrintElement element = it.next();
 			int mirrorX = width - element.getX() - element.getWidth();
 			element.setX(mirrorX);
 		}
@@ -266,9 +264,9 @@ public final class CrosstabConverter extends FrameConverter
 		if (children != null && children.size() > 0)
 		{
 			ConvertVisitor convertVisitor = new ConvertVisitor(reportConverter, frame);
-			for(int i = 0; i < children.size(); i++)
+			for (JRChild child : children)
 			{
-				children.get(i).visit(convertVisitor);
+				child.visit(convertVisitor);
 			}
 		}
 		

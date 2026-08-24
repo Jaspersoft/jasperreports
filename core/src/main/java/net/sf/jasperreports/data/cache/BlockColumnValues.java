@@ -57,9 +57,9 @@ public class BlockColumnValues implements ColumnValues, Serializable
 	{
 		out.writeInt(size);
 		out.writeInt(blocks.length);
-		for (int i = 0; i < blocks.length; i++)
+		for (ColumnValues block : blocks)
 		{
-			out.writeUnshared(blocks[i]);
+			out.writeUnshared(block);
 		}
 	}
 	

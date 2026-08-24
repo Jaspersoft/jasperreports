@@ -78,7 +78,7 @@ public class QRCodeRasterizedImageProducer implements QRCodeImageProducer
 		hints.put(EncodeHintType.MARGIN, margin);
 		
 		Integer qrVersion = qrCodeBean.getQrVersion();
-		if(qrVersion != null)
+		if (qrVersion != null)
 		{
 			hints.put(EncodeHintType.QR_VERSION, qrVersion);
 		}

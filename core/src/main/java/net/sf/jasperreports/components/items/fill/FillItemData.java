@@ -26,6 +26,7 @@ package net.sf.jasperreports.components.items.fill;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.components.items.Item;
 import net.sf.jasperreports.components.items.ItemData;
@@ -73,14 +74,10 @@ public abstract class FillItemData
 		List<Item> srcItemList = itemData.getItems();
 		if (srcItemList != null && !srcItemList.isEmpty())
 		{
-			itemsList = new ArrayList<>();
-			for(Item item : srcItemList)
-			{
-				if(item != null)
-				{
-					itemsList.add(getFillItem(fillContextProvider, item, factory));
-				}
-			}
+			itemsList = 
+				srcItemList.stream().filter(item -> item != null)
+					.map(item -> getFillItem(fillContextProvider, item, factory))
+					.collect(Collectors.toCollection(ArrayList::new));
 		}
 	}
 	
@@ -107,7 +104,7 @@ public abstract class FillItemData
 	{
 		if (itemsList != null)
 		{
-			for(FillItem item : itemsList)
+			for (FillItem item : itemsList)
 			{
 				item.evaluateProperties(evaluator, evaluation);
 			}
@@ -149,7 +146,7 @@ public abstract class FillItemData
 				evaluatedItems = new ArrayList<>();
 			}
 
-			for(FillItem item : itemsList)
+			for (FillItem item : itemsList)
 			{
 				evaluatedItems.add(item.getEvaluatedProperties());
 			}

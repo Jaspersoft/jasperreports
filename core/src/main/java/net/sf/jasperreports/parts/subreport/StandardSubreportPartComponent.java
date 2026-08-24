@@ -26,7 +26,6 @@ package net.sf.jasperreports.parts.subreport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +93,7 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (jrSubreportParameters != null && jrSubreportParameters.length > 0)
 		{
 			parametersMap = new HashMap<>(jrSubreportParameters.length);
-			for(JRSubreportParameter jrSubreportParameter : jrSubreportParameters)
+			for (JRSubreportParameter jrSubreportParameter : jrSubreportParameters)
 			{
 				parametersMap.put(jrSubreportParameter.getName(), factory.getSubreportParameter(jrSubreportParameter));
 			}
@@ -104,9 +103,9 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (subrepReturnValues != null && subrepReturnValues.length > 0)
 		{
 			returnValues = new ArrayList<>(subrepReturnValues.length);
-			for (int i = 0; i < subrepReturnValues.length; i++)
+			for (JRSubreportReturnValue subrepReturnValue : subrepReturnValues)
 			{
-				returnValues.add(factory.getSubreportReturnValue(subrepReturnValues[i]));
+				returnValues.add(factory.getSubreportReturnValue(subrepReturnValue));
 			}
 		}
 	}
@@ -307,9 +306,8 @@ public class StandardSubreportPartComponent implements Serializable, SubreportPa
 		if (parametersMap != null)
 		{
 			clone.parametersMap = new LinkedHashMap<>();
-			for(Iterator<String> it = parametersMap.keySet().iterator(); it.hasNext();)
+			for (String name : parametersMap.keySet())
 			{
-				String name = it.next();
 				clone.parametersMap.put(name, JRCloneUtils.nullSafeClone(parametersMap.get(name)));
 			}
 		}

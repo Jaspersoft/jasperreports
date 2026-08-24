@@ -56,7 +56,7 @@ public class ChartThemesUtilities
 		else
 		{
 			newValue = String.valueOf(value);
-			if(newValue.length() > 4)
+			if (newValue.length() > 4)
 				newValue = newValue.substring(0,4);
 		}
 		return Double.valueOf(sign + newValue);
@@ -64,11 +64,11 @@ public class ChartThemesUtilities
 
 	public static double getScaledValue(double value, int scale)
 	{
-		if(scale < 0)
+		if (scale < 0)
 		{
 			return value * Math.pow(10.0, -scale);
 		}
-		else if(scale > 2)
+		else if (scale > 2)
 		{
 			return value / Math.pow(10.0, scale-2);
 		}
@@ -78,20 +78,20 @@ public class ChartThemesUtilities
 	
 	public static int getAwtFontStyle(JRFont font, int defaultBoldStyle, int defaultItalicStyle)
 	{
-		if(font == null)
+		if (font == null)
 			return Font.PLAIN;
 		
 		int style = Font.PLAIN;
-		if((font.isOwnBold() == null && defaultBoldStyle == Font.BOLD) ||
+		if ((font.isOwnBold() == null && defaultBoldStyle == Font.BOLD) ||
 		(font.isOwnBold() != null && font.isOwnBold()))
 		{
 				style = Font.BOLD;
 		}
 		
-		if((font.isOwnItalic() == null && defaultItalicStyle == Font.ITALIC) ||
+		if ((font.isOwnItalic() == null && defaultItalicStyle == Font.ITALIC) ||
 		(font.isOwnItalic() != null && font.isOwnItalic()))
 		{
-			if(style == Font.BOLD)
+			if (style == Font.BOLD)
 				style |= Font.ITALIC;
 			else
 				style = Font.ITALIC;

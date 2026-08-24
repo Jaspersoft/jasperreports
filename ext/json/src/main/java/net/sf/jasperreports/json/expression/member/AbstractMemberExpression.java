@@ -29,26 +29,26 @@ import net.sf.jasperreports.json.expression.filter.FilterExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public abstract class AbstractMemberExpression implements MemberExpression {
-    private DIRECTION direction;
-    private FilterExpression filterExpression;
+	private DIRECTION direction;
+	private FilterExpression filterExpression;
 
 
-    @Override
-    public FilterExpression getFilterExpression() {
-        return filterExpression;
-    }
+	@Override
+	public FilterExpression getFilterExpression() {
+		return filterExpression;
+	}
 
-    @Override
-    public void setFilterExpression(FilterExpression filterExpression) {
-        this.filterExpression = filterExpression;
-    }
+	@Override
+	public void setFilterExpression(FilterExpression filterExpression) {
+		this.filterExpression = filterExpression;
+	}
 
-    public DIRECTION getDirection() {
-        return direction;
-    }
+	public DIRECTION getDirection() {
+		return direction;
+	}
 
-    public void setDirection(DIRECTION direction) {
-        this.direction = direction;
-    }
+	public void setDirection(DIRECTION direction) {
+		this.direction = direction;
+	}
 
 }

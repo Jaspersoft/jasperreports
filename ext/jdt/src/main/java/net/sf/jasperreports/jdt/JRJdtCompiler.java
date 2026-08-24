@@ -31,7 +31,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -392,9 +391,8 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 //		}
 		
 		List<JRPropertiesUtil.PropertySuffix> properties = JRPropertiesUtil.getInstance(jasperReportsContext).getProperties(JDT_PROPERTIES_PREFIX);
-		for (Iterator<JRPropertiesUtil.PropertySuffix> it = properties.iterator(); it.hasNext();)
+		for (JRPropertiesUtil.PropertySuffix property : properties)
 		{
-			JRPropertiesUtil.PropertySuffix property = it.next();
 			String propVal = property.getValue();
 			if (propVal != null && propVal.length() > 0)
 			{
@@ -566,10 +564,8 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 
 				String sourceCode = units[classIdx].getSourceCode();
 				
-				for (int i = 0; i < problems.length; i++) 
+				for (IProblem problem : problems) 
 				{
-					IProblem problem = problems[i];
-
 					if (IProblem.UndefinedMethod == problem.getID())
 					{
 						if (
@@ -596,9 +592,9 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 			else
 			{
 				ClassFile[] resultClassFiles = result.getClassFiles();
-				for (int i = 0; i < resultClassFiles.length; i++) 
+				for (ClassFile resultClassFile : resultClassFiles) 
 				{
-					units[classIdx].setCompileData(resultClassFiles[i].getBytes());
+					units[classIdx].setCompileData(resultClassFile.getBytes());
 				}
 			}
 		}
@@ -656,7 +652,7 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 									)
 								);
 							problemBuilder.append("\n");
-							for(int j = problemStartIndex; j < problem.getSourceStart(); j++)
+							for (int j = problemStartIndex; j < problem.getSourceStart(); j++)
 							{
 								problemBuilder.append(" ");
 							}
@@ -667,7 +663,7 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 							else
 							{
 								problemBuilder.append("<");
-								for(int j = problem.getSourceStart() + 1; j < problem.getSourceEnd(); j++)
+								for (int j = problem.getSourceStart() + 1; j < problem.getSourceEnd(); j++)
 								{
 									problemBuilder.append("-");
 								}

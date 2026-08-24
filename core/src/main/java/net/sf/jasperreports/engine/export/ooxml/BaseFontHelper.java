@@ -117,7 +117,7 @@ public abstract class BaseFontHelper extends BaseHelper
 	{
 		String rIdf = fontPaths.get(fontPath);
 
-		if (rIdf == null)
+		if (rIdf == null) // computeIfAbsent is not appropriate due to fontPaths self-reference making it fragile
 		{
 			rIdf = "rIdf" + Integer.valueOf(fontPaths.size() + 1);
 			fontPaths.put(fontPath, rIdf);
@@ -338,16 +338,11 @@ public abstract class BaseFontHelper extends BaseHelper
 			isFirstLocale = firstLocale.equals(localeCode);
 		}
 		
-		String ooxmlFontId = name + (isFirstLocale ? "" : (" " + localeCode));
-
-		OoxmlFont ooxmlFont = ooxmlFonts.get(ooxmlFontId);
-		if (ooxmlFont == null)
-		{
-			ooxmlFont = OoxmlFont.getInstance(ooxmlFontId);
-			ooxmlFonts.put(ooxmlFontId, ooxmlFont);
-		}
-		
-		return ooxmlFont;
+		return 
+			ooxmlFonts.computeIfAbsent(
+				name + (isFirstLocale ? "" : (" " + localeCode)),
+				key -> OoxmlFont.getInstance(key)
+				);
 	}
 
 	protected abstract String getExporterKey();

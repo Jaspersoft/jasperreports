@@ -32,7 +32,7 @@ public class DirectValueClassFilterDecorator implements DirectExpressionValueFil
 	private final DirectExpressionValueFilter baseFilter;
 	private final ReportClassFilter classFilter;
 	
-	public DirectValueClassFilterDecorator(DirectExpressionValueFilter baseFilter, 
+	public DirectValueClassFilterDecorator(DirectExpressionValueFilter baseFilter,
 			ReportClassFilter classFilter)
 	{
 		this.baseFilter = baseFilter;

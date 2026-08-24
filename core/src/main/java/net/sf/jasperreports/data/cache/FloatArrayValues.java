@@ -47,9 +47,9 @@ public class FloatArrayValues implements ColumnValues, Serializable
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException
 	{
 		out.writeInt(values.length);
-		for (int i = 0; i < values.length; i++)
+		for (float value : values)
 		{
-			out.writeFloat(values[i]);
+			out.writeFloat(value);
 		}
 	}
 	

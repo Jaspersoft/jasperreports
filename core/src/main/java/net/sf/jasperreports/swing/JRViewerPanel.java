@@ -203,12 +203,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 			}
 		});
 
-		pnlTabs.addChangeListener(new javax.swing.event.ChangeListener() {
-			@Override
-			public void stateChanged(javax.swing.event.ChangeEvent evt) {
-				pnlTabsStateChanged(evt);
-			}
-		});
+		pnlTabs.addChangeListener(this::pnlTabsStateChanged);
 		add(pnlTabs, java.awt.BorderLayout.CENTER);
 
 		scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -348,7 +343,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	@Override
 	public void gotoHyperlink(JRPrintHyperlink hyperlink)
 	{
-		switch(hyperlink.getHyperlinkType())
+		switch (hyperlink.getHyperlinkType())
 		{
 			case REFERENCE :
 			{
@@ -534,14 +529,10 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 			pageError = true;
 			
 			paintPageError(grx);
-			SwingUtilities.invokeLater(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					JOptionPane.showMessageDialog(JRViewerPanel.this, viewerContext.getBundleString("error.displaying"));
-				}
-			});
+			
+			SwingUtilities.invokeLater(
+				() -> JOptionPane.showMessageDialog(JRViewerPanel.this, viewerContext.getBundleString("error.displaying"))
+				);
 		}
 
 	}
@@ -936,12 +927,10 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 
 	protected void createHyperlinks(List<JRPrintElement> elements, int offsetX, int offsetY)
 	{
-		if(elements != null && elements.size() > 0)
+		if (elements != null && elements.size() > 0)
 		{
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (JRPrintElement element : elements)
 			{
-				JRPrintElement element = it.next();
-
 				AreaHyperlinksRenderable imageMap = null;
 				if (element instanceof JRPrintImage)
 				{
@@ -1155,7 +1144,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	protected String getFallbackTooltip(JRPrintHyperlink hyperlink)
 	{
 		String toolTip = null;
-		switch(hyperlink.getHyperlinkType())
+		switch (hyperlink.getHyperlinkType())
 		{
 			case REFERENCE :
 			{
@@ -1224,7 +1213,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 		try
 		{
 			JRHyperlinkListener listener = null;
-			for(int i = 0; i < hyperlinkListeners.size(); i++)
+			for (int i = 0; i < hyperlinkListeners.size(); i++)
 			{
 				listener = hyperlinkListeners.get(i);
 				listener.gotoHyperlink(hyperlink);
@@ -1293,12 +1282,12 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	{
 		int bottomPosition = scrollPane.getVerticalScrollBar().getValue();
 		scrollPane.dispatchEvent(evt);
-		if((scrollPane.getViewport().getHeight() > pnlPage.getHeight() ||
+		if ((scrollPane.getViewport().getHeight() > pnlPage.getHeight() ||
 				scrollPane.getVerticalScrollBar().getValue() == bottomPosition) &&
 				viewerContext.getPageIndex() < viewerContext.getPageCount() - 1)
 		{
 			viewerContext.setPageIndex(viewerContext.getPageIndex() + 1);
-			if(scrollPane.isEnabled())
+			if (scrollPane.isEnabled())
 			{
 				scrollPane.getVerticalScrollBar().setValue(0);
 			}
@@ -1307,12 +1296,12 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 
 	protected void upNavigate(KeyEvent evt)
 	{
-		if((scrollPane.getViewport().getHeight() > pnlPage.getHeight() ||
+		if ((scrollPane.getViewport().getHeight() > pnlPage.getHeight() ||
 				scrollPane.getVerticalScrollBar().getValue() == 0) &&
 				viewerContext.getPageIndex() > 0)
 		{
 			viewerContext.setPageIndex(viewerContext.getPageIndex() - 1);
-			if(scrollPane.isEnabled())
+			if (scrollPane.isEnabled())
 			{
 				scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			}
@@ -1326,7 +1315,7 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 	protected void homeEndNavigate(int pageNumber)
 	{
 		viewerContext.setPageIndex(pageNumber);
-		if(scrollPane.isEnabled())
+		if (scrollPane.isEnabled())
 		{
 			scrollPane.getVerticalScrollBar().setValue(0);
 		}

@@ -151,7 +151,7 @@ public class PptxParagraphHelper extends BaseHelper
 		{
 			write("        <a:pStyle a:val=\"" + styleNameReference + "\"/>\n");
 		}
-		if(paragraph != null)
+		if (paragraph != null)
 		{
 			write("      <a:ind");
 			if (paragraph.getOwnFirstLineIndent() != null)
@@ -190,9 +190,8 @@ public class PptxParagraphHelper extends BaseHelper
 		if (tabStops != null && tabStops.length > 0)
 		{
 			write("   <a:tabs>\n");
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				write(
 					"   <a:tab a:pos=\"" 
 					+ LengthUtil.twip(tabStop.getPosition(), dpi)

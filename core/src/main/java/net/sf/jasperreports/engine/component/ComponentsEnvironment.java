@@ -87,8 +87,7 @@ public final class ComponentsEnvironment
 	 */
 	public Collection<ComponentsBundle> getBundles()
 	{
-		List<ComponentsBundle> bundles = getCachedBundles();
-		return bundles;
+		return getCachedBundles();
 	}
 	
 	protected List<ComponentsBundle> getCachedBundles()
@@ -96,13 +95,7 @@ public final class ComponentsEnvironment
 		Object cacheKey = ExtensionsEnvironment.getExtensionsCacheKey();
 		synchronized (cache)
 		{
-			List<ComponentsBundle> components = cache.get(cacheKey);
-			if (components == null)
-			{
-				components = findBundles();
-				cache.put(cacheKey, components);
-			}
-			return components;
+			return cache.computeIfAbsent(cacheKey, k -> findBundles());
 		}
 	}
 

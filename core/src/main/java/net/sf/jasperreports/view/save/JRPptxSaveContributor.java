@@ -65,7 +65,7 @@ public class JRPptxSaveContributor extends JRSaveContributor
 	@Override
 	public boolean accept(File file)
 	{
-		if(file.isDirectory()){
+		if (file.isDirectory()){
 			return true;
 		}
 		return file.getName().toLowerCase().endsWith(EXTENSION_PPTX);
@@ -81,7 +81,7 @@ public class JRPptxSaveContributor extends JRSaveContributor
 	@Override
 	public void save(JasperPrint jasperPrint, File file) throws JRException
 	{
-		if(!file.getName().toLowerCase().endsWith(EXTENSION_PPTX))
+		if (!file.getName().toLowerCase().endsWith(EXTENSION_PPTX))
 		{
 			file = new File(file.getAbsolutePath() + EXTENSION_PPTX);
 		}

@@ -212,7 +212,7 @@ public class FileBufferedOutputStream extends OutputStream
 			try {
 				byte[] buffer = new byte[inputBufferLength];
 				int read;
-				while((read = fileInput.read(buffer)) > 0) {
+				while ((read = fileInput.read(buffer)) > 0) {
 					out.write(buffer, 0, read);
 				}
 				fileInput.close();

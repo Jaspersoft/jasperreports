@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.tools.Diagnostic.Kind;
@@ -205,7 +206,7 @@ public class PropertiesDocReader
 			
 			Element descriptionElem = (Element) descriptionElems.item(0);
 			String constantDeclarationClassName = docPropElement.getAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME);
-			if(Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
+			if (Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
 			{
 				descriptionElem.setAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME, constantDeclarationClassName);
 			}
@@ -339,7 +340,7 @@ public class PropertiesDocReader
 			propElem.setAttribute(ATTR_CATEGORY_PROPERTY_REF, propMetadata.getName());
 			String constantDeclarationClassName=propMetadata.getConstantDeclarationClass().trim();
 			
-			if(Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
+			if (Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClassName.substring(constantDeclarationClassName.lastIndexOf('.')+1)) >= 0)
 			{
 				propElem.setAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME,constantDeclarationClassName);
 			}
@@ -359,7 +360,7 @@ public class PropertiesDocReader
 		refProp.setAttribute(ATTR_CONFIG_PROP_NAME, propName);
 		
 		String constantDeclarationClass = propertyMetadata.getConstantDeclarationClass();
-		if(Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClass.substring(constantDeclarationClass.lastIndexOf('.')+1)) >= 0)
+		if (Arrays.binarySearch(SORTED_DUPLICATE_CLASSES, constantDeclarationClass.substring(constantDeclarationClass.lastIndexOf('.')+1)) >= 0)
 		{
 			refProp.setAttribute(ATTR_CONSTANT_DECLARATION_CLASS_NAME, constantDeclarationClass.trim());
 		}
@@ -418,16 +419,7 @@ public class PropertiesDocReader
 
 	protected String getScopesText(List<PropertyScope> scopes)
 	{
-		StringBuilder scopesText = new StringBuilder();
-		for (PropertyScope scope : scopes)
-		{
-			if (scopesText.length() > 0)
-			{
-				scopesText.append(" | ");
-			}
-			scopesText.append(scope.toString());
-		}
-		return scopesText.toString();
+		return scopes.stream().map(PropertyScope::toString).collect(Collectors.joining(" | "));
 	}
 
 	protected void writeRefDoc(String refFile, Document refDoc)

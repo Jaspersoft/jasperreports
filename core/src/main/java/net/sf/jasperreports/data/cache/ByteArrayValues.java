@@ -53,9 +53,9 @@ public class ByteArrayValues implements ColumnValues, Serializable
 		out.writeLong(linearOffset);
 		
 		out.writeInt(values.length);// TODO lucianc write this as short?
-		for (int i = 0; i < values.length; i++)
+		for (byte value : values)
 		{
-			out.writeByte(values[i]);
+			out.writeByte(value);
 		}
 	}
 	

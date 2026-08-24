@@ -38,6 +38,7 @@ import org.openpdf.text.pdf.PdfNumber;
 import org.openpdf.text.pdf.PdfObject;
 import org.openpdf.text.pdf.PdfString;
 import org.openpdf.text.pdf.PdfStructureElement;
+import org.openpdf.text.pdf.PdfStructureTreeRoot;
 
 import net.sf.jasperreports.pdf.common.PdfChunk;
 import net.sf.jasperreports.pdf.common.PdfStructureEntry;
@@ -75,7 +76,7 @@ public class StandardChunk implements PdfChunk
 	{
 		chunk.setLocalDestination(anchorName);
 		if (structureEntry != null
-				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
+				&& pdfProducer.isPdf2())
 		{
 			chunk.setLocalDestinationStructElement(
 					((StandardStructureEntry) structureEntry).getElement().getReference());
@@ -157,7 +158,7 @@ public class StandardChunk implements PdfChunk
 		PdfDestination dest = new PdfDestination(PdfDestination.XYZ, 0, top, 0);
 		PdfAction action = PdfAction.gotoLocalPage(page, dest, pdfProducer.getPdfWriter());
 		if (targetStructureEntry != null
-				&& pdfProducer.getPdfWriter().getPdfVersionString().startsWith("2."))
+				&& pdfProducer.isPdf2())
 		{
 			StandardStructureEntry targetStructure = (StandardStructureEntry) targetStructureEntry.get();
 			if (targetStructure != null)
@@ -245,11 +246,9 @@ public class StandardChunk implements PdfChunk
 
 		PdfStructureElement element = ((StandardStructureEntry) linkTag).getElement();
 
-		if (StandardPdfUtils.isCustomStructureTreeRootSupported())
-		{
-			StandardPdfStructureTreeRoot treeRoot = (StandardPdfStructureTreeRoot) pdfProducer.getPdfWriter().getStructureTreeRoot();
-			treeRoot.addAnnotationParent(annotation, element.getReference());
-		}
+		PdfStructureTreeRoot treeRoot = pdfProducer.getPdfWriter().getStructureTreeRoot();
+		int structParent = treeRoot.addExistingObject(element.getReference());
+		annotation.put(PdfName.STRUCTPARENT, new PdfNumber(structParent));
 
 		pdfProducer.getPdfWriter().addAnnotation(annotation);
 

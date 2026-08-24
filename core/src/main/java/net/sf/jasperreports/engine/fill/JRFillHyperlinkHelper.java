@@ -65,9 +65,8 @@ public final class JRFillHyperlinkHelper
 		else
 		{
 			printParameters = new JRPrintHyperlinkParameters();
-			for (int i = 0; i < hyperlinkParameters.length; i++)
+			for (JRHyperlinkParameter hyperlinkParameter : hyperlinkParameters)
 			{
-				JRHyperlinkParameter hyperlinkParameter = hyperlinkParameters[i];
 				JRExpression valueExpression = hyperlinkParameter.getValueExpression();
 				Class<?> valueClass;
 				Object value;

@@ -34,7 +34,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -737,13 +736,7 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 						setRowLevels(levelInfo, level);
 
 						//clean up current level group and nested level groups as they were closed 
-						for (Iterator<String> it = crtLevelMap.keySet().iterator(); it.hasNext();)
-						{
-							if (level.compareTo(it.next()) <= 0)
-							{
-								it.remove();
-							}
-						}
+						crtLevelMap.keySet().removeIf(key -> level.compareTo(key) <= 0);
 					}
 				}
 				else // if (!isEndMarker)  // FIXMEXLS we should not add level if it is an end marker
@@ -757,13 +750,7 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 						setRowLevels(levelInfo, level);
 						
 						//clean up nested level groups as they were closed; the current one is not yet among them 
-						for (Iterator<String> it = crtLevelMap.keySet().iterator(); it.hasNext();)
-						{
-							if (level.compareTo(it.next()) < 0)
-							{
-								it.remove();
-							}
-						}
+						crtLevelMap.keySet().removeIf(key -> level.compareTo(key) < 0);
 					}
 					
 					//create the current level group
