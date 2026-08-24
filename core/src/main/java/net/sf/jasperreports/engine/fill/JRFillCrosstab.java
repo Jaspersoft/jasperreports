@@ -3116,9 +3116,9 @@ public class JRFillCrosstab extends JRFillElement implements JRCrosstab, JROrigi
 		
 		protected void resetVariables()
 		{
-			for (int i = 0; i < rowGroups.length; i++)
+			for (JRFillCrosstabRowGroup rowGroup : rowGroups)
 			{
-				rowGroups[i].getFillVariable().setValue(null);
+				rowGroup.getFillVariable().setValue(null);
 			}
 			
 			for (JRFillCrosstabColumnGroup columnGroup : columnGroups)

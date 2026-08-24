@@ -396,9 +396,9 @@ public class JRAntUpdateTask extends JRBaseAntTask
 				
 				if (updaters != null)
 				{
-					for (int i = 0; i < updaters.size(); i++)
+					for (UpdaterElement updaterElement : updaters)
 					{
-						ReportUpdater updater = updaters.get(i).getUpdater();
+						ReportUpdater updater = updaterElement.getUpdater();
 						if (updater != null)
 						{
 							jasperDesign = updater.update(jasperDesign);

@@ -101,9 +101,9 @@ public class JRFillCategoryDataset extends JRFillChartDataset implements JRCateg
 	{
 		if (categorySeries != null && categorySeries.length > 0)
 		{
-			for (int i = 0; i < categorySeries.length; i++)
+			for (JRFillCategorySeries crtCategorySeries : categorySeries)
 			{
-				categorySeries[i].evaluate(calculator);
+				crtCategorySeries.evaluate(calculator);
 			}
 		}
 	}

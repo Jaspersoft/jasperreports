@@ -82,9 +82,9 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		JRPieSeries[] pieSeries = pieDataset.getSeries();
 		if (pieSeries != null && pieSeries.length > 0)
 		{
-			for (int j = 0; j < pieSeries.length; j++)
+			for (JRPieSeries crtPieSeries : pieSeries)
 			{
-				datasetChartsCollector.collect(pieSeries[j]);
+				datasetChartsCollector.collect(crtPieSeries);
 			}
 		}
 
@@ -105,9 +105,9 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(categoryDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for (int j = 0; j < categorySeries.length; j++)
+			for (JRCategorySeries crtCategorySeries : categorySeries)
 			{
-				datasetChartsCollector.collect(categorySeries[j]);
+				datasetChartsCollector.collect(crtCategorySeries);
 			}
 		}
 	}
@@ -124,9 +124,9 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(xyDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for (int j = 0; j < xySeries.length; j++)
+			for (JRXySeries crtXySeries : xySeries)
 			{
-				datasetChartsCollector.collect(xySeries[j]);
+				datasetChartsCollector.collect(crtXySeries);
 			}
 		}
 	}
@@ -141,8 +141,8 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		if ( timeSeries != null && timeSeries.length > 0 ){
 			JRExpressionCollector datasetCollector = parent.getCollector(timeSeriesDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for ( int i = 0; i <  timeSeries.length; i++ ){
-				datasetChartsCollector.collect(timeSeries[i]);
+			for (JRTimeSeries crtTimeSeries : timeSeries){
+				datasetChartsCollector.collect(crtTimeSeries);
 			}
 		}
 	}
@@ -157,8 +157,8 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		if ( timePeriodSeries != null && timePeriodSeries.length > 0 ){
 			JRExpressionCollector datasetCollector = parent.getCollector(timePeriodDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for ( int i = 0; i < timePeriodSeries.length; i++ ){
-				datasetChartsCollector.collect(timePeriodSeries[i]);
+			for (JRTimePeriodSeries crtTimePeriodSeries : timePeriodSeries){
+				datasetChartsCollector.collect(crtTimePeriodSeries);
 			}
 		}
 	}
@@ -175,9 +175,9 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(ganttDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for (int j = 0; j < ganttSeries.length; j++)
+			for (JRGanttSeries crtGanttSeries : ganttSeries)
 			{
-				datasetChartsCollector.collect(ganttSeries[j]);
+				datasetChartsCollector.collect(crtGanttSeries);
 			}
 		}
 	}
@@ -354,9 +354,9 @@ public class ChartsExpressionCollector// extends JRExpressionCollector
 		{
 			JRExpressionCollector datasetCollector = parent.getCollector(xyzDataset);
 			ChartsExpressionCollector datasetChartsCollector = new ChartsExpressionCollector(datasetCollector);
-			for (int j = 0; j < xyzSeries.length; j++)
+			for (JRXyzSeries crtXyzSeries : xyzSeries)
 			{
-				datasetChartsCollector.collect(xyzSeries[j]);
+				datasetChartsCollector.collect(crtXyzSeries);
 			}
 		}
 

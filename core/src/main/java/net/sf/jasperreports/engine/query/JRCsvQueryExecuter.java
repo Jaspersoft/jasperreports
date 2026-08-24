@@ -150,9 +150,8 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 					List<PropertySuffix> properties = getPropertiesUtil().getAllProperties(dataset, JRCsvQueryExecuterFactory.CSV_COLUMN_NAMES);
 					if (properties != null && !properties.isEmpty()) {
 						columnNamesList = new ArrayList<>();
-						for (int i = 0; i < properties.size(); i++) {
-							String property = properties.get(i).getValue();
-							columnNamesList.add(property);
+						for (PropertySuffix property : properties) {
+							columnNamesList.add(property.getValue());
 						}
 					} else {
 						JRField[] fields = dataset.getFields();

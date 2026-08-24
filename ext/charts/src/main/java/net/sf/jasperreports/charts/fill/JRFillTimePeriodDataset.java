@@ -106,9 +106,9 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 	{
 		if (timePeriodSeries != null && timePeriodSeries.length > 0)
 		{
-			for (int i = 0; i < timePeriodSeries.length; i++)
+			for (JRFillTimePeriodSeries crtTimePeriodSeries : timePeriodSeries)
 			{
-				timePeriodSeries[i].evaluate(calculator);
+				crtTimePeriodSeries.evaluate(calculator);
 			}
 		}
 	}

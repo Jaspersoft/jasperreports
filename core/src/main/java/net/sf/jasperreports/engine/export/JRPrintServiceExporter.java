@@ -582,11 +582,14 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 	// artf1936
 	public static boolean checkAvailablePrinters() 
 	{
-		PrintService[] ss = java.awt.print.PrinterJob.lookupPrintServices();
-		for (int i=0;i<ss.length;i++) {
-			Attribute[] att = ss[i].getAttributes().toArray();
-			for (int j=0;j<att.length;j++) {
-				if (att[j].equals(PrinterIsAcceptingJobs.ACCEPTING_JOBS)) {
+		PrintService[] printServices = java.awt.print.PrinterJob.lookupPrintServices();
+		for (PrintService printService : printServices)
+		{
+			Attribute[] attributes = printService.getAttributes().toArray();
+			for (Attribute attribute : attributes)
+			{
+				if (attribute.equals(PrinterIsAcceptingJobs.ACCEPTING_JOBS))
+				{
 					return true;
 				}
 			}

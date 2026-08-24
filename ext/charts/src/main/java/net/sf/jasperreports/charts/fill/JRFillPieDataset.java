@@ -168,9 +168,9 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 	{
 		if (pieSeries != null && pieSeries.length > 0)
 		{
-			for (int i = 0; i < pieSeries.length; i++)
+			for (JRFillPieSeries crtPieSeries : pieSeries)
 			{
-				pieSeries[i].evaluate(calculator);
+				crtPieSeries.evaluate(calculator);
 			}
 		}
 

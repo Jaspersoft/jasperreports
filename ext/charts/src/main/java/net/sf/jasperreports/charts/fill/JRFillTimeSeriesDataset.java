@@ -101,9 +101,9 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 	{
 		if (timeSeries != null && timeSeries.length > 0)
 		{
-			for (int i = 0; i < timeSeries.length; i++)
+			for (JRFillTimeSeries crtTimeSeries : timeSeries)
 			{
-				timeSeries[i].evaluate( calculator );
+				crtTimeSeries.evaluate( calculator );
 			}
 		}
 	}

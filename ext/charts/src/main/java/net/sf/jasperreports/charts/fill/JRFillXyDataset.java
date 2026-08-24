@@ -105,9 +105,9 @@ public class JRFillXyDataset extends JRFillChartDataset implements JRXyDataset
 	{
 		if (xySeries != null && xySeries.length > 0)
 		{
-			for (int i = 0; i < xySeries.length; i++)
+			for (JRFillXySeries crtXySeries : xySeries)
 			{
-				xySeries[i].evaluate(calculator);
+				crtXySeries.evaluate(calculator);
 			}
 		}
 	}

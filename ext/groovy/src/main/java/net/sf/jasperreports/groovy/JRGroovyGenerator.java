@@ -221,10 +221,10 @@ public class JRGroovyGenerator
 		String[] imports = sourceTask.getImports();
 		if (imports != null && imports.length > 0)
 		{
-			for (int i = 0; i < imports.length; i++)
+			for (String importName : imports)
 			{
 				sb.append("import ");
-				sb.append(imports[i]);
+				sb.append(importName);
 				sb.append(";\n");
 			}
 		}

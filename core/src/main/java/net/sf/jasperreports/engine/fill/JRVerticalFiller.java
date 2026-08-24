@@ -2780,10 +2780,10 @@ public class JRVerticalFiller extends JRBaseFiller
 
 		if (groups != null && groups.length > 0)
 		{
-			for (int i = 0; i < groups.length; i++)
+			for (JRFillGroup crtGroup : groups)
 			{
-				((JRFillSection)groups[i].getGroupHeaderSection()).setNewGroup(group, true);
-				((JRFillSection)groups[i].getGroupFooterSection()).setNewGroup(group, true);
+				((JRFillSection)crtGroup.getGroupHeaderSection()).setNewGroup(group, true);
+				((JRFillSection)crtGroup.getGroupFooterSection()).setNewGroup(group, true);
 			}
 		}
 	}

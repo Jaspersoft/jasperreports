@@ -56,12 +56,12 @@ public class XYChartCompiler implements ComponentCompiler
 		if (xySeries != null && xySeries.length > 0)
 		{
 			JRExpressionCollector seriesCollector = collector.getCollector(dataset);
-			for (int i = 0; i < xySeries.length; i++)
+			for (XYSeries crtXySeries : xySeries)
 			{
-				seriesCollector.addExpression(xySeries[i].getSeriesExpression());
-				seriesCollector.addExpression(xySeries[i].getXValueExpression());
-				seriesCollector.addExpression(xySeries[i].getYValueExpression());
-				seriesCollector.addExpression(xySeries[i].getColorExpression());
+				seriesCollector.addExpression(crtXySeries.getSeriesExpression());
+				seriesCollector.addExpression(crtXySeries.getXValueExpression());
+				seriesCollector.addExpression(crtXySeries.getYValueExpression());
+				seriesCollector.addExpression(crtXySeries.getColorExpression());
 			}
 		}
 

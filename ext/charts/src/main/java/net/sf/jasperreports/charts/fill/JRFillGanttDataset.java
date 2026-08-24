@@ -105,9 +105,9 @@ public class JRFillGanttDataset extends JRFillChartDataset implements JRGanttDat
 	{
 		if (ganttSeries != null && ganttSeries.length > 0)
 		{
-			for (int i = 0; i < ganttSeries.length; i++)
+			for (JRFillGanttSeries crtGanttSeries : ganttSeries)
 			{
-				ganttSeries[i].evaluate(calculator);
+				crtGanttSeries.evaluate(calculator);
 			}
 		}
 	}

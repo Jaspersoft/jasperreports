@@ -60,14 +60,14 @@ public class SpiderChartCompiler implements ComponentCompiler
 			if (categorySeries != null && categorySeries.length > 0)
 			{
 				JRExpressionCollector seriesCollector = collector.getCollector(dataset);
-				for (int j = 0; j < categorySeries.length; j++)
+				for (JRCategorySeries crtCategorySeries : categorySeries)
 				{
-					seriesCollector.addExpression(categorySeries[j].getSeriesExpression());
-					seriesCollector.addExpression(categorySeries[j].getCategoryExpression());
-					seriesCollector.addExpression(categorySeries[j].getValueExpression());
-					seriesCollector.addExpression(categorySeries[j].getLabelExpression());
+					seriesCollector.addExpression(crtCategorySeries.getSeriesExpression());
+					seriesCollector.addExpression(crtCategorySeries.getCategoryExpression());
+					seriesCollector.addExpression(crtCategorySeries.getValueExpression());
+					seriesCollector.addExpression(crtCategorySeries.getLabelExpression());
 	
-					seriesCollector.collectHyperlink(categorySeries[j].getItemHyperlink());
+					seriesCollector.collectHyperlink(crtCategorySeries.getItemHyperlink());
 					
 				}
 			}
@@ -178,12 +178,12 @@ public class SpiderChartCompiler implements ComponentCompiler
 	{
 		verifier.verifyElementDataset(dataset);
 		
-		JRCategorySeries[] series = dataset.getSeries();
-		if (series != null)
+		JRCategorySeries[] categorySeries = dataset.getSeries();
+		if (categorySeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRCategorySeries crtCategorySeries : categorySeries)
 			{
-				verifier.verifyHyperlink(series[i].getItemHyperlink());
+				verifier.verifyHyperlink(crtCategorySeries.getItemHyperlink());
 			}
 		}
 	}

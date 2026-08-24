@@ -171,9 +171,9 @@ public class DatasetSortUtil
 		JRVariable[] variables = dataset.getVariables();
 		if (variables != null)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRVariable variable : variables)
 			{
-				variablesMap.put(variables[i].getName(), variables[i]);
+				variablesMap.put(variable.getName(), variable);
 			}
 		}
 

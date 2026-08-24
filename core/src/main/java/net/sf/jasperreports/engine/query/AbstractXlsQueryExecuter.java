@@ -186,9 +186,8 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 					if (properties != null && !properties.isEmpty()) 
 					{
 						columnIndexesList = new ArrayList<>();
-						for (int i = 0; i < properties.size(); i++) {
-							String propertyValue = properties.get(i).getValue();
-							for (String colIndex: propertyValue.split(",")){
+						for (PropertySuffix property : properties) {
+							for (String colIndex: property.getValue().split(",")){
 								columnIndexesList.add(Integer.valueOf(colIndex.trim()));
 							}
 						}
@@ -200,9 +199,8 @@ public abstract class AbstractXlsQueryExecuter extends JRAbstractQueryExecuter {
 						if (properties != null && !properties.isEmpty()) 
 						{
 							columnIndexesList = new ArrayList<>();
-							for (int i = 0; i < properties.size(); i++) {
-								String propertyValue = properties.get(i).getValue();
-								for (String colIndex: propertyValue.split(",")){
+							for (PropertySuffix property : properties) {
+								for (String colIndex: property.getValue().split(",")){
 									columnIndexesList.add(Integer.valueOf(colIndex.trim()));
 								}
 							}
