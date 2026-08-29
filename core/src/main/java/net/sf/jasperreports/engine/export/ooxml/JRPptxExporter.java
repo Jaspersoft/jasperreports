@@ -377,6 +377,10 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				isEmbedFonts
 				);
 		
+		// the helper below is created before the first input item is set, so the report
+		// resolution has to be read here; initReport() refreshes it for each item afterwards
+		reportDpi = jasperPrint.getDpi();
+		
 		presentationHelper = new PptxPresentationHelper(jasperReportsContext, presentationWriter, fontWriter, reportDpi);
 		presentationHelper.exportHeader(isEmbedFonts);
 		
@@ -2174,7 +2178,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 	}
@@ -2220,7 +2224,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 	}

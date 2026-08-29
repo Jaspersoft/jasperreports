@@ -26,7 +26,10 @@ package net.sf.jasperreports.engine.util;
 import java.awt.BasicStroke;
 import java.awt.Stroke;
 
+import net.sf.jasperreports.engine.JRCommonGraphicElement;
+import net.sf.jasperreports.engine.JRImage;
 import net.sf.jasperreports.engine.JRPen;
+import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.type.LineStyleEnum;
 import net.sf.jasperreports.engine.type.PenEnum;
@@ -85,6 +88,22 @@ public final class JRPenUtil
 				}
 			}
 		}
+	}
+
+	/**
+	 * Returns the line width of a graphic element, applying the default that its type implies:
+	 * images have no line unless one is set explicitly on them, while lines, rectangles and
+	 * ellipses fall back to a one pixel line, scaled to the resolution of the report.
+	 */
+	public static float getLineWidth(JRCommonGraphicElement element, int reportDpi)
+	{
+		JRPen pen = element.getLinePen();
+		if (element instanceof JRPrintImage || element instanceof JRImage)
+		{
+			Float lineWidth = pen.getLineWidth();
+			return lineWidth == null ? 0f : lineWidth;
+		}
+		return getLineWidthOrDefault(pen, reportDpi);
 	}
 
 	public static float getLineWidthOrDefault(JRPen pen, int reportDpi)

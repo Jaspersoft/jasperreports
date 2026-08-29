@@ -94,6 +94,7 @@ import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.ExifOrientationEnum;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -374,6 +375,10 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		docxZip = new DocxZip();
 
 		docWriter = docxZip.getDocumentEntry().getWriter();
+		
+		// the helpers below are created before the first input item is set, so the report
+		// resolution has to be read here; initReport() refreshes it for each item afterwards
+		reportDpi = jasperPrint.getDpi();
 		
 		docHelper = new DocxDocumentHelper(jasperReportsContext, docWriter, reportDpi);
 		docHelper.exportHeader(pageFormat);
@@ -916,7 +921,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -940,7 +945,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -964,7 +969,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		JRPen pen = box.getPen();
 		pen.setLineColor(ellipse.getLinePen().getLineColor());
 		pen.setLineStyle(ellipse.getLinePen().getLineStyle());
-		pen.setLineWidth(ellipse.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(ellipse, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		

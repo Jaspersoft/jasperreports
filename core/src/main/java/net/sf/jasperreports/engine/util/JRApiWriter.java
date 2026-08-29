@@ -114,6 +114,7 @@ import net.sf.jasperreports.engine.JRSubreportReturnValue;
 import net.sf.jasperreports.engine.JRTextElement;
 import net.sf.jasperreports.engine.JRTextField;
 import net.sf.jasperreports.engine.JRVariable;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.ReturnValue;
 import net.sf.jasperreports.engine.TabStop;
@@ -335,6 +336,7 @@ public class JRApiWriter
 		write( "jasperDesign.setColumnCount({0, number, #});\n", report.getColumnCount());
 		write( "jasperDesign.setPrintOrder({0});\n", report.getPrintOrder(), PrintOrderEnum.VERTICAL);
 		write( "jasperDesign.setColumnDirection({0});\n", report.getColumnDirection(), RunDirectionEnum.LTR);
+		write( "jasperDesign.setDpi({0, number, #});\n", report.getDpi(), JasperPrint.DEFAULT_REPORT_DPI);
 		write( "jasperDesign.setPageWidth({0, number, #});\n", report.getPageWidth());
 		write( "jasperDesign.setPageHeight({0, number, #});\n", report.getPageHeight());
 		write( "jasperDesign.setOrientation({0});\n", report.getOrientation(), OrientationEnum.PORTRAIT);

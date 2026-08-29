@@ -91,7 +91,7 @@ public class GraphicStyle extends Style
 
 		forecolor = JRColorUtil.getColorHexa(element.getLinePen().getLineColor());
 
-		width = JRPenUtil.getLineWidthOrDefault(element.getLinePen(), reportDpi);
+		width = JRPenUtil.getLineWidth(element, reportDpi);
 		if (width <= 0)
 		{
 			style = "none";

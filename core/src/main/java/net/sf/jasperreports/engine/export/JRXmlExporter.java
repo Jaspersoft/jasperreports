@@ -71,6 +71,7 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRStyle;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintBookmark;
 import net.sf.jasperreports.engine.PrintPageFormat;
@@ -357,6 +358,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 
 		xmlWriter.startElement(JRXmlConstants.ELEMENT_jasperPrint, getNamespace());
 		xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, jasperPrint.getName());
+		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_dpi, jasperPrint.getDpi(), JasperPrint.DEFAULT_REPORT_DPI);
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_pageWidth, jasperPrint.getPageWidth());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_pageHeight, jasperPrint.getPageHeight());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_topMargin, jasperPrint.getTopMargin());

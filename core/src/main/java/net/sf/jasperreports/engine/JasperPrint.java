@@ -1101,4 +1101,16 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 		
 		return eventSupport;
 	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+	{
+		in.defaultReadObject();
+
+		if (dpi == 0)
+		{
+			// documents generated before the dpi attribute was introduced do not carry a value for it,
+			// and field initializers are not run during deserialization
+			dpi = DEFAULT_REPORT_DPI;
+		}
+	}
 }

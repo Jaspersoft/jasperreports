@@ -99,6 +99,7 @@ import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.DefaultFormatFactory;
 import net.sf.jasperreports.engine.util.FileBufferedOutputStream;
 import net.sf.jasperreports.engine.util.JRDataUtils;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRTypeSniffer;
@@ -1679,7 +1680,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		cellHelper.exportHeader(box,
 								rowIndex, 
@@ -1706,7 +1707,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		cellHelper.exportHeader(box,
 				rowIndex, 

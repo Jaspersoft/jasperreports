@@ -81,6 +81,7 @@ import net.sf.jasperreports.engine.type.ModeEnum;
 import net.sf.jasperreports.engine.util.ExifOrientationEnum;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.export.OdsExporterConfiguration;
@@ -1038,7 +1039,7 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 

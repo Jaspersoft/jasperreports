@@ -158,7 +158,7 @@ public class DocxDocumentHelper extends BaseHelper
 		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageWidth, dpi) + "\" w:h=\"" + LengthUtil.twip(pageHeight, dpi) + "\"");
 		write(" w:orient=\"" + (pageFormat.getOrientation() == OrientationEnum.LANDSCAPE ? "landscape" : "portrait") + "\"");
 		
-		if (OoxmlUtils.getSuitablePaperSize(pageWidth, pageHeight) == PaperSizeEnum.UNDEFINED)
+		if (OoxmlUtils.getSuitablePaperSize(pageWidth, pageHeight, dpi) == PaperSizeEnum.UNDEFINED)
 		{
 			// unique identifier for the paper size
 			write(" w:code=\""+ (1000 + pageWidth + pageHeight) +"\"");

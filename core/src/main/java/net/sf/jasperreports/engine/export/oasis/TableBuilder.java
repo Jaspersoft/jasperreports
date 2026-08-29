@@ -55,6 +55,7 @@ import net.sf.jasperreports.engine.export.HyperlinkUtil;
 import net.sf.jasperreports.engine.export.JRExporterGridCell;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.type.LineDirectionEnum;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -303,7 +304,7 @@ public class TableBuilder
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine.export;
 
+import net.sf.jasperreports.engine.JasperPrint;
 
 
 /**
@@ -36,9 +37,7 @@ public final class LengthUtil
 	 */
 	public static double inch(double pixels)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		return inches;
+		return inch(pixels, JasperPrint.DEFAULT_REPORT_DPI);
 	}
 	
 	/**
@@ -54,10 +53,7 @@ public final class LengthUtil
 	 */
 	public static double inchFloor2Dec(double pixels)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.floor(inches * 100.0)) / 100.0;
-		return inches;
+		return inchFloor2Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
 	}
 	
 	/**
@@ -74,10 +70,7 @@ public final class LengthUtil
 	 */
 	public static double inchFloor4Dec(double pixels)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.floor(inches * 10000.0)) / 10000.0;
-		return inches;
+		return inchFloor4Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
 	}
 
 	/**
@@ -94,10 +87,7 @@ public final class LengthUtil
 	 */
 	public static double inchRound2Dec(double pixels)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.round(inches * 100.0)) / 100.0;
-		return inches;
+		return inchRound2Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
 	}
 	
 	/**
@@ -106,7 +96,7 @@ public final class LengthUtil
 	public static double inchRound2Dec(double pixels, int dpi)
 	{
 		double inches = pixels / dpi;
-		return (Math.round(inches * 10000.0)) / 10000.0;
+		return (Math.round(inches * 100.0)) / 100.0;
 	}
 
 	/**
@@ -114,10 +104,7 @@ public final class LengthUtil
 	 */
 	public static double inchRound4Dec(double pixels)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.round(inches * 10000.0)) / 10000.0;
-		return inches;
+		return inchRound4Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
 	}
 
 	/**
@@ -130,13 +117,13 @@ public final class LengthUtil
 	}
 
 	/**
-	 * Convert a float value to twips (multiply with 20)
-	 * @param points value that need to be converted
+	 * Convert a float value to twips
+	 * @param pixels value that need to be converted
 	 * @return converted value in twips
 	 */
-	public static int twip(float points) 
+	public static int twip(float pixels) 
 	{
-		return (int)(points * 20);
+		return (int)(pixels * 20); // 1440.0f / 72
 	}
 
 	/**
@@ -148,13 +135,13 @@ public final class LengthUtil
 	}
 
 	/**
-	 * Convert an int value from points to EMU (multiply with 12700)
-	 * @param points value that needs to be converted
+	 * Convert an int value from pixels to EMU
+	 * @param pixels value that needs to be converted
 	 * @return converted value in EMU
 	 */
-	public static int emu(float points) 
+	public static int emu(float pixels) 
 	{
-		return (int)(points * 12700);
+		return (int)(pixels * 12700); // 914400.0f / 72
 	}
 	
 	/**
@@ -170,7 +157,7 @@ public final class LengthUtil
 	 */
 	public static int halfPoint(float pixels) 
 	{
-		return (int)(pixels * 8);
+		return (int)(pixels * 8); // 576.0f / 72
 	}
 
 	/**

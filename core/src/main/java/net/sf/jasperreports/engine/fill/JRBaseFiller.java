@@ -596,9 +596,9 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			loadStyles();
 
 			jasperPrint.setName(name);
+			jasperPrint.setDpi(dpi);
 			jasperPrint.setPageWidth(pageWidth);
 			jasperPrint.setPageHeight(pageHeight);
-			jasperPrint.setDpi(dpi);
 			jasperPrint.setTopMargin(topMargin);
 			jasperPrint.setLeftMargin(leftMargin);
 			jasperPrint.setBottomMargin(bottomMargin);

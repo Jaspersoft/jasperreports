@@ -264,7 +264,7 @@ public class XlsxSheetHelper extends BaseHelper
 			}
 		}
 		
-		PaperSizeEnum pSize = OoxmlUtils.getSuitablePaperSize(printSettings);
+		PaperSizeEnum pSize = OoxmlUtils.getSuitablePaperSize(printSettings, reportDpi);
 		String paperSize = pSize == PaperSizeEnum.UNDEFINED ? "" : " paperSize=\"" + pSize.getOoxmlValue() + "\"";
 		write(paperSize);	
 		

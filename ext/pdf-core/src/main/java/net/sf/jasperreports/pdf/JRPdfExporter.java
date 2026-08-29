@@ -1390,12 +1390,12 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		int lcOffsetX = getOffsetX();
 		int lcOffsetY = getOffsetY();
 
-		float lineWidth = toPoints(JRPenUtil.getLineWidthOrDefault(line.getLinePen(), reportDpi));
+		float lineWidth = toPoints(JRPenUtil.getLineWidth(line, reportDpi));
 		if (lineWidth > 0f)
 		{
 			pdfTagger.beginArtifact();
 
-			preparePen(line.getLinePen(), LineCapStyle.BUTT);
+			preparePen(line.getLinePen(), JRPenUtil.getLineWidth(line, reportDpi), LineCapStyle.BUTT);
 
 			if (line.getWidth() == 1)
 			{
@@ -1545,9 +1545,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfTagger.beginArtifact();
 
 		pdfContent.setFillColor(rectangle.getBackcolor());
-		preparePen(rectangle.getLinePen(), LineCapStyle.PROJECTING_SQUARE);
+		preparePen(rectangle.getLinePen(), JRPenUtil.getLineWidth(rectangle, reportDpi), LineCapStyle.PROJECTING_SQUARE);
 
-		float lineWidth = toPoints(JRPenUtil.getLineWidthOrDefault(rectangle.getLinePen(), reportDpi));
+		float lineWidth = toPoints(JRPenUtil.getLineWidth(rectangle, reportDpi));
 		int lcOffsetX = getOffsetX();
 		int lcOffsetY = getOffsetY();
 		
@@ -1610,9 +1610,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pdfTagger.beginArtifact();
 
 		pdfContent.setFillColor(ellipse.getBackcolor());
-		preparePen(ellipse.getLinePen(), LineCapStyle.PROJECTING_SQUARE);
+		preparePen(ellipse.getLinePen(), JRPenUtil.getLineWidth(ellipse, reportDpi), LineCapStyle.PROJECTING_SQUARE);
 
-		float lineWidth = toPoints(JRPenUtil.getLineWidthOrDefault(ellipse.getLinePen(), reportDpi));
+		float lineWidth = toPoints(JRPenUtil.getLineWidth(ellipse, reportDpi));
 		int lcOffsetX = getOffsetX();
 		int lcOffsetY = getOffsetY();
 		
@@ -3321,13 +3321,26 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	 */
 	private void preparePen(JRPen pen, LineCapStyle lineCap)
 	{
-		Float lineWidth = pen.getLineWidth();
-		if (lineWidth == null || lineWidth <= 0)
+		Float penLineWidth = pen.getLineWidth();
+		if (penLineWidth == null)
+		{
+			return;
+		}
+		preparePen(pen, penLineWidth, lineCap);
+	}
+
+	/**
+	 * Prepares the pen using a line width that the caller has already resolved, so that the
+	 * stroke settings match the line width that the same caller uses to draw with.
+	 */
+	private void preparePen(JRPen pen, float penLineWidth, LineCapStyle lineCap)
+	{
+		if (penLineWidth <= 0)
 		{
 			return;
 		}
 
-		lineWidth = toPoints(lineWidth);
+		float lineWidth = toPoints(penLineWidth);
 		
 		PdfContent pdfContent = pdfProducer.getPdfContent();
 		pdfContent.setLineWidth(lineWidth);

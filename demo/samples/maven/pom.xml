@@ -59,6 +59,9 @@
 							<updaters>
 								<updater>com.update.RenewUuidsUpdater</updater>
 								<updater>com.update.StyleUpdater</updater>
+								<!--
+								<updater>com.update.DpiUpdater</updater>
+								-->
 							</updaters>
 						</configuration>
 					</execution>

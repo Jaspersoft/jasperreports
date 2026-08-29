@@ -356,6 +356,12 @@ public class SimpleTextLineWrapper implements TextLineWrapper
 			// creating AWT font
 			// FIXME using the current text attributes might be slightly dangerous as we are sharing font metrics
 			font = Font.getFont(textAttributes);
+			if (font.getSize2D() != fontKey.size)
+			{
+				// the text attributes carry the font size as declared in the report, while the font
+				// key size also includes the scaling that the report resolution requires
+				font = font.deriveFont(fontKey.size);
+			}
 		}
 		return font;
 	}

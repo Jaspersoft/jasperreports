@@ -135,6 +135,7 @@ import net.sf.jasperreports.engine.util.DefaultFormatFactory;
 import net.sf.jasperreports.engine.util.ExifOrientationEnum;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.JRImageLoader;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.export.XlsExporterConfiguration;
@@ -795,7 +796,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				side = BoxStyle.RIGHT;
 			}
 		}
-		BoxStyle boxStyle = new BoxStyle(side, line.getLinePen());
+		BoxStyle boxStyle = new BoxStyle(side, line.getLinePen(), JRPenUtil.getLineWidth(line, reportDpi));
 
 		FillPatternType mode = backgroundMode;
 		short backcolor = whiteIndex;
@@ -1464,7 +1465,11 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	 */
 	protected static BorderStyle getBorderStyle(JRPen pen)
 	{
-		float lineWidth = pen.getLineWidth() == null ? 0 : pen.getLineWidth();
+		return getBorderStyle(pen, pen.getLineWidth() == null ? 0f : pen.getLineWidth());
+	}
+
+	protected static BorderStyle getBorderStyle(JRPen pen, float lineWidth)
+	{
 
 		if (lineWidth > 0f)
 		{
@@ -2428,8 +2433,8 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 		if ((printSettings.getPageWidth() != 0) && (printSettings.getPageHeight() != 0))
 		{
 
-			double dWidth = (printSettings.getPageWidth() / 72.0);
-			double dHeight = (printSettings.getPageHeight() / 72.0);
+			double dWidth = (printSettings.getPageWidth() / (double)reportDpi);
+			double dHeight = (printSettings.getPageHeight() / (double)reportDpi);
 
 			height = Math.round(dHeight * 25.4);
 			width = Math.round(dWidth * 25.4);
@@ -2731,7 +2736,12 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 
 		public BoxStyle(int side, JRPen pen)
 		{
-			borderStyle[side] = JRXlsExporter.getBorderStyle(pen);
+			this(side, pen, pen.getLineWidth() == null ? 0f : pen.getLineWidth());
+		}
+
+		public BoxStyle(int side, JRPen pen, float lineWidth)
+		{
+			borderStyle[side] = JRXlsExporter.getBorderStyle(pen, lineWidth);
 			borderColour[side] = JRXlsExporter.this.getWorkbookColor(pen.getLineColor()).getIndex();
 
 			hash = computeHash();
@@ -2749,7 +2759,8 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				JRPrintElement element = gridCell.getElement();
 				if (element instanceof JRCommonGraphicElement)
 				{
-					setPen(((JRCommonGraphicElement)element).getLinePen());
+					JRCommonGraphicElement graphicElement = (JRCommonGraphicElement)element;
+					setPen(graphicElement.getLinePen(), JRPenUtil.getLineWidth(graphicElement, reportDpi));
 				}
 	
 				hash = computeHash();
@@ -2775,6 +2786,11 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 
 		public void setPen(JRPen pen)
 		{
+			setPen(pen, pen.getLineWidth() == null ? 0f : pen.getLineWidth());
+		}
+
+		public void setPen(JRPen pen, float lineWidth)
+		{
 			if (
 				borderStyle[TOP] == BorderStyle.NONE
 				&& borderStyle[LEFT] == BorderStyle.NONE
@@ -2782,7 +2798,7 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				&& borderStyle[RIGHT] == BorderStyle.NONE
 				)
 			{
-				BorderStyle style = JRXlsExporter.getBorderStyle(pen);
+				BorderStyle style = JRXlsExporter.getBorderStyle(pen, lineWidth);
 				short colour = JRXlsExporter.this.getWorkbookColor(pen.getLineColor()).getIndex();
 
 				borderStyle[TOP] = style;

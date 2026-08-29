@@ -225,6 +225,7 @@ public class PartReportFiller extends BaseReportFiller
 			//loadStyles();
 
 			jasperPrint.setName(jasperReport.getName());
+			jasperPrint.setDpi(jasperReport.getDpi());
 			jasperPrint.setPageWidth(jasperReport.getPageWidth());
 			jasperPrint.setPageHeight(jasperReport.getPageHeight());
 			jasperPrint.setTopMargin(jasperReport.getTopMargin());

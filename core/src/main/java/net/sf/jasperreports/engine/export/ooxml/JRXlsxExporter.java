@@ -95,6 +95,7 @@ import net.sf.jasperreports.engine.util.FileBufferedOutputStream;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
 import net.sf.jasperreports.engine.util.JRDataUtils;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -1440,7 +1441,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -1462,7 +1463,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		

@@ -2430,10 +2430,10 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			LineStyleEnum bps = box.getBottomPen().getLineStyle();
 			LineStyleEnum rps = box.getRightPen().getLineStyle();
 			
-			float tpw = toZoom(box.getTopPen().getLineWidth() == null ? 0f : box.getTopPen().getLineWidth());
-			float lpw = toZoom(box.getLeftPen().getLineWidth() == null ? 0f : box.getLeftPen().getLineWidth());
-			float bpw = toZoom(box.getBottomPen().getLineWidth() == null ? 0f : box.getBottomPen().getLineWidth());
-			float rpw = toZoom(box.getRightPen().getLineWidth() == null ? 0f : box.getRightPen().getLineWidth());
+			float tpw = toZoom(toBorderWidth(box.getTopPen().getLineWidth()));
+			float lpw = toZoom(toBorderWidth(box.getLeftPen().getLineWidth()));
+			float bpw = toZoom(toBorderWidth(box.getBottomPen().getLineWidth()));
+			float rpw = toZoom(toBorderWidth(box.getRightPen().getLineWidth()));
 			
 			Color tpc = box.getTopPen().getLineColor();
 			
@@ -2486,8 +2486,44 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		return appendPen(sb, pen, side, borderWidth);
 	}
 
+	/**
+	 * Writes a border width, snapping it to a whole number of pixels when the conversion from
+	 * the report resolution lands within rounding distance of one, so that a one pixel border
+	 * is written as such whatever the resolution.
+	 */
+	protected String toBorderSizeUnit(float borderWidth)
+	{
+		float zoomed = toZoom(borderWidth);
+		float rounded = Math.round(zoomed);
+		if (rounded > 0f && Math.abs(zoomed - rounded) < 0.001f)
+		{
+			zoomed = rounded;
+		}
+
+		Number number = zoomed;
+		if (number.intValue() == number.floatValue())
+		{
+			number = number.intValue();
+		}
+
+		return String.valueOf(number) + currentSizeUnit;
+	}
+
+	/**
+	 * Browsers drop or round sub-pixel borders, so a border thinner than one pixel at the
+	 * resolution of the report is widened to exactly one pixel.
+	 */
+	protected float toBorderWidth(Float lineWidth)
+	{
+		float borderWidth = lineWidth == null ? 0f : lineWidth;
+		float minWidth = (float)reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+		return 0f < borderWidth && borderWidth < minWidth ? minWidth : borderWidth;
+	}
+
 	protected boolean appendPen(StringBuilder sb, JRPen pen, String side, float borderWidth)
 	{
+		borderWidth = toBorderWidth(borderWidth);
+
 		boolean addedToStyle = false;
 
 		String borderStyle = null;
@@ -2526,7 +2562,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			}
 
 			sb.append(": ");
-			sb.append(toSizeUnit(borderWidth));
+			sb.append(toBorderSizeUnit(borderWidth));
 			
 			sb.append(" ");
 			sb.append(borderStyle);

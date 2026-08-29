@@ -762,5 +762,12 @@ public class JRBaseReport implements JRReport, Serializable, JRChangeEventsSuppo
 		in.defaultReadObject();
 
 		styleResolver = StyleResolver.getInstance();
+
+		if (dpi == 0)
+		{
+			// reports compiled before the dpi attribute was introduced do not carry a value for it,
+			// and field initializers are not run during deserialization
+			dpi = JasperPrint.DEFAULT_REPORT_DPI;
+		}
 	}
 }
