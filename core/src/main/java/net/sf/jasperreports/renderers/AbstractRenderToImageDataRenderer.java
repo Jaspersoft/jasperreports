@@ -76,7 +76,9 @@ public abstract class AbstractRenderToImageDataRenderer extends AbstractRenderTo
 		}
 
 		int dpi = getImageDataDPI(jasperReportsContext);
-		double scale = dpi/72d;
+		// the dimension is expressed in report pixels, so the raster is sized from the physical
+		// size of the element rather than from a fixed resolution
+		double scale = dpi / (double)getReportDpi();
 		
 		BufferedImage bi =
 			new BufferedImage(

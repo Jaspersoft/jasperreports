@@ -88,6 +88,12 @@ public class ConvertChartContext implements ChartContext
 	}
 	
 	@Override
+	public int getReportDpi()
+	{
+		return reportConverter.getReport().getDpi();
+	}
+
+	@Override
 	public JasperReportsContext getJasperReportsContext()
 	{
 		return DefaultJasperReportsContext.getInstance();//FIXMECONTEXT

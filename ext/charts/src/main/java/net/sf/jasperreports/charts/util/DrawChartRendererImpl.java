@@ -32,8 +32,9 @@ import org.jfree.chart.JFreeChart;
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintImageAreaHyperlink;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
-import net.sf.jasperreports.renderers.AbstractRenderer;
+import net.sf.jasperreports.renderers.AbstractRenderToImageAwareRenderer;
 import net.sf.jasperreports.renderers.AreaHyperlinksRenderable;
 import net.sf.jasperreports.renderers.Graphics2DRenderable;
 
@@ -41,12 +42,13 @@ import net.sf.jasperreports.renderers.Graphics2DRenderable;
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
-public class DrawChartRendererImpl extends AbstractRenderer implements AreaHyperlinksRenderable, Graphics2DRenderable
+public class DrawChartRendererImpl extends AbstractRenderToImageAwareRenderer implements AreaHyperlinksRenderable, Graphics2DRenderable
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
 	private JFreeChart chart;
 	private ChartHyperlinkProvider chartHyperlinkProvider;
+	private int reportDpi = JasperPrint.DEFAULT_REPORT_DPI;
 	
 	public DrawChartRendererImpl(JFreeChart chart, ChartHyperlinkProvider chartHyperlinkProvider)
 	{
@@ -54,19 +56,33 @@ public class DrawChartRendererImpl extends AbstractRenderer implements AreaHyper
 		this.chartHyperlinkProvider = chartHyperlinkProvider;
 	}
 
+	public DrawChartRendererImpl(JFreeChart chart, ChartHyperlinkProvider chartHyperlinkProvider, int reportDpi)
+	{
+		this(chart, chartHyperlinkProvider);
+		this.reportDpi = reportDpi;
+	}
+
+	@Override
+	public int getReportDpi()
+	{
+		return reportDpi;
+	}
+
 	@Override
 	public void render(JasperReportsContext jasperReportsContext, Graphics2D grx, Rectangle2D rectangle) 
 	{
 		if (chart != null)
 		{
-			chart.draw(grx, rectangle);
+			ChartUtil.drawChart(chart, grx, rectangle, reportDpi);
 		}
 	}
 	
 	@Override
 	public List<JRPrintImageAreaHyperlink> getImageAreaHyperlinks(Rectangle2D renderingArea) throws JRException
 	{
-		return ChartUtil.getImageAreaHyperlinks(chart, chartHyperlinkProvider, null, renderingArea);
+		double dpiScale = (double)reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+		return ChartUtil.getImageAreaHyperlinks(
+			chart, chartHyperlinkProvider, null, ChartUtil.toChartArea(renderingArea, dpiScale), dpiScale);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintImageAreaHyperlink;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.type.ImageTypeEnum;
 import net.sf.jasperreports.engine.util.JRImageLoader;
@@ -55,8 +56,24 @@ public class ImageChartRendererFactory extends AbstractChartRenderableFactory
 		Rectangle2D rectangle
 		)
 	{
-		int dpi = JRPropertiesUtil.getInstance(jasperReportsContext).getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, 72);
-		double scale = dpi/72d;
+		return getRenderable(jasperReportsContext, chart, chartHyperlinkProvider, rectangle, JasperPrint.DEFAULT_REPORT_DPI);
+	}
+
+	@Override
+	public Renderable getRenderable(
+		JasperReportsContext jasperReportsContext,
+		JFreeChart chart, 
+		ChartHyperlinkProvider chartHyperlinkProvider,
+		Rectangle2D rectangle,
+		int reportDpi
+		)
+	{
+		int dpi = JRPropertiesUtil.getInstance(jasperReportsContext).getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, reportDpi);
+		// the rectangle is expressed in report pixels, so the raster is sized from the physical
+		// size of the element rather than from a fixed resolution
+		double scale = dpi / (double)reportDpi;
+		double dpiScale = (double)reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+		Rectangle2D chartArea = ChartUtil.toChartArea(rectangle, dpiScale);
 		
 		BufferedImage bi = 
 			new BufferedImage(
@@ -70,15 +87,15 @@ public class ImageChartRendererFactory extends AbstractChartRenderableFactory
 		Graphics2D grx = bi.createGraphics();
 		try
 		{
-			grx.scale(scale, scale);
+			grx.scale(scale * dpiScale, scale * dpiScale);
 
 			if (chartHyperlinkProvider != null && chartHyperlinkProvider.hasHyperlinks())
 			{
-				areaHyperlinks = ChartUtil.getImageAreaHyperlinks(chart, chartHyperlinkProvider, grx, rectangle);
+				areaHyperlinks = ChartUtil.getImageAreaHyperlinks(chart, chartHyperlinkProvider, grx, chartArea, dpiScale);
 			}
 			else
 			{
-				chart.draw(grx, rectangle);
+				chart.draw(grx, chartArea);
 			}
 		}
 		finally

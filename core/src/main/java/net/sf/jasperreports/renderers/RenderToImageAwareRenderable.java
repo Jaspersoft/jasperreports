@@ -26,6 +26,7 @@ package net.sf.jasperreports.renderers;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 
 
@@ -41,6 +42,16 @@ public interface RenderToImageAwareRenderable
 	 * 
 	 */
 	public int getImageDataDPI(JasperReportsContext jasperReportsContext);
+
+	/**
+	 * Returns the resolution of the report this renderer belongs to. Renderer dimensions are
+	 * expressed in the pixels of the report, so the resolution is needed to work out the physical
+	 * size an image has to be rasterized at.
+	 */
+	default int getReportDpi()
+	{
+		return JasperPrint.DEFAULT_REPORT_DPI;
+	}
 
 	/**
 	 * 

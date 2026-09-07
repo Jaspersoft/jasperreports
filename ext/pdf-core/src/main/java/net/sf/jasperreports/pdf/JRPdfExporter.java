@@ -2166,8 +2166,12 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 					: null;
 				if (dimension == null)
 				{
-					renderWidth = availableImageWidth;
-					renderHeight = availableImageHeight;
+					// renderers draw in the pixels of the report, the same as for every other
+					// Graphics2D consumer; the template is scaled to the available area when placed
+					renderWidth = printImage.getWidth() - leftPadding - rightPadding;
+					renderHeight = printImage.getHeight() - topPadding - bottomPadding;
+					renderWidth = renderWidth < 0 ? 0 : renderWidth;
+					renderHeight = renderHeight < 0 ? 0 : renderHeight;
 				}
 				else
 				{

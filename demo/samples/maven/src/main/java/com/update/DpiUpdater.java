@@ -31,6 +31,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.sf.jasperreports.barcode4j.Barcode4jComponent;
+import net.sf.jasperreports.barcode4j.BarcodeComponent;
+import net.sf.jasperreports.barcode4j.FourStateBarcodeComponent;
+import net.sf.jasperreports.barcode4j.POSTNETComponent;
 import net.sf.jasperreports.components.iconlabel.IconLabelComponent;
 import net.sf.jasperreports.components.list.DesignListContents;
 import net.sf.jasperreports.components.list.StandardListComponent;
@@ -617,6 +621,10 @@ public class DpiUpdater implements ReportUpdater
 				updateChildren(contents.getChildren(), scaler);
 			}
 		}
+		else if (component instanceof BarcodeComponent)
+		{
+			updateBarcode((BarcodeComponent)component, scaler);
+		}
 		else if (component instanceof IconLabelComponent)
 		{
 			IconLabelComponent iconLabel = (IconLabelComponent)component;
@@ -638,6 +646,43 @@ public class DpiUpdater implements ReportUpdater
 		if (element instanceof JRDesignElement)
 		{
 			updateElement((JRDesignElement)element, scaler);
+		}
+	}
+
+
+	/**
+	 * Scales the lengths declared by a barcode component.
+	 * <p/>
+	 * The bar geometry of a barcode is expressed in the same pixel lengths as the rest of the
+	 * design. Leaving it at the source resolution keeps the bars at their original width inside
+	 * an element that has grown, and the engine then fits the barcode by its height, which comes
+	 * out as a barcode far too narrow for the space it occupies.
+	 * <p/>
+	 * The margin of a QR code is deliberately left alone, because it counts modules rather than
+	 * measuring a length, and so does not depend on the resolution.
+	 */
+	private void updateBarcode(BarcodeComponent barcode, Scaler scaler)
+	{
+		if (barcode instanceof Barcode4jComponent)
+		{
+			Barcode4jComponent barcode4j = (Barcode4jComponent)barcode;
+			barcode4j.setModuleWidth(scaler.scale(barcode4j.getModuleWidth()));
+			barcode4j.setQuietZone(scaler.scale(barcode4j.getQuietZone()));
+			barcode4j.setVerticalQuietZone(scaler.scale(barcode4j.getVerticalQuietZone()));
+		}
+
+		if (barcode instanceof FourStateBarcodeComponent)
+		{
+			FourStateBarcodeComponent fourState = (FourStateBarcodeComponent)barcode;
+			fourState.setAscenderHeight(scaler.scale(fourState.getAscenderHeight()));
+			fourState.setIntercharGapWidth(scaler.scale(fourState.getIntercharGapWidth()));
+			fourState.setTrackHeight(scaler.scale(fourState.getTrackHeight()));
+		}
+		else if (barcode instanceof POSTNETComponent)
+		{
+			POSTNETComponent postnet = (POSTNETComponent)barcode;
+			postnet.setIntercharGapWidth(scaler.scale(postnet.getIntercharGapWidth()));
+			postnet.setShortBarHeight(scaler.scale(postnet.getShortBarHeight()));
 		}
 	}
 
@@ -892,6 +937,14 @@ public class DpiUpdater implements ReportUpdater
 		Float scale(Float length)
 		{
 			return length == null ? null : (float)(length.floatValue() * factor);
+		}
+
+		/**
+		 *
+		 */
+		Double scale(Double length)
+		{
+			return length == null ? null : length.doubleValue() * factor;
 		}
 
 		/**

@@ -50,6 +50,7 @@ import org.krysalis.barcode4j.tools.UnitConv;
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRStyle;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.renderers.Renderable;
 
@@ -64,6 +65,7 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 	protected final JRComponentElement componentElement;
 	protected final BarcodeComponent barcodeComponent;
 	protected final JRDefaultStyleProvider defaultStyleProvider;
+	protected final int reportDpi;
 
 	protected String message;
 	protected AbstractBarcodeBean barcodeBean;
@@ -76,10 +78,33 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		JRDefaultStyleProvider defaultStyleProvider
 		)
 	{
+		this(jasperReportsContext, componentElement, defaultStyleProvider, JasperPrint.DEFAULT_REPORT_DPI);
+	}
+
+	protected AbstractBarcodeEvaluator(
+		JasperReportsContext jasperReportsContext,
+		JRComponentElement componentElement, 
+		JRDefaultStyleProvider defaultStyleProvider,
+		int reportDpi
+		)
+	{
 		this.jasperReportsContext = jasperReportsContext;
 		this.componentElement = componentElement;
 		this.barcodeComponent = (BarcodeComponent) componentElement.getComponent();
 		this.defaultStyleProvider = defaultStyleProvider;
+		this.reportDpi = reportDpi;
+	}
+
+	/**
+	 * Barcode geometry is expressed in millimetres, while element and component measurements are
+	 * expressed in the pixels of the report, so they are converted to points before being handed
+	 * over to the barcode. Font sizes are already expressed in points and are not converted.
+	 */
+	protected double toPoints(double reportPixels)
+	{
+		return reportDpi == JasperPrint.DEFAULT_REPORT_DPI
+			? reportPixels
+			: reportPixels * JasperPrint.DEFAULT_REPORT_DPI / reportDpi;
 	}
 
 	public void evaluateBarcode()
@@ -150,7 +175,7 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		Double moduleWidth = barcodeComponent.getModuleWidth();
 		if (moduleWidth != null)
 		{
-			barcodeBean.setModuleWidth(UnitConv.pt2mm(moduleWidth));
+			barcodeBean.setModuleWidth(UnitConv.pt2mm(toPoints(moduleWidth)));
 		}
 		
 		TextPositionEnum textPlacement = barcodeComponent.getTextPosition();
@@ -164,24 +189,24 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		if (quietZone != null)
 		{
 			barcodeBean.doQuietZone(true);
-			barcodeBean.setQuietZone(UnitConv.pt2mm(quietZone));
+			barcodeBean.setQuietZone(UnitConv.pt2mm(toPoints(quietZone)));
 		}
 		
 		Double vQuietZone = barcodeComponent.getVerticalQuietZone();
 		if (vQuietZone != null)
 		{
-			barcodeBean.setVerticalQuietZone(UnitConv.pt2mm(vQuietZone));
+			barcodeBean.setVerticalQuietZone(UnitConv.pt2mm(toPoints(vQuietZone)));
 		}
 
 		// FIXME DataMatrix?
 		double barcodeHeight;
 		if (BarcodeUtils.isVertical(barcodeComponent))
 		{
-			barcodeHeight = UnitConv.pt2mm(componentElement.getWidth());
+			barcodeHeight = UnitConv.pt2mm(toPoints(componentElement.getWidth()));
 		}
 		else
 		{
-			barcodeHeight = UnitConv.pt2mm(componentElement.getHeight());
+			barcodeHeight = UnitConv.pt2mm(toPoints(componentElement.getHeight()));
 		}
 		barcodeBean.setHeight(barcodeHeight);
 	}
@@ -447,19 +472,19 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		if (barcodeComponent.getAscenderHeight() != null)
 		{
 			barcodeBean.setAscenderHeight(
-					UnitConv.pt2mm(barcodeComponent.getAscenderHeight()));
+					UnitConv.pt2mm(toPoints(barcodeComponent.getAscenderHeight())));
 		}
 		
 		if (barcodeComponent.getIntercharGapWidth() != null)
 		{
 			barcodeBean.setIntercharGapWidth(
-					UnitConv.pt2mm(barcodeComponent.getIntercharGapWidth()));
+					UnitConv.pt2mm(toPoints(barcodeComponent.getIntercharGapWidth())));
 		}
 		
 		if (barcodeComponent.getTrackHeight() != null)
 		{
 			barcodeBean.setTrackHeight(
-					UnitConv.pt2mm(barcodeComponent.getTrackHeight()));
+					UnitConv.pt2mm(toPoints(barcodeComponent.getTrackHeight())));
 		}
 	}
 
@@ -492,7 +517,7 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		if (postnet.getShortBarHeight() != null)
 		{
 			postnetBean.setShortBarHeight(
-					UnitConv.pt2mm(postnet.getShortBarHeight()));
+					UnitConv.pt2mm(toPoints(postnet.getShortBarHeight())));
 		}
 		
 		if (postnet.getBaselinePosition() != null)
@@ -516,7 +541,7 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		if (postnet.getIntercharGapWidth() != null)
 		{
 			postnetBean.setIntercharGapWidth(
-					UnitConv.pt2mm(postnet.getIntercharGapWidth()));
+					UnitConv.pt2mm(toPoints(postnet.getIntercharGapWidth())));
 		}
 		evaluateBarcodeRenderable(postnet);
 	}

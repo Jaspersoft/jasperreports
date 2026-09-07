@@ -803,7 +803,8 @@ public class JRFillChart extends JRFillElement implements JRChart
 				filler.getJasperReportsContext(),
 				chart, 
 				chartHyperlinkProvider,
-				rectangle
+				rectangle,
+				filler.getDpi()
 				);
 	}
 	
@@ -1458,6 +1459,12 @@ public class JRFillChart extends JRFillElement implements JRChart
 
 	class FillChartContext implements ChartContext
 	{
+		@Override
+		public int getReportDpi()
+		{
+			return filler.getDpi();
+		}
+
 		private final byte evaluation; 
 		
 		protected FillChartContext(byte evaluation)

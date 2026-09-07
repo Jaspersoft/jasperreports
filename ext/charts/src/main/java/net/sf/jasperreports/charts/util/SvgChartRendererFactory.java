@@ -37,6 +37,7 @@ import org.w3c.dom.Document;
 
 import net.sf.jasperreports.engine.JRPrintImageAreaHyperlink;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.renderers.Renderable;
 import net.sf.jasperreports.renderers.SimpleRenderToImageAwareDataRenderer;
@@ -56,6 +57,21 @@ public class SvgChartRendererFactory extends AbstractChartRenderableFactory
 		Rectangle2D rectangle
 		)
 	{
+		return getRenderable(jasperReportsContext, chart, chartHyperlinkProvider, rectangle, JasperPrint.DEFAULT_REPORT_DPI);
+	}
+
+	@Override
+	public Renderable getRenderable(
+		JasperReportsContext jasperReportsContext,
+		JFreeChart chart, 
+		ChartHyperlinkProvider chartHyperlinkProvider,
+		Rectangle2D rectangle,
+		int reportDpi
+		)
+	{
+		double dpiScale = (double)reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+		Rectangle2D chartArea = ChartUtil.toChartArea(rectangle, dpiScale);
+
 		DOMImplementation domImpl = 
 			GenericDOMImplementation.getDOMImplementation();
 		Document document = 
@@ -64,16 +80,20 @@ public class SvgChartRendererFactory extends AbstractChartRenderableFactory
 			new SVGGraphics2D(document);
 		
 		grx.setSVGCanvasSize(rectangle.getBounds().getSize());
+		if (dpiScale != 1d)
+		{
+			grx.scale(dpiScale, dpiScale);
+		}
 
 		List<JRPrintImageAreaHyperlink> areaHyperlinks = null;
 
 		if (chartHyperlinkProvider != null && chartHyperlinkProvider.hasHyperlinks())
 		{
-			areaHyperlinks = ChartUtil.getImageAreaHyperlinks(chart, chartHyperlinkProvider, grx, rectangle);
+			areaHyperlinks = ChartUtil.getImageAreaHyperlinks(chart, chartHyperlinkProvider, grx, chartArea, dpiScale);
 		}
 		else
 		{
-			chart.draw(grx, rectangle);
+			chart.draw(grx, chartArea);
 		}
 
 		try

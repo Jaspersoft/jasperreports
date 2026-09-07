@@ -24,6 +24,7 @@
 package net.sf.jasperreports.charts.util;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -58,6 +59,7 @@ import net.sf.jasperreports.engine.JRPrintImageArea;
 import net.sf.jasperreports.engine.JRPrintImageAreaHyperlink;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRClassLoader;
 import net.sf.jasperreports.engine.util.JRSingletonCache;
@@ -110,6 +112,21 @@ public final class ChartUtil
 		Rectangle2D renderingArea
 		)// throws JRException
 	{
+		return getImageAreaHyperlinks(chart, chartHyperlinkProvider, grx, renderingArea, 1d);
+	}
+
+	/**
+	 * Collects the hyperlink areas of a chart laid out on the given area. The areas come out in the
+	 * coordinates the chart was laid out in, so they are scaled back to the pixels of the report.
+	 */
+	public static List<JRPrintImageAreaHyperlink> getImageAreaHyperlinks(
+		JFreeChart chart,
+		ChartHyperlinkProvider chartHyperlinkProvider,
+		Graphics2D grx,
+		Rectangle2D renderingArea,
+		double dpiScale
+		)// throws JRException
+	{
 		List<JRPrintImageAreaHyperlink> areaHyperlinks = null;
 		
 		if (chartHyperlinkProvider != null && chartHyperlinkProvider.hasHyperlinks())
@@ -137,7 +154,7 @@ public final class ChartUtil
 					JRPrintHyperlink printHyperlink = chartHyperlinkProvider.getEntityHyperlink(entity);
 					if (printHyperlink != null)
 					{
-						JRPrintImageArea area = getImageArea(entity);
+						JRPrintImageArea area = getImageArea(entity, dpiScale);
 
 						JRPrintImageAreaHyperlink areaHyperlink = new JRPrintImageAreaHyperlink();
 						areaHyperlink.setArea(area);
@@ -151,7 +168,7 @@ public final class ChartUtil
 		return areaHyperlinks;
 	}
 
-	private static JRPrintImageArea getImageArea(ChartEntity entity)
+	private static JRPrintImageArea getImageArea(ChartEntity entity, double dpiScale)
 	{
 		JRPrintImageArea area = new JRPrintImageArea();
 		area.setShape(JRPrintImageArea.getShape(entity.getShapeType()));
@@ -159,6 +176,13 @@ public final class ChartUtil
 		int[] coordinates = getCoordinates(entity);
 		if (coordinates != null)
 		{
+			if (dpiScale != 1d)
+			{
+				for (int i = 0; i < coordinates.length; i++)
+				{
+					coordinates[i] = (int)Math.round(coordinates[i] * dpiScale);
+				}
+			}
 			area.setCoordinates(coordinates);
 		}
 		return area;
@@ -211,6 +235,59 @@ public final class ChartUtil
 	/**
 	 * 
 	 */
+	/**
+	 * Draws a chart at the resolution of the report. Charts lay themselves out using fonts and
+	 * strokes expressed in points, so at a resolution other than the default they are drawn onto
+	 * a surface scaled accordingly, on a rectangle reduced by the same amount.
+	 */
+	public static void drawChart(JFreeChart chart, Graphics2D grx, Rectangle2D rectangle, int reportDpi)
+	{
+		double dpiScale = (double)reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+		if (dpiScale == 1d)
+		{
+			chart.draw(grx, rectangle);
+			return;
+		}
+
+		AffineTransform transform = grx.getTransform();
+		try
+		{
+			grx.scale(dpiScale, dpiScale);
+			chart.draw(grx, toChartArea(rectangle, dpiScale));
+		}
+		finally
+		{
+			grx.setTransform(transform);
+		}
+	}
+
+	/**
+	 * Converts a length expressed in report pixels into the point based coordinates a chart lays
+	 * out in, so that paints and shapes derived from the dimensions of the chart element line up
+	 * with the chart itself.
+	 */
+	public static float toChartLength(float reportPixels, int reportDpi)
+	{
+		return reportDpi == JasperPrint.DEFAULT_REPORT_DPI
+			? reportPixels
+			: reportPixels * JasperPrint.DEFAULT_REPORT_DPI / reportDpi;
+	}
+
+	/**
+	 * Reduces a rectangle expressed in report pixels to the point based area a chart lays out in.
+	 */
+	public static Rectangle2D toChartArea(Rectangle2D rectangle, double dpiScale)
+	{
+		return dpiScale == 1d
+			? rectangle
+			: new Rectangle2D.Double(
+				rectangle.getX() / dpiScale,
+				rectangle.getY() / dpiScale,
+				rectangle.getWidth() / dpiScale,
+				rectangle.getHeight() / dpiScale
+				);
+	}
+
 	public ChartRenderableFactory getChartRenderableFactory(String renderType)
 	{
 		String factoryClass = JRPropertiesUtil.getInstance(jasperReportsContext).getProperty(ChartRenderableFactory.PROPERTY_CHART_RENDERER_FACTORY_PREFIX + renderType);

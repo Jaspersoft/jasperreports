@@ -1850,8 +1850,10 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 					break;
 			}
 
-			int dpi = getPropertiesUtil().getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, 72);
-			double scale = dpi/72d;
+			int dpi = getPropertiesUtil().getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, reportDpi);
+			// the element dimensions are expressed in report pixels, so the raster is sized from
+			// the physical size of the element rather than from a fixed resolution
+			double scale = dpi / (double)reportDpi;
 			
 			BufferedImage bi = 
 				new BufferedImage(
