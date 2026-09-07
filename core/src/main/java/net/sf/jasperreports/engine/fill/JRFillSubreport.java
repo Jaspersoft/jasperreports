@@ -29,8 +29,10 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -161,7 +163,9 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 	private int printPageContentsWidth;
 
 	private JRSubreportRunner runner;
-	
+
+	private Set<Object> scaledDpiTemplates;
+
 	/**
 	 * Set of checked reports.
 	 */
@@ -650,13 +654,30 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 		
 		subreportFiller.mainDataset.setFillPosition(datasetPosition);
 		subreportFiller.mainDataset.setCacheSkipped(!cacheIncluded);
+
+		scaledDpiTemplates = null;
 	}
 
 	protected FillerSubreportParent createFillerParent(DatasetExpressionEvaluator evaluator) throws JRException
 	{
 		return new FillerSubreportParent(this, evaluator);
 	}
-	
+
+	void scaleTemplatePenWidths(Collection<JRPrintElement> elements, double dpiScale)
+	{
+		if (scaledDpiTemplates == null)
+		{
+			scaledDpiTemplates = Collections.newSetFromMap(new IdentityHashMap<>());
+		}
+		if (elements != null)
+		{
+			for (JRPrintElement element : elements)
+			{
+				OffsetElementsUtil.scaleTemplatePenWidths(element, dpiScale, scaledDpiTemplates);
+			}
+		}
+	}
+
 	/**
 	 * Utility method used for constructing a parameter values map for subreports, sub datasets and crosstabs.
 	 * 
@@ -919,7 +940,18 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 			// stretching by default
 			pageHeight = availableHeight - getRelativeY();
 		}
-		subreportFiller.setPageHeight(pageHeight);
+
+		int parentDpi = filler.getDpi();
+		int subreportDpi = subreportFiller.getDpi();
+
+		if (parentDpi != subreportDpi)
+		{
+			subreportFiller.setPageHeight(pageHeight * subreportDpi / parentDpi);
+		}
+		else
+		{
+			subreportFiller.setPageHeight(pageHeight);
+		}
 
 		synchronized (subreportFiller)
 		{
@@ -990,7 +1022,20 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 
 			printPage = subreportFiller.getCurrentPage();
 			printPageContentsWidth = subreportFiller.getCurrentPageContentsWidth();
-			setPrepareHeight(result.hasFinished() ? subFillerParent.getCurrentPageStretchHeight() : pageHeight);
+
+			if (result.hasFinished())
+			{
+				int stretchHeight = subFillerParent.getCurrentPageStretchHeight();
+				if (parentDpi != subreportDpi)
+				{
+					stretchHeight = stretchHeight * parentDpi / subreportDpi;
+				}
+				setPrepareHeight(stretchHeight);
+			}
+			else
+			{
+				setPrepareHeight(pageHeight);
+			}
 
 			//if the subreport fill thread has not finished, 
 			// it means that the subreport will overflow on the next page
@@ -1153,30 +1198,44 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 		if (!filler.isIgnorePagination())
 		{
 			JasperReport jasperReport = getReport();
-			
+			int subreportDpi = jasperReport.getDpi();
+
 			int pageHeight;
 			int topMargin = jasperReport.getTopMargin();
 			int bottomMargin = jasperReport.getBottomMargin();
-			
+
 			JRBaseFiller parentFiller = filler;
 			do
 			{
+				int parentDpi = parentFiller.jasperReport.getDpi();
+
 				// set every time, so at the end it will be the master page height
 				pageHeight = parentFiller.jasperReport.getPageHeight();
-				
+				if (parentDpi != subreportDpi)
+				{
+					pageHeight = pageHeight * subreportDpi / parentDpi;
+				}
+
 				// sum parent page margins
-				topMargin += parentFiller.jasperReport.getTopMargin();
-				bottomMargin += parentFiller.jasperReport.getBottomMargin();
-				
-				parentFiller = 
-					parentFiller.parent != null && parentFiller.parent.getFiller() instanceof JRBaseFiller 
-						? (JRBaseFiller) parentFiller.parent.getFiller() 
+				int parentTopMargin = parentFiller.jasperReport.getTopMargin();
+				int parentBottomMargin = parentFiller.jasperReport.getBottomMargin();
+				if (parentDpi != subreportDpi)
+				{
+					parentTopMargin = parentTopMargin * subreportDpi / parentDpi;
+					parentBottomMargin = parentBottomMargin * subreportDpi / parentDpi;
+				}
+				topMargin += parentTopMargin;
+				bottomMargin += parentBottomMargin;
+
+				parentFiller =
+					parentFiller.parent != null && parentFiller.parent.getFiller() instanceof JRBaseFiller
+						? (JRBaseFiller) parentFiller.parent.getFiller()
 						: null;//FIXMEBOOK
 			}
 			while (parentFiller != null);
-			
+
 			List<JRValidationFault> brokenRules = new ArrayList<>();
-			JRVerifier.verifyBandHeights(brokenRules, 
+			JRVerifier.verifyBandHeights(brokenRules,
 					jasperReport, pageHeight, topMargin, bottomMargin);
 			
 			if (!brokenRules.isEmpty())

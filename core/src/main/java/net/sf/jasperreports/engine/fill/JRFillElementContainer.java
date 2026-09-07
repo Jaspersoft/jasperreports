@@ -739,6 +739,10 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 						double dpiScale = (parentDpi != subreportDpi) ? (double) parentDpi / subreportDpi : 1d;
 
 						Collection<JRPrintElement> printElements = subreport.getPrintElements();
+						if (dpiScale != 1d)
+						{
+							subreport.scaleTemplatePenWidths(printElements, dpiScale);
+						}
 						addSubElements(printContainer, element, printElements, dpiScale);
 						int contentsWidth = subreport.getPrintContentsWidth();
 						if (dpiScale != 1d)
@@ -800,6 +804,7 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 						printElement.setY(element.getRelativeY() + (int) Math.round(printElement.getY() * dpiScale));
 						printElement.setWidth((int) Math.round(printElement.getWidth() * dpiScale));
 						printElement.setHeight((int) Math.round(printElement.getHeight() * dpiScale));
+						OffsetElementsUtil.scaleChildren(printElement, dpiScale);
 					}
 					else
 					{
