@@ -134,7 +134,7 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 		if (elements.size() == 1 && elements.get(0) instanceof OffsetElements)
 		{
 			OffsetElements offsetElements = (OffsetElements) elements.get(0);
-			if (offsetElements.getOffsetX() == 0 && offsetElements.getOffsetY() == 0)
+			if (offsetElements.getOffsetX() == 0 && offsetElements.getOffsetY() == 0 && offsetElements.getDpiScale() == 1d)
 			{
 				Collection<? extends JRPrintElement> elementsList = offsetElements.getElements();
 				if (elementsList instanceof VirtualizableElementList)
