@@ -25,16 +25,22 @@ package net.sf.jasperreports.engine.analytics.dataset;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.analytics.data.Axis;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_axis,
+	"levels"
+	})
 @JsonDeserialize(as = DesignDataAxis.class)
 public interface DataAxis extends JRCloneable
 {

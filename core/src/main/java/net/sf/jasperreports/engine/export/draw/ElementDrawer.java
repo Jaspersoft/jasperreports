@@ -186,7 +186,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 					element.getX() + offsetX + leftOffset / 3, 
 					element.getY() + offsetY + topPenWidth / 3
 					);
-				if(width > (leftOffset + rightOffset) / 3)
+				if (width > (leftOffset + rightOffset) / 3)
 				{
 					grx.scale(
 						(width - (leftOffset + rightOffset) / 3) 
@@ -276,7 +276,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 					element.getX() + offsetX + leftPenWidth / 3, 
 					element.getY() + offsetY + topOffset / 3
 					);
-				if(height > (topOffset + bottomOffset) / 3)
+				if (height > (topOffset + bottomOffset) / 3)
 				{
 					grx.scale(
 						1,
@@ -367,7 +367,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 					element.getX() + offsetX + leftOffset / 3, 
 					element.getY() + offsetY + height - bottomPenWidth / 3
 					);
-				if(width > (leftOffset + rightOffset) / 3)
+				if (width > (leftOffset + rightOffset) / 3)
 				{
 					grx.scale(
 						(width - (leftOffset + rightOffset) / 3) 
@@ -458,7 +458,7 @@ public abstract class ElementDrawer<T extends JRPrintElement>
 					element.getX() + offsetX + width - rightPenWidth / 3, 
 					element.getY() + offsetY + topOffset / 3
 					);
-				if(height > (topOffset + bottomOffset) / 3)
+				if (height > (topOffset + bottomOffset) / 3)
 				{
 					grx.scale(
 						1,

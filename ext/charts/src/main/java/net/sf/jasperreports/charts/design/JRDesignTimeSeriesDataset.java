@@ -126,7 +126,7 @@ public class JRDesignTimeSeriesDataset extends JRDesignChartDataset implements J
 	 */
 	public JRTimeSeries removeTimeSeries( JRTimeSeries timeSeries ) 
 	{
-		if( timeSeries != null)
+		if ( timeSeries != null)
 		{
 			int idx = timeSeriesList.indexOf(timeSeries);
 			if (idx >= 0)

@@ -13,12 +13,5 @@
 		<sample.base.name>GenericElement</sample.base.name>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports-spring</artifactId>
-			<version>${revision}</version>
-			<scope>runtime</scope>
-			<optional>false</optional>
-		</dependency>
 	</dependencies>
 </project>

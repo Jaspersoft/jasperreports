@@ -1,4 +1,4 @@
-<jasperReport name="OrphanFooterReport.51" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1951f7e6-f9e5-481d-94a6-ddc3db1e1d41">
+<jasperReport name="OrphanFooterReport.51" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1951f7e6-f9e5-481d-94a6-ddc3db1e1d41">
 	<property name="net.sf.jasperreports.data.adapter" value="net/sf/jasperreports/data/EmptyDataAdapter.1.jrdax"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans"/>
 	<parameter name="TXT" forPrompting="false" class="java.lang.String">

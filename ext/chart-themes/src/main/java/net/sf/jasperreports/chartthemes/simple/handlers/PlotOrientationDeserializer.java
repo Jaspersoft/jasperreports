@@ -60,7 +60,7 @@ public class PlotOrientationDeserializer extends StdDeserializer<PlotOrientation
 		JsonNode node = oc.readTree(p);
 		
 		return convert(node.textValue());
-    }
+	}
 
 	public static PlotOrientation convert(String value)
 	{

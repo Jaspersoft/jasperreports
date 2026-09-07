@@ -217,7 +217,7 @@ public final class JasperCompileManager
 	{
 		File sourceFile = new File(sourceFileName);
 
-		JasperDesign jasperDesign = JRXmlLoader.load(sourceFileName);
+		JasperDesign jasperDesign = JRXmlLoader.load(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperDesign.getName() + ".jasper");
 		String destFileName = destFile.toString();
@@ -243,7 +243,7 @@ public final class JasperCompileManager
 		String destFileName
 		) throws JRException
 	{
-		JasperDesign jasperDesign = JRXmlLoader.load(sourceFileName);
+		JasperDesign jasperDesign = JRXmlLoader.load(jasperReportsContext, sourceFileName);
 
 		compileToFile(jasperDesign, destFileName);
 	}
@@ -276,9 +276,9 @@ public final class JasperCompileManager
 	 * @param sourceFileName XML source file name
 	 * @return compiled report design object 
 	 */
-	public  JasperReport compile(String sourceFileName) throws JRException
+	public JasperReport compile(String sourceFileName) throws JRException
 	{
-		JasperDesign jasperDesign = JRXmlLoader.load(sourceFileName);
+		JasperDesign jasperDesign = JRXmlLoader.load(jasperReportsContext, sourceFileName);
 
 		return compile(jasperDesign);
 	}
@@ -297,7 +297,7 @@ public final class JasperCompileManager
 		OutputStream outputStream
 		) throws JRException
 	{
-		JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+		JasperDesign jasperDesign = JRXmlLoader.load(jasperReportsContext, inputStream);
 
 		compileToStream(jasperDesign, outputStream);
 	}
@@ -331,7 +331,7 @@ public final class JasperCompileManager
 	 */
 	public JasperReport compile(InputStream inputStream) throws JRException
 	{
-		JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+		JasperDesign jasperDesign = JRXmlLoader.load(jasperReportsContext, inputStream);
 
 		return compile(jasperDesign);
 	}
@@ -361,7 +361,7 @@ public final class JasperCompileManager
 	 */
 	public Collection<JRValidationFault> verify(JasperDesign jasperDesign)
 	{
-		return JRVerifier.verifyDesign(jasperDesign);
+		return JRVerifier.verifyDesign(jasperReportsContext, jasperDesign, null);
 	}
 
 
@@ -422,7 +422,7 @@ public final class JasperCompileManager
 		File sourceFile = new File(sourceFileName);
 
 		/* We need the report name. */
-		JRReport report = (JRReport)JRLoader.loadObject(sourceFile);
+		JRReport report = (JRReport)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), report.getName() + ".jasper.jrxml");
 		String destFileName = destFile.toString();
@@ -445,7 +445,7 @@ public final class JasperCompileManager
 		String destFileName
 		) throws JRException
 	{
-		JRReport report = (JRReport)JRLoader.loadObjectFromFile(sourceFileName);
+		JRReport report = (JRReport)JRLoader.loadObject(jasperReportsContext, new File(sourceFileName));
 
 		writeToXmlFile(report, destFileName);
 	}
@@ -484,7 +484,7 @@ public final class JasperCompileManager
 		OutputStream outputStream
 		) throws JRException
 	{
-		JRReport report = (JRReport)JRLoader.loadObject(inputStream);
+		JRReport report = (JRReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		writeToXmlStream(report, outputStream);
 	}
@@ -813,7 +813,7 @@ public final class JasperCompileManager
 
 		try
 		{
-			Constructor<? extends JRCompiler>  constructor = compilerClass.getConstructor(JasperReportsContext.class);//FIXMECONTEXT check all constructors like that
+			Constructor<? extends JRCompiler> constructor = compilerClass.getConstructor(JasperReportsContext.class);//FIXMECONTEXT check all constructors like that
 			compiler = constructor.newInstance(jasperReportsContext);
 		}
 		catch (Exception e)
@@ -840,7 +840,7 @@ public final class JasperCompileManager
 		String compilerClassName = getCompilerClassProperty();
 		if (compilerClassName == null || compilerClassName.trim().length() == 0)
 		{
-			String language = jasperDesign.getLanguage();
+			String language = jasperDesign.getLanguage() == null ? JRReport.LANGUAGE_JAVA : jasperDesign.getLanguage();
 			compilerClassName = JRPropertiesUtil.getInstance(jasperReportsContext).getProperty(JRCompiler.COMPILER_PREFIX + language);
 			if (compilerClassName == null || compilerClassName.trim().length() == 0)
 			{
@@ -884,7 +884,7 @@ public final class JasperCompileManager
 			}
 		}
 		catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException 
-			| IllegalAccessException |  InstantiationException e)
+			| IllegalAccessException | InstantiationException e)
 		{
 			throw new JRException(
 					EXCEPTION_MESSAGE_KEY_INSTANTIATE_REPORT_COMPILER_FAILURE,

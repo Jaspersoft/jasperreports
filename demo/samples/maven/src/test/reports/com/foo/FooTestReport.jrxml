@@ -1,0 +1,9 @@
+<jasperReport name="FooTestReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="a900a3ec-4701-4286-a652-fb21575845e6">
+	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
+	<title height="782">
+		<printWhenExpression><![CDATA[com.foo.FooTestClass.isToPrint()]]></printWhenExpression>
+		<element kind="staticText" uuid="fd7b67ac-fe76-4008-b276-ca666fd05561" mode="Opaque" x="0" y="0" width="555" height="90" backcolor="#DDDDDD" hTextAlign="Center" vTextAlign="Middle" style="Sans_Normal">
+			<text><![CDATA[Foo Test Report]]></text>
+		</element>
+	</title>
+</jasperReport>

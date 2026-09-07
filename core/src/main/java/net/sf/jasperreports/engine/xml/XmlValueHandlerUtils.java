@@ -32,7 +32,6 @@ import org.apache.commons.logging.LogFactory;
 
 import net.sf.jasperreports.engine.export.JRXmlExporter;
 import net.sf.jasperreports.extensions.ExtensionsEnvironment;
-import net.sf.jasperreports.extensions.ExtensionsRegistry;
 
 /**
  * Class the provides access to {@link XmlValueHandler XML value handlers}.
@@ -76,14 +75,11 @@ public class XmlValueHandlerUtils
 		Object cacheKey = ExtensionsEnvironment.getExtensionsCacheKey();
 		synchronized (cache)
 		{
-			List<XmlValueHandler> handlers = cache.get(cacheKey);
-			if (handlers == null)
-			{
-				ExtensionsRegistry extensionsRegistry = ExtensionsEnvironment.getExtensionsRegistry();
-				handlers = extensionsRegistry.getExtensions(XmlValueHandler.class);
-				cache.put(cacheKey, handlers);
-			}
-			return handlers;
+			return 
+				cache.computeIfAbsent(
+					cacheKey,
+					k -> ExtensionsEnvironment.getExtensionsRegistry().getExtensions(XmlValueHandler.class)
+					);
 		}
 	}
 

@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configReference>
+
+  <category key="net.sf.jasperreports.metadata.property.category:export">
+    <name>Report Export</name>
+  </category>
+
+
+  <!-- net.sf.jasperreports.export.pdf.128.bit.key -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.128.bit.key">
+    <description>
+Property that specifies whether the encryption key is 128 bits.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#is128BitKey()">is128BitKey()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.bookmarks.enabled -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.bookmarks.enabled">
+    <description>
+Property that determines if the bookmarks are to be created or not in the resulting PDF document.
+    </description>
+  </configProperty>
+  
+  
+  <!-- 	net.sf.jasperreports.export.pdf.classic.document.language -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.classic.document.language">
+    <description>
+The language of the document, used for glyph substitution when Apache FOP is present
+and the <code>net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled</code>
+property is set.
+<p>
+See <a href="https://github.com/LibrePDF/OpenPDF/blob/0c9c4ca393b01444b7cb13bb1d12da202bd0d458/openpdf/src/main/java/com/lowagie/text/Document.java#L206">the OpenPDF code</a>.
+</p>
+    </description>
+  </configProperty>
+  
+  
+  <!-- 	net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.classic.fop.glyph.substitution.enabled">
+    <description>
+Flag that determines whether glyph substitution based on Apache FOP is enabled.
+The flag is set to <code>false</code> by default, disabling glyph substitution.
+<p>
+When Apache FOP is present on the classpath, glyph substitution can only be disabled
+when using OpenPDF 1.3.32 and newer, or a version patched by Jaspersoft (1.3.30.jaspersoft.x from 
+<a href="https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/com/github/librepdf/openpdf/">https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/com/github/librepdf/openpdf/</a>).
+The property needs to be explicitly set to <code>true</code> when using an unpatched version of OpenPDF older than 1.3.32 together with Apache FOP. 
+</p>
+<p>
+Also see the <a href="#net.sf.jasperreports.export.pdf.classic.document.language">net.sf.jasperreports.export.pdf.classic.document.language</a>
+property which can be used to control Apache FOP glyph substitution.
+</p>
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.collapse.missing.bookmark.levels -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.collapse.missing.bookmark.levels">
+    <description>
+Property that determines if missing bookmark levels are collapsed, or if 
+empty bookmarks are created for the missing levels.
+<p>
+The property dictates what happens when a filled report contains an anchor
+having a bookmark level that is not the immediate successor of its parent
+(e.g. an anchor with bookmark level 3 follows immediately after a bookmark
+of level 1).
+If the property is not set, an empty bookmark is created for the missing
+level(s) in order to preserve the original level of the bookmark.
+When the property is set, the level of the bookmark will be collapsed and
+the bookmark will be created as a direct descendant of its nearest parent.
+</p>
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.compressed -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.compressed">
+    <description>
+Property that specifies whether the PDF document should be compressed.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isCompressed()">isCompressed()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.create.batch.mode.bookmarks -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.create.batch.mode.bookmarks">
+    <description>
+Property that specifies whether the PDF document should contain an outline section.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isCreatingBatchModeBookmarks()">isCreatingBatchModeBookmarks()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.display.metadata.title -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.display.metadata.title">
+    <description>
+Property that specifies whether the document title should be displayed in the title bar instead of the file name. Should be set to true for accessible documents that provide a document title.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isDisplayMetadataTitle()">isDisplayMetadataTitle()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.encrypted -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.encrypted">
+    <description>
+Property that specifies  whether the final PDF document should be encrypted.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isEncrypted()">isEncrypted()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.even.page.offset.x -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.even.page.offset.x">
+    <description>
+Property that specifies the X offset (in pixels) for moving elements in even page number pages, to simulate gutter margins.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfReportConfiguration.html#getEvenPageOffsetX()">getEvenPageOffsetX()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.even.page.offset.y -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.even.page.offset.y">
+    <description>
+Property that specifies the Y offset (in pixels) for moving elements in even page number pages, to simulate gutter margins.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfReportConfiguration.html#getEvenPageOffsetY()">getEvenPageOffsetY()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.border.style -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.border.style">
+    <description>
+Property that specifies the PDF-compatible border style for input fields. Possible values are:
+<ul>
+<li><code>Solid</code> - specifies a solid border</li>
+<li><code>Dashed</code> - specifies a dashed border</li>
+<li><code>Beveled</code> - specifies a beveled border</li>
+<li><code>Inset</code> - specifies an inset border</li>
+<li><code>Underline</code> - specifies an underline border</li>
+</ul>
+When this property is not set, the engine looks at the JasperReports element border settings. If the pen style is 
+'<code>Solid</code>' or '<code>Dashed</code>', these styles will be applied, otherwise the '<code>Solid</code>' style will be considered by default.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.check.type -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.check.type">
+    <description>
+Property applicable to check input fields in a PDF form that specifies the check type decoration. Possible values are:
+<ul>
+<li><code>Check</code> - specifies a checkbox type decoration</li>
+<li><code>Circle</code> - specifies a circle tipe decoration</li>
+<li><code>Cross</code> - specifies a cross type decoration</li>
+<li><code>Diamond</code> - specifies a diamond type decoration</li>
+<li><code>Square</code> - specifies a square type decoration</li>
+<li><code>Star</code> - specifies a star type decoration</li>
+</ul>
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.checked -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.checked">
+    <description>
+Flag property applicable for check input fields that specifies if the input field is checked.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.choice.separators -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.choice.separators">
+    <description>
+Specifies the set of characters used as choices separator in the choices list. 
+See <a href="#net.sf.jasperreports.export.pdf.field.choices">net.sf.jasperreports.export.pdf.field.choices</a> property.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.choices -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.choices">
+    <description>
+Specifies the list of choices for an input field such as list or combobox. Choices in the list are delimited by a set of separator characters provided 
+by the <a href="#net.sf.jasperreports.export.pdf.field.choice.separators">net.sf.jasperreports.export.pdf.field.choice.separators</a> property. 
+If no <code>net.sf.jasperreports.export.pdf.field.choice.separators</code> property is set, the default choices separator is "|".<br/>
+Example: <code>'One'|'Two'|'Three'</code>
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.combo.edit -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.combo.edit">
+    <description>
+Flag property applicable for combobox input fields that specifies if the combobox field is editable. By default the combobox is not editable.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.name -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.name">
+    <description>
+Property that specifies the field name, which serves as unique identifier within the PDF form. 
+If not specified, the field name is generated using the report element UUID.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.read.only -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.read.only">
+    <description>
+Flag property that specifies if the input field is read-only. As a known limitation, this property is not applicable for radio group fields.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.text.multiline -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.text.multiline">
+    <description>
+Flag property applicable for input text fields that specifies if the input text is also multiline.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.type -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.type">
+    <description>
+Property that specifies the input field type in PDF forms. Possible values are:
+<ul>
+<li><code>Text</code> - specifies a text input field</li>
+<li><code>Combo</code> - specifies a combobox input field</li>
+<li><code>List</code> - specifies a list input field</li>
+<li><code>Check</code> - specifies a checkbox input field</li>
+<li><code>Radio</code> - specifies a radio group option input field</li>
+</ul>
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.field.value -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.field.value">
+    <description>
+Property that specifies the initial text content for the text field or the initial selected value in 
+list or combobox field, depending on the PDF form field type of the element. When this property is missing,
+the actual text content of the text element is used.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.font.{arbitrary_name} -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.font.{arbitrary_name}">
+    <description>
+Prefix of properties that specify font files for the PDF exporter.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.fontdir.{arbitrary_name} -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.fontdir.{arbitrary_name}">
+    <description>
+Prefix of properties that specify font directories for the PDF exporter.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.force.linebreak.policy -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.force.linebreak.policy">
+    <description>
+Property that specifies whether the PDF exporter should use a <a href="https://librepdf.github.io/OpenPDF/docs-1-3-17/com/lowagie/text/SplitCharacter.html">SplitCharacter</a> 
+implementation to ensure that PDF text wrap behavior is the same as in AWT.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfReportConfiguration.html#isForceLineBreakPolicy()">isForceLineBreakPolicy()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.force.svg.shapes -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.force.svg.shapes">
+    <description>
+Property that specifies whether the rendering of SVG images using shapes on the PDF Graphics2D context should be forced.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfReportConfiguration.html#isForceSvgShapes()">isForceSvgShapes()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.ignore.hyperlink -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.ignore.hyperlink">
+    <description>
+This property is used by the PDF exporter to determine if a certain hyperlink should be activated or not. 
+This flag can be controlled at hyperlink declaration level by using the hyperlink parameter with the same name.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.javascript -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.javascript">
+    <description>
+Property that contains the user defined JavaScript piece of code to be inserted into the generated PDF document.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getPdfJavaScript()">getPdfJavaScript()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.justified.letter.spacing -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.justified.letter.spacing">
+    <description>
+Property that determines whether justified text alignment can modify letter spacing in words. Default value is <code>false</code>.
+    </description>
+  </configProperty>
+  
+  
+  <!-- 	net.sf.jasperreports.export.pdf.legacy.target.blank.links -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.legacy.target.blank.links">
+    <description>
+Flag that enables legacy <code>hyperlinkTarget="Blank"</code> links in PDF.
+<br/>
+Before version 6.21.0, the PDF exporter created <code>hyperlinkTarget="Blank"</code> links using a JavaScript action
+that worked in Adobe Acrobat (and possibly other viewers), but not in the PDF viewers built into the Firefox and Chrome browsers.
+Starting from version 6.21.0, standard PDF links are created for elements with <code>hyperlinkTarget="Blank"</code>.
+This flag can be set to reinstate the pre 6.21.0 behaviour.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.legacy.text.measuring.fix -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.legacy.text.measuring.fix">
+    <description>
+This property controls the addition of 1 pixel to the PDF text rendering area to compensate for the fact that the legacy text measuring code was truncating 
+the text height causing the last line of text in PDF to not fit in certain cases, especially at small font sizes.
+This should be enabled only when the legacy text measuring is enabled with the <a href="#net.sf.jasperreports.legacy.text.measuring">net.sf.jasperreports.legacy.text.measuring</a> property, 
+otherwise the additional pixel in PDF text rendering is not needed since the newer text measuring code no longer truncates text height.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.pdf.metadata.author -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.metadata.author">
+    <description>
+Property that contains the author information to use for the generated PDF metadata.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getMetadataAuthor()">getMetadataAutor()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.metadata.creator -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.metadata.creator">
+    <description>
+Property that contains the creator information to use for the generated PDF metadata.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getMetadataCreator()">getMetadataCreator()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.metadata.keywords -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.metadata.keywords">
+    <description>
+Property that contains the keywords to use for the generated PDF metadata.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getMetadataKeywords()">getMetadataKeywords()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.metadata.producer -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.metadata.producer">
+    <description>
+Property that contains the producer information to use for the generated PDF metadata.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getMetadataProducer()">getMetadataProducer()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.metadata.subject -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.metadata.subject">
+    <description>
+Property that contains the subject information to use for the generated PDF metadata.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getMetadataSubject()">getMetadataSubject()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.metadata.title -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.metadata.title">
+    <description>
+Property that contains the title information to use for the generated PDF metadata.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getMetadataTitle()">getMetadataTitle()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.odd.page.offset.x -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.odd.page.offset.x">
+    <description>
+Property that specifies the X offset (in pixels) for moving elements in odd page number pages, to simulate gutter margins.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfReportConfiguration.html#getOddPageOffsetX()">getOddPageOffsetX()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.odd.page.offset.y -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.odd.page.offset.y">
+    <description>
+Property that specifies the Y offset (in pixels) for moving elements in odd page number pages, to simulate gutter margins.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfReportConfiguration.html#getOddPageOffsetY()">getOddPageOffsetY()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.owner.password -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.owner.password">
+    <description>
+Property that contains the password belonging to the owner of the document, if it is encrypted. If the owner password is not specified, but the PDF is 
+encrypted, then the password will be a random string.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getOwnerPassword()">getOwnerPassword()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.permissions.allowed -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.permissions.allowed">
+    <description>
+Property that contains the allowed user permissions of the PDF document, if it is encrypted. Allowed values are one or many the permission names enumerated in  
+<api href="net/sf/jasperreports/pdf/type/PdfPermissionsEnum.html">PdfPermissionsEnum</api> class, separated by a pipe (|) sign:
+<ul>
+<li><code>ALL</code> - all user permissions are allowed</li>
+<li><code>ASSEMBLY</code> - assembly permission allowed</li>
+<li><code>COPY</code> - copy permission allowed</li>
+<li><code>DEGRADED_PRINTING</code> - degraded printing permission allowed</li>
+<li><code>FILL_IN</code> - fill in forms permission allowed</li>
+<li><code>MODIFY_ANNOTATIONS</code> - modify annotation permission allowed</li>
+<li><code>MODIFY_CONTENTS</code> - modify contents permission allowed</li>
+<li><code>PRINTING</code> - print permission allowed</li>
+<li><code>SCREENREADERS</code> - screen readers permission allowed</li>
+</ul>
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getAllowedPermissions()">getAllowedPermissions()</api> PDF export configuration setting. 
+By default no user permissions are allowed at all.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.permissions.denied -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.permissions.denied">
+    <description>
+Property that contains the denied user permissions of the PDF document, if it is encrypted. This property works in conjunction with 
+the <a href="#net.sf.jasperreports.export.pdf.permissions.allowed">net.sf.jasperreports.export.pdf.permissions.allowed</a>. If present, denied permissions 
+will be excluded from the allowed values. This property may contain one or many permission names enumerated in  
+<api href="net/sf/jasperreports/pdf/type/PdfPermissionsEnum.html">PdfPermissionsEnum</api> class, separated by a pipe (|) sign:
+<ul>
+<li><code>ALL</code> - all user permissions are denied</li>
+<li><code>ASSEMBLY</code> - assembly permission denied</li>
+<li><code>COPY</code> - copy permission denied</li>
+<li><code>DEGRADED_PRINTING</code> - degraded printing permission denied</li>
+<li><code>FILL_IN</code> - fill in forms permission denied</li>
+<li><code>MODIFY_ANNOTATIONS</code> - modify annotation permission denied</li>
+<li><code>MODIFY_CONTENTS</code> - modify contents permission denied</li>
+<li><code>PRINTING</code> - print permission denied</li>
+<li><code>SCREENREADERS</code> - screen readers permission denied</li>
+</ul>
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getDeniedPermissions()">getDeniedPermissions()</api> PDF export configuration setting. 
+By default there are no user permissions allowed for the document.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.print.scaling -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.print.scaling">
+    <description>
+Property that specifies the print scaling preference in the PDF print dialog.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getPrintScaling()">getPrintScaling()</api> PDF export configuration setting.
+<br/>
+Possible values are <code>default</code> and <code>none</code>.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.size.page.to.content -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.size.page.to.content">
+    <description>
+Property which specifies if the size of each page should be increased to accommodate its content.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.l -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.l">
+    <description>
+Property used to associate a PDF L tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.li -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.li">
+    <description>
+Property used to associate a PDF LI tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.lbl -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.lbl">
+    <description>
+Property used to associate a PDF Lbl tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.lbody -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.lbody">
+    <description>
+Property used to associate a PDF LBody tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.h1 -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.h1">
+    <description>
+Property used to associate a PDF H1 tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.h2 -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.h2">
+    <description>
+Property used to associate a PDF H2 tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.h3 -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.h3">
+    <description>
+Property used to associate a PDF H3 tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.h4 -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.h4">
+    <description>
+Property used to associate a PDF H4 tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.h5 -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.h5">
+    <description>
+Property used to associate a PDF H5 tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.h6 -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.h6">
+    <description>
+Property used to associate a PDF H6 tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.reference -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.reference">
+    <description>
+Property used to associate a PDF Reference tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.note -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.note">
+    <description>
+Property used to associate a PDF Note tag with this element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.language -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.language">
+    <description>
+Property that specifies the language that the exporter should put in the language tag of the generated PDF.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getTagLanguage()">getTagLanguage()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tag.attribute.ActualText -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tag.attribute.ActualText">
+    <description>
+Property that specifies the actual text that the screen reader should read for the current element.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.tagged -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.tagged">
+    <description>
+Property that specifies whether the exporter should put structure tags in the generated PDF.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isTagged()">isTagged()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.use.cmyk.colors -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.use.cmyk.colors">
+    <description>
+Property whose value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isUseCMYKColors()">isUseCMYKColors()</api> export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.user.password -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.user.password">
+    <description>
+Property that contains the user password needed to open the document, if it is encrypted.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getUserPassword()">getUserPassword()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.version -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdf.version">
+    <description>
+Property that specifies the version of the generated PDF.
+Possible values are 1.2, 1.3, 1.4, 1.5, 1.6, 1.7 and 2.0.
+Single digit values 2, 3, 4, 5, 6 and 7 are also accepted for backward compatibility as aliases for the 1.x versions.
+<br/>
+Its value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getPdfVersion()">getPdfVersion()</api> PDF export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdfa.conformance -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdfa.conformance">
+    <description>
+Property whose value is used as default for the <api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getPdfaConformance()">getPdfaConformance()</api> 
+export configuration setting. It specifies the conformance level of the PDF/A document. Possible values are: <code>pdfa1a</code>, <code>pdfa1b</code> and <code>none</code>.
+<br/>
+By default, this property is set to <code>none</code>. 
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdfa.embed.icc.profile -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdfa.embed.icc.profile">
+    <description>
+Property whose value is used as default for the 
+<api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#isEmbedIccProfile()">isEmbedIccProfile()</api> export configuration setting.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdfa.icc.profile.path -->
+  
+  <configProperty name="net.sf.jasperreports.export.pdfa.icc.profile.path">
+    <description>
+Property whose value is used as default for the <api href="net/sf/jasperreports/pdf/PdfExporterConfiguration.html#getIccProfilePath()">getIccProfilePath()</api> 
+export configuration setting. It specifies the path to the ICC profile file for the PDF/A compliant documents.
+    </description>
+  </configProperty>
+  
+  
+  <!-- net.sf.jasperreports.export.pdf.producer.factory -->
+
+  <configProperty name="net.sf.jasperreports.export.pdf.producer.factory">
+    <description>
+Property that specifies the factory class used to create the PDF producer implementation.
+The value should be the fully qualified name of a class that implements the
+<api href="net/sf/jasperreports/pdf/common/PdfProducerFactory.html">PdfProducerFactory</api> interface.
+<br/>
+By default, this property is set to <code>net.sf.jasperreports.pdf.classic.ClassicPdfProducerFactory</code>.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.pdf.tagger.factory -->
+
+  <configProperty name="net.sf.jasperreports.export.pdf.tagger.factory">
+    <description>
+Property that specifies the factory class used to create the PDF tagger implementation responsible for
+inserting tags into the generated PDF document for accessibility and/or archiving purposes.
+The value should be the fully qualified name of a class that implements the
+<api href="net/sf/jasperreports/pdf/common/PdfTaggerFactory.html">PdfTaggerFactory</api> interface.
+<br/>
+By default, this property is set to <code>net.sf.jasperreports.pdf.common.DefaultPdfTaggerFactory</code>,
+which raises an error if the report is required to produce tagged PDF.
+<br/>
+To avoid the error and thus ignore the tagged PDF export settings, you should set this property to 
+<code>net.sf.jasperreports.pdf.common.SilentPdfTaggerFactory</code>, which produces documents without tags.
+<br/>
+For proper tagged PDF output, please consider upgrading to 
+<a href="https://www.jaspersoft.com/products/jaspersoft-commercial">JasperReports Library Professional</a>, 
+from <a href="https://www.jaspersoft.com/contact-us">Jaspersoft</a>.
+    </description>
+  </configProperty>
+
+
+  <!-- net.sf.jasperreports.export.pdf.use.saved.line.breaks -->
+
+  <configProperty name="net.sf.jasperreports.export.pdf.use.saved.line.breaks">
+    <description>
+Property that determines whether the PDF exporter should make use of the text line break positions saved during the report fill.
+The property is only effective when the <code>net.sf.jasperreports.text.save.line.breaks</code> flag is set.
+<br/>
+The property assumes that the same font is used during report fill and for PDF exporting, therefore using font extensions for texts is recommended.
+    </description>
+  </configProperty>
+  
+  
+</configReference>

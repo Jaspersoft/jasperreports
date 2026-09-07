@@ -68,7 +68,6 @@ public class DataSourceApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill1();
 		fill2();
 		fill3();
@@ -100,7 +99,7 @@ public class DataSourceApp extends AbstractSampleApp
 		parameters.put("DataFile", "CustomDataSource.java");
 
 		JasperFillManager.fillReportToFile("target/reports/DataSourceReport.jasper", parameters, new CustomDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -116,7 +115,7 @@ public class DataSourceApp extends AbstractSampleApp
 		parameters.put("DataFile", "CustomTableModel.java");
 
 		JasperFillManager.fillReportToFile("target/reports/DataSourceReport.jasper", parameters, new JRTableModelDataSource(new CustomTableModel()));
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -132,7 +131,7 @@ public class DataSourceApp extends AbstractSampleApp
 		parameters.put("DataFile", "CustomBeanFactory.java - Bean Array");
 
 		JasperFillManager.fillReportToFile("target/reports/DataSourceReport.jasper", parameters, new JRBeanArrayDataSource(CustomBeanFactory.getBeanArray()));
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -148,7 +147,7 @@ public class DataSourceApp extends AbstractSampleApp
 		parameters.put("DataFile", "CustomBeanFactory.java - Bean Collection");
 
 		JasperFillManager.fillReportToFile("target/reports/DataSourceReport.jasper", parameters, new JRBeanCollectionDataSource(CustomBeanFactory.getBeanCollection()));
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -159,7 +158,7 @@ public class DataSourceApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/DataSourceReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -170,7 +169,7 @@ public class DataSourceApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/DataSourceReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -181,7 +180,7 @@ public class DataSourceApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/DataSourceReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -192,7 +191,7 @@ public class DataSourceApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/DataSourceReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -203,7 +202,7 @@ public class DataSourceApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/DataSourceReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -226,7 +225,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -252,7 +251,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -275,7 +274,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -298,7 +297,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -321,7 +320,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -344,7 +343,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -367,7 +366,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -390,7 +389,7 @@ public class DataSourceApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	

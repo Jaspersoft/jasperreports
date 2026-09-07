@@ -69,7 +69,7 @@ public class JRBaseXyDataset extends JRBaseChartDataset implements JRXyDataset
 		if (srcXySeries != null && srcXySeries.length > 0)
 		{
 			xySeries = new JRXySeries[srcXySeries.length];
-			for(int i = 0; i < xySeries.length; i++)
+			for (int i = 0; i < xySeries.length; i++)
 			{
 				xySeries[i] = factory.getXySeries(srcXySeries[i]);
 			}

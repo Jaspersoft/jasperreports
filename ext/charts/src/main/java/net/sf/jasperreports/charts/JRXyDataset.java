@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import net.sf.jasperreports.charts.design.JRDesignXyDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * This dataset is a wrapper for data series made of (x, y) value pairs and is used for 
@@ -35,6 +37,16 @@ import net.sf.jasperreports.charts.design.JRDesignXyDataset;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
+	"series"
+	})
 @JsonTypeName("xy")
 @JsonDeserialize(as = JRDesignXyDataset.class)
 public interface JRXyDataset extends JRChartDataset

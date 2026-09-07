@@ -240,7 +240,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 			FontExtensionsReceiver receiver, boolean loadFonts) throws SAXException
 	{
 		NodeList nodeList = fontFamiliesNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.ELEMENT_NODE)
@@ -294,7 +294,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		}
 
 		NodeList nodeList = fontFamilyNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.ELEMENT_NODE)
@@ -413,7 +413,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		Map<String,String> exportFonts = new HashMap<>();
 		
 		NodeList nodeList = exportFontsNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (
@@ -444,7 +444,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		}
 
 		NodeList nodeList = fontSetNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.ELEMENT_NODE)
@@ -479,7 +479,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		}
 
 		NodeList nodeList = familyNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.ELEMENT_NODE)
@@ -503,7 +503,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 	 */
 	public static String getFontsXml(List<FontFamily> fontFamilies)
 	{
-		if(fontFamilies != null)
+		if (fontFamilies != null)
 		{
 			FontExtensionsContainer extensions = new SimpleFontExtensionsContainer(fontFamilies, null);
 			StringBuilder sb = new StringBuilder();
@@ -534,7 +534,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		writer.startElement("fontFamilies");
 		
 		List<? extends FontFamily> fontFamilies = extensions.getFontFamilies();
-		if(fontFamilies != null)
+		if (fontFamilies != null)
 		{
 			for (FontFamily fontFamily : fontFamilies)
 			{
@@ -600,7 +600,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 				if (locales != null)
 				{
 					writer.startElement(NODE_locales);
-					for(String locale : locales)
+					for (String locale : locales)
 					{
 						writer.writeCDATAElement(NODE_locale, locale);
 					}
@@ -619,7 +619,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 	protected static void writeExportFonts(JRXmlWriteHelper writer, 
 			Map<String, String> exportFonts) throws IOException
 	{
-		if(exportFonts != null)
+		if (exportFonts != null)
 		{
 			writer.startElement(NODE_exportFonts);
 			for (Entry<String, String> exportFont : exportFonts.entrySet())
@@ -688,7 +688,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 			return;
 		}
 		
-		if(fontSet.getName() == null)
+		if (fontSet.getName() == null)
 		{
 			log.error("Font set name is required.");
 			return;
@@ -697,7 +697,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		writer.startElement(NODE_fontSet);
 		writer.addAttribute(ATTRIBUTE_name, fontSet.getName());
 			
-		if(fontSet instanceof SimpleFontSet)
+		if (fontSet instanceof SimpleFontSet)
 		{
 			Map<String, String> exportFonts = ((SimpleFontSet) fontSet).getExportFonts();
 			writeExportFonts(writer, exportFonts);
@@ -723,7 +723,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 			return;
 		}
 		
-		if(family.getFamilyName() == null)
+		if (family.getFamilyName() == null)
 		{
 			log.error("Font set name is required.");
 			return;
@@ -901,7 +901,7 @@ public final class SimpleFontExtensionHelper implements ErrorHandler
 		Set<String> locales = new HashSet<>();
 		
 		NodeList nodeList = localesNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (

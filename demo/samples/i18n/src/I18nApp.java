@@ -72,7 +72,6 @@ public class I18nApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fillDefault();
 		pdf();
 		xmlEmbed();
@@ -104,7 +103,7 @@ public class I18nApp extends AbstractSampleApp
 //					parameters.put("array", aw);
 			parameters.put(JRParameter.REPORT_LOCALE, locale);
 			JasperFillManager.fillReportToFile("target/reports/I18nReport.jasper", parameters, new JREmptyDataSource());
-			System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -118,7 +117,7 @@ public class I18nApp extends AbstractSampleApp
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("number", 1234567 + Math.random());
 		JasperFillManager.fillReportToFile("target/reports/I18nReport.jasper", parameters, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -155,7 +154,7 @@ public class I18nApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/I18nReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -166,7 +165,7 @@ public class I18nApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/I18nReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -177,7 +176,7 @@ public class I18nApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/I18nReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -188,7 +187,7 @@ public class I18nApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/I18nReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -211,7 +210,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -237,7 +236,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -260,7 +259,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -283,7 +282,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -309,7 +308,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -335,7 +334,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -358,7 +357,7 @@ public class I18nApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -381,7 +380,7 @@ public class I18nApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

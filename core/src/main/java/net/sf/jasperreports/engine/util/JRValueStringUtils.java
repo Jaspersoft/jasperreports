@@ -32,7 +32,9 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.util.Base64Util;
 
 
@@ -556,7 +558,9 @@ public final class JRValueStringUtils
 				Base64Util.decode(dataIn, bytesOut);
 				
 				ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
-				ObjectInputStream objectIn = new ObjectInputStream(bytesIn);
+				JasperReportsContext context = DefaultJasperReportsContext.getInstance();
+				ObjectInputStream objectIn = new FilteredObjectInputStream(
+						context, bytesIn, new ValueClassFilter(context));
 				return objectIn.readObject();
 			}
 			catch (IOException | ClassNotFoundException e)

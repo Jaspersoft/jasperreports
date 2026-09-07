@@ -58,9 +58,9 @@ public class HeaderCell
 		this.totals = totals;
 		
 		boolean foundTotal = false;
-		for (int i = 0; i < bucketValues.length; i++)
+		for (BucketDefinition.Bucket bucketValue : bucketValues)
 		{
-			if (bucketValues[i] != null && bucketValues[i].isTotal())
+			if (bucketValue != null && bucketValue.isTotal())
 			{
 				foundTotal = true;
 				break;

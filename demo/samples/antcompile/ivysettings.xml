@@ -2,7 +2,7 @@
 	<settings defaultResolver="maven"/>
 	<resolvers>
 		<chain name="maven">
-			<!-- should only be used for local testing -->
+			<!-- should only be used for local testing, check project classpath first -->
 			<!--
 			<ibiblio name="local-maven2" m2compatible="true" usepoms="true"
 				root="file://${user.home}/.m2/repository/"/>

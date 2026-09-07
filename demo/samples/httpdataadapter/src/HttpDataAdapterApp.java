@@ -48,7 +48,6 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 		html();
@@ -61,9 +60,8 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperFillManager.fillReportToFile(
@@ -71,7 +69,7 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 				fileName.substring(0, fileName.lastIndexOf(".jasper")) + ".jrprint",
 				null
 				);
-			System.err.println(reportFile.getName() + " filling time : " + (System.currentTimeMillis() - start));
+			System.out.println(reportFile.getName() + " filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -82,16 +80,15 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperExportManager.exportReportToPdfFile(
 				fileName, 
 				fileName.substring(0, fileName.indexOf(".jrprint")) + ".pdf"
 				);
-			System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 
@@ -102,16 +99,15 @@ public class HttpDataAdapterApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			String fileName = reportFile.getAbsolutePath();
 			JasperExportManager.exportReportToHtmlFile(
 				fileName, 
 				fileName.substring(0, fileName.indexOf(".jrprint")) + ".html"
 				);
-			System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 		
 	}

@@ -39,7 +39,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	{
 		super.setData(dataset);
 		
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().setData(dataset);
 		}
@@ -49,7 +49,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void beforeReportInit() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().beforeReportInit();
 		}
@@ -59,7 +59,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void afterReportInit() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().afterReportInit();
 		}
@@ -69,7 +69,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void beforePageInit() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().beforePageInit();
 		}
@@ -79,7 +79,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void afterPageInit() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().afterPageInit();
 		}
@@ -89,7 +89,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void beforeColumnInit() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().beforeColumnInit();
 		}
@@ -99,7 +99,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void afterColumnInit() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().afterColumnInit();
 		}
@@ -109,7 +109,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void beforeGroupInit(String groupName) throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().beforeGroupInit(groupName);
 		}
@@ -119,7 +119,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void afterGroupInit(String groupName) throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().afterGroupInit(groupName);
 		}
@@ -129,7 +129,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void beforeDetailEval() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().beforeDetailEval();
 		}
@@ -139,7 +139,7 @@ public class JRFillDatasetScriptlet extends JRAbstractScriptlet
 	@Override
 	public void afterDetailEval() throws JRScriptletException
 	{
-		for(Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
+		for (Iterator<JRAbstractScriptlet> it = dataset.scriptlets.iterator(); it.hasNext();)
 		{
 			it.next().afterDetailEval();
 		}

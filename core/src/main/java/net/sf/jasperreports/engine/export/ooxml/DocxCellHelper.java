@@ -208,7 +208,7 @@ public class DocxCellHelper extends BaseHelper
 		
 		if (rotation != null)
 		{
-			switch(rotation)
+			switch (rotation)
 			{
 				case LEFT:
 				{

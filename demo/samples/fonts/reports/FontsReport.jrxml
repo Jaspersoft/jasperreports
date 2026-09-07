@@ -1,4 +1,4 @@
-<jasperReport name="FontsReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="8c1609b4-a52a-445f-acc9-69218b035b22">
+<jasperReport name="FontsReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="8c1609b4-a52a-445f-acc9-69218b035b22">
 	<property name="net.sf.jasperreports.export.docx.embed.fonts" value="true"/>
 	<property name="net.sf.jasperreports.export.pptx.embed.fonts" value="true"/>
 	<title height="782">

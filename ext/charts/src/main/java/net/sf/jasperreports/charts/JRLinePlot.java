@@ -23,16 +23,49 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.charts.design.JRDesignLinePlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * Type of plot used to render Line charts.
  * 
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	"showLines",
+	"showShapes",
+	"categoryAxisLabelColor",
+	"categoryAxisTickLabelColor",
+	"categoryAxisTickLabelMask",
+	"categoryAxisVerticalTickLabels",
+	"categoryAxisLineColor",
+	"categoryAxisTickLabelRotation",
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_categoryAxisLabelExpression,
+	"categoryAxisLabelFont",
+	"categoryAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_valueAxisLabelExpression,
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression
+	})
 @JsonTypeName("line")
 @JsonDeserialize(as = JRDesignLinePlot.class)
 public interface JRLinePlot extends JRCategoryPlot, JRCommonLinePlot

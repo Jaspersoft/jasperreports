@@ -107,13 +107,13 @@ public final class ChartConverter extends ElementConverter
 	private Renderable getRenderer(ReportConverter reportConverter, JRChart chart)
 	{
 		String renderType = chart.getRenderType();//FIXMETHEME try reuse this sequence
-		if(renderType == null)
+		if (renderType == null)
 		{
 			renderType = JRPropertiesUtil.getInstance(reportConverter.getJasperReportsContext()).getProperty(reportConverter.getReport(), JRChart.PROPERTY_CHART_RENDER_TYPE);
 		}
 		
 		String themeName = chart.getTheme();
-		if(themeName == null)
+		if (themeName == null)
 		{
 			themeName = JRPropertiesUtil.getInstance(reportConverter.getJasperReportsContext()).getProperty(reportConverter.getReport(), JRChart.PROPERTY_CHART_THEME);
 		}

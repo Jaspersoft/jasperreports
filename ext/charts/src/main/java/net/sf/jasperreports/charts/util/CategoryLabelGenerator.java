@@ -61,7 +61,7 @@ public class CategoryLabelGenerator extends StandardCategoryItemLabelGenerator
 	{
 		Comparable<?> seriesName = dataset.getRowKey(series);
 		Map<Comparable<?>, String> labels = labelsMap.get(seriesName);
-		if(labels != null)
+		if (labels != null)
 		{
 			return labels.get(dataset.getColumnKey(category));
 		}

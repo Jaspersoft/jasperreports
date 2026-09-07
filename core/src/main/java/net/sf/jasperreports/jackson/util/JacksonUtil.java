@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,11 +42,13 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.util.DefaultXmlPrettyPrinter;
 
@@ -63,6 +64,7 @@ import net.sf.jasperreports.engine.component.ComponentsEnvironment;
 import net.sf.jasperreports.engine.part.PartComponent;
 import net.sf.jasperreports.engine.part.PartComponentsBundle;
 import net.sf.jasperreports.engine.part.PartComponentsEnvironment;
+import net.sf.jasperreports.engine.util.JRClassLoader;
 import net.sf.jasperreports.engine.util.JRValueStringUtils;
 import net.sf.jasperreports.engine.xml.ReportWriterConfiguration;
 
@@ -153,6 +155,8 @@ public class JacksonUtil
 	
 	public XmlMapper getXmlMapper()
 	{
+		//FIXME if the JasperReportsContext instance is shared but the thread classloader changes, 
+		// the cached object does not have extensions from the current classloader
 		XmlMapper mapper = (XmlMapper)jasperReportsContext.getOwnValue(XML_MAPPER_CONTEXT_KEY);
 		if (mapper == null)
 		{
@@ -207,7 +211,13 @@ public class JacksonUtil
 		module.addSerializer(JRPropertiesMap.class, new PropertiesMapSerializer(reportWriterConfig));
 		// for our own classes and interfaces, we use class level annotations
 		mapper.registerModule(module);
-		
+
+		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+		filterProvider.addFilter(VersionPropertyFilter.FILTER_ID, new VersionPropertyFilter());
+		filterProvider.setFailOnUnknownId(false);
+		mapper.setFilterProvider(filterProvider);
+		mapper.addMixIn(Object.class, VersionFilterMixin.class);
+
 		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 	}
 	
@@ -219,7 +229,7 @@ public class JacksonUtil
 	{
 		try
 		{
-			Class<?> clazz = Class.forName(mapping.getClassName());
+			Class<?> clazz = JRClassLoader.loadClassForRealName(mapping.getClassName());
 			// in theory, we could register subtypes without specifying a name here, just the class,
 			// using properties without suffix in the extension config file.
 			// in such case, the name would be provided by the @JsonTypeName annotation in the registered class.
@@ -401,14 +411,26 @@ public class JacksonUtil
 		}
 	}
 	
-	public void writeXml(Object object, Writer writer) 
+	public void writeXml(Object object, Writer writer)
+	{
+		writeXml(object, writer, null);
+	}
+
+	public void writeXml(Object object, Writer writer, String targetVersion)
 	{
 		XmlMapper mapper = getXmlMapper();
 		try
 		{
-			mapper.writer(TAB_XML_PRETTY_PRINTER).writeValue(writer, object);
-		} 
-		catch (IOException e) 
+			ObjectWriter objectWriter = mapper.writer(TAB_XML_PRETTY_PRINTER);
+			if (targetVersion != null)
+			{
+				objectWriter = objectWriter.withAttribute(
+					VersionPropertyFilter.ATTRIBUTE_TARGET_VERSION, targetVersion
+				);
+			}
+			objectWriter.writeValue(writer, object);
+		}
+		catch (IOException e)
 		{
 			throw new JRRuntimeException(e);
 		}
@@ -444,9 +466,8 @@ public class JacksonUtil
 					{
 						ArrayNode paramValues = getObjectMapper().createArrayNode();
 						Collection col = (Collection) hParam.getValue();
-						for (Iterator it = col.iterator(); it.hasNext();)
+						for (Object next : col)
 						{
-							Object next = it.next();
 							paramValues.add(JRValueStringUtils.serialize(next.getClass().getName(), next));
 						}
 						params.set(hParam.getName(), paramValues);

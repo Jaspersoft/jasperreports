@@ -91,7 +91,7 @@ public class JsonUtil {
 				result = false;	
 			} else {
 				String contextValue = contextNode.path(attribute).asText();
-				switch(operator) {
+				switch (operator) {
 				case LT:
 					try {
 						result = Double.parseDouble(contextValue) < Double.parseDouble(value);

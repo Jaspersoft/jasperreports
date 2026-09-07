@@ -50,7 +50,7 @@ public class JRBaseCrosstabBucket implements JRCrosstabBucket, Serializable
 	protected String valueClassRealName;
 	protected transient Class<?> valueClass;
 
-	protected BucketOrder bucketOrder = BucketOrder.ASCENDING;
+	protected BucketOrder bucketOrder;
 	
 	protected JRExpression expression;
 	protected JRExpression orderByExpression;
@@ -111,7 +111,7 @@ public class JRBaseCrosstabBucket implements JRCrosstabBucket, Serializable
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{

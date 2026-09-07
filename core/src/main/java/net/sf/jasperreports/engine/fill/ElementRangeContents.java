@@ -58,14 +58,7 @@ public class ElementRangeContents implements ElementEvaluationsCollector, Elemen
 	@Override
 	public void collect(JRPrintElement printElement, JRFillElement fillElement, JREvaluationTime evaluationTime)
 	{
-		Map<JRPrintElement, JRFillElement> elementEvaluations = evaluations.get(evaluationTime);
-		if (elementEvaluations == null)
-		{
-			elementEvaluations = new LinkedHashMap<>();
-			evaluations.put(evaluationTime, elementEvaluations);
-		}
-		
-		elementEvaluations.put(printElement, fillElement);
+		evaluations.computeIfAbsent(evaluationTime, k -> new LinkedHashMap<>()).put(printElement, fillElement);
 	}
 	
 	public boolean hasEvaluations()

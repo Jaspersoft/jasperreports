@@ -63,6 +63,14 @@ public enum SortOrderEnum implements NamedEnum
 		return EnumUtil.getEnumByName(values(), name);
 	}
 	
+	/**
+	 *
+	 */
+	public static SortOrderEnum getValueOrDefault(SortOrderEnum value)
+	{
+		return value == null ? ASCENDING : value;
+	}
+	
 	@Override
 	public SortOrderEnum getDefault()
 	{

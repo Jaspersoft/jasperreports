@@ -65,12 +65,12 @@ public final class JRTypeSniffer
 	 */
 	public static boolean isJPEG(byte[] data) {
 		// check if the image data length is less than 2 bytes
-		if(data.length < 2) {
+		if (data.length < 2) {
 			return false;
 		}
 		
 		//0xff is -1 and 0xd8 is -40
-		if(data[0] == -1 && data[1] == -40) {
+		if (data[0] == -1 && data[1] == -40) {
 			return true;
 		}
 		
@@ -87,11 +87,11 @@ public final class JRTypeSniffer
 	 * Note: This method only really needs the first 8 bytes.
 	 */
 	public static boolean isPNG(byte[] data) {
-		if(data.length < 8) {
+		if (data.length < 8) {
 			return false;
 		}
 		
-		if(data[0] == -119 &&
+		if (data[0] == -119 &&
 			data[1] == 80 &&
 			data[2] == 78 &&
 			data[3] == 71 &&
@@ -114,11 +114,11 @@ public final class JRTypeSniffer
 	 * Note: This method only really needs the first 2 bytes.
 	 */
 	public static boolean isTIFF(byte[] data) {
-		if(data.length < 2) {
+		if (data.length < 2) {
 			return false;
 		}
 		
-		if((data[0] == 73 && data[1] == 73) || 
+		if ((data[0] == 73 && data[1] == 73) || 
 			(data[0] == 77 && data[1] == 77)) {
 			return true;
 		}

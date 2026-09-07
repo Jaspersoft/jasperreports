@@ -1,4 +1,4 @@
-<jasperReport name="TableReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c927e671-66f3-40f2-a189-49d30d607fe5" floatColumnFooter="true">
+<jasperReport name="TableReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c927e671-66f3-40f2-a189-49d30d607fe5" floatColumnFooter="true">
 	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
 	<property name="net.sf.jasperreports.export.pdf.tag.language" value="EN-US"/>
 	<property name="net.sf.jasperreports.export.pdf.metadata.title" value="Tabular Report"/>

@@ -18,11 +18,10 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<maven.install.skip>false</maven.install.skip>
-		<maven.source.skip>true</maven.source.skip>
+		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<maven.deploy.skip>false</maven.deploy.skip>
-		<dependency-check.skip>true</dependency-check.skip>
+		<maven.source.skip>true</maven.source.skip>
+		<dependency-check.skip>true</dependency-check.skip><!-- this is for the owasp check -->
 	</properties>
 	<build>
 		<resources>
@@ -45,7 +44,7 @@
 				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<archive>
-						<manifestFile>${project.build.directory}/classes/META-INF/MANIFEST.MF</manifestFile>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
 			</plugin>

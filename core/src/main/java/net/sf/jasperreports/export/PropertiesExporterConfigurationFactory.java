@@ -68,7 +68,7 @@ public class PropertiesExporterConfigurationFactory<C extends CommonExportConfig
 			if (properties != null && !properties.isEmpty())
 			{
 				String[] values = new String[properties.size()];
-				for(int i = 0; i < values.length; i++)
+				for (int i = 0; i < values.length; i++)
 				{
 					values[i] = properties.get(i).getValue();
 				}

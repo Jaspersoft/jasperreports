@@ -388,11 +388,9 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		DocxExporterConfiguration configuration = getCurrentConfiguration();
 
 		String application = configuration.getMetadataApplication();
-		if( application == null )
+		if ( application == null )
 		{
-			@SuppressWarnings("deprecation") //this can be replaced only after abandoning Java 8 support 
-			String depApplication = "JasperReports Library version " + Package.getPackage("net.sf.jasperreports.engine").getImplementationVersion();
-			application = depApplication;
+			application = "JasperReports Library version " + DefaultJasperReportsContext.class.getPackage().getImplementationVersion();
 		}
 		appHelper.exportProperty(PropsAppHelper.PROPERTY_APPLICATION, application);
 
@@ -521,7 +519,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 
 //		if ((hyperlinksMap != null && hyperlinksMap.size() > 0))
 //		{
-//			for(Iterator it = hyperlinksMap.keySet().iterator(); it.hasNext();)
+//			for (Iterator it = hyperlinksMap.keySet().iterator(); it.hasNext();)
 //			{
 //				String href = (String)it.next();
 //				String id = (String)hyperlinksMap.get(href);
@@ -574,47 +572,50 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		
 		if (configuration.isBackgroundAsHeader())
 		{
-			headerIndex++;
-			ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
-			headerWriter = headerEntry.getWriter();
-
-			headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
-			headerHelper.exportHeader(pageFormat);
-
-			ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
-			headerRelsHelper = new DocxHeaderRelsHelper(jasperReportsContext, headerRelsEntry.getWriter());
-			headerRelsHelper.exportHeader();
-			
-			headerRunHelper = new DocxRunHelper(jasperReportsContext, headerWriter, docxFontHelper);
-			
-			pageAnchor = null;
-
-			crtDocHelper = headerHelper;
-			crtDocWriter = headerWriter;
-			crtRelsHelper = headerRelsHelper;
-			crtRunHelper = headerRunHelper;
-			
-			JRGridLayout backgrounGridLayout =
+			JRGridLayout backgroundGridLayout =
 				new JRGridLayout(
 					backgroundNature,
 					page.getElements(),
 					pageFormat.getPageWidth(),
 					pageFormat.getPageHeight(),
-					configuration.getOffsetX() == null ? 0 : configuration.getOffsetX(), 
+					configuration.getOffsetX() == null ? 0 : configuration.getOffsetX(),
 					configuration.getOffsetY() == null ? 0 : configuration.getOffsetY(),
 					null //address
 					);
 
-			exportGrid(backgrounGridLayout, null);
-			
-			relsHelper.exportHeader(headerIndex);
-			ctHelper.exportHeader(headerIndex);
+			if (backgroundGridLayout.getXCuts().size() > 0)
+			{
+				headerIndex++;
+				ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
+				headerWriter = headerEntry.getWriter();
 
-			headerHelper.exportFooter();
-			headerHelper.close();
+				headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
+				headerHelper.exportHeader(pageFormat);
 
-			headerRelsHelper.exportFooter();
-			headerRelsHelper.close();
+				ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
+				headerRelsHelper = new DocxHeaderRelsHelper(jasperReportsContext, headerRelsEntry.getWriter());
+				headerRelsHelper.exportHeader();
+
+				headerRunHelper = new DocxRunHelper(jasperReportsContext, headerWriter, docxFontHelper);
+
+				pageAnchor = null;
+
+				crtDocHelper = headerHelper;
+				crtDocWriter = headerWriter;
+				crtRelsHelper = headerRelsHelper;
+				crtRunHelper = headerRunHelper;
+
+				exportGrid(backgroundGridLayout, null);
+
+				relsHelper.exportHeader(headerIndex);
+				ctHelper.exportHeader(headerIndex);
+
+				headerHelper.exportFooter();
+				headerHelper.close();
+
+				headerRelsHelper.exportFooter();
+				headerRelsHelper.close();
+			}
 		}
 	}
 
@@ -717,7 +718,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		
 		boolean isFlexibleRowHeight = getCurrentItemConfiguration().isFlexibleRowHeight();
 
-		for(int row = 0; row < rowCount; row++)
+		for (int row = 0; row < rowCount; row++)
 		{
 			int emptyCellColSpan = 0;
 			//int emptyCellWidth = 0;
@@ -727,7 +728,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 			int maxBottomPadding = 0; //for some strange reason, the bottom margin affects the row height; subtracting it here
 			GridRow gridRow = grid.getRow(row);
 			int rowSize = gridRow.size();
-			for(int col = 0; col < rowSize; col++)
+			for (int col = 0; col < rowSize; col++)
 			{
 				JRExporterGridCell gridCell = gridRow.get(col);
 				JRLineBox box = gridCell.getBox();
@@ -778,7 +779,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				startPage = false;
 			}
 			
-			for(int col = 0; col < rowSize; col++)
+			for (int col = 0; col < rowSize; col++)
 			{
 				JRExporterGridCell gridCell = gridRow.get(col);
 				if (gridCell.getType() == JRExporterGridCell.TYPE_OCCUPIED_CELL)
@@ -1073,7 +1074,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 
 		AttributedCharacterIterator iterator = styledText.getAttributedString().getIterator();
 
-		while(runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
+		while (runLimit < styledText.length() && (runLimit = iterator.getRunLimit()) <= styledText.length())
 		{
 			Map<Attribute,Object> attributes = iterator.getAttributes();
 
@@ -1492,7 +1493,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				if (url != null)
 				{
 					String targetMode = "";
-					switch(image.getHyperlinkType())
+					switch (image.getHyperlinkType())
 					{
 						case LOCAL_PAGE:
 						case LOCAL_ANCHOR:
@@ -1776,6 +1777,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	{
 		tableHelper.getCellHelper().exportHeader(frame, gridCell);
 //		tableHelper.getCellHelper().exportProps(gridCell);
+		tableHelper.getParagraphHelper().exportEmptyParagraph();
 
 		boolean appendBackcolor =
 			frame.getMode() == ModeEnum.OPAQUE
@@ -1905,7 +1907,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	protected String getHyperlinkTarget(JRPrintHyperlink link)
 	{
 		String target = null;
-		switch(link.getHyperlinkTarget())
+		switch (link.getHyperlinkTarget())
 		{
 			case SELF :
 			{
@@ -1938,7 +1940,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{

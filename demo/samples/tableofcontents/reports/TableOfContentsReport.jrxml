@@ -1,4 +1,4 @@
-<jasperReport name="TableOfContentsReport" language="java" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e52780b9-8f01-4b16-86fe-712163e5aadc">
+<jasperReport name="TableOfContentsReport" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e52780b9-8f01-4b16-86fe-712163e5aadc">
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
 	<property name="net.sf.jasperreports.export.xls.exclude.origin.keep.first.band.1" value="pageHeader"/>
 	<property name="net.sf.jasperreports.export.xls.exclude.origin.keep.first.report.1" value="*"/>

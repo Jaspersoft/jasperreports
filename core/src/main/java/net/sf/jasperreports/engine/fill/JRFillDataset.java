@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -107,6 +106,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_DATA = "fill.dataset.no.such.snapshot.data";
 	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_PARAMETER = "fill.dataset.no.such.snapshot.parameter";
 	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_VARIABLE = "fill.dataset.no.such.variable";
+	public static final String EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_DISABLED = "query.executer.disabled";
 	
 	/**
 	 * The filler that created this object.
@@ -368,9 +368,9 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 			List<JRFillVariable> variableList = new ArrayList<>(jrVariables.length * 3);
 
 			variablesMap = new HashMap<>();
-			for (int i = 0; i < jrVariables.length; i++)
+			for (JRVariable jrVariable : jrVariables)
 			{
-				addVariable(jrVariables[i], variableList, factory);
+				addVariable(jrVariable, variableList, factory);
 			}
 
 			setVariables(variableList);
@@ -487,9 +487,9 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		variables = new JRFillVariable[variableList.size()];
 		variables = variableList.toArray(variables);
 
-		for (int i = 0; i < variables.length; i++)
+		for (JRFillVariable variable : variables)
 		{
-			variablesMap.put(variables[i].getName(), variables[i]);
+			variablesMap.put(variable.getName(), variable);
 		}
 	}
 
@@ -569,9 +569,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		scriptlets = new ArrayList<>();
 		
 		List<ScriptletFactory> factories = getJasperReportsContext().getExtensions(ScriptletFactory.class);
-		for (Iterator<ScriptletFactory> it = factories.iterator(); it.hasNext();)
+		for (ScriptletFactory factory : factories)
 		{
-			ScriptletFactory factory = it.next();
 			List<JRAbstractScriptlet> tmpScriptlets = factory.getScriplets(context);
 			if (tmpScriptlets != null)
 			{
@@ -1084,9 +1083,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		if (parameters != null && parameters.length > 0)
 		{
 			ParameterEvaluationTimeEnum defaultEvaluationTime = getDefaultParameterEvaluationTime();
-			for (int i = 0; i < parameters.length; i++)
+			for (JRFillParameter parameter : parameters)
 			{
-				JRFillParameter parameter = parameters[i];
 				String paramName = parameter.getName();
 				ParameterEvaluationTimeEnum paramEvalTime = parameter.getEvaluationTime() == null ? defaultEvaluationTime : parameter.getEvaluationTime();
 				
@@ -1116,9 +1114,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int i = 0; i < parameters.length; i++)
+			for (JRFillParameter parameter : parameters)
 			{
-				JRFillParameter parameter = parameters[i];
 				String paramName = parameter.getName();
 				
 				Object value = null;
@@ -1146,9 +1143,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (parameters != null && parameters.length > 0)
 		{
-			for (int i = 0; i < parameters.length; i++)
+			for (JRFillParameter parameter : parameters)
 			{
-				JRFillParameter parameter = parameters[i];
 				String paramName = parameter.getName();
 				
 				if (
@@ -1213,7 +1209,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		parameterContributors = getParameterContributors(contributorContext);
 		if (parameterContributors != null)
 		{
-			for(ParameterContributor contributor : parameterContributors)
+			for (ParameterContributor contributor : parameterContributors)
 			{
 				contributor.contributeParameters(parameterValues);
 			}
@@ -1257,7 +1253,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (parameterContributors != null)
 		{
-			for(ParameterContributor contributor : parameterContributors)
+			for (ParameterContributor contributor : parameterContributors)
 			{
 				contributor.dispose();
 			}
@@ -1271,13 +1267,12 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	private List<ParameterContributor> getParameterContributors(ParameterContributorContext context) throws JRException
 	{
 		List<ParameterContributor> allContributors = null;
-		List<?> factories = getJasperReportsContext().getExtensions(ParameterContributorFactory.class);
+		List<ParameterContributorFactory> factories = getJasperReportsContext().getExtensions(ParameterContributorFactory.class);
 		if (factories != null && factories.size() > 0)
 		{
 			allContributors = new ArrayList<>();
-			for (Iterator<?> it = factories.iterator(); it.hasNext();)
+			for (ParameterContributorFactory factory : factories)
 			{
-				ParameterContributorFactory factory = (ParameterContributorFactory)it.next();
 				List<ParameterContributor> contributors = factory.getContributors(context);
 				if (contributors != null)
 				{
@@ -1321,7 +1316,21 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 						+ "Creating " + query.getLanguage() + " query executer");
 			}
 			
-			QueryExecuterFactory queryExecuterFactory = JRQueryExecuterUtils.getInstance(getJasperReportsContext()).getExecuterFactory(query.getLanguage());
+			String language = query.getLanguage();
+			boolean enabled = JRPropertiesUtil.getInstance(getJasperReportsContext())
+					.getBooleanProperty(
+							QueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX
+							+ language
+							+ QueryExecuterFactory.PROPERTY_QUERY_EXECUTER_FACTORY_ENABLED_SUFFIX,
+							true);
+			if (!enabled)
+			{
+				throw new JRRuntimeException(
+						EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_DISABLED,
+						new Object[]{language});
+			}
+
+			QueryExecuterFactory queryExecuterFactory = JRQueryExecuterUtils.getInstance(getJasperReportsContext()).getExecuterFactory(language);
 			SimpleQueryExecutionContext queryExecutionContext = SimpleQueryExecutionContext.of(
 					getJasperReportsContext(), getRepositoryContext());
 			queryExecuter = queryExecuterFactory.createQueryExecuter(queryExecutionContext, this, parametersMap);
@@ -1531,7 +1540,7 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 					}
 				}
 			}
-			while(hasNext && !includeRow);
+			while (hasNext && !includeRow);
 			
 			if (hasNext)
 			{
@@ -1572,9 +1581,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (fields != null && fields.length > 0)
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRFillField field : fields)
 			{
-				JRFillField field = fields[i];
 				field.setPreviousOldValue(field.getOldValue());
 				field.setOldValue(field.getValue());
 				field.setValue(dataSource.getFieldValue(field));
@@ -1583,9 +1591,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				variable.setPreviousOldValue(variable.getOldValue());
 				variable.setOldValue(variable.getValue());
 			}
@@ -1597,9 +1604,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (fields != null && fields.length > 0)
 		{
-			for (int i = 0; i < fields.length; i++)
+			for (JRFillField field : fields)
 			{
-				JRFillField field = fields[i];
 				field.setValue(field.getOldValue());
 				field.setOldValue(field.getPreviousOldValue());
 			}
@@ -1613,9 +1619,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				variable.setValue(variable.getOldValue());
 				variable.setOldValue(variable.getPreviousOldValue());
 			}
@@ -1864,9 +1869,8 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 		{
 			List<JRFillVariable> variableList = new ArrayList<>(variables.length * 2);
 
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				checkVariableCalculationReq(variable, variableList, factory);
 			}
 

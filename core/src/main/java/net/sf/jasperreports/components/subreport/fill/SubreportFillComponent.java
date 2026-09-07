@@ -25,7 +25,6 @@ package net.sf.jasperreports.components.subreport.fill;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -214,9 +213,8 @@ public abstract class SubreportFillComponent extends BaseFillComponent
 		printFrame.setHeight(fillSubreport.getContentsStretchHeight() + lineBox.getTopPadding() + lineBox.getBottomPadding());
 		
 		List<JRStyle> styles = fillSubreport.getSubreportStyles();
-		for (Iterator<JRStyle> it = styles.iterator(); it.hasNext();)
+		for (JRStyle style : styles)
 		{
-			JRStyle style = it.next();
 			try
 			{
 				fillContext.getFiller().addPrintStyle(style);
@@ -228,9 +226,8 @@ public abstract class SubreportFillComponent extends BaseFillComponent
 		}
 		
 		List<JROrigin> origins = fillSubreport.getSubreportOrigins();
-		for (Iterator<JROrigin> it = origins.iterator(); it.hasNext();)
+		for (JROrigin origin : origins)
 		{
-			JROrigin origin = it.next();
 			fillContext.getFiller().getJasperPrint().addOrigin(origin);
 		}
 		

@@ -39,11 +39,23 @@
 		<module>ext/jaxen</module>
 		<module>ext/jdt</module>
 		<module>ext/json</module>
+		<module>ext/maven</module>
+		<module>ext/maven-bom</module>
 		<module>ext/olap</module>
+		<module>ext/openpdf</module>
 		<module>ext/pdf</module>
+		<module>ext/pdf-core</module>
 		<module>ext/servlets</module>
 		<module>ext/servlets-j2ee</module>
 		<module>ext/spring</module>
 		<module>ext/xalan</module>
 	</modules>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
+		<maven.resources.skip>true</maven.resources.skip>
+		<maven.source.skip>true</maven.source.skip>
+		<maven.test.skip>true</maven.test.skip>
+	</properties>
 </project>

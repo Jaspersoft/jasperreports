@@ -91,7 +91,7 @@ public class RtfEditorKitMarkupProcessor extends EditorKitMarkupProcessor
 		
 		JRStyledText styledText = new JRStyledText();
 		styledText.setGlobalAttributes(new HashMap<>());
-		for(int i = 0; i < elements.size(); i++)
+		for (int i = 0; i < elements.size(); i++)
 		{
 			if (chunk != null)
 			{
@@ -138,11 +138,11 @@ public class RtfEditorKitMarkupProcessor extends EditorKitMarkupProcessor
 	 */
 	protected void addElements(List<Element> elements, Element element) 
 	{
-		if(element instanceof LeafElement)
+		if (element instanceof LeafElement)
 		{
 			elements.add(element);
 		}
-		for(int i = 0; i < element.getElementCount(); i++)
+		for (int i = 0; i < element.getElementCount(); i++)
 		{
 			Element child = element.getElement(i);
 			addElements(elements, child);

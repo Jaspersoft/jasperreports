@@ -66,9 +66,8 @@ public final class HyperlinkUtil
 				List<JRPrintHyperlinkParameter> parameters = link.getHyperlinkParameters().getParameters();
 				if (parameters != null)
 				{
-					for (int i = 0; i < parameters.size(); i++)
+					for (JRPrintHyperlinkParameter parameter : parameters)
 					{
-						JRPrintHyperlinkParameter parameter = parameters.get(i);
 						if (propName.equals(parameter.getName()))
 						{
 							hyperlinkVisible = (Boolean)parameter.getValue();

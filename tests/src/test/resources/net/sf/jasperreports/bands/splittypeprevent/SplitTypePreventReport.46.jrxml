@@ -1,4 +1,4 @@
-<jasperReport name="SplitTypePreventReport.46" language="java" pageWidth="595" pageHeight="160" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="1d1d4b5d-e211-4b7d-80ac-73e229b5e9fb">
+<jasperReport name="SplitTypePreventReport.46" pageWidth="595" pageHeight="160" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="1d1d4b5d-e211-4b7d-80ac-73e229b5e9fb">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<dataset name="ListData" uuid="5ed45609-588e-443d-8e47-8aad0fb8d213">
 		<parameter name="TEST" class="net.sf.jasperreports.bands.splittypeprevent.SplitTypePreventTest"/>

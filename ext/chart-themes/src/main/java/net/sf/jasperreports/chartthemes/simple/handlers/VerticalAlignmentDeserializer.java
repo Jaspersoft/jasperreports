@@ -60,7 +60,7 @@ public class VerticalAlignmentDeserializer extends StdDeserializer<VerticalAlign
 		JsonNode node = oc.readTree(p);
 		
 		return convert(node.textValue());
-    }
+	}
 
 	public static VerticalAlignment convert(String value)
 	{

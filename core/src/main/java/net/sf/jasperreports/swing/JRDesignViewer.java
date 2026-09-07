@@ -77,7 +77,7 @@ public class JRDesignViewer extends JRViewer
 	 */
 	public JRDesignViewer(
 		JasperReportsContext jasperReportsContext,
-		String fileName, 
+		String fileName,
 		boolean isXML
 		) throws JRException
 	{
@@ -90,7 +90,7 @@ public class JRDesignViewer extends JRViewer
 	 */
 	public JRDesignViewer(
 		JasperReportsContext jasperReportsContext,
-		InputStream is, 
+		InputStream is,
 		boolean isXML
 		) throws JRException
 	{

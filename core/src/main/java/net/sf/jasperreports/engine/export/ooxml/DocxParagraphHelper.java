@@ -152,7 +152,7 @@ public class DocxParagraphHelper extends BaseHelper
 		{
 			write("        <w:pStyle w:val=\"" + styleNameReference + "\"/>\n");
 		}
-		if(paragraph != null)
+		if (paragraph != null)
 		{
 			write("      <w:ind");
 			if (paragraph.getOwnFirstLineIndent() != null)
@@ -196,9 +196,8 @@ public class DocxParagraphHelper extends BaseHelper
 		if (tabStops != null && tabStops.length > 0)
 		{
 			write("   <w:tabs>\n");
-			for (int i = 0; i < tabStops.length; i++)
+			for (TabStop tabStop : tabStops)
 			{
-				TabStop tabStop = tabStops[i];
 				write(
 					"   <w:tab w:pos=\"" + LengthUtil.twip(tabStop.getPosition()) 
 					+ "\" w:val=\"" + getTabStopAlignment(TabStopAlignEnum.getValueOrDefault(tabStop.getAlignment())) 
@@ -298,7 +297,7 @@ public class DocxParagraphHelper extends BaseHelper
 			pageBreak = false;
 		}
 		write("     </w:pPr>");
-		if(startPage)
+		if (startPage)
 		{
 			write("<w:bookmarkStart w:id=\"" + bookmarkIndex);
 			write("\" w:name=\"" + pageAnchor);

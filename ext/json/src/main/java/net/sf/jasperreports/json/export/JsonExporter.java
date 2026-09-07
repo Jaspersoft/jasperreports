@@ -186,7 +186,7 @@ public class JsonExporter extends JRAbstractExporter<JsonReportConfiguration, Js
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -200,7 +200,7 @@ public class JsonExporter extends JRAbstractExporter<JsonReportConfiguration, Js
 				int endPageIndex = (pageRange == null || pageRange.getEndPageIndex() == null) ? (pages.size() - 1) : pageRange.getEndPageIndex();
 
 				JRPrintPage page = null;
-				for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+				for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 				{
 					checkInterrupted();
 
@@ -259,7 +259,7 @@ public class JsonExporter extends JRAbstractExporter<JsonReportConfiguration, Js
 	{
 		if (elements != null && elements.size() > 0)
 		{
-			for(Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
+			for (Iterator<JRPrintElement> it = elements.iterator(); it.hasNext();)
 			{
 				checkInterrupted();
 				JRPrintElement element = it.next();
@@ -575,7 +575,7 @@ public class JsonExporter extends JRAbstractExporter<JsonReportConfiguration, Js
 			JRHyperlinkProducer customHandler = getHyperlinkProducer(link);		
 			if (customHandler == null)
 			{
-				switch(link.getHyperlinkType())
+				switch (link.getHyperlinkType())
 				{
 					case REFERENCE :
 					{

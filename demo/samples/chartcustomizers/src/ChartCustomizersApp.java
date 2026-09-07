@@ -52,7 +52,6 @@ public class ChartCustomizersApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 		html();
@@ -69,15 +68,14 @@ public class ChartCustomizersApp extends AbstractSampleApp
 		parameters.put("legendHeight", "10");
 		
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperFillManager.fillReportToFile(
 				reportFile.getAbsolutePath(), 
 				new HashMap<String, Object>(parameters) 
 				);
-			System.err.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -88,14 +86,13 @@ public class ChartCustomizersApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToPdfFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -106,14 +103,13 @@ public class ChartCustomizersApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToHtmlFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 

@@ -100,7 +100,7 @@ public class JRBaseExpression implements JRExpression, Serializable
 		if (jrChunks != null && jrChunks.length > 0)
 		{
 			chunks = new JRExpressionChunk[jrChunks.length];
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				chunks[i] = factory.getExpressionChunk(jrChunks[i]);
 			}
@@ -166,42 +166,42 @@ public class JRBaseExpression implements JRExpression, Serializable
 		{
 			StringBuilder sb = new StringBuilder();
 
-			for(int i = 0; i < chunks.length; i++)
+			for (JRExpressionChunk chunk : chunks)
 			{
-				switch(chunks[i].getType())
+				switch (chunk.getType())
 				{
 					case JRExpressionChunk.TYPE_PARAMETER :
 					{
 						sb.append("$P{");
-						sb.append( chunks[i].getText() );
+						sb.append( chunk.getText() );
 						sb.append("}");
 						break;
 					}
 					case JRExpressionChunk.TYPE_FIELD :
 					{
 						sb.append("$F{");
-						sb.append( chunks[i].getText() );
+						sb.append( chunk.getText() );
 						sb.append("}");
 						break;
 					}
 					case JRExpressionChunk.TYPE_VARIABLE :
 					{
 						sb.append("$V{");
-						sb.append( chunks[i].getText() );
+						sb.append( chunk.getText() );
 						sb.append("}");
 						break;
 					}
 					case JRExpressionChunk.TYPE_RESOURCE :
 					{
 						sb.append("$R{");
-						sb.append( chunks[i].getText() );
+						sb.append( chunk.getText() );
 						sb.append("}");
 						break;
 					}
 					case JRExpressionChunk.TYPE_TEXT :
 					default :
 					{
-						String textChunk = chunks[i].getText();
+						String textChunk = chunk.getText();
 						String escapedText = escapeTextChunk(textChunk);
 						sb.append(escapedText);
 						break;

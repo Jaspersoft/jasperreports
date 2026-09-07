@@ -39,7 +39,9 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
 @JsonPropertyOrder({
-	"evaluationTime", // important to be first because of @JsonUnwrapped below
+	// "evaluationTime" must be first: it is @JsonUnwrapped and its properties serialize as XML attributes of <part>.
+	// Jackson XML writes attributes only while the opening tag is still open, so they must be emitted before any child elements.
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
 	JRXmlConstants.ATTRIBUTE_uuid,
 	"properties",
 	JRXmlConstants.ELEMENT_property,

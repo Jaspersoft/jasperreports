@@ -137,7 +137,7 @@ public abstract class SQLBetweenBaseClause implements JRClauseFunction
 		ClauseFunctionParameterHandler rightParamHandler = createParameterHandler(queryContext, clauseId, rightParam, false);
 		StringBuffer sbuffer = queryContext.queryBuffer();
 		
-		if(leftParamHandler.hasValue() && rightParamHandler.hasValue())
+		if (leftParamHandler.hasValue() && rightParamHandler.hasValue())
 		{
 			sbuffer.append("( ");
 			handleGreaterClause(sbuffer, clauseId, col, leftParamHandler, queryContext);
@@ -145,9 +145,9 @@ public abstract class SQLBetweenBaseClause implements JRClauseFunction
 			handleLessClause(sbuffer, clauseId, col, rightParamHandler, queryContext);
 			sbuffer.append(" )");
 		}
-		else if(!leftParamHandler.hasValue())
+		else if (!leftParamHandler.hasValue())
 		{
-			if(!rightParamHandler.hasValue())
+			if (!rightParamHandler.hasValue())
 			{
 				sbuffer.append(CLAUSE_TRUISM);
 			}

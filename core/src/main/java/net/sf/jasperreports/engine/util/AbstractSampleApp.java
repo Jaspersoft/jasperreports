@@ -37,8 +37,6 @@ import java.util.TreeSet;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRReport;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 
@@ -72,19 +70,18 @@ public abstract class AbstractSampleApp
 				tasks.add(method.getName());
 			}
 		}
-		for (String task:tasks)
-		{
-			sb.append(task).append(" | ");
-		}
+
+		sb.append(String.join(" | ", tasks));
 		
-		return sb.toString().substring(0, sb.length() - 3);
+		return sb.toString();
 	}
 
 	
 	/**
-	 *
+	 * 
+	 * @throws Throwable 
 	 */
-	protected void executeTask(String taskName)
+	protected void executeTask(String taskName) throws Throwable
 	{
 		try
 		{
@@ -95,9 +92,13 @@ public abstract class AbstractSampleApp
 		{
 			System.out.println(usage());
 		}
-		catch (IllegalAccessException | InvocationTargetException e)
+		catch (IllegalAccessException e)
 		{
-			e.getCause().printStackTrace();
+			throw e;
+		}
+		catch (InvocationTargetException e)
+		{
+			throw e.getCause();
 		}
 	}
 	
@@ -108,15 +109,22 @@ public abstract class AbstractSampleApp
 	protected File[] getFiles(File parentFile, String extension)
 	{
 		List<File> fileList = new ArrayList<>();
-		String[] files = parentFile.list();
-		if (files != null)
+		String[] fileNames = parentFile.list();
+		if (fileNames != null)
 		{
-			for(int i = 0; i < files.length; i++)
+			for (String fileName : fileNames)
 			{
-				String reportFile = files[i];
-				if (reportFile.endsWith("." + extension))
+				File file = new File(parentFile, fileName);
+				if (file.isDirectory())
 				{
-					fileList.add(new File(parentFile, reportFile)); 
+					fileList.addAll(List.of(getFiles(file, extension)));
+				}
+				else
+				{
+					if (fileName.endsWith("." + extension))
+					{
+						fileList.add(file); 
+					}
 				}
 			}
 		}
@@ -171,9 +179,10 @@ public abstract class AbstractSampleApp
 				System.out.println(app.usage());
 			}
 		}
-		catch (Exception e)
+		catch (Throwable e)
 		{
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 
@@ -182,85 +191,6 @@ public abstract class AbstractSampleApp
 	 *
 	 */
 	public abstract void test() throws JRException;
-
-
-	/**
-	 *
-	 */
-	public void compile() throws JRException
-	{
-		File[] files = getFiles(new File("reports"), "jrxml");
-		if (files.length > 0)
-		{
-			File destFileParent = new File("target/reports");
-			if (!destFileParent.exists())
-			{
-				destFileParent.mkdirs();
-			}
-
-			System.out.println("Compiling " + files.length + " report design files."); // deliberately using System.out.println instead of logging in the sample apps
-
-			for (int i = 0; i < files.length; i++)
-			{
-				File srcFile = files[i];
-				String srcFileName = srcFile.getName();
-				String destFileName = srcFileName.substring(0, srcFileName.lastIndexOf(".jrxml")) + ".jasper";
-
-				System.out.print("Compiling: " + srcFileName + " ... ");
-
-				JasperCompileManager.compileReportToFile(
-					srcFile.getAbsolutePath(),
-					new File(destFileParent, destFileName).getAbsolutePath()
-					);
-
-				System.out.println("OK.");
-			}
-		}
-		else
-		{
-			System.out.println("No report design files found to compile.");
-		}
-	}
-
-
-	/**
-	 *
-	 */
-	public void decompile() throws JRException
-	{
-		File[] files = getFiles(new File("target/reports"), "jasper");
-		if (files.length > 0)
-		{
-			File destFileParent = new File("target/reports");
-			if (!destFileParent.exists())
-			{
-				destFileParent.mkdirs();
-			}
-
-			System.out.println("Decompiling " + files.length + " report design files.");
-
-			for (int i = 0; i < files.length; i++)
-			{
-				File srcFile = files[i];
-				String srcFileName = srcFile.getName();
-				String destFileName = srcFileName + ".jrxml";
-
-				System.out.print("Decompiling: " + srcFileName + " ... ");
-
-				new JRXmlWriter(DefaultJasperReportsContext.getInstance()).write(
-					(JasperReport)JRLoader.loadObjectFromFile(srcFile.getAbsolutePath()), 
-					new File(destFileParent, destFileName).getAbsolutePath(), 
-					"UTF-8"
-					);
-
-				System.out.println("OK.");
-			}
-		}
-		else
-		{
-			System.out.println("No report design files found to decompile.");
-		}
-	}
 
 
 	/**
@@ -279,9 +209,8 @@ public abstract class AbstractSampleApp
 
 			System.out.println("Writing API for " + files.length + " report design files.");
 
-			for (int i = 0; i < files.length; i++)
+			for (File srcFile : files)
 			{
-				File srcFile = files[i];
 				String srcFileName = srcFile.getName();
 				String destFileName = srcFileName.substring(0, srcFileName.lastIndexOf(".jasper")) + ".java";
 
@@ -320,9 +249,8 @@ public abstract class AbstractSampleApp
 
 			System.out.println("Running " + files.length + " API report design files.");
 
-			for (int i = 0; i < files.length; i++)
+			for (File srcFile : files)
 			{
-				File srcFile = files[i];
 				String srcFileName = srcFile.getName();
 				String srcClassName = srcFileName.substring(0, srcFileName.lastIndexOf(".jasper"));
 				String destFileName = srcFileName.substring(0, srcFileName.lastIndexOf(".jasper")) + ".api.jrxml";

@@ -24,7 +24,6 @@
 package net.sf.jasperreports.web.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
@@ -49,8 +48,7 @@ public class ContentTypeMappingExtensionsRegistryFactory implements ExtensionsRe
 	public ExtensionsRegistry createRegistry(String registryId, JRPropertiesMap properties) {
 		List<PropertySuffix> contentTypeMappingProperties = JRPropertiesUtil.getProperties(properties, CONTENT_TYPE_MAPPING_PROPERTY_PREFIX);
 		List<ContentTypeMapping> contentTypeMappings = new ArrayList<>();
-		for (Iterator<PropertySuffix> it = contentTypeMappingProperties.iterator(); it.hasNext();) {
-			PropertySuffix contentTypeMappingProp = it.next();
+		for (PropertySuffix contentTypeMappingProp : contentTypeMappingProperties) {
 			contentTypeMappings.add(new ContentTypeMapping(contentTypeMappingProp.getSuffix(),contentTypeMappingProp.getValue()));
 		}
 		

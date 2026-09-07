@@ -56,7 +56,7 @@ public class FillXYDataset extends JRFillElementDataset implements XYDataset
 		if (srcXySeries != null && srcXySeries.length > 0)
 		{
 			xySeries = new FillXYSeries[srcXySeries.length];
-			for(int i = 0; i < xySeries.length; i++)
+			for (int i = 0; i < xySeries.length; i++)
 			{
 				xySeries[i] = new FillXYSeries(srcXySeries[i], factory);
 			}
@@ -70,9 +70,9 @@ public class FillXYDataset extends JRFillElementDataset implements XYDataset
 	{
 		if (xySeries != null && xySeries.length > 0)
 		{
-			for(int i = 0; i < xySeries.length; i++)
+			for (FillXYSeries crtXySeries : xySeries)
 			{
-				xySeries[i].evaluate(calculator);
+				crtXySeries.evaluate(calculator);
 			}
 		}
 	}
@@ -88,10 +88,8 @@ public class FillXYDataset extends JRFillElementDataset implements XYDataset
 				xySeriesNames = new ArrayList<Comparable<?>>();
 			}
 
-			for(int i = 0; i < xySeries.length; i++)
+			for (FillXYSeries crtXySeries : xySeries)
 			{
-				FillXYSeries crtXySeries = xySeries[i];
-
 				Comparable<?> seriesName = crtXySeries.getSeries();
 				XYSeriesData xySeriesData = xySeriesMap.get(seriesName);
 				if (xySeriesData == null)
@@ -103,7 +101,7 @@ public class FillXYDataset extends JRFillElementDataset implements XYDataset
 				
 				xySeriesData.getXData().add(crtXySeries.getXValue());
 				xySeriesData.getYData().add(crtXySeries.getYValue());
-				if(crtXySeries.getColor() != null)
+				if (crtXySeries.getColor() != null)
 				{
 					xySeriesData.setColor(crtXySeries.getColor());
 				}

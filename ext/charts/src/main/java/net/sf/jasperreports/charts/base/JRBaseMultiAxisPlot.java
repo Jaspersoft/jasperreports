@@ -24,7 +24,6 @@
 package net.sf.jasperreports.charts.base;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.charts.ChartsExpressionCollector;
@@ -85,10 +84,8 @@ public class JRBaseMultiAxisPlot extends JRBaseChartPlot implements JRMultiAxisP
 		axes.clear();
 		if (origAxes != null)
 		{
-			Iterator<JRChartAxis> iter = origAxes.iterator();
-			while (iter.hasNext())
+			for (JRChartAxis axis : origAxes)
 			{
-				JRChartAxis axis = iter.next();
 				axes.add(factory.getChartAxis(axis));
 			}
 		}
@@ -112,10 +109,8 @@ public class JRBaseMultiAxisPlot extends JRBaseChartPlot implements JRMultiAxisP
 	@Override
 	public void collectExpressions(ChartsExpressionCollector collector)
 	{
-		Iterator<JRChartAxis> iter = axes.iterator();
-		while (iter.hasNext())
+		for (JRChartAxis axis : axes)
 		{
-			JRChartAxis axis = iter.next();
 			collector.collect(axis.getChart());
 		}
 	}

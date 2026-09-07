@@ -75,7 +75,7 @@ public enum ExifOrientationEnum
 		ExifOrientationEnum[] values = values();
 		if (values != null)
 		{
-			for(ExifOrientationEnum e:values)
+			for (ExifOrientationEnum e:values)
 			{
 				if (orientation == e.getOrientation())
 				{

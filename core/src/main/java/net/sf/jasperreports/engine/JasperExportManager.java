@@ -107,7 +107,7 @@ public final class JasperExportManager
 		File sourceFile = new File(sourceFileName);
 
 		/* We need the report name. */
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".pdf");
 		String destFileName = destFile.toString();
@@ -131,7 +131,7 @@ public final class JasperExportManager
 		String destFileName
 		) throws JRException
 	{
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObjectFromFile(sourceFileName);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, new File(sourceFileName));
 
 		exportToPdfFile(jasperPrint, destFileName);
 	}
@@ -173,7 +173,7 @@ public final class JasperExportManager
 		OutputStream outputStream
 		) throws JRException
 	{
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(inputStream);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		exportToPdfStream(jasperPrint, outputStream);
 	}
@@ -274,7 +274,7 @@ public final class JasperExportManager
 		File sourceFile = new File(sourceFileName);
 
 		/* We need the report name. */
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".jrpxml");
 		String destFileName = destFile.toString();
@@ -309,7 +309,7 @@ public final class JasperExportManager
 		boolean isEmbeddingImages
 		) throws JRException
 	{
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObjectFromFile(sourceFileName);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, new File(sourceFileName));
 
 		exportToXmlFile(
 			jasperPrint, 
@@ -366,7 +366,7 @@ public final class JasperExportManager
 		OutputStream outputStream
 		) throws JRException
 	{
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(inputStream);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		exportToXmlStream(jasperPrint, outputStream);
 	}
@@ -437,7 +437,7 @@ public final class JasperExportManager
 		File sourceFile = new File(sourceFileName);
 
 		/* We need the report name. */
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".html");
 		String destFileName = destFile.toString();
@@ -467,7 +467,7 @@ public final class JasperExportManager
 		String destFileName
 		) throws JRException
 	{
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObjectFromFile(sourceFileName);
+		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(jasperReportsContext, new File(sourceFileName));
 
 		exportToHtmlFile(
 			jasperPrint, 

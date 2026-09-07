@@ -27,6 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -50,11 +55,6 @@ import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 import net.sf.jasperreports.poi.export.JRXlsExporter;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
@@ -74,7 +74,6 @@ public class HibernateApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 		xmlEmbed();
@@ -107,12 +106,11 @@ public class HibernateApp extends AbstractSampleApp
 				new File("target/reports/AddressesReport.jasper"),
 				new File("target/reports/HibernateQueryReport.jasper")
 			};
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperFillManager.fillReportToFile(reportFile.getAbsolutePath(), new HashMap<String, Object>(params));
-			System.err.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 		
 		transaction.rollback();
@@ -126,12 +124,11 @@ public class HibernateApp extends AbstractSampleApp
 	public void print() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperPrintManager.printReport(reportFile.getAbsolutePath(), true);
-			System.err.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Printing time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -142,12 +139,11 @@ public class HibernateApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToPdfFile(reportFile.getAbsolutePath());
-			System.err.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -158,10 +154,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void rtf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -174,7 +169,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". RTF creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -185,12 +180,11 @@ public class HibernateApp extends AbstractSampleApp
 	public void xml() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), false);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -201,12 +195,11 @@ public class HibernateApp extends AbstractSampleApp
 	public void xmlEmbed() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), true);
-			System.err.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". XML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -217,12 +210,11 @@ public class HibernateApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToHtmlFile(reportFile.getAbsolutePath());
-			System.err.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -233,10 +225,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void xls() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -252,7 +243,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -263,10 +254,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void csv() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -279,7 +269,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". CSV creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -290,10 +280,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void odt() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -306,7 +295,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODT creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -317,10 +306,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void ods() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -336,7 +324,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". ODS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". ODS creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -347,10 +335,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void docx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -363,7 +350,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". DOCX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -374,10 +361,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void xlsx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -393,7 +379,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLSX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -404,10 +390,9 @@ public class HibernateApp extends AbstractSampleApp
 	public void pptx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
@@ -420,7 +405,7 @@ public class HibernateApp extends AbstractSampleApp
 		
 			exporter.exportReport();
 
-			System.err.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". PPTX creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	

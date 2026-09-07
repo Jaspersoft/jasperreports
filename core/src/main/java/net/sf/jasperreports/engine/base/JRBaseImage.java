@@ -76,7 +76,7 @@ public class JRBaseImage extends JRBaseGraphicElement implements JRImage
 	protected VerticalImageAlignEnum verticalImageAlign;
 	protected Boolean isUsingCache;
 	protected boolean isLazy;
-	protected OnErrorTypeEnum onErrorType = OnErrorTypeEnum.ERROR;
+	protected OnErrorTypeEnum onErrorType;
 	protected EvaluationTimeEnum evaluationTime;
 	protected String linkType;
 	protected String linkTarget;
@@ -104,7 +104,7 @@ public class JRBaseImage extends JRBaseGraphicElement implements JRImage
 	 * The bookmark level for the anchor associated with this image.
 	 * @see JRAnchor#getBookmarkLevel()
 	 */
-	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK;
+	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK; // primitive int field has zero as default value anyway, but it is explicitly initialized for clarity
 
 	/**
 	 *

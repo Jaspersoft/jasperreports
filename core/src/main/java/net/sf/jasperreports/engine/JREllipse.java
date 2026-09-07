@@ -23,10 +23,12 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import net.sf.jasperreports.engine.design.JRDesignEllipse;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * An abstract representation of a graphic element representing an ellipse.
@@ -34,9 +36,35 @@ import net.sf.jasperreports.engine.design.JRDesignEllipse;
  * Ellipses are the most basic graphic elements. As such, there are no supplementary
  * settings to declare an ellipse element besides those already mentioned in the sections for
  * the <code>&lt;reportElement&gt;</code> and <code>&lt;graphicElement&gt;</code> tags.
- * 
+ *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
+	"removeLineWhenBlank",
+	JRXmlConstants.ATTRIBUTE_fill,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_pen
+	})
 @JsonTypeName("ellipse")
 @JsonDeserialize(as = JRDesignEllipse.class)
 public interface JREllipse extends JRGraphicElement

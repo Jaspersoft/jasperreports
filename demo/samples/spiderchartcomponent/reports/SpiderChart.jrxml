@@ -1,4 +1,4 @@
-<jasperReport name="SpiderChart" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="6d765a2d-1e53-4d51-a872-7c03a5ce3886">
+<jasperReport name="SpiderChart" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="6d765a2d-1e53-4d51-a872-7c03a5ce3886">
 	<import>net.sf.jasperreports.engine.data.JRCsvDataSource</import>
 	<field name="value" class="java.lang.Double"/>
 	<field name="series" class="java.lang.String"/>

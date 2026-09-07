@@ -85,7 +85,7 @@ public class JRSingletonCache<T>
 		try
 		{
 			@SuppressWarnings("unchecked")
-			Class<? extends T> clazz = (Class<? extends T>) JRClassLoader.loadClassForName(className);
+			Class<? extends T> clazz = (Class<? extends T>) JRClassLoader.resolveClassForName(className);
 			if (itf != null && !itf.isAssignableFrom(clazz))
 			{
 				throw 
@@ -117,14 +117,7 @@ public class JRSingletonCache<T>
 
 	protected Map<String,T> getContextInstanceCache()
 	{
-		Object contextKey = getContextKey();
-		Map<String,T> contextCache = cache.get(contextKey);
-		if (contextCache == null)
-		{
-			contextCache = new ReferenceMap<>();
-			cache.put(contextKey, contextCache);
-		}
-		return contextCache;
+		return cache.computeIfAbsent(getContextKey(), k -> new ReferenceMap<>());
 	}
 	
 	protected Object getContextKey()

@@ -93,6 +93,10 @@ public final class JRLoader
 	public static final String EXCEPTION_MESSAGE_KEY_RESOURCE_NOT_FOUND = "util.loader.resource.not.found";
 	public static final String EXCEPTION_MESSAGE_KEY_URL_OPEN_ERROR = "util.loader.url.open.error";
 
+	private static final String URL_PROTOCOL_FILE = "file";
+	private static final String URL_PROTOCOL_JAR = "jar";
+	private static final String URL_PROTOCOL_JRT = "jrt";
+
 	/**
 	 *
 	 */
@@ -822,6 +826,14 @@ public final class JRLoader
 		}
 	}
 	
+	public static boolean isFileSystemURL(URL url)
+	{
+		String protocol = url.getProtocol();
+		return URL_PROTOCOL_FILE.equalsIgnoreCase(protocol)
+				|| URL_PROTOCOL_JAR.equalsIgnoreCase(protocol)
+				|| URL_PROTOCOL_JRT.equalsIgnoreCase(protocol);
+	}
+
 	private JRLoader()
 	{
 	}

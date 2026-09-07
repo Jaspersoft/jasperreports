@@ -30,6 +30,6 @@ import net.sf.jasperreports.json.JRJsonNode;
  */
 public interface FilterExpressionEvaluator {
 
-    boolean evaluate(JRJsonNode contextNode);
+	boolean evaluate(JRJsonNode contextNode);
 
 }

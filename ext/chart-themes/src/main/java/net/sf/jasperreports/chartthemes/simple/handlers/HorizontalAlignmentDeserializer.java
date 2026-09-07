@@ -60,7 +60,7 @@ public class HorizontalAlignmentDeserializer extends StdDeserializer<HorizontalA
 		JsonNode node = oc.readTree(p);
 		
 		return convert(node.textValue());
-    }
+	}
 
 	public static HorizontalAlignment convert(String value)
 	{

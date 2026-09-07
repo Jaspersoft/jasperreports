@@ -25,6 +25,7 @@ package net.sf.jasperreports.components.table;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -38,15 +39,32 @@ import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRDatasetRun;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRVisitable;
+import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.type.HorizontalPosition;
 import net.sf.jasperreports.engine.xml.JRXmlConstants;
+import net.sf.jasperreports.jackson.util.JRXmlSince;
 import net.sf.jasperreports.properties.PropertyConstants;
 
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_whenNoDataType,
+	JRXmlConstants.ATTRIBUTE_horizontalPosition,
+	"shrinkWidth",
+	JRXmlConstants.ELEMENT_datasetRun,
+	"column",
+	"tableHeader",
+	JRXmlConstants.ELEMENT_columnHeader,
+	JRXmlConstants.ELEMENT_groupHeader,
+	JRXmlConstants.ELEMENT_groupFooter,
+	JRXmlConstants.ELEMENT_columnFooter,
+	"tableFooter",
+	JRXmlConstants.ELEMENT_detail,
+	JRXmlConstants.ELEMENT_noData
+	})
 @JsonTypeName(ComponentsExtensionsRegistryFactory.TABLE_COMPONENT_NAME)
 @JsonDeserialize(as = StandardTable.class)
 public interface TableComponent extends Component, JRCloneable, JRVisitable, DatasetRunHolder
@@ -114,12 +132,14 @@ public interface TableComponent extends Component, JRCloneable, JRVisitable, Dat
 	 * @return the position of the table columns within the table element box, 
 	 * <code>null</code> if no position is specified
 	 */
+	@JRXmlSince(JRConstants.VERSION_7_0_2)
 	@JacksonXmlProperty(isAttribute = true)
 	HorizontalPosition getHorizontalPosition();
 
 	/**
 	 * Specifies if the table box should shrink to accommodate the smaller total width of visible columns.
 	 */
+	@JRXmlSince(JRConstants.VERSION_7_0_2)
 	@JacksonXmlProperty(isAttribute = true)
 	Boolean shrinkWidth();
 

@@ -27,24 +27,24 @@ package net.sf.jasperreports.json.expression.filter;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ValueDescriptor {
-    private String value;
-    private FilterExpression.VALUE_TYPE type;
+	private String value;
+	private FilterExpression.VALUE_TYPE type;
 
-    public ValueDescriptor(FilterExpression.VALUE_TYPE type, String value) {
-        this.value = value;
-        this.type = type;
-    }
+	public ValueDescriptor(FilterExpression.VALUE_TYPE type, String value) {
+		this.value = value;
+		this.type = type;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public FilterExpression.VALUE_TYPE getType() {
-        return type;
-    }
+	public FilterExpression.VALUE_TYPE getType() {
+		return type;
+	}
 
-    @Override
-    public String toString() {
-        return type + "{" + value + "}";
-    }
+	@Override
+	public String toString() {
+		return type + "{" + value + "}";
+	}
 }

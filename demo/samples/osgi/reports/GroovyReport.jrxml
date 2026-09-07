@@ -1,0 +1,48 @@
+<jasperReport name="GroovyReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="4b20bc0d-8ac4-4148-9fbd-7de745028f99">
+	<parameter name="A" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[3d]]></defaultValueExpression>
+	</parameter>
+	<parameter name="B" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[5d]]></defaultValueExpression>
+	</parameter>
+	<title height="742">
+		<element kind="line" uuid="c8ea39d8-6dac-47a5-b49e-83357b9d3322" x="0" y="0" width="515" height="1"/>
+		<element kind="staticText" uuid="85abf622-e58c-48ec-b705-2d1475de706e" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
+			<text><![CDATA[Groovy Sample]]></text>
+		</element>
+		<element kind="textField" uuid="bafbf934-dc89-4785-b9ed-34002af7a61e" x="0" y="50" width="515" height="50" fontSize="12.0" linkType="Reference" linkTarget="Blank" hTextAlign="Center">
+			<expression><![CDATA["This sample uses Apache Groovy\n" + "http://groovy-lang.org/"]]></expression>
+			<hyperlinkReferenceExpression><![CDATA["http://groovy-lang.org/"]]></hyperlinkReferenceExpression>
+		</element>
+		<element kind="textField" uuid="41c1ebe8-7ec9-4254-89b6-474f9fa0d9b0" x="280" y="150" width="200" height="35" fontSize="24.0">
+			<expression><![CDATA[$P{A}]]></expression>
+		</element>
+		<element kind="staticText" uuid="85a9ea03-d69b-45e4-aa4f-73de36e1026f" positionType="Float" x="0" y="150" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[A =]]></text>
+		</element>
+		<element kind="staticText" uuid="0f21c859-2b95-44e3-9a9d-47b77ba71fb4" positionType="Float" x="0" y="190" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[B =]]></text>
+		</element>
+		<element kind="textField" uuid="034f0370-5a6c-41b1-8c76-58f76d2c8280" x="280" y="190" width="200" height="35" fontSize="24.0">
+			<expression><![CDATA[$P{B}]]></expression>
+		</element>
+		<element kind="staticText" uuid="c119d47f-2268-4cbd-b09d-2b1bf11ee71d" positionType="Float" x="0" y="230" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[Java   A + B =]]></text>
+		</element>
+		<element kind="textField" uuid="47fbdc4f-4072-4770-ac39-85eed17148be" x="280" y="230" width="200" height="35" forecolor="#FF0000" fontSize="24.0">
+			<expression><![CDATA[Double.valueOf($P{A}.doubleValue() + $P{B}.doubleValue())]]></expression>
+		</element>
+		<element kind="staticText" uuid="49d3f7b7-6606-4fd3-92e6-a15bf8dc1296" positionType="Float" x="0" y="270" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[Groovy   A + B =]]></text>
+		</element>
+		<element kind="textField" uuid="680c3815-af28-4096-a838-80fb4ef8897e" x="280" y="270" width="200" height="35" forecolor="#008000" fontSize="24.0">
+			<expression><![CDATA[$P{A} + $P{B}]]></expression>
+		</element>
+		<element kind="staticText" uuid="49d3f7b7-6606-4fd3-92e6-a15bf8dc1296" positionType="Float" x="0" y="310" width="259" height="35" fontSize="24.0" hTextAlign="Right">
+			<text><![CDATA[Groovy closure =]]></text>
+		</element>
+		<element kind="textField" uuid="680c3815-af28-4096-a838-80fb4ef8897e" x="280" y="310" width="200" height="35" forecolor="#008080" fontSize="24.0">
+			<expression><![CDATA[[5, 6, 7, 8, 9].findAll{it % 2 == 1}]]></expression>
+		</element>
+	</title>
+</jasperReport>

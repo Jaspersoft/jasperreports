@@ -39,7 +39,8 @@ public class JRBaseCrosstabRowGroup extends JRBaseCrosstabGroup implements JRCro
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
 	protected int width;
-	protected CrosstabRowPositionEnum position = CrosstabRowPositionEnum.TOP;
+	protected CrosstabRowPositionEnum position;
+	protected boolean keepTogether;
 
 	public JRBaseCrosstabRowGroup(JRCrosstabRowGroup group, JRBaseObjectFactory factory)
 	{
@@ -47,6 +48,7 @@ public class JRBaseCrosstabRowGroup extends JRBaseCrosstabGroup implements JRCro
 
 		width = group.getWidth();
 		position = group.getPosition();
+		keepTogether = group.isKeepTogether();
 	}
 
 	@Override
@@ -59,5 +61,11 @@ public class JRBaseCrosstabRowGroup extends JRBaseCrosstabGroup implements JRCro
 	public int getWidth()
 	{
 		return width;
+	}
+
+	@Override
+	public boolean isKeepTogether()
+	{
+		return keepTogether;
 	}
 }

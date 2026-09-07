@@ -1,4 +1,4 @@
-<jasperReport name="ParagraphsReport.1" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="1c6f84ba-6471-4479-9bf0-1b285fc79c97">
+<jasperReport name="ParagraphsReport.1" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="1c6f84ba-6471-4479-9bf0-1b285fc79c97">
 	<style name="myDefault" default="true" fontName="DejaVu Sans"/>
 	<style name="rulerStyle" style="myDefault" mode="Opaque" hTextAlign="Left" fontSize="4.0"/>
 	<style name="indentStyle" style="myDefault" mode="Transparent" backcolor="#FFFFFF">

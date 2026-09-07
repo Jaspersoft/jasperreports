@@ -134,13 +134,13 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	
 	public Integer WEEKDAY(Object dateObject, Boolean isSundayFirstDay){
 		Integer dayOfWeek = getCalendarFieldFromDate(dateObject,Calendar.DAY_OF_WEEK);
-		if(dayOfWeek==null) {
-			if(log.isDebugEnabled()){
+		if (dayOfWeek==null) {
+			if (log.isDebugEnabled()){
 				log.debug("Unable to get the correct day of the week.");
 			}
 			return null;
 		}
-		if(isSundayFirstDay){
+		if (isSundayFirstDay){
 			// By default Sunday is considered first day in Java 
 			// Calendar.SUNDAY should be a constant with value 1.
 			// See the Calendar.DAY_OF_WEEK javadoc		
@@ -148,7 +148,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		}
 		else{
 			// shift the days
-			if(dayOfWeek==Calendar.SUNDAY){
+			if (dayOfWeek==Calendar.SUNDAY){
 				return 7;
 			}
 			else{
@@ -200,8 +200,8 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("month"),
 		@FunctionParameter("dayOfMonth")})
 	public Date DATE(Integer year, Integer month, Integer dayOfMonth){
-		if(year==null || month==null || dayOfMonth==null) {
-			if(log.isDebugEnabled()){
+		if (year==null || month==null || dayOfMonth==null) {
+			if (log.isDebugEnabled()){
 				log.debug("None of the arguments can be null.");
 			}
 			return null;
@@ -220,7 +220,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObject")})
 	public Long DATEVALUE(Object dateObject){
 		Date convertedDate = convertDateObject(dateObject);
-		if(convertedDate!=null){
+		if (convertedDate!=null){
 			return convertedDate.getTime(); 
 		}
 		else {
@@ -244,8 +244,8 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	}
 	
 	public String TIME(Integer hours, Integer minutes, Integer seconds, String timePattern){
-		if(hours==null || minutes==null || seconds==null) {
-			if(log.isDebugEnabled()){
+		if (hours==null || minutes==null || seconds==null) {
+			if (log.isDebugEnabled()){
 				log.debug("None of the arguments can be null.");
 			}
 			return null;
@@ -254,7 +254,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		LocalTime lt = LocalTime.of(hours, minutes, seconds);
 		DateTimeFormatter fallbackFormatter = 
 				DateTimeFormatter.ofLocalizedTime(FormatStyle.LONG).withLocale(getReportLocale()).withZone(getReportTimeZone().toZoneId());
-		if(timePattern==null) {
+		if (timePattern==null) {
 			return fallbackFormatter.format(lt);
 		}
 		else {
@@ -279,7 +279,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("months")})
 	public Date EDATE(Object dateObject, Integer months){
 		Date convertedDate = convertDateObject(dateObject);
-		if(convertedDate==null){
+		if (convertedDate==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -301,7 +301,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("workdays")})
 	public Date WORKDAY(Object dateObject, Integer workdays){
 		Date convertedDate = convertDateObject(dateObject);
-		if(convertedDate==null){
+		if (convertedDate==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -335,12 +335,12 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("endDate")})
 	public Integer NETWORKDAYS(Object startDate, Object endDate){
 		Date startDateObj = convertDateObject(startDate);
-		if(startDateObj==null) {
+		if (startDateObj==null) {
 			logCannotConvertToDate();
 			return null;
 		}
 		Date endDateObj = convertDateObject(endDate);
-		if(endDateObj==null){
+		if (endDateObj==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -350,7 +350,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 			ZonedDateTime zdtEnd = ZonedDateTime.ofInstant(Instant.ofEpochMilli(endDateObj.getTime()), reportZoneID);
 			
 			int workingDays = 0;
-			if(zdtCursor.isAfter(zdtEnd)) {
+			if (zdtCursor.isAfter(zdtEnd)) {
 				// Swap date information
 				ZonedDateTime tmp = zdtCursor;
 				zdtCursor = zdtEnd;
@@ -359,9 +359,9 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 
 			LocalDate cursorLocalDate = zdtCursor.toLocalDate();
 			LocalDate endLocalDate = zdtEnd.toLocalDate();
-			while(ChronoUnit.DAYS.between(cursorLocalDate, endLocalDate)>0) {
+			while (ChronoUnit.DAYS.between(cursorLocalDate, endLocalDate)>0) {
 				DayOfWeek dayOfWeek = cursorLocalDate.getDayOfWeek();
-				if(!isWeekendDay(dayOfWeek)) {
+				if (!isWeekendDay(dayOfWeek)) {
 					workingDays++;
 				}
 				cursorLocalDate = cursorLocalDate.plusDays(1);
@@ -381,12 +381,12 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("endDate")})
 	public Integer DAYS(Object startDate, Object endDate){
 		Date startDateObj = convertDateObject(startDate);
-		if(startDateObj==null) {
+		if (startDateObj==null) {
 			logCannotConvertToDate();
 			return null;
 		}
 		Date endDateObj = convertDateObject(endDate);
-		if(endDateObj==null){
+		if (endDateObj==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -407,7 +407,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObj")})
 	public Integer DAYSINMONTH(Object dateObj){
 		Date date = convertDateObject(dateObj);
-		if(date==null){
+		if (date==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -426,7 +426,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObj")})
 	public Integer DAYSINYEAR(Object dateObj){
 		Date date = convertDateObject(dateObj);
-		if(date==null){
+		if (date==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -446,12 +446,12 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("endDate")})
 	public Integer WEEKS(Object startDate, Object endDate){
 		Date startDateObj = convertDateObject(startDate);
-		if(startDateObj==null) {
+		if (startDateObj==null) {
 			logCannotConvertToDate();
 			return null;
 		}
 		Date endDateObj = convertDateObject(endDate);
-		if(endDateObj==null){
+		if (endDateObj==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -472,7 +472,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObj")})
 	public Integer WEEKSINYEAR(Object dateObj){
 		Date date = convertDateObject(dateObj);
-		if(date==null){
+		if (date==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -502,7 +502,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObj")})
 	public Integer WEEKNUM(Object dateObj){
 		Date date = convertDateObject(dateObj);
-		if(date==null){
+		if (date==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -522,12 +522,12 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("endDate")})
 	public Integer MONTHS(Object startDate, Object endDate){
 		Date startDateObj = convertDateObject(startDate);
-		if(startDateObj==null) {
+		if (startDateObj==null) {
 			logCannotConvertToDate();
 			return null;
 		}
 		Date endDateObj = convertDateObject(endDate);
-		if(endDateObj==null){
+		if (endDateObj==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -549,12 +549,12 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("endDate")})
 	public Integer YEARS(Object startDate, Object endDate){
 		Date startDateObj = convertDateObject(startDate);
-		if(startDateObj==null) {
+		if (startDateObj==null) {
 			logCannotConvertToDate();
 			return null;
 		}
 		Date endDateObj = convertDateObject(endDate);
-		if(endDateObj==null){
+		if (endDateObj==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -575,7 +575,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObj")})
 	public Boolean ISLEAPYEAR(Object dateObj){
 		Date date = convertDateObject(dateObj);
-		if(date==null){
+		if (date==null){
 			logCannotConvertToDate();
 			return null;
 		}
@@ -594,7 +594,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateObj"),
 		@FunctionParameter("formatPattern")})
 	public String DATEFORMAT(Date dateObj, String formatPattern){
-		if(dateObj==null){
+		if (dateObj==null){
 			return null;
 		}
 		else{
@@ -614,10 +614,10 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 		@FunctionParameter("dateExprObj")})
 	public DateRange DATERANGE(Object dateExprObj){
 		DateRangeBuilder dateRangeBuilder = null;
-		if(dateExprObj instanceof String){
+		if (dateExprObj instanceof String){
 			dateRangeBuilder = new DateRangeBuilder((String)dateExprObj);
 		}
-		else if(dateExprObj instanceof Date) {
+		else if (dateExprObj instanceof Date) {
 			dateRangeBuilder = new DateRangeBuilder((Date)dateExprObj);
 		}
 		else {
@@ -639,38 +639,38 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	 * like for example java.sql.Date.
 	 */
 	private Date convertDateObject(Object dateObject){
-		if(dateObject==null){
-			if(log.isDebugEnabled()){
+		if (dateObject==null){
+			if (log.isDebugEnabled()){
 				log.debug("The date object can not be null.");
 			}
 			return null;
 		}
-		else if(dateObject instanceof String){
+		else if (dateObject instanceof String){
 			// Try to convert using the different style for pattern.
 			// We use MEDIUM as the first one because it is the DEFAULT
 			int formatTypes[] = new int[]{DateFormat.MEDIUM, DateFormat.SHORT, DateFormat.LONG, DateFormat.FULL};
-			for(int formatType : formatTypes) {
+			for (int formatType : formatTypes) {
 				try {
 					DateFormat df = DateFormat.getDateInstance(formatType, getReportLocale());
 					df.setTimeZone(getReportTimeZone());
 					return df.parse((String)dateObject);
 				} catch (ParseException e) {
-					if(log.isDebugEnabled()){
+					if (log.isDebugEnabled()){
 						log.debug("Unable to parse the string as Date using the standard SimpleDateFormat.");
 					}
 				}
 			}
 			return null;
 		}
-		else if(dateObject instanceof Long){
+		else if (dateObject instanceof Long){
 			Calendar cal = Calendar.getInstance(getReportTimeZone(), getReportLocale());
 			cal.setTimeInMillis((Long)dateObject);
 			return cal.getTime();
 		}
-		else if(dateObject instanceof Date){
+		else if (dateObject instanceof Date){
 			return (Date)dateObject;
 		}
-		if(log.isDebugEnabled()){
+		if (log.isDebugEnabled()){
 			log.debug("The specified object is not among the allowed types for Date conversion.");
 		}
 		return null;
@@ -682,7 +682,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	 */
 	private Integer getCalendarFieldFromDate(Object dateObject,int field){
 		Date convertedDate = convertDateObject(dateObject);
-		if(convertedDate==null) {
+		if (convertedDate==null) {
 			logCannotConvertToDate();
 			return null;
 		}
@@ -694,7 +694,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	}
 	
 	private static void logCannotConvertToDate() {
-		if(log.isDebugEnabled()){
+		if (log.isDebugEnabled()){
 			log.debug("Unable to convert to a valid Date instance.");
 		}
 	}
@@ -708,7 +708,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	 */
 	private TimeZone getReportTimeZone() {
 		TimeZone reportTimeZone = TimeZone.getDefault(); 
-		if(getContext()!=null) {
+		if (getContext()!=null) {
 			reportTimeZone = (TimeZone) getContext().getParameterValue(JRParameter.REPORT_TIME_ZONE);
 		}
 		return reportTimeZone;
@@ -723,7 +723,7 @@ public final class DateTimeFunctions extends AbstractFunctionSupport
 	 */
 	private Locale getReportLocale() {
 		Locale reportLocale = Locale.getDefault(); 
-		if(getContext()!=null) {
+		if (getContext()!=null) {
 			reportLocale = (Locale) getContext().getParameterValue(JRParameter.REPORT_LOCALE);
 		}
 		return reportLocale;

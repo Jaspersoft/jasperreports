@@ -24,7 +24,6 @@
 package net.sf.jasperreports.crosstabs;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -73,17 +72,15 @@ public class CrosstabDeepVisitor extends JRDelegationVisitor implements Elements
 		visitCrosstabCell(crosstab.getHeaderCell());
 		
 		JRCrosstabRowGroup[] rowGroups = crosstab.getRowGroups();
-		for (int i = 0; i < rowGroups.length; i++)
+		for (JRCrosstabRowGroup rowGroup : rowGroups)
 		{
-			JRCrosstabRowGroup rowGroup = rowGroups[i];
 			visitCrosstabCell(rowGroup.getHeader());
 			visitCrosstabCell(rowGroup.getTotalHeader());
 		}
 		
 		JRCrosstabColumnGroup[] columnGroups = crosstab.getColumnGroups();
-		for (int i = 0; i < columnGroups.length; i++)
+		for (JRCrosstabColumnGroup columnGroup : columnGroups)
 		{
-			JRCrosstabColumnGroup columnGroup = columnGroups[i];
 			visitCrosstabCell(columnGroup.getCrosstabHeader());
 			visitCrosstabCell(columnGroup.getHeader());
 			visitCrosstabCell(columnGroup.getTotalHeader());
@@ -92,9 +89,8 @@ public class CrosstabDeepVisitor extends JRDelegationVisitor implements Elements
 		if (crosstab instanceof JRDesignCrosstab)
 		{
 			List<JRCrosstabCell> cells = ((JRDesignCrosstab) crosstab).getCellsList();
-			for (Iterator<JRCrosstabCell> it = cells.iterator(); it.hasNext();)
+			for (JRCrosstabCell cell : cells)
 			{
-				JRCrosstabCell cell = it.next();
 				visitCrosstabCell(cell.getContents());
 			}
 		}

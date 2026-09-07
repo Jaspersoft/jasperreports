@@ -25,11 +25,13 @@ package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.design.JRDesignLine;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.type.LineDirectionEnum;
 
 
@@ -56,6 +58,33 @@ import net.sf.jasperreports.engine.type.LineDirectionEnum;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_uuid,
+	JRXmlConstants.ATTRIBUTE_key,
+	JRXmlConstants.ATTRIBUTE_x,
+	JRXmlConstants.ATTRIBUTE_y,
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_height,
+	JRXmlConstants.ATTRIBUTE_forecolor,
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_mode,
+	JRXmlConstants.ATTRIBUTE_positionType,
+	JRXmlConstants.ATTRIBUTE_stretchType,
+	"printRepeatedValues",
+	"printInFirstWholeBand",
+	"printWhenDetailOverflows",
+	JRXmlConstants.ATTRIBUTE_printWhenGroupChanges,
+	"removeLineWhenBlank",
+	JRXmlConstants.ATTRIBUTE_fill,
+	JRXmlConstants.ATTRIBUTE_direction,
+	JRXmlConstants.ATTRIBUTE_style,
+	JRXmlConstants.ELEMENT_property,
+	JRXmlConstants.ELEMENT_propertyExpression,
+	JRXmlConstants.ELEMENT_styleExpression,
+	JRXmlConstants.ELEMENT_printWhenExpression,
+	JRXmlConstants.ELEMENT_pen
+	})
 @JsonTypeName("line")
 @JsonDeserialize(as = JRDesignLine.class)
 public interface JRLine extends JRGraphicElement

@@ -21,10 +21,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JasperReports. If not, see <http://www.gnu.org/licenses/>.
  */
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Panel;
-import java.awt.Toolkit;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,7 +32,6 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.JRCsvMetadataExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
@@ -82,9 +77,9 @@ public class AccessibleApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
+		pdfa();
 		xmlEmbed();
 		xml();
 		html();
@@ -109,29 +104,8 @@ public class AccessibleApp extends AbstractSampleApp
 	public void fill() throws JRException
 	{
 		long start = System.currentTimeMillis();
-		//Preparing parameters
-		Image image = 
-			Toolkit.getDefaultToolkit().createImage(
-				JRLoader.loadBytesFromResource("dukesign.jpg")
-				);
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", 10500);
-		parameters.put("SummaryImage", image);
-		
-		JasperFillManager.fillReportToFile("target/reports/AccessibleReport.jasper", parameters);
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		JasperFillManager.fillReportToFile("target/reports/AccessibleReport.jasper", null);
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -142,7 +116,7 @@ public class AccessibleApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/AccessibleReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -153,18 +127,34 @@ public class AccessibleApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/AccessibleReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
 	/**
 	 * 
 	 */
-	public void pdfa1() throws JRException
+	public void pdfa() throws JRException
+	{
+		for (PdfaConformanceEnum value : PdfaConformanceEnum.values())
+		{
+			if (value != PdfaConformanceEnum.NONE)
+			{
+				pdfa(value);
+			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 */
+	private void pdfa(PdfaConformanceEnum conformance) throws JRException
 	{
 		long start = System.currentTimeMillis();
 
-		try{
+		try
+		{
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 			JRPdfExporter exporter = new JRPdfExporter();
@@ -183,22 +173,21 @@ public class AccessibleApp extends AbstractSampleApp
 			// Include structure tags for PDF/A-1a compliance; unnecessary for PDF/A-1b
 			configuration.setTagged(true);
 			
-			configuration.setPdfaConformance(PdfaConformanceEnum.PDFA_1A);
-			
-			// Uncomment the following line and specify a valid path for the ICC profile
-//			configuration.setIccProfilePath("path/to/ICC/profile");
+			configuration.setPdfaConformance(conformance);
 			
 			exporter.setConfiguration(configuration);
 			exporter.exportReport();
 
-			FileOutputStream fos = new FileOutputStream("target/reports/AccessibleReport_pdfa.pdf");
+			FileOutputStream fos = new FileOutputStream("target/reports/AccessibleReport_" + conformance.getName() + ".pdf");
 			os.writeTo(fos);
 			fos.close();
-		}catch(Exception e){
+		}
+		catch(Exception e)
+		{
 			 e.printStackTrace();
 		}
 				
-		System.err.println("PDF/A-1a creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF/A-" + conformance.getName().substring("pdfa".length()) + " creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -209,7 +198,7 @@ public class AccessibleApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/AccessibleReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -220,7 +209,7 @@ public class AccessibleApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToXmlFile("target/reports/AccessibleReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -231,7 +220,7 @@ public class AccessibleApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToHtmlFile("target/reports/AccessibleReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("HTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -254,7 +243,7 @@ public class AccessibleApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -285,7 +274,7 @@ public class AccessibleApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -316,7 +305,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("Metadata XLS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("Metadata XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -339,7 +328,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("Metadata JSON creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("Metadata JSON creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -362,7 +351,7 @@ public class AccessibleApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -385,7 +374,7 @@ public class AccessibleApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("Metadata CSV creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("Metadata CSV creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -408,7 +397,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -431,7 +420,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -454,7 +443,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -484,7 +473,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -515,7 +504,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("Metadata XLSX creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("Metadata XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -538,36 +527,7 @@ public class AccessibleApp extends AbstractSampleApp
 
 		exporter.exportReport();
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	/**
-	 *
-	 */
-	public void run() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		//Preparing parameters
-		Image image = Toolkit.getDefaultToolkit().createImage("dukesign.jpg");
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", 10500);
-		parameters.put("SummaryImage", image);
-		
-		JasperRunManager.runReportToPdfFile("target/reports/AccessibleReport.jasper", parameters, getDemoHsqldbConnection());
-		System.err.println("PDF running time : " + (System.currentTimeMillis() - start));
+		System.out.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

@@ -1,0 +1,78 @@
+﻿"id","sales_date_of_close_id","sales_date_of_start_id","sales_person_id","sales_account_id","sales_location_id","sales_state_id","amount","time_to_close","probability","id1","sales_state","id2","start_year","start_quarter_in_year","start_quarter_name","start_month","start_month_name","start_week_in_year","start_week_in_month","id3","close_year","close_quarter_in_year","close_quarter_name","close_month","close_month_name","close_week_in_year","close_week_in_month","id4","first_name","last_name","full_name","manager_id"
+57,8,3,6,13,13,3,5530,35,60,3,"Prospecting",3,2002,4,"Q4",11,"November",46,3,8,2002,4,"Q4",12,"December",51,4,6,"Sally","Bronsen","sally",2
+58,8,3,6,13,13,7,5930,32,50,7,"Qualification",3,2002,4,"Q4",11,"November",46,3,8,2002,4,"Q4",12,"December",51,4,6,"Sally","Bronsen","sally",2
+245,38,12,6,58,58,5,56060,76,85,5,"Negotiation/Review",12,2003,1,"Q1",1,"January",3,4,38,2003,2,"Q2",4,"April",14,1,6,"Sally","Bronsen","sally",2
+280,34,13,6,65,65,6,12060,55,50,6,"Needs Analysis",13,2003,1,"Q1",1,"January",4,5,34,2003,1,"Q1",3,"March",12,4,6,"Sally","Bronsen","sally",2
+332,46,15,6,75,75,7,55060,79,70,7,"Qualification",15,2003,1,"Q1",2,"February",6,2,46,2003,2,"Q2",5,"May",17,1,6,"Sally","Bronsen","sally",2
+452,42,20,6,99,99,7,5560,34,60,7,"Qualification",20,2003,1,"Q1",3,"March",11,3,42,2003,2,"Q2",4,"April",16,3,6,"Sally","Bronsen","sally",2
+453,42,20,6,99,99,7,5960,35,50,7,"Qualification",20,2003,1,"Q1",3,"March",11,3,42,2003,2,"Q2",4,"April",16,3,6,"Sally","Bronsen","sally",2
+560,46,25,6,121,121,5,590,10,70,5,"Negotiation/Review",25,2003,2,"Q2",4,"April",16,4,46,2003,2,"Q2",5,"May",17,1,6,"Sally","Bronsen","sally",2
+589,58,26,6,126,126,3,25090,56,45,3,"Prospecting",26,2003,2,"Q2",4,"April",17,5,58,2003,2,"Q2",6,"June",25,4,6,"Sally","Bronsen","sally",2
+608,55,26,6,130,130,7,5990,38,75,7,"Qualification",26,2003,2,"Q2",4,"April",17,5,55,2003,2,"Q2",6,"June",22,1,6,"Sally","Bronsen","sally",2
+710,65,31,6,151,151,3,12090,50,50,3,"Prospecting",31,2003,2,"Q2",6,"June",22,1,65,2003,3,"Q3",7,"July",29,3,6,"Sally","Bronsen","sally",2
+762,76,33,6,161,161,7,55120,73,70,7,"Qualification",33,2003,2,"Q2",6,"June",24,3,76,2003,3,"Q3",8,"August",34,4,6,"Sally","Bronsen","sally",2
+881,67,37,6,185,185,3,620,11,85,3,"Prospecting",37,2003,3,"Q3",7,"July",28,3,67,2003,3,"Q3",7,"July",30,4,6,"Sally","Bronsen","sally",2
+1038,87,43,6,216,216,4,6050,40,75,4,"Value Proposition",43,2003,3,"Q3",8,"August",34,4,87,2003,4,"Q4",10,"October",40,1,6,"Sally","Bronsen","sally",2
+1105,104,46,6,230,230,5,56150,74,85,5,"Negotiation/Review",46,2003,3,"Q3",9,"September",37,3,104,2003,4,"Q4",11,"November",48,5,6,"Sally","Bronsen","sally",2
+1140,100,47,6,237,237,4,12150,54,50,4,"Value Proposition",47,2003,3,"Q3",9,"September",38,4,100,2003,4,"Q4",11,"November",46,3,6,"Sally","Bronsen","sally",2
+1141,105,47,6,237,237,3,50150,68,60,3,"Prospecting",47,2003,3,"Q3",9,"September",38,4,105,2003,4,"Q4",12,"December",48,1,6,"Sally","Bronsen","sally",2
+1144,105,47,6,237,237,6,140150,69,80,6,"Needs Analysis",47,2003,3,"Q3",9,"September",38,4,105,2003,4,"Q4",12,"December",48,1,6,"Sally","Bronsen","sally",2
+1192,108,48,6,247,247,7,55150,80,70,7,"Qualification",48,2003,4,"Q4",10,"October",39,1,108,2003,4,"Q4",12,"December",50,2,6,"Sally","Bronsen","sally",2
+1309,96,52,6,271,271,7,680,10,85,7,"Qualification",52,2003,4,"Q4",10,"October",43,5,96,2003,4,"Q4",11,"November",44,1,6,"Sally","Bronsen","sally",2
+1310,102,52,6,271,271,5,5680,31,60,5,"Negotiation/Review",52,2003,4,"Q4",10,"October",43,5,102,2003,4,"Q4",11,"November",47,4,6,"Sally","Bronsen","sally",2
+1311,102,52,6,271,271,5,6080,31,50,5,"Negotiation/Review",52,2003,4,"Q4",10,"October",43,5,102,2003,4,"Q4",11,"November",47,4,6,"Sally","Bronsen","sally",2
+1442,108,57,6,298,298,7,1080,12,75,7,"Qualification",57,2003,4,"Q4",12,"December",48,1,108,2003,4,"Q4",12,"December",50,2,6,"Sally","Bronsen","sally",2
+1445,121,57,6,298,298,4,25180,59,45,4,"Value Proposition",57,2003,4,"Q4",12,"December",48,1,121,2004,1,"Q1",1,"January",4,4,6,"Sally","Bronsen","sally",2
+1531,128,60,6,316,316,3,56180,73,85,3,"Prospecting",60,2003,4,"Q4",12,"December",51,4,128,2004,1,"Q1",3,"March",9,1,6,"Sally","Bronsen","sally",2
+1566,125,61,6,323,323,3,12180,51,50,3,"Prospecting",61,2003,4,"Q4",12,"December",52,5,125,2004,1,"Q1",2,"February",7,3,6,"Sally","Bronsen","sally",2
+1618,137,63,6,333,333,3,55210,80,70,3,"Prospecting",63,2004,1,"Q1",1,"January",2,2,137,2004,2,"Q2",4,"April",13,1,6,"Sally","Bronsen","sally",2
+1739,129,67,6,357,357,5,6110,31,50,5,"Negotiation/Review",67,2004,1,"Q1",2,"February",6,2,129,2004,1,"Q1",3,"March",10,1,6,"Sally","Bronsen","sally",2
+1875,147,71,6,384,384,5,25210,59,45,5,"Negotiation/Review",71,2004,1,"Q1",3,"March",10,2,147,2004,2,"Q2",5,"May",18,1,6,"Sally","Bronsen","sally",2
+1894,142,72,6,388,388,5,6140,37,75,5,"Negotiation/Review",72,2004,1,"Q1",3,"March",11,3,142,2004,2,"Q2",4,"April",16,3,6,"Sally","Bronsen","sally",2
+1997,159,75,6,409,409,6,50240,71,60,6,"Needs Analysis",75,2004,2,"Q2",4,"April",14,1,159,2004,2,"Q2",6,"June",24,2,6,"Sally","Bronsen","sally",2
+2000,161,75,6,409,409,4,140240,80,80,4,"Value Proposition",75,2004,2,"Q2",4,"April",14,1,161,2004,2,"Q2",6,"June",25,3,6,"Sally","Bronsen","sally",2
+2168,161,81,6,443,443,7,5740,34,60,7,"Qualification",81,2004,2,"Q2",5,"May",20,3,161,2004,2,"Q2",6,"June",25,3,6,"Sally","Bronsen","sally",2
+2169,161,81,6,443,443,4,6140,32,50,4,"Value Proposition",81,2004,2,"Q2",5,"May",20,3,161,2004,2,"Q2",6,"June",25,3,6,"Sally","Bronsen","sally",2
+2276,163,85,6,465,465,7,770,12,70,7,"Qualification",85,2004,2,"Q2",6,"June",24,3,163,2004,2,"Q2",6,"June",26,4,6,"Sally","Bronsen","sally",2
+2302,166,86,6,470,470,3,1170,13,75,3,"Prospecting",86,2004,2,"Q2",6,"June",25,4,166,2004,3,"Q3",7,"July",27,1,6,"Sally","Bronsen","sally",2
+2324,172,86,6,474,474,7,6170,38,75,7,"Qualification",86,2004,2,"Q2",6,"June",25,4,172,2004,3,"Q3",7,"July",30,4,6,"Sally","Bronsen","sally",2
+2391,188,89,6,488,488,7,56270,79,85,7,"Qualification",89,2004,3,"Q3",7,"July",28,2,188,2004,4,"Q4",10,"October",39,1,6,"Sally","Bronsen","sally",2
+2426,180,90,6,495,495,6,12270,51,50,6,"Needs Analysis",90,2004,3,"Q3",7,"July",29,3,180,2004,3,"Q3",9,"September",36,1,6,"Sally","Bronsen","sally",2
+2427,188,90,6,495,495,5,50270,72,60,5,"Negotiation/Review",90,2004,3,"Q3",7,"July",29,3,188,2004,4,"Q4",10,"October",39,1,6,"Sally","Bronsen","sally",2
+2430,189,90,6,495,495,7,140270,78,80,7,"Qualification",90,2004,3,"Q3",7,"July",29,3,189,2004,4,"Q4",10,"October",40,1,6,"Sally","Bronsen","sally",2
+2732,189,99,6,556,556,6,1200,13,75,6,"Needs Analysis",99,2004,3,"Q3",9,"September",38,4,189,2004,4,"Q4",10,"October",40,1,6,"Sally","Bronsen","sally",2
+2735,201,99,6,556,556,4,25300,57,45,4,"Value Proposition",99,2004,3,"Q3",9,"September",38,4,201,2004,4,"Q4",11,"November",46,2,6,"Sally","Bronsen","sally",2
+2754,195,99,6,560,560,3,6200,36,75,3,"Prospecting",99,2004,3,"Q3",9,"September",38,4,195,2004,4,"Q4",10,"October",43,4,6,"Sally","Bronsen","sally",2
+2821,212,101,6,574,574,7,56300,74,85,7,"Qualification",101,2004,4,"Q4",10,"October",40,1,212,2004,4,"Q4",12,"December",51,3,6,"Sally","Bronsen","sally",2
+2856,207,102,6,581,581,7,12330,50,50,7,"Qualification",102,2004,4,"Q4",10,"October",41,2,207,2004,4,"Q4",12,"December",48,1,6,"Sally","Bronsen","sally",2
+2857,214,102,6,581,581,5,50330,74,60,5,"Negotiation/Review",102,2004,4,"Q4",10,"October",41,2,214,2004,4,"Q4",12,"December",52,4,6,"Sally","Bronsen","sally",2
+3026,205,107,6,615,615,5,830,12,85,5,"Negotiation/Review",107,2004,4,"Q4",11,"November",46,3,205,2004,4,"Q4",11,"November",48,4,6,"Sally","Bronsen","sally",2
+3132,210,110,6,637,637,5,830,10,70,5,"Negotiation/Review",110,2004,4,"Q4",12,"December",49,2,210,2004,4,"Q4",12,"December",50,2,6,"Sally","Bronsen","sally",2
+3158,212,111,6,642,642,7,1230,10,75,7,"Qualification",111,2004,4,"Q4",12,"December",50,3,212,2004,4,"Q4",12,"December",51,3,6,"Sally","Bronsen","sally",2
+3161,227,111,6,642,642,6,25330,58,45,6,"Needs Analysis",111,2004,4,"Q4",12,"December",50,3,227,2005,1,"Q1",2,"February",6,1,6,"Sally","Bronsen","sally",2
+3180,223,112,6,646,646,7,6260,36,75,7,"Qualification",112,2004,4,"Q4",12,"December",51,4,223,2005,1,"Q1",1,"January",4,4,6,"Sally","Bronsen","sally",2
+3247,239,114,6,660,660,3,56360,79,85,3,"Prospecting",114,2005,1,"Q1",1,"January",1,1,239,2005,1,"Q1",3,"March",12,3,6,"Sally","Bronsen","sally",2
+3283,239,115,6,667,667,7,50360,70,60,7,"Qualification",115,2005,1,"Q1",1,"January",2,2,239,2005,1,"Q1",3,"March",12,3,6,"Sally","Bronsen","sally",2
+3334,244,116,6,677,677,7,55360,80,70,7,"Qualification",116,2005,1,"Q1",1,"January",3,3,244,2005,2,"Q2",4,"April",14,1,6,"Sally","Bronsen","sally",2
+3454,235,119,6,701,701,6,5860,31,60,6,"Needs Analysis",119,2005,1,"Q1",2,"February",6,2,235,2005,1,"Q1",3,"March",10,1,6,"Sally","Bronsen","sally",2
+3562,239,123,6,723,723,7,890,13,70,7,"Qualification",123,2005,1,"Q1",3,"March",10,2,239,2005,1,"Q1",3,"March",12,3,6,"Sally","Bronsen","sally",2
+3677,258,126,6,746,746,6,56390,70,85,6,"Needs Analysis",126,2005,1,"Q1",3,"March",13,5,258,2005,2,"Q2",6,"June",23,1,6,"Sally","Bronsen","sally",2
+3712,256,127,6,753,753,7,12390,55,50,7,"Qualification",127,2005,2,"Q2",4,"April",14,1,256,2005,2,"Q2",5,"May",22,5,6,"Sally","Bronsen","sally",2
+3716,262,127,6,753,753,5,140390,74,80,5,"Negotiation/Review",127,2005,2,"Q2",4,"April",14,1,262,2005,2,"Q2",6,"June",25,3,6,"Sally","Bronsen","sally",2
+3883,254,132,6,787,787,4,920,10,85,4,"Value Proposition",132,2005,2,"Q2",5,"May",19,2,254,2005,2,"Q2",5,"May",20,3,6,"Sally","Bronsen","sally",2
+3885,260,132,6,787,787,5,6320,32,50,5,"Negotiation/Review",132,2005,2,"Q2",5,"May",19,2,260,2005,2,"Q2",6,"June",24,2,6,"Sally","Bronsen","sally",2
+4018,262,136,6,814,814,7,1320,14,75,7,"Qualification",136,2005,2,"Q2",6,"June",23,2,262,2005,2,"Q2",6,"June",25,3,6,"Sally","Bronsen","sally",2
+4040,269,136,6,818,818,5,6320,35,75,5,"Negotiation/Review",136,2005,2,"Q2",6,"June",23,2,269,2005,3,"Q3",7,"July",28,2,6,"Sally","Bronsen","sally",2
+4142,281,139,6,839,839,7,12420,55,50,7,"Qualification",139,2005,2,"Q2",6,"June",26,5,281,2005,3,"Q3",8,"August",34,3,6,"Sally","Bronsen","sally",2
+4146,286,139,6,839,839,5,140420,72,80,5,"Negotiation/Review",139,2005,2,"Q2",6,"June",26,5,286,2005,3,"Q3",9,"September",36,1,6,"Sally","Bronsen","sally",2
+4313,279,144,6,872,873,7,950,11,85,7,"Qualification",144,2005,3,"Q3",8,"August",31,1,279,2005,3,"Q3",8,"August",33,2,6,"Sally","Bronsen","sally",2
+4314,286,144,6,872,873,5,5950,32,60,5,"Negotiation/Review",144,2005,3,"Q3",8,"August",31,1,286,2005,3,"Q3",9,"September",36,1,6,"Sally","Bronsen","sally",2
+4422,286,147,6,894,895,5,950,11,70,5,"Negotiation/Review",147,2005,3,"Q3",8,"August",34,4,286,2005,3,"Q3",9,"September",36,1,6,"Sally","Bronsen","sally",2
+4448,288,148,6,899,900,7,1350,15,75,7,"Qualification",148,2005,3,"Q3",8,"August",35,5,288,2005,3,"Q3",9,"September",37,2,6,"Sally","Bronsen","sally",2
+4451,303,148,6,899,900,7,25450,60,45,7,"Qualification",148,2005,3,"Q3",8,"August",35,5,303,2005,4,"Q4",10,"October",44,5,6,"Sally","Bronsen","sally",2
+4572,307,151,6,924,925,3,12450,54,50,3,"Prospecting",151,2005,3,"Q3",9,"September",38,3,307,2005,4,"Q4",11,"November",46,2,6,"Sally","Bronsen","sally",2
+4573,314,151,6,924,925,5,50450,75,60,5,"Negotiation/Review",151,2005,3,"Q3",9,"September",38,3,314,2005,4,"Q4",12,"December",49,1,6,"Sally","Bronsen","sally",2
+4624,318,153,6,934,935,7,55480,79,70,7,"Qualification",153,2005,4,"Q4",10,"October",40,1,318,2005,4,"Q4",12,"December",51,3,6,"Sally","Bronsen","sally",2
+4743,305,156,6,958,959,7,980,14,85,7,"Qualification",156,2005,4,"Q4",10,"October",43,4,305,2005,4,"Q4",11,"November",45,1,6,"Sally","Bronsen","sally",2
+4744,311,156,6,958,959,7,5980,35,60,7,"Qualification",156,2005,4,"Q4",10,"October",43,4,311,2005,4,"Q4",11,"November",48,4,6,"Sally","Bronsen","sally",2
+4852,311,159,6,980,981,3,980,12,70,3,"Prospecting",159,2005,4,"Q4",11,"November",46,3,311,2005,4,"Q4",11,"November",48,4,6,"Sally","Bronsen","sally",2

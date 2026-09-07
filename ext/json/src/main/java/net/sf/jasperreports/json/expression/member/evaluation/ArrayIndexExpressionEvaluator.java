@@ -43,96 +43,96 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ArrayIndexExpressionEvaluator extends AbstractMemberExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(ArrayIndexExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(ArrayIndexExpressionEvaluator.class);
 
-    private ArrayIndexExpression expression;
+	private ArrayIndexExpression expression;
 
-    public ArrayIndexExpressionEvaluator(EvaluationContext evaluationContext, ArrayIndexExpression expression) {
-        super(evaluationContext);
-        this.expression = expression;
-    }
+	public ArrayIndexExpressionEvaluator(EvaluationContext evaluationContext, ArrayIndexExpression expression) {
+		super(evaluationContext);
+		this.expression = expression;
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
-        if (log.isDebugEnabled()) {
-            log.debug("---> evaluating arrayIndex expression [" + expression +
-                    "] on a node with (size: " + contextNode.getSize() +
-                    ", cSize: " + contextNode.getContainerSize() + ")");
-        }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
+		if (log.isDebugEnabled()) {
+			log.debug("---> evaluating arrayIndex expression [" + expression +
+					"] on a node with (size: " + contextNode.getSize() +
+					", cSize: " + contextNode.getContainerSize() + ")");
+		}
 
-        JsonNodeContainer result = new JsonNodeContainer();
+		JsonNodeContainer result = new JsonNodeContainer();
 
-        switch(expression.getDirection()) {
-            case DOWN:
-                // this only make sense for containers with appropriate size
-                if (expression.getIndex() >= 0 && expression.getIndex() < contextNode.getContainerSize()) {
-                    List<JRJsonNode> containerNodes = contextNode.getContainerNodes();
-                    JRJsonNode nodeAtIndex = containerNodes.get(expression.getIndex());
+		switch (expression.getDirection()) {
+			case DOWN:
+				// this only make sense for containers with appropriate size
+				if (expression.getIndex() >= 0 && expression.getIndex() < contextNode.getContainerSize()) {
+					List<JRJsonNode> containerNodes = contextNode.getContainerNodes();
+					JRJsonNode nodeAtIndex = containerNodes.get(expression.getIndex());
 
-                    if (applyFilter(nodeAtIndex)) {
-                        result.add(nodeAtIndex);
-                    }
-                }
-                break;
-            case ANYWHERE_DOWN:
-                List<JRJsonNode> nodes = contextNode.getContainerNodes();
+					if (applyFilter(nodeAtIndex)) {
+						result.add(nodeAtIndex);
+					}
+				}
+				break;
+			case ANYWHERE_DOWN:
+				List<JRJsonNode> nodes = contextNode.getContainerNodes();
 
-                for (JRJsonNode node: nodes) {
-                    result.addNodes(goAnywhereDown(node));
-                }
+				for (JRJsonNode node: nodes) {
+					result.addNodes(goAnywhereDown(node));
+				}
 
-                break;
-        }
+				break;
+		}
 
-        if (result.getSize() > 0) {
-            return result;
-        }
+		if (result.getSize() > 0) {
+			return result;
+		}
 
-        return null;
+		return null;
 
-    }
+	}
 
-    @Override
-    public MemberExpression getMemberExpression() {
-        return expression;
-    }
+	@Override
+	public MemberExpression getMemberExpression() {
+		return expression;
+	}
 
-    private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
-        List<JRJsonNode> result = new ArrayList<>();
-        Deque<JRJsonNode> stack = new ArrayDeque<>();
-        JsonNode initialDataNode = jrJsonNode.getDataNode();
+	private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
+		List<JRJsonNode> result = new ArrayList<>();
+		Deque<JRJsonNode> stack = new ArrayDeque<>();
+		JsonNode initialDataNode = jrJsonNode.getDataNode();
 
-        if (log.isDebugEnabled()) {
-            log.debug("initial stack population with: " + initialDataNode);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("initial stack population with: " + initialDataNode);
+		}
 
-        // populate the stack initially
-        stack.push(jrJsonNode);
+		// populate the stack initially
+		stack.push(jrJsonNode);
 
-        while (!stack.isEmpty()) {
-            JRJsonNode stackNode = stack.pop();
-            JsonNode stackDataNode = stackNode.getDataNode();
+		while (!stack.isEmpty()) {
+			JRJsonNode stackNode = stack.pop();
+			JsonNode stackDataNode = stackNode.getDataNode();
 
-            addChildrenToStack(stackNode, stack);
+			addChildrenToStack(stackNode, stack);
 
-            // process the current stack item
-            if (stackDataNode.isArray()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("processing stack element: " + stackDataNode);
-                }
+			// process the current stack item
+			if (stackDataNode.isArray()) {
+				if (log.isDebugEnabled()) {
+					log.debug("processing stack element: " + stackDataNode);
+				}
 
-                if (expression.getIndex() >= 0 && expression.getIndex() < stackDataNode.size()) {
-                    JsonNode nodeAtIndex = stackDataNode.get(expression.getIndex());
-                    JRJsonNode child = stackNode.createChild(nodeAtIndex);
+				if (expression.getIndex() >= 0 && expression.getIndex() < stackDataNode.size()) {
+					JsonNode nodeAtIndex = stackDataNode.get(expression.getIndex());
+					JRJsonNode child = stackNode.createChild(nodeAtIndex);
 
-                    if (applyFilter(child)) {
-                        result.add(child);
-                    }
-                }
-            }
-        }
+					if (applyFilter(child)) {
+						result.add(child);
+					}
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

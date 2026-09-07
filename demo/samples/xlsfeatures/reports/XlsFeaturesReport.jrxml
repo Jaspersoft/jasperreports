@@ -1,4 +1,4 @@
-<jasperReport name="XlsFeaturesReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="0" bottomMargin="5" uuid="3680323d-8319-4223-a93f-182b8d9bd7e2">
+<jasperReport name="XlsFeaturesReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="0" bottomMargin="5" uuid="3680323d-8319-4223-a93f-182b8d9bd7e2">
 	<property name="net.sf.jasperreports.csv.column.names" value="city, id, name, address, state"/>
 	<property name="net.sf.jasperreports.csv.source" value="data/CsvDataSource.txt"/>
 	<property name="net.sf.jasperreports.export.xls.column.width.ratio" value="1.25f"/>

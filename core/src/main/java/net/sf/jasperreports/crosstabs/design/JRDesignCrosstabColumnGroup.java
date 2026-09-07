@@ -46,7 +46,7 @@ public class JRDesignCrosstabColumnGroup extends JRDesignCrosstabGroup implement
 	public static final String PROPERTY_CROSSTAB_HEADER = "crosstabHeader";
 
 	protected int height;
-	protected CrosstabColumnPositionEnum position = CrosstabColumnPositionEnum.LEFT;
+	protected CrosstabColumnPositionEnum position;
 	protected JRCellContents crosstabHeader;
 
 	

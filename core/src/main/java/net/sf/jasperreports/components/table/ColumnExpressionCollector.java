@@ -111,9 +111,9 @@ public class ColumnExpressionCollector implements ColumnVisitor<Void>
 		JRElement[] elements = cell.getElements();
 		if (elements != null)
 		{
-			for (int i = 0; i < elements.length; i++)
+			for (JRElement element : elements)
 			{
-				elements[i].collectExpressions(datasetCollector);
+				element.collectExpressions(datasetCollector);
 			}
 		}
 	}

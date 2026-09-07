@@ -105,7 +105,7 @@ public abstract class SQLLessOrGreaterBaseClause implements JRClauseFunction
 		
 		ClauseFunctionParameterHandler paramHandler = createParameterHandler(queryContext, clauseId, param);
 		StringBuffer sbuffer = queryContext.queryBuffer();
-		if(!paramHandler.hasValue())
+		if (!paramHandler.hasValue())
 		{
 			sbuffer.append(CLAUSE_TRUISM);
 			return;
@@ -131,7 +131,7 @@ public abstract class SQLLessOrGreaterBaseClause implements JRClauseFunction
 	 */
 	protected void handleLessOrGreaterOperator(StringBuffer sBuffer, String clauseId)
 	{
-		if(JRJdbcQueryExecuter.CLAUSE_ID_LESS.equals(clauseId))
+		if (JRJdbcQueryExecuter.CLAUSE_ID_LESS.equals(clauseId))
 		{
 			sBuffer.append(OPERATOR_LESS);
 		}

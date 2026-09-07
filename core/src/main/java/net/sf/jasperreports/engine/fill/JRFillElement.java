@@ -30,7 +30,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -269,11 +268,10 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		String[] propertyNames = staticProperties.getPropertyNames();
 		List<String> prefixes = filler.getPrintTransferPropertyPrefixes();
 		JRPropertiesMap transferProperties = new JRPropertiesMap();
-		for (int i = 0; i < propertyNames.length; i++)
+		for (String prop : propertyNames)
 		{
 			for (String prefix : prefixes)
 			{
-				String prop = propertyNames[i];
 				if (prop.startsWith(prefix))
 				{
 					transferProperties.setProperty(prop, staticProperties.getProperty(prop));
@@ -1346,10 +1344,10 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		// collect delayed evaluations from conditional style expressions
 		if (conditionalStyles != null && conditionalStyles.length > 0)
 		{
-			for (int i = 0; i < conditionalStyles.length; i++)
+			for (JRConditionalStyle conditionalStyle : conditionalStyles)
 			{
 				collectDelayedEvaluations(
-						conditionalStyles[i].getConditionExpression());
+						conditionalStyle.getConditionExpression());
 			}
 		}
 	}
@@ -1362,9 +1360,8 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 			JRExpressionChunk[] chunks = expression.getChunks();
 			if (chunks != null)
 			{
-				for (int i = 0; i < chunks.length; i++)
+				for (JRExpressionChunk chunk : chunks)
 				{
-					JRExpressionChunk chunk = chunks[i];
 					switch (chunk.getType())
 					{
 						case JRExpressionChunk.TYPE_FIELD:
@@ -1420,13 +1417,7 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 
 	private DelayedEvaluations getDelayedEvaluations(JREvaluationTime time)
 	{
-		DelayedEvaluations delayedEvaluations = delayedEvaluationsMap.get(time);
-		if (delayedEvaluations == null)
-		{
-			delayedEvaluations = new DelayedEvaluations();
-			delayedEvaluationsMap.put(time, delayedEvaluations);
-		}
-		return delayedEvaluations;
+		return delayedEvaluationsMap.computeIfAbsent(time, k -> new DelayedEvaluations());
 	}
 
 
@@ -1475,9 +1466,8 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 	
 	protected void initDelayedEvaluationPrint(JRRecordedValuesPrintElement printElement) throws JRException
 	{
-		for (Iterator<JREvaluationTime> it = delayedEvaluationsMap.keySet().iterator(); it.hasNext();)
+		for (JREvaluationTime evaluationTime : delayedEvaluationsMap.keySet())
 		{
-			JREvaluationTime evaluationTime = it.next();
 			if (!evaluationTime.equals(JREvaluationTime.EVALUATION_TIME_NOW))
 			{
 				filler.addBoundElement(this, printElement, evaluationTime);
@@ -1500,16 +1490,14 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		{
 			DelayedEvaluations delayedEvaluations = delayedEvaluationsMap.get(evaluationTime);
 			
-			for (Iterator<String> it = delayedEvaluations.fields.iterator(); it.hasNext();)
+			for (String fieldName : delayedEvaluations.fields)
 			{
-				String fieldName = it.next();
 				JRFillField field = getField(fieldName);
 				recordedValues.recordFieldValue(fieldName, field.getValue(evaluation));
 			}
 
-			for (Iterator<String> it = delayedEvaluations.variables.iterator(); it.hasNext();)
+			for (String variableName : delayedEvaluations.variables)
 			{
-				String variableName = it.next();
 				JRFillVariable variable = getVariable(variableName);
 				recordedValues.recordVariableValue(variableName, variable.getValue(evaluation));
 			}
@@ -1532,9 +1520,8 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		Map<String,Object> fieldValues = recordedValues.getRecordedFieldValues();
 		if (fieldValues != null)
 		{
-			for (Iterator<Map.Entry<String,Object>> it = fieldValues.entrySet().iterator(); it.hasNext();)
+			for (Map.Entry<String,Object> entry : fieldValues.entrySet())
 			{
-				Map.Entry<String,Object> entry = it.next();
 				String fieldName = entry.getKey();
 				Object fieldValue = entry.getValue();
 				JRFillField field = getField(fieldName);
@@ -1545,9 +1532,8 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		Map<String,Object> variableValues = recordedValues.getRecordedVariableValues();
 		if (variableValues != null)
 		{
-			for (Iterator<Map.Entry<String,Object>> it = variableValues.entrySet().iterator(); it.hasNext();)
+			for (Map.Entry<String,Object> entry : variableValues.entrySet())
 			{
-				Map.Entry<String,Object> entry = it.next();
 				String variableName = entry.getKey();
 				Object variableValue = entry.getValue();
 				JRFillVariable variable = getVariable(variableName);
@@ -1561,9 +1547,8 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		Map<String,Object> fieldValues = recordedValues.getRecordedFieldValues();
 		if (fieldValues != null)
 		{
-			for (Iterator<String> it = fieldValues.keySet().iterator(); it.hasNext();)
+			for (String fieldName : fieldValues.keySet())
 			{
-				String fieldName = it.next();
 				JRFillField field = getField(fieldName);
 				field.restoreValue(evaluation);
 			}
@@ -1572,9 +1557,8 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 		Map<String,Object> variableValues = recordedValues.getRecordedVariableValues();
 		if (variableValues != null)
 		{
-			for (Iterator<String> it = variableValues.keySet().iterator(); it.hasNext();)
+			for (String variableName : variableValues.keySet())
 			{
-				String variableName = it.next();
 				JRFillVariable variable = getVariable(variableName);
 				variable.restoreValue(evaluation);
 			}

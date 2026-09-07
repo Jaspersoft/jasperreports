@@ -317,7 +317,7 @@ public class JRStyledTextUtil
 			}
 			index = fontMatch.endIndex;
 		}
-		while(index < endIndex);
+		while (index < endIndex);
 		
 		if (hadUnmatched)
 		{
@@ -441,7 +441,7 @@ public class JRStyledTextUtil
 	{
 		Pair<String, Locale> key = new Pair<>(name, locale);
 		FamilyFonts fonts = familyFonts.get(key);
-		if (fonts == null)
+		if (fonts == null) // computeIfAbsent is not appropriate due to performance reasons with ConcurrentHashMap
 		{
 			fonts = loadFamilyFonts(name, locale);
 			familyFonts.put(key, fonts);
@@ -803,9 +803,8 @@ public class JRStyledTextUtil
 
 	public static void resizeRuns(List<Run> runs, int startIndex, int count)
 	{
-		for (int j = 0; j < runs.size(); j++)
+		for (JRStyledText.Run run : runs)
 		{
-			JRStyledText.Run run = runs.get(j);
 			if (startIndex < run.startIndex)
 			{
 				run.startIndex += count;

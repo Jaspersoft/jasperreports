@@ -85,7 +85,7 @@ public class SpiderChartRendererEvaluator
 		DefaultCategoryDataset dataset = null;
 		StandardCategoryItemLabelGenerator labelGenerator = null;
 		
-		if(FILL_DATASET.equals(datasetType))
+		if (FILL_DATASET.equals(datasetType))
 		{
 			dataset = ((FillSpiderDataset)spiderchartBean.getDataset()).getCustomDataset();
 			labelGenerator = ((FillSpiderDataset)spiderchartBean.getDataset()).getLabelGenerator();
@@ -98,63 +98,63 @@ public class SpiderChartRendererEvaluator
 		
 		SpiderWebPlot spiderWebPlot = new SpiderWebPlot(dataset);
 
-		if(plot.getAxisLineColor() != null)
+		if (plot.getAxisLineColor() != null)
 		{
 			spiderWebPlot.setAxisLinePaint(plot.getAxisLineColor());
 		}
-		if(plot.getAxisLineWidth() != null)
+		if (plot.getAxisLineWidth() != null)
 		{
 			spiderWebPlot.setAxisLineStroke(new BasicStroke(plot.getAxisLineWidth()));
 		}
-		if(plot.getBackcolor() != null)
+		if (plot.getBackcolor() != null)
 		{
 			spiderWebPlot.setBackgroundPaint(plot.getBackcolor());
 		}
-		if(plot.getBackgroundAlpha() != null)
+		if (plot.getBackgroundAlpha() != null)
 		{
 			spiderWebPlot.setBackgroundAlpha(plot.getBackgroundAlpha());
 		}
-		if(plot.getForegroundAlpha() != null)
+		if (plot.getForegroundAlpha() != null)
 		{
 			spiderWebPlot.setForegroundAlpha(plot.getForegroundAlpha());
 		}
-		if(plot.getHeadPercent() != null)
+		if (plot.getHeadPercent() != null)
 		{
 			spiderWebPlot.setHeadPercent(plot.getHeadPercent());
 		}
-		if(plot.getInteriorGap() != null)
+		if (plot.getInteriorGap() != null)
 		{
 			spiderWebPlot.setInteriorGap(plot.getInteriorGap());
 		}
-		if(plot.getLabelColor() != null)
+		if (plot.getLabelColor() != null)
 		{
 			spiderWebPlot.setLabelPaint(plot.getLabelColor());
 		}
-		if(plot.getLabelFont() != null)
+		if (plot.getLabelFont() != null)
 		{
 			spiderWebPlot.setLabelFont(FontUtil.getInstance(jasperReportsContext).getAwtFont(plot.getLabelFont(), Locale.getDefault()));
 		}
-		if(plot.getLabelGap() != null)
+		if (plot.getLabelGap() != null)
 		{
 			spiderWebPlot.setAxisLabelGap(plot.getLabelGap());
 		}
-		if(spiderchartBean.getMaxValue() != null)
+		if (spiderchartBean.getMaxValue() != null)
 		{
 			spiderWebPlot.setMaxValue(spiderchartBean.getMaxValue());
 		}
-		if(plot.getRotation() != null)
+		if (plot.getRotation() != null)
 		{
 			spiderWebPlot.setDirection(plot.getRotation().getRotation());
 		}
-		if(plot.getStartAngle() != null)
+		if (plot.getStartAngle() != null)
 		{
 			spiderWebPlot.setStartAngle(plot.getStartAngle());
 		}
-		if(plot.getTableOrder() != null)
+		if (plot.getTableOrder() != null)
 		{
 			spiderWebPlot.setDataExtractOrder(plot.getTableOrder().getOrder());
 		}
-		if(plot.getWebFilled() != null)
+		if (plot.getWebFilled() != null)
 		{
 			spiderWebPlot.setWebFilled(plot.getWebFilled());
 		}
@@ -171,7 +171,7 @@ public class SpiderChartRendererEvaluator
 		JFreeChart jfreechart = new JFreeChart(titleText, titleFont, spiderWebPlot, true);
 
 		Color backcolor = chartSettings.getBackcolor() != null ? chartSettings.getBackcolor() : element.getBackcolor();
-		if(backcolor != null)
+		if (backcolor != null)
 		{
 			jfreechart.setBackgroundPaint(backcolor);
 		}
@@ -182,7 +182,7 @@ public class SpiderChartRendererEvaluator
 		{
 			TextTitle title = jfreechart.getTitle();
 			title.setText(titleText);
-			if(chartSettings.getTitleColor() != null)
+			if (chartSettings.getTitleColor() != null)
 			{
 				title.setPaint(chartSettings.getTitleColor());
 			}
@@ -197,12 +197,12 @@ public class SpiderChartRendererEvaluator
 		{
 			TextTitle subtitle = new TextTitle(subtitleText);
 			subtitle.setText(subtitleText);
-			if(chartSettings.getSubtitleColor() != null)
+			if (chartSettings.getSubtitleColor() != null)
 			{
 				subtitle.setPaint(chartSettings.getSubtitleColor());
 			}
 
-			if(chartSettings.getSubtitleColor() != null)
+			if (chartSettings.getSubtitleColor() != null)
 			{
 				Font subtitleFont = chartSettings.getSubtitleFont() != null 
 				? FontUtil.getInstance(jasperReportsContext).getAwtFont(chartSettings.getSubtitleFont(), Locale.getDefault())
@@ -223,7 +223,7 @@ public class SpiderChartRendererEvaluator
 			legend.setVisible((chartSettings.getShowLegend() == null || chartSettings.getShowLegend()));
 			if (legend.isVisible())
 			{
-				if(chartSettings.getLegendColor() != null)
+				if (chartSettings.getLegendColor() != null)
 				{
 					legend.setItemPaint(chartSettings.getLegendColor());
 				}
@@ -232,7 +232,7 @@ public class SpiderChartRendererEvaluator
 					legend.setBackgroundPaint(chartSettings.getLegendBackgroundColor());
 				}
 	
-				if(chartSettings.getLegendFont() != null)
+				if (chartSettings.getLegendFont() != null)
 				{
 					legend.setItemFont(FontUtil.getInstance(jasperReportsContext).getAwtFont(chartSettings.getLegendFont(), Locale.getDefault()));
 				}
@@ -304,7 +304,7 @@ public class SpiderChartRendererEvaluator
 	private static RectangleEdge getEdge(EdgeEnum position, RectangleEdge defaultPosition)
 	{
 		RectangleEdge edge = defaultPosition;
-		if(position != null)
+		if (position != null)
 		{
 			switch (position)
 			{

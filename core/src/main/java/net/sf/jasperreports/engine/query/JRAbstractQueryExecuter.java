@@ -27,11 +27,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRDataset;
 import net.sf.jasperreports.engine.JRParameter;
@@ -43,6 +44,7 @@ import net.sf.jasperreports.engine.JRValueParameter;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRQueryChunkHandler;
 import net.sf.jasperreports.engine.util.JRQueryParser;
+import net.sf.jasperreports.properties.PropertyConstants;
 import net.sf.jasperreports.repo.RepositoryContext;
 
 /**
@@ -57,7 +59,25 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 	public static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_CIRCULARLY_NESTED_PARAMETER = "query.clause.circularly.nested.parameter";
 	public static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_ID_FIRST_TOKEN_MISSING = "query.clause.id.first.token.missing";
 	public static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_NOT_FOUND = "query.clause.not.found";
+	public static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_CLAUSE_DISABLED = "query.parameter.clause.disabled";
 	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_PARAMETER_TYPE = "query.unsupported.parameter.type";
+
+	/**
+	 * Flag property that determines whether query parameter clause text injection (<code>$P!{}</code>) is enabled.
+	 * <p/>
+	 * When set to <code>false</code>, any use of <code>$P!{}</code> parameter clause syntax in a query will result
+	 * in an error. This can be used to prevent parameter values from being directly injected as text into queries.
+	 * <p/>
+	 * The property is enabled by default.
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_SECURITY,
+			defaultValue = PropertyConstants.BOOLEAN_TRUE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_7_0_7,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_QUERY_PARAMETER_CLAUSE_ENABLED = JRPropertiesUtil.PROPERTY_PREFIX + "query.parameter.clause.enabled";
 
 	public static final String GET_COLLECTED = "getCollectedParameterNames()";
 	
@@ -367,9 +387,8 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 			if (chunks != null && chunks.length > 0)
 			{
 				StringBuffer sbuffer = new StringBuffer();
-				for(int i = 0; i < chunks.length; i++)
+				for (JRQueryChunk chunk : chunks)
 				{
-					JRQueryChunk chunk = chunks[i];
 					appendQueryChunk(sbuffer, chunk);
 				}
 
@@ -475,6 +494,16 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 
 	protected void appendParameterClauseChunk(final StringBuffer sbuffer, String chunkText)
 	{
+		boolean parameterClauseEnabled = getPropertiesUtil().getBooleanProperty(
+				PROPERTY_QUERY_PARAMETER_CLAUSE_ENABLED, true);
+		if (!parameterClauseEnabled)
+		{
+			throw
+				new JRRuntimeException(
+					EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_CLAUSE_DISABLED,
+					new Object[]{chunkText});
+		}
+
 		String parameterName = chunkText;
 		checkParameter(parameterName);
 		
@@ -639,9 +668,8 @@ public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 	protected List<String> getCollectedParameterNames()
 	{
 		List<String> parameterNames = new ArrayList<>(queryParameters.size());
-		for (Iterator<QueryParameterEntry> it = queryParameters.iterator(); it.hasNext();)
+		for (QueryParameterEntry paramEntry : queryParameters)
 		{
-			QueryParameterEntry paramEntry = it.next();
 			if (!(paramEntry instanceof QueryParameter))
 			{
 				throw 

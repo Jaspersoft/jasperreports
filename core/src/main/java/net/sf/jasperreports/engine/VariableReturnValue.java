@@ -23,13 +23,22 @@
  */
 package net.sf.jasperreports.engine;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * A value copied from a subdataset into a variable of the parent report.
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_toVariable,
+	JRXmlConstants.ATTRIBUTE_calculation,
+	JRXmlConstants.ATTRIBUTE_incrementerFactoryClass,
+	JRXmlConstants.ATTRIBUTE_fromVariable
+	})
 public interface VariableReturnValue extends CommonReturnValue
 {
 

@@ -73,13 +73,10 @@ public class ResourceBundleMessageProvider implements MessageProvider
 	 */
 	public String getMessage(String code, Locale locale)
 	{
-		ResourceBundle bundle = bundles.get(locale);
-		if (bundle == null)
-		{
-			bundle = JRResourcesUtil.loadResourceBundle(baseName, locale, classLoader);
-			bundles.put(locale, bundle);
-		}
-		
-		return bundle.getString(code);
+		return 
+			bundles.computeIfAbsent(
+				locale, 
+				key -> JRResourcesUtil.loadResourceBundle(baseName, key, classLoader)
+				).getString(code);
 	}
 }

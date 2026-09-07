@@ -24,7 +24,6 @@
 package net.sf.jasperreports.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
@@ -55,10 +54,8 @@ public class CastorMappingExtensionsRegistryFactory implements ExtensionsRegistr
 	{
 		List<PropertySuffix> castorMappingProperties = JRPropertiesUtil.getProperties(properties, CASTOR_MAPPING_PROPERTY_PREFIX);
 		List<CastorMapping> castorMappings = new ArrayList<>();
-		for (Iterator<PropertySuffix> it = castorMappingProperties.iterator(); it.hasNext();)
+		for (PropertySuffix castorMappingProp : castorMappingProperties)
 		{
-			PropertySuffix castorMappingProp = it.next();
-			
 			String key;
 			String version;
 			String suffix = castorMappingProp.getSuffix();

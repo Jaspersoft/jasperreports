@@ -53,21 +53,21 @@ public final class MathFunctions
 	@FunctionParameters({
 			@FunctionParameter("number")})
 	public static Number ABS(Number number){
-		if(number==null) {
+		if (number==null) {
 			logNullArgument();
 			return null;
 		}
 		else{
-			if(number instanceof Integer){
+			if (number instanceof Integer){
 				return Math.abs((Integer)number);
 			}
-			else if(number instanceof Double){
+			else if (number instanceof Double){
 				return Math.abs((Double)number);
 			}
-			else if(number instanceof Float){
+			else if (number instanceof Float){
 				return Math.abs((Float)number);
 			}
-			else if(number instanceof Long){
+			else if (number instanceof Long){
 				return Math.abs((Long)number);
 			}
 			else{
@@ -85,12 +85,12 @@ public final class MathFunctions
 	@FunctionParameters({
 			@FunctionParameter("number")})
 	public static Long FACT(Integer number){
-		if(number==null) {
+		if (number==null) {
 			logNullArgument();
 			return null;
 		}
-		if(number<0){
-			if(log.isDebugEnabled()) {
+		if (number<0){
+			if (log.isDebugEnabled()) {
 				log.debug("Unable to calculate the factorial number of a negative number.");
 			}
 			return null;
@@ -112,7 +112,7 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("number")})
 	public static Boolean ISEVEN(Number number){
-		if(number==null) {
+		if (number==null) {
 			logNullArgument();
 			return null;
 		}
@@ -129,7 +129,7 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("number")})
 	public static Boolean ISODD(Number number){
-		if(number==null) {
+		if (number==null) {
 			logNullArgument();
 			return null;
 		}
@@ -146,17 +146,17 @@ public final class MathFunctions
 	@FunctionParameters({
 			@FunctionParameter("numbers")})
 	public static Number PRODUCT(Number ...numbers){
-		if(numbers.length==0) {
+		if (numbers.length==0) {
 			logEmptyArgumentsList();
 			return null;
 		}
-		if(!isNumberListValid(numbers)) {
+		if (!isNumberListValid(numbers)) {
 			logArgumentsWithNullElements();
 			return null;
 		}
 		double result=1;
-		for (int i=0;i<numbers.length;i++){
-			result*=numbers[i].doubleValue();
+		for (Number number : numbers){
+			result*=number.doubleValue();
 		}
 		return result;
 	}
@@ -192,7 +192,7 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("number")})
 	public static Integer SIGN(Number number){
-		if(number==null) {
+		if (number==null) {
 			logNullArgument();
 			return null;
 		}
@@ -209,7 +209,7 @@ public final class MathFunctions
 	@FunctionParameters({
 			@FunctionParameter("number")})
 	public static Number SQRT(Number number){
-		if(number==null) {
+		if (number==null) {
 			logNullArgument();
 			return null;
 		}
@@ -226,17 +226,17 @@ public final class MathFunctions
 	@FunctionParameters({
 			@FunctionParameter("numbers")})
 	public static Number SUM(Number ...numbers){
-		if(numbers.length==0) {
+		if (numbers.length==0) {
 			logEmptyArgumentsList();
 			return null;
 		}
-		if(!isNumberListValid(numbers)) {
+		if (!isNumberListValid(numbers)) {
 			logArgumentsWithNullElements();
 			return null;
 		}
 		double result=0;
-		for (int i=0;i<numbers.length;i++){
-			result+=numbers[i].doubleValue();
+		for (Number number : numbers){
+			result+=number.doubleValue();
 		}
 		return result;
 	}
@@ -249,17 +249,17 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("numbers")})
 	public static Number MIN(Number ...numbers){
-		if(numbers.length==0) {
+		if (numbers.length==0) {
 			logEmptyArgumentsList();
 			return null;
 		}
-		if(!isNumberListValid(numbers)) {
+		if (!isNumberListValid(numbers)) {
 			logArgumentsWithNullElements();
 			return null;
 		}
 		double min= numbers[0].doubleValue();
 		for (int i=1;i<numbers.length;i++){
-			if(numbers[i].doubleValue()<min){
+			if (numbers[i].doubleValue()<min){
 				min = numbers[i].doubleValue();
 			}
 		}
@@ -274,17 +274,17 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("numbers")})
 	public static Number MAX(Number ...numbers){
-		if(numbers.length==0) {
+		if (numbers.length==0) {
 			logEmptyArgumentsList();
 			return null;
 		}
-		if(!isNumberListValid(numbers)) {
+		if (!isNumberListValid(numbers)) {
 			logArgumentsWithNullElements();
 			return null;
 		}
 		double max= numbers[0].doubleValue();
 		for (int i=1;i<numbers.length;i++){
-			if(numbers[i].doubleValue()>max){
+			if (numbers[i].doubleValue()>max){
 				max = numbers[i].doubleValue();
 			}
 		}
@@ -299,7 +299,7 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("number")})
 	public static Double FLOOR(Number number){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -314,7 +314,7 @@ public final class MathFunctions
 	@FunctionParameters({
 		@FunctionParameter("number")})
 	public static Double CEIL(Number number){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -330,7 +330,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static BigDecimal ROUND_UP(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -347,7 +347,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static BigDecimal ROUND_DOWN(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -364,7 +364,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static BigDecimal ROUND_CEILING(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -381,7 +381,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static BigDecimal ROUND_FLOOR(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -398,7 +398,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static BigDecimal ROUND_HALF_UP(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -416,7 +416,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static BigDecimal ROUND_HALF_EVEN(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -433,7 +433,7 @@ public final class MathFunctions
 		@FunctionParameter("number"),
 		@FunctionParameter("scale")})
 	public static java.math.BigDecimal ROUND_HALF_DOWN(Number number, int scale){
-		if(number == null) {
+		if (number == null) {
 			logNullArgument();
 			return null;
 		}
@@ -445,8 +445,8 @@ public final class MathFunctions
 	 * No null element must be contained.
 	 */
 	private static boolean isNumberListValid(Number ...numbers){
-		for(int i=0;i<numbers.length;i++){
-			if(numbers[i]==null) return false;
+		for (Number number : numbers){
+			if (number==null) return false;
 		}
 		return true;
 	}
@@ -455,9 +455,9 @@ public final class MathFunctions
 	 * Fixes the return type for the numeric result value.
 	 */
 	private static Number fixNumberReturnType(Number returnValue, Number ...numbers){
-		if(haveSameType(Integer.class, numbers)) return returnValue.intValue();
-		if(haveSameType(Long.class, numbers)) return returnValue.longValue();
-		if(haveSameType(Float.class, numbers)) return returnValue.floatValue();
+		if (haveSameType(Integer.class, numbers)) return returnValue.intValue();
+		if (haveSameType(Long.class, numbers)) return returnValue.longValue();
+		if (haveSameType(Float.class, numbers)) return returnValue.floatValue();
 		return returnValue.doubleValue();
 	}
 	
@@ -466,8 +466,8 @@ public final class MathFunctions
 	 */
 	private static boolean haveSameType(
 			Class<? extends Number> clazz, Number ...numbers){
-		for(int i=0; i<numbers.length; i++){
-			if(numbers[i].getClass() != clazz){
+		for (Number number : numbers){
+			if (number.getClass() != clazz){
 				return false;
 			}
 		}
@@ -477,19 +477,19 @@ public final class MathFunctions
 	/* Utility methods for logging common messages */
 	
 	private static void logNullArgument() {
-		if(log.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			log.debug("The argument can not be null.");
 		}
 	}
 
 	private static void logEmptyArgumentsList() {
-		if(log.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			log.debug("No arguments were specified.");
 		}
 	}
 	
 	private static void logArgumentsWithNullElements() {
-		if(log.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			log.debug("No null element is allowed among arguments");
 		}
 	}

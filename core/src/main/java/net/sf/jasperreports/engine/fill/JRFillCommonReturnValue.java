@@ -122,7 +122,7 @@ public abstract class JRFillCommonReturnValue implements CommonReturnValue
 			{
 				try
 				{
-					Class<?> incrementerFactoryClass = JRClassLoader.loadClassForName(incrementerFactoryClassName);
+					Class<?> incrementerFactoryClass = JRClassLoader.resolveClassForName(incrementerFactoryClassName);
 					incrementerFactory = JRIncrementerFactoryCache.getInstance(incrementerFactoryClass); 
 				}
 				catch (ClassNotFoundException e)

@@ -141,9 +141,9 @@ public class FillReturnValues
 		
 		if (returnValues != null && band != null)
 		{
-			for (int i = 0; i < returnValues.length; i++)
+			for (JRFillCommonReturnValue returnValue : returnValues)
 			{
-				String varName = returnValues[i].getToVariable();
+				String varName = returnValue.getToVariable();
 				band.saveVariable(varName);
 			}
 		}
@@ -154,9 +154,8 @@ public class FillReturnValues
 		boolean used = false;
 		if (returnValues != null)
 		{
-			for (int j = 0; j < returnValues.length; j++)
+			for (CommonReturnValue returnValue : returnValues)
 			{
-				CommonReturnValue returnValue = returnValues[j];
 				if (returnValue.getToVariable().equals(variableName))
 				{
 					if (log.isDebugEnabled())
@@ -180,9 +179,9 @@ public class FillReturnValues
 	{
 		if (returnValues != null && returnValues.length > 0)
 		{
-			for (int i = 0; i < returnValues.length; i++)
+			for (JRFillCommonReturnValue returnValue : returnValues)
 			{
-				copyValue(returnValues[i], sourceContext);
+				copyValue(returnValue, sourceContext);
 			}
 		}
 	}
@@ -220,9 +219,8 @@ public class FillReturnValues
 	{
 		if (returnValues != null && returnValues.length > 0)
 		{
-			for (int i = 0; i < returnValues.length; i++)
+			for (JRFillCommonReturnValue returnValue : returnValues)
 			{
-				JRFillCommonReturnValue returnValue = returnValues[i];
 				if (returnValue.isDerived())
 				{
 					// internally created, not checking

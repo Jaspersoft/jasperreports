@@ -28,5 +28,31 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
+		<!-- 
+			This is here just so that the sample is not run twice
+			simultaneously on two threads, when all samples are run.
+			The build directory below did not solve the problem
+			of the sample app creating files in target folder.
+		-->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-samples-subreport</artifactId>
+			<version>${revision}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
+	<build>
+		<directory>target-javaflow</directory>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>${flatten-maven-plugin.version}</version>
+				<configuration>
+					<flattenedPomFilename>.flattened-pom-javaflow.xml</flattenedPomFilename>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

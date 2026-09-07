@@ -12,5 +12,7 @@
 	<properties>
 		<sample.base.name>NoReport</sample.base.name>
 		<sample.report.name>NoReport</sample.report.name>
+		<jasperreports.compile.skip>true</jasperreports.compile.skip>
+		<jasperreports.decompile.skip>true</jasperreports.decompile.skip>
 	</properties>
 </project>

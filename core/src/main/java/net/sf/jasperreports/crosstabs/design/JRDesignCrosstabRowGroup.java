@@ -41,8 +41,11 @@ public class JRDesignCrosstabRowGroup extends JRDesignCrosstabGroup implements J
 
 	public static final String PROPERTY_WIDTH = "width";
 
+	public static final String PROPERTY_KEEP_TOGETHER = "keepTogether";
+
 	protected int width;
-	protected CrosstabRowPositionEnum position = CrosstabRowPositionEnum.TOP;
+	protected CrosstabRowPositionEnum position;
+	protected boolean keepTogether;
 
 	public JRDesignCrosstabRowGroup()
 	{
@@ -87,6 +90,25 @@ public class JRDesignCrosstabRowGroup extends JRDesignCrosstabGroup implements J
 		int old = this.width;
 		this.width = width;
 		getEventSupport().firePropertyChange(PROPERTY_WIDTH, old, this.width);
+	}
+
+	@Override
+	public boolean isKeepTogether()
+	{
+		return keepTogether;
+	}
+
+	/**
+	 * Sets whether the row group should be kept together on a single page.
+	 *
+	 * @param keepTogether whether the row group should be kept together
+	 * @see JRCrosstabRowGroup#isKeepTogether()
+	 */
+	public void setKeepTogether(boolean keepTogether)
+	{
+		boolean old = this.keepTogether;
+		this.keepTogether = keepTogether;
+		getEventSupport().firePropertyChange(PROPERTY_KEEP_TOGETHER, old, this.keepTogether);
 	}
 
 	@Override

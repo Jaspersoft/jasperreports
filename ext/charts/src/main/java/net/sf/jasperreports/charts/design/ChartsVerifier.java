@@ -99,12 +99,12 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 
-		JRCategorySeries[] series = dataset.getSeries();
-		if (series != null)
+		JRCategorySeries[] categorySeries = dataset.getSeries();
+		if (categorySeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRCategorySeries crtCategorySeries : categorySeries)
 			{
-				verify(series[i]);
+				verify(crtCategorySeries);
 			}
 		}
 	}
@@ -120,12 +120,12 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 		
-		JRPieSeries[] series = dataset.getSeries();
-		if (series != null)
+		JRPieSeries[] pieSeries = dataset.getSeries();
+		if (pieSeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRPieSeries crtPieSeries : pieSeries)
 			{
-				verify(series[i]);
+				verify(crtPieSeries);
 			}
 		}
 
@@ -150,12 +150,12 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 
-		JRTimePeriodSeries[] series = dataset.getSeries();
-		if (series != null)
+		JRTimePeriodSeries[] timePeriodSeries = dataset.getSeries();
+		if (timePeriodSeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRTimePeriodSeries crtTimePeriodSeries : timePeriodSeries)
 			{
-				verify(series[i]);
+				verify(crtTimePeriodSeries);
 			}
 		}
 	}
@@ -171,12 +171,12 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 
-		JRTimeSeries[] series = dataset.getSeries();
-		if (series != null)
+		JRTimeSeries[] timeSeries = dataset.getSeries();
+		if (timeSeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRTimeSeries crtTimeSeries : timeSeries)
 			{
-				verify(series[i]);
+				verify(crtTimeSeries);
 			}
 		}
 	}
@@ -201,12 +201,12 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 
-		JRXySeries[] series = dataset.getSeries();
-		if (series != null)
+		JRXySeries[] xySeries = dataset.getSeries();
+		if (xySeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRXySeries crtXySeries : xySeries)
 			{
-				verify(series[i]);
+				verify(crtXySeries);
 			}
 		}
 	}
@@ -228,12 +228,12 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 
-		JRXyzSeries[] series = dataset.getSeries();
-		if (series != null)
+		JRXyzSeries[] xyzSeries = dataset.getSeries();
+		if (xyzSeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRXyzSeries crtXyzSeries : xyzSeries)
 			{
-				verify(series[i]);
+				verify(crtXyzSeries);
 			}
 		}
 	}
@@ -243,13 +243,13 @@ public class ChartsVerifier implements ChartVisitor // extends JRVerifier
 	{
 		parent.verifyElementDataset(dataset);
 		
-		JRGanttSeries[] series = dataset.getSeries();
+		JRGanttSeries[] ganttSeries = dataset.getSeries();
 		
-		if (series != null)
+		if (ganttSeries != null)
 		{
-			for (int i = 0; i < series.length; i++)
+			for (JRGanttSeries crtGanttSeries : ganttSeries)
 			{
-				verify(series[i]);
+				verify(crtGanttSeries);
 			}
 		}
 	}

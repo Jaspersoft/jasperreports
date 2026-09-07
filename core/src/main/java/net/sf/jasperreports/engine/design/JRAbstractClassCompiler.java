@@ -77,11 +77,11 @@ public abstract class JRAbstractClassCompiler extends JRAbstractJavaCompiler imp
 		}
 		finally
 		{
-			for (int i = 0; i < classFiles.length; i++)
+			for (File classFile : classFiles)
 			{
-				if (classFiles[i].exists())
+				if (classFile.exists())
 				{
-					classFiles[i].delete();
+					classFile.delete();
 				}
 			}
 		}

@@ -227,9 +227,8 @@ public class FillTable extends SubreportFillComponent
 		{
 			JRPropertiesMap dynamicProperties = new JRPropertiesMap();
 			
-			for (int i = 0; i < propExprs.length; i++)
+			for (JRPropertyExpression prop : propExprs)
 			{
-				JRPropertyExpression prop = propExprs[i];
 				String value = (String) evaluateExpression(prop.getValueExpression(), evaluation);
 				//if (value != null) //for some properties such as data properties in metadata exporters, the null value is significant
 				{

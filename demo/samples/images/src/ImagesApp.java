@@ -23,13 +23,15 @@
  */
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
 import net.sf.jasperreports.engine.export.oasis.JROdsExporter;
@@ -37,6 +39,7 @@ import net.sf.jasperreports.engine.export.oasis.JROdtExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRPptxExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.util.AbstractSampleApp;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
@@ -66,7 +69,6 @@ public class ImagesApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 		xmlEmbed();
@@ -88,9 +90,50 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void fill() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		JasperFillManager.fillReportToFile("target/reports/ImagesReport.jasper", null, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		String destFile = JasperFillManager.fillReportToFile("target/reports/ImagesReport.jasper", null);
+		System.out.println(destFile);
+
+		fill("dukesign.jpg", "panoramic");
+		fill("dukewave.png", "upright");
+	}
+	
+	
+	/**
+	 *
+	 */
+	private void fill(String imageFileName, String folderName) throws JRException
+	{
+		fill(imageFileName, folderName, RotationEnum.NONE);
+		fill(imageFileName, folderName, RotationEnum.LEFT);
+		fill(imageFileName, folderName, RotationEnum.RIGHT);
+		fill(imageFileName, folderName, RotationEnum.UPSIDE_DOWN);
+	}
+	
+	
+	/**
+	 *
+	 */
+	private void fill(String imageFileName, String folderName, RotationEnum rotation) throws JRException
+	{
+		File folder = new File("target/reports/" + folderName + (rotation == RotationEnum.NONE ? "" : ("-" + rotation.getName().toLowerCase())));
+		folder.mkdirs();
+		
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("ImageFileName", imageFileName);
+
+		File[] files = getFiles(new File("target/reports/scale"), "jasper");
+		for (File reportFile : files)
+		{
+			JasperReport jasperReport = (JasperReport)JRLoader.loadObject(reportFile);
+			jasperReport.getStyles()[0].setRotation(rotation);
+			File destFile = new File(folder, reportFile.getName().substring(0, reportFile.getName().length() - ".jasper".length()) + ".jrprint"); 
+			JasperFillManager.fillReportToFile(
+				jasperReport, 
+				destFile.getAbsolutePath(), 
+				parameters
+				);
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -99,9 +142,12 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void print() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		JasperPrintManager.printReport("target/reports/ImagesReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File reportFile : files)
+		{
+			JasperPrintManager.printReport(reportFile.getAbsolutePath(), true);
+			System.out.println(reportFile);
+		}
 	}
 	
 	
@@ -110,9 +156,12 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void pdf() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToPdfFile("target/reports/ImagesReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File reportFile : files)
+		{
+			String destFile = JasperExportManager.exportReportToPdfFile(reportFile.getAbsolutePath());
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -121,9 +170,12 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void xml() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToXmlFile("target/reports/ImagesReport.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File reportFile : files)
+		{
+			String destFile = JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), false);
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -132,9 +184,12 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void xmlEmbed() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToXmlFile("target/reports/ImagesReport.jrprint", true);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File reportFile : files)
+		{
+			String destFile = JasperExportManager.exportReportToXmlFile(reportFile.getAbsolutePath(), true);
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -143,9 +198,12 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void html() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToHtmlFile("target/reports/ImagesReport.jrprint");
-		System.err.println("HTML creation time : " + (System.currentTimeMillis() - start));
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File reportFile : files)
+		{
+			String destFile = JasperExportManager.exportReportToHtmlFile(reportFile.getAbsolutePath());
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -154,21 +212,22 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void rtf() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".rtf");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".rtf");
-		
-		JRRtfExporter exporter = new JRRtfExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleWriterExporterOutput(destFile));
-		
-		exporter.exportReport();
+			JRRtfExporter exporter = new JRRtfExporter();
 
-		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleWriterExporterOutput(destFile));
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -177,24 +236,25 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void xls() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xls");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xls");
-		
-		JRXlsExporter exporter = new JRXlsExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
-		SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
-		configuration.setOnePagePerSheet(false);
-		exporter.setConfiguration(configuration);
-		
-		exporter.exportReport();
+			JRXlsExporter exporter = new JRXlsExporter();
 
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
+			SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+			configuration.setOnePagePerSheet(false);
+			exporter.setConfiguration(configuration);
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -203,21 +263,22 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void csv() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".csv");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".csv");
-		
-		JRCsvExporter exporter = new JRCsvExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleWriterExporterOutput(destFile));
-		
-		exporter.exportReport();
+			JRCsvExporter exporter = new JRCsvExporter();
 
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleWriterExporterOutput(destFile));
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -226,21 +287,22 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void odt() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".odt");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".odt");
-		
-		JROdtExporter exporter = new JROdtExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
-		
-		exporter.exportReport();
+			JROdtExporter exporter = new JROdtExporter();
 
-		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -249,21 +311,22 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void ods() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".ods");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".ods");
-		
-		JROdsExporter exporter = new JROdsExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
-		
-		exporter.exportReport();
+			JROdsExporter exporter = new JROdsExporter();
 
-		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -272,21 +335,22 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void docx() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".docx");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".docx");
-		
-		JRDocxExporter exporter = new JRDocxExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
-		
-		exporter.exportReport();
+			JRDocxExporter exporter = new JRDocxExporter();
 
-		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -295,24 +359,25 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void xlsx() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xlsx");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xlsx");
-		
-		JRXlsxExporter exporter = new JRXlsxExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
-		SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
-		configuration.setOnePagePerSheet(false);
-		exporter.setConfiguration(configuration);
-		
-		exporter.exportReport();
+			JRXlsxExporter exporter = new JRXlsxExporter();
 
-		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
+			SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
+			configuration.setOnePagePerSheet(false);
+			exporter.setConfiguration(configuration);
+
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	
@@ -321,21 +386,22 @@ public class ImagesApp extends AbstractSampleApp
 	 */
 	public void pptx() throws JRException
 	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("target/reports/ImagesReport.jrprint");
+		File[] files = getFiles(new File("target/reports"), "jrprint");
+		for (File sourceFile : files)
+		{
+			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
+			File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".pptx");
 
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".pptx");
-		
-		JRPptxExporter exporter = new JRPptxExporter();
-		
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
+			JRPptxExporter exporter = new JRPptxExporter();
 
-		exporter.exportReport();
+			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(destFile));
 
-		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
+			exporter.exportReport();
+
+			System.out.println(destFile);
+		}
 	}
 	
 	

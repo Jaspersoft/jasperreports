@@ -30,7 +30,6 @@ import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 import java.text.BreakIterator;
 import java.text.CharacterIterator;
-import java.util.Iterator;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRCommonText;
@@ -189,9 +188,8 @@ public class ComplexTextLineWrapper implements TextLineWrapper
 	{
 		for (char c = attributes.first(); c != CharacterIterator.DONE; c = attributes.next())
 		{
-			for (Iterator<Map.Entry<Attribute,Object>> it = attributes.getAttributes().entrySet().iterator(); it.hasNext();)
+			for (Map.Entry<Attribute,Object> attributeEntry : attributes.getAttributes().entrySet())
 			{
-				Map.Entry<Attribute,Object> attributeEntry = it.next();
 				AttributedCharacterIterator.Attribute attribute = attributeEntry.getKey();
 				if (attributes.getRunStart(attribute) == attributes.getIndex())
 				{
@@ -210,9 +208,8 @@ public class ComplexTextLineWrapper implements TextLineWrapper
 	protected void setAttributes(AttributedString string, Map<Attribute,Object> attributes, 
 		int startIndex, int endIndex)
 	{
-		for (Iterator<Map.Entry<Attribute,Object>> it = attributes.entrySet().iterator(); it.hasNext();)
+		for (Map.Entry<Attribute,Object> entry : attributes.entrySet())
 		{
-			Map.Entry<Attribute,Object> entry = it.next();
 			Attribute attribute = entry.getKey();
 			Object attributeValue = entry.getValue();
 			string.addAttribute(attribute, attributeValue, startIndex, endIndex);

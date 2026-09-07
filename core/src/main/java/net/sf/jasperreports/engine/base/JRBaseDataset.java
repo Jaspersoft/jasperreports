@@ -105,7 +105,7 @@ public class JRBaseDataset implements JRDataset, Serializable, JRChangeEventsSup
 		if (jrScriptlets != null && jrScriptlets.length > 0)
 		{
 			scriptlets = new JRScriptlet[jrScriptlets.length];
-			for(int i = 0; i < scriptlets.length; i++)
+			for (int i = 0; i < scriptlets.length; i++)
 			{
 				scriptlets[i] = factory.getScriptlet(jrScriptlets[i]);
 			}
@@ -116,7 +116,7 @@ public class JRBaseDataset implements JRDataset, Serializable, JRChangeEventsSup
 		if (jrParameters != null && jrParameters.length > 0)
 		{
 			parameters = new JRParameter[jrParameters.length];
-			for(int i = 0; i < parameters.length; i++)
+			for (int i = 0; i < parameters.length; i++)
 			{
 				parameters[i] = factory.getParameter(jrParameters[i]);
 			}
@@ -127,7 +127,7 @@ public class JRBaseDataset implements JRDataset, Serializable, JRChangeEventsSup
 		if (jrFields != null && jrFields.length > 0)
 		{
 			fields = new JRField[jrFields.length];
-			for(int i = 0; i < fields.length; i++)
+			for (int i = 0; i < fields.length; i++)
 			{
 				fields[i] = factory.getField(jrFields[i]);
 			}
@@ -138,7 +138,7 @@ public class JRBaseDataset implements JRDataset, Serializable, JRChangeEventsSup
 		if (jrSortFields != null && jrSortFields.length > 0)
 		{
 			sortFields = new JRSortField[jrSortFields.length];
-			for(int i = 0; i < sortFields.length; i++)
+			for (int i = 0; i < sortFields.length; i++)
 			{
 				sortFields[i] = factory.getSortField(jrSortFields[i]);
 			}
@@ -149,7 +149,7 @@ public class JRBaseDataset implements JRDataset, Serializable, JRChangeEventsSup
 		if (jrVariables != null && jrVariables.length > 0)
 		{
 			variables = new JRVariable[jrVariables.length];
-			for(int i = 0; i < variables.length; i++)
+			for (int i = 0; i < variables.length; i++)
 			{
 				variables[i] = factory.getVariable(jrVariables[i]);
 			}
@@ -160,7 +160,7 @@ public class JRBaseDataset implements JRDataset, Serializable, JRChangeEventsSup
 		if (jrGroups != null && jrGroups.length > 0)
 		{
 			groups = new JRGroup[jrGroups.length];
-			for(int i = 0; i < groups.length; i++)
+			for (int i = 0; i < groups.length; i++)
 			{
 				groups[i] = factory.getGroup(jrGroups[i]);
 			}

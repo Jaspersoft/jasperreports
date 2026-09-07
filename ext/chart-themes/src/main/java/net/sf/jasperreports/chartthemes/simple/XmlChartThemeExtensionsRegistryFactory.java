@@ -28,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -68,9 +67,8 @@ public class XmlChartThemeExtensionsRegistryFactory implements
 		List<PropertySuffix> themeProperties = JRPropertiesUtil.getProperties(properties, 
 				XML_CHART_THEME_PROPERTY_PREFIX);
 		Map<String, ChartTheme> themes = new HashMap<>();
-		for (Iterator<PropertySuffix> it = themeProperties.iterator(); it.hasNext();)
+		for (PropertySuffix themeProp : themeProperties)
 		{
-			PropertySuffix themeProp = it.next();
 			String themeName = themeProp.getSuffix();
 			String themeLocation = themeProp.getValue();
 			XmlChartTheme theme = new XmlChartTheme(themeLocation);

@@ -70,7 +70,7 @@ public final class JRTextAttribute extends AttributedCharacterIterator.Attribute
 	public static final JRTextAttribute HTML_LIST = new JRTextAttribute("HTML_LIST");
 	public static final JRTextAttribute HTML_LIST_ITEM = new JRTextAttribute("HTML_LIST_ITEM");
 
-    /**
+	/**
 	 * Used in report search to mark the matching terms
 	 */
 	public static final JRTextAttribute SEARCH_HIGHLIGHT = new JRTextAttribute("SEARCH_HIGHLIGHT");

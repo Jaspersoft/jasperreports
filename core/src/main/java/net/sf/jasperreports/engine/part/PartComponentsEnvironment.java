@@ -97,13 +97,7 @@ public final class PartComponentsEnvironment
 		Object cacheKey = ExtensionsEnvironment.getExtensionsCacheKey();
 		synchronized (cache)
 		{
-			List<PartComponentsBundle> components = cache.get(cacheKey);
-			if (components == null)
-			{
-				components = findBundles();
-				cache.put(cacheKey, components);
-			}
-			return components;
+			return cache.computeIfAbsent(cacheKey, k -> findBundles());
 		}
 	}
 

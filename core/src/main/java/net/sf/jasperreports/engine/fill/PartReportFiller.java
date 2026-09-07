@@ -562,7 +562,7 @@ public class PartReportFiller extends BaseReportFiller
 
 	public BookmarkHelper getFirstBookmarkHelper()
 	{
-		for(FillPrintPart part = partQueue.head(); part != null; part = part.nextPart())
+		for (FillPrintPart part = partQueue.head(); part != null; part = part.nextPart())
 		{
 			PartPrintOutput output = part.getOutput();
 			if (output != null)

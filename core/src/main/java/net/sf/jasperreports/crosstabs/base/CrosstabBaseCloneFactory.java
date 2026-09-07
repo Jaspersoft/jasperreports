@@ -34,18 +34,11 @@ import net.sf.jasperreports.engine.JRVariable;
  */
 public class CrosstabBaseCloneFactory//FIXME use CloneStore instead
 {
-
 	private Map<JRVariable, JRVariable> clonedVariables = new HashMap<>();
 	
 	public JRVariable clone(JRVariable variable)
 	{
-		JRVariable clone = clonedVariables.get(variable);
-		if (clone == null)
-		{
-			clone = (JRVariable) variable.clone();
-			clonedVariables.put(variable, clone);
-		}
-		return clone;
+		return clonedVariables.computeIfAbsent(variable, k -> (JRVariable) variable.clone());
 	}
 	
 	@SuppressWarnings("unchecked")

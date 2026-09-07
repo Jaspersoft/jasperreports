@@ -58,7 +58,6 @@ public class XlsFeaturesApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		xls();
 		xlsx();
@@ -77,12 +76,11 @@ public class XlsFeaturesApp extends AbstractSampleApp
 		parameters.put("DataFile", "CsvDataSource.txt - CSV query executer");
 
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i< files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 			JasperFillManager.fillReportToFile(sourceFile.getPath(), new HashMap<String, Object>(parameters));
-			System.err.println("Report : " + sourceFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -93,10 +91,9 @@ public class XlsFeaturesApp extends AbstractSampleApp
 	public void xls() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 	
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 	
@@ -114,7 +111,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". XLS creation time : " + (System.currentTimeMillis() - start));
 	
 		}
 	}
@@ -126,10 +123,9 @@ public class XlsFeaturesApp extends AbstractSampleApp
 	public void xlsx() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File sourceFile : files)
 		{
 			long start = System.currentTimeMillis();
-			File sourceFile = files[i];
 	
 			JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
 			String extension = jasperPrint.getName().contains("Macro") ? ".xlsm" : ".xlsx";
@@ -147,7 +143,7 @@ public class XlsFeaturesApp extends AbstractSampleApp
 			
 			exporter.exportReport();
 	
-			System.err.println("Report : " + sourceFile + ". "+ extension.toUpperCase() + " creation time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + sourceFile + ". "+ extension.toUpperCase() + " creation time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	

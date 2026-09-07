@@ -39,66 +39,66 @@ import org.apache.commons.logging.LogFactory;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class MultiLevelUpExpressionEvaluator extends AbstractMemberExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(MultiLevelUpExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(MultiLevelUpExpressionEvaluator.class);
 
-    private MultiLevelUpExpression expression;
+	private MultiLevelUpExpression expression;
 
 
-    public MultiLevelUpExpressionEvaluator(EvaluationContext evaluationContext, MultiLevelUpExpression expression) {
-        super(evaluationContext);
-        this.expression = expression;
-    }
+	public MultiLevelUpExpressionEvaluator(EvaluationContext evaluationContext, MultiLevelUpExpression expression) {
+		super(evaluationContext);
+		this.expression = expression;
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
-        List<JRJsonNode> nodes = contextNode.getNodes();
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
+		List<JRJsonNode> nodes = contextNode.getNodes();
 
-        if (log.isDebugEnabled()) {
-            log.debug("---> evaluating expression [" + expression +
-                    "] on a node with (size: " + contextNode.getSize() +
-                    ", cSize: " + contextNode.getContainerSize() + ")");
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("---> evaluating expression [" + expression +
+					"] on a node with (size: " + contextNode.getSize() +
+					", cSize: " + contextNode.getContainerSize() + ")");
+		}
 
-        JsonNodeContainer result = new JsonNodeContainer();
-        List<JRJsonNode> uniqueParents = new ArrayList<>();
+		JsonNodeContainer result = new JsonNodeContainer();
+		List<JRJsonNode> uniqueParents = new ArrayList<>();
 
-        for (JRJsonNode node: nodes) {
-            JRJsonNode parent = getParent(node);
+		for (JRJsonNode node: nodes) {
+			JRJsonNode parent = getParent(node);
 
-            if (parent != null && !uniqueParents.contains(parent)) {
-                uniqueParents.add(parent);
+			if (parent != null && !uniqueParents.contains(parent)) {
+				uniqueParents.add(parent);
 
-                if (applyFilter(parent)) {
-                    result.add(parent);
-                }
-            }
-        }
+				if (applyFilter(parent)) {
+					result.add(parent);
+				}
+			}
+		}
 
-        if (result.getSize() > 0) {
-            return result;
-        }
+		if (result.getSize() > 0) {
+			return result;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public MemberExpression getMemberExpression() {
-        return expression;
-    }
+	@Override
+	public MemberExpression getMemberExpression() {
+		return expression;
+	}
 
-    private JRJsonNode getParent(JRJsonNode jrJsonNode) {
-        JRJsonNode result = jrJsonNode;
-        int level = expression.getLevel();
+	private JRJsonNode getParent(JRJsonNode jrJsonNode) {
+		JRJsonNode result = jrJsonNode;
+		int level = expression.getLevel();
 
-        for(int i=0; i < level; i++) {
-            result = result.getParent();
+		for (int i=0; i < level; i++) {
+			result = result.getParent();
 
-            if (result == null) {
-                return null;
-            }
-        }
+			if (result == null) {
+				return null;
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

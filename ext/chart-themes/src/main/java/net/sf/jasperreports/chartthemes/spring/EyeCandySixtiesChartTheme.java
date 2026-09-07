@@ -497,7 +497,7 @@ public class EyeCandySixtiesChartTheme extends GenericChartTheme
 		// Set the shape
 		MeterShapeEnum shape = jrPlot.getShape() == null ? MeterShapeEnum.DIAL : jrPlot.getShape();
 		
-		switch(shape)
+		switch (shape)
 		{
 			case CHORD:
 				chartPlot.setDialShape(DialShape.CHORD);
@@ -1080,7 +1080,7 @@ class GradientXYBubbleRenderer extends XYBubbleRenderer
 			double transRange = 0.0;
 			double zero;
 
-			switch(getScaleType()) {
+			switch (getScaleType()) {
 				case SCALE_ON_DOMAIN_AXIS:
 					zero = domainAxis.valueToJava2D(0.0, dataArea,
 							domainAxisLocation);

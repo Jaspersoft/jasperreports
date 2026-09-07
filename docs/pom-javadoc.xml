@@ -18,7 +18,11 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<maven.javadoc.skip>false</maven.javadoc.skip>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
+		<maven.javadoc.skip>false</maven.javadoc.skip><!-- not needed, just to make it more clear -->
+		<maven.source.skip>true</maven.source.skip>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 	<modules>
 		<!-- 
@@ -51,6 +55,7 @@
 		<module>../ext/jaxen</module>
 		<module>../ext/jdt</module>
 		<module>../ext/json</module>
+		<module>../ext/maven</module>
 		<module>../ext/olap</module>
 		<module>../ext/pdf</module>
 		<module>../ext/servlets</module>

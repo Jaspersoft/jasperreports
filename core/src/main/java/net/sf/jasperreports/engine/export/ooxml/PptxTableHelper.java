@@ -88,7 +88,7 @@ public class PptxTableHelper extends BaseHelper
 		write("   <a:tableStyleId>{2D5ABB26-0587-4C30-8999-92F81FD0307C}</a:tableStyleId>\n");
 		write("   </a:tblPr>\n");
 		write("   <a:tblGrid>\n");
-		for(int col = 1; col < xCuts.size(); col++)
+		for (int col = 1; col < xCuts.size(); col++)
 		{
 			write("    <a:gridCol w=\"" + LengthUtil.emu(xCuts.getCutOffset(col) - xCuts.getCutOffset(col - 1)) + "\"/>\n");
 		}

@@ -57,11 +57,11 @@ public class JRBaseParameter implements JRParameter, Serializable, JRChangeEvent
 	 */
 	protected String name;
 	protected String description;
-	protected String valueClassName = java.lang.String.class.getName(); //FIXMEJACK check all
+	protected String valueClassName = java.lang.String.class.getName();
 	protected String valueClassRealName;
 	protected String nestedTypeName;
 	protected boolean isSystemDefined;
-	protected boolean isForPrompting = true;
+	protected boolean isForPrompting = true; // primitive boolean field can't be null; custom BooleanTrueAsEmptySerializer used
 	protected ParameterEvaluationTimeEnum evaluationTime;
 
 	protected transient Class<?> valueClass;
@@ -135,7 +135,7 @@ public class JRBaseParameter implements JRParameter, Serializable, JRChangeEvent
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch(ClassNotFoundException e)
 				{

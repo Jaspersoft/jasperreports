@@ -1,4 +1,4 @@
-<jasperReport name="NumberFormatReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="9df06543-a919-4db2-9dcd-ed4c8a66dec7">
+<jasperReport name="NumberFormatReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="9df06543-a919-4db2-9dcd-ed4c8a66dec7">
 	<title height="540">
 		<element kind="textField" uuid="a37e1c3b-4a40-4275-86aa-cfbf51fcf8eb" x="0" y="10" width="200" height="60" fontName="DejaVu Sans" fontSize="14.0" pattern="#,##,###.00">
 			<expression><![CDATA[123456789.899]]></expression>

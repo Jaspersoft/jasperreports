@@ -62,7 +62,7 @@ public class XYDatasetLabelGenerator extends StandardXYItemLabelGenerator
 	{
 		Comparable<?> seriesName = dataset.getSeriesKey(series);
 		Map<Number,String> labels = labelsMap.get(seriesName);
-		if(labels != null)
+		if (labels != null)
 		{
 			return labels.get(((XYSeriesCollection)dataset).getX(series, item));
 		}

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.components.spiderchart;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -34,6 +35,7 @@ import net.sf.jasperreports.components.charts.ChartPlot;
 import net.sf.jasperreports.components.charts.ChartSettings;
 import net.sf.jasperreports.engine.JRCloneable;
 import net.sf.jasperreports.engine.JRConstants;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.base.JRBaseObjectFactory;
 import net.sf.jasperreports.engine.component.BaseComponentContext;
@@ -47,6 +49,13 @@ import net.sf.jasperreports.engine.util.JRCloneUtils;
  * 
  * @author Sanda Zaharia (shertage@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	JRXmlConstants.ATTRIBUTE_evaluationGroup,
+	"chartSettings",
+	JRXmlConstants.ELEMENT_dataset,
+	JRXmlConstants.ELEMENT_plot
+	})
 @JsonTypeName(ChartsExtensionsRegistryFactory.SPIDERCHART_COMPONENT_NAME)
 public class SpiderChartComponent implements ChartComponent, JRChangeEventsSupport, JRCloneable
 {

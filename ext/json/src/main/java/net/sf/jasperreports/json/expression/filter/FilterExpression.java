@@ -31,19 +31,19 @@ import net.sf.jasperreports.json.expression.filter.evaluation.FilterExpressionEv
  */
 public interface FilterExpression {
 
-    enum LOGICAL_OPERATOR {
-        AND,
-        OR
-    }
+	enum LOGICAL_OPERATOR {
+		AND,
+		OR
+	}
 
-    enum VALUE_TYPE {
-        NULL,
-        BOOLEAN,
-        INTEGER,
-        DOUBLE,
-        STRING
-    }
+	enum VALUE_TYPE {
+		NULL,
+		BOOLEAN,
+		INTEGER,
+		DOUBLE,
+		STRING
+	}
 
-    boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator);
+	boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator);
 
 }

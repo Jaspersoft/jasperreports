@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.engine.JRFont;
@@ -34,7 +35,16 @@ import net.sf.jasperreports.engine.JRFont;
 /**
  * @author Flavus Sana (flavius_sana@users.sourceforge.net) 
  */
-public interface JRValueAxisFormat 
+@JsonPropertyOrder({
+	"valueAxisLabelColor",
+	"valueAxisTickLabelColor",
+	"valueAxisTickLabelMask",
+	"valueAxisVerticalTickLabels",
+	"valueAxisLineColor",
+	"valueAxisLabelFont",
+	"valueAxisTickLabelFont"
+	})
+public interface JRValueAxisFormat
 {
 
 	/**

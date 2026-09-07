@@ -84,7 +84,7 @@ public class JRBaseSection implements JRSection, JRChangeEventsSupport, Serializ
 		if (jrBands != null && jrBands.length > 0)
 		{
 			bands = new JRBand[jrBands.length];
-			for(int i = 0; i < jrBands.length; i++)
+			for (int i = 0; i < jrBands.length; i++)
 			{
 				bands[i] = factory.getBand(jrBands[i]);
 			}
@@ -95,7 +95,7 @@ public class JRBaseSection implements JRSection, JRChangeEventsSupport, Serializ
 		if (jrParts != null && jrParts.length > 0)
 		{
 			parts = new JRPart[jrParts.length];
-			for(int i = 0; i < jrParts.length; i++)
+			for (int i = 0; i < jrParts.length; i++)
 			{
 				parts[i] = factory.getPart(jrParts[i]);
 			}

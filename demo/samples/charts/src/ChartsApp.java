@@ -30,11 +30,7 @@ import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.util.AbstractSampleApp;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 
 
 /**
@@ -56,7 +52,6 @@ public class ChartsApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 		html();
@@ -72,16 +67,15 @@ public class ChartsApp extends AbstractSampleApp
 		parameters.put("MaxOrderID", 12500);
 		
 		File[] files = getFiles(new File("target/reports"), "jasper");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperFillManager.fillReportToFile(
 				reportFile.getAbsolutePath(), 
 				new HashMap<String, Object>(parameters), 
 				getDemoHsqldbConnection()
 				);
-			System.err.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". Filling time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -92,14 +86,13 @@ public class ChartsApp extends AbstractSampleApp
 	public void pdf() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToPdfFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". PDF export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 	
@@ -110,14 +103,13 @@ public class ChartsApp extends AbstractSampleApp
 	public void html() throws JRException
 	{
 		File[] files = getFiles(new File("target/reports"), "jrprint");
-		for(int i = 0; i < files.length; i++)
+		for (File reportFile : files)
 		{
-			File reportFile = files[i];
 			long start = System.currentTimeMillis();
 			JasperExportManager.exportReportToHtmlFile(
 				reportFile.getAbsolutePath()
 				);
-			System.err.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
+			System.out.println("Report : " + reportFile + ". HTML export time : " + (System.currentTimeMillis() - start));
 		}
 	}
 

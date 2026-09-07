@@ -113,7 +113,7 @@ public class XlsxRunHelper extends BaseHelper
 			isOpen = true;
 		}
 		
-		if(isOpen)
+		if (isOpen)
 		{
 			value = attrs.get(TextAttribute.FOREGROUND) == null 
 					? parentAttrs.get(TextAttribute.FOREGROUND) 
@@ -134,7 +134,7 @@ public class XlsxRunHelper extends BaseHelper
 	//		if (value != null && (isOwnFont ||!value.equals(oldValue)))
 	//		{
 	//			String backcolor = ColorEnum.getByColor((Color)value) == null ? COLOR_NONE : ColorEnum.getByColor((Color)value).getName();
-	//			if(backcolor != null){
+	//			if (backcolor != null){
 	//				write("        <highlight val=\"" + backcolor + "\" />\n");
 	//			}
 	//		}
@@ -189,7 +189,7 @@ public class XlsxRunHelper extends BaseHelper
 
 		if (TextAttribute.SUPERSCRIPT_SUPER.equals(value))
 		{
-			if(!isOpen)
+			if (!isOpen)
 			{
 				write("       <rPr>\n");
 				isOpen = true;
@@ -198,7 +198,7 @@ public class XlsxRunHelper extends BaseHelper
 		}
 		else if (TextAttribute.SUPERSCRIPT_SUB.equals(value))
 		{
-			if(!isOpen)
+			if (!isOpen)
 			{
 				write("       <rPr>\n");
 				isOpen = true;
@@ -206,7 +206,7 @@ public class XlsxRunHelper extends BaseHelper
 			write("        <vertAlign val=\"subscript\" />\n");
 		}
 		
-		if(isOpen)
+		if (isOpen)
 		{
 			write("       </rPr>\n");
 		}

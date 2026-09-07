@@ -52,8 +52,8 @@ public final class ExporterFilterFactoryUtil
 		//return (ExporterFilterFactory) cache.getCachedInstance(factoryClassName);
 		try
 		{
-			Class<?> clazz = JRClassLoader.loadClassForName(factoryClassName);
-			return (ExporterFilterFactory)clazz.getDeclaredConstructor().newInstance();
+			Class<?> clazz = JRClassLoader.resolveClassForName(factoryClassName);
+			return clazz.asSubclass(ExporterFilterFactory.class).getDeclaredConstructor().newInstance();
 		}
 		catch (ClassNotFoundException e)
 		{

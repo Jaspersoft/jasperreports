@@ -110,10 +110,10 @@ public final class OoxmlUtils
 	
 	public static byte[] getSalt() 
 	{
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return salt;
-    }
+		SecureRandom random = new SecureRandom();
+		byte[] salt = new byte[16];
+		random.nextBytes(salt);
+		return salt;
+	}
 
 }

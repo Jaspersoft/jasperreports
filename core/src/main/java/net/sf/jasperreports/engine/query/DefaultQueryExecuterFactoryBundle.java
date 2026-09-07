@@ -23,10 +23,6 @@
  */
 package net.sf.jasperreports.engine.query;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
@@ -78,14 +74,9 @@ public final class DefaultQueryExecuterFactoryBundle implements JRQueryExecuterF
 	@Override
 	public String[] getLanguages()
 	{
-		List<String> languages = new ArrayList<>();
-		List<PropertySuffix> properties = JRPropertiesUtil.getInstance(jasperReportsContext).getProperties(QueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX);
-		for (Iterator<PropertySuffix> it = properties.iterator(); it.hasNext();)
-		{
-			PropertySuffix property = it.next();
-			languages.add(property.getSuffix());
-		}
-		return languages.toArray(new String[languages.size()]);
+		return
+			JRPropertiesUtil.getInstance(jasperReportsContext).getProperties(QueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX)
+				.stream().map(PropertySuffix::getSuffix).toArray(String[]::new);
 	}
 
 	@Override

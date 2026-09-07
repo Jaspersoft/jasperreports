@@ -1,4 +1,4 @@
-<jasperReport name="BookReport" language="java" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e52780b9-8f01-4b16-86fe-712163e5aadc">
+<jasperReport name="BookReport" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e52780b9-8f01-4b16-86fe-712163e5aadc">
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
 	<query language="sql"><![CDATA[SELECT ShipCountry FROM Orders GROUP BY ShipCountry HAVING count(DISTINCT ShipCity) > 2 ORDER BY ShipCountry]]></query>
 	<field name="ShipCountry" class="java.lang.String"/>

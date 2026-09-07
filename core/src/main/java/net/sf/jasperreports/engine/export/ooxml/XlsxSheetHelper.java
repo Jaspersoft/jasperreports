@@ -39,6 +39,7 @@ import net.sf.jasperreports.engine.export.JRXlsAbstractExporter;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.export.XlsRowLevelInfo;
 import net.sf.jasperreports.engine.export.ooxml.type.PaperSizeEnum;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.engine.util.FileBufferedWriter;
 import net.sf.jasperreports.engine.util.JRColorUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
@@ -108,7 +109,7 @@ public class XlsxSheetHelper extends BaseHelper
 		write(" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\">\n");
 		
 		write("<sheetPr>\n");
-		if(tabColor != null)
+		if (tabColor != null)
 		{
 			write("<tabColor rgb=\"FF" + JRColorUtil.getColorHexa(tabColor) + "\"/>\n");
 		}
@@ -129,12 +130,12 @@ public class XlsxSheetHelper extends BaseHelper
 		
 		write("</sheetPr><dimension ref=\"A1\"/><sheetViews><sheetView workbookViewId=\"0\"");
 		
-		if(!showGridlines)
+		if (!showGridlines)
 		{
 			write(" showGridLines=\"0\"");
 		}
 		
-		if(rowFreezeIndex > 0 || columnFreezeIndex > 0)
+		if (rowFreezeIndex > 0 || columnFreezeIndex > 0)
 		{
 			write(">\n<pane" + (columnFreezeIndex > 0 ? (" xSplit=\"" + columnFreezeIndex + "\"") : "") + (rowFreezeIndex > 0 ? (" ySplit=\"" + rowFreezeIndex + "\"") : ""));
 			String columnFreezeName = columnFreezeIndex < 0 
@@ -202,7 +203,7 @@ public class XlsxSheetHelper extends BaseHelper
 			write("\" spinCount=\"" + spinCount + "\" sheet=\"1\" objects=\"1\" scenarios=\"1\"/>\n");
 		}
 
-		if(autoFilter != null)
+		if (autoFilter != null)
 		{
 			write("<autoFilter ref=\"" + autoFilter + "\"/>\n");
 		}
@@ -236,13 +237,10 @@ public class XlsxSheetHelper extends BaseHelper
 		write("\"/>\n");
 		write("<pageSetup");	
 		
-		if (jasperPrint.getOrientation() != null)
-		{
-			write(" orientation=\"" + jasperPrint.getOrientation().getName().toLowerCase() + "\"");	
-		}
+		write(" orientation=\"" + OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()).getName().toLowerCase() + "\"");	
 		
 		/* the scale factor takes precedence over fitWidth and fitHeight properties */
-		if(scale != null && scale > 9 && scale < 401)
+		if (scale != null && scale > 9 && scale < 401)
 		{
 			write(" scale=\"" + scale + "\"");	
 		}
@@ -267,7 +265,7 @@ public class XlsxSheetHelper extends BaseHelper
 		String paperSize = pSize == PaperSizeEnum.UNDEFINED ? "" : " paperSize=\"" + pSize.getOoxmlValue() + "\"";
 		write(paperSize);	
 		
-		if(firstPageNumber!= null && firstPageNumber > 0)
+		if (firstPageNumber!= null && firstPageNumber > 0)
 		{
 			write(" firstPageNumber=\"" + firstPageNumber + "\"");
 			write(" useFirstPageNumber=\"1\"/>\n");
@@ -322,7 +320,7 @@ public class XlsxSheetHelper extends BaseHelper
 			}
 			write("</headerFooter>\n");
 		}
-		else if(!firstPageNotSet)
+		else if (!firstPageNotSet)
 		{
 			write("<headerFooter><oddFooter>&amp;CPage &amp;P</oddFooter></headerFooter>\n");
 		}
@@ -366,9 +364,30 @@ public class XlsxSheetHelper extends BaseHelper
 	 */
 	public void exportColumn(int colIndex, int colWidth, boolean autoFit) 
 	{
+		/*
+		bestFit on <col> is not an instruction for Excel to calculate the optimal column width when opening the file. It's a state flag that marks the column as
+		being in auto-fit mode for future interactive user input. It tells Excel: "when the user types a number into this column, grow the column to fit." But it
+		does nothing to measure and fit existing cell content on file open.
+		
+		For rows it's different. Excel does recalculate row heights when opening a file if customHeight="0" is set. Row height depends mainly on font size and text
+		wrapping, which Excel evaluates automatically. That's why bestFit="1" with customHeight="0" works for rows — Excel sees "this height isn't custom,
+		recalculate it" and does so.
+		
+		For columns there's no equivalent mechanism. Column width calculation requires measuring the rendered pixel width of every cell value in the column using
+		font metrics — Excel simply doesn't do this automatically on open. The only way to get auto-fitted column widths in a generated XLSX is to calculate the
+		widths yourself.
+		
+		Since we are already calculating the width of auto fit columns, there is no point in setting bestFit for columns, as it would be inhibited by customWidth="1".
+		*/
 		try
 		{
-			colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + (3f * colWidth / 18f) + "\"/>\n");
+			//colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + ((float)colWidth * 4 / 21) + "\"/>\n");
+			//colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + (int)((colWidth * 4 / 3 + 5) / 7) + "\"/>\n");
+			//colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + (int)(colWidth / 6f) + "\"/>\n");
+
+			// this ratio was found empirically, by using a square image with scaleImage=RetainShape, to make sure it remains square (if at all possible), 
+			// on different operating systems, and viewing the documents using both Microsoft Excel and LibreOffice 
+			colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + ((float)colWidth * 45 / 256) + "\"/>\n");
 		}
 		catch (IOException e)
 		{
@@ -450,7 +469,7 @@ public class XlsxSheetHelper extends BaseHelper
 		
 		try
 		{
-			if(isLocal){
+			if (isLocal){
 				hyperlinksWriter.write("<hyperlink ref=\"" + ref + "\" location=\"" + getDefinedName(href) + "\"/>\n");
 			} else {
 				hyperlinksWriter.write("<hyperlink ref=\"" + ref + "\" r:id=\"rIdLnk" + sheetRelsHelper.getHyperlink(href) + "\"/>\n");

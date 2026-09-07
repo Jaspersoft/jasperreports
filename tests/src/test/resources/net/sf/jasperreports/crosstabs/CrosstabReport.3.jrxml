@@ -1,4 +1,4 @@
-<jasperReport name="CrosstabReport.3" language="java" pageWidth="1600" pageHeight="1400" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1130" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="885d79b2-35fe-4141-b51c-e2445e098e6d">
+<jasperReport name="CrosstabReport.3" pageWidth="1600" pageHeight="1400" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1130" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="885d79b2-35fe-4141-b51c-e2445e098e6d">
 	<property name="net.sf.jasperreports.data.adapter" value="net/sf/jasperreports/data/EmptyDataAdapter.1.jrdax"/>
 	<property name="net.sf.jasperreports.crosstab.interactive" value="false"/>
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>

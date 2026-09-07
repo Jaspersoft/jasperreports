@@ -67,5 +67,5 @@ public class MapDeserializer extends StdDeserializer<Map<String, String>>
 	public Map<String, String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException 
 	{
 		return deserialize(p, ctxt, new HashMap<>());
-    }
+	}
 }

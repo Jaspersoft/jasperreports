@@ -357,7 +357,7 @@ public abstract class JRBaseChartPlot implements JRChartPlot, Serializable, JRCh
 		if (seriesColors != null)
 		{
 			clone.seriesColors = new TreeSet<>();
-			for(Iterator<JRSeriesColor> it = seriesColors.iterator(); it.hasNext();)
+			for (Iterator<JRSeriesColor> it = seriesColors.iterator(); it.hasNext();)
 			{
 				clone.seriesColors.add(JRCloneUtils.nullSafeClone(it.next()));
 			}

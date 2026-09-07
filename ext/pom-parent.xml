@@ -11,11 +11,6 @@
 	<packaging>pom</packaging>
 	<properties>
 		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
-		<maven.install.skip>false</maven.install.skip>
-		<maven.source.skip>false</maven.source.skip>
-		<maven.javadoc.skip>false</maven.javadoc.skip>
-		<maven.deploy.skip>false</maven.deploy.skip>
-		<maven.test.skip>false</maven.test.skip>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -78,8 +73,18 @@
 				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<archive>
-						<manifestFile>${project.build.directory}/classes/META-INF/MANIFEST.MF</manifestFile>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<ignoredUnusedDeclaredDependencies>
+						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
+					</ignoredUnusedDeclaredDependencies>
 				</configuration>
 			</plugin>
 			<plugin>

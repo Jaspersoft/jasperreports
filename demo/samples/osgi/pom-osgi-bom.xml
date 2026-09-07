@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.sf.jasperreports</groupId>
+		<artifactId>jasperreports-samples-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../pom-parent.xml</relativePath>
+	</parent>
+	<artifactId>jasperreports-samples-osgi-bom</artifactId>
+	<packaging>pom</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-groovy</artifactId>
+			<version>${revision}</version>
+			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-javascript</artifactId>
+			<version>${revision}</version>
+			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-webp</artifactId>
+			<version>${imageio-webp.version}</version>
+			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
+	</dependencies>
+</project>

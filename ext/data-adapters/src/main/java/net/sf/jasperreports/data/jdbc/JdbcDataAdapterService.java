@@ -137,7 +137,7 @@ public class JdbcDataAdapterService extends AbstractClasspathAwareDataAdapterSer
 	 */
 	protected String getUrlForConnection() {
 		JdbcDataAdapter jdbcDataAdapter = getJdbcDataAdapter();
-		if(jdbcDataAdapter!=null) {
+		if (jdbcDataAdapter!=null) {
 			return jdbcDataAdapter.getUrl();
 		}
 		else {
@@ -165,7 +165,7 @@ public class JdbcDataAdapterService extends AbstractClasspathAwareDataAdapterSer
 				
 				Properties	connectProps = new Properties();
 				Map<String, String> map = jdbcDataAdapter.getProperties();
-				if(map != null)
+				if (map != null)
 					for (Entry<String, String> entry : map.entrySet())
 						connectProps.setProperty(entry.getKey(), entry.getValue());
 				
@@ -179,7 +179,7 @@ public class JdbcDataAdapterService extends AbstractClasspathAwareDataAdapterSer
 				connectProps.setProperty("password", password);
 				
 				connection = driver.connect(getUrlForConnection(), connectProps);
-				if(connection == null)
+				if (connection == null)
 				{
 					boolean urlValid = driver.acceptsURL(getUrlForConnection());
 					if (!urlValid)

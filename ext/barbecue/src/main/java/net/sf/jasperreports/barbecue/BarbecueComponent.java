@@ -25,6 +25,7 @@ package net.sf.jasperreports.barbecue;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -39,6 +40,18 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_type,
+	"drawText",
+	"checksumRequired",
+	"barWidth",
+	"barHeight",
+	JRXmlConstants.ATTRIBUTE_rotation,
+	JRXmlConstants.ATTRIBUTE_evaluationTime,
+	JRXmlConstants.ATTRIBUTE_evaluationGroup,
+	"codeExpression",
+	"applicationIdentifierExpression"
+	})
 @JsonTypeName(BarbecueExtensionsRegistryFactory.BARBECUE_COMPONENT_NAME)
 @JsonDeserialize(as = StandardBarbecueComponent.class)
 public interface BarbecueComponent extends ContextAwareComponent, JREvaluation, JRCloneable

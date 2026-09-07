@@ -170,15 +170,15 @@ public class FillXYChart extends BaseFillComponent implements JRFillCloneable
 	    
 	    List<Comparable<?>> xySeriesNames = dataset.getXYSeriesNames();
 		Map<Comparable<?>, XYSeriesData> xySeriesMap = dataset.getXYSeriesMap();
-		if(xySeriesMap != null && !xySeriesMap.isEmpty())
+		if (xySeriesMap != null && !xySeriesMap.isEmpty())
 		{
 			int i = 0;
-			for(Comparable<?> name : xySeriesNames)
+			for (Comparable<?> name : xySeriesNames)
 			{
 				XYSeriesData data = xySeriesMap.get(name);
 				org.knowm.xchart.XYSeries series = xyChart.addSeries(name.toString(), data.getXData(), data.getYData());
 				Color color = data.getColor();
-				if(color != null)
+				if (color != null)
 				{
 					series.setLineColor(color);
 					styler.getSeriesColors()[i] = color;

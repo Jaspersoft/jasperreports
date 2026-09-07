@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.export;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.annotations.properties.Property;
@@ -78,9 +77,8 @@ public class DefaultExporterFilterFactory implements ExporterFilterFactory
 	{
 		List<ExporterFilterFactory> factories = getAllFilterFactories(exporterContext.getJasperReportsContext(), exporterContext.getExportedReport());
 		List<ExporterFilter> filters = new ArrayList<>(factories.size());
-		for (Iterator<ExporterFilterFactory> it = factories.iterator(); it.hasNext();)
+		for (ExporterFilterFactory factory : factories)
 		{
-			ExporterFilterFactory factory = it.next();
 			ExporterFilter filter = factory.getFilter(exporterContext);
 			if (filter != null)
 			{
@@ -109,9 +107,8 @@ public class DefaultExporterFilterFactory implements ExporterFilterFactory
 		List<JRPropertiesUtil.PropertySuffix> factoryProps = JRPropertiesUtil.getInstance(jasperReportsContext).getAllProperties(report, 
 				PROPERTY_EXPORTER_FILTER_FACTORY_PREFIX);
 		List<ExporterFilterFactory> factories = new ArrayList<>(factoryProps.size());
-		for (Iterator<JRPropertiesUtil.PropertySuffix> it = factoryProps.iterator(); it.hasNext();)
+		for (JRPropertiesUtil.PropertySuffix prop : factoryProps)
 		{
-			JRPropertiesUtil.PropertySuffix prop = it.next();
 			ExporterFilterFactory factory = getFilterFactory(prop.getValue());
 			factories.add(factory);
 		}

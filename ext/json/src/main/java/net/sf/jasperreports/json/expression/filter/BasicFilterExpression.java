@@ -35,117 +35,117 @@ import net.sf.jasperreports.json.expression.member.MemberExpression;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class BasicFilterExpression implements FilterExpression {
-    private List<MemberExpression> memberExpressionList = new ArrayList<>();
-    private JsonOperatorEnum operator;
-    private ValueDescriptor valueDescriptor;
-    private boolean isSizeFunction;
-    private boolean isNullFunction;
-    private boolean isNotNullFunction;
-    private boolean isArrayFunction;
-    private boolean isObjectFunction;
-    private boolean isValueFunction;
+	private List<MemberExpression> memberExpressionList = new ArrayList<>();
+	private JsonOperatorEnum operator;
+	private ValueDescriptor valueDescriptor;
+	private boolean isSizeFunction;
+	private boolean isNullFunction;
+	private boolean isNotNullFunction;
+	private boolean isArrayFunction;
+	private boolean isObjectFunction;
+	private boolean isValueFunction;
 
 
-    public BasicFilterExpression() {
-    }
+	public BasicFilterExpression() {
+	}
 
-    @Override
-    public boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateBasicFilter(this, jsonNode);
-    }
+	@Override
+	public boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateBasicFilter(this, jsonNode);
+	}
 
-    public List<MemberExpression> getMemberExpressionList() {
-        return memberExpressionList;
-    }
+	public List<MemberExpression> getMemberExpressionList() {
+		return memberExpressionList;
+	}
 
-    public void addMemberExpression(MemberExpression memberExpression) {
-        memberExpressionList.add(memberExpression);
-    }
+	public void addMemberExpression(MemberExpression memberExpression) {
+		memberExpressionList.add(memberExpression);
+	}
 
-    public JsonOperatorEnum getOperator() {
-        return operator;
-    }
+	public JsonOperatorEnum getOperator() {
+		return operator;
+	}
 
-    public void setOperator(JsonOperatorEnum operator) {
-        this.operator = operator;
-    }
+	public void setOperator(JsonOperatorEnum operator) {
+		this.operator = operator;
+	}
 
-    public ValueDescriptor getValueDescriptor() {
-        return valueDescriptor;
-    }
+	public ValueDescriptor getValueDescriptor() {
+		return valueDescriptor;
+	}
 
-    public void setValueDescriptor(ValueDescriptor valueDescriptor) {
-        this.valueDescriptor = valueDescriptor;
-    }
+	public void setValueDescriptor(ValueDescriptor valueDescriptor) {
+		this.valueDescriptor = valueDescriptor;
+	}
 
-    public boolean isSizeFunction() {
-        return isSizeFunction;
-    }
+	public boolean isSizeFunction() {
+		return isSizeFunction;
+	}
 
-    public void setIsSizeFunction(boolean isSizeFunction) {
-        this.isSizeFunction = isSizeFunction;
-    }
+	public void setIsSizeFunction(boolean isSizeFunction) {
+		this.isSizeFunction = isSizeFunction;
+	}
 
-    public boolean isNullFunction() {
-        return isNullFunction;
-    }
+	public boolean isNullFunction() {
+		return isNullFunction;
+	}
 
-    public void setIsNullFunction(boolean isNullFunction) {
-        this.isNullFunction = isNullFunction;
-    }
+	public void setIsNullFunction(boolean isNullFunction) {
+		this.isNullFunction = isNullFunction;
+	}
 
-    public boolean isNotNullFunction() {
-        return isNotNullFunction;
-    }
+	public boolean isNotNullFunction() {
+		return isNotNullFunction;
+	}
 
-    public void setIsNotNullFunction(boolean isNotNullFunction) {
-        this.isNotNullFunction = isNotNullFunction;
-    }
+	public void setIsNotNullFunction(boolean isNotNullFunction) {
+		this.isNotNullFunction = isNotNullFunction;
+	}
 
-    public boolean isArrayFunction() {
-        return isArrayFunction;
-    }
+	public boolean isArrayFunction() {
+		return isArrayFunction;
+	}
 
-    public void setIsArrayFunction(boolean isArrayFunction) {
-        this.isArrayFunction = isArrayFunction;
-    }
+	public void setIsArrayFunction(boolean isArrayFunction) {
+		this.isArrayFunction = isArrayFunction;
+	}
 
-    public boolean isObjectFunction() {
-        return isObjectFunction;
-    }
+	public boolean isObjectFunction() {
+		return isObjectFunction;
+	}
 
-    public void setIsObjectFunction(boolean isObjectFunction) {
-        this.isObjectFunction = isObjectFunction;
-    }
+	public void setIsObjectFunction(boolean isObjectFunction) {
+		this.isObjectFunction = isObjectFunction;
+	}
 
-    public boolean isValueFunction() {
-        return isValueFunction;
-    }
+	public boolean isValueFunction() {
+		return isValueFunction;
+	}
 
-    public void setIsValueFunction(boolean isValueFunction) {
-        this.isValueFunction = isValueFunction;
-    }
+	public void setIsValueFunction(boolean isValueFunction) {
+		this.isValueFunction = isValueFunction;
+	}
 
-    @Override
-    public String toString() {
-        String result = "";
+	@Override
+	public String toString() {
+		String result = "";
 
-        for(MemberExpression me: memberExpressionList) {
-            result += me.toString() + " ";
-        }
+		for (MemberExpression me: memberExpressionList) {
+			result += me.toString() + " ";
+		}
 
-        if (isSizeFunction) {
-            result += "isSizeFn";
-        } else if (isValueFunction) {
-            result += "isValueFn";
-        } else if (isArrayFunction) {
-            result += "isArrayFn";
-        } else if (isNotNullFunction) {
-            result += "isNotNullFn";
-        } else if (isObjectFunction) {
-            result += "isObjectFn";
-        }
+		if (isSizeFunction) {
+			result += "isSizeFn";
+		} else if (isValueFunction) {
+			result += "isValueFn";
+		} else if (isArrayFunction) {
+			result += "isArrayFn";
+		} else if (isNotNullFunction) {
+			result += "isNotNullFn";
+		} else if (isObjectFunction) {
+			result += "isObjectFn";
+		}
 
-        return result + " " + operator + " " + valueDescriptor;
-    }
+		return result + " " + operator + " " + valueDescriptor;
+	}
 }

@@ -1,4 +1,4 @@
-<jasperReport name="ColumnOverflowTest" language="java" columnCount="2" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="401" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="800dc9d6-c433-4ca6-8c6f-a3a9393e9dbf">
+<jasperReport name="ColumnOverflowTest" columnCount="2" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="401" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="800dc9d6-c433-4ca6-8c6f-a3a9393e9dbf">
 	<columnHeader height="324" splitType="Stretch"/>
 	<detail>
 		<band height="35" splitType="Stretch"/>

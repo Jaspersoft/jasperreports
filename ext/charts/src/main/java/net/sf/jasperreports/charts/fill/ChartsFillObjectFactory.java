@@ -171,9 +171,9 @@ public class ChartsFillObjectFactory implements ChartsAbstractObjectFactory
 	@Override
 	public JRXyzDataset getXyzDataset( JRXyzDataset xyzDataset ){
 		JRFillXyzDataset fillXyzDataset = null;
-		if( xyzDataset != null ){
+		if ( xyzDataset != null ){
 			fillXyzDataset = (JRFillXyzDataset)parent.get( xyzDataset );
-			if( fillXyzDataset == null ){
+			if ( fillXyzDataset == null ){
 				fillXyzDataset = new JRFillXyzDataset( xyzDataset, this );
 				parent.registerElementDataset(fillXyzDataset);
 			}
@@ -209,11 +209,11 @@ public class ChartsFillObjectFactory implements ChartsAbstractObjectFactory
 	public JRTimeSeriesDataset getTimeSeriesDataset( JRTimeSeriesDataset timeSeriesDataset ){
 		JRFillTimeSeriesDataset fillTimeSeriesDataset = null;
 
-		if( timeSeriesDataset != null ){
+		if ( timeSeriesDataset != null ){
 
 			fillTimeSeriesDataset = (JRFillTimeSeriesDataset)parent.get( timeSeriesDataset );
 
-			if( fillTimeSeriesDataset == null ){
+			if ( fillTimeSeriesDataset == null ){
 				fillTimeSeriesDataset = new JRFillTimeSeriesDataset( timeSeriesDataset, this );
 				parent.registerElementDataset(fillTimeSeriesDataset);
 			}
@@ -225,9 +225,9 @@ public class ChartsFillObjectFactory implements ChartsAbstractObjectFactory
 	@Override
 	public JRTimePeriodDataset getTimePeriodDataset( JRTimePeriodDataset timePeriodDataset ){
 		JRFillTimePeriodDataset fillTimePeriodDataset = null;
-		if( timePeriodDataset != null ){
+		if ( timePeriodDataset != null ){
 			fillTimePeriodDataset = (JRFillTimePeriodDataset)parent.get( timePeriodDataset );
-			if( fillTimePeriodDataset == null ){
+			if ( fillTimePeriodDataset == null ){
 				fillTimePeriodDataset = new JRFillTimePeriodDataset( timePeriodDataset, this );
 				parent.registerElementDataset(fillTimePeriodDataset);
 			}
@@ -295,10 +295,10 @@ public class ChartsFillObjectFactory implements ChartsAbstractObjectFactory
 	public JRXyzSeries getXyzSeries( JRXyzSeries xyzSeries ){
 		JRFillXyzSeries fillXyzSeries = null;
 
-		if( xyzSeries != null ){
+		if ( xyzSeries != null ){
 			fillXyzSeries = (JRFillXyzSeries)parent.get( xyzSeries );
 
-			if( fillXyzSeries == null ){
+			if ( fillXyzSeries == null ){
 				fillXyzSeries = new JRFillXyzSeries( xyzSeries, this );
 			}
 		}
@@ -385,9 +385,9 @@ public class ChartsFillObjectFactory implements ChartsAbstractObjectFactory
 	@Override
 	public JRTimePeriodSeries getTimePeriodSeries( JRTimePeriodSeries timePeriodSeries ){
 		JRFillTimePeriodSeries fillTimePeriodSeries = null;
-		if( timePeriodSeries != null ){
+		if ( timePeriodSeries != null ){
 			fillTimePeriodSeries = (JRFillTimePeriodSeries)parent.get( timePeriodSeries );
-			if( fillTimePeriodSeries == null ){
+			if ( fillTimePeriodSeries == null ){
 				fillTimePeriodSeries = new JRFillTimePeriodSeries( timePeriodSeries, this );
 			}
 		}
@@ -539,9 +539,9 @@ public class ChartsFillObjectFactory implements ChartsAbstractObjectFactory
 
 	public JRTimeSeriesPlot getTimeSeriesPlot( JRTimeSeriesPlot plot ){
 		JRFillTimeSeriesPlot fillPlot = null;
-		if( plot != null ){
+		if ( plot != null ){
 			fillPlot = (JRFillTimeSeriesPlot)parent.get( plot );
-			if( fillPlot == null ){
+			if ( fillPlot == null ){
 				fillPlot = new JRFillTimeSeriesPlot( plot, this );
 			}
 		}

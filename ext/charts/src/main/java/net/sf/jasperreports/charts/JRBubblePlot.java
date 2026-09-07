@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.charts.design.JRDesignBubblePlot;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 import net.sf.jasperreports.charts.type.ScaleTypeEnum;
 import net.sf.jasperreports.engine.JRExpression;
 
@@ -54,6 +56,35 @@ import net.sf.jasperreports.engine.JRExpression;
  *
  * @author Flavius Sana (flavius_sana@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_backcolor,
+	JRXmlConstants.ATTRIBUTE_orientation,
+	JRXmlConstants.ATTRIBUTE_backgroundAlpha,
+	JRXmlConstants.ATTRIBUTE_foregroundAlpha,
+	JRXmlConstants.ATTRIBUTE_labelRotation,
+	JRXmlConstants.ATTRIBUTE_scaleType,
+	"xAxisLabelColor",
+	"xAxisTickLabelColor",
+	"xAxisTickLabelMask",
+	"xAxisVerticalTickLabels",
+	"xAxisLineColor",
+	"yAxisLabelColor",
+	"yAxisTickLabelColor",
+	"yAxisTickLabelMask",
+	"yAxisVerticalTickLabels",
+	"yAxisLineColor",
+	JRXmlConstants.ELEMENT_seriesColor,
+	JRXmlConstants.ELEMENT_xAxisLabelExpression,
+	"xAxisLabelFont",
+	"xAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_yAxisLabelExpression,
+	"yAxisLabelFont",
+	"yAxisTickLabelFont",
+	JRXmlConstants.ELEMENT_domainAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_domainAxisMaxValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMinValueExpression,
+	JRXmlConstants.ELEMENT_rangeAxisMaxValueExpression
+	})
 @JsonTypeName("bubble")
 @JsonDeserialize(as = JRDesignBubblePlot.class)
 public interface JRBubblePlot extends JRChartPlot, JRXAxisFormat, JRYAxisFormat

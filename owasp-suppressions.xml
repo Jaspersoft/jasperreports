@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
 	<suppress>
-		<cve>CVE-2021-37533</cve>
-		<cve>CVE-2022-45688</cve>
-		<cve>CVE-2023-5072</cve>
-		<cve>CVE-2022-0869</cve>
-		<cve>CVE-2023-45960</cve>
-		<cve>CVE-2015-0897</cve>
-		<cve>CVE-2023-34411</cve>
-		<cve>CVE-2023-52070</cve>
-		<cve>CVE-2024-22949</cve>
-		<cve>CVE-2024-23076</cve>
-		<cve>CVE-2025-10492</cve>
+		<cve>CVE-2025-10492</cve> <!-- JRL -->
+		<cve>CVE-2025-7962</cve> <!-- angus-activation-2.0.0.jar -->
 	</suppress>
 </suppressions>

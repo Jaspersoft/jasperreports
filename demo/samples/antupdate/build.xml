@@ -3,6 +3,10 @@
 	<description>Shows how multiple JRXML files can be updated in batch mode using the ANT build tool.</description>
 
 	<path id="sample-classpath">
+		<!-- should only be used for local testing -->
+		<!--
+		<pathelement location="../../../ext/ant/target/classes"/>
+		-->
 		<path refid="sample-lib"/>
 		<pathelement location="./build/classes"/>
 		<pathelement location="../../common-samples/classes"/>
@@ -27,10 +31,8 @@
 				destdir="./build/reports">
 			<classpath refid="sample-classpath"/>
 			<include name="**/*.jrxml"/>
-			<!--
 			<updater>com.update.RenewUuidsUpdater</updater>
 			<updater>com.update.StyleUpdater</updater>
-			-->
 		</jru>
 	</target> 
 
@@ -43,10 +45,8 @@
 				</fileset>
 			</src>
 			<classpath refid="sample-classpath"/>
-			<!--
 			<updater>com.update.RenewUuidsUpdater</updater>
 			<updater>com.update.StyleUpdater</updater>
-			-->
 		</jru> 
 	</target> 
 
@@ -108,8 +108,10 @@
 		<echo message="==================================="/>
 		<antcall target="clean" />
 		<antcall target="javac" />
+		<antcall target="compile" />
 		<antcall target="update1" />
 		<antcall target="update2" />
+		<antcall target="compileUpdated" />
 	</target>
 
 </project>

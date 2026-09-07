@@ -26,14 +26,13 @@ package net.sf.jasperreports.engine;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle.Control;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.sf.jasperreports.engine.util.JRLoader;
 
@@ -384,9 +383,8 @@ public final class JRPropertiesUtil
 		if (propertiesMap != null)
 		{
 			String[] propertyNames = propertiesMap.getPropertyNames();
-			for (int i = 0; i < propertyNames.length; i++)
+			for (String name : propertyNames)
 			{
-				String name = propertyNames[i];
 				if (name.startsWith(prefix))
 				{
 					String suffix = name.substring(prefixLength);
@@ -420,16 +418,10 @@ public final class JRPropertiesUtil
 		{
 			if (!global.isEmpty())
 			{
-				Set<String> ownSuffixes = new HashSet<>();
-				for (Iterator<PropertySuffix> it = own.iterator(); it.hasNext();)
-				{
-					PropertySuffix prop = it.next();
-					ownSuffixes.add(prop.getSuffix());
-				}
+				Set<String> ownSuffixes = own.stream().map(PropertySuffix::getSuffix).collect(Collectors.toSet());
 				
-				for (Iterator<PropertySuffix> it = global.iterator(); it.hasNext();)
+				for (PropertySuffix prop : global)
 				{
-					PropertySuffix prop = it.next();
 					if (!ownSuffixes.contains(prop.getSuffix()))
 					{
 						own.add(prop);
@@ -933,16 +925,14 @@ public final class JRPropertiesUtil
 			JRPropertiesHolder destination, String tranferPropertiesPrefix)
 	{
 		List<PropertySuffix> transferPrefixProps = getProperties(tranferPropertiesPrefix);//FIXME cache this
-		for (Iterator<PropertySuffix> prefixIt = transferPrefixProps.iterator(); prefixIt.hasNext();)
+		for (JRPropertiesUtil.PropertySuffix transferPrefixProp : transferPrefixProps)
 		{
-			JRPropertiesUtil.PropertySuffix transferPrefixProp = prefixIt.next();
 			String transferPrefix = transferPrefixProp.getValue();
 			if (transferPrefix != null && transferPrefix.length() > 0)
 			{
 				List<PropertySuffix> transferProps = getProperties(source, transferPrefix);
-				for (Iterator<PropertySuffix> propIt = transferProps.iterator(); propIt.hasNext();)
+				for (JRPropertiesUtil.PropertySuffix property : transferProps)
 				{
-					JRPropertiesUtil.PropertySuffix property = propIt.next();
 					String value = property.getValue();
 					destination.getPropertiesMap().setProperty(property.getKey(), value);
 				}

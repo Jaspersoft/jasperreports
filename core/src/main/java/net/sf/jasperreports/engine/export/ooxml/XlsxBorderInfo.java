@@ -73,7 +73,7 @@ public class XlsxBorderInfo
 	 */
 	public XlsxBorderInfo(JRLineBox box, LineDirectionEnum direction)
 	{
-		if(direction != null)
+		if (direction != null)
 		{
 			setDiagonalBorder(box.getPen());
 		}

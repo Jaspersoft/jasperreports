@@ -25,18 +25,33 @@ package net.sf.jasperreports.crosstabs;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import net.sf.jasperreports.crosstabs.design.JRDesignCrosstabRowGroup;
 import net.sf.jasperreports.crosstabs.type.CrosstabRowPositionEnum;
+import net.sf.jasperreports.engine.JRConstants;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
+import net.sf.jasperreports.jackson.util.JRXmlSince;
 
 
 /**
  * Crosstab row group interface.
- * 
+ *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	"totalPosition",
+	JRXmlConstants.ATTRIBUTE_width,
+	JRXmlConstants.ATTRIBUTE_position,
+	JRXmlConstants.ATTRIBUTE_keepTogether,
+	"mergeHeaderCells",
+	"bucket",
+	"header",
+	"totalHeader"
+	})
 @JsonDeserialize(as = JRDesignCrosstabRowGroup.class)
 public interface JRCrosstabRowGroup extends JRCrosstabGroup
 {
@@ -68,4 +83,19 @@ public interface JRCrosstabRowGroup extends JRCrosstabGroup
 	@JsonInclude(Include.NON_EMPTY)
 	@JacksonXmlProperty(isAttribute = true)
 	public CrosstabRowPositionEnum getPosition();
+
+
+	/**
+	 * Determines whether the row group should be kept together on a single page.
+	 * <p>
+	 * When set to <code>true</code>, all rows belonging to the same row group instance
+	 * will be kept together on a single page. If there is not enough space on the current page,
+	 * the entire row group will be moved to the next page.
+	 *
+	 * @return whether the row group should be kept together
+	 */
+	@JRXmlSince(JRConstants.VERSION_7_0_7)
+	@JsonInclude(Include.NON_DEFAULT)
+	@JacksonXmlProperty(isAttribute = true)
+	public boolean isKeepTogether();
 }

@@ -30,7 +30,6 @@
 package net.sf.jasperreports.engine.export;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -273,9 +272,8 @@ public class JROriginExporterFilter implements ResetableExporterFilter
 		{
 			filter = (filter == null ? new JROriginExporterFilter(): filter);
 				
-			for(Iterator<PropertySuffix> it = properties.iterator(); it.hasNext();)
+			for (PropertySuffix propertySuffix : properties)
 			{
-				PropertySuffix propertySuffix = it.next();
 				String suffix = propertySuffix.getSuffix();
 				String propValue = propUtil.getProperty(propertiesMap, propertySuffix.getKey());
 				BandTypeEnum bandType = BandTypeEnum.getByName(propValue == null ? null : propValue.trim());

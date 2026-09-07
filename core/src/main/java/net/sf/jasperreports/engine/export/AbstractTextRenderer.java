@@ -356,7 +356,7 @@ public abstract class AbstractTextRenderer
 			StringTokenizer tkzer = new StringTokenizer(runText, "\n", true);
 
 			// text is split into paragraphs, using the newline character as delimiter
-			while(tkzer.hasMoreTokens() && !isMaxHeightReached) 
+			while (tkzer.hasMoreTokens() && !isMaxHeightReached) 
 			{
 				String paragraphText = tkzer.nextToken();
 
@@ -783,7 +783,7 @@ public abstract class AbstractTextRenderer
 	{
 		float lineHeight = 0;
 
-		switch(paragraph.getLineSpacing())
+		switch (paragraph.getLineSpacing())
 		{
 			case ONE_AND_HALF:
 			{
@@ -863,7 +863,7 @@ public abstract class AbstractTextRenderer
 	{
 		float lineHeight = 0;
 
-		switch(paragraph.getLineSpacing())
+		switch (paragraph.getLineSpacing())
 		{
 			case SINGLE:
 			case ONE_AND_HALF:

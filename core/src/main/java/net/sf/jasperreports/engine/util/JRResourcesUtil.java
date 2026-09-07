@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.apache.commons.logging.Log;
@@ -174,12 +175,13 @@ public final class JRResourcesUtil
 	
 	public static File resolveFile(RepositoryContext context, String location)
 	{
-		return resolveFile(context, location, JRResourcesUtil::defaultLocateFile);
+		return resolveFile(context, location, JRResourcesUtil::defaultLocateFile, JRResourcesUtil::defaultLocateContextFile);
 	}
 
-	public static File resolveFile(RepositoryContext context, String location, Function<String, File> rootLocator)
+	public static File resolveFile(RepositoryContext context, String location, Function<String, File> rootLocator,
+			BiFunction<File, String, File> contextLocator)
 	{
-		File file = locateFile(context == null ? null : context.getResourceContext(), location, rootLocator);
+		File file = locateFile(context == null ? null : context.getResourceContext(), location, rootLocator, contextLocator);
 		if (file != null && file.isFile())
 		{
 			return file;
@@ -199,7 +201,19 @@ public final class JRResourcesUtil
 		return null;
 	}
 	
-	protected static File locateFile(RepositoryResourceContext resourceContext, String location, Function<String, File> rootLocator)
+	protected static File defaultLocateContextFile(File contextFolder, String location)
+	{
+		File file = new File(contextFolder, location);
+		if (file.exists())
+		{
+			return file;
+		}
+		
+		return null;
+	}
+	
+	protected static File locateFile(RepositoryResourceContext resourceContext, String location, Function<String, File> rootLocator,
+			BiFunction<File, String, File> contextLocator)
 	{
 		File file = rootLocator.apply(location);
 		if (file != null)
@@ -215,8 +229,8 @@ public final class JRResourcesUtil
 				File contextDir = locateContextDirectory(context, rootLocator);
 				if (contextDir != null)
 				{
-					file = new File(contextDir, location);
-					if (file.exists())
+					file = contextLocator.apply(contextDir, location);
+					if (file != null)
 					{
 						if (log.isDebugEnabled())
 						{

@@ -44,6 +44,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.engine.util.JRGraphEnvInitializer;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleGraphics2DExporterOutput;
@@ -158,7 +159,7 @@ public class JRPrinterAWT implements Printable
 
 		printJob.setJobName("JasperReports - " + jasperPrint.getName());
 		
-		switch (jasperPrint.getOrientation())
+		switch (OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()))
 		{
 			case LANDSCAPE :
 			{

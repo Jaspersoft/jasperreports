@@ -29,28 +29,28 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class JRJsonNode {
-    private JRJsonNode parent;
-    private JsonNode dataNode;
+	private JRJsonNode parent;
+	private JsonNode dataNode;
 
-    public JRJsonNode(JRJsonNode parent, JsonNode dataNode) {
-        this.parent = parent;
-        this.dataNode = dataNode;
-    }
+	public JRJsonNode(JRJsonNode parent, JsonNode dataNode) {
+		this.parent = parent;
+		this.dataNode = dataNode;
+	}
 
-    public JRJsonNode getParent() {
-        return parent;
-    }
+	public JRJsonNode getParent() {
+		return parent;
+	}
 
-    public JsonNode getDataNode() {
-        return dataNode;
-    }
+	public JsonNode getDataNode() {
+		return dataNode;
+	}
 
-    public JRJsonNode createChild(JsonNode childDataNode) {
-        return new JRJsonNode(this, childDataNode);
-    }
+	public JRJsonNode createChild(JsonNode childDataNode) {
+		return new JRJsonNode(this, childDataNode);
+	}
 
-    @Override
-    public String toString() {
-        return dataNode.toString();
-    }
+	@Override
+	public String toString() {
+		return dataNode.toString();
+	}
 }

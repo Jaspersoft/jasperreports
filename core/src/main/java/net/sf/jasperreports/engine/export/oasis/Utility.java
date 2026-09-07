@@ -58,7 +58,7 @@ public final class Utility
 			StringBuilder sb = new StringBuilder();
 			StringTokenizer tkzer = new StringTokenizer(source, "\n\t", true);
 			String token = null;
-			while(tkzer.hasMoreTokens())
+			while (tkzer.hasMoreTokens())
 			{
 				token = tkzer.nextToken();
 				if ("\n".equals(token))

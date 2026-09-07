@@ -1,4 +1,4 @@
-<jasperReport name="MondrianFoodMartSalesOlap4jReport" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="025fc52c-bafe-4c4f-88f3-f8f1e99ece10">
+<jasperReport name="MondrianFoodMartSalesOlap4jReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="025fc52c-bafe-4c4f-88f3-f8f1e99ece10">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="8.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<style name="Sans_Bold" fontName="DejaVu Sans" fontSize="8.0" bold="true" italic="false" underline="false" strikeThrough="false"/>
 	<query language="olap4j"><![CDATA[select NON EMPTY {[Measures].[Unit Sales], [Measures].[Customer Count]} ON COLUMNS,

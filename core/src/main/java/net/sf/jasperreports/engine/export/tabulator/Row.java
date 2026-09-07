@@ -54,7 +54,7 @@ public class Row extends DimensionEntry
 		int colIdx = column.index;
 		if (colIdx >= cells.size())
 		{
-			for(int i = cells.size(); i <= colIdx; ++i)
+			for (int i = cells.size(); i <= colIdx; ++i)
 			{
 				cells.add(null);
 			}

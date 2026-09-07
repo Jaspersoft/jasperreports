@@ -45,242 +45,242 @@ import java.util.regex.Pattern;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ObjectKeyExpressionEvaluator extends AbstractMemberExpressionEvaluator {
-    private static final Log log = LogFactory.getLog(ObjectKeyExpressionEvaluator.class);
+	private static final Log log = LogFactory.getLog(ObjectKeyExpressionEvaluator.class);
 
-    private ObjectKeyExpression expression;
-    private boolean isCalledFromFilter;
-    private Pattern fieldNamePattern;
+	private ObjectKeyExpression expression;
+	private boolean isCalledFromFilter;
+	private Pattern fieldNamePattern;
 
 
-    public ObjectKeyExpressionEvaluator(EvaluationContext evaluationContext, ObjectKeyExpression expression) {
-        this(evaluationContext, expression, false);
-    }
+	public ObjectKeyExpressionEvaluator(EvaluationContext evaluationContext, ObjectKeyExpression expression) {
+		this(evaluationContext, expression, false);
+	}
 
-    public ObjectKeyExpressionEvaluator(EvaluationContext evaluationContext,
-                                        ObjectKeyExpression expression, boolean isCalledFromFilter) {
-        super(evaluationContext);
+	public ObjectKeyExpressionEvaluator(EvaluationContext evaluationContext,
+										ObjectKeyExpression expression, boolean isCalledFromFilter) {
+		super(evaluationContext);
 
-        this.expression = expression;
-        this.isCalledFromFilter = isCalledFromFilter;
+		this.expression = expression;
+		this.isCalledFromFilter = isCalledFromFilter;
 
-        if (!expression.isWildcard() && expression.isComplex()) {
-            this.fieldNamePattern = Pattern.compile(expression.getObjectKey());
-        }
-    }
+		if (!expression.isWildcard() && expression.isComplex()) {
+			this.fieldNamePattern = Pattern.compile(expression.getObjectKey());
+		}
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
-        List<JRJsonNode> nodes = contextNode.getNodes();
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer contextNode) {
+		List<JRJsonNode> nodes = contextNode.getNodes();
 
-        if (log.isDebugEnabled()) {
-            log.debug("---> evaluating expression [" + expression +
-                    "] on a node with (size: " + contextNode.getSize() +
-                    ", cSize: " + contextNode.getContainerSize() + ")");
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("---> evaluating expression [" + expression +
+					"] on a node with (size: " + contextNode.getSize() +
+					", cSize: " + contextNode.getContainerSize() + ")");
+		}
 
-        JsonNodeContainer result = new JsonNodeContainer();
+		JsonNodeContainer result = new JsonNodeContainer();
 
-        for (JRJsonNode node: nodes) {
-            List<JRJsonNode> evaluatedNodes = singleEval(node);
+		for (JRJsonNode node: nodes) {
+			List<JRJsonNode> evaluatedNodes = singleEval(node);
 
-            if (evaluatedNodes.size() > 0) {
-                result.addNodes(evaluatedNodes);
-            }
-        }
+			if (evaluatedNodes.size() > 0) {
+				result.addNodes(evaluatedNodes);
+			}
+		}
 
-        if (result.getSize() > 0) {
-            return result;
-        }
+		if (result.getSize() > 0) {
+			return result;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public MemberExpression getMemberExpression() {
-        return expression;
-    }
+	@Override
+	public MemberExpression getMemberExpression() {
+		return expression;
+	}
 
-    private List<JRJsonNode> singleEval(JRJsonNode jrJsonNode) {
-        switch (expression.getDirection()) {
-            case DOWN:
-                return goDown(jrJsonNode);
-            case ANYWHERE_DOWN:
-                return goAnywhereDown(jrJsonNode);
-        }
+	private List<JRJsonNode> singleEval(JRJsonNode jrJsonNode) {
+		switch (expression.getDirection()) {
+			case DOWN:
+				return goDown(jrJsonNode);
+			case ANYWHERE_DOWN:
+				return goAnywhereDown(jrJsonNode);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    private List<JRJsonNode> goDown(JRJsonNode jrJsonNode) {
-        if (log.isDebugEnabled()) {
-            log.debug("going " + MemberExpression.DIRECTION.DOWN + " by " +
-                    (expression.isWildcard() ?
-                            "wildcard" :
-                            "key: [" + expression.getObjectKey() + "]") + " on " + jrJsonNode.getDataNode());
-        }
+	private List<JRJsonNode> goDown(JRJsonNode jrJsonNode) {
+		if (log.isDebugEnabled()) {
+			log.debug("going " + MemberExpression.DIRECTION.DOWN + " by " +
+					(expression.isWildcard() ?
+							"wildcard" :
+							"key: [" + expression.getObjectKey() + "]") + " on " + jrJsonNode.getDataNode());
+		}
 
-        List<JRJsonNode> result = new ArrayList<>();
-        JsonNode dataNode = jrJsonNode.getDataNode();
+		List<JRJsonNode> result = new ArrayList<>();
+		JsonNode dataNode = jrJsonNode.getDataNode();
 
-        // advance into object
-        if (dataNode.isObject()) {
-            // if wildcard => filter and add all its children(the values for each key) to an arrayNode
-            if (expression.isWildcard()) {
-                ArrayNode container = getEvaluationContext().getObjectMapper().createArrayNode();
-                Iterator<Map.Entry<String, JsonNode>> it = dataNode.fields();
+		// advance into object
+		if (dataNode.isObject()) {
+			// if wildcard => filter and add all its children(the values for each key) to an arrayNode
+			if (expression.isWildcard()) {
+				ArrayNode container = getEvaluationContext().getObjectMapper().createArrayNode();
+				Iterator<Map.Entry<String, JsonNode>> it = dataNode.fields();
 
-                while (it.hasNext()) {
-                    JsonNode current = it.next().getValue();
+				while (it.hasNext()) {
+					JsonNode current = it.next().getValue();
 
-                    if (applyFilter(jrJsonNode.createChild(current))) {
-                        container.add(current);
-                    }
-                }
+					if (applyFilter(jrJsonNode.createChild(current))) {
+						container.add(current);
+					}
+				}
 
-                if (container.size() > 0) {
-                    result.add(jrJsonNode.createChild(container));
-                }
-            }
-            // else go down and filter
-            else {
-                JRJsonNode deeperNode = goDeeperIntoObjectNode(jrJsonNode, isCalledFromFilter);
-                if (deeperNode != null) {
-                    result.add(deeperNode);
-                }
-            }
-        }
-        // advance into array
-        // when called from filter => keep the array containment
-        else if (dataNode.isArray()) {
-            if (expression.isWildcard()) {
-                result = filterArrayNode(jrJsonNode, (ArrayNode) dataNode, null, isCalledFromFilter);
-            } else {
-                result = filterArrayNode(jrJsonNode, (ArrayNode) dataNode, expression.getObjectKey(), isCalledFromFilter);
-            }
-        }
+				if (container.size() > 0) {
+					result.add(jrJsonNode.createChild(container));
+				}
+			}
+			// else go down and filter
+			else {
+				JRJsonNode deeperNode = goDeeperIntoObjectNode(jrJsonNode, isCalledFromFilter);
+				if (deeperNode != null) {
+					result.add(deeperNode);
+				}
+			}
+		}
+		// advance into array
+		// when called from filter => keep the array containment
+		else if (dataNode.isArray()) {
+			if (expression.isWildcard()) {
+				result = filterArrayNode(jrJsonNode, (ArrayNode) dataNode, null, isCalledFromFilter);
+			} else {
+				result = filterArrayNode(jrJsonNode, (ArrayNode) dataNode, expression.getObjectKey(), isCalledFromFilter);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
-        if (log.isDebugEnabled()) {
-            log.debug("going " + MemberExpression.DIRECTION.ANYWHERE_DOWN + " by " +
-                    (expression.isWildcard() ?
-                            "wildcard" :
-                            "key: [" + expression.getObjectKey() + "]") + " on " + jrJsonNode.getDataNode());
-        }
+	private List<JRJsonNode> goAnywhereDown(JRJsonNode jrJsonNode) {
+		if (log.isDebugEnabled()) {
+			log.debug("going " + MemberExpression.DIRECTION.ANYWHERE_DOWN + " by " +
+					(expression.isWildcard() ?
+							"wildcard" :
+							"key: [" + expression.getObjectKey() + "]") + " on " + jrJsonNode.getDataNode());
+		}
 
-        List<JRJsonNode> result = new ArrayList<>();
-        Deque<JRJsonNode> stack = new ArrayDeque<>();
-        JsonNode initialDataNode = jrJsonNode.getDataNode();
+		List<JRJsonNode> result = new ArrayList<>();
+		Deque<JRJsonNode> stack = new ArrayDeque<>();
+		JsonNode initialDataNode = jrJsonNode.getDataNode();
 
-        if (log.isDebugEnabled()) {
-            log.debug("initial stack population with: " + initialDataNode);
-        }
+		if (log.isDebugEnabled()) {
+			log.debug("initial stack population with: " + initialDataNode);
+		}
 
-        // populate the stack initially
-        if (initialDataNode.isArray()) {
-            for (JsonNode deeper: initialDataNode) {
-                stack.addLast(jrJsonNode.createChild(deeper));
-            }
-        } else {
-            stack.push(jrJsonNode);
-        }
+		// populate the stack initially
+		if (initialDataNode.isArray()) {
+			for (JsonNode deeper: initialDataNode) {
+				stack.addLast(jrJsonNode.createChild(deeper));
+			}
+		} else {
+			stack.push(jrJsonNode);
+		}
 
-        while (!stack.isEmpty()) {
-            JRJsonNode stackNode = stack.pop();
-            JsonNode stackDataNode = stackNode.getDataNode();
+		while (!stack.isEmpty()) {
+			JRJsonNode stackNode = stack.pop();
+			JsonNode stackDataNode = stackNode.getDataNode();
 
-            addChildrenToStack(stackNode, stack);
+			addChildrenToStack(stackNode, stack);
 
-            if (log.isDebugEnabled()) {
-                log.debug("processing stack element: " + stackDataNode);
-            }
+			if (log.isDebugEnabled()) {
+				log.debug("processing stack element: " + stackDataNode);
+			}
 
-            // process the current stack item
-            if (stackDataNode.isObject()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("stack element is object; wildcard: " + expression.isWildcard());
-                }
+			// process the current stack item
+			if (stackDataNode.isObject()) {
+				if (log.isDebugEnabled()) {
+					log.debug("stack element is object; wildcard: " + expression.isWildcard());
+				}
 
-                // if wildcard => only filter the parent; we already added the object keys to the stack
-                if (expression.isWildcard()) {
-                    if (applyFilter(stackNode)) {
-                        result.add(stackNode);
-                    }
-                }
-                // else go down and filter
-                else {
-                    JRJsonNode deeperNode = goDeeperIntoObjectNode(stackNode, false);
-                    if (deeperNode != null) {
-                        result.add(deeperNode);
-                    }
-                }
-            }
-            else if (stackDataNode.isValueNode() || stackDataNode.isArray()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("stack element is " + (stackDataNode.isValueNode() ? "value node" : "array") + "; wildcard: " + expression.isWildcard());
-                }
+				// if wildcard => only filter the parent; we already added the object keys to the stack
+				if (expression.isWildcard()) {
+					if (applyFilter(stackNode)) {
+						result.add(stackNode);
+					}
+				}
+				// else go down and filter
+				else {
+					JRJsonNode deeperNode = goDeeperIntoObjectNode(stackNode, false);
+					if (deeperNode != null) {
+						result.add(deeperNode);
+					}
+				}
+			}
+			else if (stackDataNode.isValueNode() || stackDataNode.isArray()) {
+				if (log.isDebugEnabled()) {
+					log.debug("stack element is " + (stackDataNode.isValueNode() ? "value node" : "array") + "; wildcard: " + expression.isWildcard());
+				}
 
-                if (expression.isWildcard()) {
-                    if (applyFilter(stackNode)) {
-                        result.add(stackNode);
-                    }
-                }
-            }
-        }
+				if (expression.isWildcard()) {
+					if (applyFilter(stackNode)) {
+						result.add(stackNode);
+					}
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    private JRJsonNode goDeeperIntoObjectNode(JRJsonNode jrJsonNode, boolean keepMissingNode) {
-        ObjectNode dataNode = (ObjectNode) jrJsonNode.getDataNode();
-        ArrayNode container = getEvaluationContext().getObjectMapper().createArrayNode();
+	private JRJsonNode goDeeperIntoObjectNode(JRJsonNode jrJsonNode, boolean keepMissingNode) {
+		ObjectNode dataNode = (ObjectNode) jrJsonNode.getDataNode();
+		ArrayNode container = getEvaluationContext().getObjectMapper().createArrayNode();
 
-        // A complex expression allows an object key to treated as a REGEX
-        if (expression.isComplex()) {
-            Iterator<String> fieldNamesIterator = dataNode.fieldNames();
-            while (fieldNamesIterator.hasNext()) {
-                String fieldName = fieldNamesIterator.next();
-                Matcher fieldNameMatcher = fieldNamePattern.matcher(fieldName);
+		// A complex expression allows an object key to treated as a REGEX
+		if (expression.isComplex()) {
+			Iterator<String> fieldNamesIterator = dataNode.fieldNames();
+			while (fieldNamesIterator.hasNext()) {
+				String fieldName = fieldNamesIterator.next();
+				Matcher fieldNameMatcher = fieldNamePattern.matcher(fieldName);
 
-                if (fieldNameMatcher.matches()) {
-                    JsonNode deeperNode = dataNode.path(fieldName);
+				if (fieldNameMatcher.matches()) {
+					JsonNode deeperNode = dataNode.path(fieldName);
 
-                    // if the deeper node is object/value => filter and add it
-                    if (deeperNode.isObject() || deeperNode.isValueNode() || deeperNode.isArray()) {
+					// if the deeper node is object/value => filter and add it
+					if (deeperNode.isObject() || deeperNode.isValueNode() || deeperNode.isArray()) {
 
-                        JRJsonNode child = jrJsonNode.createChild(deeperNode);
-                        if (applyFilter(child)) {
-                            container.add(deeperNode);
-                        }
-                    }
-                }
-            }
-        } else {
-            JsonNode deeperNode = dataNode.path(expression.getObjectKey());
+						JRJsonNode child = jrJsonNode.createChild(deeperNode);
+						if (applyFilter(child)) {
+							container.add(deeperNode);
+						}
+					}
+				}
+			}
+		} else {
+			JsonNode deeperNode = dataNode.path(expression.getObjectKey());
 
-            // if the deeper node is object/value => filter and add it
-            if (deeperNode.isObject() || deeperNode.isValueNode() || deeperNode.isArray()) {
+			// if the deeper node is object/value => filter and add it
+			if (deeperNode.isObject() || deeperNode.isValueNode() || deeperNode.isArray()) {
 
-                JRJsonNode child = jrJsonNode.createChild(deeperNode);
-                if (applyFilter(child)) {
-                    container.add(deeperNode);
-                }
-            }
-        }
+				JRJsonNode child = jrJsonNode.createChild(deeperNode);
+				if (applyFilter(child)) {
+					container.add(deeperNode);
+				}
+			}
+		}
 
-        if (container.size() > 1) {
-            return jrJsonNode.createChild(container);
-        } else if (container.size() == 1) {
-            return jrJsonNode.createChild(container.get(0));
-        }
-        // Filtering expressions need the missing node to check for null
-        else if (keepMissingNode) {
-            return jrJsonNode.createChild(MissingNode.getInstance());
-        }
+		if (container.size() > 1) {
+			return jrJsonNode.createChild(container);
+		} else if (container.size() == 1) {
+			return jrJsonNode.createChild(container.get(0));
+		}
+		// Filtering expressions need the missing node to check for null
+		else if (keepMissingNode) {
+			return jrJsonNode.createChild(MissingNode.getInstance());
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 }

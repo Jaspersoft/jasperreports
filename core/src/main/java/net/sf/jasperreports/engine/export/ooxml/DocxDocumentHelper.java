@@ -131,7 +131,17 @@ public class DocxDocumentHelper extends BaseHelper
 			}
 		}
 		
-		if (!lastPage)
+		if (lastPage)
+		{
+			// create a last paragraph with minimal font, otherwise MS Word will create one with default font size
+			write("    <w:p>\n");
+			write("      <w:pPr>\n");
+			write("        <w:spacing w:line=\"1\" w:lineRule=\"exact\" w:before=\"0\" w:after=\"0\"/>\n");
+			write("        <w:rPr><w:sz w:val=\"1\"/></w:rPr>\n");
+			write("      </w:pPr>\n");
+			write("    </w:p>\n");
+		}
+		else
 		{
 			write("    <w:p>\n");
 			write("    <w:pPr>\n");
@@ -140,8 +150,8 @@ public class DocxDocumentHelper extends BaseHelper
 		if (headerIndex > 0) // headers are being created
 		{
 			write("   <w:headerReference w:type=\"default\" r:id=\"header" + headerIndex + "\"/>\n");
-			write("   <w:type w:val=\"continuous\"/>\n");
 		}
+		write("   <w:type w:val=\"continuous\"/>\n");
 		write("   <w:pgSz w:w=\"" + LengthUtil.twip(pageWidth) + "\" w:h=\"" + LengthUtil.twip(pageHeight) + "\"");
 		write(" w:orient=\"" + (pageFormat.getOrientation() == OrientationEnum.LANDSCAPE ? "landscape" : "portrait") + "\"");
 		
@@ -157,7 +167,12 @@ public class DocxDocumentHelper extends BaseHelper
 				+ "\" w:right=\""
 				+ LengthUtil.twip(rightMargin)
 				+ "\" w:bottom=\""
-				+ bottomMargin
+				// putting bottom margin could force some content to the next page, which is not wanted
+				+ "0" 
+				// alternatively, we could make bottom margin just a bit smaller, except for last page 
+				// where a mandatory empty paragraph would cause a new last empty page;
+				// this would work better for LibreOffice, which does not honour hard page breaks from docx
+				//+ (lastPage ? 0 : LengthUtil.twip(bottomMargin - 1))
 				+ "\" w:left=\""
 				+ LengthUtil.twip(leftMargin)
 				+ "\" w:header=\"0\" w:footer=\"0\" w:gutter=\"0\" />\n");

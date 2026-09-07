@@ -82,7 +82,7 @@ public abstract class JRBaseElement implements JRElement, Serializable, JRChange
 	protected String key;
 	protected PositionTypeEnum positionType;
 	protected StretchTypeEnum stretchType;
-	protected boolean isPrintRepeatedValues = true;
+	protected boolean isPrintRepeatedValues = true; // primitive boolean field can't be null; custom BooleanTrueAsEmptySerializer used 
 	protected ModeEnum mode;
 	protected int x;
 	protected int y;

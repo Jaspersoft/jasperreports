@@ -33,11 +33,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public interface EvaluationContext {
 
-    FilterExpressionEvaluatorVisitor getFilterExpressionEvaluatorVisitor();
+	FilterExpressionEvaluatorVisitor getFilterExpressionEvaluatorVisitor();
 
-    MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitor();
+	MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitor();
 
-    MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitorForFilter();
+	MemberExpressionEvaluatorVisitor getMemberExpressionEvaluatorVisitorForFilter();
 
-    ObjectMapper getObjectMapper();
+	ObjectMapper getObjectMapper();
 }

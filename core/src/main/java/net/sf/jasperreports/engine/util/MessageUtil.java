@@ -28,7 +28,6 @@
  */
 package net.sf.jasperreports.engine.util;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -68,9 +67,8 @@ public final class MessageUtil
 	public MessageProvider getMessageProvider(String name)
 	{
 		List<MessageProviderFactory> factories = jasperReportsContext.getExtensions(MessageProviderFactory.class);
-		for (Iterator<MessageProviderFactory> it = factories.iterator(); it.hasNext();)
+		for (MessageProviderFactory factory : factories)
 		{
-			MessageProviderFactory factory = it.next();
 			MessageProvider provider = factory.getMessageProvider(name);
 			if (provider != null)
 			{

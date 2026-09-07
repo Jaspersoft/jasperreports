@@ -30,16 +30,23 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLStreamHandlerFactory;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRResourcesUtil;
+import net.sf.jasperreports.properties.PropertyConstants;
 
 
 /**
@@ -50,9 +57,44 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	
 	private static final Log log = LogFactory.getLog(DefaultRepositoryService.class);
 	
-	public static final String PROPERTY_FILES_ENABLED = 
+	@Property(
+			category = PropertyConstants.CATEGORY_SECURITY,
+			defaultValue = PropertyConstants.BOOLEAN_TRUE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_6_11_0,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_FILES_ENABLED =
 			JRPropertiesUtil.PROPERTY_PREFIX + "default.file.repository.enabled";
-	
+
+	/**
+	 * Flag property that enables URL filtering for the default repository service.
+	 * When enabled, only URLs matching patterns defined by {@link #PROPERTY_URL_WHITELIST_PREFIX} properties are allowed.
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_SECURITY,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_7_0_7,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_URL_FILTER_ENABLED =
+			JRPropertiesUtil.PROPERTY_PREFIX + "repository.url.filter.enabled";
+
+	/**
+	 * Prefix for properties that define allowed URL patterns as regular expressions.
+	 * Each property value is a regexp matched against the full URL string.
+	 * URLs that do not match any pattern are rejected when URL filtering is enabled
+	 * via {@link #PROPERTY_URL_FILTER_ENABLED}.
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_SECURITY,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_7_0_7
+			)
+	public static final String PROPERTY_URL_WHITELIST_PREFIX =
+			JRPropertiesUtil.PROPERTY_PREFIX + "repository.url.whitelist.";
+
 	public static final String EXCEPTION_MESSAGE_KEY_NOT_IMPLEMENTED = "repo.default.not.implemented";
 	
 	/**
@@ -60,6 +102,8 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	 */
 	protected JasperReportsContext jasperReportsContext;
 	private boolean filesEnabled;
+	private boolean urlWhitelistEnabled;
+	private List<Pattern> urlWhitelist;
 
 	/**
 	 * 
@@ -75,6 +119,30 @@ public class DefaultRepositoryService implements StreamRepositoryService
 		this.jasperReportsContext = jasperReportsContext;
 		this.filesEnabled = JRPropertiesUtil.getInstance(jasperReportsContext).getBooleanProperty(
 				PROPERTY_FILES_ENABLED, true);
+		this.urlWhitelistEnabled = JRPropertiesUtil.getInstance(jasperReportsContext).getBooleanProperty(
+				PROPERTY_URL_FILTER_ENABLED, false);
+
+		if (urlWhitelistEnabled)
+		{
+			urlWhitelist = new ArrayList<>();
+			List<JRPropertiesUtil.PropertySuffix> properties =
+					JRPropertiesUtil.getInstance(jasperReportsContext).getProperties(PROPERTY_URL_WHITELIST_PREFIX);
+			for (JRPropertiesUtil.PropertySuffix property : properties)
+			{
+				String value = property.getValue();
+				if (value != null && !value.trim().isEmpty())
+				{
+					try
+					{
+						urlWhitelist.add(Pattern.compile(value.trim()));
+					}
+					catch (PatternSyntaxException e)
+					{
+						log.warn("Invalid URL whitelist pattern " + property.getKey() + ": " + value);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -107,6 +175,22 @@ public class DefaultRepositoryService implements StreamRepositoryService
 			URL url = JRResourcesUtil.createURL(uri, urlHandlerFactory);
 			if (url != null)
 			{
+				if (!isURLAllowed(url))
+				{
+					if (log.isWarnEnabled())
+					{
+						log.warn("URL " + url + " not allowed");
+					}
+					return null;
+				}
+				if (!filesEnabled && JRLoader.isFileSystemURL(url))
+				{
+					if (log.isWarnEnabled())
+					{
+						log.warn("file system URL " + url + " not enabled");
+					}
+					return null;
+				}
 				return JRLoader.getInputStream(url);
 			}
 
@@ -128,6 +212,23 @@ public class DefaultRepositoryService implements StreamRepositoryService
 		}
 		
 		return null;
+	}
+
+	protected boolean isURLAllowed(URL url)
+	{
+		if (!urlWhitelistEnabled || urlWhitelist == null)
+		{
+			return true;
+		}
+		String urlString = url.toExternalForm();
+		for (Pattern pattern : urlWhitelist)
+		{
+			if (pattern.matcher(urlString).matches())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected File resolveFile(RepositoryContext context, String uri)

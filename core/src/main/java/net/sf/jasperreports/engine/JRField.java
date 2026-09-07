@@ -25,6 +25,7 @@ package net.sf.jasperreports.engine;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -86,6 +87,12 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  * implementations.
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	JRXmlConstants.ATTRIBUTE_name,
+	JRXmlConstants.ATTRIBUTE_class,
+	"description",
+	JRXmlConstants.ELEMENT_propertyExpression
+	})
 @JsonDeserialize(as = JRDesignField.class)
 public interface JRField extends JRPropertiesHolder, JRCloneable
 {

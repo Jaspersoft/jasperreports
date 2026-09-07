@@ -221,10 +221,10 @@ public class JRGroovyGenerator
 		String[] imports = sourceTask.getImports();
 		if (imports != null && imports.length > 0)
 		{
-			for (int i = 0; i < imports.length; i++)
+			for (String importName : imports)
 			{
 				sb.append("import ");
-				sb.append(imports[i]);
+				sb.append(importName);
 				sb.append(";\n");
 			}
 		}
@@ -281,10 +281,10 @@ public class JRGroovyGenerator
 		
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRVariable variable : variables)
 			{
 				sb.append("    private JRFillVariable variable_");
-				sb.append(JRStringUtil.getJavaIdentifier(variables[i].getName()));
+				sb.append(JRStringUtil.getJavaIdentifier(variable.getName()));
 				sb.append(" = null;\n");
 			}
 		}
@@ -348,7 +348,7 @@ public class JRGroovyGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    void initParams");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -363,7 +363,7 @@ public class JRGroovyGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(parameterName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initParams");
 			sb.append(index + 1);
@@ -373,7 +373,7 @@ public class JRGroovyGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitParamsMethod(sb, it, index + 1);
 		}
@@ -389,7 +389,7 @@ public class JRGroovyGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    void initFields");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -404,7 +404,7 @@ public class JRGroovyGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(fieldName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initFields");
 			sb.append(index + 1);
@@ -414,7 +414,7 @@ public class JRGroovyGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitFieldsMethod(sb, it, index + 1);
 		}
@@ -430,7 +430,7 @@ public class JRGroovyGenerator
 		sb.append("     *\n");
 		sb.append("     */\n");
 		sb.append("    void initVars");
-		if(index > 0)
+		if (index > 0)
 		{
 			sb.append(index);
 		}
@@ -445,7 +445,7 @@ public class JRGroovyGenerator
 			sb.append(JRStringUtil.escapeJavaStringLiteral(variableName));
 			sb.append("\");\n");
 		}
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			sb.append("        initVars");
 			sb.append(index + 1);
@@ -455,7 +455,7 @@ public class JRGroovyGenerator
 		sb.append("\n");
 		sb.append("\n");
 
-		if(it.hasNext())
+		if (it.hasNext())
 		{
 			generateInitVarsMethod(sb, it, index + 1);
 		}
@@ -615,10 +615,8 @@ public class JRGroovyGenerator
 		JRExpressionChunk[] chunks = expression.getChunks();
 		if (chunks != null && chunks.length > 0)
 		{
-			for(int i = 0; i < chunks.length; i++)
+			for (JRExpressionChunk chunk : chunks)
 			{
-				JRExpressionChunk chunk = chunks[i];
-
 				String chunkText = chunk.getText();
 				if (chunkText == null)
 				{

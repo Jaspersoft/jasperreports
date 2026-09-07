@@ -1,6 +1,7 @@
-<jasperReport name="Report2" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="b37861d5-ceb4-4454-a37a-bfbb6330b15b">
+<jasperReport name="Report2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="b37861d5-ceb4-4454-a37a-bfbb6330b15b">
+	<style name="PageHeaderStyle" mode="Opaque" forecolor="#FF9900" backcolor="#FFFF99" fontSize="22.0" pdfFontName="Helvetica-Bold" bold="true" hTextAlign="Center"/>
 	<pageHeader height="40">
-		<element kind="textField" uuid="af1ddbd5-85ec-4ebf-95ff-8a98a5872603" positionType="Float" mode="Opaque" x="5" y="5" width="792" height="30" forecolor="#FF9900" backcolor="#FFFF99" fontSize="22.0" pdfFontName="Helvetica-Bold" bold="true" hTextAlign="Center">
+		<element kind="textField" uuid="af1ddbd5-85ec-4ebf-95ff-8a98a5872603" positionType="Float" x="5" y="5" width="792" height="30" style="PageHeaderStyle">
 			<expression><![CDATA["Report Two (page " + $V{PAGE_NUMBER} + ")"]]></expression>
 		</element>
 	</pageHeader>

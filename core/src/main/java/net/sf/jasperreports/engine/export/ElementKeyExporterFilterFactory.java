@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.export;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -96,9 +95,8 @@ public class ElementKeyExporterFilterFactory implements ExporterFilterFactory
 			if (!props.isEmpty())
 			{
 				Set<String> excludedKeys = new HashSet<>();
-				for (Iterator<PropertySuffix> it = props.iterator(); it.hasNext();)
+				for (PropertySuffix prop : props)
 				{
-					PropertySuffix prop = it.next();
 					String key = prop.getValue();
 					if (key == null || key.length() == 0)
 					{

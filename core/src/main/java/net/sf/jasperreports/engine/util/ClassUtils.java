@@ -94,7 +94,7 @@ public final class ClassUtils
 	public static List<Class<?>> getInterfaces(Class<?> clazz)
 	{
 		List<Class<?>> interfaces = new ArrayList<>();
-		while(clazz != null)
+		while (clazz != null)
 		{
 			interfaces.addAll(Arrays.asList(clazz.getInterfaces()));
 			clazz = clazz.getSuperclass();

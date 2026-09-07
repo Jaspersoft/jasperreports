@@ -1,4 +1,4 @@
-<jasperReport name="QueryReport" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="347ebd82-2741-4ae4-9312-31cd4e70b4b2">
+<jasperReport name="QueryReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="347ebd82-2741-4ae4-9312-31cd4e70b4b2">
 	<property name="net.sf.jasperreports.export.pdf.odd.page.offset.x" value="10"/>
 	<property name="net.sf.jasperreports.export.pdf.even.page.offset.x" value="-10"/>
 	<template><![CDATA["ReportStyles.jrtx"]]></template>

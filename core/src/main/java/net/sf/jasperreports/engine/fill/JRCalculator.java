@@ -166,9 +166,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for (int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				Object expressionValue = evaluate(variable.getExpression());
 				Object newValue = variable.getIncrementer().increment(variable, expressionValue, AbstractValueProvider.getCurrentValueProvider());
 				variable.setValue(newValue);
@@ -184,9 +183,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 
 		if (incrementDatasets && datasets != null && datasets.length > 0)
 		{
-			for (int i = 0; i < datasets.length; i++)
+			for (JRFillElementDataset elementDataset : datasets)
 			{
-				JRFillElementDataset elementDataset = datasets[i];
 				elementDataset.evaluate(this);
 
 				if (elementDataset.getIncrementType() == IncrementTypeEnum.NONE)
@@ -219,9 +217,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for(int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				JRFillVariable variable = variables[i];
 				Object expressionValue = evaluateEstimated(variable.getExpression());
 				Object newValue = variable.getIncrementer().increment(variable, expressionValue,  AbstractValueProvider.getEstimatedValueProvider());
 				variable.setEstimatedValue(newValue);
@@ -246,7 +243,7 @@ public class JRCalculator implements JRFillExpressionEvaluator
 			// we are making a first group break estimation pass just so that we give inner group level 
 			// increment variables the chance to increment themselves, just in case they are participating 
 			// into the group expression of outer groups 
-			for(int i = groups.length - 1; i >= 0; i--)
+			for (int i = groups.length - 1; i >= 0; i--)
 			{
 				JRFillGroup group = groups[i];
 				
@@ -270,9 +267,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 			// into the group expression of outer groups
 			if (variables != null && variables.length > 0)
 			{
-				for(int i = 0; i < variables.length; i++)
+				for (JRFillVariable variable : variables)
 				{
-					JRFillVariable variable = variables[i];
 					if (variable.getIncrementType() == IncrementTypeEnum.GROUP)
 					{
 						JRFillGroup group = grpsm.get(variable.getIncrementGroup());
@@ -289,10 +285,8 @@ public class JRCalculator implements JRFillExpressionEvaluator
 			estimateVariables();
 
 			boolean groupHasChanged = false;
-			for(int i = 0; i < groups.length; i++)
+			for (JRFillGroup group : groups)
 			{
-				JRFillGroup group = groups[i];
-				
 				boolean isTopLevelChange = false;
 
 				if (!groupHasChanged)
@@ -324,19 +318,19 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	{
 		if (variables != null && variables.length > 0)
 		{
-			for(int i = 0; i < variables.length; i++)
+			for (JRFillVariable variable : variables)
 			{
-				incrementVariable(variables[i], incrementType);
-				initializeVariable(variables[i], resetType);
+				incrementVariable(variable, incrementType);
+				initializeVariable(variable, resetType);
 			}
 		}
 
 		if (datasets != null && datasets.length > 0)
 		{
-			for(int i = 0; i < datasets.length; i++)
+			for (JRFillElementDataset dataset : datasets)
 			{
-				incrementDataset(datasets[i], incrementType);
-				initializeDataset(datasets[i], resetType);
+				incrementDataset(dataset, incrementType);
+				initializeDataset(dataset, resetType);
 			}
 		}
 	}

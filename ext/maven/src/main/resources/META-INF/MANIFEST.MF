@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Built-By: ${project.organization.name}
+Specification-Title: ${project.name}
+Specification-Version: ${project.version}
+Specification-Vendor: ${project.organization.name}
+Implementation-Title: net.sf.jasperreports.maven
+Implementation-Version: ${project.version}-${buildNumber}
+Implementation-Vendor: ${project.organization.name}
+Automatic-Module-Name: net.sf.jasperreports.maven
+Bundle-ManifestVersion: 2
+Bundle-Name: ${project.name}
+Bundle-Version: ${project.version}
+Bundle-Vendor: ${project.organization.name}
+Bundle-SymbolicName: net.sf.jasperreports.maven
+Bundle-ClassPath: .
+Export-Package: net.sf.jasperreports.maven
+DynamicImport-Package: *

@@ -54,9 +54,9 @@ public class ShortArrayValues implements ColumnValues, Serializable
 		out.writeLong(linearOffset);
 		
 		out.writeInt(values.length);
-		for (int i = 0; i < values.length; i++)
+		for (short value : values)
 		{
-			out.writeShort(values[i]);
+			out.writeShort(value);
 		}
 	}
 	

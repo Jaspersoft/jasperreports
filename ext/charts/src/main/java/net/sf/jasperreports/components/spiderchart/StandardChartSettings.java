@@ -172,7 +172,7 @@ public class StandardChartSettings implements ChartSettings, JRChangeEventsSuppo
 	 * The bookmark level for the anchor associated with this chart.
 	 * @see JRAnchor#getBookmarkLevel()
 	 */
-	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK;
+	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK;  // primitive int field has zero as default value anyway, but it is explicitly initialized for clarity
 
 	/**
 	 *
@@ -216,9 +216,9 @@ public class StandardChartSettings implements ChartSettings, JRChangeEventsSuppo
 		JRHyperlinkParameter[] hyperlinkParams = chart.getHyperlinkParameters();
 		if (hyperlinkParams != null && hyperlinkParams.length > 0)
 		{
-			for(int i = 0; i < hyperlinkParams.length; i++)
+			for (JRHyperlinkParameter hyperlinkParam : hyperlinkParams)
 			{
-				addHyperlinkParameter(factory.getHyperlinkParameter(hyperlinkParams[i]));
+				addHyperlinkParameter(factory.getHyperlinkParameter(hyperlinkParam));
 			}
 		}
 	}

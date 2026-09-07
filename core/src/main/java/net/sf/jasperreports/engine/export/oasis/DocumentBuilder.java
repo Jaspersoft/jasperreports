@@ -129,7 +129,7 @@ public abstract class DocumentBuilder
 		JRHyperlinkProducer customHandler = getHyperlinkProducer(link);
 		if (customHandler == null)
 		{
-			switch(link.getHyperlinkType())
+			switch (link.getHyperlinkType())
 			{
 				case REFERENCE :
 				{

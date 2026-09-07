@@ -116,7 +116,7 @@ public class JRValidationException extends JRException
 		StringBuilder sb = new StringBuilder();
 		sb.append(header);
 		int i = 1;
-		for(Iterator<JRValidationFault> it = faults.iterator(); it.hasNext(); i++)
+		for (Iterator<JRValidationFault> it = faults.iterator(); it.hasNext(); i++)
 		{
 			JRValidationFault fault = it.next();
 			sb.append("\n\t " + i + ". " + fault.getMessage());

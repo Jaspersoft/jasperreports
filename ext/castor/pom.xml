@@ -34,13 +34,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.castor</groupId>
-			<artifactId>castor-core</artifactId>
-			<version>${castor.version}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.castor</groupId>
 			<artifactId>castor-xml</artifactId>
 			<version>${castor.version}</version>
 			<scope>compile</scope>
@@ -66,5 +59,36 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
+		<!--
+			dependencies here are for controlling their versions and avoid CVEs;
+			each of them is also mentioned in the maven-dependency-plugin below
+		-->
+		<!--
+			CVE-2025-48924
+			+- org.codehaus.castor:castor-core:jar:1.4.1:compile (optional)
+			   +- org.apache.commons:commons-lang3:jar:3.4:compile
+		-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+ 			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<ignoredUnusedDeclaredDependencies>
+						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
+						<dependency>org.apache.commons:commons-lang3</dependency>
+					</ignoredUnusedDeclaredDependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

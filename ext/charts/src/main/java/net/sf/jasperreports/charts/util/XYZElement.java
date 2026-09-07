@@ -79,7 +79,7 @@ public class XYZElement implements Serializable {
 	
 	public int getCount(){
 		int retVal = 0;
-		if( xElements != null ){
+		if ( xElements != null ){
 			retVal = xElements.size();
 		}
 		

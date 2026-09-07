@@ -30,29 +30,29 @@ import net.sf.jasperreports.json.expression.member.evaluation.MemberExpressionEv
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ArrayIndexExpression extends AbstractMemberExpression {
-    private int index;
+	private int index;
 
 
-    public ArrayIndexExpression(DIRECTION direction, int index) {
-        this.index = index;
-        setDirection(direction);
-    }
+	public ArrayIndexExpression(DIRECTION direction, int index) {
+		this.index = index;
+		setDirection(direction);
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateArrayIndex(this, nodeContainer);
-    }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateArrayIndex(this, nodeContainer);
+	}
 
-    public int getIndex() {
-        return index;
-    }
+	public int getIndex() {
+		return index;
+	}
 
-    @Override
-    public String toString() {
-        String result = getDirection() + " " + index;
-        if (getFilterExpression() != null) {
-            result += "(" + getFilterExpression() + ")";
-        }
-        return result;
-    }
+	@Override
+	public String toString() {
+		String result = getDirection() + " " + index;
+		if (getFilterExpression() != null) {
+			result += "(" + getFilterExpression() + ")";
+		}
+		return result;
+	}
 }

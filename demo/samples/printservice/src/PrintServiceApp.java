@@ -72,7 +72,6 @@ public class PrintServiceApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 	}
 	
@@ -87,7 +86,7 @@ public class PrintServiceApp extends AbstractSampleApp
 		File file = new File("target/reports/PrintServiceReport.jrprint");
 		file.getParentFile().mkdirs();
 		JRSaver.saveObject(jasperPrint, file);
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -116,7 +115,7 @@ public class PrintServiceApp extends AbstractSampleApp
 		exporter.setConfiguration(configuration);
 		exporter.exportReport();
 
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 
 

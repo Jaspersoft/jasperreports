@@ -76,14 +76,14 @@ public class XlsxBorderHelper extends BaseHelper
 			return -1;			
 		}
 		JRLineBox box = null;
-		if(element instanceof JRBoxContainer && ((JRBoxContainer)element).getLineBox() != null)
+		if (element instanceof JRBoxContainer && ((JRBoxContainer)element).getLineBox() != null)
 		{
 			box = new JRBaseLineBox(null);
-			if(parentStyle != null && parentStyle.getLineBox() != null)
+			if (parentStyle != null && parentStyle.getLineBox() != null)
 			{
 				StyleUtil.appendBox(box, parentStyle.getLineBox());
 			}
-			if(element.getStyle() != null && element.getStyle().getLineBox() != null)
+			if (element.getStyle() != null && element.getStyle().getLineBox() != null)
 			{
 				StyleUtil.appendBox(box, element.getStyle().getLineBox());
 			}
@@ -105,7 +105,7 @@ public class XlsxBorderHelper extends BaseHelper
 		{
 			return -1;			
 		}
-		if(box == null && parentStyle != null)
+		if (box == null && parentStyle != null)
 		{
 			box = parentStyle.getLineBox();
 		}
@@ -157,10 +157,10 @@ public class XlsxBorderHelper extends BaseHelper
 	 */
 	private void export(XlsxBorderInfo info)
 	{
-//		if(info.hasBorder())
+//		if (info.hasBorder())
 		{
 			write("<border");
-			if(info.getDirection() != null)
+			if (info.getDirection() != null)
 			{
 				write(info.getDirection().equals(LineDirectionEnum.TOP_DOWN) ? " diagonalDown=\"1\"" : " diagonalUp=\"1\"");
 			}

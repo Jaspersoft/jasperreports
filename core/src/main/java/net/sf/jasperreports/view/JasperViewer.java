@@ -433,7 +433,7 @@ public class JasperViewer extends javax.swing.JFrame
 			}
 		}
 		
-		if(fileName == null)
+		if (fileName == null)
 		{
 			usage();
 			return;

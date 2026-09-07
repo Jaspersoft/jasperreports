@@ -1,4 +1,4 @@
-<jasperReport name="XlsFormulaReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fb79de0d-e61d-4c95-9412-a1968d62f3a7">
+<jasperReport name="XlsFormulaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fb79de0d-e61d-4c95-9412-a1968d62f3a7">
 	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
 	<title height="250">
 		<element kind="staticText" uuid="df00bc39-3b98-47b0-8963-573e2982dc54" x="0" y="0" width="595" height="150" fontSize="22.0" hTextAlign="Center" vTextAlign="Middle">

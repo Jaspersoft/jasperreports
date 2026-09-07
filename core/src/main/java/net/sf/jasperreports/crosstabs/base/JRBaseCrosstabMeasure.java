@@ -59,7 +59,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 	protected String incrementerFactoryClassName;
 	protected String incrementerFactoryClassRealName;
 	protected Class<?> incrementerFactoryClass;
-	protected CrosstabPercentageEnum percentageType = CrosstabPercentageEnum.NONE;
+	protected CrosstabPercentageEnum percentageType;
 	protected String percentageCalculatorClassName;
 	protected String percentageCalculatorClassRealName;
 	protected Class<?> percentageCalculatorClass;
@@ -129,7 +129,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 			{
 				try
 				{
-					incrementerFactoryClass = JRClassLoader.loadClassForName(className);
+					incrementerFactoryClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -168,7 +168,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 			{
 				try
 				{
-					valueClass = JRClassLoader.loadClassForName(className);
+					valueClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -219,7 +219,7 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 			{
 				try
 				{
-					percentageCalculatorClass = JRClassLoader.loadClassForName(className);
+					percentageCalculatorClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{

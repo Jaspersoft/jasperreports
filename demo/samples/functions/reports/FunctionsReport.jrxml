@@ -1,4 +1,4 @@
-<jasperReport name="FunctionsReport" language="java" pageWidth="1600" pageHeight="595" orientation="Landscape" columnWidth="1590" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="15" uuid="eae24cf2-cede-49ad-a3bf-a10ccd914c7d" ignorePagination="true">
+<jasperReport name="FunctionsReport" pageWidth="1600" pageHeight="595" orientation="Landscape" columnWidth="1590" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="15" uuid="eae24cf2-cede-49ad-a3bf-a10ccd914c7d" ignorePagination="true">
 	<property name="net.sf.jasperreports.components.table.interactive" value="false"/>
 	<property name="net.sf.jasperreports.export.html.header" value=""/>
 	<property name="net.sf.jasperreports.export.html.footer" value=""/>

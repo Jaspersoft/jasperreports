@@ -1,4 +1,4 @@
-<jasperReport name="ExcelNames" language="java" pageWidth="595" pageHeight="610" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b8d4a31-8afd-476d-bb52-2c4fcd0f8d51">
+<jasperReport name="ExcelNames" pageWidth="595" pageHeight="610" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b8d4a31-8afd-476d-bb52-2c4fcd0f8d51">
 	<property name="net.sf.jasperreports.data.adapter" value="data/EmptyDataAdapter.15.jrdax"/>
 	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
 	<property name="net.sf.jasperreports.export.xls.defined.names.eight" value="=3+5"/>

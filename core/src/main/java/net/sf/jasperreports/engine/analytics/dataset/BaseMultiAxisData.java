@@ -26,6 +26,7 @@ package net.sf.jasperreports.engine.analytics.dataset;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -72,11 +73,9 @@ public class BaseMultiAxisData implements MultiAxisData, Serializable
 		}
 		
 		List<DataMeasure> dataMeasures = data.getMeasures();
-		this.measures = new ArrayList<>(dataMeasures.size());
-		for (DataMeasure measure : dataMeasures)
-		{
-			this.measures.add(factory.getDataMeasure(measure));
-		}
+		this.measures = 
+			dataMeasures.stream().map(factory::getDataMeasure)
+				.collect(Collectors.toCollection(() -> new ArrayList<>(dataMeasures.size())));
 	}
 	
 	protected void addDataAxis(DataAxis axis)

@@ -157,4 +157,8 @@ public interface JRConstants
 	
 	public static final String VERSION_7_0_0 = "7.0.0";
 
+	public static final String VERSION_7_0_2 = "7.0.2";
+
+	public static final String VERSION_7_0_7 = "7.0.7";
+
 }

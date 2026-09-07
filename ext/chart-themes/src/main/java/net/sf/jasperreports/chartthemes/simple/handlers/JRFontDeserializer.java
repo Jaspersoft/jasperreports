@@ -98,5 +98,5 @@ public class JRFontDeserializer extends StdDeserializer<JRFont>
 		}
 		
 		return font;
-    }
+	}
 }

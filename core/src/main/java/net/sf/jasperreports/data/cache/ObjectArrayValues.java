@@ -46,10 +46,10 @@ public class ObjectArrayValues implements ColumnValues, Serializable
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException
 	{
 		out.writeInt(values.length);
-		for (int i = 0; i < values.length; i++)
+		for (Object value : values)
 		{
 			// TODO lucianc investigate when writeUnshared would help here
-			out.writeObject(values[i]);
+			out.writeObject(value);
 		}
 	}
 	

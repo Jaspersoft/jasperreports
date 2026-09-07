@@ -363,7 +363,7 @@ public class ExcelQueryExecuter extends AbstractXlsQueryExecuter
 			int test4 = bis.read();
 			bis.reset();
 
-			if(test1 == 'P' && test2 == 'K' && test3 == 0x03 && test4 == 0x04) 
+			if (test1 == 'P' && test2 == 'K' && test3 == 0x03 && test4 == 0x04) 
 			{
 				format = ExcelFormatEnum.XLSX;
 			} 

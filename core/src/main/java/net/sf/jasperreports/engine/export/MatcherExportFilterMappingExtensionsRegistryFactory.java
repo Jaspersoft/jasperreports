@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.export;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRPropertiesMap;
@@ -66,9 +65,8 @@ public class MatcherExportFilterMappingExtensionsRegistryFactory implements Exte
 	{
 		List<PropertySuffix> exportFilterMappingProperties = JRPropertiesUtil.getProperties(properties, MATCHER_EXPORT_FILTER_MAPPING_PROPERTY_PREFIX);
 		List<MatcherExportFilterMapping> exportFilterMappings = new ArrayList<>();
-		for (Iterator<PropertySuffix> it = exportFilterMappingProperties.iterator(); it.hasNext();)
+		for (PropertySuffix exportFilterMappingProp : exportFilterMappingProperties)
 		{
-			PropertySuffix exportFilterMappingProp = it.next();
 			String exporterKey = null;
 			boolean isIncludes = true;
 			String propSuffix = exportFilterMappingProp.getSuffix();

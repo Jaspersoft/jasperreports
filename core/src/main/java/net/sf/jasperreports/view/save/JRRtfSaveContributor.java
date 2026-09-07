@@ -74,7 +74,7 @@ public class JRRtfSaveContributor extends JRSaveContributor
 	@Override
 	public boolean accept(File file)
 	{
-		if(file.isDirectory()){
+		if (file.isDirectory()){
 			return true;
 		}
 		return file.getName().toLowerCase().endsWith(EXTENSION_RTF);
@@ -90,7 +90,7 @@ public class JRRtfSaveContributor extends JRSaveContributor
 	@Override
 	public void save(JasperPrint jasperPrint, File file) throws JRException
 	{
-		if(!file.getName().toLowerCase().endsWith(EXTENSION_RTF))
+		if (!file.getName().toLowerCase().endsWith(EXTENSION_RTF))
 		{
 			file = new File(file.getAbsolutePath() + EXTENSION_RTF);
 		}

@@ -52,6 +52,7 @@ import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.print.JRPrinterAWT;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.ExporterOutput;
 import net.sf.jasperreports.export.PrintServiceExporterConfiguration;
@@ -172,7 +173,7 @@ import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
  *   exporter.setConfiguration(configuration);
  *   exporter.exportReport();
 
- *   System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+ *   System.out.println("Printing time : " + (System.currentTimeMillis() - start));
  * }</pre>
  * 
  * @see net.sf.jasperreports.export.PrintServiceExporterConfiguration
@@ -329,14 +330,14 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 			List<ExporterInputItem> items = exporterInput.getItems();
 			
 			PrintRequestAttributeSet printRequestAttributeSet = null;
-			if(displayPrintDialogOnlyOnce || displayPageDialogOnlyOnce)
+			if (displayPrintDialogOnlyOnce || displayPageDialogOnlyOnce)
 			{
 				printRequestAttributeSet = new HashPrintRequestAttributeSet();
 				setDefaultPrintRequestAttributeSet(printRequestAttributeSet);
 				setOrientation(items.get(0).getJasperPrint(), printRequestAttributeSet);
-				if(displayPageDialogOnlyOnce)
+				if (displayPageDialogOnlyOnce)
 				{
-					if(printerJob.pageDialog(printRequestAttributeSet) == null)
+					if (printerJob.pageDialog(printRequestAttributeSet) == null)
 					{
 						return;
 					}
@@ -345,9 +346,9 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 						displayPageDialog = false;
 					}
 				}
-				if(displayPrintDialogOnlyOnce)
+				if (displayPrintDialogOnlyOnce)
 				{
-					if(!printerJob.printDialog(printRequestAttributeSet))
+					if (!printerJob.printDialog(printRequestAttributeSet))
 					{
 						printStatus = new Boolean[]{Boolean.FALSE};
 						return;
@@ -361,7 +362,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 			
 			List<Boolean> status = new ArrayList<>();
 			// fix for bug ID artf1455 from jasperforge.org bug database
-			for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+			for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 			{
 				ExporterInputItem item = items.get(reportIndex);
 
@@ -382,7 +383,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 				grxConfiguration.setExporterFilter(filter);
 				grxConfiguration.setMinimizePrinterJobSize(lcItemConfiguration.isMinimizePrinterJobSize());
 				
-				if(displayPrintDialog || displayPageDialog ||
+				if (displayPrintDialog || displayPageDialog ||
 						(!displayPrintDialogOnlyOnce && !displayPageDialogOnlyOnce))
 				{
 					printRequestAttributeSet = new HashPrintRequestAttributeSet();
@@ -424,7 +425,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 						PageFormat pageFormat = printerJob.defaultPage();
 						Paper paper = pageFormat.getPaper();
 						
-						switch (jasperPrint.getOrientation())
+						switch (OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()))
 						{
 							case LANDSCAPE :
 							{
@@ -529,7 +530,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 		{
 			int printableWidth;
 			int printableHeight;
-			switch (jPrint.getOrientation())
+			switch (OrientationEnum.getValueOrDefault(jPrint.getOrientation()))
 			{
 				case LANDSCAPE:
 					printableWidth = jPrint.getPageHeight();
@@ -555,7 +556,7 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 		if (!printRequestAttributeSet.containsKey(OrientationRequested.class))
 		{
 			OrientationRequested orientation;
-			switch (jPrint.getOrientation())
+			switch (OrientationEnum.getValueOrDefault(jPrint.getOrientation()))
 			{
 				case LANDSCAPE:
 					orientation = OrientationRequested.LANDSCAPE;
@@ -581,11 +582,14 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 	// artf1936
 	public static boolean checkAvailablePrinters() 
 	{
-		PrintService[] ss = java.awt.print.PrinterJob.lookupPrintServices();
-		for (int i=0;i<ss.length;i++) {
-			Attribute[] att = ss[i].getAttributes().toArray();
-			for (int j=0;j<att.length;j++) {
-				if (att[j].equals(PrinterIsAcceptingJobs.ACCEPTING_JOBS)) {
+		PrintService[] printServices = java.awt.print.PrinterJob.lookupPrintServices();
+		for (PrintService printService : printServices)
+		{
+			Attribute[] attributes = printService.getAttributes().toArray();
+			for (Attribute attribute : attributes)
+			{
+				if (attribute.equals(PrinterIsAcceptingJobs.ACCEPTING_JOBS))
+				{
 					return true;
 				}
 			}

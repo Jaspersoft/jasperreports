@@ -35,7 +35,6 @@ import java.text.AttributedString;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,11 +84,7 @@ public class JRStyledTextParser implements ErrorHandler
 			//FIXMEFONT do some cache
 			//FIXME these should be taken from the current JasperReportsContext
 			List<FontFamily> families = ExtensionsEnvironment.getExtensionsRegistry().getExtensions(FontFamily.class);
-			for (Iterator<FontFamily> itf = families.iterator(); itf.hasNext();)
-			{
-				FontFamily family =itf.next();
-				AVAILABLE_FONT_FACE_NAMES.add(family.getName());
-			}
+			families.forEach(f -> AVAILABLE_FONT_FACE_NAMES.add(f.getName()));
 			
 			//FIXME use JRGraphEnvInitializer
 			AVAILABLE_FONT_FACE_NAMES.addAll(
@@ -538,7 +533,7 @@ public class JRStyledTextParser implements ErrorHandler
 	private void parseStyle(JRStyledText styledText, Node parentNode) throws SAXException
 	{
 		NodeList nodeList = parentNode.getChildNodes();
-		for(int i = 0; i < nodeList.getLength(); i++)
+		for (int i = 0; i < nodeList.getLength(); i++)
 		{
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.TEXT_NODE)
@@ -997,9 +992,8 @@ public class JRStyledTextParser implements ErrorHandler
 	 */
 	private void resizeRuns(List<Run> runs, int startIndex, int count)
 	{
-		for (int j = 0; j < runs.size(); j++)
+		for (JRStyledText.Run run : runs)
 		{
-			JRStyledText.Run run = runs.get(j);
 			if (run.startIndex <= startIndex && run.endIndex > startIndex - count)
 			{
 				run.endIndex += count;
@@ -1158,7 +1152,7 @@ public class JRStyledTextParser implements ErrorHandler
 	
 	@Override
 	public void error(SAXParseException e) {
-		if(log.isErrorEnabled())
+		if (log.isErrorEnabled())
 		{
 			log.error("Error parsing styled text.", e);
 		}
@@ -1166,7 +1160,7 @@ public class JRStyledTextParser implements ErrorHandler
 
 	@Override
 	public void fatalError(SAXParseException e) {
-		if(log.isFatalEnabled())
+		if (log.isFatalEnabled())
 		{
 			log.fatal("Error parsing styled text.", e);
 		}
@@ -1174,7 +1168,7 @@ public class JRStyledTextParser implements ErrorHandler
 
 	@Override
 	public void warning(SAXParseException e) {
-		if(log.isWarnEnabled())
+		if (log.isWarnEnabled())
 		{
 			log.warn("Error parsing styled text.", e);
 		}

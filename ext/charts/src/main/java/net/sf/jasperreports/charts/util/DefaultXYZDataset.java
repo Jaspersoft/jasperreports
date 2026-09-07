@@ -24,7 +24,6 @@
 package net.sf.jasperreports.charts.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.data.xy.AbstractXYZDataset;
@@ -56,15 +55,14 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	 */
 	public void addValue( Comparable<?> series, Number xValue, Number yValue, Number zValue ){
 		boolean found = false;
-		for( Iterator<XYZElement> it = dataset.iterator(); it.hasNext(); ){
-			XYZElement element = it.next();
-			if( element.getSeries().equals( series )){
+		for (XYZElement element : dataset){
+			if ( element.getSeries().equals( series )){
 				element.addElement( xValue, yValue, zValue );
 				found = true;
 			}
 		}
 
-		if( !found ){
+		if ( !found ){
 			XYZElement element = new XYZElement();
 			element.setSeries( series );
 			element.addElement( xValue, yValue, zValue );
@@ -79,7 +77,7 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	@Override
 	public int getSeriesCount() {
 		int retVal = 0;
-		if( dataset != null ){
+		if ( dataset != null ){
 			retVal = dataset.size();
 		}
 		
@@ -89,8 +87,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	@Override
 	public Number getZ(int series, int index ) {
 		Number retVal = null;
-		if( dataset != null ){
-			if( series < getSeriesCount() ){
+		if ( dataset != null ){
+			if ( series < getSeriesCount() ){
 				XYZElement element = dataset.get( series );
 				retVal = element.getZElement( index );
 			}
@@ -101,8 +99,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	@Override
 	public int getItemCount(int series ) {
 		int retVal = 0;
-		if( dataset != null ){
-			if( series < getSeriesCount() ){
+		if ( dataset != null ){
+			if ( series < getSeriesCount() ){
 				XYZElement element = dataset.get( series );
 				retVal = element.getCount();
 			}
@@ -113,8 +111,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	@Override
 	public Number getX(int series, int index ) {
 		Number retVal = null;
-		if( dataset != null ){
-			if( series < getSeriesCount() ){
+		if ( dataset != null ){
+			if ( series < getSeriesCount() ){
 				XYZElement element = dataset.get( series );
 				retVal = element.getXElement( index );
 			}
@@ -125,8 +123,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	@Override
 	public Number getY(int series, int index ) {
 		Number retVal = null;
-		if( dataset != null ){
-			if( series < getSeriesCount() ){
+		if ( dataset != null ){
+			if ( series < getSeriesCount() ){
 				XYZElement element = dataset.get( series );
 				retVal = element.getYElement( index );
 			}
@@ -137,8 +135,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
 	@Override
 	public Comparable<?> getSeriesKey(int index) {
 		String retVal = null;
-		if( dataset != null ){
-			if( index < getSeriesCount() ){
+		if ( dataset != null ){
+			if ( index < getSeriesCount() ){
 				XYZElement element = dataset.get( index );
 				retVal = element.getSeries().toString();
 			}

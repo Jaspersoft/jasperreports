@@ -121,7 +121,7 @@ public class JRDesignXyzDataset extends JRDesignChartDataset implements JRXyzDat
 	 */
 	public JRXyzSeries removeXyzSeries( JRXyzSeries xyzSeries ) 
 	{
-		if( xyzSeries != null ){
+		if ( xyzSeries != null ){
 			int idx = xyzSeriesList.indexOf(xyzSeries);
 			if (idx >= 0) {
 				xyzSeriesList.remove(idx);

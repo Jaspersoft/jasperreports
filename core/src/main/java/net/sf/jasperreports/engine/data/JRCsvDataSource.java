@@ -308,7 +308,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 					indexColumns.put(forceIndex, indexName);
 					forceIndex = existingIndex;
 				}
-				while(forceIndex != null);
+				while (forceIndex != null);
 			}
 		}
 		
@@ -473,7 +473,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 		}
 		
 		//removing the unicode BOM which occurs only once, at the beginning of the file
-		if(row.length() > 0 && row.charAt(0) == '\ufeff')
+		if (row.length() > 0 && row.charAt(0) == '\ufeff')
 		{
 			row = row.substring(1);
 		}
@@ -481,11 +481,11 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 		while (pos < row.length()) {
 			c = row.charAt(pos);
 			
-			if(pos == startFieldPos)
+			if (pos == startFieldPos)
 			{
 				//determining the number of white spaces at the beginning of a field
 				//this is necessary in order to determine if a trimmed field is quoted
-				while( pos + leadingSpaces < row.length() 
+				while ( pos + leadingSpaces < row.length() 
 						&& row.charAt(pos + leadingSpaces) <= ' '  // this is how trim() works in java sun jdk 1.5; only chars <= ' ' are trimmed
 						&& row.charAt(pos + leadingSpaces) != fieldDelimiter
 						)
@@ -505,12 +505,12 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 				else {
 					if (insideQuotes )
 					{
-						if(pos+1 < row.length())
+						if (pos+1 < row.length())
 						{
 							// when already inside quotes, expecting two consecutive quotes, 
 							// otherwise it should be a closing quote
 
-							if(row.charAt(pos+1) == '"')
+							if (row.charAt(pos+1) == '"')
 							{
 								pos++;
 							}
@@ -532,10 +532,10 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 								}
 								
 								//TODO: handling misplaced quotes along with parametrized isStrictCsv; 
-								if(pos + trailingSpaces < row.length() && row.charAt(pos + trailingSpaces) != fieldDelimiter)
+								if (pos + trailingSpaces < row.length() && row.charAt(pos + trailingSpaces) != fieldDelimiter)
 								{
 									misplacedQuote = true;
-									if(isStrictCsv)
+									if (isStrictCsv)
 									{
 										throw 
 											new JRException(
@@ -553,7 +553,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 					}
 					else
 					{
-						if(isStrictCsv)
+						if (isStrictCsv)
 						{
 							throw 
 								new JRException(
@@ -576,7 +576,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 					{
 						field = field.substring(0, field.length() - 1);
 					}
-					else if(isStrictCsv)
+					else if (isStrictCsv)
 					{
 						throw 
 							new JRException(
@@ -608,7 +608,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 				
 				// if many rows were concatenated due to misplacing of starting and ending quotes in a multiline field 
 				// is possible to get more fields in the resulting row than the number of columns
-				if(addedFields == columnNames.size())
+				if (addedFields == columnNames.size())
 				{
 					addedFields = 0;
 				}
@@ -623,7 +623,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 			if ((pos == row.length()) && insideQuotes) 
 			{
 				String newRow = getRow();
-				if(newRow != null)
+				if (newRow != null)
 				{
 					row = row + recordDelimiter + newRow;
 				}
@@ -643,7 +643,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 			//if !isStrictCsv the misplaced quote is allowed to be printed as part of quoted field, 
 			//although it is not doubled; the presence of a misplaced quote inside a field is
 			//logged at logger debug level
-			if(isStrictCsv)
+			if (isStrictCsv)
 			{
 				throw 
 					new JRException(
@@ -664,7 +664,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 			{
 				field = field.substring(0, field.length() - 1);
 			}
-			else if(isStrictCsv)
+			else if (isStrictCsv)
 			{
 				throw 
 					new JRException(
@@ -677,7 +677,7 @@ public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDat
 		
 		crtRecordColumnValues.add(field);
 		++addedFields;
-		while(addedFields < columnNames.size())
+		while (addedFields < columnNames.size())
 		{
 			crtRecordColumnValues.add("");
 			++addedFields;

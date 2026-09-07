@@ -49,7 +49,7 @@ public abstract class JRBaseCrosstabGroup implements JRCrosstabGroup, Serializab
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
 	protected String name;
-	protected CrosstabTotalPositionEnum totalPosition = CrosstabTotalPositionEnum.NONE;
+	protected CrosstabTotalPositionEnum totalPosition;
 	protected JRCrosstabBucket bucket;
 	
 	protected JRCellContents header;
@@ -98,7 +98,7 @@ public abstract class JRBaseCrosstabGroup implements JRCrosstabGroup, Serializab
 	@Override
 	public boolean hasTotal()
 	{
-		return totalPosition != CrosstabTotalPositionEnum.NONE;
+		return CrosstabTotalPositionEnum.getValueOrDefault(totalPosition) != CrosstabTotalPositionEnum.NONE;
 	}
 
 	@Override

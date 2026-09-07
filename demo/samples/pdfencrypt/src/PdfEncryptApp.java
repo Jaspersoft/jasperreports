@@ -23,8 +23,6 @@
  */
 import java.io.File;
 
-import com.lowagie.text.pdf.PdfWriter;
-
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -56,7 +54,6 @@ public class PdfEncryptApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 	}
@@ -69,7 +66,7 @@ public class PdfEncryptApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperFillManager.fillReportToFile("target/reports/PdfEncryptReport.jasper", null, new JREmptyDataSource());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -94,11 +91,11 @@ public class PdfEncryptApp extends AbstractSampleApp
 		configuration.set128BitKey(true);
 		configuration.setUserPassword("jasper");
 		configuration.setOwnerPassword("reports");
-		configuration.setPermissions(PdfWriter.ALLOW_COPY | PdfWriter.ALLOW_PRINTING);
+		configuration.setAllowedPermissionsHint("COPY|PRINTING");
 		exporter.setConfiguration(configuration);
 		exporter.exportReport();
 
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

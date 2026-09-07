@@ -74,7 +74,7 @@ public class JRBasePrintText extends JRBasePrintElement implements JRPrintText
 	protected HorizontalTextAlignEnum horizontalTextAlign;
 	protected VerticalTextAlignEnum verticalTextAlign;
 	protected RotationEnum rotation;
-	protected RunDirectionEnum runDirection = RunDirectionEnum.LTR;
+	protected RunDirectionEnum runDirection;
 	protected float textHeight;
 	protected Float averageCharWidth;
 	protected String markup;
@@ -92,7 +92,7 @@ public class JRBasePrintText extends JRBasePrintElement implements JRPrintText
 	 * The bookmark level for the anchor associated with this field.
 	 * @see JRAnchor#getBookmarkLevel()
 	 */
-	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK;
+	protected int bookmarkLevel = JRAnchor.NO_BOOKMARK; // primitive int field has zero as default value anyway, but it is explicitly initialized for clarity
 
 	/**
 	 *

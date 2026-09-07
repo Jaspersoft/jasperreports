@@ -25,7 +25,6 @@ package net.sf.jasperreports.engine.fill;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -213,9 +212,8 @@ public abstract class BaseFillHandle implements FillHandle
 	
 	protected void notifyFinish(JasperPrint print)
 	{
-		for (Iterator<AsynchronousFilllListener> i = listeners.iterator(); i.hasNext();)
+		for (AsynchronousFilllListener listener : listeners)
 		{
-			AsynchronousFilllListener listener = i.next();
 			listener.reportFinished(print);
 		}
 	}
@@ -223,9 +221,8 @@ public abstract class BaseFillHandle implements FillHandle
 	
 	protected void notifyCancel()
 	{
-		for (Iterator<AsynchronousFilllListener> i = listeners.iterator(); i.hasNext();)
+		for (AsynchronousFilllListener listener : listeners)
 		{
-			AsynchronousFilllListener listener =  i.next();
 			listener.reportCancelled();
 		}
 	}
@@ -233,9 +230,8 @@ public abstract class BaseFillHandle implements FillHandle
 	
 	protected void notifyError(Throwable e)
 	{
-		for (Iterator<AsynchronousFilllListener> i = listeners.iterator(); i.hasNext();)
+		for (AsynchronousFilllListener listener : listeners)
 		{
-			AsynchronousFilllListener listener = i.next();
 			listener.reportFillError(e);
 		}
 	}

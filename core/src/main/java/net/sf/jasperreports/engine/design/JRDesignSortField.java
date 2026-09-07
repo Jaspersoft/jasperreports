@@ -93,8 +93,11 @@ public class JRDesignSortField extends JRBaseSortField
 	public boolean equals(Object obj) {
 		if (obj instanceof JRDesignSortField) {
 			JRDesignSortField compareTo = (JRDesignSortField)obj;
-			if (this.name != null && this.type != null) {
-				return this.name.equals(compareTo.getName()) && this.type.equals(compareTo.getType());
+			if (this.name != null) {
+				return 
+					this.name.equals(compareTo.getName()) 
+					&& SortFieldTypeEnum.getValueOrDefault(this.type) ==
+						SortFieldTypeEnum.getValueOrDefault(compareTo.getType());
 			} else {
 				return false;
 			}

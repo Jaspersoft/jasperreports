@@ -51,7 +51,7 @@ public abstract class MaxFontSizeFinder//FIXMETAB deprecate?
 				Float maxFontSize = ZERO;
 				int runLimit = 0;
 	
-				while(runLimit < line.getEndIndex() && (runLimit = line.getRunLimit(TextAttribute.SIZE)) <= line.getEndIndex())
+				while (runLimit < line.getEndIndex() && (runLimit = line.getRunLimit(TextAttribute.SIZE)) <= line.getEndIndex())
 				{
 					Float size = (Float)line.getAttribute(TextAttribute.SIZE);
 					if (maxFontSize.compareTo(size) < 0)

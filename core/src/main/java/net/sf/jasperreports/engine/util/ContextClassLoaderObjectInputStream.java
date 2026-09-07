@@ -24,19 +24,13 @@
 package net.sf.jasperreports.engine.util;
 
 import java.awt.Font;
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
-import net.sf.jasperreports.annotations.properties.Property;
-import net.sf.jasperreports.annotations.properties.PropertyScope;
-import net.sf.jasperreports.engine.JRPropertiesUtil;
-import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.fonts.FontUtil;
-import net.sf.jasperreports.properties.PropertyConstants;
 
 /**
  * A subclass of {@link ObjectInputStream} that uses
@@ -45,21 +39,8 @@ import net.sf.jasperreports.properties.PropertyConstants;
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class ContextClassLoaderObjectInputStream extends ObjectInputStream
+public class ContextClassLoaderObjectInputStream extends FilteredObjectInputStream
 {
-	@Property(
-		category = PropertyConstants.CATEGORY_OTHER,
-		scopes = {PropertyScope.CONTEXT},
-		sinceVersion = PropertyConstants.VERSION_7_0_4,
-		valueType = Long.class
-		)
-	public static final String PROPERTY_BYTE_COUNT_LIMIT = 
-		JRPropertiesUtil.PROPERTY_PREFIX + "deserialization.byte.count.limit";
-	
-	private final JasperReportsContext jasperReportsContext;
-
-	private DeserializationClassFilter deserializationClassFilter;
-	
 
 	/**
 	 * Creates an object input stream that reads data from the specified
@@ -71,9 +52,7 @@ public class ContextClassLoaderObjectInputStream extends ObjectInputStream
 	 */
 	public ContextClassLoaderObjectInputStream(JasperReportsContext jasperReportsContext, InputStream in) throws IOException
 	{
-		super(wrapInputStream(jasperReportsContext, in));
-		
-		this.jasperReportsContext = jasperReportsContext;
+		super(jasperReportsContext, in, new DeserializationClassFilter(jasperReportsContext));
 		
 		try
 		{
@@ -83,22 +62,6 @@ public class ContextClassLoaderObjectInputStream extends ObjectInputStream
 		{
 			//FIXMEFONT we silence this for applets. but are there other similar situations that we need to deal with by signing jars?
 		}
-		
-		this.deserializationClassFilter = new DeserializationClassFilter(jasperReportsContext);
-	}
-	
-	private static InputStream wrapInputStream(JasperReportsContext jasperReportsContext, InputStream is)
-	{
-		long byteCountLimit = JRPropertiesUtil.getInstance(jasperReportsContext).getLongProperty(PROPERTY_BYTE_COUNT_LIMIT, 0);
-		return byteCountLimit == 0 ? is : new CountInputStream(is, byteCountLimit);
-	}
-
-	/**
-	 *
-	 */
-	public JasperReportsContext getJasperReportsContext()
-	{
-		return jasperReportsContext;
 	}
 
 	/**
@@ -110,23 +73,6 @@ public class ContextClassLoaderObjectInputStream extends ObjectInputStream
 	protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException,
 			ClassNotFoundException
 	{
-		if (deserializationClassFilter.isFilteringEnabled())
-		{
-			String className = desc.getName();
-			if (className.startsWith("["))
-			{
-				if (className.endsWith(";"))
-				{
-					className = className.substring(className.lastIndexOf("[L") + 2, className.length() - 1);
-				}
-				else
-				{
-					className = className.substring(className.lastIndexOf("[") + 1);
-				}
-			}
-			deserializationClassFilter.checkClassVisibility(className);
-		}
-
 		try
 		{
 			return super.resolveClass(desc);
@@ -171,79 +117,5 @@ public class ContextClassLoaderObjectInputStream extends ObjectInputStream
 		return obj;
 	}
 
-
-}
-
-class CountInputStream extends FilterInputStream
-{
-	public static final String EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED = "deserialization.byte.count.limit.exceeded";
-
-	private long byteCount = 0;
-	private final long byteCountLimit; 
-
-	public CountInputStream(InputStream is, long byteCountLimit)
-	{
-		super(is);
-		
-		this.byteCountLimit = byteCountLimit;
-	}
-	
-	
-	@Override
-	public int read() throws IOException 
-	{
-		int r = super.read();
-		if (r >= 0)
-		{
-			byteCount++;
-			if (byteCountLimit > 0 && byteCount > byteCountLimit)
-			{
-				throw new JRRuntimeException(EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED, new Object[] {byteCountLimit});
-			}
-		}
-		return r;
-	}
-
-	@Override
-	public int read(byte[] buf) throws IOException 
-	{
-		int r = super.read(buf);
-		if (r >= 0)
-		{
-			byteCount += r;
-			if (byteCountLimit > 0 && byteCount > byteCountLimit)
-			{
-				throw new JRRuntimeException(EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED, new Object[] {byteCountLimit});
-			}
-		}
-		return r;
-	}
-
-	@Override
-	public int read(byte[] buf, int off, int len) throws IOException 
-	{
-		int r = super.read(buf, off, len);
-		if (r >= 0)
-		{
-			byteCount += r;
-			if (byteCountLimit > 0 && byteCount > byteCountLimit)
-			{
-				throw new JRRuntimeException(EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED, new Object[] {byteCountLimit});
-			}
-		}
-		return r;
-	}
-	
-	@Override
-	public long skip(long n) throws IOException 
-	{
-		long r = super.skip(n);
-		byteCount += r;
-		if (byteCountLimit > 0 && byteCount > byteCountLimit)
-		{
-			throw new JRRuntimeException(EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED, new Object[] {byteCountLimit});
-		}
-		return r;
-	}
 
 }

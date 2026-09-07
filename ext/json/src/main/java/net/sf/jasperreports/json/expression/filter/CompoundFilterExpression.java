@@ -30,36 +30,36 @@ import net.sf.jasperreports.json.expression.filter.evaluation.FilterExpressionEv
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class CompoundFilterExpression implements FilterExpression {
-    private FilterExpression f1;
-    private FilterExpression f2;
-    private LOGICAL_OPERATOR logicalOperator;
+	private FilterExpression f1;
+	private FilterExpression f2;
+	private LOGICAL_OPERATOR logicalOperator;
 
 
-    public CompoundFilterExpression(FilterExpression f1, FilterExpression f2, LOGICAL_OPERATOR logicalOperator) {
-        this.f1 = f1;
-        this.f2 = f2;
-        this.logicalOperator = logicalOperator;
-    }
+	public CompoundFilterExpression(FilterExpression f1, FilterExpression f2, LOGICAL_OPERATOR logicalOperator) {
+		this.f1 = f1;
+		this.f2 = f2;
+		this.logicalOperator = logicalOperator;
+	}
 
-    @Override
-    public boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateCompoundFilter(this, jsonNode);
-    }
+	@Override
+	public boolean evaluate(JRJsonNode jsonNode, FilterExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateCompoundFilter(this, jsonNode);
+	}
 
-    public FilterExpression getLeft() {
-        return f1;
-    }
+	public FilterExpression getLeft() {
+		return f1;
+	}
 
-    public FilterExpression getRight() {
-        return f2;
-    }
+	public FilterExpression getRight() {
+		return f2;
+	}
 
-    public LOGICAL_OPERATOR getLogicalOperator() {
-        return logicalOperator;
-    }
+	public LOGICAL_OPERATOR getLogicalOperator() {
+		return logicalOperator;
+	}
 
-    @Override
-    public String toString() {
-        return "(" + f1 + " " + logicalOperator + " " + f2 + ")";
-    }
+	@Override
+	public String toString() {
+		return "(" + f1 + " " + logicalOperator + " " + f2 + ")";
+	}
 }

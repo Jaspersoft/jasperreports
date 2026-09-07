@@ -1,4 +1,4 @@
-<jasperReport name="BreaksReport.6" language="java" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="030574cb-2d4b-4281-8294-0f87619f0d7f">
+<jasperReport name="BreaksReport.6" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="030574cb-2d4b-4281-8294-0f87619f0d7f">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="12.0" bold="false" italic="false" underline="false" strikeThrough="false"/>
 	<noData height="50">
 		<element kind="break" uuid="9dbae581-b65f-4bcf-a68b-a331d59d5e1e" x="0" y="10" width="100" height="1"/>

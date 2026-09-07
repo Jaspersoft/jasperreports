@@ -1,4 +1,4 @@
-<jasperReport name="SubreportForReturn" language="java" pageWidth="200" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cf3076ec-0d25-45e0-b533-232c2336623b">
+<jasperReport name="SubreportForReturn" pageWidth="200" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cf3076ec-0d25-45e0-b533-232c2336623b">
 	<style name="Sans_Normal" default="true" fontName="DejaVu Sans" fontSize="10.0"/>
 	<variable name="VariableForReturn" class="java.lang.String">
 		<expression><![CDATA["foo"]]></expression>

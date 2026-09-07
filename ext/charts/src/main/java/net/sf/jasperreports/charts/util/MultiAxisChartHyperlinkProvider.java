@@ -24,7 +24,6 @@
 package net.sf.jasperreports.charts.util;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -80,9 +79,8 @@ public class MultiAxisChartHyperlinkProvider implements ChartHyperlinkProvider
 		boolean hasHyperlinks = false;
 		if (!datasetProviders.isEmpty())
 		{
-			for (Iterator<ChartHyperlinkProvider> it = datasetProviders.values().iterator(); it.hasNext();)
+			for (ChartHyperlinkProvider provider : datasetProviders.values())
 			{
-				ChartHyperlinkProvider provider = it.next();
 				if (provider.hasHyperlinks())
 				{
 					hasHyperlinks = true;

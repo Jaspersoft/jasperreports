@@ -156,7 +156,7 @@ public final class JasperFillManager
 	{
 		File sourceFile = new File(sourceFileName);
 
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperReport.getName() + ".jrprint");
 		String destFileName = destFile.toString();
@@ -189,7 +189,7 @@ public final class JasperFillManager
 	{
 		File sourceFile = new File(sourceFileName);
 
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperReport.getName() + ".jrprint");
 		String destFileName = destFile.toString();
@@ -400,7 +400,7 @@ public final class JasperFillManager
 		Connection connection
 		) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		fillToStream(jasperReport, outputStream, parameters, connection);
 	}
@@ -421,7 +421,7 @@ public final class JasperFillManager
 		Map<String,Object> parameters
 		) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		fillToStream(jasperReport, outputStream, parameters);
 	}
@@ -485,7 +485,7 @@ public final class JasperFillManager
 		Connection connection
 		) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		return fill(jasperReport, parameters, connection);
 	}
@@ -505,7 +505,7 @@ public final class JasperFillManager
 		Map<String,Object> parameters
 		) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		return fill(jasperReport, parameters);
 	}
@@ -567,7 +567,7 @@ public final class JasperFillManager
 	{
 		File sourceFile = new File(sourceFileName);
 
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, sourceFile);
 
 		File destFile = new File(sourceFile.getParent(), jasperReport.getName() + ".jrprint");
 		String destFileName = destFile.toString();
@@ -690,7 +690,7 @@ public final class JasperFillManager
 		JRDataSource dataSource
 		) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		fillToStream(jasperReport, outputStream, parameters, dataSource);
 	}
@@ -733,7 +733,7 @@ public final class JasperFillManager
 		JRDataSource dataSource
 		) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(inputStream);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(jasperReportsContext, inputStream);
 
 		return fill(jasperReport, parameters, dataSource);
 	}
@@ -1083,7 +1083,7 @@ public final class JasperFillManager
 	
 	protected JasperReportSource getReportSource(File reportFile) throws JRException
 	{
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportFile);
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperReportsContext, reportFile);
 		return getReportSource(reportFile, jasperReport);
 	}
 

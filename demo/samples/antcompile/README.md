@@ -64,7 +64,8 @@ Then, the custom `jrc` task is used to compile report templates having the `*.jr
     destdir="./build/reports"
     tempdir="./build/reports"
     keepjava="true"
-    xmlvalidation="true">
+    xmlvalidation="true"
+    threads="1.5C">
   <classpath refid="sample-classpath"/>
   <include name="**/*.jrxml"/>
   </jrc>
@@ -83,7 +84,8 @@ The `compile2` target in the same build.xml file performs the same report compil
       destdir="./build/reports"
       tempdir="./build/reports"
       keepjava="true"
-      xmlvalidation="true">
+      xmlvalidation="true"
+      threads="4">
     <src>
       <fileset dir="./reports">
         <include name="**/*.jrxml"/>
@@ -103,6 +105,7 @@ In addition to the `srcdir` and the `destdir` attributes, the `jrc` custom Ant t
 - `xmlvalidation` : Flag to indicate whether the XML validation should be performed on the source report template files (true by default).
 - `tempdir` : Location to store the temporarily generated files (the current working directory by default).
 - `keepjava` : Flag to indicate if the temporary Java files generated on the fly should be kept and not deleted automatically (false by default).
+- `threads` : Number of threads to use for executing the task on multiple files in parallel. The value should be a positive integer or a float number representing a multiplier of the number of CPU cores, when followed by the letter C. For example, 2C means twice the number of CPU cores, while 0.5C means half the number of CPU cores (default is 1).
 
 
 In our sample, we use the default report compiler, which is the JDT-based compiler, because the JDT JAR is found in the classpath. This compiler works on the assumption that report expressions are Java expressions and thus it produces a Java class file dynamically containing all the report expressions and compiles it using the JDT Java compiler. Normally, this report compiler does all the Java class file generation and compilation in-memory and does not work with actual files on disk, which makes it very flexible and easy to deploy in all environments. However, if the `keepjava` flag is turned to true, it will save the report's temporary Java source file on disk, in the specified tempdir. This is useful for debugging report expressions in certain cases.
@@ -122,7 +125,7 @@ How to re-create the JRXML source files for multiple compiled report templates u
 **Since:** 3.7.1
 
 
-In case the older reports JRXML templates are lost, but we still have acces to their `*.jasper` compiled state, there is a possibility to retrieve the related JRXML, based on a specific built-in Ant task. This task provided by the JasperReports library is used for decompiling [JasperReport](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperReport.html) objects serialized as `*.jasper` files. Its functionality is defined in the [JRAntDecompileTask](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/ant/JRAntDecompileTask.html) class and works as opposite to the Ant built-in [JRAntCompileTask](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/ant/JRAntCompileTask.html) task described above.
+In case the older reports JRXML templates are lost, but we still have access to their `*.jasper` compiled version, there is a possibility to retrieve the related JRXML, based on a specific built-in Ant task. This task provided by the JasperReports library is used for decompiling [JasperReport](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperReport.html) objects serialized as `*.jasper` files. Its functionality is defined in the [JRAntDecompileTask](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/ant/JRAntDecompileTask.html) class and works as opposite to the Ant built-in [JRAntCompileTask](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/ant/JRAntCompileTask.html) task described above.
 This task scans source folders and looks up for `*.jasper` files, load them into in-memory [JasperReport](https://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperReport.html) objects, then write their report template source into corresponding `*.jrxml` files, placed into a destination folder hierarchy.
 
 The destination folder tree is similar to the source folder tree, meaning that the relative location of `*.jasper` files from the root folder is preserved for the resulting `*.jrxml` files.
@@ -134,7 +137,7 @@ Below is the `decompile` target definition in the `build.xml` file, which uses t
   <taskdef name="jrdc" classname="net.sf.jasperreports.ant.JRAntDecompileTask"> 
     <classpath refid="sample-classpath"/>
   </taskdef>
-  <jrdc destdir="./build/reports">
+  <jrdc destdir="./build/reports" threads="4">
     <src>
       <fileset dir="./build/reports">
         <include name="**/*.jasper"/>

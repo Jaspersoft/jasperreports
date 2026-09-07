@@ -27,8 +27,16 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<directory>target/javaflow</directory>
+		<directory>target-javaflow</directory>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>${flatten-maven-plugin.version}</version>
+				<configuration>
+					<flattenedPomFilename>.flattened-pom-javaflow.xml</flattenedPomFilename>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -44,7 +52,7 @@
 							<outputDirectory>${project.build.directory}/classes-javaflow</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${project.build.directory}/classes</directory>
+									<directory>${project.build.outputDirectory}</directory>
 									<includes>
 										<include>net/sf/jasperreports/engine/fill/BaseReportFiller.class</include>
 										<include>net/sf/jasperreports/engine/fill/JRBaseFiller.class</include>
@@ -67,7 +75,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.build.directory}/classes-javaflow</directory>

@@ -106,9 +106,9 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 	{
 		if (timePeriodSeries != null && timePeriodSeries.length > 0)
 		{
-			for (int i = 0; i < timePeriodSeries.length; i++)
+			for (JRFillTimePeriodSeries crtTimePeriodSeries : timePeriodSeries)
 			{
-				timePeriodSeries[i].evaluate(calculator);
+				crtTimePeriodSeries.evaluate(calculator);
 			}
 		}
 	}
@@ -126,10 +126,8 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for (int i = 0; i < timePeriodSeries.length; i++)
+			for (JRFillTimePeriodSeries crtTimePeriodSeries : timePeriodSeries)
 			{
-				JRFillTimePeriodSeries crtTimePeriodSeries = timePeriodSeries[i];
-
 				Comparable<?> seriesName = crtTimePeriodSeries.getSeries();
 				if (seriesName == null)
 				{
@@ -158,26 +156,12 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 				
 				if (crtTimePeriodSeries.getLabelExpression() != null)
 				{
-					Map<TimePeriod, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(stp, crtTimePeriodSeries.getLabel());
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(stp, crtTimePeriodSeries.getLabel());
 				}
 				
 				if (crtTimePeriodSeries.hasItemHyperlink())
 				{
-					Map<TimePeriod, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					
-					seriesLinks.put(stp, crtTimePeriodSeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>()).put(stp, crtTimePeriodSeries.getPrintItemHyperlink());
 				}
 			}
 		}
@@ -189,9 +173,8 @@ public class JRFillTimePeriodDataset extends JRFillChartDataset implements JRTim
 		TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
 		if (seriesNames != null)
 		{
-			for(int i = 0; i < seriesNames.size(); i++)
+			for (Comparable<?> seriesName : seriesNames)
 			{
-				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));
 			}
 		}

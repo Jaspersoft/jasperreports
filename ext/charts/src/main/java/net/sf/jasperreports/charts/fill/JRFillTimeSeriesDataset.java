@@ -71,7 +71,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 		super( timeSeriesDataset, factory.getParent() );
 		
 		JRTimeSeries[] srcTimeSeries = timeSeriesDataset.getSeries();
-		if( srcTimeSeries != null && srcTimeSeries.length > 0)
+		if ( srcTimeSeries != null && srcTimeSeries.length > 0)
 		{
 			timeSeries = new JRFillTimeSeries[srcTimeSeries.length];
 			for (int i = 0; i < timeSeries.length; i++)
@@ -99,11 +99,11 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 	@Override
 	protected void customEvaluate(JRCalculator calculator) throws JRExpressionEvalException 
 	{
-		if(timeSeries != null && timeSeries.length > 0)
+		if (timeSeries != null && timeSeries.length > 0)
 		{
-			for (int i = 0; i < timeSeries.length; i++)
+			for (JRFillTimeSeries crtTimeSeries : timeSeries)
 			{
-				timeSeries[i].evaluate( calculator );
+				crtTimeSeries.evaluate( calculator );
 			}
 		}
 	}
@@ -122,10 +122,8 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 				itemHyperlinks = new HashMap<>();
 			}
 
-			for (int i = 0; i < timeSeries.length; i++)
+			for (JRFillTimeSeries crtTimeSeries : timeSeries)
 			{
-				JRFillTimeSeries crtTimeSeries = timeSeries[i];
-				
 				Comparable<?> seriesName = crtTimeSeries.getSeries();
 				if (seriesName == null)
 				{
@@ -137,7 +135,7 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 				}
 
 				TimeSeries series = seriesMap.get(seriesName);
-				if(series == null)
+				if (series == null)
 				{
 					series = new TimeSeries(seriesName.toString());
 					seriesNames.add(seriesName);
@@ -156,25 +154,12 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 
 				if (crtTimeSeries.getLabelExpression() != null)
 				{
-					Map<RegularTimePeriod, String> seriesLabels = labelsMap.get(seriesName);
-					if (seriesLabels == null)
-					{
-						seriesLabels = new HashMap<>();
-						labelsMap.put(seriesName, seriesLabels);
-					}
-					
-					seriesLabels.put(tp, crtTimeSeries.getLabel());
+					labelsMap.computeIfAbsent(seriesName, k -> new HashMap<>()).put(tp, crtTimeSeries.getLabel());
 				}
 				
 				if (crtTimeSeries.hasItemHyperlink())
 				{
-					Map<RegularTimePeriod, JRPrintHyperlink> seriesLinks = itemHyperlinks.get(seriesName);
-					if (seriesLinks == null)
-					{
-						seriesLinks = new HashMap<>();
-						itemHyperlinks.put(seriesName, seriesLinks);
-					}
-					seriesLinks.put(tp, crtTimeSeries.getPrintItemHyperlink());
+					itemHyperlinks.computeIfAbsent(seriesName, k -> new HashMap<>()).put(tp, crtTimeSeries.getPrintItemHyperlink());
 				}
 			}
 		}
@@ -186,9 +171,8 @@ public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTim
 		TimeSeriesCollection dataset = new TimeSeriesCollection(getTimeZone());
 		if (seriesNames != null)
 		{
-			for(int i = 0; i < seriesNames.size(); i++)
+			for (Comparable<?> seriesName : seriesNames)
 			{
-				Comparable<?> seriesName = seriesNames.get(i);
 				dataset.addSeries(seriesMap.get(seriesName));
 			}
 		}

@@ -29,4 +29,34 @@
 			<optional>false</optional>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports-maven-plugin</artifactId>
+				<version>${revision}</version>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.jasperreports</groupId>
+						<artifactId>jasperreports-maven-plugin-bom</artifactId>
+						<version>${revision}</version>
+						<type>pom</type>
+						<exclusions>
+							<exclusion>
+								<groupId>net.sf.jasperreports</groupId>
+								<artifactId>jasperreports-hibernate</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>net.sf.jasperreports</groupId>
+						<artifactId>jasperreports-hibernate-j2ee</artifactId>
+						<version>${revision}</version>
+						<scope>runtime</scope>
+						<optional>false</optional>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 </project>

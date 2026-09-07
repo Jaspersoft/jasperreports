@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.engine.export;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -92,9 +91,8 @@ public final class GenericElementReportTransformer
 	{
 		TransformerContext transformerContext = new TransformerContext(jasperReportsContext, report);
 		List<JRPrintPage> pages = report.getPages();
-		for (Iterator<JRPrintPage> pageIt = pages.iterator(); pageIt.hasNext();)
+		for (JRPrintPage page : pages)
 		{
-			JRPrintPage page = pageIt.next();
 			transformElements(transformerContext, transformerExportKey, 
 					page.getElements());
 		}

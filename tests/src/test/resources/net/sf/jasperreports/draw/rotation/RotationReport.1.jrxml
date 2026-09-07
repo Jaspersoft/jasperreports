@@ -1,4 +1,4 @@
-<jasperReport name="RotationReport.1" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e23f1ab0-d6fa-42b2-9045-0d6b3c08edd2">
+<jasperReport name="RotationReport.1" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="e23f1ab0-d6fa-42b2-9045-0d6b3c08edd2">
 	<style name="MyDefault" default="true" fontName="DejaVu Sans" fontSize="14.0"/>
 	<title height="782">
 		<element kind="staticText" uuid="c545f28a-38db-47a3-841b-7c640c16a978" mode="Opaque" x="0" y="0" width="90" height="350" backcolor="#C0C0C0" rotation="Left">

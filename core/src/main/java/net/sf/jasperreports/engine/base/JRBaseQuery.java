@@ -51,7 +51,7 @@ public class JRBaseQuery implements JRQuery, Serializable
 	 */
 	private JRQueryChunk[] chunks;
 	
-	protected String language = JRJdbcQueryExecuterFactory.QUERY_LANGUAGE_SQL; //FIXMEJACK
+	protected String language = JRJdbcQueryExecuterFactory.QUERY_LANGUAGE_SQL;
 
 
 	/**
@@ -74,7 +74,7 @@ public class JRBaseQuery implements JRQuery, Serializable
 		if (jrChunks != null && jrChunks.length > 0)
 		{
 			chunks = new JRQueryChunk[jrChunks.length];
-			for(int i = 0; i < chunks.length; i++)
+			for (int i = 0; i < chunks.length; i++)
 			{
 				chunks[i] = factory.getQueryChunk(jrChunks[i]);
 			}

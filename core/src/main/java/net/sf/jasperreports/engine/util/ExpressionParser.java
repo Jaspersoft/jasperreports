@@ -71,7 +71,7 @@ public class ExpressionParser
 
 		int textChunkStart = 0;
 		StringBuilder textChunk = new StringBuilder(text.length());
-		while(matcher.find())
+		while (matcher.find())
 		{
 			int matchStart = matcher.start();
 			int matchEnd = matcher.end();

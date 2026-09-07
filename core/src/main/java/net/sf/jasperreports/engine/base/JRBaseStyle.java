@@ -282,7 +282,7 @@ public class JRBaseStyle implements JRStyle, Serializable, JRChangeEventsSupport
 	
 	protected void checkCircularParent()
 	{
-		for(JRStyle ancestor = parentStyle; ancestor != null; ancestor = ancestor.getStyle())
+		for (JRStyle ancestor = parentStyle; ancestor != null; ancestor = ancestor.getStyle())
 		{
 			if (ancestor == this)
 			{

@@ -1,4 +1,4 @@
-<jasperReport name="UnicodeReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="9df06543-a919-4db2-9dcd-ed4c8a66dec7">
+<jasperReport name="UnicodeReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="9df06543-a919-4db2-9dcd-ed4c8a66dec7">
 	<property name="net.sf.jasperreports.export.docx.embed.fonts" value="true"/>
 	<property name="net.sf.jasperreports.export.pptx.embed.fonts" value="true"/>
 	<style name="label" fontName="DejaVu Sans" fontSize="14.0"/>

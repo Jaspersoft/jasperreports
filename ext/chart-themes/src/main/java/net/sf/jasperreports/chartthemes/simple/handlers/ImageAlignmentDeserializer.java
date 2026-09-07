@@ -59,7 +59,7 @@ public class ImageAlignmentDeserializer extends StdDeserializer<Integer>
 		JsonNode node = oc.readTree(p);
 		
 		return convert(node.textValue());
-    }
+	}
 	
 	public static Integer convert(String value)
 	{

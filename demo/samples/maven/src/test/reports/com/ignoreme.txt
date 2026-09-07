@@ -1,0 +1,1 @@
+This file will be ignored by the report compiler task, since it does not match the file pattern used for searching report templates.

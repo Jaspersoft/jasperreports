@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.dataadapters;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
@@ -68,9 +67,8 @@ public final class DataAdapterServiceUtil
 		
 		List<DataAdapterContributorFactory> bundles = jasperReportsContext.getExtensions(
 				DataAdapterContributorFactory.class);
-		for (Iterator<DataAdapterContributorFactory> it = bundles.iterator(); it.hasNext();)
+		for (DataAdapterContributorFactory factory : bundles)
 		{
-			DataAdapterContributorFactory factory = it.next();
 			DataAdapterService service = factory.getDataAdapterService(paramContribContext, dataAdapter);
 			if (service != null)
 			{

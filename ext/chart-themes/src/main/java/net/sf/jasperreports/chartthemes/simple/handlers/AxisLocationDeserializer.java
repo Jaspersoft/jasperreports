@@ -59,7 +59,7 @@ public class AxisLocationDeserializer extends StdDeserializer<AxisLocation>
 		JsonNode node = oc.readTree(p);
 		
 		return convert(node.textValue());
-    }
+	}
 
 	public static AxisLocation convert(String value)
 	{

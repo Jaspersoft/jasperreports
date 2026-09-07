@@ -158,16 +158,7 @@ public class PropertiesMetadataUtil
 	
 	public List<PropertyMetadata> getElementProperties(JRElement element)
 	{
-		Collection<PropertyMetadata> allProperties = allProperties();
-		List<PropertyMetadata> elementProperties = new ArrayList<>();
-		for (PropertyMetadata propertyMetadata : allProperties)
-		{
-			if (inScope(propertyMetadata, element))
-			{
-				elementProperties.add(propertyMetadata);
-			}
-		}
-		return elementProperties;
+		return allProperties().stream().filter(p -> inScope(p, element)).collect(Collectors.toCollection(ArrayList::new));
 	}
 	
 	protected boolean inScope(PropertyMetadata property, JRElement element)
@@ -261,16 +252,7 @@ public class PropertiesMetadataUtil
 	
 	public List<PropertyMetadata> getContainerProperties(JRElementGroup container)
 	{
-		Collection<PropertyMetadata> allProperties = allProperties();
-		List<PropertyMetadata> containerProperties = new ArrayList<>();
-		for (PropertyMetadata propertyMetadata : allProperties)
-		{
-			if (inScope(propertyMetadata, container))
-			{
-				containerProperties.add(propertyMetadata);
-			}
-		}
-		return containerProperties;
+		return allProperties().stream().filter(p -> inScope(p, container)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	protected boolean inScope(PropertyMetadata propertyMetadata, JRElementGroup container)

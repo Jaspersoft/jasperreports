@@ -33,33 +33,33 @@ import net.sf.jasperreports.data.json.JsonExpressionLanguageEnum;
  */
 public class JsonExpressionLanguageFieldHandler extends GeneralizedFieldHandler {
 
-    public JsonExpressionLanguageFieldHandler() {
-        super();
-    }
+	public JsonExpressionLanguageFieldHandler() {
+		super();
+	}
 
-    @Override
-    public Object convertUponGet(Object value) {
-        if (value == null) {
-            return null;
-        }
-        return ((JsonExpressionLanguageEnum)value).getName();
-    }
+	@Override
+	public Object convertUponGet(Object value) {
+		if (value == null) {
+			return null;
+		}
+		return ((JsonExpressionLanguageEnum)value).getName();
+	}
 
-    @Override
-    public Object convertUponSet(Object value) {
-        if (value == null) {
-            return null;
-        }
-        return JsonExpressionLanguageEnum.getByName((String)value);
-    }
+	@Override
+	public Object convertUponSet(Object value) {
+		if (value == null) {
+			return null;
+		}
+		return JsonExpressionLanguageEnum.getByName((String)value);
+	}
 
-    @Override
-    public Class getFieldType() {
-        return JsonExpressionLanguageEnum.class;
-    }
+	@Override
+	public Class getFieldType() {
+		return JsonExpressionLanguageEnum.class;
+	}
 
-    @Override
-    public Object newInstance(Object parent) throws IllegalStateException {
-        return null;
-    }
+	@Override
+	public Object newInstance(Object parent) throws IllegalStateException {
+		return null;
+	}
 }

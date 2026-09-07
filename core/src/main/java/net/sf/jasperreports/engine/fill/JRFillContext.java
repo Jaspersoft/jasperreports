@@ -655,7 +655,7 @@ public class JRFillContext
 	{
 		@SuppressWarnings("unchecked")
 		T cachedValue = (T) fillCaches.get(key);
-		if (cachedValue == null)
+		if (cachedValue == null) // computeIfAbsent is not appropriate due to reentrance risk in this public method
 		{
 			cachedValue = cacheCreator.get();
 			fillCaches.put(key, cachedValue);

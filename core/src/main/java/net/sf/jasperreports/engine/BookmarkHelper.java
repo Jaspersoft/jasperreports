@@ -138,7 +138,7 @@ class BookmarkStack
 	{
 		BasePrintBookmark parent = this.peek();
 		// searching for parent
-		while(parent.getLevel() >= level)
+		while (parent.getLevel() >= level)
 		{
 			this.pop();
 			parent = this.peek();

@@ -55,12 +55,12 @@ public class ItemCompiler
 			List<Item> items = data.getItems();
 			if (items != null && !items.isEmpty())
 			{
-				for(Item item : items)
+				for (Item item : items)
 				{
 					List<ItemProperty> itemProperties = item.getProperties();
-					if(itemProperties != null)
+					if (itemProperties != null)
 					{
-						for(ItemProperty property : itemProperties)
+						for (ItemProperty property : itemProperties)
 						{
 							datasetCollector.addExpression(property.getValueExpression());
 						}
@@ -103,21 +103,21 @@ public class ItemCompiler
 	 */
 	public static void verifyItem(JRVerifier verifier, Item item, String itemName, String[] requiredNames, Map<String, String> alternativeNamesMap)
 	{
-		if(requiredNames != null && requiredNames.length > 0){
+		if (requiredNames != null && requiredNames.length > 0){
 			List<ItemProperty> itemProperties = item.getProperties();
 			if (itemProperties != null && !itemProperties.isEmpty())
 			{
 				for (String reqName :requiredNames)
 				{
 					boolean hasProperty = false;
-					for(ItemProperty itemProperty : itemProperties) {
+					for (ItemProperty itemProperty : itemProperties) {
 						if (itemProperty.getName().equals(reqName)
 							|| (alternativeNamesMap != null && itemProperty.getName().equals(alternativeNamesMap.get(reqName)))) {
 							hasProperty = true;
 							break;
 						}
 					}
-					if(!hasProperty) 
+					if (!hasProperty) 
 					{
 						verifier.addBrokenRule("No '" + reqName + "' property set for the " + itemName + " item.", itemProperties);
 					}

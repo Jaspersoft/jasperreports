@@ -139,29 +139,28 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 		if (datasource != null) {
 			List<String> columnNamesList = null;
 			String columnNames = getStringParameterOrProperty(JRCsvQueryExecuterFactory.CSV_COLUMN_NAMES);
-			if(columnNames != null) {
+			if (columnNames != null) {
 				columnNamesList = new ArrayList<>();
 				columnNamesList.add(columnNames);
 			} else {
 				String[] columnNamesArray = (String[]) getParameterValue(JRCsvQueryExecuterFactory.CSV_COLUMN_NAMES_ARRAY, true);
-				if(columnNamesArray != null) {
+				if (columnNamesArray != null) {
 					columnNamesList = Arrays.asList(columnNamesArray);
 				} else {
 					List<PropertySuffix> properties = getPropertiesUtil().getAllProperties(dataset, JRCsvQueryExecuterFactory.CSV_COLUMN_NAMES);
 					if (properties != null && !properties.isEmpty()) {
 						columnNamesList = new ArrayList<>();
-						for(int i = 0; i < properties.size(); i++) {
-							String property = properties.get(i).getValue();
-							columnNamesList.add(property);
+						for (PropertySuffix property : properties) {
+							columnNamesList.add(property.getValue());
 						}
 					} else {
 						JRField[] fields = dataset.getFields();
 						if (fields != null && fields.length > 0)
 						{
 							columnNamesList = new ArrayList<>();
-							for (int i = 0; i < fields.length; i++)
+							for (JRField field : fields)
 							{
-								columnNamesList.add(fields[i].getName());
+								columnNamesList.add(field.getName());
 							}
 						}
 					}
@@ -170,9 +169,8 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 
 			if (columnNamesList != null && columnNamesList.size() > 0) {
 				List<String> splitColumnNamesList = new ArrayList<>();
-				for(int i = 0; i < columnNamesList.size(); i++) {
-					String names = columnNamesList.get(i);
-					for(String token: names.split(",")){
+				for (String names : columnNamesList) {
+					for (String token: names.split(",")){
 						splitColumnNamesList.add(token.trim());
 					}
 				}
@@ -188,7 +186,7 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 				datasource.setDateFormat(dateFormat);
 			} else {
 				String dateFormatPattern = getStringParameterOrProperty(JRCsvQueryExecuterFactory.CSV_DATE_PATTERN);
-				if(dateFormatPattern != null){
+				if (dateFormatPattern != null){
 					datasource.setDatePattern(dateFormatPattern);
 				}
 			}
@@ -198,7 +196,7 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 				datasource.setNumberFormat(numberFormat);
 			} else {
 				String numberFormatPattern = getStringParameterOrProperty(JRCsvQueryExecuterFactory.CSV_NUMBER_PATTERN);
-				if(numberFormatPattern != null){
+				if (numberFormatPattern != null){
 					datasource.setNumberPattern(numberFormatPattern);
 				}
 			}
@@ -251,7 +249,7 @@ public class JRCsvQueryExecuter extends JRAbstractQueryExecuter
 
 	@Override
 	public void close() {
-		if(datasource != null){
+		if (datasource != null){
 			datasource.close();
 		}
 	}

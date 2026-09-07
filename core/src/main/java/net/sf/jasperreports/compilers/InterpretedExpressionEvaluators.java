@@ -80,13 +80,7 @@ public class InterpretedExpressionEvaluators implements DirectExpressionEvaluato
 	{
 		if (expression.isInterpreted())
 		{
-			DirectExpressionEvaluator evaluator = evaluators.get(expression);
-			if (evaluator == null)
-			{
-				evaluator = createEvaluator(expression);
-				evaluators.put(expression, evaluator);
-			}
-			return evaluator;
+			return evaluators.computeIfAbsent(expression, key -> createEvaluator(key));
 		}
 		return null;
 	}

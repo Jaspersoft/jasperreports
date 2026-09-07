@@ -60,9 +60,9 @@ public class JRBaseTimeSeriesDataset extends JRBaseChartDataset implements JRTim
 		timePeriod = dataset.getTimePeriod();
 		JRTimeSeries[] srcTimeSeries = dataset.getSeries();
 		
-		if( srcTimeSeries != null && srcTimeSeries.length > 0 ){
+		if ( srcTimeSeries != null && srcTimeSeries.length > 0 ){
 			timeSeries = new JRTimeSeries[ srcTimeSeries.length ];
-			for( int i = 0; i< timeSeries.length; i++ ){
+			for ( int i = 0; i< timeSeries.length; i++ ){
 				timeSeries[i] = factory.getTimeSeries( srcTimeSeries[i]);
 			}
 		}

@@ -57,7 +57,6 @@ public class AlterDesignApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 	}
@@ -70,7 +69,7 @@ public class AlterDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		File sourceFile = new File("target/reports/AlterDesignReport.jasper");
-		System.err.println(" : " + sourceFile.getAbsolutePath());
+		System.out.println(" : " + sourceFile.getAbsolutePath());
 		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
 		
 		JRRectangle rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("first.rectangle");
@@ -94,7 +93,7 @@ public class AlterDesignApp extends AbstractSampleApp
 		File destFile = new File(sourceFile.getParent(), jasperReport.getName() + ".jrprint");
 		JRSaver.saveObject(jasperPrint, destFile);
 		
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
 
@@ -105,7 +104,7 @@ public class AlterDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/AlterDesignReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 
 	
@@ -116,7 +115,7 @@ public class AlterDesignApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/AlterDesignReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 
 	

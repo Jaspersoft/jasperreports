@@ -153,7 +153,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		for(reportIndex = 0; reportIndex < items.size(); reportIndex++)
+		for (reportIndex = 0; reportIndex < items.size(); reportIndex++)
 		{
 			ExporterInputItem item = items.get(reportIndex);
 
@@ -161,7 +161,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 			
 			defaultFont = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
 
-			if(!hasGlobalSheetNames())
+			if (!hasGlobalSheetNames())
 			{
 				sheetNamesIndex = 0;
 			}
@@ -179,7 +179,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 				if (onePagePerSheet)
 				{
 
-					for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+					for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 					{
 						checkInterrupted();
 
@@ -222,7 +222,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 					{
 						((ResetableExporterFilter)filter).reset();
 					}
-					for(pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
+					for (pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++)
 					{
 						checkInterrupted();
 						JRPrintPage page = pages.get(pageIndex);
@@ -234,7 +234,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 				}
 			}
 
-			if(reportIndex == items.size() -1 && !pageExported)
+			if (reportIndex == items.size() -1 && !pageExported)
 			{
 				exportEmptyReport();
 			}
@@ -256,13 +256,12 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 		currentRow = new HashMap<>();
 		rowIndex += configuration.isWriteHeader() ? 1 : 0;
 		
-		for (int i = 0; i < elements.size(); ++i) 
+		for (JRPrintElement element : elements) 
 		{
-			JRPrintElement element = elements.get(i);
 			updateSheet(element);
 			
 			String sheetName = element.getPropertiesMap().getProperty(PROPERTY_SHEET_NAME);
-			if(sheetName != null)
+			if (sheetName != null)
 			{
 				setSheetName(sheetName);
 			}
@@ -316,13 +315,13 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 						: columnNamesMap.get(currentColumnName)
 						);
 
-			if(rowFreezeIndex > 0 || columnFreezeIndex > 0)
+			if (rowFreezeIndex > 0 || columnFreezeIndex > 0)
 			{
 				setFreezePane(rowFreezeIndex, columnFreezeIndex);
 			}
 			
 		}
-		if(columnNames.size() > maxColumnIndex+1)
+		if (columnNames.size() > maxColumnIndex+1)
 		{
 			throw 
 				new JRException(
@@ -333,17 +332,17 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 		// write last row
 		if (columnNames.size() > 0)
 		{
-			if(rowIndex == 1 && getCurrentItemConfiguration().isWriteHeader()) {
+			if (rowIndex == 1 && getCurrentItemConfiguration().isWriteHeader()) {
 				writeReportHeader();
 			}
 			writeCurrentRow(currentRow, repeatedValues);
 		}
 
-		if(autoFilterStart != null)
+		if (autoFilterStart != null)
 		{
 			setAutoFilter(autoFilterStart + ":" + (autoFilterEnd != null ? autoFilterEnd : autoFilterStart));
 		}
-		else if(autoFilterEnd != null)
+		else if (autoFilterEnd != null)
 		{
 			setAutoFilter(autoFilterEnd + ":" + autoFilterEnd);
 		}
@@ -406,7 +405,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 		int crtIndex = 1;
 		String txtIndex = "";
 
-		if(sheetNamesMap.containsKey(sheetName))
+		if (sheetNamesMap.containsKey(sheetName))
 		{
 			// sheet names must be unique; altering sheet name using number of occurrences
 			crtIndex = sheetNamesMap.get(sheetName) + 1;
@@ -416,7 +415,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 		sheetNamesMap.put(sheetName, crtIndex);
 
 		String name = sheetName;
-		if(txtIndex.length() > 0)
+		if (txtIndex.length() > 0)
 		{
 			name += " " + txtIndex;
 		}
@@ -451,10 +450,10 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 	protected String getFormula(JRPrintText text)
 	{
 		String formula = text.getPropertiesMap().getProperty(PROPERTY_CELL_FORMULA);
-		if( formula != null)
+		if ( formula != null)
 		{
 			formula = formula.trim();
-			if(formula.startsWith("="))
+			if (formula.startsWith("="))
 			{
 				formula = formula.substring(1);
 			}

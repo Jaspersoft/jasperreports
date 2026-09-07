@@ -48,7 +48,7 @@ public class BatikUserAgent extends UserAgentAdapter
 {
 
 	@Property(
-			category = PropertyConstants.CATEGORY_OTHER,
+			category = PropertyConstants.CATEGORY_SECURITY,
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_7_0_1,
 			valueType = Boolean.class)

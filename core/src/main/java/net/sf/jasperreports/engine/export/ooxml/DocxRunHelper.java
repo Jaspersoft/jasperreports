@@ -96,12 +96,12 @@ public class DocxRunHelper extends BaseHelper
 				);
 			
 			StringTokenizer tkzer = new StringTokenizer(text, "\n", true);
-			while(tkzer.hasMoreTokens())
+			while (tkzer.hasMoreTokens())
 			{
 				String token = tkzer.nextToken();
 				if ("\n".equals(token))
 				{
-					if(isNewLineAsParagraph)
+					if (isNewLineAsParagraph)
 					{
 						write("<w:t xml:space=\"preserve\"><w:p/></w:t>\n");
 					}
@@ -179,7 +179,7 @@ public class DocxRunHelper extends BaseHelper
 			write("        <w:color w:val=\"" + JRColorUtil.getColorHexa((Color)value) + "\" />\n");
 		}
 		
-		if(highlightText)
+		if (highlightText)
 		{
 			value = attrs.get(TextAttribute.BACKGROUND);
 

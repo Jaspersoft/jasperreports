@@ -365,9 +365,8 @@ public class HtmlEditorKitMarkupProcessor extends EditorKitMarkupProcessor
 	 */
 	private void resizeRuns(List<Run> runs, int startIndex, int count)
 	{
-		for (int j = 0; j < runs.size(); j++)
+		for (JRStyledText.Run run : runs)
 		{
-			JRStyledText.Run run = runs.get(j);
 			if (run.startIndex <= startIndex && run.endIndex > startIndex - count)
 			{
 				run.endIndex += count;
@@ -384,7 +383,7 @@ public class HtmlEditorKitMarkupProcessor extends EditorKitMarkupProcessor
 	protected static String getOLBulletChars(int index, boolean isUpperCase)
 	{
 		// max 3-letter index is 18277
-		if(index < 0 || index > 18277)	
+		if (index < 0 || index > 18277)	
 		{
 			throw 
 				new JRRuntimeException(

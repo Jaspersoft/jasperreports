@@ -435,7 +435,7 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 		Boolean columnAutoFit = getColumnAutoFit(element);
 		if (columnAutoFit != null)
 		{
-			if(!cut.hasProperty(ExcelAbstractExporter.PROPERTY_AUTO_FIT_COLUMN))
+			if (!cut.hasProperty(ExcelAbstractExporter.PROPERTY_AUTO_FIT_COLUMN))
 			{
 				cut.setProperty(ExcelAbstractExporter.PROPERTY_AUTO_FIT_COLUMN, columnAutoFit);
 			}
@@ -484,7 +484,7 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 	
 	private void setMargin(Integer marginValue, Cut cut, String marginName)
 	{
-		if(
+		if (
 			marginValue != null && (!cut.hasProperty(marginName) || (Integer)cut.getProperty(marginName) < marginValue)
 			)
 		{
@@ -495,7 +495,7 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 	
 	private void setHeaderFooter(String headerFooterValue, Cut cut, String headerFooterName)
 	{
-		if(headerFooterValue != null && headerFooterValue.trim().length() > 0)
+		if (headerFooterValue != null && headerFooterValue.trim().length() > 0)
 		{
 			cut.setProperty(headerFooterName, headerFooterValue);
 		}
@@ -518,7 +518,7 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 		Boolean rowAutoFit = getRowAutoFit(element);
 		if (rowAutoFit != null)
 		{
-			if(!cut.hasProperty(ExcelAbstractExporter.PROPERTY_AUTO_FIT_ROW))
+			if (!cut.hasProperty(ExcelAbstractExporter.PROPERTY_AUTO_FIT_ROW))
 			{
 				cut.setProperty(ExcelAbstractExporter.PROPERTY_AUTO_FIT_ROW, rowAutoFit);
 			}
@@ -529,10 +529,10 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 		}
 
 		List<PropertySuffix> rowLevelSuffixes = getRowLevelSuffixes(element);
-		if(rowLevelSuffixes != null && !rowLevelSuffixes.isEmpty())
+		if (rowLevelSuffixes != null && !rowLevelSuffixes.isEmpty())
 		{
 			SortedMap<String, Boolean> levelMap = new TreeMap<>();
-			for(PropertySuffix suffix : rowLevelSuffixes)
+			for (PropertySuffix suffix : rowLevelSuffixes)
 			{
 				String level = suffix.getSuffix();
 				String marker = suffix.getValue();
@@ -551,49 +551,49 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 		}
 		
 		String sheetName = getSheetName(element);
-		if(sheetName != null)
+		if (sheetName != null)
 		{
 			cut.setProperty(ExcelAbstractExporter.PROPERTY_SHEET_NAME, sheetName);
 		}
 
 		String tabColor = getSheetTabColor(element);
-		if(tabColor != null)
+		if (tabColor != null)
 		{
 			cut.setProperty(PROPERTY_SHEET_TAB_COLOR, tabColor);
 		}
 
 		Integer pageScale = getPageScale(element);
-		if(pageScale != null && pageScale > 9 && pageScale < 401)
+		if (pageScale != null && pageScale > 9 && pageScale < 401)
 		{
 			cut.setProperty(PROPERTY_PAGE_SCALE, pageScale);
 		}
 		
 		Integer firstPageNumber = getFirstPageNumber(element);
-		if(firstPageNumber != null)
+		if (firstPageNumber != null)
 		{
 			cut.setProperty(PROPERTY_FIRST_PAGE_NUMBER, firstPageNumber);
 		}
 		
 		Boolean showGridlines = getShowGridlines(element);
-		if(showGridlines != null)
+		if (showGridlines != null)
 		{
 			cut.setProperty(PROPERTY_SHOW_GRIDLINES, showGridlines);
 		}
 		
 		Boolean ignoreCellBackground = getIgnoreCellBackground(element);
-		if(ignoreCellBackground != null)
+		if (ignoreCellBackground != null)
 		{
 			cut.setProperty(PROPERTY_IGNORE_CELL_BACKGROUND, ignoreCellBackground);
 		}
 		
 		Boolean ignoreCellBorder = getIgnoreCellBorder(element);
-		if(ignoreCellBorder != null)
+		if (ignoreCellBorder != null)
 		{
 			cut.setProperty(PROPERTY_IGNORE_CELL_BORDER, ignoreCellBorder);
 		}
 
 		Boolean whitePageBackground = getWhitePageBackground(element);
-		if(whitePageBackground != null)
+		if (whitePageBackground != null)
 		{
 			cut.setProperty(PROPERTY_WHITE_PAGE_BACKGROUND, whitePageBackground);
 		}
@@ -605,7 +605,7 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 					? col2
 					: col1
 					);
-		if(columnFreezeIndex > 0)
+		if (columnFreezeIndex > 0)
 		{
 			cut.setProperty(ExcelAbstractExporter.PROPERTY_FREEZE_COLUMN_EDGE, columnFreezeIndex);
 		}
@@ -617,21 +617,21 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 					? row2
 					: row1
 					);
-		if(rowFreezeIndex > 0)
+		if (rowFreezeIndex > 0)
 		{
 			cut.setProperty(ExcelAbstractExporter.PROPERTY_FREEZE_ROW_EDGE, rowFreezeIndex);
 		}
 		
 		Float columnWidthRatio = getColumnWidthRatio(element);
 		// only positive  values are allowed
-		if(columnWidthRatio != null && columnWidthRatio > 0f)
+		if (columnWidthRatio != null && columnWidthRatio > 0f)
 		{
 			cut.setProperty(PROPERTY_COLUMN_WIDTH_RATIO, columnWidthRatio);
 		}
 		
 		Integer printPageHeight = getPrintPageHeight(element);
 		// only positive  values are allowed
-		if(printPageHeight != null && printPageHeight > 0 
+		if (printPageHeight != null && printPageHeight > 0 
 			&& (!cut.hasProperty(PROPERTY_PRINT_PAGE_HEIGHT) || (Integer)cut.getProperty(PROPERTY_PRINT_PAGE_HEIGHT) < printPageHeight))
 		{
 			cut.setProperty(PROPERTY_PRINT_PAGE_HEIGHT, printPageHeight);
@@ -639,7 +639,7 @@ public abstract class JRXlsAbstractExporterNature extends AbstractExporterNature
 		
 		Integer printPageWidth = getPrintPageWidth(element);
 		// only positive  values are allowed
-		if(printPageWidth != null && printPageWidth > 0 
+		if (printPageWidth != null && printPageWidth > 0 
 				&& (!cut.hasProperty(PROPERTY_PRINT_PAGE_WIDTH) || (Integer)cut.getProperty(PROPERTY_PRINT_PAGE_WIDTH) < printPageWidth))
 		{
 			cut.setProperty(PROPERTY_PRINT_PAGE_WIDTH, printPageWidth);

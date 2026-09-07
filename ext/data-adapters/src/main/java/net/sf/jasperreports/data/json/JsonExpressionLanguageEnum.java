@@ -33,31 +33,31 @@ import net.sf.jasperreports.engine.type.NamedEnum;
  */
 public enum JsonExpressionLanguageEnum implements NamedEnum {
 
-    /**
-     * The first JSON expression language implementation
-     */
-    JSON("json"),
+	/**
+	 * The first JSON expression language implementation
+	 */
+	JSON("json"),
 
-    /**
-     * The JSON QL expression language implementation
-     */
-    JSONQL("jsonql");
-
-
-    private final transient String name;
+	/**
+	 * The JSON QL expression language implementation
+	 */
+	JSONQL("jsonql");
 
 
-    JsonExpressionLanguageEnum(String name) {
-        this.name = name;
-    }
+	private final transient String name;
 
-    @Override
-    @JsonValue
-    public String getName() {
-        return name;
-    }
 
-    public static JsonExpressionLanguageEnum getByName(String name) {
-        return EnumUtil.getEnumByName(values(), name);
-    }
+	JsonExpressionLanguageEnum(String name) {
+		this.name = name;
+	}
+
+	@Override
+	@JsonValue
+	public String getName() {
+		return name;
+	}
+
+	public static JsonExpressionLanguageEnum getByName(String name) {
+		return EnumUtil.getEnumByName(values(), name);
+	}
 }

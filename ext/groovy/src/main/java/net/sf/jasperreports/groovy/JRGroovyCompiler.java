@@ -98,10 +98,10 @@ public class JRGroovyCompiler extends JRAbstractJavaCompiler
 		
 		CompilationUnit unit = new CompilationUnit(config);
 		
-		for (int i = 0; i < units.length; i++)
+		for (JRCompilationUnit crtUnit : units)
 		{
-			byte[] sourceBytes = units[i].getSourceCode().getBytes(StandardCharsets.UTF_8);
-			unit.addSource("calculator_" + units[i].getCompileName(), new ByteArrayInputStream(sourceBytes));
+			byte[] sourceBytes = crtUnit.getSourceCode().getBytes(StandardCharsets.UTF_8);
+			unit.addSource("calculator_" + crtUnit.getCompileName(), new ByteArrayInputStream(sourceBytes));
 		}
 		
 		try 
@@ -129,9 +129,9 @@ public class JRGroovyCompiler extends JRAbstractJavaCompiler
 		Map<String, byte[]> classBytes = generatedClasses.stream().collect(
 				Collectors.toMap(GroovyClass::getName, GroovyClass::getBytes));
 		CompiledClasses compiledClasses = new CompiledClasses(classBytes);
-		for (int i = 0; i < units.length; i++)
+		for (JRCompilationUnit crtUnit : units)
 		{
-			units[i].setCompileData(compiledClasses);
+			crtUnit.setCompileData(compiledClasses);
 		}
 		
 		return null;

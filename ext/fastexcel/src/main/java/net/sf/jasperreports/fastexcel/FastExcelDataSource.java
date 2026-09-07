@@ -451,9 +451,8 @@ public class FastExcelDataSource extends AbstractXlsDataSource
 		else
 		{
 			Map<String, Integer> newColumnNames = new LinkedHashMap<>();
-			for(Iterator<Integer> it = columnNames.values().iterator(); it.hasNext();)
+			for (Integer columnIndex : columnNames.values())
 			{
-				Integer columnIndex = it.next();
 				Cell cell = row.getCell(columnIndex);
 				if (cell != null)
 				{

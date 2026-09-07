@@ -61,5 +61,5 @@ public class ReportTemplateDeserializer extends StdDeserializer<JRReportTemplate
 		JsonNode node = oc.readTree(p);
 		
 		return new JRDesignReportTemplate(new JRDesignExpression(node.asText()));
-    }
+	}
 }

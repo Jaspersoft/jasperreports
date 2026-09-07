@@ -11,9 +11,12 @@
 	<packaging>pom</packaging>
 	<properties>
 		<jasperreports.root.dir>${basedir}/../../../</jasperreports.root.dir>
-		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
+		<maven.buildNumber.skip>true</maven.buildNumber.skip>
+		<maven.deploy.skip>true</maven.deploy.skip>
+		<maven.install.skip>true</maven.install.skip>
 		<sample.app.name>${sample.base.name}App</sample.app.name>
 		<sample.report.name>${sample.base.name}Report</sample.report.name>
+		<pdf.producer>classic</pdf.producer>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,20 +40,7 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports-pdf</artifactId>
-			<version>${revision}</version>
-			<scope>compile</scope>
-			<optional>false</optional>
-			<!-- to allow switching to jasperreports-javaflow -->
-			<exclusions>
-				<exclusion>
-					<groupId>net.sf.jasperreports</groupId>
-					<artifactId>jasperreports</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- PDF producer dependency is in profiles below -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-excel-poi</artifactId>
@@ -80,6 +70,58 @@
 			<optional>false</optional>
 		</dependency>
 	</dependencies>
+	<profiles>
+		<profile>
+			<id>openpdf-classic</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.jasperreports</groupId>
+					<artifactId>jasperreports-pdf</artifactId>
+					<version>${revision}</version>
+					<scope>compile</scope>
+					<optional>false</optional>
+					<!-- to allow switching to jasperreports-javaflow -->
+					<exclusions>
+						<exclusion>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>openpdf3</id>
+			<activation>
+				<property>
+					<name>pdf.producer</name>
+					<value>openpdf3</value>
+				</property>
+			</activation>
+			<properties>
+				<pdf.producer>openpdf3</pdf.producer>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.jasperreports</groupId>
+					<artifactId>jasperreports-openpdf</artifactId>
+					<version>${revision}</version>
+					<scope>compile</scope>
+					<optional>false</optional>
+					<!-- to allow switching to jasperreports-javaflow -->
+					<exclusions>
+						<exclusion>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -115,6 +157,7 @@
 					-->
 					<include>**/*.txt</include>
 					<include>**/*.xsd</include>
+					<include>**/*.jrctx</include>
 				</includes>
 			</resource>
 			<resource>
@@ -140,6 +183,32 @@
 					<fork>true</fork><!-- TODO lucianc is this ok? -->
 					<compilerArgument>-Xlint:deprecation,-unchecked,-options</compilerArgument>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports-maven-plugin</artifactId>
+				<version>${revision}</version>
+				<executions>
+					<execution>
+						<id>compile-reports</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/reports</sourceDirectory>
+							<outputDirectory>${project.build.directory}/reports</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<!-- this is for decompile, as update goal is not expected to be called on all samples -->
+						<id>default-cli</id>
+						<configuration>
+							<sourceDirectory>${project.build.directory}/reports</sourceDirectory>
+							<outputDirectory>${project.build.directory}/reports</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -173,6 +242,7 @@
 							<executable>mvn</executable>
 							<arguments>
 								<argument>exec:java</argument>
+								<argument>-Dpdf.producer=${pdf.producer}</argument>
 							</arguments>
 							<workingDirectory>${project.basedir}</workingDirectory>
 						</configuration>

@@ -191,13 +191,9 @@ public abstract class JRAbstractJavaCompiler extends JRAbstractCompiler
 
 	protected static synchronized void putClassInCache(String className, Class<?> loadedClass)
 	{
-		Object key = classCacheKey();
-		Map<String,Class<?>> contextMap = classCache.get(key);
-		if (contextMap == null)
-		{
-			contextMap = new ReferenceMap<>(ReferenceMap.ReferenceStrength.HARD, ReferenceMap.ReferenceStrength.SOFT);
-			classCache.put(key, contextMap);
-		}
-		contextMap.put(className, loadedClass);
+		classCache.computeIfAbsent(
+			classCacheKey(),
+			k -> new ReferenceMap<>(ReferenceMap.ReferenceStrength.HARD, ReferenceMap.ReferenceStrength.SOFT)
+			).put(className, loadedClass);
 	}
 }

@@ -23,7 +23,6 @@
  */
 package net.sf.jasperreports.engine.export;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -57,9 +56,8 @@ public class DefaultHyperlinkTargetProducerFactory extends JRHyperlinkTargetProd
 
 		List<JRHyperlinkTargetProducerFactory> factories = jasperReportsContext.getExtensions(
 				JRHyperlinkTargetProducerFactory.class);
-		for (Iterator<JRHyperlinkTargetProducerFactory> it = factories.iterator(); it.hasNext();)
+		for (JRHyperlinkTargetProducerFactory factory : factories)
 		{
-			JRHyperlinkTargetProducerFactory factory = it.next();
 			JRHyperlinkTargetProducer producer = factory.getHyperlinkTargetProducer(linkTarget);
 			if (producer != null)
 			{

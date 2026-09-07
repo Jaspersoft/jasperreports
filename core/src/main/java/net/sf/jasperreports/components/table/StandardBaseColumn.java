@@ -112,9 +112,9 @@ public abstract class StandardBaseColumn implements BaseColumn, Serializable, JR
 		if (props != null && props.length > 0)
 		{
 			propertyExpressions = new ArrayList<>(props.length);
-			for (int i = 0; i < props.length; i++)
+			for (JRPropertyExpression prop : props)
 			{
-				propertyExpressions.add(factory.getBaseObjectFactory().getPropertyExpression(props[i]));
+				propertyExpressions.add(factory.getBaseObjectFactory().getPropertyExpression(prop));
 			}
 		}
 	}

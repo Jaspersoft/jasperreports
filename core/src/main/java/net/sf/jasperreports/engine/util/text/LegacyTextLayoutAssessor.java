@@ -63,9 +63,8 @@ public class LegacyTextLayoutAssessor implements TextLayoutAssessor
 	public boolean hasComplexLayout(char[] chars)
 	{
 		UnicodeBlock prevBlock = null;
-		for (int i = 0; i < chars.length; i++)
+		for (char ch : chars)
 		{
-			char ch = chars[i];
 			if (ch >= COMPEX_LAYOUT_START_CHAR && ch <= COMPEX_LAYOUT_END_CHAR)
 			{
 				//FIXME use icu4j or CharPredicateCache

@@ -45,7 +45,7 @@ public class JRBaseExpressionChunk implements JRExpressionChunk, Serializable
 	/**
 	 *
 	 */
-	protected byte type = TYPE_TEXT;
+	protected byte type = TYPE_TEXT; // primitive byte field would have zero as default value; need to set it to TYPE_TEXT explicitly
 	protected String text;
 
 

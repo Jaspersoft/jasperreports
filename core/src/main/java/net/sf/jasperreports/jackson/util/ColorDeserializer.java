@@ -60,7 +60,7 @@ public class ColorDeserializer extends StdScalarDeserializer<Color>
 		JsonNode node = oc.readTree(p);
 		
 		return convert(node.textValue());
-    }
+	}
 
 	public static Color convert(String value)
 	{

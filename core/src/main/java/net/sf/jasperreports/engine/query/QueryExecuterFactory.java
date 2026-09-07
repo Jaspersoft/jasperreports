@@ -63,7 +63,25 @@ public interface QueryExecuterFactory
 			)
 	public static final String QUERY_EXECUTER_FACTORY_PREFIX = JRPropertiesUtil.PROPERTY_PREFIX + "query.executer.factory.";
 
-	
+	/**
+	 * Flag property that determines whether a query executer factory for a given language is enabled.
+	 * <p/>
+	 * When set to <code>false</code>, any attempt to execute a query in the specified language will result
+	 * in an error. This can be used to restrict the query languages available in a deployment.
+	 * <p/>
+	 * The property is enabled by default for all query languages.
+	 */
+	@Property(
+			name = "net.sf.jasperreports.query.executer.factory.{language}.enabled",
+			category = PropertyConstants.CATEGORY_SECURITY,
+			defaultValue = PropertyConstants.BOOLEAN_TRUE,
+			scopes = {PropertyScope.CONTEXT},
+			sinceVersion = PropertyConstants.VERSION_7_0_7,
+			valueType = Boolean.class
+			)
+	public static final String PROPERTY_QUERY_EXECUTER_FACTORY_ENABLED_SUFFIX = ".enabled";
+
+
 	/**
 	 * Returns the built-in parameters associated with this query type.
 	 * <p/>

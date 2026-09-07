@@ -451,7 +451,7 @@ public class JRXmlDataSource extends AbstractXmlDataSource<JRXmlDataSource>
 	@Override
 	public boolean next() 
 	{
-		if(currentNodeIndex == nodeListLength - 1)
+		if (currentNodeIndex == nodeListLength - 1)
 		{
 			return false;
 		}
@@ -533,7 +533,7 @@ public class JRXmlDataSource extends AbstractXmlDataSource<JRXmlDataSource>
 	@Override
 	public Document subDocument() throws JRException
 	{
-		if(currentNode == null)
+		if (currentNode == null)
 		{
 			throw 
 				new JRException(

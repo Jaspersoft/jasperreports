@@ -70,9 +70,8 @@ public class SpringExtensionsRegistry implements ExtensionsRegistry
 	{
 		String[] beanNames = getExtensionBeanNames(extensionType);
 		List<T> beans = new ArrayList<>(beanNames.length);
-		for (int i = 0; i < beanNames.length; i++)
+		for (String name : beanNames)
 		{
-			String name = beanNames[i];
 			if (log.isDebugEnabled())
 			{
 				log.debug("Getting bean " + name + " as extension of type "

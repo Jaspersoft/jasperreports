@@ -48,7 +48,7 @@ public class JRTemplateLine extends JRTemplateGraphicElement
 	/**
 	 *
 	 */
-	protected LineDirectionEnum direction = LineDirectionEnum.TOP_DOWN;
+	protected LineDirectionEnum direction;
 
 	/**
 	 *

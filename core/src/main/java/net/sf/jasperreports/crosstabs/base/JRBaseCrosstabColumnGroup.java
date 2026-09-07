@@ -41,7 +41,7 @@ public class JRBaseCrosstabColumnGroup extends JRBaseCrosstabGroup implements JR
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
 	protected int height;
-	protected CrosstabColumnPositionEnum position = CrosstabColumnPositionEnum.LEFT; //FIXME why there are some default initializations left after the Jackson refactoring of JRXML?
+	protected CrosstabColumnPositionEnum position;
 	protected JRCellContents crosstabHeader;
 
 	public JRBaseCrosstabColumnGroup(JRCrosstabColumnGroup group, JRBaseObjectFactory factory)

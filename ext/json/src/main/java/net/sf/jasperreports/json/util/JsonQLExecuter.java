@@ -33,8 +33,8 @@ import net.sf.jasperreports.json.JRJsonNode;
  */
 public interface JsonQLExecuter {
 
-    List<JRJsonNode> selectNodes(JRJsonNode rootNode, String expression) throws JRException ;
+	List<JRJsonNode> selectNodes(JRJsonNode rootNode, String expression) throws JRException ;
 
-    JRJsonNode selectNode(JRJsonNode contextNode, JRJsonNode rootNode, String expression) throws JRException;
+	JRJsonNode selectNode(JRJsonNode contextNode, JRJsonNode rootNode, String expression) throws JRException;
 
 }

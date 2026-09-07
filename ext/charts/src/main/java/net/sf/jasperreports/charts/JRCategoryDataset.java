@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import net.sf.jasperreports.charts.design.JRDesignCategoryDataset;
+import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
  * This dataset accommodates one or more data series consisting of values associated with 
@@ -36,6 +38,16 @@ import net.sf.jasperreports.charts.design.JRDesignCategoryDataset;
  * 
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"kind",
+	JRXmlConstants.ATTRIBUTE_resetType,
+	JRXmlConstants.ATTRIBUTE_resetGroup,
+	JRXmlConstants.ATTRIBUTE_incrementType,
+	JRXmlConstants.ATTRIBUTE_incrementGroup,
+	JRXmlConstants.ELEMENT_datasetRun,
+	JRXmlConstants.ELEMENT_incrementWhenExpression,
+	"series"
+	})
 @JsonTypeName("category")
 @JsonDeserialize(as = JRDesignCategoryDataset.class)
 public interface JRCategoryDataset extends JRChartDataset

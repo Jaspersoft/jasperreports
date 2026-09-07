@@ -68,6 +68,14 @@ public enum CrosstabPercentageEnum implements NamedEnum
 		return EnumUtil.getEnumByName(values(), name);
 	}
 	
+	/**
+	 *
+	 */
+	public static CrosstabPercentageEnum getValueOrDefault(CrosstabPercentageEnum value)
+	{
+		return value == null ? NONE : value;
+	}
+	
 	@Override
 	public CrosstabPercentageEnum getDefault()
 	{

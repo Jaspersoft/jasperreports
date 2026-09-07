@@ -26,7 +26,6 @@ package net.sf.jasperreports.hibernate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -248,9 +247,8 @@ public class JRHibernateQueryExecuter extends JRAbstractQueryExecuter
 		{
 			Set<String> namesSet = new HashSet<>();
 			
-			for (Iterator<String> iter = parameterNames.iterator(); iter.hasNext();)
+			for (String parameterName : parameterNames)
 			{
-				String parameterName = iter.next();
 				if (namesSet.add(parameterName))
 				{
 					JRValueParameter parameter = getValueParameter(parameterName);

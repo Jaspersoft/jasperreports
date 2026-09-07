@@ -58,7 +58,6 @@ public class TextApp extends AbstractSampleApp
 	@Override
 	public void test() throws JRException
 	{
-		compile();
 		fill();
 		pdf();
 		xml();
@@ -79,7 +78,7 @@ public class TextApp extends AbstractSampleApp
 		parameters.put("OrderClause", "City");
 
 		JasperFillManager.fillReportToFile("target/reports/TextReport.jasper", parameters, getDemoHsqldbConnection());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+		System.out.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -90,7 +89,7 @@ public class TextApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("target/reports/TextReport.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		System.out.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -109,7 +108,7 @@ public class TextApp extends AbstractSampleApp
 		exporter.setExporterOutput(new SimpleWriterExporterOutput(destFile));
 		exporter.exportReport();
 
-		System.err.println("Text creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("Text creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -120,7 +119,7 @@ public class TextApp extends AbstractSampleApp
 	{
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile("target/reports/TextReport.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
@@ -143,7 +142,7 @@ public class TextApp extends AbstractSampleApp
 		
 		exporter.exportReport();
 
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+		System.out.println("XML creation time : " + (System.currentTimeMillis() - start));
 	}
 
 

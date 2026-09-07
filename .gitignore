@@ -1,5 +1,7 @@
 **/target
+**/target-javaflow
 **/.flattened-pom.xml
+**/.flattened-pom-javaflow.xml
 **/*.iml
 **/.classpath
 **/.project

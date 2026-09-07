@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -134,9 +133,8 @@ public class JRViewerController
 		if (!listeners.isEmpty())
 		{
 			JRViewerEvent event = new JRViewerEvent(this, eventCode);
-			for (Iterator<JRViewerListener> it = listeners.iterator(); it.hasNext();)
+			for (JRViewerListener listener : listeners)
 			{
-				JRViewerListener listener = it.next();
 				listener.viewerEvent(event);
 			}
 		}

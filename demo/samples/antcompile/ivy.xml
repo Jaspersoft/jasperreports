@@ -2,5 +2,6 @@
 	<info organisation="net.sf.jasperreports" module="jasperreports-samples-antcompile"/>
 	<dependencies>
 		<dependency org="net.sf.jasperreports" name="jasperreports-ant" rev="7.0.0"/>
+		<dependency org="net.sf.jasperreports" name="jasperreports-jdt" rev="7.0.0"/>
 	</dependencies>
 </ivy-module>

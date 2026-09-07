@@ -1166,7 +1166,9 @@ public class Tabulator
 			{
 				String cellContentsType = element.getPropertiesMap().getProperty(JRCellContents.PROPERTY_TYPE);
 				return 
-					JRCellContents.TYPE_COLUMN_HEADER.equals(cellContentsType) || JRCellContents.TYPE_CROSSTAB_HEADER.equals(cellContentsType)
+					JRCellContents.TYPE_COLUMN_HEADER.equals(cellContentsType) 
+						|| JRCellContents.TYPE_CROSSTAB_HEADER.equals(cellContentsType)
+						|| JRCellContents.TYPE_CROSSTAB_TITLE.equals(cellContentsType)
 					? CellType.COLUMN_HEADER
 					: (JRCellContents.TYPE_ROW_HEADER.equals(cellContentsType) ? CellType.ROW_HEADER : null);
 			}

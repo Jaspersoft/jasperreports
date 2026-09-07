@@ -58,7 +58,7 @@ public final class JRIncrementerFactoryCache
 		{
 			try
 			{
-				incrementerFactory = (JRIncrementerFactory)factoryClass.getDeclaredConstructor().newInstance();
+				incrementerFactory = factoryClass.asSubclass(JRIncrementerFactory.class).getDeclaredConstructor().newInstance();
 			}
 			catch (InstantiationException | IllegalAccessException 
 				| NoSuchMethodException | InvocationTargetException e)

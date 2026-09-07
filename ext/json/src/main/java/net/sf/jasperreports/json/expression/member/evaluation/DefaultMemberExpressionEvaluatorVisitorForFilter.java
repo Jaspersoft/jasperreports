@@ -32,17 +32,17 @@ import net.sf.jasperreports.json.expression.member.ObjectKeyExpression;
  */
 public class DefaultMemberExpressionEvaluatorVisitorForFilter extends DefaultMemberExpressionEvaluatorVisitor {
 
-    public DefaultMemberExpressionEvaluatorVisitorForFilter(EvaluationContext evaluationContext) {
-        super(evaluationContext);
-    }
+	public DefaultMemberExpressionEvaluatorVisitorForFilter(EvaluationContext evaluationContext) {
+		super(evaluationContext);
+	}
 
-    /**
-     * Filters need to keep missing nodes for null checks and keep the array containment when traversing arrays
-     */
-    @Override
-    public JsonNodeContainer evaluateObjectKey(ObjectKeyExpression expression, JsonNodeContainer contextNode) {
-        ObjectKeyExpressionEvaluator evaluator = new ObjectKeyExpressionEvaluator(getEvaluationContext(), expression, true);
-        return evaluator.evaluate(contextNode);
-    }
+	/**
+	 * Filters need to keep missing nodes for null checks and keep the array containment when traversing arrays
+	 */
+	@Override
+	public JsonNodeContainer evaluateObjectKey(ObjectKeyExpression expression, JsonNodeContainer contextNode) {
+		ObjectKeyExpressionEvaluator evaluator = new ObjectKeyExpressionEvaluator(getEvaluationContext(), expression, true);
+		return evaluator.evaluate(contextNode);
+	}
 
 }

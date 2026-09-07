@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.fill;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
@@ -90,9 +89,8 @@ public class JRFillGenericElement extends JRFillElement implements
 	{
 		super.collectDelayedEvaluations();
 		
-		for (int i = 0; i < parameters.length; i++)
+		for (JRGenericElementParameter parameter : parameters)
 		{
-			JRGenericElementParameter parameter = parameters[i];
 			collectDelayedEvaluations(parameter.getValueExpression());
 		}
 	}
@@ -100,10 +98,8 @@ public class JRFillGenericElement extends JRFillElement implements
 	protected void evaluateElement(byte evaluation) throws JRException
 	{
 		parameterValues.clear();
-		for (int i = 0; i < parameters.length; i++)
+		for (JRGenericElementParameter parameter : parameters)
 		{
-			JRGenericElementParameter parameter = parameters[i];
-			
 			Object value = null;
 			JRExpression valueExpression = parameter.getValueExpression();
 			if (valueExpression != null)
@@ -214,9 +210,8 @@ public class JRFillGenericElement extends JRFillElement implements
 
 	protected void copy(JRGenericPrintElement printElement)
 	{
-		for (Iterator<Map.Entry<String,Object>> it = parameterValues.entrySet().iterator(); it.hasNext();)
+		for (Map.Entry<String,Object> entry : parameterValues.entrySet())
 		{
-			Map.Entry<String,Object> entry = it.next();
 			String name = entry.getKey();
 			Object value = entry.getValue();
 			printElement.setParameterValue(name, value);

@@ -30,34 +30,34 @@ import net.sf.jasperreports.json.expression.member.evaluation.MemberExpressionEv
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public class ArraySliceExpression extends AbstractMemberExpression {
-    private Integer start, end;
+	private Integer start, end;
 
 
-    public ArraySliceExpression(DIRECTION direction, Integer start, Integer end) {
-        this.start = start;
-        this.end = end;
-        setDirection(direction);
-    }
+	public ArraySliceExpression(DIRECTION direction, Integer start, Integer end) {
+		this.start = start;
+		this.end = end;
+		setDirection(direction);
+	}
 
-    @Override
-    public JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator) {
-        return evaluator.evaluateArraySlice(this, nodeContainer);
-    }
+	@Override
+	public JsonNodeContainer evaluate(JsonNodeContainer nodeContainer, MemberExpressionEvaluatorVisitor evaluator) {
+		return evaluator.evaluateArraySlice(this, nodeContainer);
+	}
 
-    public Integer getStart() {
-        return start;
-    }
+	public Integer getStart() {
+		return start;
+	}
 
-    public Integer getEnd() {
-        return end;
-    }
+	public Integer getEnd() {
+		return end;
+	}
 
-    @Override
-    public String toString() {
-        String result = getDirection() + " [" + (start != null ? start : "START") + ":" + (end != null ? end : "END") + "]";
-        if (getFilterExpression() != null) {
-            result += "(" + getFilterExpression() + ")";
-        }
-        return result;
-    }
+	@Override
+	public String toString() {
+		String result = getDirection() + " [" + (start != null ? start : "START") + ":" + (end != null ? end : "END") + "]";
+		if (getFilterExpression() != null) {
+			result += "(" + getFilterExpression() + ")";
+		}
+		return result;
+	}
 }

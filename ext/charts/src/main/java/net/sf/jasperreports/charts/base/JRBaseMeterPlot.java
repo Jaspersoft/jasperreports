@@ -24,7 +24,6 @@
 package net.sf.jasperreports.charts.base;
 
 import java.awt.Color;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.charts.ChartsExpressionCollector;
@@ -161,10 +160,8 @@ public class JRBaseMeterPlot extends JRBaseChartPlot implements JRMeterPlot
 		intervals.clear();
 		if (origIntervals != null)
 		{
-			Iterator<JRMeterInterval> iter = origIntervals.iterator();
-			while (iter.hasNext())
+			for (JRMeterInterval interval : origIntervals)
 			{
-				JRMeterInterval interval = iter.next();
 				intervals.add(new JRMeterInterval(interval, factory));
 			}
 		}

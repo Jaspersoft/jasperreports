@@ -25,7 +25,6 @@ package net.sf.jasperreports.javascript;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -140,16 +139,14 @@ public class JavaScriptClassCompiler extends JavaScriptCompilerBase
 			// we're using the context to compile the expressions in interpreted mode to catch syntax errors 
 			context.setOptimizationLevel(-1);
 			
-			for (int i = 0; i < units.length; i++)
+			for (JRCompilationUnit unit : units)
 			{
-				JRCompilationUnit unit = units[i];
 				CompileSources compileSources = new CompileSources(expressionsPerScript, scriptMaxLength);
 				JavaScriptCompiledData compiledData = new JavaScriptCompiledData();
 				
 				JRSourceCompileTask compileTask = unit.getCompileTask();
-				for (Iterator<JRExpression> it = compileTask.getExpressions().iterator(); it.hasNext();)
+				for (JRExpression expr : compileTask.getExpressions())
 				{
-					JRExpression expr = it.next();
 					int id = compileTask.getExpressionId(expr);
 					
 					ScriptExpressionVisitor defaultVisitor = defaultExpressionCreator();

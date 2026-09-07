@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.charts;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
@@ -35,6 +36,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
  * </ul>
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
+@JsonPropertyOrder({
+	"showLines",
+	"showShapes"
+	})
 public interface JRCommonLinePlot
 {
 	

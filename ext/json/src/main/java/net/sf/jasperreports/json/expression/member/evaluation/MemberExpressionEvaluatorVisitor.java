@@ -36,15 +36,15 @@ import net.sf.jasperreports.json.expression.member.ObjectKeyExpression;
  */
 public interface MemberExpressionEvaluatorVisitor {
 
-    JsonNodeContainer evaluateObjectKey(ObjectKeyExpression expression, JsonNodeContainer contextNode);
+	JsonNodeContainer evaluateObjectKey(ObjectKeyExpression expression, JsonNodeContainer contextNode);
 
-    JsonNodeContainer evaluateMultiLevelUp(MultiLevelUpExpression expression, JsonNodeContainer contextNode);
+	JsonNodeContainer evaluateMultiLevelUp(MultiLevelUpExpression expression, JsonNodeContainer contextNode);
 
-    JsonNodeContainer evaluateArrayIndex(ArrayIndexExpression expression, JsonNodeContainer contextNode);
+	JsonNodeContainer evaluateArrayIndex(ArrayIndexExpression expression, JsonNodeContainer contextNode);
 
-    JsonNodeContainer evaluateArraySlice(ArraySliceExpression expression, JsonNodeContainer contextNode);
+	JsonNodeContainer evaluateArraySlice(ArraySliceExpression expression, JsonNodeContainer contextNode);
 
-    JsonNodeContainer evaluateObjectConstruction(ObjectConstructionExpression expression, JsonNodeContainer contextNode);
+	JsonNodeContainer evaluateObjectConstruction(ObjectConstructionExpression expression, JsonNodeContainer contextNode);
 
-    JsonNodeContainer evaluateArrayConstruction(ArrayConstructionExpression expression, JsonNodeContainer contextNode);
+	JsonNodeContainer evaluateArrayConstruction(ArrayConstructionExpression expression, JsonNodeContainer contextNode);
 }

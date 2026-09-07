@@ -80,8 +80,13 @@ public enum AccessibilityTagEnum implements NamedEnum
 	/**
 	 * 
 	 */
-	H6("h6");
-	
+	H6("h6"),
+
+	/**
+	 *
+	 */
+	ARTIFACT("artifact");
+
 	/**
 	 *
 	 */

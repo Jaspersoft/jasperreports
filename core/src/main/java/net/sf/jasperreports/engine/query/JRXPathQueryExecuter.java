@@ -149,7 +149,7 @@ public class JRXPathQueryExecuter extends JRAbstractQueryExecuter
 	@Override
 	public void close()
 	{
-		if(datasource != null){
+		if (datasource != null){
 			datasource.close();
 		}
 	}

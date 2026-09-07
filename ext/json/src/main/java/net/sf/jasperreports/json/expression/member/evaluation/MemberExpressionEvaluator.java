@@ -30,6 +30,6 @@ import net.sf.jasperreports.json.JsonNodeContainer;
  */
 public interface MemberExpressionEvaluator {
 
-    JsonNodeContainer evaluate(JsonNodeContainer contextNode);
+	JsonNodeContainer evaluate(JsonNodeContainer contextNode);
 
 }
