@@ -98,6 +98,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<configuration>
+					<ignoredUnusedDeclaredDependencies>
+						<dependency>org.apache.logging.log4j:log4j-core</dependency>
+						<dependency>org.slf4j:slf4j-api</dependency>
+						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
+					</ignoredUnusedDeclaredDependencies>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
