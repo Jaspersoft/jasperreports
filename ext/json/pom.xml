@@ -104,9 +104,9 @@
 				<version>${maven-dependency-plugin.version}</version>
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
+						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
 						<dependency>org.apache.logging.log4j:log4j-core</dependency>
 						<dependency>org.slf4j:slf4j-api</dependency>
-						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>
 			</plugin>
