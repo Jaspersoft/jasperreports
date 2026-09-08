@@ -30,10 +30,13 @@ import java.util.function.Consumer;
 
 import net.sf.jasperreports.engine.JRBoxContainer;
 import net.sf.jasperreports.engine.JRLineBox;
+import net.sf.jasperreports.engine.JRParagraph;
+import net.sf.jasperreports.engine.JRParagraphContainer;
 import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintFrame;
 import net.sf.jasperreports.engine.JRPrintText;
+import net.sf.jasperreports.engine.TabStop;
 import net.sf.jasperreports.engine.base.VirtualizableElementList;
 
 /**
@@ -136,6 +139,10 @@ public class OffsetElementsUtil
 				{
 					scaleLineBoxPens(((JRBoxContainer) template).getLineBox(), dpiScale);
 				}
+				if (template instanceof JRParagraphContainer)
+				{
+					scaleParagraph(((JRParagraphContainer) template).getParagraph(), dpiScale);
+				}
 			}
 		}
 		if (element instanceof JRPrintFrame)
@@ -165,6 +172,48 @@ public class OffsetElementsUtil
 		scalePenWidth(lineBox.getRightPen(), dpiScale);
 
 		scaleBoxPadding(lineBox, dpiScale);
+	}
+
+	private static void scaleParagraph(JRParagraph paragraph, double dpiScale)
+	{
+		Integer ownLeftIndent = paragraph.getOwnLeftIndent();
+		if (ownLeftIndent != null)
+		{
+			paragraph.setLeftIndent((int) Math.round(ownLeftIndent * dpiScale));
+		}
+		Integer ownFirstLineIndent = paragraph.getOwnFirstLineIndent();
+		if (ownFirstLineIndent != null)
+		{
+			paragraph.setFirstLineIndent((int) Math.round(ownFirstLineIndent * dpiScale));
+		}
+		Integer ownRightIndent = paragraph.getOwnRightIndent();
+		if (ownRightIndent != null)
+		{
+			paragraph.setRightIndent((int) Math.round(ownRightIndent * dpiScale));
+		}
+		Integer ownSpacingBefore = paragraph.getOwnSpacingBefore();
+		if (ownSpacingBefore != null)
+		{
+			paragraph.setSpacingBefore((int) Math.round(ownSpacingBefore * dpiScale));
+		}
+		Integer ownSpacingAfter = paragraph.getOwnSpacingAfter();
+		if (ownSpacingAfter != null)
+		{
+			paragraph.setSpacingAfter((int) Math.round(ownSpacingAfter * dpiScale));
+		}
+		Integer ownTabStopWidth = paragraph.getOwnTabStopWidth();
+		if (ownTabStopWidth != null)
+		{
+			paragraph.setTabStopWidth((int) Math.round(ownTabStopWidth * dpiScale));
+		}
+		TabStop[] ownTabStops = paragraph.getOwnTabStops();
+		if (ownTabStops != null)
+		{
+			for (TabStop tabStop : ownTabStops)
+			{
+				tabStop.setPosition((int) Math.round(tabStop.getPosition() * dpiScale));
+			}
+		}
 	}
 
 	private static void scaleBoxPadding(JRLineBox lineBox, double dpiScale)

@@ -46,6 +46,7 @@ import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.engine.util.JRTextAttribute;
 import net.sf.jasperreports.engine.util.ParagraphUtil;
+import net.sf.jasperreports.engine.util.StyleResolver;
 import net.sf.jasperreports.engine.util.StyledTextListWriter;
 import net.sf.jasperreports.engine.util.StyledTextWriteContext;
 
@@ -102,6 +103,7 @@ public abstract class AbstractTextRenderer
 	private final boolean defaultIndentFirstLine;
 	private final boolean defaultJustifyLastLine;
 	protected float fontSizeScale = 1f;
+	private int tabStopWidth;
 
 
 	/**
@@ -285,6 +287,7 @@ public abstract class AbstractTextRenderer
 		}
 		
 		this.text = text;
+		tabStopWidth = new StyleResolver(jasperReportsContext).getTabStopWidth(text.getParagraph(), fontSizeScale);
 
 		verticalAlignOffset = 0f;
 		switch (text.getVerticalTextAlign())
@@ -524,7 +527,7 @@ public abstract class AbstractTextRenderer
 				else
 				{
 					rightX = oldSegment.rightX;
-					nextTabStop = ParagraphUtil.getNextTabStop(text.getParagraph(), endX, rightX);
+					nextTabStop = ParagraphUtil.getNextTabStop(text.getParagraph(), endX, rightX, tabStopWidth);
 				}
 
 				//float availableWidth = formatWidth - ParagraphUtil.getSegmentOffset(nextTabStop, rightX); // nextTabStop can be null here; and that's OK
@@ -618,12 +621,12 @@ public abstract class AbstractTextRenderer
 					if (lineMeasurer.getPosition() == tabIndexOrEndIndex)
 					{
 						// the segment limit was a tab
-						if (crtSegment.rightX >= ParagraphUtil.getLastTabStop(text.getParagraph(), endX).getPosition())
+						if (crtSegment.rightX >= ParagraphUtil.getLastTabStop(text.getParagraph(), endX, tabStopWidth).getPosition())
 						{
 							// current segment stretches out beyond the last tab stop; line complete
 							lineComplete = true;
 							// next line should should start at first tab stop indent
-							nextTabStop = ParagraphUtil.getFirstTabStop(text.getParagraph(), endX);
+							nextTabStop = ParagraphUtil.getFirstTabStop(text.getParagraph(), endX, tabStopWidth);
 						}
 //						else
 //						{
@@ -637,7 +640,7 @@ public abstract class AbstractTextRenderer
 						if (layout == null)
 						{
 							// nothing fitted; next line should start at first tab stop indent
-							if (nextTabStop.getPosition() == ParagraphUtil.getFirstTabStop(text.getParagraph(), endX).getPosition())//FIXMETAB check based on segments.size()
+							if (nextTabStop.getPosition() == ParagraphUtil.getFirstTabStop(text.getParagraph(), endX, tabStopWidth).getPosition())//FIXMETAB check based on segments.size()
 							{
 								// at second attempt we give up to avoid infinite loop
 								nextTabStop = null;
@@ -658,7 +661,7 @@ public abstract class AbstractTextRenderer
 							}
 							else
 							{
-								nextTabStop = ParagraphUtil.getFirstTabStop(text.getParagraph(), endX);
+								nextTabStop = ParagraphUtil.getFirstTabStop(text.getParagraph(), endX, tabStopWidth);
 							}
 						}
 						else
@@ -673,7 +676,7 @@ public abstract class AbstractTextRenderer
 				oldSegment = crtSegment;
 			}
 
-			lineHeight = getLineHeight(paragraphStart == 0 && lines == 0, text.getParagraph(), maxLeading, maxAscent);// + maxDescent;
+			lineHeight = getLineHeight(paragraphStart == 0 && lines == 0, text.getParagraph(), maxLeading, maxAscent, fontSizeScale);// + maxDescent;
 			
 			if (paragraphStart == 0 && lines == 0)
 			//if (lines == 0) //FIXMEPARA
@@ -788,7 +791,7 @@ public abstract class AbstractTextRenderer
 	/**
 	 * 
 	 */
-	public static float getLineHeight(boolean isFirstLine, JRParagraph paragraph, float maxLeading, float maxAscent)
+	public static float getLineHeight(boolean isFirstLine, JRParagraph paragraph, float maxLeading, float maxAscent, float fontSizeScale)
 	{
 		float lineHeight = 0;
 
@@ -838,7 +841,7 @@ public abstract class AbstractTextRenderer
 				}
 				else
 				{
-					lineHeight = Math.max(maxLeading + 1f * maxAscent, paragraph.getLineSpacingSize());
+					lineHeight = Math.max(maxLeading + 1f * maxAscent, paragraph.getLineSpacingSize() * fontSizeScale);
 				}
 				break;
 			}
@@ -850,7 +853,7 @@ public abstract class AbstractTextRenderer
 				}
 				else
 				{
-					lineHeight = paragraph.getLineSpacingSize();
+					lineHeight = paragraph.getLineSpacingSize() * fontSizeScale;
 				}
 				break;
 			}

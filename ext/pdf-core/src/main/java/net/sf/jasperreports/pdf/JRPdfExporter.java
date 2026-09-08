@@ -1285,7 +1285,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pageWidth = pageWidth < pageFormat.getPageWidth() ? pageFormat.getPageWidth() : pageWidth; 
 		pageHeight = pageHeight < pageFormat.getPageHeight() ? pageFormat.getPageHeight() : pageHeight; 
 		
-		pdfProducer.setPageSize(pageFormat, toPoints(pageWidth), toPoints(pageHeight));
+		pdfProducer.setPageSize(pageFormat, Math.round(toPoints(pageWidth)), Math.round(toPoints(pageHeight)));
 	}
 
 	/**
@@ -1753,7 +1753,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				if (linkTag == null)
 				{
 					PdfImage pxImage = getPxImage();
-					pxImage.scaleAbsolute(toPoints(printImage.getWidth()), toPoints(printImage.getHeight()));
+					pxImage.scaleAbsolute(Math.round(toPoints(printImage.getWidth())), Math.round(toPoints(printImage.getHeight())));
 					PdfChunk pxChunk = pdfProducer.createChunk(pxImage);
 
 					boolean wasHyperlinkSet = setHyperlinkInfo(pxChunk, printImage);
@@ -1827,10 +1827,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			bottomPadding = printImage.getLineBox().getBottomPadding();
 			rightPadding = printImage.getLineBox().getRightPadding();
 
-			int tmpAvailableImageWidth = toPoints(printImage.getWidth() - leftPadding - rightPadding);
+			int tmpAvailableImageWidth = Math.round(toPoints(printImage.getWidth() - leftPadding - rightPadding));
 			availableImageWidth = tmpAvailableImageWidth < 0 ? 0 : tmpAvailableImageWidth;
 
-			int tmpAvailableImageHeight = toPoints(printImage.getHeight() - topPadding - bottomPadding);
+			int tmpAvailableImageHeight = Math.round(toPoints(printImage.getHeight() - topPadding - bottomPadding));
 			availableImageHeight = tmpAvailableImageHeight < 0 ? 0 : tmpAvailableImageHeight;
 		}
 		
@@ -2401,7 +2401,13 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected void getPhrase(AttributedString as, String text, JRPrintText textElement,
 			PdfPhrase phrase)
 	{
-		getPhrase(as, 0, text.length(), text, textElement, phrase);
+		getPhrase(as, 0, text.length(), text, textElement, phrase, 1f);
+	}
+
+	protected void getPhrase(AttributedString as, String text, JRPrintText textElement,
+			PdfPhrase phrase, float fontSizeScale)
+	{
+		getPhrase(as, 0, text.length(), text, textElement, phrase, fontSizeScale);
 	}
 
 	/**
@@ -2410,16 +2416,22 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected void getPhrase(AttributedString as, int beginIndex, int endIndex, String text, JRPrintText textElement,
 			PdfPhrase phrase)
 	{
+		getPhrase(as, beginIndex, endIndex, text, textElement, phrase, 1f);
+	}
+
+	protected void getPhrase(AttributedString as, int beginIndex, int endIndex, String text, JRPrintText textElement,
+			PdfPhrase phrase, float fontSizeScale)
+	{
 		int runLimit = beginIndex;
 
 		AttributedCharacterIterator iterator = as.getIterator(null, beginIndex, endIndex);
 		Locale locale = getTextLocale(textElement);
-		 
+
 		boolean firstChunk = true;
 		while (runLimit < endIndex && (runLimit = iterator.getRunLimit()) <= endIndex)
 		{
 			Map<Attribute,Object> attributes = iterator.getAttributes();
-			PdfTextChunk chunk = getChunk(attributes, text.substring(iterator.getIndex(), runLimit), locale);
+			PdfTextChunk chunk = getChunk(attributes, text.substring(iterator.getIndex(), runLimit), locale, fontSizeScale);
 
 			if (firstChunk && firstParagraph)
 			{
@@ -2461,6 +2473,20 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	/**
 	 *
 	 */
+	protected PdfTextChunk getChunk(Map<Attribute,Object> attributes, String text, Locale locale, float fontSizeScale)
+	{
+		if (fontSizeScale != 1f)
+		{
+			Number size = (Number) attributes.get(TextAttribute.SIZE);
+			if (size != null)
+			{
+				attributes = new HashMap<>(attributes);
+				attributes.put(TextAttribute.SIZE, size.floatValue() / fontSizeScale);
+			}
+		}
+		return getChunk(attributes, text, locale);
+	}
+
 	protected PdfTextChunk getChunk(Map<Attribute,Object> attributes, String text, Locale locale)
 	{
 		// underline and strikethrough are set on the chunk below
@@ -2797,10 +2823,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			value = text.getFullText();
 		}
 		
-		int llx = toPoints(text.getX() + exporterContext.getOffsetX());
-		int lly = toPoints(jasperPrint.getPageHeight() - text.getY() - exporterContext.getOffsetY());
-		int urx = llx + toPoints(text.getWidth());
-		int ury = toPoints(jasperPrint.getPageHeight() - text.getY() - exporterContext.getOffsetY() - text.getHeight());
+		float llx = toPoints(text.getX() + exporterContext.getOffsetX());
+		float lly = toPoints(jasperPrint.getPageHeight() - text.getY() - exporterContext.getOffsetY());
+		float urx = llx + toPoints(text.getWidth());
+		float ury = toPoints(jasperPrint.getPageHeight() - text.getY() - exporterContext.getOffsetY() - text.getHeight());
 		
 		PdfTextField pdfTextField;
 		switch (fieldType)
@@ -3500,7 +3526,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		int height = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 				? y
 				: pageFormat.getPageHeight() - y;
-		Bookmark bookmark = new Bookmark(parent, toPoints(x), toPoints(height), title, structureEntry);
+		Bookmark bookmark = new Bookmark(parent, Math.round(toPoints(x)), Math.round(toPoints(height)), title, structureEntry);
 		bookmarkStack.push(bookmark);
 	}
 
@@ -3590,13 +3616,13 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		return pixels * 72f / reportDpi;
 	}
 
-	public int toPoints(int pixels)
+	public float toPoints(int pixels)
 	{
 		if (reportDpi == JasperPrint.DEFAULT_REPORT_DPI)
 		{
 			return pixels;
 		}
-		return (int) Math.round(pixels * 72.0 / reportDpi);
+		return pixels * (float)JasperPrint.DEFAULT_REPORT_DPI / reportDpi;
 	}
 
 

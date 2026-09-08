@@ -1028,7 +1028,7 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 				int stretchHeight = subFillerParent.getCurrentPageStretchHeight();
 				if (parentDpi != subreportDpi)
 				{
-					stretchHeight = stretchHeight * parentDpi / subreportDpi;
+					stretchHeight = (int) Math.round((double) stretchHeight * parentDpi / subreportDpi);
 				}
 				setPrepareHeight(stretchHeight);
 			}
@@ -1221,8 +1221,8 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 				int parentBottomMargin = parentFiller.jasperReport.getBottomMargin();
 				if (parentDpi != subreportDpi)
 				{
-					parentTopMargin = parentTopMargin * subreportDpi / parentDpi;
-					parentBottomMargin = parentBottomMargin * subreportDpi / parentDpi;
+					parentTopMargin = (int) Math.round((double) parentTopMargin * subreportDpi / parentDpi);
+					parentBottomMargin = (int) Math.round((double) parentBottomMargin * subreportDpi / parentDpi);
 				}
 				topMargin += parentTopMargin;
 				bottomMargin += parentBottomMargin;

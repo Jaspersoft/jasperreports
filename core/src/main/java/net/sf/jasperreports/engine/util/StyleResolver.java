@@ -921,6 +921,29 @@ public class StyleResolver
 	/**
 	 *
 	 */
+	public Integer getTabStopWidth(JRParagraph paragraph, float fontSizeScale)
+	{
+		Integer ownTabStopWidth = paragraph.getOwnTabStopWidth();
+		if (ownTabStopWidth != null)
+		{
+			return ownTabStopWidth;
+		}
+		JRStyle style = getBaseStyle(paragraph);
+		while (style != null)
+		{
+			Integer tabStopWidth = style.getParagraph().getOwnTabStopWidth();
+			if (tabStopWidth != null)
+			{
+				return tabStopWidth;
+			}
+			style = getBaseStyle(style);
+		}
+		return Math.round(propertiesUtil.getIntegerProperty(JRParagraph.DEFAULT_TAB_STOP_WIDTH) * fontSizeScale);
+	}
+
+	/**
+	 *
+	 */
 	public TabStop[] getTabStops(JRParagraph paragraph)
 	{
 		TabStop[] ownTabStops = paragraph.getOwnTabStops();

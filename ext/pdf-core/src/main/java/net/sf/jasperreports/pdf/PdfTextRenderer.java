@@ -64,26 +64,26 @@ public class PdfTextRenderer extends AbstractPdfTextRenderer
 		if (bulletChunk != null)
 		{
 			PdfPhrase phrase = pdfProducer.createPhrase();
-			pdfExporter.getPhrase(bulletChunk, bulletText, text, phrase);
+			pdfExporter.getPhrase(bulletChunk, bulletText, text, phrase, fontSizeScale);
 
 			phrase.go(
-				- htmlListIndent - 10 + x + drawPosX + leftOffsetFactor * advance,// + leftPadding
-				pdfExporter.getCurrentPageFormat().getPageHeight()
+				pdfExporter.toPoints(- htmlListIndent - 10 + x + drawPosX + leftOffsetFactor * advance),// + leftPadding
+				pdfExporter.toPoints(pdfExporter.getCurrentPageFormat().getPageHeight()
 					- y
 					- topPadding
 					- verticalAlignOffset
 					//- text.getLeadingOffset()
 					+ lineHeight
-					- drawPosY,
-				- 10 + x + drawPosX + leftOffsetFactor * advance,// + leftPadding
-				pdfExporter.getCurrentPageFormat().getPageHeight()
+					- drawPosY),
+				pdfExporter.toPoints(- 10 + x + drawPosX + leftOffsetFactor * advance),// + leftPadding
+				pdfExporter.toPoints(pdfExporter.getCurrentPageFormat().getPageHeight()
 					- y
 					- topPadding
 					- verticalAlignOffset
 					//- text.getLeadingOffset()
 					-400//+ lineHeight//FIXMETAB
-					- drawPosY,
-				lineHeight,
+					- drawPosY),
+				pdfExporter.toPoints(lineHeight),
 				0,
 				PdfTextAlignment.RIGHT,
 				TextDirection.LTR
@@ -91,26 +91,26 @@ public class PdfTextRenderer extends AbstractPdfTextRenderer
 		}
 
 		PdfPhrase phrase = pdfProducer.createPhrase();
-		pdfExporter.getPhrase(segment.as, segment.text, text, phrase);
+		pdfExporter.getPhrase(segment.as, segment.text, text, phrase, fontSizeScale);
 		
 		phrase.go(
-			x + drawPosX + leftOffsetFactor * advance,// + leftPadding
-			pdfExporter.getCurrentPageFormat().getPageHeight()
+			pdfExporter.toPoints(x + drawPosX + leftOffsetFactor * advance),// + leftPadding
+			pdfExporter.toPoints(pdfExporter.getCurrentPageFormat().getPageHeight()
 				- y
 				- topPadding
 				- verticalAlignOffset
 				//- text.getLeadingOffset()
 				+ lineHeight
-				- drawPosY,
-			x + drawPosX + advance + rightOffsetFactor * advance,// + leftPadding
-			pdfExporter.getCurrentPageFormat().getPageHeight()
+				- drawPosY),
+			pdfExporter.toPoints(x + drawPosX + advance + rightOffsetFactor * advance),// + leftPadding
+			pdfExporter.toPoints(pdfExporter.getCurrentPageFormat().getPageHeight()
 				- y
 				- topPadding
 				- verticalAlignOffset
 				//- text.getLeadingOffset()
 				-400//+ lineHeight//FIXMETAB
-				- drawPosY,
-			lineHeight,//text.getLineSpacingFactor(),// * text.getFont().getSize(),
+				- drawPosY),
+			pdfExporter.toPoints(lineHeight),//text.getLineSpacingFactor(),// * text.getFont().getSize(),
 			0,
 			horizontalAlignment == PdfTextAlignment.JUSTIFIED && (!segment.isLastLine || justifyLastLine) 
 				? PdfTextAlignment.JUSTIFIED_ALL : horizontalAlignment,
