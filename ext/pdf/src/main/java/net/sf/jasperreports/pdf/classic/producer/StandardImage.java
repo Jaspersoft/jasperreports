@@ -71,13 +71,13 @@ public class StandardImage implements PdfImage
 	}
 
 	@Override
-	public void scaleAbsolute(int width, int height)
+	public void scaleAbsolute(float width, float height)
 	{
 		image.scaleAbsolute(width, height);
 	}
 
 	@Override
-	public void scaleToFit(int width, int height)
+	public void scaleToFit(float width, float height)
 	{
 		image.scaleToFit(width, height);
 	}

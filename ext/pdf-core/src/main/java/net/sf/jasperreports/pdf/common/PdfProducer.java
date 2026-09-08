@@ -62,7 +62,7 @@ public interface PdfProducer
 
 	void newPage();
 
-	void setPageSize(PrintPageFormat pageFormat, int pageWidth, int pageHeight);
+	void setPageSize(PrintPageFormat pageFormat, float pageWidth, float pageHeight);
 
 	void endPage();
 
@@ -85,9 +85,9 @@ public interface PdfProducer
 	PdfImage createImage(byte[] loadBytesFromResource, boolean verify) throws IOException, JRException;
 
 	PdfImage clipImage(
-			PdfImage image, 
-			int clipWidth, int clipHeight, 
-			int translateX, int translateY
+			PdfImage image,
+			float clipWidth, float clipHeight,
+			float translateX, float translateY
 			) throws JRException;
 
 	PdfImage drawImage(
@@ -119,7 +119,7 @@ public interface PdfProducer
 	
 	PdfOutlineEntry getRootOutline();
 	
-	void addPdfPage(byte[] pdfData, int x, int y, int width, int height);
+	void addPdfPage(byte[] pdfData, float x, float y, float width, float height);
 	
 	void close();
 	

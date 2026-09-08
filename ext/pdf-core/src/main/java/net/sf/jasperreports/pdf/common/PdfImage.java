@@ -38,9 +38,9 @@ public interface PdfImage
 
 	float getScaledHeight();
 
-	void scaleAbsolute(int width, int height);
+	void scaleAbsolute(float width, float height);
 
-	void scaleToFit(int width, int height);
+	void scaleToFit(float width, float height);
 
 	void scalePercent(float percent);
 

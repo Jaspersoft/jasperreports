@@ -1285,7 +1285,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pageWidth = pageWidth < pageFormat.getPageWidth() ? pageFormat.getPageWidth() : pageWidth; 
 		pageHeight = pageHeight < pageFormat.getPageHeight() ? pageFormat.getPageHeight() : pageHeight; 
 		
-		pdfProducer.setPageSize(pageFormat, Math.round(toPoints(pageWidth)), Math.round(toPoints(pageHeight)));
+		pdfProducer.setPageSize(pageFormat, toPoints(pageWidth), toPoints(pageHeight));
 	}
 
 	/**
@@ -1753,7 +1753,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				if (linkTag == null)
 				{
 					PdfImage pxImage = getPxImage();
-					pxImage.scaleAbsolute(Math.round(toPoints(printImage.getWidth())), Math.round(toPoints(printImage.getHeight())));
+					pxImage.scaleAbsolute(toPoints(printImage.getWidth()), toPoints(printImage.getHeight()));
 					PdfChunk pxChunk = pdfProducer.createChunk(pxImage);
 
 					boolean wasHyperlinkSet = setHyperlinkInfo(pxChunk, printImage);
@@ -1814,8 +1814,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		private final int bottomPadding;
 		private final int rightPadding;
 
-		private final int availableImageWidth;
-		private final int availableImageHeight;
+		private final float availableImageWidth;
+		private final float availableImageHeight;
 		
 		private InternalImageProcessor(JRPrintImage printImage)
 		{
@@ -1827,10 +1827,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			bottomPadding = printImage.getLineBox().getBottomPadding();
 			rightPadding = printImage.getLineBox().getRightPadding();
 
-			int tmpAvailableImageWidth = Math.round(toPoints(printImage.getWidth() - leftPadding - rightPadding));
+			float tmpAvailableImageWidth = toPoints(printImage.getWidth() - leftPadding - rightPadding);
 			availableImageWidth = tmpAvailableImageWidth < 0 ? 0 : tmpAvailableImageWidth;
 
-			int tmpAvailableImageHeight = Math.round(toPoints(printImage.getHeight() - topPadding - bottomPadding));
+			float tmpAvailableImageHeight = toPoints(printImage.getHeight() - topPadding - bottomPadding);
 			availableImageHeight = tmpAvailableImageHeight < 0 ? 0 : tmpAvailableImageHeight;
 		}
 		
@@ -1944,15 +1944,15 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			image.scalePercent(100f); // reset scaling and rotation here for images taken from cache, because it affects the plain size used for clipping
 			image.setRotationDegrees(0);
 			
-			int plainWidth = (int)image.getPlainWidth();
-			int plainHeight = (int)image.getPlainHeight();
+			float plainWidth = image.getPlainWidth();
+			float plainHeight = image.getPlainHeight();
 
-			int clipWidth = Math.min(plainWidth, availableImageWidth);
-			int clipHeight = Math.min(plainHeight, availableImageHeight);
-			int xoffset = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageWidth - plainWidth));
-			int yoffset = (int)(ImageUtil.getYAlignFactor(printImage) * (availableImageHeight - plainHeight));
-			int translateX = xoffset;
-			int translateY = yoffset;
+			float clipWidth = Math.min(plainWidth, availableImageWidth);
+			float clipHeight = Math.min(plainHeight, availableImageHeight);
+			float xoffset = ImageUtil.getXAlignFactor(printImage) * (availableImageWidth - plainWidth);
+			float yoffset = ImageUtil.getYAlignFactor(printImage) * (availableImageHeight - plainHeight);
+			float translateX = xoffset;
+			float translateY = yoffset;
 			int angle = 0;
 			
 			switch (ImageUtil.getRotation(printImage.getRotation(), imagePair.second()))
@@ -1961,9 +1961,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				{
 					clipWidth = Math.min(plainWidth, availableImageHeight);
 					clipHeight = Math.min(plainHeight, availableImageWidth);
-					xoffset = (int)(ImageUtil.getYAlignFactor(printImage) * (availableImageWidth - plainHeight));
-					yoffset = (int)((1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageHeight - plainWidth));
-					translateX = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainWidth));
+					xoffset = ImageUtil.getYAlignFactor(printImage) * (availableImageWidth - plainHeight);
+					yoffset = (1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageHeight - plainWidth);
+					translateX = ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainWidth);
 					translateY = xoffset;
 					angle = 90;
 					break;
@@ -1972,10 +1972,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				{
 					clipWidth = Math.min(plainWidth, availableImageHeight);
 					clipHeight = Math.min(plainHeight, availableImageWidth);
-					xoffset = (int)((1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageWidth - plainHeight));
-					yoffset = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainWidth));
-					translateX = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainWidth));
-					translateY = (int)(ImageUtil.getYAlignFactor(printImage) * (availableImageWidth - plainHeight));
+					xoffset = (1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageWidth - plainHeight);
+					yoffset = ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainWidth);
+					translateX = ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainWidth);
+					translateY = ImageUtil.getYAlignFactor(printImage) * (availableImageWidth - plainHeight);
 					angle = -90;
 					break;
 				}
@@ -1983,10 +1983,10 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				{
 					clipWidth = Math.min(plainWidth, availableImageWidth);
 					clipHeight = Math.min(plainHeight, availableImageHeight);
-					xoffset = (int)((1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageWidth - plainWidth));
-					yoffset = (int)((1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageHeight - plainHeight));
-					translateX = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageWidth - plainWidth));
-					translateY = (int)(ImageUtil.getYAlignFactor(printImage) * (availableImageHeight - plainHeight));
+					xoffset = (1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageWidth - plainWidth);
+					yoffset = (1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageHeight - plainHeight);
+					translateX = ImageUtil.getXAlignFactor(printImage) * (availableImageWidth - plainWidth);
+					translateY = ImageUtil.getYAlignFactor(printImage) * (availableImageHeight - plainHeight);
 					angle = 180;
 					break;
 				}
@@ -2062,8 +2062,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		{
 			float plainWidth = 0;
 			float plainHeight = 0;
-			int xoffset = 0;
-			int yoffset = 0;
+			float xoffset = 0;
+			float yoffset = 0;
 
 			PdfImage image = imagePair.first();
 			
@@ -2109,27 +2109,27 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			{
 				case LEFT :
 				{
-					xoffset = (int)(ImageUtil.getYAlignFactor(printImage) * (availableImageWidth - plainWidth));
-					yoffset = (int)((1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageHeight - plainHeight));
+					xoffset = ImageUtil.getYAlignFactor(printImage) * (availableImageWidth - plainWidth);
+					yoffset = (1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageHeight - plainHeight);
 					break;
 				}
 				case RIGHT :
 				{
-					xoffset = (int)((1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageWidth - plainWidth));
-					yoffset = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainHeight));
+					xoffset = (1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageWidth - plainWidth);
+					yoffset = ImageUtil.getXAlignFactor(printImage) * (availableImageHeight - plainHeight);
 					break;
 				}
 				case UPSIDE_DOWN :
 				{
-					xoffset = (int)((1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageWidth - plainWidth));
-					yoffset = (int)((1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageHeight - plainHeight));
+					xoffset = (1f - ImageUtil.getXAlignFactor(printImage)) * (availableImageWidth - plainWidth);
+					yoffset = (1f - ImageUtil.getYAlignFactor(printImage)) * (availableImageHeight - plainHeight);
 					break;
 				}
 				case NONE :
 				default :
 				{
-					xoffset = (int)(ImageUtil.getXAlignFactor(printImage) * (availableImageWidth - plainWidth));
-					yoffset = (int)(ImageUtil.getYAlignFactor(printImage) * (availableImageHeight - plainHeight));
+					xoffset = ImageUtil.getXAlignFactor(printImage) * (availableImageWidth - plainWidth);
+					yoffset = ImageUtil.getYAlignFactor(printImage) * (availableImageHeight - plainHeight);
 				}
 			}
 
@@ -2234,15 +2234,15 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		private final PdfChunk chunk;
 		private final float scaledWidth;
 		private final float scaledHeight;
-		private final int xoffset;
-		private final int yoffset;
+		private final float xoffset;
+		private final float yoffset;
 		
 		private InternalImageProcessorResult(
 				PdfChunk chunk,
 				float scaledWidth,
 				float scaledHeight,
-				int xoffset,
-				int yoffset
+				float xoffset,
+				float yoffset
 			)
 		{
 			this.chunk = chunk;
@@ -2879,7 +2879,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen pen = getFieldPen(text);
 		if (pen != null)
 		{
-			float borderWidth = pen.getLineWidth() == null ? 0 : Math.round(toPoints(pen.getLineWidth()));
+			float borderWidth = pen.getLineWidth() == null ? 0 : toPoints(pen.getLineWidth());
 			if (borderWidth > 0)
 			{
 				pdfTextField.setBorderColor(pen.getLineColor());
@@ -2976,7 +2976,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen pen = getFieldPen(element);
 		if (pen != null)
 		{
-			float borderWidth = pen.getLineWidth() == null ? 0 : Math.round(toPoints(pen.getLineWidth()));
+			float borderWidth = pen.getLineWidth() == null ? 0 : toPoints(pen.getLineWidth());
 			if (borderWidth > 0)
 			{
 				checkField.setBorderColor(pen.getLineColor());
@@ -3040,7 +3040,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		JRPen pen = getFieldPen(element);
 		if (pen != null)
 		{
-			float borderWidth = pen.getLineWidth() == null ? 0 : Math.round(toPoints(pen.getLineWidth()));
+			float borderWidth = pen.getLineWidth() == null ? 0 : toPoints(pen.getLineWidth());
 			if (borderWidth > 0)
 			{
 				radioField.setBorderColor(pen.getLineColor());
@@ -3443,7 +3443,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		final PdfOutlineEntry pdfOutline;
 		final int level;
 
-		Bookmark(Bookmark parent, int x, int top, String title, PdfStructureEntry structureEntry)
+		Bookmark(Bookmark parent, float x, float top, String title, PdfStructureEntry structureEntry)
 		{
 			this.pdfOutline = parent.pdfOutline.createChild(title, x, top, structureEntry);
 			this.level = parent.level + 1;
@@ -3526,7 +3526,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		int height = OrientationEnum.LANDSCAPE.equals(pageFormat.getOrientation()) 
 				? y
 				: pageFormat.getPageHeight() - y;
-		Bookmark bookmark = new Bookmark(parent, Math.round(toPoints(x)), Math.round(toPoints(height)), title, structureEntry);
+		Bookmark bookmark = new Bookmark(parent, toPoints(x), toPoints(height), title, structureEntry);
 		bookmarkStack.push(bookmark);
 	}
 

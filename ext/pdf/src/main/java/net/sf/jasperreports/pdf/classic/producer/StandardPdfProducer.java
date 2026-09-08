@@ -242,7 +242,7 @@ public class StandardPdfProducer implements PdfProducer
 	}
 	
 	@Override
-	public void setPageSize(PrintPageFormat pageFormat, int pageWidth, int pageHeight)
+	public void setPageSize(PrintPageFormat pageFormat, float pageWidth, float pageHeight)
 	{
 		Rectangle pageSize;
 		if (pageFormat.getOrientation() == OrientationEnum.LANDSCAPE)
@@ -428,7 +428,7 @@ public class StandardPdfProducer implements PdfProducer
 	}
 	
 	@Override
-	public PdfImage clipImage(PdfImage image, int clipWidth, int clipHeight, int translateX, int translateY) throws JRException
+	public PdfImage clipImage(PdfImage image, float clipWidth, float clipHeight, float translateX, float translateY) throws JRException
 	{
 		Image img = ((StandardImage)image).getImage();
 
@@ -610,7 +610,7 @@ public class StandardPdfProducer implements PdfProducer
 
 	@Override
 	public void addPdfPage(byte[] pdfData,
-			int x, int y, int width, int height)
+			float x, float y, float width, float height)
 	{
 		try (PdfReader pdfReader = new PdfReader(pdfData))
 		{
