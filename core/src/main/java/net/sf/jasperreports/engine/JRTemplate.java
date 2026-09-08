@@ -136,6 +136,15 @@ public interface JRTemplate
 {
 
 	/**
+	 * Returns the DPI resolution at which the dimensional style properties
+	 * (lengths and thicknesses) in this template are expressed. Defaults to 72.
+	 *
+	 * @return the template DPI
+	 */
+	@JacksonXmlProperty(isAttribute = true)
+	int getDpi();
+
+	/**
 	 * Returns the templates included/referenced by this template.
 	 * 
 	 * @return the included templates

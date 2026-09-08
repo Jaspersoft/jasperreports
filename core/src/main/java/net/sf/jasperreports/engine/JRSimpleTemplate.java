@@ -49,9 +49,21 @@ public class JRSimpleTemplate implements JRTemplate, Serializable, JRChangeEvent
 
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
+	private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
 	private final List<JRTemplateReference> includedTemplates = new ArrayList<>();
 	private final List<JRStyle> styles = new ArrayList<>();
 	private transient JRPropertyChangeSupport eventSupport;//FIXMECLONE
+
+	@Override
+	public int getDpi()
+	{
+		return dpi;
+	}
+
+	public void setDpi(int dpi)
+	{
+		this.dpi = dpi;
+	}
 
 	@Override
 	public JRPropertyChangeSupport getEventSupport() {
@@ -307,6 +319,16 @@ public class JRSimpleTemplate implements JRTemplate, Serializable, JRChangeEvent
 			{
 				addIncludedTemplate(template);
 			}
+		}
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException
+	{
+		in.defaultReadObject();
+
+		if (dpi == 0)
+		{
+			dpi = JasperPrint.DEFAULT_REPORT_DPI;
 		}
 	}
 

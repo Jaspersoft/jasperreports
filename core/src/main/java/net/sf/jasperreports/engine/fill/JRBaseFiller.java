@@ -87,6 +87,7 @@ import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRStyledTextParser;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.engine.util.StyleResolver;
+import net.sf.jasperreports.engine.util.StyleUtil;
 import net.sf.jasperreports.repo.RepositoryContext;
 import net.sf.jasperreports.repo.RepositoryResourceContext;
 import net.sf.jasperreports.repo.SimpleRepositoryContext;
@@ -859,22 +860,30 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		collectIncludedTemplates(templateSource, externalStyles, 
 				loadedLocations, templateParentLocations);
 
-		JRStyle[] templateStyles = templateSource.getTemplate().getStyles();
+		JRTemplate template = templateSource.getTemplate();
+		JRStyle[] templateStyles = template.getStyles();
 		if (templateStyles != null)
 		{
+			int templateDpi = template.getDpi();
+			boolean needsDpiScaling = templateDpi != dpi;
+
 			for (JRStyle style : templateStyles)
 			{
 				String styleName = style.getName();
 				if (styleName == null)
 				{
-					throw 
+					throw
 						new JRRuntimeException(
-							EXCEPTION_MESSAGE_KEY_EXTERNAL_STYLE_NAME_NOT_SET,  
-							(Object[])null 
+							EXCEPTION_MESSAGE_KEY_EXTERNAL_STYLE_NAME_NOT_SET,
+							(Object[])null
 							);
 				}
 
-				externalStyles.add(style);
+				externalStyles.add(
+					needsDpiScaling
+						? StyleUtil.scaleDpiStyle(style, templateDpi, dpi)
+						: style
+					);
 			}
 		}
 	}

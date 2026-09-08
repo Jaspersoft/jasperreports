@@ -58,6 +58,7 @@ import net.sf.jasperreports.engine.JRBand;
 import net.sf.jasperreports.engine.JRBoxContainer;
 import net.sf.jasperreports.engine.JRChild;
 import net.sf.jasperreports.engine.JRCommonGraphicElement;
+import net.sf.jasperreports.engine.JRCommonRectangle;
 import net.sf.jasperreports.engine.JRConditionalStyle;
 import net.sf.jasperreports.engine.JRGroup;
 import net.sf.jasperreports.engine.JRLineBox;
@@ -338,6 +339,15 @@ public class DpiUpdater implements ReportUpdater
 		else if (object instanceof JRStyle)
 		{
 			updatePen(((JRStyle)object).getLinePen(), scaler);
+		}
+
+		if (object instanceof JRCommonRectangle)
+		{
+			((JRCommonRectangle)object).setRadius(scaler.scale(((JRCommonRectangle)object).getOwnRadius()));
+		}
+		else if (object instanceof JRStyle)
+		{
+			((JRStyle)object).setRadius(scaler.scale(((JRStyle)object).getOwnRadius()));
 		}
 
 		if (object instanceof JRParagraphContainer)

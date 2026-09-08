@@ -31,6 +31,8 @@ import net.sf.jasperreports.engine.JRParagraph;
 import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JRStyleContainer;
+import net.sf.jasperreports.engine.TabStop;
+import net.sf.jasperreports.engine.base.JRBaseStyle;
 import net.sf.jasperreports.engine.base.JRBoxPen;
 import net.sf.jasperreports.engine.type.ModeEnum;
 
@@ -430,5 +432,134 @@ public final class StyleUtil
 			destParagraph.setTabStopWidth(srcParagraph.getOwnTabStopWidth());
 		}
 	}
-	
+
+	/**
+	 * Clones a style and scales its dimensional properties from the source DPI to the target DPI.
+	 * Non-dimensional properties are left unchanged.
+	 */
+	public static JRStyle scaleDpiStyle(JRStyle style, int sourceDpi, int targetDpi)
+	{
+		JRBaseStyle scaled = (JRBaseStyle)((JRBaseStyle)style).clone();
+		double factor = (double)targetDpi / sourceDpi;
+		scaleDpiStyleAttributes(scaled, factor);
+
+		JRConditionalStyle[] conditionalStyles = scaled.getConditionalStyles();
+		if (conditionalStyles != null)
+		{
+			for (JRConditionalStyle conditionalStyle : conditionalStyles)
+			{
+				scaleDpiStyleAttributes(conditionalStyle, factor);
+			}
+		}
+
+		return scaled;
+	}
+
+	private static void scaleDpiStyleAttributes(JRStyle style, double factor)
+	{
+		if (style.getOwnRadius() != null)
+		{
+			style.setRadius(scaleInt(style.getOwnRadius(), factor));
+		}
+
+		scaleDpiPen(style.getLinePen(), factor);
+		scaleDpiBox(style.getLineBox(), factor);
+		scaleDpiParagraph(style.getParagraph(), factor);
+	}
+
+	private static void scaleDpiPen(JRPen pen, double factor)
+	{
+		if (pen != null && pen.getOwnLineWidth() != null)
+		{
+			pen.setLineWidth(scaleFloat(pen.getOwnLineWidth(), factor));
+		}
+	}
+
+	private static void scaleDpiBox(JRLineBox lineBox, double factor)
+	{
+		if (lineBox == null)
+		{
+			return;
+		}
+
+		if (lineBox.getOwnPadding() != null)
+		{
+			lineBox.setPadding(scaleInt(lineBox.getOwnPadding(), factor));
+		}
+		if (lineBox.getOwnTopPadding() != null)
+		{
+			lineBox.setTopPadding(scaleInt(lineBox.getOwnTopPadding(), factor));
+		}
+		if (lineBox.getOwnLeftPadding() != null)
+		{
+			lineBox.setLeftPadding(scaleInt(lineBox.getOwnLeftPadding(), factor));
+		}
+		if (lineBox.getOwnBottomPadding() != null)
+		{
+			lineBox.setBottomPadding(scaleInt(lineBox.getOwnBottomPadding(), factor));
+		}
+		if (lineBox.getOwnRightPadding() != null)
+		{
+			lineBox.setRightPadding(scaleInt(lineBox.getOwnRightPadding(), factor));
+		}
+
+		scaleDpiPen(lineBox.getPen(), factor);
+		scaleDpiPen(lineBox.getTopPen(), factor);
+		scaleDpiPen(lineBox.getLeftPen(), factor);
+		scaleDpiPen(lineBox.getBottomPen(), factor);
+		scaleDpiPen(lineBox.getRightPen(), factor);
+	}
+
+	private static void scaleDpiParagraph(JRParagraph paragraph, double factor)
+	{
+		if (paragraph == null)
+		{
+			return;
+		}
+
+		if (paragraph.getOwnFirstLineIndent() != null)
+		{
+			paragraph.setFirstLineIndent(scaleInt(paragraph.getOwnFirstLineIndent(), factor));
+		}
+		if (paragraph.getOwnLeftIndent() != null)
+		{
+			paragraph.setLeftIndent(scaleInt(paragraph.getOwnLeftIndent(), factor));
+		}
+		if (paragraph.getOwnRightIndent() != null)
+		{
+			paragraph.setRightIndent(scaleInt(paragraph.getOwnRightIndent(), factor));
+		}
+		if (paragraph.getOwnSpacingBefore() != null)
+		{
+			paragraph.setSpacingBefore(scaleInt(paragraph.getOwnSpacingBefore(), factor));
+		}
+		if (paragraph.getOwnSpacingAfter() != null)
+		{
+			paragraph.setSpacingAfter(scaleInt(paragraph.getOwnSpacingAfter(), factor));
+		}
+		if (paragraph.getOwnTabStopWidth() != null)
+		{
+			paragraph.setTabStopWidth(scaleInt(paragraph.getOwnTabStopWidth(), factor));
+		}
+
+		TabStop[] tabStops = paragraph.getOwnTabStops();
+		if (tabStops != null)
+		{
+			for (TabStop tabStop : tabStops)
+			{
+				tabStop.setPosition(scaleInt(tabStop.getPosition(), factor));
+			}
+		}
+	}
+
+	private static int scaleInt(int value, double factor)
+	{
+		return (int)Math.floor(value * factor);
+	}
+
+	private static float scaleFloat(float value, double factor)
+	{
+		return (float)(value * factor);
+	}
+
 }

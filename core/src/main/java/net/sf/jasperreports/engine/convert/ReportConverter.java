@@ -72,6 +72,7 @@ import net.sf.jasperreports.engine.type.PrintOrderEnum;
 import net.sf.jasperreports.engine.type.RunDirectionEnum;
 import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRExpressionUtil;
+import net.sf.jasperreports.engine.util.StyleUtil;
 import net.sf.jasperreports.engine.xml.JRXmlTemplateLoader;
 
 /**
@@ -361,16 +362,29 @@ public class ReportConverter
 			}
 		}
 		
-		collectStyles(template.getStyles());
+		collectStyles(template.getStyles(), template.getDpi());
 	}
 
 	protected void collectStyles(JRStyle[] styles)
 	{
+		collectStyles(styles, report.getDpi());
+	}
+
+	protected void collectStyles(JRStyle[] styles, int templateDpi)
+	{
 		if (styles != null)
 		{
+			int reportDpi = report.getDpi();
+			boolean needsDpiScaling = templateDpi != reportDpi;
+			
 			for (JRStyle style : styles)
 			{
-				stylesMap.put(style.getName(), style);
+				stylesMap.put(
+					style.getName(),
+					needsDpiScaling
+						? StyleUtil.scaleDpiStyle(style, templateDpi, reportDpi)
+						: style
+					);
 			}
 		}
 	}
