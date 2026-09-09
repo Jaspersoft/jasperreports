@@ -109,7 +109,7 @@ public class OffsetElementsUtil
 		}
 	}
 
-	private static void scaleTextProperties(JRPrintElement element, double dpiScale)
+	static void scaleTextProperties(JRPrintElement element, double dpiScale)
 	{
 		if (element instanceof JRPrintText)
 		{

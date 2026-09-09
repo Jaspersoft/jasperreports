@@ -1590,21 +1590,25 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		int parentPageIndex = parentFiller.getJasperPrint().getPages().size() - 1;
 		FillPageKey parentKey = new FillPageKey(parentFiller.printPage, parentPageIndex);
 		
+		int parentDpi = parentFiller.getDpi();
+		int subreportDpi = getDpi();
+		double dpiScale = (parentDpi != subreportDpi) ? (double) parentDpi / subreportDpi : 1d;
+
 		// move all delayed elements from the subreport page to the master page
-		moveBoundActions(subreportKey, parentKey);
+		moveBoundActions(subreportKey, parentKey, dpiScale);
 		// move all master evaluations to the parent
 		parent.getFiller().delayedActions.moveMasterEvaluations(delayedActions, parentKey);
 	}
 
-	protected void moveBoundActions(FillPageKey subreportKey, FillPageKey parentKey)
+	protected void moveBoundActions(FillPageKey subreportKey, FillPageKey parentKey, double dpiScale)
 	{
-		delayedActions.moveActions(subreportKey, parentKey);
+		delayedActions.moveActions(subreportKey, parentKey, dpiScale);
 		
 		if (subfillers != null)//recursive
 		{
 			for (JRBaseFiller subfiller : subfillers.values())
 			{
-				subfiller.moveBoundActions(subreportKey, parentKey);
+				subfiller.moveBoundActions(subreportKey, parentKey, dpiScale);
 			}
 		}
 	}
