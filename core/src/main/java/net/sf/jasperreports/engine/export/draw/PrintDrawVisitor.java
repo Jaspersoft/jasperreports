@@ -37,7 +37,6 @@ import net.sf.jasperreports.engine.JRPrintLine;
 import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRRuntimeException;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintElementVisitor;
 import net.sf.jasperreports.engine.export.AwtTextRenderer;
@@ -73,26 +72,6 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 		boolean minimizePrinterJobSize,
 		boolean ignoreMissingFont,
 		boolean defaultIndentFirstLine,
-		boolean defaultJustifyLastLine
-		)
-	{
-		this(
-			jasperReportsContext,
-			renderersCache,
-			minimizePrinterJobSize,
-			ignoreMissingFont,
-			defaultIndentFirstLine,
-			defaultJustifyLastLine,
-			JasperPrint.DEFAULT_REPORT_DPI
-			);
-	}
-
-	public PrintDrawVisitor(
-		JasperReportsContext jasperReportsContext,
-		RenderersCache renderersCache,
-		boolean minimizePrinterJobSize,
-		boolean ignoreMissingFont,
-		boolean defaultIndentFirstLine,
 		boolean defaultJustifyLastLine,
 		int reportDpi
 		)
@@ -103,7 +82,7 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext, reportDpi);
 		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache, reportDpi);
 
-		AwtTextRenderer textRenderer =
+		AwtTextRenderer textRenderer = 
 			new AwtTextRenderer(
 				jasperReportsContext,
 				minimizePrinterJobSize,
@@ -112,33 +91,11 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 				defaultJustifyLastLine,
 				reportDpi
 				);
-
+		
 		textDrawer = new TextDrawer(jasperReportsContext, textRenderer);
 		frameDrawer = new FrameDrawer(jasperReportsContext, null, this);
 	}
-
-	public PrintDrawVisitor(
-		JRGraphics2DExporterContext exporterContext,
-		ExporterFilter filter,
-		RenderersCache renderersCache,
-		boolean minimizePrinterJobSize,
-		boolean ignoreMissingFont,
-		boolean defaultIndentFirstLine,
-		boolean defaultJustifyLastLine
-		)
-	{
-		this(
-			exporterContext,
-			filter,
-			renderersCache,
-			minimizePrinterJobSize,
-			ignoreMissingFont,
-			defaultIndentFirstLine,
-			defaultJustifyLastLine,
-			JasperPrint.DEFAULT_REPORT_DPI
-			);
-	}
-
+	
 	public PrintDrawVisitor(
 		JRGraphics2DExporterContext exporterContext,
 		ExporterFilter filter,
@@ -165,7 +122,7 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 				defaultJustifyLastLine,
 				reportDpi
 				);
-
+		
 		textDrawer = new TextDrawer(jasperReportsContext, textRenderer);
 		frameDrawer = new FrameDrawer(exporterContext, filter, this);
 	}

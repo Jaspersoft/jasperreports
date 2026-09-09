@@ -42,17 +42,6 @@ public class DrawChartRendererFactory extends AbstractChartRenderableFactory
 		JasperReportsContext jasperReportsContext,
 		JFreeChart chart, 
 		ChartHyperlinkProvider chartHyperlinkProvider, 
-		Rectangle2D rectangle
-		)
-	{
-		return new DrawChartRendererImpl(chart, chartHyperlinkProvider);
-	}
-
-	@Override
-	public Renderable getRenderable(
-		JasperReportsContext jasperReportsContext,
-		JFreeChart chart, 
-		ChartHyperlinkProvider chartHyperlinkProvider, 
 		Rectangle2D rectangle,
 		int reportDpi
 		)

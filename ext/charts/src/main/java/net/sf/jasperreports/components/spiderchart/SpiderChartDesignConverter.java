@@ -81,7 +81,8 @@ public class SpiderChartDesignConverter implements ComponentDesignConverter
 				spiderchartBean,
 				null,
 				JRPropertiesUtil.getInstance(reportConverter.getJasperReportsContext()).getProperty(reportConverter.getReport(), JRChart.PROPERTY_CHART_RENDER_TYPE),
-				SpiderChartRendererEvaluator.SAMPLE_DATASET)
+				SpiderChartRendererEvaluator.SAMPLE_DATASET,
+				reportConverter.getReport().getDpi())
 				);
 		
 		return printImage;

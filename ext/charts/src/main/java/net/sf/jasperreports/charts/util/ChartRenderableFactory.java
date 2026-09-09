@@ -52,22 +52,7 @@ public interface ChartRenderableFactory
 		JasperReportsContext jasperReportsContext,
 		JFreeChart chart, 
 		ChartHyperlinkProvider chartHyperlinkProvider,
-		Rectangle2D rectangle
-		);
-
-	/**
-	 * Charts express their fonts and strokes in points, while the rectangle they are drawn into
-	 * is expressed in the pixels of the report, so a chart needs the resolution of the report in
-	 * order to come out at the intended physical size.
-	 */
-	default Renderable getRenderable(
-		JasperReportsContext jasperReportsContext,
-		JFreeChart chart, 
-		ChartHyperlinkProvider chartHyperlinkProvider,
 		Rectangle2D rectangle,
 		int reportDpi
-		)
-	{
-		return getRenderable(jasperReportsContext, chart, chartHyperlinkProvider, rectangle);
-	}
+		);
 }

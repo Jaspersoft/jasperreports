@@ -302,7 +302,7 @@ public class ReportConverter
 			}
 		}
 		
-		collectStyles(report.getStyles());
+		collectStyles(report.getStyles(), report.getDpi());
 	}
 
 	protected void loadReportTemplateStyles(JRReportTemplate template, Set<String> loadedLocations)
@@ -363,11 +363,6 @@ public class ReportConverter
 		}
 		
 		collectStyles(template.getStyles(), template.getDpi());
-	}
-
-	protected void collectStyles(JRStyle[] styles)
-	{
-		collectStyles(styles, report.getDpi());
 	}
 
 	protected void collectStyles(JRStyle[] styles, int templateDpi)

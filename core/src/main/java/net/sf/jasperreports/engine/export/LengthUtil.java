@@ -23,8 +23,6 @@
  */
 package net.sf.jasperreports.engine.export;
 
-import net.sf.jasperreports.engine.JasperPrint;
-
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
@@ -35,46 +33,22 @@ public final class LengthUtil
 	/**
 	 * Converts pixels to inches without decimal truncation.
 	 */
-	public static double inch(double pixels)
-	{
-		return inch(pixels, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-	
-	/**
-	 *
-	 */
 	public static double inch(double pixels, int dpi)
 	{
 		return pixels / dpi;
 	}
-
-	/**
-	 * 
-	 */
-	public static double inchFloor2Dec(double pixels)
-	{
-		return inchFloor2Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
-	}
 	
 	/**
-	 *
+	 * 
 	 */
 	public static double inchFloor2Dec(double pixels, int dpi)
 	{
 		double inches = pixels / dpi;
 		return (Math.floor(inches * 100.0)) / 100.0;
 	}
-
+	
 	/**
 	 * 
-	 */
-	public static double inchFloor4Dec(double pixels)
-	{
-		return inchFloor4Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-
-	/**
-	 *
 	 */
 	public static double inchFloor4Dec(double pixels, int dpi)
 	{
@@ -85,30 +59,14 @@ public final class LengthUtil
 	/**
 	 * 
 	 */
-	public static double inchRound2Dec(double pixels)
-	{
-		return inchRound2Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-	
-	/**
-	 *
-	 */
 	public static double inchRound2Dec(double pixels, int dpi)
 	{
 		double inches = pixels / dpi;
 		return (Math.round(inches * 100.0)) / 100.0;
 	}
-
+	
 	/**
 	 * 
-	 */
-	public static double inchRound4Dec(double pixels)
-	{
-		return inchRound4Dec(pixels, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-
-	/**
-	 *
 	 */
 	public static double inchRound4Dec(double pixels, int dpi)
 	{
@@ -121,14 +79,6 @@ public final class LengthUtil
 	 * @param pixels value that need to be converted
 	 * @return converted value in twips
 	 */
-	public static int twip(float pixels) 
-	{
-		return (int)(pixels * 20); // 1440.0f / 72
-	}
-
-	/**
-	 *
-	 */
 	public static int twip(float pixels, int dpi)
 	{
 		return (int)(pixels * 1440.0f / dpi);
@@ -139,29 +89,13 @@ public final class LengthUtil
 	 * @param pixels value that needs to be converted
 	 * @return converted value in EMU
 	 */
-	public static int emu(float pixels) 
-	{
-		return (int)(pixels * 12700); // 914400.0f / 72
-	}
-	
-	/**
-	 *
-	 */
 	public static int emu(float pixels, int dpi)
 	{
 		return (int)(pixels * 914400.0f / dpi);
 	}
-
+	
 	/**
 	 * 
-	 */
-	public static int halfPoint(float pixels) 
-	{
-		return (int)(pixels * 8); // 576.0f / 72
-	}
-
-	/**
-	 *
 	 */
 	public static int halfPoint(float pixels, int dpi)
 	{

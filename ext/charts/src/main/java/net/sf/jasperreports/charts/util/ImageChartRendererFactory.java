@@ -53,17 +53,6 @@ public class ImageChartRendererFactory extends AbstractChartRenderableFactory
 		JasperReportsContext jasperReportsContext,
 		JFreeChart chart, 
 		ChartHyperlinkProvider chartHyperlinkProvider,
-		Rectangle2D rectangle
-		)
-	{
-		return getRenderable(jasperReportsContext, chart, chartHyperlinkProvider, rectangle, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-
-	@Override
-	public Renderable getRenderable(
-		JasperReportsContext jasperReportsContext,
-		JFreeChart chart, 
-		ChartHyperlinkProvider chartHyperlinkProvider,
 		Rectangle2D rectangle,
 		int reportDpi
 		)

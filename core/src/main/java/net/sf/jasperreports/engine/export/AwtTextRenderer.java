@@ -52,27 +52,6 @@ public class AwtTextRenderer extends AbstractTextRenderer
 	
 	
 	/**
-	 * 
-	 */
-	public AwtTextRenderer(
-		JasperReportsContext jasperReportsContext,
-		boolean isMinimizePrinterJobSize,
-		boolean ignoreMissingFont,
-		boolean defaultIndentFirstLine,
-		boolean defaultJustifyLastLine
-		)
-	{
-		this(
-			jasperReportsContext,
-			isMinimizePrinterJobSize,
-			ignoreMissingFont,
-			defaultIndentFirstLine,
-			defaultJustifyLastLine,
-			JasperPrint.DEFAULT_REPORT_DPI
-			);
-	}
-
-	/**
 	 *
 	 */
 	public AwtTextRenderer(
@@ -85,13 +64,13 @@ public class AwtTextRenderer extends AbstractTextRenderer
 		)
 	{
 		super(
-			jasperReportsContext,
-			isMinimizePrinterJobSize,
+			jasperReportsContext, 
+			isMinimizePrinterJobSize, 
 			ignoreMissingFont,
 			defaultIndentFirstLine,
 			defaultJustifyLastLine
 			);
-
+		
 		this.noBackcolorSelector = JRStyledTextAttributeSelector.getNoBackcolorSelector(jasperReportsContext);
 		styledTextUtil = JRStyledTextUtil.getInstance(jasperReportsContext);
 		this.fontSizeScale = (float) reportDpi / JasperPrint.DEFAULT_REPORT_DPI;

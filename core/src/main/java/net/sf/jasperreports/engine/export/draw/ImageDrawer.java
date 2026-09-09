@@ -66,14 +66,6 @@ public class ImageDrawer extends ElementDrawer<JRPrintImage>
 	 */
 	public ImageDrawer(
 		JasperReportsContext jasperReportsContext,
-		RenderersCache renderersCache
-		)
-	{
-		this(jasperReportsContext, renderersCache, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-
-	public ImageDrawer(
-		JasperReportsContext jasperReportsContext,
 		RenderersCache renderersCache,
 		int reportDpi
 		)

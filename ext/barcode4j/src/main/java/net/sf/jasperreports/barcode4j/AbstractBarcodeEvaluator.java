@@ -75,15 +75,6 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 	protected AbstractBarcodeEvaluator(
 		JasperReportsContext jasperReportsContext,
 		JRComponentElement componentElement, 
-		JRDefaultStyleProvider defaultStyleProvider
-		)
-	{
-		this(jasperReportsContext, componentElement, defaultStyleProvider, JasperPrint.DEFAULT_REPORT_DPI);
-	}
-
-	protected AbstractBarcodeEvaluator(
-		JasperReportsContext jasperReportsContext,
-		JRComponentElement componentElement, 
 		JRDefaultStyleProvider defaultStyleProvider,
 		int reportDpi
 		)

@@ -103,19 +103,6 @@ public final class ChartUtil
 	
 	
 	/**
-	 * 
-	 */
-	public static List<JRPrintImageAreaHyperlink> getImageAreaHyperlinks(
-		JFreeChart chart,
-		ChartHyperlinkProvider chartHyperlinkProvider,
-		Graphics2D grx,
-		Rectangle2D renderingArea
-		)// throws JRException
-	{
-		return getImageAreaHyperlinks(chart, chartHyperlinkProvider, grx, renderingArea, 1d);
-	}
-
-	/**
 	 * Collects the hyperlink areas of a chart laid out on the given area. The areas come out in the
 	 * coordinates the chart was laid out in, so they are scaled back to the pixels of the report.
 	 */

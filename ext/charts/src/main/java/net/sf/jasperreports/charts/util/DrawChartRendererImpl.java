@@ -50,15 +50,10 @@ public class DrawChartRendererImpl extends AbstractRenderToImageAwareRenderer im
 	private ChartHyperlinkProvider chartHyperlinkProvider;
 	private int reportDpi = JasperPrint.DEFAULT_REPORT_DPI;
 	
-	public DrawChartRendererImpl(JFreeChart chart, ChartHyperlinkProvider chartHyperlinkProvider)
+	public DrawChartRendererImpl(JFreeChart chart, ChartHyperlinkProvider chartHyperlinkProvider, int reportDpi)
 	{
 		this.chart = chart;
 		this.chartHyperlinkProvider = chartHyperlinkProvider;
-	}
-
-	public DrawChartRendererImpl(JFreeChart chart, ChartHyperlinkProvider chartHyperlinkProvider, int reportDpi)
-	{
-		this(chart, chartHyperlinkProvider);
 		this.reportDpi = reportDpi;
 	}
 
