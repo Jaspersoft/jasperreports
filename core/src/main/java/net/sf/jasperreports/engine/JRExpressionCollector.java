@@ -779,12 +779,22 @@ public class JRExpressionCollector
 				for (JRConditionalStyle conditionalStyle : conditionalStyles)
 				{
 					JRExpression conditionExpression = conditionalStyle.getConditionExpression();
-					Collection<JRValidationFault> brokenRules = new ArrayList<>();
-					JRVerifier.verifyExpression(conditionExpression, expressionVerifier.getParametersMap(), expressionVerifier.getFieldsMap(), expressionVerifier.getVariablesMap(), brokenRules);
-					if (brokenRules.size() == 0 || !skipFaulty)
+					if (conditionExpression != null && skipFaulty)
 					{
-						addExpression(conditionExpression);
+						Collection<JRValidationFault> brokenRules = new ArrayList<>();
+						JRVerifier.verifyExpression(
+							conditionExpression, 
+							expressionVerifier.getParametersMap(), 
+							expressionVerifier.getFieldsMap(), 
+							expressionVerifier.getVariablesMap(), 
+							brokenRules
+							);
+						if (!brokenRules.isEmpty())
+						{
+							continue;
+						}
 					}
+					addExpression(conditionExpression);
 				}
 			}
 
