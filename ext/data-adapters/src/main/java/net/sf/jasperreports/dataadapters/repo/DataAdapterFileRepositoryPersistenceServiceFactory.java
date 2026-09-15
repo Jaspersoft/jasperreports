@@ -24,7 +24,6 @@
 package net.sf.jasperreports.dataadapters.repo;
 
 import net.sf.jasperreports.engine.JasperReportsContext;
-import net.sf.jasperreports.repo.FileRepositoryPersistenceServiceFactory;
 import net.sf.jasperreports.repo.FileRepositoryService;
 import net.sf.jasperreports.repo.PersistenceService;
 import net.sf.jasperreports.repo.PersistenceServiceFactory;
@@ -37,12 +36,12 @@ import net.sf.jasperreports.repo.Resource;
  */
 public class DataAdapterFileRepositoryPersistenceServiceFactory implements PersistenceServiceFactory
 {
-	private static final FileRepositoryPersistenceServiceFactory INSTANCE = new FileRepositoryPersistenceServiceFactory();
+	private static final DataAdapterFileRepositoryPersistenceServiceFactory INSTANCE = new DataAdapterFileRepositoryPersistenceServiceFactory();
 	
 	/**
 	 * 
 	 */
-	public static FileRepositoryPersistenceServiceFactory getInstance()
+	public static DataAdapterFileRepositoryPersistenceServiceFactory getInstance()
 	{
 		return INSTANCE;
 	}
