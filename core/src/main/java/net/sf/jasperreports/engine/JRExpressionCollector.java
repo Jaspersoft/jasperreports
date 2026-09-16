@@ -261,6 +261,7 @@ public class JRExpressionCollector
 	protected static class GeneratedIds
 	{
 		private final TreeMap<Integer, JRExpression> ids = new TreeMap<>();
+		private final Set<Integer> reservedIds = new HashSet<>();
 		private int nextId;
 		private List<JRExpression> expressions;
 		
@@ -272,8 +273,24 @@ public class JRExpressionCollector
 		public JRExpression put(Integer id, JRExpression expression)
 		{
 			expressions = null;
+			reservedIds.remove(id);
 
 			return ids.put(id, expression);
+		}
+		
+		/**
+		 * Marks an id as taken by an expression which is not collected in this context, so that
+		 * the id does not get used by a different expression here.
+		 */
+		public void reserve(Integer id, JRExpression expression)
+		{
+			if (!ids.containsKey(id))
+			{
+				expressions = null;
+				reservedIds.add(id);
+
+				ids.put(id, expression);
+			}
 		}
 		
 		public void move(Integer id, Integer newId)
@@ -284,6 +301,11 @@ public class JRExpressionCollector
 			if (expression != null)
 			{
 				ids.put(newId, expression);
+				
+				if (reservedIds.remove(id))
+				{
+					reservedIds.add(newId);
+				}
 			}
 		}
 
@@ -301,7 +323,14 @@ public class JRExpressionCollector
 		{
 			if (expressions == null)
 			{
-				expressions = new ArrayList<>(ids.values());
+				expressions = new ArrayList<>(ids.size());
+				for (Map.Entry<Integer, JRExpression> idExpression : ids.entrySet())
+				{
+					if (!reservedIds.contains(idExpression.getKey()))
+					{
+						expressions.add(idExpression.getValue());
+					}
+				}
 			}
 			return expressions;
 		}
@@ -403,6 +432,35 @@ public class JRExpressionCollector
 			}
 			
 			setExpressionContext(expression);
+		}
+	}
+
+	/**
+	 * Reserves the id of an expression which is not collected in this context, so that no other
+	 * expression of this context gets the same id.
+	 * <p>
+	 * Expression ids are report wide, but each dataset and crosstab has its own expression
+	 * evaluator which only implements the ids collected for it. Leaving the id of a skipped
+	 * expression free would allow an expression of this context to take it, in which case
+	 * evaluating the skipped expression here would return the value of that other expression.
+	 * The reserved id has no case in the generated evaluator, so it evaluates to null, which
+	 * conditional styles read as a condition which is not met.
+	 */
+	protected void reserveExpression(JRExpression expression)
+	{
+		Integer id = getExpressionId(expression);
+		if (id == null)
+		{
+			id = generatedIds.nextId();
+			setGeneratedId(expression, id);
+		}
+		
+		generatedIds.reserve(id, expression);
+		
+		if (log.isTraceEnabled())
+		{
+			log.trace(hashCode() + " reserved id " + id 
+					+ " for skipped expression " + expression.hashCode() + " " + expression.getText());
 		}
 	}
 
@@ -799,6 +857,7 @@ public class JRExpressionCollector
 							);
 						if (!brokenRules.isEmpty())
 						{
+							reserveExpression(conditionExpression);
 							continue;
 						}
 					}
