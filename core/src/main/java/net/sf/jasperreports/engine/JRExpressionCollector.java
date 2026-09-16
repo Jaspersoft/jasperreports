@@ -322,6 +322,7 @@ public class JRExpressionCollector
 	private Map<JRCrosstab,JRExpressionCollector> crosstabCollectors;
 
 	private final Set<JRStyle> collectedStyles;
+	private final Set<JRStyle> partiallyCollectedStyles;
 
 
 	protected JRExpressionCollector(JasperReportsContext jasperReportsContext, JRExpressionCollector parent, JRReport report)
@@ -354,6 +355,7 @@ public class JRExpressionCollector
 		}
 
 		collectedStyles = new HashSet<>();
+		partiallyCollectedStyles = new HashSet<>();
 	}
 
 	/**
@@ -767,10 +769,12 @@ public class JRExpressionCollector
 	 * Collects expressions used in a style definition.
 	 * 
 	 * @param style the style to collect expressions from
+	 * @param skipFaulty whether the condition expressions which are not valid in the current
+	 * context are to be skipped instead of being collected and reported as broken rules
 	 */
-	public void collect(JRStyle style, boolean skipFaulty)
+	private void collect(JRStyle style, boolean skipFaulty)
 	{
-		if (style != null && collectedStyles.add(style))
+		if (style != null && addCollectedStyle(style, skipFaulty))
 		{
 			JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
 
@@ -800,6 +804,32 @@ public class JRExpressionCollector
 
 			collect(style.getStyle(), skipFaulty);
 		}
+	}
+
+
+	/**
+	 * Marks a style as collected and returns whether its expressions still need to be collected.
+	 * <p>
+	 * Fault tolerant collection only gathers the condition expressions which are valid in the
+	 * current context, so a style collected this way is only partially collected and needs to be
+	 * collected again if it later proves to be explicitly referenced by an element. Collecting it
+	 * again gathers all its condition expressions, including the faulty ones, which are this way
+	 * reported as broken rules by the verifier.
+	 */
+	private boolean addCollectedStyle(JRStyle style, boolean skipFaulty)
+	{
+		if (collectedStyles.contains(style))
+		{
+			return false;
+		}
+
+		if (skipFaulty)
+		{
+			return partiallyCollectedStyles.add(style);
+		}
+
+		collectedStyles.add(style);
+		return true;
 	}
 
 
@@ -875,15 +905,16 @@ public class JRExpressionCollector
 	}
 
 	/**
-	 *
+	 * Collects the expressions used in the given style definitions, skipping the condition
+	 * expressions which are not valid in the current context.
 	 */
-	private void collect(JRStyle[] styles, boolean skipFaulty)
+	private void collectFaultTolerant(JRStyle[] styles)
 	{
 		if (styles != null && styles.length > 0)
 		{
 			for (JRStyle style : styles)
 			{
-				collect(style, skipFaulty);
+				collect(style, true);
 			}
 		}
 	}
@@ -1132,7 +1163,7 @@ public class JRExpressionCollector
 		JRExpressionCollector crosstabCollector = getCollector(crosstab);
 
 		crosstabCollector.collect(report.getDefaultStyle());
-		crosstabCollector.collect(report.getStyles(), true);
+		crosstabCollector.collectFaultTolerant(report.getStyles());
 
 		addExpression(crosstab.getParametersMapExpression());
 
@@ -1253,7 +1284,7 @@ public class JRExpressionCollector
 	{
 		JRExpressionCollector collector = getCollector(dataset);
 
-		collector.collect(report.getStyles(), true);
+		collector.collectFaultTolerant(report.getStyles());
 		collector.collectPropertyExpressions(dataset.getPropertyExpressions());
 		collector.collect(dataset.getParameters());
 		collector.collect(dataset.getFields());
