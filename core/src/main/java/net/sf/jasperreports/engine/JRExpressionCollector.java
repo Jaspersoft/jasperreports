@@ -356,6 +356,7 @@ public class JRExpressionCollector
 
 	private final Set<JRStyle> collectedStyles;
 	private final Set<JRStyle> partiallyCollectedStyles;
+	private boolean usesStyleExpression;
 
 
 	protected JRExpressionCollector(JasperReportsContext jasperReportsContext, JRExpressionCollector parent, JRReport report)
@@ -795,6 +796,15 @@ public class JRExpressionCollector
 		collect(report.getSummary());
 		collect(report.getNoData());
 
+		collectStyleExpressionStyles();
+		if (datasetCollectors != null)
+		{
+			for (JRExpressionCollector datasetCollector : datasetCollectors.values())
+			{
+				datasetCollector.collectStyleExpressionStyles();
+			}
+		}
+
 		return getExpressions();
 	}
 
@@ -1062,8 +1072,35 @@ public class JRExpressionCollector
 	{
 		collect(element.getStyle());
 		addExpression(element.getPrintWhenExpression());
-		addExpression(element.getStyleExpression());
+		JRExpression styleExpression = element.getStyleExpression();
+		if (styleExpression != null)
+		{
+			usesStyleExpression = true;
+			addExpression(styleExpression);
+		}
 		collectPropertyExpressions(element.getPropertyExpressions());
+	}
+
+
+	/**
+	 * Collects the condition expressions of all report styles, if any element of this context has
+	 * a style expression.
+	 * <p>
+	 * A style expression produces a style name at fill time, so any report style can end up
+	 * applied to such an element and the condition expressions of all report styles have to be
+	 * available in this context. A context which has no element with a style expression only
+	 * needs the styles which its elements explicitly reference, collected along with the
+	 * elements, and the report default style, which applies to any element.
+	 * <p>
+	 * This has to be called after the elements of the context have been collected, because it is
+	 * the elements which tell whether the context uses style expressions.
+	 */
+	protected void collectStyleExpressionStyles()
+	{
+		if (usesStyleExpression)
+		{
+			collectFaultTolerant(report.getStyles());
+		}
 	}
 
 	public void collectPropertyExpressions(
@@ -1226,7 +1263,6 @@ public class JRExpressionCollector
 		JRExpressionCollector crosstabCollector = getCollector(crosstab);
 
 		crosstabCollector.collect(report.getDefaultStyle(), true);
-		crosstabCollector.collectFaultTolerant(report.getStyles());
 
 		addExpression(crosstab.getParametersMapExpression());
 
@@ -1294,6 +1330,8 @@ public class JRExpressionCollector
 		crosstabCollector.collect(crosstab.getWhenNoDataCell());
 
 		collectCrosstabCells(crosstab, crosstabCollector);
+
+		crosstabCollector.collectStyleExpressionStyles();
 	}
 
 
@@ -1347,7 +1385,7 @@ public class JRExpressionCollector
 	{
 		JRExpressionCollector collector = getCollector(dataset);
 
-		collector.collectFaultTolerant(report.getStyles());
+		collector.collect(report.getDefaultStyle(), true);
 		collector.collectPropertyExpressions(dataset.getPropertyExpressions());
 		collector.collect(dataset.getParameters());
 		collector.collect(dataset.getFields());
