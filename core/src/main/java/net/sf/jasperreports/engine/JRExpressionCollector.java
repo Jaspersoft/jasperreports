@@ -136,6 +136,10 @@ public class JRExpressionCollector
 		private final Map fieldsMap;
 		private final Map variablesMap;
 		
+		/**
+		 * @param dataset the dataset to verify expressions against, or <code>null</code> if the
+		 * dataset does not exist, in which case no name is considered valid
+		 */
 		public DatasetExpressionVerifier(JRDataset dataset)
 		{
 			if (dataset instanceof JRDesignDataset)
@@ -147,7 +151,7 @@ public class JRExpressionCollector
 			else
 			{
 				parametersMap = new HashMap<>();
-				if (dataset.getParameters() != null)
+				if (dataset != null && dataset.getParameters() != null)
 				{
 					for (JRParameter parameter : dataset.getParameters())
 					{
@@ -156,7 +160,7 @@ public class JRExpressionCollector
 				}
 
 				fieldsMap = new HashMap<>();
-				if (dataset.getFields() != null)
+				if (dataset != null && dataset.getFields() != null)
 				{
 					for (JRField field : dataset.getFields())
 					{
@@ -165,7 +169,7 @@ public class JRExpressionCollector
 				}
 
 				variablesMap = new HashMap<>();
-				if (dataset.getVariables() != null)
+				if (dataset != null && dataset.getVariables() != null)
 				{
 					for (JRVariable variable : dataset.getVariables())
 					{
@@ -574,7 +578,7 @@ public class JRExpressionCollector
 			collector = datasetCollectors.get(datasetName);
 			if (collector == null)
 			{
-				collector = new JRExpressionCollector(jasperReportsContext, this, report, new DatasetExpressionVerifier(JRReportUtils.findSubdataset(datasetName, report)));
+				collector = new JRExpressionCollector(jasperReportsContext, this, report, new DatasetExpressionVerifier(JRReportUtils.getSubdataset(datasetName, report)));
 				datasetCollectors.put(datasetName, collector);
 				
 				if (log.isTraceEnabled())

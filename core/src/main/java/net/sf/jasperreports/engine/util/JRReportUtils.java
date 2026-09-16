@@ -44,9 +44,29 @@ public final class JRReportUtils
 
 	public static JRDataset findSubdataset(String datasetName, JRReport report)
 	{
+		JRDataset reportDataset = getSubdataset(datasetName, report);
+		
+		if (reportDataset == null)
+		{
+			throw 
+				new JRRuntimeException(
+					EXCEPTION_MESSAGE_KEY_REPORT_SUBDATASET_NOT_FOUND,
+					new Object[]{datasetName, report.getName()});
+		}
+		return reportDataset;
+	}
+
+
+	/**
+	 * Returns the report subdataset with the given name, or <code>null</code> if the report does
+	 * not have such a subdataset. Unlike {@link #findSubdataset(String, JRReport)}, this method
+	 * tolerates a missing subdataset, which is useful before the report design gets verified.
+	 */
+	public static JRDataset getSubdataset(String datasetName, JRReport report)
+	{
 		JRDataset[] datasets = report.getDatasets();
 		JRDataset reportDataset = null;
-		if (datasets != null)
+		if (datasetName != null && datasets != null)
 		{
 			for (int i = 0; i < datasets.length; i++)
 			{
@@ -56,14 +76,6 @@ public final class JRReportUtils
 					break;
 				}
 			}
-		}
-		
-		if (reportDataset == null)
-		{
-			throw 
-				new JRRuntimeException(
-					EXCEPTION_MESSAGE_KEY_REPORT_SUBDATASET_NOT_FOUND,
-					new Object[]{datasetName, report.getName()});
 		}
 		return reportDataset;
 	}
