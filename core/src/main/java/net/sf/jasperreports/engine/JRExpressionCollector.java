@@ -1225,7 +1225,7 @@ public class JRExpressionCollector
 		JRExpressionCollector datasetCollector = getCollector(dataset);
 		JRExpressionCollector crosstabCollector = getCollector(crosstab);
 
-		crosstabCollector.collect(report.getDefaultStyle());
+		crosstabCollector.collect(report.getDefaultStyle(), true);
 		crosstabCollector.collectFaultTolerant(report.getStyles());
 
 		addExpression(crosstab.getParametersMapExpression());

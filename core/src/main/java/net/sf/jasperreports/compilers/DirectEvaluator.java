@@ -44,22 +44,29 @@ public class DirectEvaluator extends JREvaluator
 		//NOOP
 	}
 
+	/**
+	 * Evaluating by id returns null because this evaluator is used for compilation units which
+	 * have no generated expression evaluator class, so the only expressions which can reach here
+	 * are expressions which the unit does not implement. Generated evaluator classes behave the
+	 * same way, their switch on the expression id leaving the value null for an id which they do
+	 * not implement.
+	 */
 	@Override
 	protected Object evaluate(int id) throws Throwable
 	{
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
 	protected Object evaluateOld(int id) throws Throwable
 	{
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
 	protected Object evaluateEstimated(int id) throws Throwable
 	{
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 }
