@@ -643,6 +643,9 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 				{
 					for (Integer j : autofitList) 
 					{
+						// Microsoft Excel does not auto-fit columns that contain merged cells,
+						// so it does not make sense to force POI to resize merged cells, as this
+						// behavior does not have an equivalent in Microsoft Excel
 						currentSheet.autoSizeColumn(j, false);
 					}
 				}
@@ -673,16 +676,14 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 	@Override
 	protected void setColumnWidth(int col, int width, boolean autoFit)
 	{
+		sheet.setColumnWidth(col, Math.min(45 * width * 72 / reportDpi, 256 * 255));
+
 		if (autoFit)
 		{
 			//the autofit will be applied before closing workbook, after the sheet completion
 			List<Integer> autofitList= autofitColumns.get(sheet) != null ? autofitColumns.get(sheet) : new ArrayList<>();
 			autofitList.add(col);
 			autofitColumns.put(sheet, autofitList);
-		}
-		else
-		{
-			sheet.setColumnWidth(col, Math.min(45 * width * 72 / reportDpi, 256 * 255));
 		}
 	}
 

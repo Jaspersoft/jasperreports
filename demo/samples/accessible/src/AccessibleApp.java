@@ -161,21 +161,14 @@ public class AccessibleApp extends AbstractSampleApp
 			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(os));
 			
 			JasperPrint jp = (JasperPrint)JRLoader.loadObject(new File("target/reports/AccessibleReport.jrprint"));
-			
-			// Exclude transparent images when exporting to PDF; elements marked with the key 'TransparentImage'
-			// will be excluded from the exported PDF
-			jp.setProperty("net.sf.jasperreports.export.pdf.exclude.key.TransparentImage", null);
-			
 			exporter.setExporterInput(new SimpleExporterInput(jp));
 			
 			SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
-			
 			// Include structure tags for PDF/A-1a compliance; unnecessary for PDF/A-1b
 			configuration.setTagged(true);
-			
 			configuration.setPdfaConformance(conformance);
-			
 			exporter.setConfiguration(configuration);
+			
 			exporter.exportReport();
 
 			FileOutputStream fos = new FileOutputStream("target/reports/AccessibleReport_" + conformance.getName() + ".pdf");
