@@ -47,12 +47,14 @@ public class DocxBorderInfo
 	protected Color[] borderColor = new Color[4];
 	protected String[] borderWidth = new String[4];
 	protected String[] borderStyle = new String[4];
+	protected int dpi;
 
 	/**
 	 *
 	 */
-	public DocxBorderInfo(JRLineBox box)
+	public DocxBorderInfo(JRLineBox box, int dpi)
 	{
+		this.dpi = dpi;
 		setBorder(box.getTopPen(), TOP_BORDER);
 		setBorder(box.getLeftPen(), LEFT_BORDER);
 		setBorder(box.getBottomPen(), BOTTOM_BORDER);
@@ -62,8 +64,9 @@ public class DocxBorderInfo
 	/**
 	 *
 	 */
-	public DocxBorderInfo(JRPen pen)
+	public DocxBorderInfo(JRPen pen, int dpi)
 	{
+		this.dpi = dpi;
 		if (
 			borderWidth[TOP_BORDER] == null
 			&& borderWidth[LEFT_BORDER] == null
@@ -125,7 +128,7 @@ public class DocxBorderInfo
 				}
 			}
 
-			borderWidth[side] = String.valueOf(LengthUtil.halfPoint(width));
+			borderWidth[side] = String.valueOf(LengthUtil.halfPoint(width, dpi));
 		}
 		else
 		{

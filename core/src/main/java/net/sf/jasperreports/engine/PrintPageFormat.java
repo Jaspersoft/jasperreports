@@ -63,6 +63,16 @@ public interface PrintPageFormat
 	public Integer getRightMargin();
 		
 	/**
+	 * Returns the resolution, in dots per inch, in which the dimensions of the pages
+	 * described by this page format are expressed.
+	 * <p>
+	 * Parts of a document can come from reports having different resolutions, so this is
+	 * the resolution that applies to the pages of the part, which is not necessarily the
+	 * resolution of the document as a whole.
+	 */
+	public int getDpi();
+
+	/**
 	 * Returns the page orientation.
 	 */
 	public OrientationEnum getOrientation();

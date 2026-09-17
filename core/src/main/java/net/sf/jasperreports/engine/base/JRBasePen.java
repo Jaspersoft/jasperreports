@@ -106,7 +106,7 @@ public class JRBasePen implements JRPen, Serializable, Cloneable, JRChangeEvents
 	@Override
 	public Float getLineWidth()
 	{
-		return getStyleResolver().getLineWidth(this, penContainer.getDefaultLineWidth());
+		return getStyleResolver().getLineWidth(this);
 	}
 
 	@Override

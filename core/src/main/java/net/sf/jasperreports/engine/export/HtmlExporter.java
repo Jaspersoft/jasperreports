@@ -68,6 +68,7 @@ import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintElementId;
 import net.sf.jasperreports.engine.PrintElementVisitor;
@@ -103,6 +104,7 @@ import net.sf.jasperreports.engine.util.HyperlinkData;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.JRCloneUtils;
 import net.sf.jasperreports.engine.util.JRColorUtil;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRTextAttribute;
@@ -248,6 +250,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	private boolean defaultIndentFirstLine;
 	private boolean defaultJustifyLastLine;
 
+	protected int reportDpi;
 	private float currentZoomRatio;
 	private String currentSizeUnit;
 
@@ -341,6 +344,10 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	protected void initReport()
 	{
 		super.initReport();
+
+		// the document resolution applies to the pages that do not belong to a part;
+		// exportPage() refreshes it for every page that does
+		reportDpi = jasperPrint.getDpi();
 
 		HtmlReportConfiguration configuration = getCurrentItemConfiguration();
 		
@@ -583,6 +590,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	
 	protected void exportPage(JRPrintPage page) throws IOException
 	{
+		reportDpi = jasperPrint.getPageFormat(pageIndex).getDpi();
+
 		HtmlReportConfiguration configuration = getCurrentItemConfiguration();
 
 		Tabulator tabulator = new Tabulator(tableFilter, page.getElements(), configuration.isAccessibleHtml());
@@ -1928,6 +1937,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		startCell(rectangle, cell);
 		
 		int radius = rectangle.getRadius();
+		float borderWidth = JRPenUtil.getLineWidthOrDefault(rectangle.getLinePen(), reportDpi);
 		if (radius == 0)
 		{
 			StringBuilder styleBuffer = new StringBuilder();
@@ -1936,7 +1946,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			appendPen(
 				styleBuffer,
 				rectangle.getLinePen(),
-				null
+				null,
+				borderWidth
 				);
 			writeStyle(styleBuffer);
 		}
@@ -1945,10 +1956,12 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 		if (radius != 0)
 		{
-			float lineDiff = rectangle.getLinePen().getLineWidth() / 2;
-			writer.write("<svg height=\"" + rectangle.getHeight() + "\" width=\"" + rectangle.getWidth() + "\">");
-			writer.write("<rect x=\"" + lineDiff + "\" y=\"" + lineDiff + "\" rx=\"" + radius + "\" ry=\"" + radius + "\" ");
-			writer.write("height=\"" + (rectangle.getHeight() - 2 * lineDiff) + "\" width=\"" + (rectangle.getWidth() - 2 * lineDiff) + "\" ");
+			float lineDiff = toZoom(borderWidth) / 2;
+			float svgWidth = toZoom(rectangle.getWidth());
+			float svgHeight = toZoom(rectangle.getHeight());
+			writer.write("<svg height=\"" + svgHeight + "\" width=\"" + svgWidth + "\">");
+			writer.write("<rect x=\"" + lineDiff + "\" y=\"" + lineDiff + "\" rx=\"" + toZoom(radius) + "\" ry=\"" + toZoom(radius) + "\" ");
+			writer.write("height=\"" + (svgHeight - 2 * lineDiff) + "\" width=\"" + (svgWidth - 2 * lineDiff) + "\" ");
 			writeSvgStyle(rectangle);
 			writer.write("\"/></svg>");
 		}
@@ -1962,10 +1975,12 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 		finishStartCell();
 
-		float lineDiff = ellipse.getLinePen().getLineWidth() / 2;
-		writer.write("<svg height=\"" + ellipse.getHeight() + "\" width=\"" + ellipse.getWidth() + "\">");
-		writer.write("<ellipse cx=\"" + (ellipse.getWidth() / 2) + "\" cy=\"" + (ellipse.getHeight() / 2));
-		writer.write("\" rx=\"" + (ellipse.getWidth() / 2 - lineDiff) + "\" ry=\"" + (ellipse.getHeight() / 2 - lineDiff) + "\" ");
+		float lineDiff = toZoom(JRPenUtil.getLineWidthOrDefault(ellipse.getLinePen(), reportDpi)) / 2;
+		float svgWidth = toZoom(ellipse.getWidth());
+		float svgHeight = toZoom(ellipse.getHeight());
+		writer.write("<svg height=\"" + svgHeight + "\" width=\"" + svgWidth + "\">");
+		writer.write("<ellipse cx=\"" + (svgWidth / 2) + "\" cy=\"" + (svgHeight / 2));
+		writer.write("\" rx=\"" + (svgWidth / 2 - lineDiff) + "\" ry=\"" + (svgHeight / 2 - lineDiff) + "\" ");
 		writeSvgStyle(ellipse);
 		writer.write("\"/></svg>");
 		
@@ -1974,20 +1989,21 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 	protected void writeSvgStyle(JRPrintGraphicElement element) throws IOException
 	{
+		float lineWidth = toZoom(JRPenUtil.getLineWidthOrDefault(element.getLinePen(), reportDpi));
 		writer.write("style=\"fill:" + JRColorUtil.getCssColor(element.getBackcolor()) + ";");
 		writer.write("stroke:" + JRColorUtil.getCssColor(element.getLinePen().getLineColor()) + ";");
-		writer.write("stroke-width:" + element.getLinePen().getLineWidth() + ";");
+		writer.write("stroke-width:" + lineWidth + ";");
 
 		switch (element.getLinePen().getLineStyle())
 		{
 			case DOTTED :
 			{
-				writer.write("stroke-dasharray:" + element.getLinePen().getLineWidth() + "," + element.getLinePen().getLineWidth() + ";");
+				writer.write("stroke-dasharray:" + lineWidth + "," + lineWidth + ";");
 				break;
 			}
 			case DASHED :
 			{
-				writer.write("stroke-dasharray:" + 5 * element.getLinePen().getLineWidth() + "," + 3 * element.getLinePen().getLineWidth() + ";");
+				writer.write("stroke-dasharray:" + 5 * lineWidth + "," + 3 * lineWidth + ";");
 				break;
 			}
 			case DOUBLE : //FIXME: there is no built-in svg support for double stroke style; strokes could be rendered twice as a workaround
@@ -2007,11 +2023,11 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		{
 			finishStartCell();
 			
-			int width = line.getWidth();
-			int height = line.getHeight();
+			float width = toZoom(line.getWidth());
+			float height = toZoom(line.getHeight());
 			LineDirectionEnum lineDirection = line.getDirection();
-			int y1 = lineDirection == LineDirectionEnum.BOTTOM_UP ? height : 0;
-			int y2 = lineDirection == LineDirectionEnum.BOTTOM_UP ? 0 : height;
+			float y1 = lineDirection == LineDirectionEnum.BOTTOM_UP ? height : 0;
+			float y2 = lineDirection == LineDirectionEnum.BOTTOM_UP ? 0 : height;
 			
 			writer.write("<svg height=\"" + height + "\" width=\"" + width + "\">");
 			writer.write("<line x1=\"0\" y1=\"" + y1 +"\" x2=\"" + width + "\" y2=\"" + y2 + "\" ");
@@ -2053,7 +2069,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			appendPen(
 				styleBuffer,
 				line.getLinePen(),
-				side
+				side,
+				JRPenUtil.getLineWidthOrDefault(line.getLinePen(), reportDpi)
 				);
 
 			writeStyle(styleBuffer);
@@ -2066,7 +2083,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	
 	
 	protected boolean isOblique(JRPrintLine line){
-		return line.getWidth() > 1 && line.getHeight() > 1;
+		return toZoom(line.getWidth()) > 1 && toZoom(line.getHeight()) > 1;
 	}
 	
 	protected void writeGenericElement(JRGenericPrintElement element, TableCell cell) throws IOException, JRException
@@ -2417,23 +2434,10 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			LineStyleEnum bps = box.getBottomPen().getLineStyle();
 			LineStyleEnum rps = box.getRightPen().getLineStyle();
 			
-			float tpw = box.getTopPen().getLineWidth();
-			float lpw = box.getLeftPen().getLineWidth();
-			float bpw = box.getBottomPen().getLineWidth();
-			float rpw = box.getRightPen().getLineWidth();
-			
-			if (0f < tpw && tpw < 1f) {
-				tpw = 1f;
-			}
-			if (0f < lpw && lpw < 1f) {
-				lpw = 1f;
-			}
-			if (0f < bpw && bpw < 1f) {
-				bpw = 1f;
-			}
-			if (0f < rpw && rpw < 1f) {
-				rpw = 1f;
-			}
+			float tpw = toZoom(toBorderWidth(box.getTopPen().getLineWidth()));
+			float lpw = toZoom(toBorderWidth(box.getLeftPen().getLineWidth()));
+			float bpw = toZoom(toBorderWidth(box.getBottomPen().getLineWidth()));
+			float rpw = toZoom(toBorderWidth(box.getRightPen().getLineWidth()));
 			
 			Color tpc = box.getTopPen().getLineColor();
 			
@@ -2482,13 +2486,49 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	
 	protected boolean appendPen(StringBuilder sb, JRPen pen, String side)
 	{
-		boolean addedToStyle = false;
-		
-		float borderWidth = pen.getLineWidth();
-		if (0f < borderWidth && borderWidth < 1f)
+		float borderWidth = pen.getLineWidth() == null ? 0f : pen.getLineWidth();
+		return appendPen(sb, pen, side, borderWidth);
+	}
+
+	/**
+	 * Writes a border width, snapping it to a whole number of pixels when the conversion from
+	 * the report resolution lands within rounding distance of one, so that a one pixel border
+	 * is written as such whatever the resolution.
+	 */
+	protected String toBorderSizeUnit(float borderWidth)
+	{
+		float zoomed = toZoom(borderWidth);
+		float rounded = Math.round(zoomed);
+		if (rounded > 0f && Math.abs(zoomed - rounded) < 0.001f)
 		{
-			borderWidth = 1f;
+			zoomed = rounded;
 		}
+
+		Number number = zoomed;
+		if (number.intValue() == number.floatValue())
+		{
+			number = number.intValue();
+		}
+
+		return String.valueOf(number) + currentSizeUnit;
+	}
+
+	/**
+	 * Browsers drop or round sub-pixel borders, so a border thinner than one pixel at the
+	 * resolution of the report is widened to exactly one pixel.
+	 */
+	protected float toBorderWidth(Float lineWidth)
+	{
+		float borderWidth = lineWidth == null ? 0f : lineWidth;
+		float minWidth = (float)reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+		return 0f < borderWidth && borderWidth < minWidth ? minWidth : borderWidth;
+	}
+
+	protected boolean appendPen(StringBuilder sb, JRPen pen, String side, float borderWidth)
+	{
+		borderWidth = toBorderWidth(borderWidth);
+
+		boolean addedToStyle = false;
 
 		String borderStyle = null;
 		switch (pen.getLineStyle())
@@ -2526,7 +2566,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			}
 
 			sb.append(": ");
-			sb.append(toSizeUnit(borderWidth));
+			sb.append(toBorderSizeUnit(borderWidth));
 			
 			sb.append(" ");
 			sb.append(borderStyle);
@@ -2879,9 +2919,25 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		return String.valueOf(number) + currentSizeUnit;
 	}
 
+	public String toFontSizeUnit(float points)
+	{
+		Number number = currentZoomRatio * points;
+		if (number.intValue() == number.floatValue())
+		{
+			number = number.intValue();
+		}
+
+		return String.valueOf(number) + currentSizeUnit;
+	}
+
 	protected float toZoom(float size)//FIXMEEXPORT cache this
 	{
-		return (currentZoomRatio * size);
+		float scaled = size;
+		if (reportDpi != JasperPrint.DEFAULT_REPORT_DPI)
+		{
+			scaled = (float)(size * 72.0 / reportDpi);
+		}
+		return currentZoomRatio * scaled;
 	}
 
 	private void addSearchAttributes(JRStyledText styledText, JRPrintText textElement) {
@@ -3314,7 +3370,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		}
 
 		styleBuffer.append("font-size: ");
-		styleBuffer.append(toSizeUnit((Float)attributes.get(TextAttribute.SIZE)));
+		styleBuffer.append(toFontSizeUnit((Float)attributes.get(TextAttribute.SIZE)));
 		styleBuffer.append(";");
 			
 		switch (lineSpacing)

@@ -855,12 +855,6 @@ public class JRBaseStyle implements JRStyle, Serializable, JRChangeEventsSupport
 	}
 	
 	@Override
-	public Float getDefaultLineWidth()
-	{
-		return null;
-	}
-	
-	@Override
 	public Color getDefaultLineColor()
 	{
 		return getForecolor();

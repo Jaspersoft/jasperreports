@@ -72,6 +72,7 @@ import net.sf.jasperreports.engine.type.PrintOrderEnum;
 import net.sf.jasperreports.engine.type.RunDirectionEnum;
 import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRExpressionUtil;
+import net.sf.jasperreports.engine.util.StyleUtil;
 import net.sf.jasperreports.engine.xml.JRXmlTemplateLoader;
 
 /**
@@ -171,6 +172,7 @@ public class ReportConverter
 		jasperPrint.setLeftMargin(report.getLeftMargin());
 		jasperPrint.setBottomMargin(report.getBottomMargin());
 		jasperPrint.setRightMargin(report.getRightMargin());
+		jasperPrint.setDpi(report.getDpi());
 		
 		JRPropertiesUtil.getInstance(jasperReportsContext).transferProperties(report, jasperPrint, JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX);
 
@@ -300,7 +302,7 @@ public class ReportConverter
 			}
 		}
 		
-		collectStyles(report.getStyles());
+		collectStyles(report.getStyles(), report.getDpi());
 	}
 
 	protected void loadReportTemplateStyles(JRReportTemplate template, Set<String> loadedLocations)
@@ -360,16 +362,24 @@ public class ReportConverter
 			}
 		}
 		
-		collectStyles(template.getStyles());
+		collectStyles(template.getStyles(), template.getDpi());
 	}
 
-	protected void collectStyles(JRStyle[] styles)
+	protected void collectStyles(JRStyle[] styles, int templateDpi)
 	{
 		if (styles != null)
 		{
+			int reportDpi = report.getDpi();
+			boolean needsDpiScaling = templateDpi != reportDpi;
+			
 			for (JRStyle style : styles)
 			{
-				stylesMap.put(style.getName(), style);
+				stylesMap.put(
+					style.getName(),
+					needsDpiScaling
+						? StyleUtil.scaleDpiStyle(style, templateDpi, reportDpi)
+						: style
+					);
 			}
 		}
 	}
@@ -474,14 +484,15 @@ public class ReportConverter
 	 */
 	private void addHorizontalGridLine(int x, int y, int width)
 	{
+		float dpiScale = (float) report.getDpi() / JasperPrint.DEFAULT_REPORT_DPI;
 		JRPrintFrame printFrame = new JRBasePrintFrame(getDefaultStyleProvider());
 		printFrame.setX(x);
 		printFrame.setY(y);
 		printFrame.setWidth(width);
-		printFrame.setHeight(1);
+		printFrame.setHeight(Math.max(1, (int) dpiScale));
 		printFrame.getLineBox().getPen().setLineWidth((Float)0f);
 		printFrame.getLineBox().getPen().setLineStyle(LineStyleEnum.SOLID);
-		printFrame.getLineBox().getTopPen().setLineWidth((Float)0.1f);
+		printFrame.getLineBox().getTopPen().setLineWidth(0.1f * dpiScale);
 		printFrame.getLineBox().getTopPen().setLineStyle(LineStyleEnum.DASHED);
 		printFrame.getLineBox().getTopPen().setLineColor(GRID_LINE_COLOR);
 		pageElements.add(0, printFrame);
@@ -492,14 +503,15 @@ public class ReportConverter
 	 */
 	private void addVerticalGridLine(int x, int y, int height)
 	{
+		float dpiScale = (float) report.getDpi() / JasperPrint.DEFAULT_REPORT_DPI;
 		JRPrintFrame printFrame = new JRBasePrintFrame(getDefaultStyleProvider());
 		printFrame.setX(x);
 		printFrame.setY(y);
-		printFrame.setWidth(1);
+		printFrame.setWidth(Math.max(1, (int) dpiScale));
 		printFrame.setHeight(height);
 		printFrame.getLineBox().getPen().setLineWidth((Float)0f);
 		printFrame.getLineBox().getPen().setLineStyle(LineStyleEnum.SOLID);
-		printFrame.getLineBox().getLeftPen().setLineWidth((Float)0.1f);
+		printFrame.getLineBox().getLeftPen().setLineWidth(0.1f * dpiScale);
 		printFrame.getLineBox().getLeftPen().setLineStyle(LineStyleEnum.DASHED);
 		printFrame.getLineBox().getLeftPen().setLineColor(GRID_LINE_COLOR);
 		pageElements.add(0, printFrame);

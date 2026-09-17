@@ -328,11 +328,12 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 		}
 	}
 	
-	public void moveActions(FillPageKey fromKey, FillPageKey toKey)
+	public void moveActions(FillPageKey fromKey, FillPageKey toKey, double dpiScale)
 	{
 		if (log.isDebugEnabled())
 		{
-			log.debug(id + " moving actions from " + fromKey + " to " + toKey);
+			log.debug(id + " moving actions from " + fromKey + " to " + toKey
+					+ (dpiScale != 1d ? " with dpiScale " + dpiScale : ""));
 		}
 		
 		for (LinkedHashMap<FillPageKey, LinkedMap<Object, EvaluationBoundAction>> map : actionsMap.values())
@@ -345,6 +346,10 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 					LinkedMap<Object, EvaluationBoundAction> subreportMap = map.remove(fromKey);
 					if (subreportMap != null && !subreportMap.isEmpty())
 					{
+						if (dpiScale != 1d)
+						{
+							applyDpiScale(subreportMap, dpiScale);
+						}
 						LinkedMap<Object, EvaluationBoundAction> masterMap = pageActionsMap(map, toKey);
 						masterMap.addAll(subreportMap);
 					}
@@ -355,6 +360,17 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 				fillContext.unlockVirtualizationContext();
 			}
 		}
+	}
+
+	protected void applyDpiScale(LinkedMap<Object, EvaluationBoundAction> actions, double dpiScale)
+	{
+		actions.forEach(action ->
+		{
+			if (action instanceof ElementEvaluationAction)
+			{
+				((ElementEvaluationAction) action).multiplyDpiScale(dpiScale);
+			}
+		});
 	}
 
 	@Override
@@ -488,7 +504,14 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 				}
 				
 				// add first so that it will be executed immediately
-				actionsMap.addFirst(element, new ElementEvaluationAction(fillElement, element));
+				ElementEvaluationAction action = new ElementEvaluationAction(fillElement, element);
+				int reportDpi = reportFiller.getDpi();
+				int elementDpi = fillElement.filler.getDpi();
+				if (reportDpi != elementDpi)
+				{
+					action.multiplyDpiScale((double) reportDpi / elementDpi);
+				}
+				actionsMap.addFirst(element, action);
 			}
 		}
 	}
@@ -683,7 +706,14 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 									+ ", on " + element + ", using " + fillElement);
 						}
 						
-						actionsMap.add(element, new ElementEvaluationAction(fillElement, element));
+						ElementEvaluationAction action = new ElementEvaluationAction(fillElement, element);
+						int reportDpi = reportFiller.getDpi();
+						int elementDpi = fillElement.filler.getDpi();
+						if (reportDpi != elementDpi)
+						{
+							action.multiplyDpiScale((double) reportDpi / elementDpi);
+						}
+						actionsMap.add(element, action);
 					}
 				}
 				

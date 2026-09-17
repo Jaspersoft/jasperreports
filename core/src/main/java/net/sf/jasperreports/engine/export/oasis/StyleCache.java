@@ -55,6 +55,7 @@ public class StyleCache
 	private final WriterHelper styleWriter;
 	private Set<String> fontFaces = new HashSet<>();
 	private final String exporterKey;
+	private int reportDpi;
 
 	/**
 	 *
@@ -83,12 +84,33 @@ public class StyleCache
 	public StyleCache(
 		JasperReportsContext jasperReportsContext, 
 		WriterHelper styleWriter, 
-		String exporterKey
+		String exporterKey,
+		int reportDpi
 		)
 	{
 		this.fontUtil = FontUtil.getInstance(jasperReportsContext);
 		this.styleWriter = styleWriter;
 		this.exporterKey = exporterKey;
+		this.reportDpi = reportDpi;
+	}
+
+	public void setReportDpi(int reportDpi)
+	{
+		this.reportDpi = reportDpi;
+	}
+
+
+	/**
+	 * Returns the cache key of a style whose output depends on the report resolution.
+	 * <p>
+	 * Style identifiers are built from dimensions expressed in report pixels, while the
+	 * styles themselves are written in physical units, so the same identifier stands for
+	 * different styles at different resolutions. A document can mix parts filled at
+	 * different resolutions, hence the resolution has to be part of the key.
+	 */
+	private String styleId(Style style)
+	{
+		return reportDpi + "|" + style.getId();
 	}
 
 
@@ -106,9 +128,9 @@ public class StyleCache
 	 */
 	public String getTableStyle(int width, int pageFormatIndex, boolean isFrame, boolean isPageBreak, Color tabColor) throws IOException 
 	{
-		TableStyle tableStyle  = new TableStyle(styleWriter, width, pageFormatIndex, isFrame, isPageBreak, tabColor);
+		TableStyle tableStyle  = new TableStyle(styleWriter, width, pageFormatIndex, isFrame, isPageBreak, tabColor, reportDpi);
 		
-		String tableStyleId = tableStyle.getId();
+		String tableStyleId = styleId(tableStyle);
 		String tableStyleName = tableStyles.get(tableStyleId);
 		
 		if (tableStyleName == null)
@@ -128,9 +150,9 @@ public class StyleCache
 	 */
 	public String getRowStyle(int rowHeight) throws IOException 
 	{
-		RowStyle rowStyle  = new RowStyle(styleWriter, rowHeight);
+		RowStyle rowStyle  = new RowStyle(styleWriter, rowHeight, reportDpi);
 		
-		String rowStyleId = rowStyle.getId();
+		String rowStyleId = styleId(rowStyle);
 		String rowStyleName = rowStyles.get(rowStyleId);
 		
 		if (rowStyleName == null)
@@ -150,9 +172,9 @@ public class StyleCache
 	 */
 	public String getColumnStyle(int columnWidth) throws IOException 
 	{
-		ColumnStyle columnStyle  = new ColumnStyle(styleWriter, columnWidth);
+		ColumnStyle columnStyle  = new ColumnStyle(styleWriter, columnWidth, reportDpi);
 		
-		String columnStyleId = columnStyle.getId();
+		String columnStyleId = styleId(columnStyle);
 		String columnStyleName = columnStyles.get(columnStyleId);
 		
 		if (columnStyleName == null)
@@ -172,10 +194,10 @@ public class StyleCache
 	 */
 	public String getFrameStyle(JRPrintText text) throws IOException //FIXMEODT is this used?
 	{
-		FrameStyle frameStyle  = new FrameStyle(styleWriter, text);
+		FrameStyle frameStyle  = new FrameStyle(styleWriter, text, reportDpi);
 		frameStyle.setBox(text.getLineBox());
 		
-		String frameStyleId = frameStyle.getId();
+		String frameStyleId = styleId(frameStyle);
 		String frameStyleName = frameStyles.get(frameStyleId);
 		
 		if (frameStyleName == null)
@@ -195,9 +217,9 @@ public class StyleCache
 	 */
 	public String getFrameStyle(JRPrintElement element) throws IOException //FIXMEODT is this used?
 	{
-		FrameStyle frameStyle  = new FrameStyle(styleWriter, element);
+		FrameStyle frameStyle  = new FrameStyle(styleWriter, element, reportDpi);
 		
-		String frameStyleId = frameStyle.getId();
+		String frameStyleId = styleId(frameStyle);
 		String frameStyleName = frameStyles.get(frameStyleId);
 		
 		if (frameStyleName == null)
@@ -238,9 +260,10 @@ public class StyleCache
 				cropTop, 
 				cropLeft,
 				cropBottom,
-				cropRight);
+				cropRight,
+				reportDpi);
 		
-		String graphicStyleId = graphicStyle.getId();
+		String graphicStyleId = styleId(graphicStyle);
 		String graphicStyleName = cellStyles.get(graphicStyleId);
 		
 		if (graphicStyleName == null)
@@ -268,7 +291,7 @@ public class StyleCache
 	 */
 	public String getCellStyle(JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText)
 	{
-		CellStyle cellStyle  = new CellStyle(styleWriter, gridCell, shrinkToFit, wrapText);
+		CellStyle cellStyle  = new CellStyle(styleWriter, gridCell, shrinkToFit, wrapText, reportDpi);
 		
 //		JRPrintElement element = gridCell.getElement();
 //
@@ -277,7 +300,7 @@ public class StyleCache
 //		if (element instanceof JRCommonGraphicElement)
 //			cellStyle.setPen(((JRCommonGraphicElement)element).getLinePen());
 		
-		String cellStyleId = cellStyle.getId();
+		String cellStyleId = styleId(cellStyle);
 		String cellStyleName = cellStyles.get(cellStyleId);
 		
 		if (cellStyleName == null)
@@ -296,9 +319,9 @@ public class StyleCache
 	 */
 	public String getParagraphStyle(JRPrintText text, boolean isIgnoreTextFormatting)
 	{
-		ParagraphStyle paragraphStyle  = new ParagraphStyle(styleWriter, text, isIgnoreTextFormatting);
+		ParagraphStyle paragraphStyle  = new ParagraphStyle(styleWriter, text, isIgnoreTextFormatting, reportDpi);
 		
-		String paragraphStyleId = paragraphStyle.getId();
+		String paragraphStyleId = styleId(paragraphStyle);
 		String paragraphStyleName = paragraphStyles.get(paragraphStyleId);
 		
 		if (paragraphStyleName == null)

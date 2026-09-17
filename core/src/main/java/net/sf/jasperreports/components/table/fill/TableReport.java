@@ -2144,6 +2144,12 @@ public class TableReport implements JRReport
 	}
 
 	@Override
+	public int getDpi()
+	{
+		return parentReport.getDpi();
+	}
+
+	@Override
 	public int getPageWidth()
 	{
 		return fillContext.getComponentElement().getWidth();

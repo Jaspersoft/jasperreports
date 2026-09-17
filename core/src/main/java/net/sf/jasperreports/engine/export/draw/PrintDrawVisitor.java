@@ -72,14 +72,15 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 		boolean minimizePrinterJobSize,
 		boolean ignoreMissingFont,
 		boolean defaultIndentFirstLine,
-		boolean defaultJustifyLastLine
+		boolean defaultJustifyLastLine,
+		int reportDpi
 		)
 	{
 		this.jasperReportsContext = jasperReportsContext;
-		this.lineDrawer = new LineDrawer(jasperReportsContext);
-		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext);
-		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext);
-		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache);
+		this.lineDrawer = new LineDrawer(jasperReportsContext, reportDpi);
+		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext, reportDpi);
+		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext, reportDpi);
+		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache, reportDpi);
 
 		AwtTextRenderer textRenderer = 
 			new AwtTextRenderer(
@@ -87,7 +88,8 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 				minimizePrinterJobSize,
 				ignoreMissingFont,
 				defaultIndentFirstLine,
-				defaultJustifyLastLine
+				defaultJustifyLastLine,
+				reportDpi
 				);
 		
 		textDrawer = new TextDrawer(jasperReportsContext, textRenderer);
@@ -101,22 +103,24 @@ public class PrintDrawVisitor implements PrintElementVisitor<Offset>
 		boolean minimizePrinterJobSize,
 		boolean ignoreMissingFont,
 		boolean defaultIndentFirstLine,
-		boolean defaultJustifyLastLine
+		boolean defaultJustifyLastLine,
+		int reportDpi
 		)
 	{
 		this.jasperReportsContext = exporterContext.getJasperReportsContext();
-		this.lineDrawer = new LineDrawer(jasperReportsContext);
-		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext);
-		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext);
-		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache);
+		this.lineDrawer = new LineDrawer(jasperReportsContext, reportDpi);
+		this.rectangleDrawer = new RectangleDrawer(jasperReportsContext, reportDpi);
+		this.ellipseDrawer = new EllipseDrawer(jasperReportsContext, reportDpi);
+		this.imageDrawer = new ImageDrawer(jasperReportsContext, renderersCache, reportDpi);
 
-		AwtTextRenderer textRenderer = 
+		AwtTextRenderer textRenderer =
 			new AwtTextRenderer(
 				jasperReportsContext,
 				minimizePrinterJobSize,
 				ignoreMissingFont,
 				defaultIndentFirstLine,
-				defaultJustifyLastLine
+				defaultJustifyLastLine,
+				reportDpi
 				);
 		
 		textDrawer = new TextDrawer(jasperReportsContext, textRenderer);

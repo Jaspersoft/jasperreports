@@ -30,6 +30,7 @@ import org.jfree.data.general.Dataset;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 
 /**
@@ -47,6 +48,16 @@ public interface ChartContext
 	 * 
 	 */
 	public JRChart getChart();
+
+	/**
+	 * Returns the resolution of the report the chart belongs to. Charts lay themselves out in
+	 * points, so anything derived from the pixel dimensions of the chart element has to be
+	 * converted before it can be used as a chart coordinate.
+	 */
+	default int getReportDpi()
+	{
+		return JasperPrint.DEFAULT_REPORT_DPI;
+	}
 
 	/**
 	 * 

@@ -76,7 +76,8 @@ public class DrawVisitor extends UniformElementVisitor
 				propUtil.getBooleanProperty(report, Graphics2DReportConfiguration.MINIMIZE_PRINTER_JOB_SIZE, true),
 				propUtil.getBooleanProperty(report, JRStyledText.PROPERTY_AWT_IGNORE_MISSING_FONT, false),
 				propUtil.getBooleanProperty(report, JRPrintText.PROPERTY_AWT_INDENT_FIRST_LINE, true),
-				propUtil.getBooleanProperty(report, JRPrintText.PROPERTY_AWT_JUSTIFY_LAST_LINE, false)
+				propUtil.getBooleanProperty(report, JRPrintText.PROPERTY_AWT_JUSTIFY_LAST_LINE, false),
+				report.getDpi()
 				);
 		
 		setGraphics2D(grx);

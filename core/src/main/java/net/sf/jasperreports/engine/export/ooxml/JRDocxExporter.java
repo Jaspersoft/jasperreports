@@ -94,6 +94,7 @@ import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.ExifOrientationEnum;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -216,6 +217,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	protected DocxRunHelper headerRunHelper;
 	protected DocxRunHelper crtRunHelper;
 
+	protected int reportDpi;
+
 	protected ExporterNature backgroundNature;
 	protected ExporterNature pageNature;
 
@@ -332,6 +335,13 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	{
 		super.initReport();
 		
+		reportDpi = jasperPrint.getDpi();
+
+		if (docHelper != null)
+		{
+			docHelper.setDpi(reportDpi);
+		}
+
 		if (jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
 			// allows null values for the property
@@ -371,7 +381,11 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 
 		docWriter = docxZip.getDocumentEntry().getWriter();
 		
-		docHelper = new DocxDocumentHelper(jasperReportsContext, docWriter);
+		// the helpers below are created before the first input item is set, so the report
+		// resolution has to be read here; initReport() refreshes it for each item afterwards
+		reportDpi = jasperPrint.getDpi();
+		
+		docHelper = new DocxDocumentHelper(jasperReportsContext, docWriter, reportDpi);
 		docHelper.exportHeader(pageFormat);
 		
 		relsHelper = new DocxRelsHelper(jasperReportsContext, docxZip.getRelsEntry().getWriter());
@@ -440,7 +454,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		DocxSettingsHelper settingsHelper = 
 			new DocxSettingsHelper(
 				jasperReportsContext,
-				docxZip.getSettingsEntry().getWriter()
+				docxZip.getSettingsEntry().getWriter(),
+				reportDpi
 				);
 		settingsHelper.export(jasperPrint, isEmbedFonts);
 		settingsHelper.close();
@@ -589,7 +604,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				ExportZipEntry headerEntry = docxZip.addHeader(headerIndex);
 				headerWriter = headerEntry.getWriter();
 
-				headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter);
+				headerHelper = new DocxHeaderHelper(jasperReportsContext, headerWriter, reportDpi);
 				headerHelper.exportHeader(pageFormat);
 
 				ExportZipEntry headerRelsEntry = docxZip.addHeaderRels(headerIndex);
@@ -688,7 +703,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 							xCuts,
 							false,
 							pageFormat,
-							frameIndex
+							frameIndex,
+							reportDpi
 							);
 				int maxReportIndex = exporterInput.getItems().size() - 1;
 				
@@ -711,7 +727,8 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 					xCuts,
 					frameIndex == null && (reportIndex != 0 || pageIndex != startPageIndex),
 					pageFormat,
-					frameIndex
+					frameIndex,
+					reportDpi
 					);
 
 		tableHelper.exportHeader();
@@ -734,7 +751,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				JRLineBox box = gridCell.getBox();
 				if (box != null)
 				{
-					Integer topPadding = box.getTopPadding() + Math.round(box.getTopPen().getLineWidth());
+					Integer topPadding = box.getTopPadding() + (box.getTopPen().getLineWidth() == null ? 0 : Math.round(box.getTopPen().getLineWidth()));
 					if (
 						topPadding != null 
 						&& maxTopPadding < topPadding
@@ -909,7 +926,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -933,7 +950,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -957,7 +974,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		JRPen pen = box.getPen();
 		pen.setLineColor(ellipse.getLinePen().getLineColor());
 		pen.setLineStyle(ellipse.getLinePen().getLineStyle());
-		pen.setLineWidth(ellipse.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(ellipse, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -1131,7 +1148,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	public void exportImage(DocxTableHelper tableHelper, JRPrintImage image, JRExporterGridCell gridCell) throws JRException
 	{
 		int leftPadding = image.getLineBox().getLeftPadding();
-		int topPadding = image.getLineBox().getTopPadding() + Math.round(image.getLineBox().getTopPen().getLineWidth()); // top border eats into cell space
+		int topPadding = image.getLineBox().getTopPadding() + (image.getLineBox().getTopPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getTopPen().getLineWidth())); // top border eats into cell space
 		int rightPadding = image.getLineBox().getRightPadding();
 		int bottomPadding = image.getLineBox().getBottomPadding();
 
@@ -1429,10 +1446,10 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 						+ "relativeHeight=\"0\" behindDoc=\"0\" locked=\"0\" layoutInCell=\"1\" allowOverlap=\"1\">\n");
 					crtDocHelper.write("<wp:simplePos x=\"0\" y=\"0\"/>\n");
 					crtDocHelper.write("<wp:positionH relativeFrom=\"column\">\n");
-					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(xoffset) + "</wp:posOffset>\n");
+					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(xoffset, reportDpi) + "</wp:posOffset>\n");
 					crtDocHelper.write("</wp:positionH>\n");
 					crtDocHelper.write("<wp:positionV relativeFrom=\"paragraph\">\n");
-					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(yoffset + topPadding - tableHelper.getRowMaxTopPadding()) + "</wp:posOffset>\n");
+					crtDocHelper.write("<wp:posOffset>" + LengthUtil.emu(yoffset + topPadding - tableHelper.getRowMaxTopPadding(), reportDpi) + "</wp:posOffset>\n");
 					crtDocHelper.write("</wp:positionV>\n");
 				}
 				else
@@ -1440,7 +1457,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 					// in header writer, images need inline instead of anchor, otherwise they do not show up
 					crtDocHelper.write("<wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\">\n");
 				}
-				crtDocHelper.write("<wp:extent cx=\"" + LengthUtil.emu(renderWidth) + "\" cy=\"" + LengthUtil.emu(renderHeight) + "\"/>\n");
+				crtDocHelper.write("<wp:extent cx=\"" + LengthUtil.emu(renderWidth, reportDpi) + "\" cy=\"" + LengthUtil.emu(renderHeight, reportDpi) + "\"/>\n");
 				crtDocHelper.write("<wp:effectExtent l=\"0\" t=\"0\" r=\"0\" b=\"0\"/>\n");
 				crtDocHelper.write("<wp:wrapNone/>\n");
 
@@ -1470,7 +1487,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				crtDocHelper.write("<pic:spPr>\n");
 				crtDocHelper.write("  <a:xfrm rot=\"" + (60000 * angle) + "\">\n");
 				crtDocHelper.write("    <a:off x=\"0\" y=\"0\"/>\n");
-				crtDocHelper.write("    <a:ext cx=\"" + LengthUtil.emu(renderWidth) + "\" cy=\"" + LengthUtil.emu(renderHeight) + "\"/>");
+				crtDocHelper.write("    <a:ext cx=\"" + LengthUtil.emu(renderWidth, reportDpi) + "\" cy=\"" + LengthUtil.emu(renderHeight, reportDpi) + "\"/>");
 				crtDocHelper.write("  </a:xfrm>\n");
 				crtDocHelper.write("  <a:prstGeom prst=\"rect\"></a:prstGeom>\n");
 				crtDocHelper.write("</pic:spPr>\n");

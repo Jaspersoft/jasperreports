@@ -285,9 +285,9 @@ public class JRStyledText implements Cloneable
 	/**
 	 * Returns an attributed string that contains the AWT font attribute, as the font is actually loaded.
 	 */
-	public AttributedString getAwtAttributedString(FontUtil fontUtil, boolean ignoreMissingFont)
+	public AttributedString getAwtAttributedString(FontUtil fontUtil, boolean ignoreMissingFont, float fontSizeScale)
 	{
-		return getAwtAttributedString(() -> fontUtil, ignoreMissingFont);
+		return getAwtAttributedString(() -> fontUtil, ignoreMissingFont, fontSizeScale);
 	}
 
 	/**
@@ -295,10 +295,10 @@ public class JRStyledText implements Cloneable
 	 */
 	public AttributedString getAwtAttributedString(JasperReportsContext jasperReportsContext, boolean ignoreMissingFont)
 	{
-		return getAwtAttributedString(() -> FontUtil.getInstance(jasperReportsContext), ignoreMissingFont);
+		return getAwtAttributedString(() -> FontUtil.getInstance(jasperReportsContext), ignoreMissingFont, 1f);
 	}
 
-	protected AttributedString getAwtAttributedString(Supplier<FontUtil> fontUtilSupplier, boolean ignoreMissingFont)
+	protected AttributedString getAwtAttributedString(Supplier<FontUtil> fontUtilSupplier, boolean ignoreMissingFont, float fontSizeScale)
 	{
 		if (awtAttributedString == null)
 		{
@@ -332,6 +332,23 @@ public class JRStyledText implements Cloneable
 //				}
 			}
 			
+			if (fontSizeScale != 1f)
+			{
+				AttributedCharacterIterator sizeIterator = awtAttributedString.getIterator();
+				int sizeRunLimit = 0;
+				while (sizeRunLimit < sizeIterator.getEndIndex()
+						&& (sizeRunLimit = sizeIterator.getRunLimit(TextAttribute.SIZE)) <= sizeIterator.getEndIndex())
+				{
+					Float size = (Float) sizeIterator.getAttribute(TextAttribute.SIZE);
+					if (size != null)
+					{
+						awtAttributedString.addAttribute(TextAttribute.SIZE, size * fontSizeScale,
+								sizeIterator.getIndex(), sizeRunLimit);
+					}
+					sizeIterator.setIndex(sizeRunLimit);
+				}
+			}
+
 			AttributedCharacterIterator iterator = awtAttributedString.getIterator();
 			
 			int runLimit = 0;

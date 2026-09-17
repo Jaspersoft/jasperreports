@@ -52,6 +52,7 @@ public interface ChartRenderableFactory
 		JasperReportsContext jasperReportsContext,
 		JFreeChart chart, 
 		ChartHyperlinkProvider chartHyperlinkProvider,
-		Rectangle2D rectangle
+		Rectangle2D rectangle,
+		int reportDpi
 		);
 }

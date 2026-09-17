@@ -110,6 +110,20 @@ public class IconLabelComponentFill extends BaseFillComponent implements Stretch
 		labelTextField.evaluate(evaluation);
 		iconTextField.evaluate(evaluation);
 	}
+
+	/**
+	 * Converts a length expressed in points, such as a font size, into the pixel length that the
+	 * resolution of the report requires.
+	 */
+	private int toPixels(float points)
+	{
+		int reportDpi = fillContext.getFiller().getDpi();
+		if (reportDpi == JasperPrint.DEFAULT_REPORT_DPI)
+		{
+			return (int)points;
+		}
+		return (int)(points * reportDpi / JasperPrint.DEFAULT_REPORT_DPI);
+	}
 	
 	@Override
 	public JRPrintElement fill()
@@ -203,8 +217,8 @@ public class IconLabelComponentFill extends BaseFillComponent implements Stretch
 			int calculatedLabelWidth =
 				(int)labelTextField.getTextWidth() 
 				+ labelTextField.getLineBox().getLeftPadding() 
-				+ labelTextField.getLineBox().getRightPadding() 
-				+ 3;//we do +3 to avoid text wrap in html (+1 was enough for pdf)
+				+ labelTextField.getLineBox().getRightPadding()
+				+ toPixels(3);//we do +3 to avoid text wrap in html (+1 was enough for pdf)
 			labelPrintText.setWidth(Math.min(labelTextField.getWidth(), calculatedLabelWidth));//for some reason, calculated text width seems to be larger then available text width
 		}
 		
@@ -584,7 +598,7 @@ public class IconLabelComponentFill extends BaseFillComponent implements Stretch
 			iconLabelComponent.getContext().getComponentElement().getWidth()
 			- getLineBox().getLeftPadding() 
 			- getLineBox().getRightPadding()
-			- 1;
+			- toPixels(1);
 
 		if (paddingDiff < 0)
 		{
@@ -604,7 +618,7 @@ public class IconLabelComponentFill extends BaseFillComponent implements Stretch
 			- getLineBox().getLeftPadding() 
 			- getLineBox().getRightPadding();
 
-		middlePadding = (int)(iconTextField.getFontSize() / 2);
+		middlePadding = toPixels(iconTextField.getFontSize() / 2);
 
 		if (availableWidth <= middlePadding)
 		{
@@ -695,7 +709,7 @@ public class IconLabelComponentFill extends BaseFillComponent implements Stretch
 			)//FIXMEICONLABEL here we might get to hide icons simply because label is blank
 		{
 			direction = IconLabelDirectionEnum.VERTICAL;
-			middlePadding = (int)(iconTextField.getFontSize() / 2);
+			middlePadding = toPixels(iconTextField.getFontSize() / 2);
 //			labelTextField.setWidth(availableWidth);
 			int iconAvailableHeight =
 				(labelTextField.getTextAdjust() == TextAdjustEnum.STRETCH_HEIGHT

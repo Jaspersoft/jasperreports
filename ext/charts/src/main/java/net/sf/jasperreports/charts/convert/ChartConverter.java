@@ -139,7 +139,8 @@ public final class ChartConverter extends ElementConverter
 				reportConverter.getJasperReportsContext(),
 				jfreeChart, 
 				null,
-				rectangle
+				rectangle,
+				reportConverter.getReport().getDpi()
 				);
 	}
 }

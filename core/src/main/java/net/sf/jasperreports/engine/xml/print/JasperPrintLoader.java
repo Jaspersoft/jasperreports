@@ -52,6 +52,7 @@ public class JasperPrintLoader
 	{
 		JasperPrint jasperPrint = new JasperPrint();
 		xmlLoader.setAttribute(JRXmlConstants.ATTRIBUTE_name, jasperPrint::setName);
+		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_dpi, jasperPrint::setDpi);
 		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_pageWidth, jasperPrint::setPageWidth);
 		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_pageHeight, jasperPrint::setPageHeight);
 		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_topMargin, jasperPrint::setTopMargin);
@@ -137,6 +138,7 @@ public class JasperPrintLoader
 		xmlLoader.setAttribute(JRXmlConstants.ATTRIBUTE_name, part::setName);
 		
 		SimplePrintPageFormat pageFormat = new SimplePrintPageFormat();
+		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_dpi, pageFormat::setDpi);
 		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_pageWidth, pageFormat::setPageWidth);
 		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_pageHeight, pageFormat::setPageHeight);
 		xmlLoader.setIntAttribute(JRXmlConstants.ATTRIBUTE_topMargin, pageFormat::setTopMargin);

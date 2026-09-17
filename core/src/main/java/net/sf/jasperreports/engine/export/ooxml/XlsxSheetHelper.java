@@ -70,6 +70,7 @@ public class XlsxSheetHelper extends BaseHelper
 	private final Integer fitHeight;
 	private final Boolean autoFitPageHeight;
 	private final boolean defaultAutoFitRow;
+	private final int reportDpi;
 
 	/**
 	 * 
@@ -78,7 +79,8 @@ public class XlsxSheetHelper extends BaseHelper
 		JasperReportsContext jasperReportsContext,
 		Writer writer, 
 		XlsxSheetRelsHelper sheetRelsHelper,
-		XlsReportConfiguration configuration
+		XlsReportConfiguration configuration,
+		int reportDpi
 		)
 	{
 		super(jasperReportsContext, writer);
@@ -89,6 +91,7 @@ public class XlsxSheetHelper extends BaseHelper
 		fitHeight = configuration.getFitHeight();
 		autoFitPageHeight = configuration.isAutoFitPageHeight();
 		defaultAutoFitRow = configuration.isAutoFitRow();
+		this.reportDpi = reportDpi;
 	}
 
 	/**
@@ -222,18 +225,18 @@ public class XlsxSheetHelper extends BaseHelper
 		}
 
 		write("<pageMargins left=\"");
-		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getLeftMargin()))); 
+		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getLeftMargin(), reportDpi)));
 		write("\" right=\"");
-		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getRightMargin()))); 
+		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getRightMargin(), reportDpi)));
 		write("\" top=\"");
-		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getTopMargin()))); 
+		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getTopMargin(), reportDpi)));
 		write("\" bottom=\"");
-		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getBottomMargin()))); 
+		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getBottomMargin(), reportDpi)));
 		write("0");
 		write("\" header=\"");
-		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getHeaderMargin()))); 
+		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getHeaderMargin(), reportDpi)));
 		write("\" footer=\"");
-		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getFooterMargin()))); 
+		write(String.valueOf(LengthUtil.inchFloor4Dec(printSettings.getFooterMargin(), reportDpi)));
 		write("\"/>\n");
 		write("<pageSetup");	
 		
@@ -261,7 +264,7 @@ public class XlsxSheetHelper extends BaseHelper
 			}
 		}
 		
-		PaperSizeEnum pSize = OoxmlUtils.getSuitablePaperSize(printSettings);
+		PaperSizeEnum pSize = OoxmlUtils.getSuitablePaperSize(printSettings, reportDpi);
 		String paperSize = pSize == PaperSizeEnum.UNDEFINED ? "" : " paperSize=\"" + pSize.getOoxmlValue() + "\"";
 		write(paperSize);	
 		
@@ -387,7 +390,7 @@ public class XlsxSheetHelper extends BaseHelper
 
 			// this ratio was found empirically, by using a square image with scaleImage=RetainShape, to make sure it remains square (if at all possible), 
 			// on different operating systems, and viewing the documents using both Microsoft Excel and LibreOffice 
-			colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + ((float)colWidth * 45 / 256) + "\"/>\n");
+			colsWriter.write("<col min=\"" + (colIndex + 1) + "\" max=\"" + (colIndex + 1) + "\" customWidth=\"1\" width=\"" + ((float)colWidth * 45 * 72 / (256 * reportDpi)) + "\"/>\n");
 		}
 		catch (IOException e)
 		{
@@ -427,7 +430,7 @@ public class XlsxSheetHelper extends BaseHelper
 			write("<sheetData>\n");
 		}
 		rowIndex++;
-		write("<row r=\"" + rowIndex + "\""  + (isAutoFit ? " customHeight=\"0\" bestFit=\"1\"" : " customHeight=\"1\"") + " ht=\"" + (isAutoFit ? 0 : rowHeight) + "\"");
+		write("<row r=\"" + rowIndex + "\""  + (isAutoFit ? " customHeight=\"0\" bestFit=\"1\"" : " customHeight=\"1\"") + " ht=\"" + (isAutoFit ? 0 : rowHeight * 72f / reportDpi) + "\"");
 		if (levelInfo != null && levelInfo.getLevelMap().size() > 0)
 		{
 			write(" outlineLevel=\"" + levelInfo.getLevelMap().size() + "\"");

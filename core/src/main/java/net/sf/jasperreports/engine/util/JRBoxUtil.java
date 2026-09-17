@@ -24,6 +24,7 @@
 package net.sf.jasperreports.engine.util;
 
 import net.sf.jasperreports.engine.JRLineBox;
+import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.base.JRBoxPen;
 import net.sf.jasperreports.engine.type.RotationEnum;
 
@@ -46,11 +47,11 @@ public final class JRBoxUtil
 		clone.setBottomPadding(0);
 		clone.setRightPadding(0);
 		
-		if (!keepLeft || box.getLeftPen().getLineWidth() <= 0f)
+		if (!keepLeft || box.getLeftPen().getLineWidth() == null || box.getLeftPen().getLineWidth() <= 0f)
 		{
 			if (complementaryBox != null)
 			{
-				clone.getLeftPen().setLineWidth(complementaryBox.getLeftPen().getLineWidth());
+				clone.getLeftPen().setLineWidth(getBoxLineWidth(complementaryBox.getLeftPen()));
 				clone.getLeftPen().setLineColor(complementaryBox.getLeftPen().getLineColor());
 				clone.getLeftPen().setLineStyle(complementaryBox.getLeftPen().getLineStyle());
 			}
@@ -60,11 +61,11 @@ public final class JRBoxUtil
 			}
 		}
 		
-		if (!keepRight || box.getRightPen().getLineWidth() <= 0f)
+		if (!keepRight || box.getRightPen().getLineWidth() == null || box.getRightPen().getLineWidth() <= 0f)
 		{
 			if (complementaryBox != null)
 			{
-				clone.getRightPen().setLineWidth(complementaryBox.getRightPen().getLineWidth());
+				clone.getRightPen().setLineWidth(getBoxLineWidth(complementaryBox.getRightPen()));
 				clone.getRightPen().setLineColor(complementaryBox.getRightPen().getLineColor());
 				clone.getRightPen().setLineStyle(complementaryBox.getRightPen().getLineStyle());
 			}
@@ -74,11 +75,11 @@ public final class JRBoxUtil
 			}
 		}
 		
-		if (!keepTop || box.getTopPen().getLineWidth() <= 0f)
+		if (!keepTop || box.getTopPen().getLineWidth() == null || box.getTopPen().getLineWidth() <= 0f)
 		{
 			if (complementaryBox != null)
 			{
-				clone.getTopPen().setLineWidth(complementaryBox.getTopPen().getLineWidth());
+				clone.getTopPen().setLineWidth(getBoxLineWidth(complementaryBox.getTopPen()));
 				clone.getTopPen().setLineColor(complementaryBox.getTopPen().getLineColor());
 				clone.getTopPen().setLineStyle(complementaryBox.getTopPen().getLineStyle());
 			}
@@ -88,11 +89,11 @@ public final class JRBoxUtil
 			}
 		}
 		
-		if (!keepBottom || box.getBottomPen().getLineWidth() <= 0f)
+		if (!keepBottom || box.getBottomPen().getLineWidth() == null || box.getBottomPen().getLineWidth() <= 0f)
 		{
 			if (complementaryBox != null)
 			{
-				clone.getBottomPen().setLineWidth(complementaryBox.getBottomPen().getLineWidth());
+				clone.getBottomPen().setLineWidth(getBoxLineWidth(complementaryBox.getBottomPen()));
 				clone.getBottomPen().setLineColor(complementaryBox.getBottomPen().getLineColor());
 				clone.getBottomPen().setLineStyle(complementaryBox.getBottomPen().getLineStyle());
 			}
@@ -255,6 +256,12 @@ public final class JRBoxUtil
 	}
 	
 	
+	private static float getBoxLineWidth(JRPen pen)
+	{
+		Float width = pen.getLineWidth();
+		return width == null ? 0f : width;
+	}
+
 	private JRBoxUtil()
 	{
 	}

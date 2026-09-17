@@ -96,6 +96,7 @@ import net.sf.jasperreports.engine.util.FileBufferedWriter;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
 import net.sf.jasperreports.engine.util.JRColorUtil;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.engine.util.JRTypeSniffer;
@@ -241,6 +242,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 
 	protected boolean defaultFrameAsTable;
 
+	protected int reportDpi;
+
 	/**
 	 * used for counting the total number of sheets
 	 */
@@ -332,6 +335,15 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	{
 		super.initReport();
 		
+		// the document resolution sizes the slides and applies to the pages that do not
+		// belong to a part; exportPage() refreshes it for every page that does
+		reportDpi = jasperPrint.getDpi();
+
+		if (presentationHelper != null)
+		{
+			presentationHelper.setDpi(reportDpi);
+		}
+
 		if (jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
 			// allows null values for the property
@@ -372,7 +384,11 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				isEmbedFonts
 				);
 		
-		presentationHelper = new PptxPresentationHelper(jasperReportsContext, presentationWriter, fontWriter);
+		// the helper below is created before the first input item is set, so the report
+		// resolution has to be read here; initReport() refreshes it for each item afterwards
+		reportDpi = jasperPrint.getDpi();
+		
+		presentationHelper = new PptxPresentationHelper(jasperReportsContext, presentationWriter, fontWriter, reportDpi);
 		presentationHelper.exportHeader(isEmbedFonts);
 		
 		presentationRelsHelper = new PptxPresentationRelsHelper(jasperReportsContext, presentationRelsWriter);
@@ -602,6 +618,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	 */
 	protected void exportPage(JRPrintPage page, boolean isBackgroundAsSlideMaster, boolean hasToSlideMasterElements) throws JRException
 	{
+		reportDpi = jasperPrint.getPageFormat(pageIndex).getDpi();
+
 		frameIndexStack = new ArrayList<>();
 
 		List<JRPrintElement> elements = page.getElements();
@@ -777,8 +795,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("  </p:nvSpPr>\n");
 		slideHelper.write("  <p:spPr>\n");
 		slideHelper.write("    <a:xfrm" + (line.getDirection() == LineDirectionEnum.BOTTOM_UP ? " flipV=\"1\"" : "") + ">\n");
-		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(x) + "\" y=\"" + LengthUtil.emu(y) + "\"/>\n");
-		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(width) + "\" cy=\"" + LengthUtil.emu(height) + "\"/>\n");
+		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(x, reportDpi) + "\" y=\"" + LengthUtil.emu(y, reportDpi) + "\"/>\n");
+		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(width, reportDpi) + "\" cy=\"" + LengthUtil.emu(height, reportDpi) + "\"/>\n");
 		slideHelper.write("    </a:xfrm><a:prstGeom prst=\"line\"><a:avLst/></a:prstGeom>\n");
 		if (line.getMode() == ModeEnum.OPAQUE && line.getBackcolor() != null)
 		{
@@ -804,9 +822,10 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	 */
 	protected void exportPen(JRPen pen)
 	{
-		if (pen != null && pen.getLineWidth() > 0)
+		float lineWidth = pen == null ? 0 : JRPenUtil.getLineWidthOrDefault(pen, reportDpi);
+		if (lineWidth > 0)
 		{
-			slideHelper.write("  <a:ln w=\"" + LengthUtil.emu(pen.getLineWidth()) + "\"");
+			slideHelper.write("  <a:ln w=\"" + LengthUtil.emu(lineWidth, reportDpi) + "\"");
 			if (LineStyleEnum.DOUBLE.equals(pen.getLineStyle()))
 			{
 				slideHelper.write(" cmpd=\"dbl\"");
@@ -864,8 +883,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("  </p:nvSpPr>\n");
 		slideHelper.write("  <p:spPr>\n");
 		slideHelper.write("    <a:xfrm>\n");
-		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(rectangle.getX() + getOffsetX()) + "\" y=\"" + LengthUtil.emu(rectangle.getY() + getOffsetY()) + "\"/>\n");
-		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(rectangle.getWidth()) + "\" cy=\"" + LengthUtil.emu(rectangle.getHeight()) + "\"/>\n");
+		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(rectangle.getX() + getOffsetX(), reportDpi) + "\" y=\"" + LengthUtil.emu(rectangle.getY() + getOffsetY(), reportDpi) + "\"/>\n");
+		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(rectangle.getWidth(), reportDpi) + "\" cy=\"" + LengthUtil.emu(rectangle.getHeight(), reportDpi) + "\"/>\n");
 		slideHelper.write("    </a:xfrm><a:prstGeom prst=\"" + (radius == 0 ? "rect" : "roundRect") + "\">");
 		if (radius > 0)
 		{
@@ -911,8 +930,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("  </p:nvSpPr>\n");
 		slideHelper.write("  <p:spPr>\n");
 		slideHelper.write("    <a:xfrm>\n");
-		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(ellipse.getX() + getOffsetX()) + "\" y=\"" + LengthUtil.emu(ellipse.getY() + getOffsetY()) + "\"/>\n");
-		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(ellipse.getWidth()) + "\" cy=\"" + LengthUtil.emu(ellipse.getHeight()) + "\"/>\n");
+		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(ellipse.getX() + getOffsetX(), reportDpi) + "\" y=\"" + LengthUtil.emu(ellipse.getY() + getOffsetY(), reportDpi) + "\"/>\n");
+		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(ellipse.getWidth(), reportDpi) + "\" cy=\"" + LengthUtil.emu(ellipse.getHeight(), reportDpi) + "\"/>\n");
 		slideHelper.write("    </a:xfrm><a:prstGeom prst=\"ellipse\"><a:avLst/></a:prstGeom>\n");
 		if (ellipse.getMode() == ModeEnum.OPAQUE && ellipse.getBackcolor() != null)
 		{
@@ -1033,8 +1052,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("  </p:nvSpPr>\n");
 		slideHelper.write("  <p:spPr>\n");
 		slideHelper.write("    <a:xfrm rot=\"" + rotation + "\">\n");
-		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(x) + "\" y=\"" + LengthUtil.emu(y) + "\"/>\n");
-		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(width) + "\" cy=\"" + LengthUtil.emu(height) + "\"/>\n");
+		slideHelper.write("      <a:off x=\"" + LengthUtil.emu(x, reportDpi) + "\" y=\"" + LengthUtil.emu(y, reportDpi) + "\"/>\n");
+		slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(width, reportDpi) + "\" cy=\"" + LengthUtil.emu(height, reportDpi) + "\"/>\n");
 		slideHelper.write("    </a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom>\n");
 		if (text.getMode() == ModeEnum.OPAQUE && text.getBackcolor() != null)
 		{
@@ -1046,13 +1065,13 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("  </p:spPr>\n");
 		slideHelper.write("  <p:txBody>\n");
 		slideHelper.write("    <a:bodyPr wrap=\"square\" lIns=\"" +
-				LengthUtil.emu(leftPadding) +
+				LengthUtil.emu(leftPadding, reportDpi) +
 				"\" tIns=\"" +
-				LengthUtil.emu(topPadding) +
+				LengthUtil.emu(topPadding, reportDpi) +
 				"\" rIns=\"" +
-				LengthUtil.emu(rightPadding) +
+				LengthUtil.emu(rightPadding, reportDpi) +
 				"\" bIns=\"" +
-				LengthUtil.emu(bottomPadding) +
+				LengthUtil.emu(bottomPadding, reportDpi) +
 				"\" rtlCol=\"0\" anchor=\"");
 		switch (text.getVerticalTextAlign())
 		{
@@ -1558,8 +1577,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				slideHelper.write("</p:blipFill>\n");
 				slideHelper.write("  <p:spPr>\n");
 				slideHelper.write("    <a:xfrm rot=\"" + (60000 * angle) + "\">\n");
-				slideHelper.write("      <a:off x=\"" + LengthUtil.emu(image.getX() + getOffsetX() + leftPadding + xoffset) + "\" y=\"" + LengthUtil.emu(image.getY() + getOffsetY() + topPadding + yoffset) + "\"/>\n");
-				slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(renderWidth) + "\" cy=\"" + LengthUtil.emu(renderHeight) + "\"/>\n");
+				slideHelper.write("      <a:off x=\"" + LengthUtil.emu(image.getX() + getOffsetX() + leftPadding + xoffset, reportDpi) + "\" y=\"" + LengthUtil.emu(image.getY() + getOffsetY() + topPadding + yoffset, reportDpi) + "\"/>\n");
+				slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(renderWidth, reportDpi) + "\" cy=\"" + LengthUtil.emu(renderHeight, reportDpi) + "\"/>\n");
 				slideHelper.write("    </a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom>\n");
 				if (image.getMode() == ModeEnum.OPAQUE && image.getBackcolor() != null)
 				{
@@ -1854,8 +1873,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 			slideHelper.write("    <p:nvPr/>\n");
 			slideHelper.write("  </p:nvGraphicFramePr>\n");
 			slideHelper.write("  <p:xfrm>\n");
-			slideHelper.write("      <a:off x=\"" + LengthUtil.emu(frame.getX() + getOffsetX()) + "\" y=\"" + LengthUtil.emu(frame.getY() + getOffsetY()) + "\"/>\n");
-			slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(frame.getWidth()) + "\" cy=\"" + LengthUtil.emu(frame.getHeight()) + "\"/>\n");
+			slideHelper.write("      <a:off x=\"" + LengthUtil.emu(frame.getX() + getOffsetX(), reportDpi) + "\" y=\"" + LengthUtil.emu(frame.getY() + getOffsetY(), reportDpi) + "\"/>\n");
+			slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(frame.getWidth(), reportDpi) + "\" cy=\"" + LengthUtil.emu(frame.getHeight(), reportDpi) + "\"/>\n");
 			slideHelper.write("  </p:xfrm>\n");
 			slideHelper.write("  <a:graphic>\n");
 			slideHelper.write("    <a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/table\">\n");
@@ -1895,8 +1914,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 			slideHelper.write("  </p:nvSpPr>\n");
 			slideHelper.write("  <p:spPr>\n");
 			slideHelper.write("    <a:xfrm>\n");
-			slideHelper.write("      <a:off x=\"" + LengthUtil.emu(frame.getX() + getOffsetX()) + "\" y=\"" + LengthUtil.emu(frame.getY() + getOffsetY()) + "\"/>\n");
-			slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(frame.getWidth()) + "\" cy=\"" + LengthUtil.emu(frame.getHeight()) + "\"/>\n");
+			slideHelper.write("      <a:off x=\"" + LengthUtil.emu(frame.getX() + getOffsetX(), reportDpi) + "\" y=\"" + LengthUtil.emu(frame.getY() + getOffsetY(), reportDpi) + "\"/>\n");
+			slideHelper.write("      <a:ext cx=\"" + LengthUtil.emu(frame.getWidth(), reportDpi) + "\" cy=\"" + LengthUtil.emu(frame.getHeight(), reportDpi) + "\"/>\n");
 			slideHelper.write("    </a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom>\n");
 			if (frame.getMode() == ModeEnum.OPAQUE && frame.getBackcolor() != null)
 			{
@@ -1989,7 +2008,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				new PptxTableHelper(
 					jasperReportsContext,
 					slideHelper.writer, 
-					xCuts
+					xCuts,
+					reportDpi
 					);
 
 		tableHelper.exportHeader();
@@ -2167,7 +2187,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 	}
@@ -2213,7 +2233,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 	}
@@ -2564,13 +2584,13 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 		slideHelper.write("  </a:txBody>\n");
 
 		slideHelper.write("  <a:tcPr marL=\"" +
-				LengthUtil.emu(text.getLineBox().getLeftPadding()) +
+				LengthUtil.emu(text.getLineBox().getLeftPadding(), reportDpi) +
 				"\" marT=\"" +
-				LengthUtil.emu(text.getLineBox().getTopPadding()) +
+				LengthUtil.emu(text.getLineBox().getTopPadding(), reportDpi) +
 				"\" marR=\"" +
-				LengthUtil.emu(text.getLineBox().getRightPadding()) +
+				LengthUtil.emu(text.getLineBox().getRightPadding(), reportDpi) +
 				"\" marB=\"" +
-				LengthUtil.emu(text.getLineBox().getBottomPadding()) +
+				LengthUtil.emu(text.getLineBox().getBottomPadding(), reportDpi) +
 				"\" anchor=\"");
 		switch (text.getVerticalTextAlign())
 		{
@@ -2832,7 +2852,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	{
 		JRBasePen pen = null;
 		Float lineWidth = box.getPen().getLineWidth();
-		if (lineWidth == 0)
+		if (lineWidth == null || lineWidth == 0)
 		{
 			// PPTX does not support side borders
 			// in case side borders are defined for the report element, ensure that all 4 are declared and all of them come with the same settings
@@ -2840,7 +2860,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				((JRBasePen)box.getTopPen()).isIdentical(box.getLeftPen())
 				&& ((JRBasePen)box.getTopPen()).isIdentical(box.getBottomPen())
 				&& ((JRBasePen)box.getTopPen()).isIdentical(box.getRightPen())
-				&& box.getTopPen().getLineWidth() > 0
+				&& box.getTopPen().getLineWidth() != null && box.getTopPen().getLineWidth() > 0
 				)
 			{
 				pen = new JRBasePen(box);

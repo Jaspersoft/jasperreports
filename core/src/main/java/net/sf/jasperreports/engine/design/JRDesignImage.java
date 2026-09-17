@@ -40,7 +40,6 @@ import net.sf.jasperreports.engine.JRHyperlinkHelper;
 import net.sf.jasperreports.engine.JRHyperlinkParameter;
 import net.sf.jasperreports.engine.JRImage;
 import net.sf.jasperreports.engine.JRLineBox;
-import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRVisitor;
 import net.sf.jasperreports.engine.base.JRBaseImage;
 import net.sf.jasperreports.engine.base.JRBaseLineBox;
@@ -497,12 +496,6 @@ public class JRDesignImage extends JRDesignGraphicElement implements JRImage
 		int old = this.bookmarkLevel;
 		this.bookmarkLevel = bookmarkLevel;
 		getEventSupport().firePropertyChange(PROPERTY_BOOKMARK_LEVEL, old, this.bookmarkLevel);
-	}
-
-	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_0;
 	}
 
 	@Override

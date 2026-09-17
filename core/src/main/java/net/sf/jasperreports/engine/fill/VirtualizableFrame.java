@@ -102,9 +102,14 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 	@Override
 	public void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY)
 	{
+		addOffsetElements(elements, offsetX, offsetY, 1d);
+	}
+
+	@Override
+	public void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY, double dpiScale)
+	{
 		if (elements == null || elements.isEmpty())
 		{
-			// nothing to do
 			return;
 		}
 		
@@ -117,7 +122,7 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 			deepSize += VirtualizableElementCounter.count(elements);
 		}
 		
-		OffsetElements offsetElements = new OffsetElements(elements, offsetX, offsetY);
+		OffsetElements offsetElements = new OffsetElements(elements, offsetX, offsetY, dpiScale);
 		this.elements.add(offsetElements);		
 	}
 	
@@ -129,7 +134,7 @@ public class VirtualizableFrame implements JRPrintElementContainer, OffsetElemen
 		if (elements.size() == 1 && elements.get(0) instanceof OffsetElements)
 		{
 			OffsetElements offsetElements = (OffsetElements) elements.get(0);
-			if (offsetElements.getOffsetX() == 0 && offsetElements.getOffsetY() == 0)
+			if (offsetElements.getOffsetX() == 0 && offsetElements.getOffsetY() == 0 && offsetElements.getDpiScale() == 1d)
 			{
 				Collection<? extends JRPrintElement> elementsList = offsetElements.getElements();
 				if (elementsList instanceof VirtualizableElementList)

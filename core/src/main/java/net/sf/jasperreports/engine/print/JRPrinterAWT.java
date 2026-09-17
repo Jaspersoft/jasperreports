@@ -158,18 +158,24 @@ public class JRPrinterAWT implements Printable
 		Paper paper = pageFormat.getPaper();
 
 		printJob.setJobName("JasperReports - " + jasperPrint.getName());
-		
+
+		// paper sizes are expressed in 1/72 of an inch, so the page dimensions
+		// need to be converted from the resolution of the report
+		double dpiScale = (double) JasperPrint.DEFAULT_REPORT_DPI / jasperPrint.getDpi();
+		double paperWidth = jasperPrint.getPageWidth() * dpiScale;
+		double paperHeight = jasperPrint.getPageHeight() * dpiScale;
+
 		switch (OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()))
 		{
 			case LANDSCAPE :
 			{
 				pageFormat.setOrientation(PageFormat.LANDSCAPE);
-				paper.setSize(jasperPrint.getPageHeight(), jasperPrint.getPageWidth());
+				paper.setSize(paperHeight, paperWidth);
 				paper.setImageableArea(
 					0,
 					0,
-					jasperPrint.getPageHeight(),
-					jasperPrint.getPageWidth()
+					paperHeight,
+					paperWidth
 					);
 				break;
 			}
@@ -178,12 +184,12 @@ public class JRPrinterAWT implements Printable
 			default :
 			{
 				pageFormat.setOrientation(PageFormat.PORTRAIT);
-				paper.setSize(jasperPrint.getPageWidth(), jasperPrint.getPageHeight());
+				paper.setSize(paperWidth, paperHeight);
 				paper.setImageableArea(
 					0,
 					0,
-					jasperPrint.getPageWidth(),
-					jasperPrint.getPageHeight()
+					paperWidth,
+					paperHeight
 					);
 			}
 		}
@@ -271,9 +277,12 @@ public class JRPrinterAWT implements Printable
 	public Image printPageToImage(int pageIndex, float zoom) throws JRException
 	{
 		PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
-		
-		int rasterWidth = (int) Math.ceil(pageFormat.getPageWidth() * zoom);
-		int rasterHeight = (int) Math.ceil(pageFormat.getPageHeight() * zoom);
+		// the page dimensions are expressed in the resolution of the page format, which
+		// is the one of the part the page belongs to
+		float dpiScale = (float) JasperPrint.DEFAULT_REPORT_DPI / pageFormat.getDpi();
+
+		int rasterWidth = (int) Math.ceil(pageFormat.getPageWidth() * dpiScale * zoom);
+		int rasterHeight = (int) Math.ceil(pageFormat.getPageHeight() * dpiScale * zoom);
 		Image pageImage = new BufferedImage(
 			rasterWidth,
 			rasterHeight,

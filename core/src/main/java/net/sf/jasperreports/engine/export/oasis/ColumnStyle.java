@@ -37,14 +37,16 @@ public class ColumnStyle extends Style
 	 *
 	 */
 	private int columnWidth;
+	private int reportDpi;
 
 	/**
 	 *
 	 */
-	public ColumnStyle(WriterHelper styleWriter, int columnWidth)
+	public ColumnStyle(WriterHelper styleWriter, int columnWidth, int reportDpi)
 	{
 		super(styleWriter);
 		this.columnWidth = columnWidth;
+		this.reportDpi = reportDpi;
 	}
 	
 	@Override
@@ -59,7 +61,7 @@ public class ColumnStyle extends Style
 		styleWriter.write(" <style:style style:name=\"" + columnStyleName + "\"");
 		styleWriter.write(" style:family=\"table-column\">\n");
 		styleWriter.write("   <style:table-column-properties");		
-		styleWriter.write(" style:column-width=\"" + LengthUtil.inchFloor4Dec(columnWidth) + "in\"");
+		styleWriter.write(" style:column-width=\"" + LengthUtil.inchFloor4Dec(columnWidth, reportDpi) + "in\"");
 		styleWriter.write("/>\n");
 		styleWriter.write(" </style:style>\n");
 		styleWriter.flush();

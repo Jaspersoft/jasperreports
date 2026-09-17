@@ -139,6 +139,7 @@ import net.sf.jasperreports.engine.util.DefaultFormatFactory;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRImageLoader;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.export.XlsExporterConfiguration;
@@ -344,10 +345,10 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			sheet.protectSheet(password);
 		}
 		
-		sheet.setMargin(PageMargin.LEFT, LengthUtil.inch(configuration.getPrintPageLeftMargin()));
-		sheet.setMargin(PageMargin.RIGHT, LengthUtil.inch(configuration.getPrintPageRightMargin()));
-		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(configuration.getPrintPageTopMargin()));
-		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(configuration.getPrintPageBottomMargin()));
+		sheet.setMargin(PageMargin.LEFT, LengthUtil.inch(configuration.getPrintPageLeftMargin(), reportDpi));
+		sheet.setMargin(PageMargin.RIGHT, LengthUtil.inch(configuration.getPrintPageRightMargin(), reportDpi));
+		sheet.setMargin(PageMargin.TOP, LengthUtil.inch(configuration.getPrintPageTopMargin(), reportDpi));
+		sheet.setMargin(PageMargin.BOTTOM, LengthUtil.inch(configuration.getPrintPageBottomMargin(), reportDpi));
 
 		if (configuration.getSheetHeaderLeft() != null)
 		{
@@ -379,8 +380,8 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			sheet.getFooter().setRight(configuration.getSheetFooterRight());
 		}
 		
-		printSetup.setHeaderMargin(LengthUtil.inch(configuration.getPrintHeaderMargin()));	
-		printSetup.setFooterMargin(LengthUtil.inch(configuration.getPrintFooterMargin()));	
+		printSetup.setHeaderMargin(LengthUtil.inch(configuration.getPrintHeaderMargin(), reportDpi));
+		printSetup.setFooterMargin(LengthUtil.inch(configuration.getPrintFooterMargin(), reportDpi));	
 		
 		RunDirectionEnum sheetDirection = configuration.getSheetDirection();
 		if (sheetDirection != null) {
@@ -558,11 +559,11 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					if (columnWidth != null && columnWidth < Integer.MAX_VALUE) {
 						if (columnWidthRatio != null && columnWidthRatio > 1f)
 						{
-							columnWidth =  Math.round(45 * columnWidth * columnWidthRatio);
+							columnWidth =  Math.round(45 * columnWidth * columnWidthRatio * 72 / reportDpi);
 						}
 						else
 						{
-							columnWidth =  45 * columnWidth;
+							columnWidth =  45 * columnWidth * 72 / reportDpi;
 						}
 						currentSheet.setColumnWidth(columnNamesMap.get(columnName), Math.min(columnWidth, 256 * 255));
 					} else {
@@ -599,7 +600,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	protected void setRowHeight(HSSFRow row) {
 		Integer rowHeight = (Integer)currentRow.get(CURRENT_ROW_HEIGHT);
 		if (row != null && rowHeight != null && rowHeight < Integer.MAX_VALUE) {
-			row.setHeightInPoints((Integer)currentRow.get(CURRENT_ROW_HEIGHT));
+			row.setHeightInPoints(rowHeight * 72f / reportDpi);
 		}
 	}
 	
@@ -740,7 +741,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					side = BoxStyle.RIGHT;
 				}
 			}
-			BoxStyle boxStyle = new BoxStyle(side, line.getLinePen());
+			BoxStyle boxStyle = new BoxStyle(side, line.getLinePen(), JRPenUtil.getLineWidth(line, reportDpi));
 
 			FillPatternType mode = backgroundMode;
 			short backcolor = whiteIndex;
@@ -1496,8 +1497,10 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					break;
 			}
 
-			int dpi = getPropertiesUtil().getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, 72);
-			double scale = dpi/72d;
+			int dpi = getPropertiesUtil().getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, reportDpi);
+			// the element dimensions are expressed in report pixels, so the raster is sized from
+			// the physical size of the element rather than from a fixed resolution
+			double scale = dpi / (double)reportDpi;
 			
 			BufferedImage bi = 
 				new BufferedImage(
@@ -1762,8 +1765,16 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	/**
 	 *
 	 */
-	protected static BorderStyle getBorderStyle(JRPen pen) {
-		float lineWidth = pen.getLineWidth();
+	protected static BorderStyle getBorderStyle(JRPen pen, int reportDpi) {
+		return getBorderStyle(pen, pen.getLineWidth() == null ? 0f : pen.getLineWidth(), reportDpi);
+	}
+
+	/**
+	 * The border styles below stand for physical thicknesses, so the pen width, which is
+	 * expressed in report pixels, has to be converted to points before being classified.
+	 */
+	protected static BorderStyle getBorderStyle(JRPen pen, float penWidth, int reportDpi) {
+		float lineWidth = LengthUtil.point(penWidth, reportDpi);
 
 		if (lineWidth > 0f) {
 			switch (pen.getLineStyle()) {
@@ -1952,8 +1963,8 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 
 		if ((pageFormat.getPageWidth() != 0) && (pageFormat.getPageHeight() != 0)) {
 
-			double dWidth = (pageFormat.getPageWidth() / 72.0);
-			double dHeight = (pageFormat.getPageHeight() / 72.0);
+			double dWidth = (pageFormat.getPageWidth() / (double)reportDpi);
+			double dHeight = (pageFormat.getPageHeight() / (double)reportDpi);
 
 			height = Math.round(dHeight * 25.4);
 			width = Math.round(dWidth * 25.4);
@@ -2253,7 +2264,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	{
 		if (marginValue != null)
 		{
-			double margin = LengthUtil.inch(marginValue);
+			double margin = LengthUtil.inch(marginValue, reportDpi);
 			if (margin > sheet.getMargin(marginType))
 			{
 				sheet.setMargin(marginType, margin);
@@ -2266,7 +2277,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		if (marginValue != null)
 		{
 			HSSFPrintSetup printSetup = sheet.getPrintSetup();
-			double margin = LengthUtil.inch(marginValue);
+			double margin = LengthUtil.inch(marginValue, reportDpi);
 			if (isHeaderMargin)
 			{
 				if (margin > printSetup.getHeaderMargin())
@@ -2298,7 +2309,11 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		private int hash;
 
 		public BoxStyle(int side, JRPen pen) {
-			borderStyle[side] = JRXlsMetadataExporter.getBorderStyle(pen);
+			this(side, pen, pen.getLineWidth() == null ? 0f : pen.getLineWidth());
+		}
+
+		public BoxStyle(int side, JRPen pen, float lineWidth) {
+			borderStyle[side] = JRXlsMetadataExporter.getBorderStyle(pen, lineWidth, reportDpi);
 			borderColour[side] = JRXlsMetadataExporter.this.getWorkbookColor(pen.getLineColor()).getIndex();
 			hash = computeHash();
 		}
@@ -2310,35 +2325,40 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 					setBox(((JRBoxContainer)element).getLineBox());
 				}
 				if (element instanceof JRCommonGraphicElement) {
-					setPen(((JRCommonGraphicElement)element).getLinePen());
+					JRCommonGraphicElement graphicElement = (JRCommonGraphicElement)element;
+					setPen(graphicElement.getLinePen(), JRPenUtil.getLineWidth(graphicElement, reportDpi));
 				}
 			}
 		}
 
 		public void setBox(JRLineBox box) {
-			borderStyle[TOP] = JRXlsMetadataExporter.getBorderStyle(box.getTopPen());
+			borderStyle[TOP] = JRXlsMetadataExporter.getBorderStyle(box.getTopPen(), reportDpi);
 			borderColour[TOP] = JRXlsMetadataExporter.this.getWorkbookColor(box.getTopPen().getLineColor()).getIndex();
 
-			borderStyle[BOTTOM] = JRXlsMetadataExporter.getBorderStyle(box.getBottomPen());
+			borderStyle[BOTTOM] = JRXlsMetadataExporter.getBorderStyle(box.getBottomPen(), reportDpi);
 			borderColour[BOTTOM] = JRXlsMetadataExporter.this.getWorkbookColor(box.getBottomPen().getLineColor()).getIndex();
 
-			borderStyle[LEFT] = JRXlsMetadataExporter.getBorderStyle(box.getLeftPen());
+			borderStyle[LEFT] = JRXlsMetadataExporter.getBorderStyle(box.getLeftPen(), reportDpi);
 			borderColour[LEFT] = JRXlsMetadataExporter.this.getWorkbookColor(box.getLeftPen().getLineColor()).getIndex();
 
-			borderStyle[RIGHT] = JRXlsMetadataExporter.getBorderStyle(box.getRightPen());
+			borderStyle[RIGHT] = JRXlsMetadataExporter.getBorderStyle(box.getRightPen(), reportDpi);
 			borderColour[RIGHT] = JRXlsMetadataExporter.this.getWorkbookColor(box.getRightPen().getLineColor()).getIndex();
 
 			hash = computeHash();
 		}
 
 		public void setPen(JRPen pen) {
+			setPen(pen, pen.getLineWidth() == null ? 0f : pen.getLineWidth());
+		}
+
+		public void setPen(JRPen pen, float lineWidth) {
 			if (
 				borderStyle[TOP] == BorderStyle.NONE
 				&& borderStyle[LEFT] == BorderStyle.NONE
 				&& borderStyle[BOTTOM] == BorderStyle.NONE
 				&& borderStyle[RIGHT] == BorderStyle.NONE
 				) {
-				BorderStyle style = JRXlsMetadataExporter.getBorderStyle(pen);
+				BorderStyle style = JRXlsMetadataExporter.getBorderStyle(pen, lineWidth, reportDpi);
 				short colour = JRXlsMetadataExporter.this.getWorkbookColor(pen.getLineColor()).getIndex();
 
 				borderStyle[TOP] = style;

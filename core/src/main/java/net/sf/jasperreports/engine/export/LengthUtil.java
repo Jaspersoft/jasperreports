@@ -24,7 +24,6 @@
 package net.sf.jasperreports.engine.export;
 
 
-
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
@@ -34,83 +33,94 @@ public final class LengthUtil
 	/**
 	 * Converts pixels to inches without decimal truncation.
 	 */
-	public static double inch(double pixels)
+	public static double inch(double pixels, int dpi)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		return inches;
+		return pixels / dpi;
 	}
 	
 	/**
 	 * 
 	 */
-	public static double inchFloor2Dec(double pixels)
+	public static double inchFloor2Dec(double pixels, int dpi)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.floor(inches * 100.0)) / 100.0;
-		return inches;
+		double inches = pixels / dpi;
+		return (Math.floor(inches * 100.0)) / 100.0;
 	}
 	
 	/**
 	 * 
 	 */
-	public static double inchFloor4Dec(double pixels)
+	public static double inchFloor4Dec(double pixels, int dpi)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.floor(inches * 10000.0)) / 10000.0;
-		return inches;
+		double inches = pixels / dpi;
+		return (Math.floor(inches * 10000.0)) / 10000.0;
 	}
 
 	/**
 	 * 
 	 */
-	public static double inchRound2Dec(double pixels)
+	public static double inchRound2Dec(double pixels, int dpi)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.round(inches * 100.0)) / 100.0;
-		return inches;
+		double inches = pixels / dpi;
+		return (Math.round(inches * 100.0)) / 100.0;
 	}
 	
 	/**
 	 * 
 	 */
-	public static double inchRound4Dec(double pixels)
+	public static double inchRound4Dec(double pixels, int dpi)
 	{
-		double inches = 0.0;
-		inches = pixels / 72.0;
-		inches = (Math.round(inches * 10000.0)) / 10000.0;
-		return inches;
+		double inches = pixels / dpi;
+		return (Math.round(inches * 10000.0)) / 10000.0;
 	}
 
 	/**
-	 * Convert a float value to twips (multiply with 20)
-	 * @param points value that need to be converted
+	 * Convert a float value to twips
+	 * @param pixels value that need to be converted
 	 * @return converted value in twips
 	 */
-	public static int twip(float points) 
+	public static int twip(float pixels, int dpi)
 	{
-		return (int)(points * 20);
+		return (int)(pixels * 1440.0f / dpi);
 	}
 
 	/**
-	 * Convert an int value from points to EMU (multiply with 12700)
-	 * @param points value that needs to be converted
+	 * Convert an int value from pixels to EMU
+	 * @param pixels value that needs to be converted
 	 * @return converted value in EMU
 	 */
-	public static int emu(float points) 
+	public static int emu(float pixels, int dpi)
 	{
-		return (int)(points * 12700);
+		return (int)(pixels * 914400.0f / dpi);
 	}
 	
 	/**
 	 * 
 	 */
-	public static int halfPoint(float pixels) 
+	public static int halfPoint(float pixels, int dpi)
 	{
-		return (int)(pixels * 8);
+		return (int)(pixels * 576.0f / dpi);
+	}
+
+	/**
+	 * Converts pixels to points, for output formats that only offer a fixed set of
+	 * line thicknesses and thus need the value expressed in physical units.
+	 * @param pixels value that needs to be converted
+	 * @return converted value in points
+	 */
+	public static float point(float pixels, int dpi)
+	{
+		return pixels * 72.0f / dpi;
+	}
+
+	/**
+	 * Converts points back to pixels, the inverse of {@link #point(float, int)}.
+	 * @param points value that needs to be converted
+	 * @return converted value in pixels
+	 */
+	public static int pixel(float points, int dpi)
+	{
+		return Math.round(points * dpi / 72.0f);
 	}
 
 	

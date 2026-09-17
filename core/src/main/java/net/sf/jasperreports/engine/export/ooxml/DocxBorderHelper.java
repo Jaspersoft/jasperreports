@@ -40,9 +40,15 @@ public class DocxBorderHelper extends BaseHelper
 	/**
 	 *
 	 */
-	public DocxBorderHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	private int dpi;
+
+	/**
+	 *
+	 */
+	public DocxBorderHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
+		this.dpi = dpi;
 	}
 	
 	/**
@@ -52,7 +58,7 @@ public class DocxBorderHelper extends BaseHelper
 	{
 		if (box != null)
 		{
-			exportBorder(new DocxBorderInfo(box));
+			exportBorder(new DocxBorderInfo(box, dpi));
 		}
 	}
 
@@ -108,7 +114,7 @@ public class DocxBorderHelper extends BaseHelper
 	{
 		if (padding != null)
 		{
-			write("       <w:" + DocxBorderInfo.BORDER[side] +" w:w=\"" + LengthUtil.twip(padding) + "\" w:type=\"dxa\" />\n");
+			write("       <w:" + DocxBorderInfo.BORDER[side] +" w:w=\"" + LengthUtil.twip(padding, dpi) + "\" w:type=\"dxa\" />\n");
 		}
 	}
 

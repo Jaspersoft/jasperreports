@@ -41,6 +41,7 @@ public class ElementEvaluationAction implements EvaluationBoundAction
 	
 	protected final JRFillElement element;
 	protected final JRPrintElement printElement;
+	private double dpiScale = 1d;
 
 	public ElementEvaluationAction(JRFillElement element, JRPrintElement printElement)
 	{
@@ -48,6 +49,16 @@ public class ElementEvaluationAction implements EvaluationBoundAction
 		this.printElement = printElement;
 	}
 	
+	public double getDpiScale()
+	{
+		return dpiScale;
+	}
+
+	public void multiplyDpiScale(double scale)
+	{
+		this.dpiScale *= scale;
+	}
+
 	@Override
 	public void execute(BoundActionExecutionContext executionContext) throws JRException
 	{
@@ -68,6 +79,11 @@ public class ElementEvaluationAction implements EvaluationBoundAction
 		
 		element.resolveElement(printElement, 
 				executionContext.getExpressionEvaluationType(), evaluationTime);
+		
+		if (dpiScale != 1d)
+		{
+			OffsetElementsUtil.scaleTextProperties(printElement, dpiScale);
+		}
 	}
 
 	@Override

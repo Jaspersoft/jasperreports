@@ -36,6 +36,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 
 import net.sf.jasperreports.engine.JRPrintLine;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.type.LineDirectionEnum;
 import net.sf.jasperreports.engine.type.LineStyleEnum;
@@ -47,12 +48,15 @@ import net.sf.jasperreports.engine.util.JRPenUtil;
  */
 public class LineDrawer extends ElementDrawer<JRPrintLine>
 {
+	private final int reportDpi;
+
 	/**
 	 *
 	 */
-	public LineDrawer(JasperReportsContext jasperReportsContext)
+	public LineDrawer(JasperReportsContext jasperReportsContext, int reportDpi)
 	{
 		super(jasperReportsContext);
+		this.reportDpi = reportDpi;
 	}
 	
 	
@@ -61,83 +65,85 @@ public class LineDrawer extends ElementDrawer<JRPrintLine>
 	{
 		grx.setColor(line.getLinePen().getLineColor());
 		
-		Stroke stroke = JRPenUtil.getStroke(line.getLinePen(), BasicStroke.CAP_BUTT);
+		Stroke stroke = JRPenUtil.getStroke(line.getLinePen(), BasicStroke.CAP_BUTT, reportDpi);
 
 		if (stroke != null)
 		{
 			grx.setStroke(stroke);
 			
-			float lineWidth = line.getLinePen().getLineWidth();
-			
-			if (line.getWidth() == 1)
+			float lineWidth = JRPenUtil.getLineWidthOrDefault(line.getLinePen(), reportDpi);
+			float dpiScale = (float) reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+			int dpiOne = Math.max(1, (int) dpiScale);
+
+			if (line.getWidth() <= dpiOne)
 			{
-				if (line.getHeight() != 1)
+				if (line.getHeight() > dpiOne)
 				{
 					//Vertical line
 					if (line.getLinePen().getLineStyle() ==LineStyleEnum.DOUBLE)
 					{
-						grx.translate(0.5 - lineWidth / 3, 0);
+						grx.translate(0.5 * dpiScale - lineWidth / 3, 0);
 						grx.drawLine(
-							line.getX() + offsetX, 
+							line.getX() + offsetX,
 							line.getY() + offsetY,
-							line.getX() + offsetX,  
+							line.getX() + offsetX,
 							line.getY() + offsetY + line.getHeight()
 							);
 						grx.translate(2 * lineWidth / 3, 0);
 						grx.drawLine(
-							line.getX() + offsetX, 
+							line.getX() + offsetX,
 							line.getY() + offsetY,
-							line.getX() + offsetX,  
+							line.getX() + offsetX,
 							line.getY() + offsetY + line.getHeight()
 							);
-						grx.translate(-0.5 - lineWidth / 3, 0);
+						grx.translate(-0.5 * dpiScale - lineWidth / 3, 0);
 					}
 					else
 					{
-						grx.translate(0.5, 0);
+						grx.translate(0.5 * dpiScale, 0);
 						grx.drawLine(
-							line.getX() + offsetX, 
+							line.getX() + offsetX,
 							line.getY() + offsetY,
-							line.getX() + offsetX,  
+							line.getX() + offsetX,
 							line.getY() + offsetY + line.getHeight()
 							);
-						grx.translate(-0.5, 0);
+						grx.translate(-0.5 * dpiScale, 0);
 					}
 				}
 			}
 			else
 			{
-				if (line.getHeight() == 1)
+				if (line.getHeight() <= dpiOne)
 				{
 					//Horizontal line
 					if (line.getLinePen().getLineStyle() == LineStyleEnum.DOUBLE)
 					{
-						grx.translate(0, 0.5 - lineWidth / 3);
+						grx.translate(0, 0.5 * dpiScale - lineWidth / 3);
 						grx.drawLine(
-							line.getX() + offsetX, 
+							line.getX() + offsetX,
 							line.getY() + offsetY,
-							line.getX() + offsetX + line.getWidth(),  
+							line.getX() + offsetX + line.getWidth(),
 							line.getY() + offsetY
 							);
 						grx.translate(0, 2 * lineWidth / 3);
 						grx.drawLine(
-							line.getX() + offsetX, 
+							line.getX() + offsetX,
 							line.getY() + offsetY,
-							line.getX() + offsetX + line.getWidth(),  
+							line.getX() + offsetX + line.getWidth(),
 							line.getY() + offsetY
 							);
-						grx.translate(0, -0.5 - lineWidth / 3);
+						grx.translate(0, -0.5 * dpiScale - lineWidth / 3);
 					}
 					else
 					{
-						grx.translate(0, 0.5);
+						grx.translate(0, 0.5 * dpiScale);
 						grx.drawLine(
-							line.getX() + offsetX, 
+							line.getX() + offsetX,
 							line.getY() + offsetY,
-							line.getX() + offsetX + line.getWidth(),  
+							line.getX() + offsetX + line.getWidth(),
 							line.getY() + offsetY
 							);
-						grx.translate(0, -0.5);
+						grx.translate(0, -0.5 * dpiScale);
 					}
 				}
 				else

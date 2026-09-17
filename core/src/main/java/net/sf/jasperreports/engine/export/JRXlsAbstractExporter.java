@@ -48,6 +48,7 @@ import net.sf.jasperreports.engine.JRPrintLine;
 import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.JRPrintText;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.base.JRBasePrintPage;
@@ -272,6 +273,8 @@ public abstract class JRXlsAbstractExporter<RC extends XlsReportConfiguration, C
 			
 			private OrientationEnum orientation;
 			
+			private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
+			
 			public SheetPrintSettings() 
 			{
 			}
@@ -420,6 +423,15 @@ public abstract class JRXlsAbstractExporter<RC extends XlsReportConfiguration, C
 			public void setFooterRight(String footerRight) 
 			{
 				this.footerRight = footerRight;
+			}
+
+			@Override
+			public int getDpi() {
+				return dpi;
+			}
+
+			public void setDpi(int dpi) {
+				this.dpi = dpi;
 			}
 
 			@Override

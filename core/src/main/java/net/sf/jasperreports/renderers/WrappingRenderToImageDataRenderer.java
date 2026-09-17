@@ -142,6 +142,17 @@ public class WrappingRenderToImageDataRenderer extends AbstractRenderToImageData
 	}
 
 	@Override
+	public int getReportDpi()
+	{
+		if (renderer instanceof RenderToImageAwareRenderable)
+		{
+			return ((RenderToImageAwareRenderable) renderer).getReportDpi();
+		}
+
+		return super.getReportDpi();
+	}
+
+	@Override
 	public int getImageDataDPI(JasperReportsContext jasperReportsContext)
 	{
 		if (renderer instanceof RenderToImageAwareRenderable)

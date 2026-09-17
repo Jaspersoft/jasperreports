@@ -513,6 +513,7 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	protected boolean collapseRowSpan;
 	protected boolean defaultUseTimeZone;
 	protected boolean imageBorderFixEnabled;
+	protected int reportDpi;
 	
 	public class NameScope {
 		private String name;
@@ -624,6 +625,8 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	protected void initReport() {
 		super.initReport();
 
+		reportDpi = jasperPrint.getDpi();
+
 		setSheetNames();
 		if (jasperPrint.hasProperties()
 				&& jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS)) {
@@ -655,6 +658,9 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 
 	protected void updatePrintSettings(SheetInfo.SheetPrintSettings printSettings,
 			XlsReportConfiguration configuration) {
+		// the page dimensions below come from the document of the current input item, which
+		// is a single part when the input carries parts, so they share its resolution
+		printSettings.setDpi(reportDpi);
 		if (printSettings.getPageHeight() == null) {
 			printSettings.setPageHeight(configuration.getPrintPageHeight() == null ? jasperPrint.getPageHeight()
 					: configuration.getPrintPageHeight());
@@ -876,17 +882,25 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	 *
 	 */
 	protected int getImageBorderCorrection(JRPen pen) {
-		float lineWidth = pen.getLineWidth();
+		// the correction is a one or two point inset that keeps the image from overlapping
+		// its border, so the pen width is classified in points and the resulting inset is
+		// then turned back into the pixels of the report resolution
+		float lineWidth = pen.getLineWidth() == null ? 0 : LengthUtil.point(pen.getLineWidth(), reportDpi);
+		float correction;
 
 		if (lineWidth > 0f) {
 			if (lineWidth >= 2f) {
-				return 2;
+				correction = 2f;
 			}
-
-			return 1;
+			else {
+				correction = 1f;
+			}
+		}
+		else {
+			correction = imageBorderFixEnabled ? 1f : 0f;
 		}
 
-		return imageBorderFixEnabled ? 1 : 0;
+		return LengthUtil.pixel(correction, reportDpi);
 	}
 
 	/**

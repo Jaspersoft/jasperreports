@@ -67,7 +67,8 @@ public class BarcodeDesignConverter implements ComponentDesignConverter
 				new BarcodeDesignEvaluator(
 					reportConverter.getJasperReportsContext(),
 					element, 
-					reportConverter.getDefaultStyleProvider()
+					reportConverter.getDefaultStyleProvider(),
+					reportConverter.getReport().getDpi()
 					);
 			return evaluator.evaluateImage();
 		}

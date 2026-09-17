@@ -55,6 +55,7 @@ import net.sf.jasperreports.engine.export.HyperlinkUtil;
 import net.sf.jasperreports.engine.export.JRExporterGridCell;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.type.LineDirectionEnum;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -85,6 +86,7 @@ public class TableBuilder
 	private Map<Integer, String> columnStyles;
 	private Color tabColor;
 	private boolean rowTagOpen;
+	protected int reportDpi;
 	
 
 	protected TableBuilder(
@@ -113,6 +115,7 @@ public class TableBuilder
 		this.rowStyles = rowStyles == null ? new HashMap<>() : rowStyles;
 		this.columnStyles = columnStyles == null ? new HashMap<>() : columnStyles;
 		this.tabColor = tabColor;
+		this.reportDpi = jasperPrint.getDpi();
 	}
 	
 	protected TableBuilder(
@@ -159,6 +162,7 @@ public class TableBuilder
 		this.rowStyles = rowStyles == null ? new HashMap<>() : rowStyles;
 		this.columnStyles = columnStyles == null ? new HashMap<>() : columnStyles;
 		this.tabColor = tabColor;
+		this.reportDpi = jasperPrint.getDpi();
 	}
 
 
@@ -178,6 +182,15 @@ public class TableBuilder
 			this(documentBuilder, jasperPrint, pageFormatIndex, pageIndex, bodyWriter, styleWriter, styleCache, rowStyles, columnStyles, null);
 		}
 
+
+	/**
+	 * Overrides the document resolution with the one of the pages being built, which
+	 * differs from it when those pages come from a part filled at another resolution.
+	 */
+	public void setReportDpi(int reportDpi)
+	{
+		this.reportDpi = reportDpi;
+	}
 
 	public void buildTableStyle(int width) 
 	{
@@ -300,7 +313,7 @@ public class TableBuilder
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 
@@ -338,10 +351,10 @@ public class TableBuilder
 		bodyWriter.write(
 				"<draw:line text:anchor-type=\"paragraph\" "
 				+ "draw:style-name=\"" + styleCache.getGraphicStyle(line) + "\" "
-				+ "svg:x1=\"" + LengthUtil.inchFloor4Dec(x1) + "in\" "
-				+ "svg:y1=\"" + LengthUtil.inchFloor4Dec(y1) + "in\" "
-				+ "svg:x2=\"" + LengthUtil.inchFloor4Dec(x2) + "in\" "
-				+ "svg:y2=\"" + LengthUtil.inchFloor4Dec(y2) + "in\">"
+				+ "svg:x1=\"" + LengthUtil.inchFloor4Dec(x1, reportDpi) + "in\" "
+				+ "svg:y1=\"" + LengthUtil.inchFloor4Dec(y1, reportDpi) + "in\" "
+				+ "svg:x2=\"" + LengthUtil.inchFloor4Dec(x2, reportDpi) + "in\" "
+				+ "svg:y2=\"" + LengthUtil.inchFloor4Dec(y2, reportDpi) + "in\">"
 				//+ "</draw:line>"
 				+ "<text:p/></draw:line>"
 				+ "</text:p>"
@@ -361,8 +374,8 @@ public class TableBuilder
 		bodyWriter.write(
 			"<draw:ellipse text:anchor-type=\"paragraph\" "
 			+ "draw:style-name=\"" + styleCache.getGraphicStyle(ellipse) + "\" "
-			+ "svg:width=\"" + LengthUtil.inchFloor4Dec(ellipse.getWidth()) + "in\" "
-			+ "svg:height=\"" + LengthUtil.inchFloor4Dec(ellipse.getHeight()) + "in\" "
+			+ "svg:width=\"" + LengthUtil.inchFloor4Dec(ellipse.getWidth(), reportDpi) + "in\" "
+			+ "svg:height=\"" + LengthUtil.inchFloor4Dec(ellipse.getHeight(), reportDpi) + "in\" "
 			+ "svg:x=\"0in\" "
 			+ "svg:y=\"0in\">"
 			+ "<text:p/></draw:ellipse></text:p>"

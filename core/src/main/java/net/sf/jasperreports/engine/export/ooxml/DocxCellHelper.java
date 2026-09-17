@@ -58,15 +58,17 @@ public class DocxCellHelper extends BaseHelper
 	 *
 	 */
 	private DocxBorderHelper borderHelper;
+	private int dpi;
 	
 	/**
 	 *
 	 */
-	public DocxCellHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	public DocxCellHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
 		
-		borderHelper = new DocxBorderHelper(jasperReportsContext, writer);
+		this.dpi = dpi;
+		borderHelper = new DocxBorderHelper(jasperReportsContext, writer, dpi);
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class DocxCellHelper extends BaseHelper
 		
 		exportPropsHeader();
 
-		write("      <w:tcW w:w=\"" + LengthUtil.twip(gridCell.getWidth()) +"\" w:type=\"dxa\"/>\n");
+		write("      <w:tcW w:w=\"" + LengthUtil.twip(gridCell.getWidth(), dpi) +"\" w:type=\"dxa\"/>\n");
 
 		if (gridCell.getColSpan() > 1)
 		{

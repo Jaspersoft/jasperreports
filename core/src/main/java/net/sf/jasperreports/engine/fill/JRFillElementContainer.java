@@ -734,11 +734,24 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 							filler.getJasperPrint().addOrigin(origin);
 						}
 						
+						int parentDpi = filler.getDpi();
+						int subreportDpi = subreport.subreportFiller.getDpi();
+						double dpiScale = (parentDpi != subreportDpi) ? (double) parentDpi / subreportDpi : 1d;
+
 						Collection<JRPrintElement> printElements = subreport.getPrintElements();
-						addSubElements(printContainer, element, printElements);
-						if (subreport.getX() + subreport.getPrintContentsWidth() > maxWidth)
+						if (dpiScale != 1d)
 						{
-							maxWidth = subreport.getX() + subreport.getPrintContentsWidth();
+							subreport.scaleTemplatePenWidths(printElements, dpiScale);
+						}
+						addSubElements(printContainer, element, printElements, dpiScale);
+						int contentsWidth = subreport.getPrintContentsWidth();
+						if (dpiScale != 1d)
+						{
+							contentsWidth = (int) Math.round(contentsWidth * dpiScale);
+						}
+						if (subreport.getX() + contentsWidth > maxWidth)
+						{
+							maxWidth = subreport.getX() + contentsWidth;
 						}
 						
 						subreport.subreportPageFilled();
@@ -768,12 +781,16 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 	protected void addSubElements(JRPrintElementContainer printContainer, JRFillElement element, 
 			Collection<? extends JRPrintElement> printElements)
 	{
+		addSubElements(printContainer, element, printElements, 1d);
+	}
+
+	protected void addSubElements(JRPrintElementContainer printContainer, JRFillElement element,
+			Collection<? extends JRPrintElement> printElements, double dpiScale)
+	{
 		if (printContainer instanceof OffsetElementsContainer)
 		{
-			// adding the subelements as whole lists to bands so that we don't need
-			// another virtualized list at print band level
 			((OffsetElementsContainer) printContainer).addOffsetElements(printElements, 
-					element.getX(), element.getRelativeY());
+					element.getX(), element.getRelativeY(), dpiScale);
 		}
 		else
 		{
@@ -781,8 +798,19 @@ public abstract class JRFillElementContainer extends JRFillElementGroup implemen
 			{
 				for (JRPrintElement printElement : printElements)
 				{
-					printElement.setX(element.getX() + printElement.getX());
-					printElement.setY(element.getRelativeY() + printElement.getY());
+					if (dpiScale != 1d)
+					{
+						printElement.setX(element.getX() + (int) Math.round(printElement.getX() * dpiScale));
+						printElement.setY(element.getRelativeY() + (int) Math.round(printElement.getY() * dpiScale));
+						printElement.setWidth((int) Math.round(printElement.getWidth() * dpiScale));
+						printElement.setHeight((int) Math.round(printElement.getHeight() * dpiScale));
+						OffsetElementsUtil.scaleChildren(printElement, dpiScale);
+					}
+					else
+					{
+						printElement.setX(element.getX() + printElement.getX());
+						printElement.setY(element.getRelativeY() + printElement.getY());
+					}
 					printContainer.addElement(printElement);
 				}
 			}

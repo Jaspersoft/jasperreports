@@ -23,6 +23,13 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-barcode4j</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -59,6 +66,9 @@
 							<updaters>
 								<updater>com.update.RenewUuidsUpdater</updater>
 								<updater>com.update.StyleUpdater</updater>
+								<!--
+								<updater>com.update.DpiUpdater</updater>
+								-->
 							</updaters>
 						</configuration>
 					</execution>

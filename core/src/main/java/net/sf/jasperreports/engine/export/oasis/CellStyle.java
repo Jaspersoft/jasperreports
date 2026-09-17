@@ -51,9 +51,9 @@ public class CellStyle extends BorderStyle
 	/**
 	 *
 	 */
-	public CellStyle(WriterHelper styleWriter, JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText)
+	public CellStyle(WriterHelper styleWriter, JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText, int reportDpi)
 	{
-		super(styleWriter);
+		super(styleWriter, reportDpi);
 
 		JRPrintElement element = gridCell.getElement();
 		

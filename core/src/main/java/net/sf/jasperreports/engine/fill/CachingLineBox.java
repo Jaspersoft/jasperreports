@@ -62,12 +62,6 @@ public class CachingLineBox implements JRLineBox
 	}
 
 	@Override
-	public Float getDefaultLineWidth()
-	{
-		return base.getDefaultLineWidth();
-	}
-
-	@Override
 	public JRStyle getStyle()
 	{
 		return base.getStyle();

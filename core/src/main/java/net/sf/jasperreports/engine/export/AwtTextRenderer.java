@@ -31,6 +31,7 @@ import java.text.AttributedCharacterIterator;
 
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRStyledTextAttributeSelector;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -51,14 +52,15 @@ public class AwtTextRenderer extends AbstractTextRenderer
 	
 	
 	/**
-	 * 
+	 *
 	 */
 	public AwtTextRenderer(
 		JasperReportsContext jasperReportsContext,
 		boolean isMinimizePrinterJobSize,
 		boolean ignoreMissingFont,
 		boolean defaultIndentFirstLine,
-		boolean defaultJustifyLastLine
+		boolean defaultJustifyLastLine,
+		int reportDpi
 		)
 	{
 		super(
@@ -71,6 +73,7 @@ public class AwtTextRenderer extends AbstractTextRenderer
 		
 		this.noBackcolorSelector = JRStyledTextAttributeSelector.getNoBackcolorSelector(jasperReportsContext);
 		styledTextUtil = JRStyledTextUtil.getInstance(jasperReportsContext);
+		this.fontSizeScale = (float) reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
 	}
 	
 

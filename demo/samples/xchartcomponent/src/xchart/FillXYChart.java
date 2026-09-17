@@ -25,17 +25,16 @@ package xchart;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.component.BaseFillComponent;
 import net.sf.jasperreports.engine.component.FillPrepareResult;
 import net.sf.jasperreports.engine.fill.JRFillCloneFactory;
@@ -45,18 +44,15 @@ import net.sf.jasperreports.engine.fill.JRTemplateImage;
 import net.sf.jasperreports.engine.fill.JRTemplatePrintImage;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.type.ImageTypeEnum;
-import net.sf.jasperreports.engine.type.OnErrorTypeEnum;
+import net.sf.jasperreports.engine.util.JRImageLoader;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.renderers.Renderable;
-import net.sf.jasperreports.renderers.util.RendererUtil;
+import net.sf.jasperreports.renderers.SimpleDataRenderer;
 
-import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.XYStyler;
 
 /**
@@ -152,12 +148,17 @@ public class FillXYChart extends BaseFillComponent implements JRFillCloneable
 	protected void copy(JRPrintImage image)
 	{
 		dataset.finishDataset();
-		
+
 		JRComponentElement element = fillContext.getComponentElement();
-		
+		int reportDpi = fillContext.getFiller().getDpi();
+		double dpiScale = (double) reportDpi / JasperPrint.DEFAULT_REPORT_DPI;
+
+		int chartWidth = (int) (element.getWidth() / dpiScale);
+		int chartHeight = (int) (element.getHeight() / dpiScale);
+
 	    XYChart xyChart = new XYChartBuilder()
-	    		.width(element.getWidth())
-	    		.height(element.getHeight())
+	    		.width(chartWidth)
+	    		.height(chartHeight)
 	    		.title(chartTitle == null ? "" : chartTitle)
 	    		.xAxisTitle(xAxisTitle == null ? "" : xAxisTitle)
 	    		.yAxisTitle(yAxisTitle == null ? "" : yAxisTitle)
@@ -167,7 +168,7 @@ public class FillXYChart extends BaseFillComponent implements JRFillCloneable
 	    styler.setAxisTitlesVisible(true);
 	    styler.setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
 	    styler.setChartBackgroundColor(element.getBackcolor() == null ? Color.WHITE : element.getBackcolor());
-	    
+
 	    List<Comparable<?>> xySeriesNames = dataset.getXYSeriesNames();
 		Map<Comparable<?>, XYSeriesData> xySeriesMap = dataset.getXYSeriesMap();
 		if (xySeriesMap != null && !xySeriesMap.isEmpty())
@@ -182,17 +183,33 @@ public class FillXYChart extends BaseFillComponent implements JRFillCloneable
 				{
 					series.setLineColor(color);
 					styler.getSeriesColors()[i] = color;
-					//series.setFillColor(color);
 				}
 				i++;
 			}
 		}
 		try
 		{
-			BufferedImage img = BitmapEncoder.getBufferedImage(xyChart);
-			Renderable renderable = RendererUtil
-					.getInstance(fillContext.getFiller().getJasperReportsContext())
-					.getRenderable(img, ImageTypeEnum.PNG, OnErrorTypeEnum.ERROR);
+			BufferedImage bi = new BufferedImage(
+				element.getWidth(),
+				element.getHeight(),
+				BufferedImage.TYPE_INT_ARGB
+			);
+			Graphics2D grx = bi.createGraphics();
+			try
+			{
+				grx.scale(dpiScale, dpiScale);
+				xyChart.paint(grx, chartWidth, chartHeight);
+			}
+			finally
+			{
+				grx.dispose();
+			}
+
+			Renderable renderable = new SimpleDataRenderer(
+				JRImageLoader.getInstance(fillContext.getFiller().getJasperReportsContext())
+					.loadBytesFromAwtImage(bi, ImageTypeEnum.PNG),
+				null
+			);
 			image.setRenderer(renderable);
 		}
 		catch(Exception e)

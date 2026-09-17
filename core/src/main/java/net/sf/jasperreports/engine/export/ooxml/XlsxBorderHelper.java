@@ -33,6 +33,7 @@ import net.sf.jasperreports.engine.JRLineBox;
 import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRStyle;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.base.JRBaseLineBox;
 import net.sf.jasperreports.engine.export.JRExporterGridCell;
@@ -49,12 +50,19 @@ public class XlsxBorderHelper extends BaseHelper
 {
 	private Map<XlsxBorderInfo, Integer> borderCache = new HashMap<>();//FIXMEXLSX use soft cache? check other exporter caches as well
 	
+	private int reportDpi = JasperPrint.DEFAULT_REPORT_DPI;
+	
 	/**
 	 *
 	 */
 	public XlsxBorderHelper(JasperReportsContext jasperReportsContext, Writer writer)
 	{
 		super(jasperReportsContext, writer);
+	}
+	
+	public void setReportDpi(int reportDpi)
+	{
+		this.reportDpi = reportDpi;
 	}
 	
 	/**
@@ -119,7 +127,7 @@ public class XlsxBorderHelper extends BaseHelper
 			return -1;			
 		}
 		
-		XlsxBorderInfo borderInfo = new XlsxBorderInfo(box, direction);
+		XlsxBorderInfo borderInfo = new XlsxBorderInfo(box, direction, reportDpi);
 		Integer borderIndex = borderCache.get(borderInfo);
 		if (borderIndex == null)
 		{
@@ -137,7 +145,7 @@ public class XlsxBorderHelper extends BaseHelper
 	{
 		if (box != null)
 		{
-			export(new XlsxBorderInfo(box));
+			export(new XlsxBorderInfo(box, reportDpi));
 		}
 	}
 
@@ -148,7 +156,7 @@ public class XlsxBorderHelper extends BaseHelper
 	{
 		if (pen != null)
 		{
-			export(new XlsxBorderInfo(pen));
+			export(new XlsxBorderInfo(pen, reportDpi));
 		}
 	}
 

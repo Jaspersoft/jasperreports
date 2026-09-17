@@ -34,6 +34,7 @@ import org.apache.commons.logging.LogFactory;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JRExpressionCollector;
 import net.sf.jasperreports.engine.JRHyperlinkParameter;
 import net.sf.jasperreports.engine.JRImage;
@@ -839,8 +840,9 @@ public class JRFillImage extends JRFillGraphicElement implements JRImage
 		imageWidth = null;
 		imageX = null;
 		
-		int realHeight = (int) imageSize.getHeight();
-		int realWidth = (int) imageSize.getWidth();
+		float dpiScale = (float) filler.getDpi() / JasperPrint.DEFAULT_REPORT_DPI;
+		int realHeight = (int) (imageSize.getHeight() * dpiScale);
+		int realWidth = (int) (imageSize.getWidth() * dpiScale);
 		boolean fitted;
 		
 		RotationEnum exifRotation = ImageUtil.getRotation(getRotation(), exifOrientation);

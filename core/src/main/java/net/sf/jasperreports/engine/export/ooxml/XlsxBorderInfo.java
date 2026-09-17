@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import net.sf.jasperreports.engine.JRLineBox;
 import net.sf.jasperreports.engine.JRPen;
+import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.type.LineDirectionEnum;
 import net.sf.jasperreports.engine.util.ObjectUtils;
 
@@ -56,12 +57,14 @@ public class XlsxBorderInfo
 	protected XlsxBorderStyle rightBorderStyle;
 	protected XlsxBorderStyle diagonalBorderStyle;
 	protected LineDirectionEnum direction;
+	protected int reportDpi;
 
 	/**
 	 *
 	 */
-	public XlsxBorderInfo(JRLineBox box)
+	public XlsxBorderInfo(JRLineBox box, int reportDpi)
 	{
+		this.reportDpi = reportDpi;
 		setTopBorder(box.getTopPen());
 		setLeftBorder(box.getLeftPen());
 		setBottomBorder(box.getBottomPen());
@@ -71,8 +74,9 @@ public class XlsxBorderInfo
 	/**
 	 *
 	 */
-	public XlsxBorderInfo(JRLineBox box, LineDirectionEnum direction)
+	public XlsxBorderInfo(JRLineBox box, LineDirectionEnum direction, int reportDpi)
 	{
+		this.reportDpi = reportDpi;
 		if (direction != null)
 		{
 			setDiagonalBorder(box.getPen());
@@ -90,8 +94,9 @@ public class XlsxBorderInfo
 	/**
 	 *
 	 */
-	public XlsxBorderInfo(JRPen pen)
+	public XlsxBorderInfo(JRPen pen, int reportDpi)
 	{
+		this.reportDpi = reportDpi;
 		setTopBorder(pen);
 		setLeftBorder(pen);
 		setBottomBorder(pen);
@@ -175,9 +180,11 @@ public class XlsxBorderInfo
 	/**
 	 *
 	 */
-	private static XlsxBorderStyle borderStyle(JRPen pen)
+	private XlsxBorderStyle borderStyle(JRPen pen)
 	{
-		float width = pen.getLineWidth() == null ? 0 : pen.getLineWidth();
+		// the thickness names below stand for physical widths, so the pen width has to be
+		// converted from the report resolution to points before it is classified
+		float width = pen.getLineWidth() == null ? 0 : LengthUtil.point(pen.getLineWidth(), reportDpi);
 		XlsxBorderStyle style = null;
 
 		if (width > 0f)

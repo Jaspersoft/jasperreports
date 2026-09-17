@@ -38,12 +38,6 @@ public interface JRPenContainer extends JRStyleContainer
 	 *
 	 */
 	@JsonIgnore
-	public Float getDefaultLineWidth();
-
-	/**
-	 *
-	 */
-	@JsonIgnore
 	public Color getDefaultLineColor();
 
 }

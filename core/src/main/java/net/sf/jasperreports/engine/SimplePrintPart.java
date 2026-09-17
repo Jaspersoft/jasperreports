@@ -62,6 +62,9 @@ public class SimplePrintPart implements PrintPart, Serializable
 		pageFormat.setTopMargin(partJasperPrint.getTopMargin());
 		pageFormat.setRightMargin(partJasperPrint.getRightMargin());
 		pageFormat.setBottomMargin(partJasperPrint.getBottomMargin());
+		// the dimensions above are in the resolution of the part report, which is not
+		// necessarily the resolution of the document the part ends up in
+		pageFormat.setDpi(partJasperPrint.getDpi());
 		printPart.setPageFormat(pageFormat);
 		
 		return printPart;

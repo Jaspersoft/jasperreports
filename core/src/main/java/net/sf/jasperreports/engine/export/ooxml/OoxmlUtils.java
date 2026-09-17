@@ -39,21 +39,21 @@ import net.sf.jasperreports.engine.export.ooxml.type.PaperSizeEnum;
 public final class OoxmlUtils 
 {
 
-	public static PaperSizeEnum getSuitablePaperSize(PrintPageFormat pageFormat)
+	public static PaperSizeEnum getSuitablePaperSize(PrintPageFormat pageFormat, int dpi)
 	{
 		if (pageFormat != null)
 		{
-			return getSuitablePaperSize(pageFormat.getPageWidth(), pageFormat.getPageHeight());
+			return getSuitablePaperSize(pageFormat.getPageWidth(), pageFormat.getPageHeight(), dpi);
 		}
 		return PaperSizeEnum.UNDEFINED;
 	}
-	
-	public static PaperSizeEnum getSuitablePaperSize(int pageWidth, int pageHeight)
+
+	public static PaperSizeEnum getSuitablePaperSize(int pageWidth, int pageHeight, int dpi)
 	{
 		if (pageWidth != 0 && pageHeight != 0)
 		{
-			long mmPageWidth = Math.round((pageWidth / 72d) * 25.4);
-			long mmPageHeight = Math.round((pageHeight / 72d) * 25.4);
+			long mmPageWidth = Math.round((pageWidth / (double)dpi) * 25.4);
+			long mmPageHeight = Math.round((pageHeight / (double)dpi) * 25.4);
 
 			for (PaperSizeEnum paperSize : PaperSizeEnum.values())
 			{

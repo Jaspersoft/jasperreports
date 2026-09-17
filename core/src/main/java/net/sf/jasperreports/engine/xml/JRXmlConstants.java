@@ -60,6 +60,7 @@ public final class JRXmlConstants
 	public static final String ATTRIBUTE_columnDirection = "columnDirection";
 	public static final String ATTRIBUTE_pageWidth = "pageWidth";
 	public static final String ATTRIBUTE_pageHeight = "pageHeight";
+	public static final String ATTRIBUTE_dpi = "dpi";
 	public static final String ATTRIBUTE_orientation = "orientation";
 	public static final String ATTRIBUTE_whenNoDataType = "whenNoDataType";
 	public static final String ATTRIBUTE_sectionType = "sectionType";

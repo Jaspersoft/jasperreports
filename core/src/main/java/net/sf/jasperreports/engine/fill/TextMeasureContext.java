@@ -48,4 +48,6 @@ public interface TextMeasureContext
 
 	FontRenderContext getFontRenderContext();
 
+	float getFontSizeScale();
+
 }

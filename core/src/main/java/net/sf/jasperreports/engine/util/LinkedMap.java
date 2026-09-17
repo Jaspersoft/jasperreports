@@ -25,6 +25,7 @@ package net.sf.jasperreports.engine.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * A doubly linked list that can also map entries on keys.
@@ -226,6 +227,19 @@ public class LinkedMap<K, V>
 		for (LinkedValue<K, V> entry = map.header.next; entry != map.header; entry = entry.next)
 		{
 			add(entry.key, entry.value);
+		}
+	}
+
+	/**
+	 * Iterates over all values in insertion order.
+	 *
+	 * @param consumer
+	 */
+	public void forEach(Consumer<V> consumer)
+	{
+		for (LinkedValue<K, V> entry = header.next; entry != header; entry = entry.next)
+		{
+			consumer.accept(entry.value);
 		}
 	}
 }

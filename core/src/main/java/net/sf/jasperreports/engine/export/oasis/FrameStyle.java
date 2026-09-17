@@ -44,9 +44,9 @@ public class FrameStyle extends BorderStyle
 	/**
 	 *
 	 */
-	public FrameStyle(WriterHelper styleWriter, JRPrintElement element)
+	public FrameStyle(WriterHelper styleWriter, JRPrintElement element, int reportDpi)
 	{
-		super(styleWriter);
+		super(styleWriter, reportDpi);
 		
 		if (element.getMode() == ModeEnum.OPAQUE)
 		{

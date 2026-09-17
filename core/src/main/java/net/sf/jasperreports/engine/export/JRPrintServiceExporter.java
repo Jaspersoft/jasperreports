@@ -425,17 +425,23 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 						PageFormat pageFormat = printerJob.defaultPage();
 						Paper paper = pageFormat.getPaper();
 						
+						// paper sizes are expressed in 1/72 of an inch, so the page dimensions
+						// need to be converted from the resolution of the report
+						double dpiScale = (double)JasperPrint.DEFAULT_REPORT_DPI / jasperPrint.getDpi();
+						double paperWidth = jasperPrint.getPageWidth() * dpiScale;
+						double paperHeight = jasperPrint.getPageHeight() * dpiScale;
+						
 						switch (OrientationEnum.getValueOrDefault(jasperPrint.getOrientation()))
 						{
 							case LANDSCAPE :
 							{
 								pageFormat.setOrientation(PageFormat.LANDSCAPE);
-								paper.setSize(jasperPrint.getPageHeight(), jasperPrint.getPageWidth());
+								paper.setSize(paperHeight, paperWidth);
 								paper.setImageableArea(
 									0,
 									0,
-									jasperPrint.getPageHeight(),
-									jasperPrint.getPageWidth()
+									paperHeight,
+									paperWidth
 									);
 								break;
 							}
@@ -443,12 +449,12 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 							default :
 							{
 								pageFormat.setOrientation(PageFormat.PORTRAIT);
-								paper.setSize(jasperPrint.getPageWidth(), jasperPrint.getPageHeight());
+								paper.setSize(paperWidth, paperHeight);
 								paper.setImageableArea(
 									0,
 									0,
-									jasperPrint.getPageWidth(),
-									jasperPrint.getPageHeight()
+									paperWidth,
+									paperHeight
 									);
 							}
 						}
@@ -546,8 +552,8 @@ public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceRepor
 				new MediaPrintableArea(
 					0f, 
 					0f, 
-					printableWidth / 72f,
-					printableHeight / 72f,
+					(float)LengthUtil.inch(printableWidth, jPrint.getDpi()),
+					(float)LengthUtil.inch(printableHeight, jPrint.getDpi()),
 					MediaPrintableArea.INCH
 					)
 				);

@@ -44,7 +44,7 @@ public abstract class AbstractRenderToImageAwareRenderer extends AbstractRendere
 	@Override
 	public int getImageDataDPI(JasperReportsContext jasperReportsContext)
 	{
-		return JRPropertiesUtil.getInstance(jasperReportsContext).getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, 72);
+		return JRPropertiesUtil.getInstance(jasperReportsContext).getIntegerProperty(Renderable.PROPERTY_IMAGE_DPI, getReportDpi());
 	}
 
 	@Override

@@ -44,6 +44,7 @@ import net.sf.jasperreports.engine.JRPropertiesHolder;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRTextElement;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.TabStop;
 import net.sf.jasperreports.engine.export.AbstractTextRenderer;
@@ -54,6 +55,7 @@ import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRTextAttribute;
 import net.sf.jasperreports.engine.util.ParagraphUtil;
+import net.sf.jasperreports.engine.util.StyleResolver;
 import net.sf.jasperreports.engine.util.StyledTextWriteContext;
 import net.sf.jasperreports.properties.PropertyConstants;
 
@@ -208,6 +210,7 @@ public class TextMeasurer implements JRTextMeasurer
 	protected JRCommonText textElement;
 	private JRPropertiesHolder propertiesHolder;
 	private DynamicPropertiesHolder dynamicPropertiesHolder;
+	private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
 	
 	private SimpleTextLineWrapper simpleLineWrapper;
 	private ComplexTextLineWrapper complexLineWrapper;
@@ -219,6 +222,7 @@ public class TextMeasurer implements JRTextMeasurer
 	private int bottomPadding;
 	protected int rightPadding;
 	private JRParagraph jrParagraph;
+	private int tabStopWidth;
 	private boolean isFirstParagraph;
 
 	private float formatWidth;
@@ -487,6 +491,7 @@ public class TextMeasurer implements JRTextMeasurer
 		rightPadding = textElement.getLineBox().getRightPadding();
 		
 		jrParagraph = textElement.getParagraph();
+		tabStopWidth = new StyleResolver(jasperReportsContext).getTabStopWidth(jrParagraph, getFontSizeScale());
 
 		switch (textElement.getRotation())
 		{
@@ -590,7 +595,7 @@ public class TextMeasurer implements JRTextMeasurer
 		// decide if a bullet should be rendered
 		StyledTextWriteContext context = new StyledTextWriteContext(true);
 
-		AttributedCharacterIterator allParagraphs = styledText.getAwtAttributedString(fontUtil, ignoreMissingFont).getIterator(); 
+		AttributedCharacterIterator allParagraphs = styledText.getAwtAttributedString(fontUtil, ignoreMissingFont, getFontSizeScale()).getIterator();
 		String fullText = styledText.getText();
 
 		isFirstParagraph = true;
@@ -942,7 +947,7 @@ public class TextMeasurer implements JRTextMeasurer
 			else
 			{
 				rightX = oldSegment.rightX;
-				nextTabStopHolder[0] = ParagraphUtil.getNextTabStop(jrParagraph, endX, rightX);
+				nextTabStopHolder[0] = ParagraphUtil.getNextTabStop(jrParagraph, endX, rightX, tabStopWidth);
 			}
 
 			//float availableWidth = formatWidth - ParagraphUtil.getSegmentOffset(nextTabStopHolder[0], rightX); // nextTabStop can be null here; and that's OK
@@ -1004,12 +1009,12 @@ public class TextMeasurer implements JRTextMeasurer
 				if (lineWrapper.paragraphPosition() == tabIndexOrEndIndex)
 				{
 					// the segment limit was a tab
-					if (crtSegment.rightX >= ParagraphUtil.getLastTabStop(jrParagraph, endX).getPosition())
+					if (crtSegment.rightX >= ParagraphUtil.getLastTabStop(jrParagraph, endX, tabStopWidth).getPosition())
 					{
 						// current segment stretches out beyond the last tab stop; line complete
 						lineComplete = true;
 						// next line should should start at first tab stop indent
-						nextTabStopHolder[0] = ParagraphUtil.getFirstTabStop(jrParagraph, endX);
+						nextTabStopHolder[0] = ParagraphUtil.getFirstTabStop(jrParagraph, endX, tabStopWidth);
 					}
 //					else
 //					{
@@ -1023,7 +1028,7 @@ public class TextMeasurer implements JRTextMeasurer
 					if (textLine == null)
 					{
 						// nothing fitted; next line should start at first tab stop indent
-						if (nextTabStopHolder[0].getPosition() == ParagraphUtil.getFirstTabStop(jrParagraph, endX).getPosition())//FIXMETAB check based on segments.size()
+						if (nextTabStopHolder[0].getPosition() == ParagraphUtil.getFirstTabStop(jrParagraph, endX, tabStopWidth).getPosition())//FIXMETAB check based on segments.size()
 						{
 							// at second attempt we give up to avoid infinite loop
 							nextTabStopHolder[0] = null;
@@ -1037,7 +1042,7 @@ public class TextMeasurer implements JRTextMeasurer
 						}
 						else
 						{
-							nextTabStopHolder[0] = ParagraphUtil.getFirstTabStop(jrParagraph, endX);
+							nextTabStopHolder[0] = ParagraphUtil.getFirstTabStop(jrParagraph, endX, tabStopWidth);
 						}
 					}
 					else
@@ -1052,7 +1057,7 @@ public class TextMeasurer implements JRTextMeasurer
 			oldSegment = crtSegment;
 		}
 		
-		float lineHeight = AbstractTextRenderer.getLineHeight(measuredState.lines == 0, jrParagraph, maxLeading, maxAscent);
+		float lineHeight = AbstractTextRenderer.getLineHeight(measuredState.lines == 0, jrParagraph, maxLeading, maxAscent, getFontSizeScale());
 		
 		if (measuredState.lines == 0) //FIXMEPARA
 		//if (measuredState.paragraphStartLine == measuredState.lines)
@@ -1140,6 +1145,22 @@ public class TextMeasurer implements JRTextMeasurer
 		return AwtTextRenderer.LINE_BREAK_FONT_RENDER_CONTEXT;
 	}
 
+	/**
+	 *
+	 */
+	public void setDpi(int dpi)
+	{
+		this.dpi = dpi;
+	}
+
+	/**
+	 *
+	 */
+	public float getFontSizeScale()
+	{
+		return (float) dpi / JasperPrint.DEFAULT_REPORT_DPI;
+	}
+
 	class Context implements TextMeasureContext
 	{
 		@Override
@@ -1176,6 +1197,12 @@ public class TextMeasurer implements JRTextMeasurer
 		public FontRenderContext getFontRenderContext()
 		{
 			return TextMeasurer.this.getFontRenderContext();
+		}
+
+		@Override
+		public float getFontSizeScale()
+		{
+			return TextMeasurer.this.getFontSizeScale();
 		}
 	}
 }

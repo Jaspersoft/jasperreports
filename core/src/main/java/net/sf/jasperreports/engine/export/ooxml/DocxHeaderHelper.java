@@ -39,16 +39,16 @@ public class DocxHeaderHelper extends DocxDocumentHelper
 	/**
 	 * 
 	 */
-	public DocxHeaderHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	public DocxHeaderHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
-		super(jasperReportsContext, writer);
+		super(jasperReportsContext, writer, dpi);
 	}
 	
 	@Override
 	public void exportHeader(PrintPageFormat pageFormat)
 	{
-		int pageWidth = LengthUtil.emu(pageFormat.getPageWidth() - pageFormat.getLeftMargin() - pageFormat.getRightMargin());
-		int pageHeight = LengthUtil.emu(pageFormat.getPageHeight() - pageFormat.getTopMargin() - pageFormat.getBottomMargin());
+		int pageWidth = LengthUtil.emu(pageFormat.getPageWidth() - pageFormat.getLeftMargin() - pageFormat.getRightMargin(), dpi);
+		int pageHeight = LengthUtil.emu(pageFormat.getPageHeight() - pageFormat.getTopMargin() - pageFormat.getBottomMargin(), dpi);
 		
 		write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		write("<w:hdr\n");

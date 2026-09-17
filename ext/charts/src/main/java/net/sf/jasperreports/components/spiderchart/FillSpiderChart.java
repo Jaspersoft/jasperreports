@@ -181,7 +181,8 @@ public class FillSpiderChart extends BaseFillComponent implements JRFillCloneabl
 				spiderChartSharedBean, 
 				chartCustomizer, 
 				JRChart.RENDER_TYPE_DRAW, 
-				SpiderChartRendererEvaluator.FILL_DATASET
+				SpiderChartRendererEvaluator.FILL_DATASET,
+				fillContext.getFiller().getDpi()
 				);
 	}
 

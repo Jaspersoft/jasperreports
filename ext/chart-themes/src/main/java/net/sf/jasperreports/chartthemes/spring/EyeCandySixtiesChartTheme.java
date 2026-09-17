@@ -139,7 +139,13 @@ public class EyeCandySixtiesChartTheme extends GenericChartTheme
 
 		GradientPaint gp = (GradientPaint)getDefaultValue(defaultChartPropertiesMap, ChartThemesConstants.BACKGROUND_PAINT);
 
-		jfreeChart.setBackgroundPaint(new GradientPaint(0f, 0f, gp.getColor1(), 0f, getChart().getHeight() * 0.7f, gp.getColor2(), false));
+		jfreeChart.setBackgroundPaint(
+			new GradientPaint(
+				0f, 0f, gp.getColor1(), 
+				0f, ChartUtil.toChartLength(getChart().getHeight() * 0.7f, getChartContext().getReportDpi()), gp.getColor2(), 
+				false
+				)
+			);
 	}
 
 	@Override
@@ -212,7 +218,13 @@ public class EyeCandySixtiesChartTheme extends GenericChartTheme
 		}
 		piePlot.setShadowXOffset(5);
 		piePlot.setShadowYOffset(10);
-		piePlot.setShadowPaint(new GradientPaint(0, getChart().getHeight() / 2, new Color(41, 120, 162), 0, getChart().getHeight(), Color.white));
+		int reportDpi = getChartContext().getReportDpi();
+		piePlot.setShadowPaint(
+			new GradientPaint(
+				0, ChartUtil.toChartLength(getChart().getHeight() / 2f, reportDpi), new Color(41, 120, 162), 
+				0, ChartUtil.toChartLength(getChart().getHeight(), reportDpi), Color.white
+				)
+			);
 		PieDataset pieDataset = piePlot.getDataset();
 		if (pieDataset != null)
 		{

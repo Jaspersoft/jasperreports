@@ -95,6 +95,7 @@ import net.sf.jasperreports.engine.util.FileBufferedOutputStream;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
 import net.sf.jasperreports.engine.util.JRDataUtils;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
@@ -194,7 +195,9 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 
 	protected Map<String, Integer> sheetMapping;
 
+	protected int reportDpi;
 	
+
 	protected class ExporterContext extends BaseExporterContext implements JRXlsxExporterContext
 	{
 	}
@@ -248,9 +251,12 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 	{
 		super.initReport();
 		
+		reportDpi = jasperPrint.getDpi();
+
 		XlsReportConfiguration configuration = getCurrentItemConfiguration();
 
 		styleHelper.setConfiguration(configuration); 
+		styleHelper.setReportDpi(reportDpi);
 
 		nature = 
 			new JRXlsxExporterNature(
@@ -750,7 +756,8 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				jasperReportsContext,
 				sheetWriter, 
 				sheetRelsHelper,
-				configuration
+				configuration,
+				reportDpi
 				);
 		
 		ExportZipEntry drawingRelsEntry = xlsxZip.addDrawingRels(sheetIndex + 1);
@@ -1192,20 +1199,20 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				drawingHelper.write("<xdr:from><xdr:col>" +
 					colIndex +
 					"</xdr:col><xdr:colOff>" +
-					LengthUtil.emu(leftPadding) +
+					LengthUtil.emu(leftPadding, reportDpi) +
 					"</xdr:colOff><xdr:row>" +
 					rowIndex +
 					"</xdr:row><xdr:rowOff>" +
-					LengthUtil.emu(topPadding) +
+					LengthUtil.emu(topPadding, reportDpi) +
 					"</xdr:rowOff></xdr:from>\n");
 				drawingHelper.write("<xdr:to><xdr:col>" +
 					(colIndex + gridCell.getColSpan()) +
 					"</xdr:col><xdr:colOff>" +
-					LengthUtil.emu(-rightPadding) +
+					LengthUtil.emu(-rightPadding, reportDpi) +
 					"</xdr:colOff><xdr:row>" +
 					(rowIndex + (collapseRowSpan ? 1 : gridCell.getRowSpan())) +
 					"</xdr:row><xdr:rowOff>" +
-					LengthUtil.emu(-bottomPadding) +
+					LengthUtil.emu(-bottomPadding, reportDpi) +
 					"</xdr:rowOff></xdr:to>\n");
 				
 				drawingHelper.write("<xdr:pic>\n");
@@ -1237,7 +1244,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 				drawingHelper.write("<xdr:spPr>\n");
 				drawingHelper.write("  <a:xfrm rot=\"" + (60000 * angle) + "\">\n");
 				drawingHelper.write("    <a:off x=\"0\" y=\"0\"/>\n");
-				drawingHelper.write("    <a:ext cx=\"" + LengthUtil.emu(0) + "\" cy=\"" + LengthUtil.emu(0) + "\"/>");
+				drawingHelper.write("    <a:ext cx=\"" + LengthUtil.emu(0, reportDpi) + "\" cy=\"" + LengthUtil.emu(0, reportDpi) + "\"/>");
 				drawingHelper.write("  </a:xfrm>\n");
 				drawingHelper.write("<a:prstGeom prst=\"rect\"></a:prstGeom>\n");
 //				if (image.getMode() == ModeEnum.OPAQUE && image.getBackcolor() != null)
@@ -1435,7 +1442,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		
@@ -1457,7 +1464,7 @@ public class JRXlsxExporter extends JRXlsAbstractExporter<XlsxReportConfiguratio
 		JRPen pen = box.getPen();
 		pen.setLineColor(rectangle.getLinePen().getLineColor());
 		pen.setLineStyle(rectangle.getLinePen().getLineStyle());
-		pen.setLineWidth(rectangle.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(rectangle, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 		

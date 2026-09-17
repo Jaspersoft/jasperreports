@@ -91,6 +91,15 @@ public class XlsxStyleHelper extends BaseHelper
 	/**
 	 * 
 	 */
+	public void setReportDpi(int reportDpi)
+	{
+		borderHelper.setReportDpi(reportDpi);
+	}
+	
+
+	/**
+	 * 
+	 */
 	public int getCellStyle(
 		JRExporterGridCell gridCell,
 		JRPrintElement element,

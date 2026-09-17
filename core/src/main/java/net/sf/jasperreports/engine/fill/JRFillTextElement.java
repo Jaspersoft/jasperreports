@@ -199,6 +199,10 @@ public abstract class JRFillTextElement extends JRFillElement implements JRTextE
 	private void createTextMeasurer()
 	{
 		textMeasurer = JRTextMeasurerUtil.getInstance(filler.getFillContext().getFontUtil()).createTextMeasurer(this);
+		if (textMeasurer instanceof TextMeasurer)
+		{
+			((TextMeasurer) textMeasurer).setDpi(filler.getDpi());
+		}
 	}
 
 	protected void ensureTextMeasurer()

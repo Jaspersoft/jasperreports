@@ -93,7 +93,7 @@ public interface Renderable extends Serializable
 	 */
 	@Property(
 			category = PropertyConstants.CATEGORY_OTHER,
-			defaultValue = "72",
+			defaultValue = "the resolution of the report",
 			scopes = {PropertyScope.CONTEXT},
 			sinceVersion = PropertyConstants.VERSION_4_1_1,
 			valueType = Integer.class

@@ -48,12 +48,15 @@ import net.sf.jasperreports.engine.util.JRPenUtil;
  */
 public class EllipseDrawer extends ElementDrawer<JRPrintEllipse>
 {
+	private final int reportDpi;
+
 	/**
 	 *
 	 */
-	public EllipseDrawer(JasperReportsContext jasperReportsContext)
+	public EllipseDrawer(JasperReportsContext jasperReportsContext, int reportDpi)
 	{
 		super(jasperReportsContext);
+		this.reportDpi = reportDpi;
 	}
 	
 	
@@ -76,7 +79,7 @@ public class EllipseDrawer extends ElementDrawer<JRPrintEllipse>
 
 		grx.setColor(ellipse.getLinePen().getLineColor());
 
-		Stroke stroke = JRPenUtil.getStroke(ellipse.getLinePen(), BasicStroke.CAP_SQUARE);
+		Stroke stroke = JRPenUtil.getStroke(ellipse.getLinePen(), BasicStroke.CAP_SQUARE, reportDpi);
 
 		if (stroke != null)
 		{
@@ -86,7 +89,7 @@ public class EllipseDrawer extends ElementDrawer<JRPrintEllipse>
 
 			if (ellipse.getLinePen().getLineStyle() == LineStyleEnum.DOUBLE)
 			{
-				float lineWidth = ellipse.getLinePen().getLineWidth();
+				float lineWidth = JRPenUtil.getLineWidthOrDefault(ellipse.getLinePen(), reportDpi);
 				
 				grx.translate(
 					ellipse.getX() + offsetX - lineWidth / 3, 

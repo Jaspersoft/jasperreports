@@ -91,13 +91,18 @@ public class JRPrintBand implements JRPrintElementContainer, OffsetElementsConta
 	@Override
 	public void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY)
 	{
+		addOffsetElements(elements, offsetX, offsetY, 1d);
+	}
+
+	@Override
+	public void addOffsetElements(Collection<? extends JRPrintElement> elements, int offsetX, int offsetY, double dpiScale)
+	{
 		if (elements == null || elements.isEmpty())
 		{
-			// nothing to do
 			return;
 		}
 		
-		OffsetElements offsetElements = new OffsetElements(elements, offsetX, offsetY);
+		OffsetElements offsetElements = new OffsetElements(elements, offsetX, offsetY, dpiScale);
 		this.elements.add(offsetElements);
 	}
 	

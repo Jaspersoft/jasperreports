@@ -40,7 +40,6 @@ import java.util.Set;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRGenericPrintElement;
-import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintEllipse;
 import net.sf.jasperreports.engine.JRPrintFrame;
@@ -363,24 +362,6 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 	protected JRStyledText getStyledText(JRPrintText textElement)
 	{
 		return textElement.getFullStyledText(noneSelector);
-	}
-
-	@Override
-	protected int getImageBorderCorrection(JRPen pen)
-	{
-		float lineWidth = pen.getLineWidth();
-		
-		if (lineWidth > 0f)
-		{
-			if (lineWidth >= 2f)
-			{
-				return 2;
-			}
-
-			return 1;
-		}
-		
-		return imageBorderFixEnabled ? 1 : 0;
 	}
 
 	

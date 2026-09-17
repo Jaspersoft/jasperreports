@@ -235,6 +235,9 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	protected DocumentBuilder documentBuilder;
 
 	protected StyleCache styleCache;
+	protected StyleBuilder styleBuilder;
+
+	protected int reportDpi;
 
 	protected ExporterNature nature;
 
@@ -316,6 +319,10 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	{
 		super.initReport();
 		
+		// the document resolution applies to the pages that do not belong to a part;
+		// exportPage() refreshes it for every page that does
+		setReportDpi(jasperPrint.getDpi());
+
 		if (jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
 			// allows null values for the property
@@ -333,8 +340,28 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	/**
 	 *
 	 */
+	protected void setReportDpi(int reportDpi)
+	{
+		this.reportDpi = reportDpi;
+
+		if (styleCache != null)
+		{
+			styleCache.setReportDpi(reportDpi);
+		}
+		if (styleBuilder != null)
+		{
+			styleBuilder.setReportDpi(reportDpi);
+		}
+	}
+
+	
+	/**
+	 *
+	 */
 	protected void exportReportToOasisZip(OutputStream os) throws JRException, IOException
 	{
+		setReportDpi(jasperPrint.getDpi());
+
 		OasisZip oasisZip = new OdtZip();
 
 		ExportZipEntry tempBodyEntry = new FileBufferedZipEntry(null);
@@ -345,13 +372,13 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 
 		documentBuilder = new OdtDocumentBuilder(oasisZip);
 		
-		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey());
+		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey(), reportDpi);
 
 		WriterHelper stylesWriter = new WriterHelper(jasperReportsContext, oasisZip.getStylesEntry().getWriter());
 
 		List<ExporterInputItem> items = exporterInput.getItems();
 
-		StyleBuilder styleBuilder = new StyleBuilder(stylesWriter);
+		styleBuilder = new StyleBuilder(stylesWriter, reportDpi);
 		
 		styleBuilder.buildBeforeAutomaticStyles(jasperPrint);
 		
@@ -382,6 +409,9 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 					
 					if (oldPageFormat != pageFormat)
 					{
+						// the page layout is written in physical units, so it needs the
+						// resolution of this page format rather than the document one
+						setReportDpi(pageFormat.getDpi());
 						styleBuilder.buildPageLayout(++pageFormatIndex, pageFormat);
 						oldPageFormat = pageFormat;
 					}
@@ -436,6 +466,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 		ReportExportConfiguration configuration = getCurrentItemConfiguration();
 		
 		PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
+		setReportDpi(pageFormat.getDpi());
 		
 		JRGridLayout layout =
 			new JRGridLayout(
@@ -472,6 +503,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 			? new TableBuilder(documentBuilder, jasperPrint, pageFormatIndex, pageIndex, tempBodyWriter, tempStyleWriter, styleCache, rowStyles, columnStyles)
 			: new TableBuilder(documentBuilder, jasperPrint, frameIndex.toString(), tempBodyWriter, tempStyleWriter, styleCache, rowStyles, columnStyles);
 
+		tableBuilder.setReportDpi(reportDpi);
 		
 		tableBuilder.buildTableStyle(gridLayout.getWidth());
 		tableBuilder.buildTableHeader();
@@ -718,13 +750,13 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	public void exportImage(TableBuilder tableBuilder, JRPrintImage image, JRExporterGridCell gridCell) throws JRException
 	{
 		int topPadding = 
-			Math.max(image.getLineBox().getTopPadding(), Math.round(image.getLineBox().getTopPen().getLineWidth()));
+			Math.max(image.getLineBox().getTopPadding(), image.getLineBox().getTopPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getTopPen().getLineWidth()));
 		int leftPadding = 
-			Math.max(image.getLineBox().getLeftPadding(), Math.round(image.getLineBox().getLeftPen().getLineWidth()));
+			Math.max(image.getLineBox().getLeftPadding(), image.getLineBox().getLeftPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getLeftPen().getLineWidth()));
 		int bottomPadding = 
-			Math.max(image.getLineBox().getBottomPadding(), Math.round(image.getLineBox().getBottomPen().getLineWidth()));
+			Math.max(image.getLineBox().getBottomPadding(), image.getLineBox().getBottomPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getBottomPen().getLineWidth()));
 		int rightPadding = 
-			Math.max(image.getLineBox().getRightPadding(), Math.round(image.getLineBox().getRightPen().getLineWidth()));
+			Math.max(image.getLineBox().getRightPadding(), image.getLineBox().getRightPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getRightPen().getLineWidth()));
 
 		int availableImageWidth = Math.max(0,image.getWidth() - leftPadding - rightPadding);
 		int availableImageHeight = Math.max(0,image.getHeight() - topPadding - bottomPadding);
@@ -779,8 +811,8 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 						+ "draw:style-name=\"G_ImgFrm\" "
 						+ "svg:x=\"0in\" "
 						+ "svg:y=\"0in\" "
-						+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameWidth) + "in\" "
-						+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameHeight) + "in\" "
+						+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameWidth, reportDpi) + "in\" "
+						+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.frameHeight, reportDpi) + "in\" "
 						+ ">\n"
 						);
 				tempBodyWriter.write("<draw:text-box>\n");
@@ -793,10 +825,10 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 							imageProcessorResult.cropBottom,
 							imageProcessorResult.cropRight
 							) + "\" "
-					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.xoffset) + "in\" "
-					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.yoffset) + "in\" "
-					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageWidth) + "in\" "
-					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageHeight) + "in\" "
+					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.xoffset, reportDpi) + "in\" "
+					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.yoffset, reportDpi) + "in\" "
+					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageWidth, reportDpi) + "in\" "
+					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.imageHeight, reportDpi) + "in\" "
 					+ "draw:transform=\"rotate (" + imageProcessorResult.angle + ")\">\n"
 					);
 				tempBodyWriter.write("<draw:image ");

@@ -492,7 +492,6 @@ public class JRBaseParagraph implements JRParagraph, Serializable, Cloneable, JR
 		rightIndent = getRightIndent();
 		spacingBefore = getSpacingBefore();
 		spacingAfter = getSpacingAfter();
-		tabStopWidth = getTabStopWidth();
 		
 		TabStop[] tabStopArray = getTabStops();
 		if (tabStopArray != null)

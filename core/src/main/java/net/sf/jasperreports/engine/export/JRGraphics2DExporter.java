@@ -154,6 +154,7 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	 *
 	 */
 	protected PrintDrawVisitor drawVisitor;
+	protected int reportDpi;
 	
 	private boolean whitePageBackground = true;
 	
@@ -233,8 +234,26 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	{
 		super.initReport();
 		
+		// the document resolution applies to the pages that do not belong to a part;
+		// setReportDpi() switches to the resolution of the page being exported
+		reportDpi = jasperPrint.getDpi();
+
 		setOffset(false);
 
+		Graphics2DReportConfiguration configuration = getCurrentItemConfiguration();
+		
+		createDrawVisitor();
+		
+		whitePageBackground = configuration.isWhitePageBackground();
+	}
+
+	
+	/**
+	 * Creates the draw visitor for the current report resolution. The resolution is baked
+	 * into the element drawers, so the visitor has to be recreated when it changes.
+	 */
+	protected void createDrawVisitor()
+	{
 		Graphics2DReportConfiguration configuration = getCurrentItemConfiguration();
 		
 		Boolean isMinimizePrinterJobSize = configuration.isMinimizePrinterJobSize();
@@ -252,7 +271,7 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 				false
 				);
 		
-		drawVisitor = 
+		drawVisitor =
 			new PrintDrawVisitor(
 				exporterContext,
 				filter,
@@ -260,10 +279,23 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 				isMinimizePrinterJobSize == null ? Boolean.TRUE : isMinimizePrinterJobSize,
 				isIgnoreMissingFont == null ? Boolean.FALSE : isIgnoreMissingFont,
 				defaultIndentFirstLine,
-				defaultJustifyLastLine
+				defaultJustifyLastLine,
+				reportDpi
 				);
-		
-		whitePageBackground = configuration.isWhitePageBackground();
+	}
+
+	
+	/**
+	 * Switches to the given resolution, recreating the draw visitor when it differs from
+	 * the one currently in use.
+	 */
+	protected void setReportDpi(int reportDpi)
+	{
+		if (this.reportDpi != reportDpi)
+		{
+			this.reportDpi = reportDpi;
+			createDrawVisitor();
+		}
 	}
 
 	
@@ -290,24 +322,29 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 		
 		ReportExportConfiguration configuration = getCurrentItemConfiguration();
 		
+		PageRange pageRange = getPageRange();
+		int startPageIndex = (pageRange == null || pageRange.getStartPageIndex() == null) ? 0 : pageRange.getStartPageIndex();
+
+		PrintPageFormat pageFormat = jasperPrint.getPageFormat(startPageIndex);
+		// the page dimensions and the elements on the page are expressed in the resolution
+		// of the page format, which the scaling below turns into points
+		setReportDpi(pageFormat.getDpi());
+
 		AffineTransform atrans = new AffineTransform();
 		atrans.translate(
 			configuration.getOffsetX() == null ? 0 : configuration.getOffsetX(), 
 			configuration.getOffsetY() == null ? 0 : configuration.getOffsetY()
 			);
 		float zoom = getZoom();
-		atrans.scale(zoom, zoom);
+		float dpiScale = 72f / reportDpi;
+		atrans.scale(zoom * dpiScale, zoom * dpiScale);
 		grx.transform(atrans);
 
 		List<JRPrintPage> pages = jasperPrint.getPages();
 		if (pages != null)
 		{
-			PageRange pageRange = getPageRange();
-			int startPageIndex = (pageRange == null || pageRange.getStartPageIndex() == null) ? 0 : pageRange.getStartPageIndex();
-
 			Shape oldClipShape = grx.getClip();
 	
-			PrintPageFormat pageFormat = jasperPrint.getPageFormat(startPageIndex);
 			grx.clip(new Rectangle(0, 0, pageFormat.getPageWidth(), pageFormat.getPageHeight()));
 	
 			try

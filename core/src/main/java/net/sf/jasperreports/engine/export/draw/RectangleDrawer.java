@@ -48,12 +48,15 @@ import net.sf.jasperreports.engine.util.JRPenUtil;
  */
 public class RectangleDrawer extends ElementDrawer<JRPrintRectangle>
 {
+	private final int reportDpi;
+
 	/**
 	 *
 	 */
-	public RectangleDrawer(JasperReportsContext jasperReportsContext)
+	public RectangleDrawer(JasperReportsContext jasperReportsContext, int reportDpi)
 	{
 		super(jasperReportsContext);
+		this.reportDpi = reportDpi;
 	}
 	
 	
@@ -90,7 +93,7 @@ public class RectangleDrawer extends ElementDrawer<JRPrintRectangle>
 
 		grx.setColor(rectangle.getLinePen().getLineColor());
 
-		Stroke stroke = JRPenUtil.getStroke(rectangle.getLinePen(), BasicStroke.CAP_SQUARE);
+		Stroke stroke = JRPenUtil.getStroke(rectangle.getLinePen(), BasicStroke.CAP_SQUARE, reportDpi);
 
 		if (stroke != null && width > 0 && height > 0)
 		{
@@ -100,7 +103,7 @@ public class RectangleDrawer extends ElementDrawer<JRPrintRectangle>
 
 			if (rectangle.getLinePen().getLineStyle() == LineStyleEnum.DOUBLE)
 			{
-				float lineWidth = rectangle.getLinePen().getLineWidth();
+				float lineWidth = JRPenUtil.getLineWidthOrDefault(rectangle.getLinePen(), reportDpi);
 				
 				if (rectangle.getRadius() > 0)
 				{

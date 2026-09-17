@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.engine;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import net.sf.jasperreports.engine.type.OrientationEnum;
@@ -41,6 +43,7 @@ public class SimplePrintPageFormat implements PrintPageFormat, Serializable
 	private Integer leftMargin;
 	private Integer bottomMargin;
 	private Integer rightMargin;
+	private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
 	private OrientationEnum orientation;
 
 	/**
@@ -146,6 +149,23 @@ public class SimplePrintPageFormat implements PrintPageFormat, Serializable
 	}
 	
 	/**
+	 * Returns the resolution in which the page dimensions are expressed.
+	 */
+	@Override
+	public int getDpi()
+	{
+		return dpi;
+	}
+		
+	/**
+	 *
+	 */
+	public void setDpi(int dpi)
+	{
+		this.dpi = dpi;
+	}
+	
+	/**
 	 * Returns the page orientation.
 	 */
 	@Override
@@ -162,4 +182,15 @@ public class SimplePrintPageFormat implements PrintPageFormat, Serializable
 		this.orientation = orientation;
 	}
 	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+	{
+		in.defaultReadObject();
+
+		if (dpi == 0)
+		{
+			// page formats serialized before the dpi attribute was introduced do not carry a
+			// value for it, and field initializers are not run during deserialization
+			dpi = JasperPrint.DEFAULT_REPORT_DPI;
+		}
+	}
 }

@@ -78,7 +78,7 @@ public class ComplexTextLineWrapper implements TextLineWrapper
 	{
 		globalAttributes = styledText.getGlobalAttributes();
 		allParagraphs = styledText.getAwtAttributedString(context.getFontUtil(),
-				context.isIgnoreMissingFont()).getIterator();
+				context.isIgnoreMissingFont(), context.getFontSizeScale()).getIterator();
 		return true;
 	}
 

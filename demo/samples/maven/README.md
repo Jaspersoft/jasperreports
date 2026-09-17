@@ -8,6 +8,7 @@ Shows how multiple report design files can be compiled, decompiled or updated in
 [Compiling Multiple Report Template Files Using the JasperReports Maven Plugin](#compile)\
 [Generating the JRXML Source Files for Multiple Compiled Report Template Files Using the JasperReports Maven Plugin (Decompiling)](#decompile)\
 [Updating Multiple Report Template Files Using the JasperReports Maven Plugin](#update)\
+[Converting Report Templates to a Different DPI Resolution](#dpi)\
 [JasperReports Maven Plugin Usage](#usage)
 
 ### Secondary Features
@@ -185,12 +186,45 @@ Here is an example of how to configure the `update` Maven plugin goal:
         <updaters>
           <updater>com.update.RenewUuidsUpdater</updater>
           <updater>com.update.StyleUpdater</updater>
+          <updater>com.update.DpiUpdater</updater>
         </updaters>
       </configuration>
     </execution>
   </executions>
 </plugin>
 ```
+
+<div align="right"><a href='#top'>top</a></div>
+
+---
+
+## <a name='dpi'>Converting</a> Report Templates to a Different DPI Resolution
+<div align="right">Documented by <a href='mailto:teodord@users.sourceforge.net'>Teodor Danciu</a></div>
+
+**Description / Goal**
+
+How to convert existing report templates to a higher DPI resolution, in order to benefit from more precise positioning and sizing of the report content.
+
+
+All lengths in a report template are expressed in pixels and are interpreted at the resolution declared by the `dpi` attribute of the `<jasperReport/>` element, which defaults to 72 DPI. Raising the report resolution gives a finer coordinate grid, so that content can be positioned and sized more precisely, but it also means that every length in the template has to be recalculated in accordance with the target resolution. This is exactly the kind of repetitive, mechanical change that report updaters are good at, so the `DpiUpdater` class in this sample performs it on the whole report design:
+
+```
+public JasperDesign update(JasperDesign jasperDesign)
+```
+
+The updater multiplies every pixel length in the design by `targetDpi / sourceDpi` and then stamps the new resolution onto the design by calling `setDpi(targetDpi)`. The target resolution is read from the `com.update.target.dpi` system property, and defaults to 300 DPI, so that the sample can be run for a different resolution without being modified:
+
+```
+mvn compile jasperreports:update -Dnet.sf.jasperreports.maven.updater.dpi=200
+```
+
+The lengths that need to be converted are the page size and the page margins, the column width and the column spacing, the band heights, the element positions and sizes, the paddings and the pen line widths of the boxes, the paragraph indents, spacings and tab stops, and the sizes that crosstabs, tables and lists declare for their cells and columns.
+
+Font sizes, on the other hand, are deliberately left untouched, because they are expressed in typographic points and not in pixels. The engine itself scales them by `dpi / 72` when measuring and rendering text, so scaling them in the template as well would make the text twice as large as intended. For the same reason, pen line widths that are not explicitly set are left unset, so that they keep resolving to the resolution dependent default line width computed by the engine.
+
+Lengths are rounded down. Rounding down loses at most one pixel at the target resolution, but it guarantees that the converted design still satisfies the layout constraints checked by the report verifier, because the sum of the rounded down parts is never greater than the rounded down sum. Positions and sizes are also scaled as a chain of edges, meaning that the converted size of an element is the difference between the converted positions of its two edges, so that elements that were adjacent in the original design remain exactly adjacent afterwards. This matters in particular for the cells of crosstabs and tables, whose sizes are checked against the sums of the rows and the columns they span.
+
+Note that report templates referenced through `<template/>` elements are not visible to the updater and have to be converted separately.
 
 <div align="right"><a href='#top'>top</a></div>
 

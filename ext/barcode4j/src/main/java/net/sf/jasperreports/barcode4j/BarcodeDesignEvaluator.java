@@ -43,10 +43,11 @@ public class BarcodeDesignEvaluator extends AbstractBarcodeEvaluator
 	public BarcodeDesignEvaluator(
 		JasperReportsContext jasperReportsContext,
 		JRComponentElement componentElement,
-		JRDefaultStyleProvider defaultStyleProvider
+		JRDefaultStyleProvider defaultStyleProvider,
+		int reportDpi
 		)
 	{
-		super(jasperReportsContext, componentElement, defaultStyleProvider);
+		super(jasperReportsContext, componentElement, defaultStyleProvider, reportDpi);
 	}
 	
 	public Renderable evaluateImage()

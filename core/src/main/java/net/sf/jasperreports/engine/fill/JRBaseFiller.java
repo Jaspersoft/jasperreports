@@ -87,6 +87,7 @@ import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRStyledTextParser;
 import net.sf.jasperreports.engine.util.JRStyledTextUtil;
 import net.sf.jasperreports.engine.util.StyleResolver;
+import net.sf.jasperreports.engine.util.StyleUtil;
 import net.sf.jasperreports.repo.RepositoryContext;
 import net.sf.jasperreports.repo.RepositoryResourceContext;
 import net.sf.jasperreports.repo.SimpleRepositoryContext;
@@ -130,6 +131,8 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	protected int maxPageWidth;
 
 	protected int pageHeight;
+
+	protected int dpi;
 
 	protected OrientationEnum orientation;
 
@@ -332,6 +335,7 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		columnDirection = jasperReport.getColumnDirection();
 		pageWidth = jasperReport.getPageWidth();
 		pageHeight = jasperReport.getPageHeight();
+		dpi = jasperReport.getDpi();
 		orientation = jasperReport.getOrientation();
 		whenNoDataType = jasperReport.getWhenNoDataType();
 		columnWidth = jasperReport.getColumnWidth();
@@ -593,6 +597,7 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			loadStyles();
 
 			jasperPrint.setName(name);
+			jasperPrint.setDpi(dpi);
 			jasperPrint.setPageWidth(pageWidth);
 			jasperPrint.setPageHeight(pageHeight);
 			jasperPrint.setTopMargin(topMargin);
@@ -855,22 +860,30 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		collectIncludedTemplates(templateSource, externalStyles, 
 				loadedLocations, templateParentLocations);
 
-		JRStyle[] templateStyles = templateSource.getTemplate().getStyles();
+		JRTemplate template = templateSource.getTemplate();
+		JRStyle[] templateStyles = template.getStyles();
 		if (templateStyles != null)
 		{
+			int templateDpi = template.getDpi();
+			boolean needsDpiScaling = templateDpi != dpi;
+
 			for (JRStyle style : templateStyles)
 			{
 				String styleName = style.getName();
 				if (styleName == null)
 				{
-					throw 
+					throw
 						new JRRuntimeException(
-							EXCEPTION_MESSAGE_KEY_EXTERNAL_STYLE_NAME_NOT_SET,  
-							(Object[])null 
+							EXCEPTION_MESSAGE_KEY_EXTERNAL_STYLE_NAME_NOT_SET,
+							(Object[])null
 							);
 				}
 
-				externalStyles.add(style);
+				externalStyles.add(
+					needsDpiScaling
+						? StyleUtil.scaleDpiStyle(style, templateDpi, dpi)
+						: style
+					);
 			}
 		}
 	}
@@ -1577,21 +1590,25 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 		int parentPageIndex = parentFiller.getJasperPrint().getPages().size() - 1;
 		FillPageKey parentKey = new FillPageKey(parentFiller.printPage, parentPageIndex);
 		
+		int parentDpi = parentFiller.getDpi();
+		int subreportDpi = getDpi();
+		double dpiScale = (parentDpi != subreportDpi) ? (double) parentDpi / subreportDpi : 1d;
+
 		// move all delayed elements from the subreport page to the master page
-		moveBoundActions(subreportKey, parentKey);
+		moveBoundActions(subreportKey, parentKey, dpiScale);
 		// move all master evaluations to the parent
 		parent.getFiller().delayedActions.moveMasterEvaluations(delayedActions, parentKey);
 	}
 
-	protected void moveBoundActions(FillPageKey subreportKey, FillPageKey parentKey)
+	protected void moveBoundActions(FillPageKey subreportKey, FillPageKey parentKey, double dpiScale)
 	{
-		delayedActions.moveActions(subreportKey, parentKey);
+		delayedActions.moveActions(subreportKey, parentKey, dpiScale);
 		
 		if (subfillers != null)//recursive
 		{
 			for (JRBaseFiller subfiller : subfillers.values())
 			{
-				subfiller.moveBoundActions(subreportKey, parentKey);
+				subfiller.moveBoundActions(subreportKey, parentKey, dpiScale);
 			}
 		}
 	}

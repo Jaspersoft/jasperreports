@@ -171,17 +171,17 @@ public class PdfGlyphRenderer extends AbstractPdfTextRenderer
 					);
 			
 			bulletLayout.draw(
-				pdfGraphics2D, 
-				x + drawPosX - bulletLayout.getVisibleAdvance() - 10, 
-				y + topPadding + verticalAlignOffset + drawPosY
+				pdfGraphics2D,
+				pdfExporter.toPoints(x + drawPosX) - bulletLayout.getVisibleAdvance() - 10,
+				pdfExporter.toPoints(y + topPadding + verticalAlignOffset + drawPosY)
 				);
 		}
 
 		TabSegment segment = segments.get(segmentIndex);
 		segment.layout.draw(
 				pdfGraphics2D,
-				x + drawPosX,// + leftPadding,
-				y + topPadding + verticalAlignOffset + drawPosY
+				pdfExporter.toPoints(x + drawPosX),// + leftPadding,
+				pdfExporter.toPoints(y + topPadding + verticalAlignOffset + drawPosY)
 				);
 		
 		return;

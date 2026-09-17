@@ -75,7 +75,8 @@ public class SpiderChartRendererEvaluator
 		SpiderChartSharedBean spiderchartBean, 
 		ChartCustomizer chartCustomizer, 
 		String defaultRenderType,
-		String datasetType
+		String datasetType,
+		int reportDpi
 		)
 	{
 		SpiderChartComponent chartComponent = (SpiderChartComponent) element.getComponent();
@@ -253,7 +254,8 @@ public class SpiderChartRendererEvaluator
 				jasperReportsContext,
 				jfreechart, 
 				spiderchartBean.getHyperlinkProvider(),
-				rectangle
+				rectangle,
+				reportDpi
 				);
 	}
 	

@@ -47,6 +47,7 @@ public class DocxTableHelper extends BaseHelper
 	private PrintPageFormat pageFormat;
 	private JRPrintElementIndex frameIndex;
 	private int rowMaxTopPadding;
+	private int dpi;
 
 	/**
 	 * 
@@ -57,16 +58,18 @@ public class DocxTableHelper extends BaseHelper
 		CutsInfo xCuts,
 		boolean pageBreak,
 		PrintPageFormat pageFormat,
-		JRPrintElementIndex frameIndex
+		JRPrintElementIndex frameIndex,
+		int dpi
 		) 
 	{
 		super(jasperReportsContext, writer);
 
 		this.xCuts = xCuts;
-		this.cellHelper = new DocxCellHelper(jasperReportsContext, writer);
-		this.paragraphHelper = new DocxParagraphHelper(jasperReportsContext, writer, pageBreak);
+		this.cellHelper = new DocxCellHelper(jasperReportsContext, writer, dpi);
+		this.paragraphHelper = new DocxParagraphHelper(jasperReportsContext, writer, pageBreak, dpi);
 		this.pageFormat = pageFormat;
 		this.frameIndex = frameIndex;
+		this.dpi = dpi;
 	}
 
 
@@ -101,16 +104,16 @@ public class DocxTableHelper extends BaseHelper
 		int firstCutOffset = xCuts.getCutOffset(0);
 		if (frameIndex == null && firstCutOffset > pageFormat.getLeftMargin())
 		{
-			write("    <w:gridCol w:w=\"" + LengthUtil.twip(firstCutOffset - pageFormat.getLeftMargin()) + "\"/>\n");
+			write("    <w:gridCol w:w=\"" + LengthUtil.twip(firstCutOffset - pageFormat.getLeftMargin(), dpi) + "\"/>\n");
 		}
 		for (int col = 1; col < xCuts.size(); col++)
 		{
-			write("    <w:gridCol w:w=\"" + LengthUtil.twip(xCuts.getCutOffset(col) - xCuts.getCutOffset(col - 1)) + "\"/>\n");
+			write("    <w:gridCol w:w=\"" + LengthUtil.twip(xCuts.getCutOffset(col) - xCuts.getCutOffset(col - 1), dpi) + "\"/>\n");
 		}
 		int lastColumnOffset = xCuts.getCutOffset(xCuts.size() - 1);
 		if (frameIndex == null && lastColumnOffset < pageFormat.getPageWidth() - pageFormat.getRightMargin())
 		{
-			write("    <w:gridCol w:w=\"" + LengthUtil.twip(pageFormat.getPageWidth() - pageFormat.getRightMargin() - lastColumnOffset) + "\"/>\n");
+			write("    <w:gridCol w:w=\"" + LengthUtil.twip(pageFormat.getPageWidth() - pageFormat.getRightMargin() - lastColumnOffset, dpi) + "\"/>\n");
 		}
 		write("   </w:tblGrid>\n");
 	}
@@ -124,7 +127,7 @@ public class DocxTableHelper extends BaseHelper
 	{
 		write("   <w:tr>\n");
 		write("    <w:trPr>\n");
-		write("     <w:trHeight w:hRule=\"" + (allowRowResize ? "atLeast" : "exact")  + "\" w:val=\"" +  + LengthUtil.twip(rowHeight) + "\" />\n");
+		write("     <w:trHeight w:hRule=\"" + (allowRowResize ? "atLeast" : "exact")  + "\" w:val=\"" +  + LengthUtil.twip(rowHeight, dpi) + "\" />\n");
 		write("    </w:trPr>\n");
 	}
 	
@@ -142,7 +145,7 @@ public class DocxTableHelper extends BaseHelper
 			// starting with MS Office 2409, column width needed to be specified, but only for nested tables;
 			// this also avoids the complicated case of the first column of the top level table which has its width
 			// take into account the page margin
-			write("      <w:tcW w:w=\"" + LengthUtil.twip(gridCell.getWidth()) +"\" w:type=\"dxa\"/>\n");
+			write("      <w:tcW w:w=\"" + LengthUtil.twip(gridCell.getWidth(), dpi) +"\" w:type=\"dxa\"/>\n");
 		}
 		if (emptyCellColSpan > 1)
 		{
@@ -167,7 +170,7 @@ public class DocxTableHelper extends BaseHelper
 		write("     <w:tcPr>\n");
 		if (frameIndex != null)
 		{
-			write("      <w:tcW w:w=\"" + LengthUtil.twip(gridCell.getWidth()) +"\" w:type=\"dxa\"/>\n");
+			write("      <w:tcW w:w=\"" + LengthUtil.twip(gridCell.getWidth(), dpi) +"\" w:type=\"dxa\"/>\n");
 		}
 		if (gridCell.getColSpan() > 1)
 		{

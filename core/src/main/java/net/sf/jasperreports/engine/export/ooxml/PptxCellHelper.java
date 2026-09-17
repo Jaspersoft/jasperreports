@@ -55,11 +55,11 @@ public class PptxCellHelper extends BaseHelper
 	/**
 	 *
 	 */
-	public PptxCellHelper(JasperReportsContext jasperReportsContext, Writer writer)
+	public PptxCellHelper(JasperReportsContext jasperReportsContext, Writer writer, int dpi)
 	{
 		super(jasperReportsContext, writer);
 		
-		borderHelper = new PptxBorderHelper(jasperReportsContext, writer);
+		borderHelper = new PptxBorderHelper(jasperReportsContext, writer, dpi);
 	}
 	
 	/**

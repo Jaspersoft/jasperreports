@@ -81,6 +81,7 @@ import net.sf.jasperreports.engine.type.ModeEnum;
 import net.sf.jasperreports.engine.util.ExifOrientationEnum;
 import net.sf.jasperreports.engine.util.ImageUtil;
 import net.sf.jasperreports.engine.util.ImageUtil.Insets;
+import net.sf.jasperreports.engine.util.JRPenUtil;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sf.jasperreports.engine.util.JRStyledText;
 import net.sf.jasperreports.export.OdsExporterConfiguration;
@@ -135,6 +136,8 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 
 	protected StyleCache styleCache;
 
+	protected int reportDpi;
+
 	protected DocumentBuilder documentBuilder;
 	protected TableBuilder tableBuilder;
 	protected StyleBuilder styleBuilder;
@@ -151,6 +154,8 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	@Override
 	protected void openWorkbook(OutputStream os) throws JRException, IOException
 	{
+		reportDpi = jasperPrint.getDpi();
+
 		oasisZip = new OdsZip();
 
 		tempBodyEntry = new FileBufferedZipEntry(null);
@@ -163,11 +168,11 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		columnStyles.clear();
 		documentBuilder = new OdsDocumentBuilder(oasisZip);
 		
-		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey());
+		styleCache = new StyleCache(jasperReportsContext, tempStyleWriter, getExporterKey(), reportDpi);
 
 		stylesWriter = new WriterHelper(jasperReportsContext, oasisZip.getStylesEntry().getWriter());
 
-		styleBuilder = new StyleBuilder(stylesWriter);
+		styleBuilder = new StyleBuilder(stylesWriter, reportDpi);
 		styleBuilder.buildBeforeAutomaticStyles(jasperPrint);
 
 		namedExpressions = new StringBuilder("<table:named-expressions>\n");
@@ -377,13 +382,13 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		) throws JRException 
 	{
 		int topPadding = 
-			Math.max(image.getLineBox().getTopPadding(), Math.round(image.getLineBox().getTopPen().getLineWidth()));
+			Math.max(image.getLineBox().getTopPadding(), image.getLineBox().getTopPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getTopPen().getLineWidth()));
 		int leftPadding = 
-			Math.max(image.getLineBox().getLeftPadding(), Math.round(image.getLineBox().getLeftPen().getLineWidth()));
+			Math.max(image.getLineBox().getLeftPadding(), image.getLineBox().getLeftPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getLeftPen().getLineWidth()));
 		int bottomPadding = 
-			Math.max(image.getLineBox().getBottomPadding(), Math.round(image.getLineBox().getBottomPen().getLineWidth()));
+			Math.max(image.getLineBox().getBottomPadding(), image.getLineBox().getBottomPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getBottomPen().getLineWidth()));
 		int rightPadding = 
-			Math.max(image.getLineBox().getRightPadding(), Math.round(image.getLineBox().getRightPen().getLineWidth()));
+			Math.max(image.getLineBox().getRightPadding(), image.getLineBox().getRightPen().getLineWidth() == null ? 0 : Math.round(image.getLineBox().getRightPen().getLineWidth()));
 
 		int availableImageWidth = image.getWidth() - leftPadding - rightPadding;
 		availableImageWidth = availableImageWidth < 0 ? 0 : availableImageWidth;
@@ -476,13 +481,13 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 					// probably because the image is anchored to the paragraph
 					+ "svg:x=\"0in\" "
 					+ "svg:y=\"0in\" "
-//					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset) + "in\" "
-//					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset) + "in\" "
-					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.width) + "in\" "
-					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.height) + "in\" "
+//					+ "svg:x=\"" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset, reportDpi) + "in\" "
+//					+ "svg:y=\"" + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset, reportDpi) + "in\" "
+					+ "svg:width=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.width, reportDpi) + "in\" "
+					+ "svg:height=\"" + LengthUtil.inchFloor4Dec(imageProcessorResult.height, reportDpi) + "in\" "
 					+ "draw:transform=\"rotate (" + imageProcessorResult.angle + ") "
-					+ "translate (" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset) 
-					+ "in," + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset) + "in)\">"
+					+ "translate (" + LengthUtil.inchFloor4Dec(leftPadding + imageProcessorResult.xoffset, reportDpi)
+					+ "in," + LengthUtil.inchFloor4Dec(topPadding + imageProcessorResult.yoffset, reportDpi) + "in)\">"
 					);				
 				tempBodyWriter.write("<draw:image ");
 				tempBodyWriter.write(" xlink:href=\"" + JRStringUtil.xmlEncode(imageProcessorResult.imagePath) + "\"");
@@ -1034,7 +1039,7 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 		}
 		pen.setLineColor(line.getLinePen().getLineColor());
 		pen.setLineStyle(line.getLinePen().getLineStyle());
-		pen.setLineWidth(line.getLinePen().getLineWidth());
+		pen.setLineWidth(JRPenUtil.getLineWidth(line, reportDpi));
 
 		gridCell.setBox(box);//CAUTION: only some exporters set the cell box
 
@@ -1389,6 +1394,17 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	protected void initReport()
 	{
 		super.initReport();
+
+		reportDpi = jasperPrint.getDpi();
+
+		if (styleCache != null)
+		{
+			styleCache.setReportDpi(reportDpi);
+		}
+		if (styleBuilder != null)
+		{
+			styleBuilder.setReportDpi(reportDpi);
+		}
 
 		XlsReportConfiguration configuration = getCurrentItemConfiguration();
 		

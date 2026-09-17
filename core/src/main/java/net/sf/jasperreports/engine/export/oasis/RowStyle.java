@@ -37,14 +37,16 @@ public class RowStyle extends Style
 	 *
 	 */
 	private int rowHeight;
+	private int reportDpi;
 
 	/**
 	 *
 	 */
-	public RowStyle(WriterHelper styleWriter, int rowHeight)
+	public RowStyle(WriterHelper styleWriter, int rowHeight, int reportDpi)
 	{
 		super(styleWriter);
 		this.rowHeight = rowHeight;
+		this.reportDpi = reportDpi;
 	}
 	
 	@Override
@@ -66,7 +68,7 @@ public class RowStyle extends Style
 		else
 		{
 			styleWriter.write(" style:use-optimal-row-height=\"false\"");
-			styleWriter.write(" style:row-height=\"" + LengthUtil.inchFloor4Dec(rowHeight) + "in\"");
+			styleWriter.write(" style:row-height=\"" + LengthUtil.inchFloor4Dec(rowHeight, reportDpi) + "in\"");
 		}
 		styleWriter.write("/>\n");
 		styleWriter.write(" </style:style>\n");

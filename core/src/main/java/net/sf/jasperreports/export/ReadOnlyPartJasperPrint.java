@@ -73,6 +73,20 @@ public class ReadOnlyPartJasperPrint extends JasperPrint
 	}
 
 	@Override
+	public int getDpi()
+	{
+		// a part can come from a report whose resolution differs from the one of the
+		// document it ends up in, in which case its page format carries that resolution
+		return part == null ? parentJasperPrint.getDpi() : part.getPageFormat().getDpi();
+	}
+
+	@Override
+	public void setDpi(int dpi)
+	{
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int getPageWidth()
 	{
 		return part == null ? parentJasperPrint.getPageWidth() : part.getPageFormat().getPageWidth();

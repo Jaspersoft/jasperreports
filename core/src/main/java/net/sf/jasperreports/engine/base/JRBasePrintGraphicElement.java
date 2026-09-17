@@ -95,12 +95,6 @@ public abstract class JRBasePrintGraphicElement extends JRBasePrintElement imple
 		
 
 	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_1;
-	}
-
-	@Override
 	public Color getDefaultLineColor() 
 	{
 		return getForecolor();

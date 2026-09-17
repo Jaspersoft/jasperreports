@@ -30,7 +30,6 @@ import net.sf.jasperreports.engine.JRHyperlinkHelper;
 import net.sf.jasperreports.engine.JRImage;
 import net.sf.jasperreports.engine.JRLineBox;
 import net.sf.jasperreports.engine.JROrigin;
-import net.sf.jasperreports.engine.JRPen;
 import net.sf.jasperreports.engine.base.JRBaseLineBox;
 import net.sf.jasperreports.engine.base.JRBasePen;
 import net.sf.jasperreports.engine.type.HorizontalImageAlignEnum;
@@ -377,12 +376,6 @@ public class JRTemplateImage extends JRTemplateGraphicElement implements JRCommo
 	}
 	
 	
-	@Override
-	public Float getDefaultLineWidth() 
-	{
-		return JRPen.LINE_WIDTH_0;
-	}
-
 	@Override
 	public int getHashCode()
 	{
