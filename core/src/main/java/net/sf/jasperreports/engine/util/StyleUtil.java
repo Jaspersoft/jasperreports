@@ -57,22 +57,23 @@ public final class StyleUtil
 		if (style != null)
 		{
 			ModeEnum styleMode = style.getOwnMode();
-			if (styleMode != null)
+			
+			JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
+			if (conditionalStyles != null)
 			{
-				JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
-				if (conditionalStyles != null)
+				for (JRConditionalStyle conditionalStyle : conditionalStyles)
 				{
-					for (JRConditionalStyle conditionalStyle : conditionalStyles)
+					ModeEnum conditionalMode = conditionalStyle.getOwnMode();
+					if (conditionalMode != null && conditionalMode != styleMode)
 					{
-						ModeEnum conditionalMode = conditionalStyle.getOwnMode();
-						if (conditionalMode != null && conditionalMode != styleMode)
-						{
-							// a conditional style overrides the style mode
-							return null;
-						}
+						// a conditional style overrides the style mode
+						return null;
 					}
 				}
-				
+			}
+			
+			if (styleMode != null)
+			{
 				// we have a style
 				return styleMode;
 			}
@@ -199,7 +200,7 @@ public final class StyleUtil
 		JRStyle style = boxContainer.getStyle();
 		if (style != null)
 		{
-			return hasBorder(style, selector);
+			return hasConditionalBorder(style, selector) || hasBorder(style, selector);
 		}
 		
 		String styleReference = boxContainer.getStyleNameReference();
@@ -230,7 +231,7 @@ public final class StyleUtil
 		JRStyle style = boxContainer.getStyle();
 		if (style != null)
 		{
-			return hasPadding(style, penSelector);
+			return hasConditionalPadding(style, penSelector) || hasPadding(style, penSelector);
 		}
 		
 		String styleReference = boxContainer.getStyleNameReference();
@@ -243,6 +244,67 @@ public final class StyleUtil
 		return false;
 	}
 
+	/**
+	 * Returns whether any conditional style of the given style sets a border on the given side.
+	 * <p>
+	 * Conditional styles are only evaluated at fill time, so a border which they set has to be
+	 * accounted for even though it might not end up being applied.
+	 */
+	protected boolean hasConditionalBorder(JRStyle style, BoxSideSelector selector)
+	{
+		JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
+		if (conditionalStyles != null)
+		{
+			for (JRConditionalStyle conditionalStyle : conditionalStyles)
+			{
+				JRLineBox lineBox = conditionalStyle.getLineBox();
+				Float sideLineWidth = selector.getPen(lineBox).getOwnLineWidth();
+				if (sideLineWidth != null ? sideLineWidth > .0f : hasOwnPenWidth(lineBox))
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns whether any conditional style of the given style sets a padding on the given side.
+	 * 
+	 * @see #hasConditionalBorder(JRStyle, BoxSideSelector)
+	 */
+	protected boolean hasConditionalPadding(JRStyle style, BoxSideSelector penSelector)
+	{
+		JRConditionalStyle[] conditionalStyles = style.getConditionalStyles();
+		if (conditionalStyles != null)
+		{
+			for (JRConditionalStyle conditionalStyle : conditionalStyles)
+			{
+				JRLineBox lineBox = conditionalStyle.getLineBox();
+				Integer sidePadding = penSelector.getPadding(lineBox);
+				if (sidePadding != null ? sidePadding > 0 : hasOwnPadding(lineBox))
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	private boolean hasOwnPenWidth(JRLineBox lineBox)
+	{
+		Float lineWidth = lineBox.getPen().getOwnLineWidth();
+		return lineWidth != null && lineWidth > .0f;
+	}
+	
+	private boolean hasOwnPadding(JRLineBox lineBox)
+	{
+		Integer padding = lineBox.getOwnPadding();
+		return padding != null && padding > 0;
+	}
+	
 	/**
 	 * Merges two styles, by appending the properties of the source style to the ones of the destination style.
 	 */

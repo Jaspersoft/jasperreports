@@ -24,6 +24,7 @@
 package net.sf.jasperreports.crosstabs.design;
 
 import java.awt.Color;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -38,6 +39,7 @@ import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.base.JRBaseLineBox;
 import net.sf.jasperreports.engine.base.JRBaseStyle;
 import net.sf.jasperreports.engine.design.JRDesignElementGroup;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.type.ModeEnum;
 import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
@@ -79,6 +81,7 @@ public class JRDesignCellContents extends JRDesignElementGroup implements JRCell
 	{
 		super();
 		
+		defaultStyleProvider = JasperDesign.getThreadInstance();
 		lineBox = new JRBaseLineBox(this);
 	}
 	
@@ -218,12 +221,30 @@ public class JRDesignCellContents extends JRDesignElementGroup implements JRCell
 	 * @param styleName the name of the external style
 	 * @see #getStyleNameReference()
 	 */
-	@JsonSetter(JRXmlConstants.ELEMENT_style)
 	public void setStyleNameReference(String styleName)
 	{
 		Object old = this.styleNameReference;
 		this.styleNameReference = styleName;
 		getEventSupport().firePropertyChange(PROPERTY_STYLE_NAME_REFERENCE, old, this.styleNameReference);
+	}
+
+	@JsonSetter(JRXmlConstants.ELEMENT_style)
+	private void setStyleName(String styleName)
+	{
+		if (styleName != null)
+		{
+			JasperDesign jasperDesign = JasperDesign.getThreadInstance();
+			Map<String,JRStyle> stylesMap = jasperDesign == null ? null : jasperDesign.getStylesMap();
+
+			if (stylesMap != null && stylesMap.containsKey(styleName))
+			{
+				setStyle(stylesMap.get(styleName));
+			}
+			else
+			{
+				setStyleNameReference(styleName);
+			}
+		}
 	}
 	
 	@JsonIgnore

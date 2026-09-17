@@ -24,6 +24,7 @@
 package net.sf.jasperreports.components.table;
 
 import java.awt.Color;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -36,6 +37,7 @@ import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.base.JRBaseLineBox;
 import net.sf.jasperreports.engine.design.DesignStyleContainer;
 import net.sf.jasperreports.engine.design.JRDesignElementGroup;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlConstants;
 
 /**
@@ -63,6 +65,7 @@ public class DesignBaseCell extends JRDesignElementGroup implements BaseCell, De
 
 	public DesignBaseCell()
 	{
+		this.defaultStyleProvider = JasperDesign.getThreadInstance();
 		this.box = new JRBaseLineBox(this);
 	}
 	
@@ -128,13 +131,31 @@ public class DesignBaseCell extends JRDesignElementGroup implements BaseCell, De
 	}
 
 	@Override
-	@JsonSetter(JRXmlConstants.ATTRIBUTE_style)
 	public void setStyleNameReference(String styleName)
 	{
 		Object old = this.styleNameReference;
 		this.styleNameReference = styleName;
 		getEventSupport().firePropertyChange(PROPERTY_STYLE_NAME_REFERENCE, 
 				old, this.styleNameReference);
+	}
+
+	@JsonSetter(JRXmlConstants.ATTRIBUTE_style)
+	private void setStyleName(String styleName)
+	{
+		if (styleName != null)
+		{
+			JasperDesign jasperDesign = JasperDesign.getThreadInstance();
+			Map<String,JRStyle> stylesMap = jasperDesign == null ? null : jasperDesign.getStylesMap();
+
+			if (stylesMap != null && stylesMap.containsKey(styleName))
+			{
+				setStyle(stylesMap.get(styleName));
+			}
+			else
+			{
+				setStyleNameReference(styleName);
+			}
+		}
 	}
 
 	public void setHeight(Integer height)

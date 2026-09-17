@@ -75,8 +75,8 @@
 								<text><![CDATA[Name]]></text>
 							</element>
 						</columnHeader>
-						<detailCell height="20">
-							<element kind="textField" uuid="fbb2c888-6c4a-4332-bf5c-fa4cf2c86f10" stretchType="ContainerHeight" x="0" y="0" width="160" height="20" textAdjust="StretchHeight" style="TableDetail">
+						<detailCell height="20" style="TableDetail">
+							<element kind="textField" uuid="fbb2c888-6c4a-4332-bf5c-fa4cf2c86f10" stretchType="ContainerHeight" x="0" y="0" width="160" height="20" textAdjust="StretchHeight">
 								<expression><![CDATA[$F{name}]]></expression>
 							</element>
 						</detailCell>
@@ -87,8 +87,8 @@
 								<text><![CDATA[Description]]></text>
 							</element>
 						</columnHeader>
-						<detailCell height="20">
-							<element kind="textField" uuid="6549ca62-64f9-4e3e-b2aa-840976dca027" stretchType="ContainerHeight" x="0" y="0" width="440" height="20" textAdjust="StretchHeight" style="TableDetail">
+						<detailCell height="20" style="TableDetail">
+							<element kind="textField" uuid="6549ca62-64f9-4e3e-b2aa-840976dca027" stretchType="ContainerHeight" x="0" y="0" width="440" height="20" textAdjust="StretchHeight">
 								<expression><![CDATA[$F{description}]]></expression>
 							</element>
 						</detailCell>
@@ -99,8 +99,8 @@
 								<text><![CDATA[Return Type]]></text>
 							</element>
 						</columnHeader>
-						<detailCell height="20">
-							<element kind="textField" uuid="04851384-ca8b-489b-9002-015308574f3b" stretchType="ContainerHeight" x="0" y="0" width="220" height="20" textAdjust="StretchHeight" style="TableDetail">
+						<detailCell height="20" style="TableDetail">
+							<element kind="textField" uuid="04851384-ca8b-489b-9002-015308574f3b" stretchType="ContainerHeight" x="0" y="0" width="220" height="20" textAdjust="StretchHeight">
 								<expression><![CDATA[$F{returnType}.getCanonicalName()]]></expression>
 							</element>
 						</detailCell>
@@ -131,7 +131,7 @@
 							</element>
 						</columnHeader>
 						<detailCell height="20" style="TableDetail">
-							<element kind="component" uuid="a0a3ea02-3100-400e-abdd-66126f5dba33" x="0" y="0" width="760" height="20" style="TableDetail">
+							<element kind="component" uuid="a0a3ea02-3100-400e-abdd-66126f5dba33" x="0" y="0" width="760" height="20">
 								<component kind="table" whenNoDataType="AllSectionsNoDetail">
 									<datasetRun uuid="41ee18de-2daa-44c0-a977-33fc4107c919" subDataset="ParametersDataset">
 										<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{parameters})]]></dataSourceExpression>
@@ -186,7 +186,7 @@
 				</datasetRun>
 				<column kind="single" uuid="10dd6316-cc10-4b70-9760-f1e03eab844f" width="530">
 					<detailCell height="30" style="TableDetail">
-						<element kind="textField" uuid="ecc2516d-6131-46ad-8f81-154f6c54890a" x="0" y="0" width="530" height="30" style="TableDetail">
+						<element kind="textField" uuid="ecc2516d-6131-46ad-8f81-154f6c54890a" x="0" y="0" width="530" height="30">
 							<expression><![CDATA[$F{Description}]]></expression>
 						</element>
 					</detailCell>
@@ -210,7 +210,7 @@
 				</column>
 				<column kind="single" uuid="7b9f3e99-48fb-40a0-b12c-f4013f171943" width="530">
 					<detailCell height="30" style="TableDetail">
-						<element kind="textField" uuid="fe59e04e-372e-4a12-8dd2-4c34ab995246" x="0" y="0" width="530" height="30" style="TableDetail">
+						<element kind="textField" uuid="fe59e04e-372e-4a12-8dd2-4c34ab995246" x="0" y="0" width="530" height="30">
 							<expression><![CDATA[$F{Expression}]]></expression>
 						</element>
 					</detailCell>
@@ -230,7 +230,7 @@
 				</column>
 				<column kind="single" uuid="b185159b-ac3d-4ec9-bae1-a8ab33659ca4" width="520">
 					<detailCell height="30" style="TableDetail">
-						<element kind="textField" uuid="8c534c20-2a97-47fb-a187-5976e3c553c9" x="0" y="0" width="520" height="30" style="TableDetail">
+						<element kind="textField" uuid="8c534c20-2a97-47fb-a187-5976e3c553c9" x="0" y="0" width="520" height="30">
 							<expression><![CDATA[$F{Result}]]></expression>
 						</element>
 					</detailCell>
