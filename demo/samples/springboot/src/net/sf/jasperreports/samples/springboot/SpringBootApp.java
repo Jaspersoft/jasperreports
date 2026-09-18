@@ -77,7 +77,7 @@ public class SpringBootApp
 				String reportName = file.getName().replace(".jasper", "");
 				html.append("<li><a href=\"rest/pdf/")
 					.append(reportName)
-					.append("\">")
+					.append("\" target=\"_blank\">")
 					.append(reportName)
 					.append("</a></li>");
 			}

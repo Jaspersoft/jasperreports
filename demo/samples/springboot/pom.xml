@@ -12,9 +12,8 @@
 	<properties>
 		<sample.base.name>SpringBoot</sample.base.name>
 		<sample.app.name>net.sf.jasperreports.samples.springboot.SpringBootApp</sample.app.name>
-		<source.version>17</source.version>
-		<target.version>17</target.version>
 		<spring-boot.version>4.0.6</spring-boot.version>
+		<exec.skip>true</exec.skip>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

@@ -69,6 +69,7 @@
 		<module>scriptlet</module>
 		<module>shapes</module>
 		<module>spiderchartcomponent</module>
+		<module>springboot</module>
 		<module>stretch</module>
 		<module>styledtext</module>
 		<module>subreport</module>
