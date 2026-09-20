@@ -310,6 +310,14 @@
 					<failOnError>true</failOnError>
 					<logResults>true</logResults>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

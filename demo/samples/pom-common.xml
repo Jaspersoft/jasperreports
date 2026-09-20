@@ -14,6 +14,7 @@
 		<maven.buildNumber.skip>true</maven.buildNumber.skip>
 		<maven.deploy.skip>true</maven.deploy.skip>
 		<maven.install.skip>true</maven.install.skip>
+		<clirr.skip>true</clirr.skip>
 		<sample.app.name>${sample.base.name}App</sample.app.name>
 		<sample.report.name>${sample.base.name}Report</sample.report.name>
 		<pdf.producer>classic</pdf.producer>
