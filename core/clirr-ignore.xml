@@ -1,43 +1,28 @@
 <differences>
 	<difference>
-		<className>net/sf/jasperreports/components/subreport/fill/ComponentFillSubreport</className>
+		<className>net/sf/jasperreports/engine/JRExpressionCollector</className>
+		<differenceType>7009</differenceType>
+		<method>*collect(net.sf.jasperreports.engine.JRStyle, boolean)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
+		<differenceType>7002</differenceType>
+		<method>*get*LineWidth(*)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
+		<differenceType>7012</differenceType>
+		<method>*</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
 		<differenceType>7004</differenceType>
-		<method>*prepareSubreport(int, boolean)</method>
+		<method>*</method>
 	</difference>
 	<difference>
-		<className>net/sf/jasperreports/engine/fill/JRFill*</className>
-		<differenceType>7004</differenceType>
-		<method>*prepare(int, boolean)</method>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/crosstabs/interactive/*Info</className>
-		<differenceType>7006</differenceType>
-		<method>*getOrder()</method>
-		<to>java.lang.String</to>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/crosstabs/interactive/*Info</className>
+		<className>net/sf/jasperreports/**</className>
 		<differenceType>7005</differenceType>
-		<method>*setOrder(net.sf.jasperreports.engine.analytics.dataset.BucketOrder)</method>
-		<to>*setOrder(java.lang.String)</to>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/engine/JRConstants</className>
-		<differenceType>6011</differenceType>
-		<field>VERSION_6_21_0</field>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/engine/component/FillComponent</className>
-		<differenceType>7012</differenceType>
-		<method>*prepare(int, boolean)</method>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/export/XlsReportConfiguration</className>
-		<differenceType>7012</differenceType>
-		<method>*getSingleSheetName()</method>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/jackson/util/ReportDeserializer</className>
-		<differenceType>8001</differenceType>
+		<method>*</method>
+		<to>*</to>
 	</difference>
 </differences>

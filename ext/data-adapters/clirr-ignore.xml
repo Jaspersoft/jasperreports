@@ -1,2 +1,8 @@
 <differences>
+	<difference>
+		<className>net/sf/jasperreports/dataadapters/repo/DataAdapterFileRepositoryPersistenceServiceFactory</className>
+		<differenceType>7006</differenceType>
+		<method>*getInstance()</method>
+		<to>net.sf.jasperreports.dataadapters.repo.DataAdapterFileRepositoryPersistenceServiceFactory</to>
+	</difference>
 </differences>

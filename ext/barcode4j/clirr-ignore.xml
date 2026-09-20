@@ -1,0 +1,7 @@
+<differences>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
+		<differenceType>7004</differenceType>
+		<method>*</method>
+	</difference>
+</differences>

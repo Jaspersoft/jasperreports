@@ -1,7 +1,12 @@
 <differences>
 	<difference>
-		<className>net/sf/jasperreports/charts/fill/JRFillChart</className>
+		<className>net/sf/jasperreports/**</className>
 		<differenceType>7004</differenceType>
-		<method>*prepare(int, boolean)</method>
+		<method>*</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/charts/ChartContext</className>
+		<differenceType>7012</differenceType>
+		<method>*getReportDpi()</method>
 	</difference>
 </differences>

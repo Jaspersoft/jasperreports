@@ -1,0 +1,6 @@
+<differences>
+	<difference>
+		<className>net/sf/jasperreports/pdf/**</className>
+		<differenceType>8001</differenceType>
+	</difference>
+</differences>

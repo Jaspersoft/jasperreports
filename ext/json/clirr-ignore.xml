@@ -1,2 +1,21 @@
 <differences>
+	<difference>
+		<className>net/sf/jasperreports/json/export/JsonMetadataExporter</className>
+		<differenceType>6011</differenceType>
+		<field>*</field>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/json/export/JsonMetadataExporter</className>
+		<differenceType>6001</differenceType>
+		<field>*</field>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/json/export/JsonMetadataExporter</className>
+		<differenceType>7002</differenceType>
+		<method>*validateSchema(java.lang.String)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/json/export/JsonMetadataExporter$ExporterContext</className>
+		<differenceType>8001</differenceType>
+	</difference>
 </differences>
