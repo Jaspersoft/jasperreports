@@ -32,7 +32,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class BooleanSerializer implements ObjectSerializer<Boolean>
 {
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_BOOLEAN_BYTE_VALUE = "engine.virtualization.unexpected.boolean.byte.value";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_BOOLEAN_BYTE_VALUE = "engine.virtualization.unexpected.boolean.byte.value";
 
 	@Override
 	public int typeValue()

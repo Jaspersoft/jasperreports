@@ -59,7 +59,7 @@ public enum ErrorCorrectionLevelEnum implements NamedEnum
 	 *
 	 */
 	private final transient String name;
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_NAME = "components.barcode4j.error.correction.level.unknown.name";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_NAME = "components.barcode4j.error.correction.level.unknown.name";
 
 	private ErrorCorrectionLevelEnum(String name) 
 	{

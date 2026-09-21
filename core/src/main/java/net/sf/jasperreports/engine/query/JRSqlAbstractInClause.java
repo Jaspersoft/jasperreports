@@ -49,9 +49,9 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public abstract class JRSqlAbstractInClause implements JRClauseFunction
 {
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_IN_CLAUSE_DB_COLUMN_TOKEN_MISSING = "query.in.clause.db.column.token.missing";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_IN_CLAUSE_INVALID_PARAMETER_TYPE = "query.in.clause.invalid.parameter.type";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_IN_CLAUSE_PARAMETER_TOKEN_MISSING = "query.in.clause.parameter.token.missing";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_IN_CLAUSE_DB_COLUMN_TOKEN_MISSING = "query.in.clause.db.column.token.missing";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_IN_CLAUSE_INVALID_PARAMETER_TYPE = "query.in.clause.invalid.parameter.type";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_IN_CLAUSE_PARAMETER_TOKEN_MISSING = "query.in.clause.parameter.token.missing";
 	
 	protected static final int POSITION_DB_COLUMN = 1;
 	protected static final int POSITION_PARAMETER = 2;

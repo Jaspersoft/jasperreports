@@ -46,7 +46,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public final class JRXPathExecuterUtils
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_XPATH_EXECUTER_FACTORY_NOT_FOUND = "util.xml.xpath.executer.factory.property.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_XPATH_EXECUTER_FACTORY_NOT_FOUND = "util.xml.xpath.executer.factory.property.not.found";
 	/**
 	 * Property that holds the {@link JRXPathExecuterFactory XPath executer factory} class name.
 	 */

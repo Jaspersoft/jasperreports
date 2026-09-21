@@ -75,8 +75,8 @@ public abstract class JRAbstractJavaCompiler extends JRAbstractCompiler
 	public static final String PROPERTY_EVALUATOR_CLASS_REFERENCE_FIX_ENABLED = JRPropertiesUtil.PROPERTY_PREFIX + 
 			"evaluator.class.reference.fix.enabled";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_EXPECTED_JAVA_LANGUAGE = "compilers.language.expected.java";
-	public static final String EXCEPTION_MESSAGE_KEY_EXPRESSION_CLASS_NOT_LOADED = "compilers.expression.class.not.loaded";
+	protected static final String EXCEPTION_MESSAGE_KEY_EXPECTED_JAVA_LANGUAGE = "compilers.language.expected.java";
+	private static final String EXCEPTION_MESSAGE_KEY_EXPRESSION_CLASS_NOT_LOADED = "compilers.expression.class.not.loaded";
 
 	// @JVM Crash workaround
 	// Reference to the loaded class class in a per thread map

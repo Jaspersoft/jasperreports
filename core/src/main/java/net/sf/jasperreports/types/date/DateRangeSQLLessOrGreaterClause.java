@@ -35,8 +35,8 @@ import net.sf.jasperreports.engine.query.SQLLessOrGreaterBaseClause;
  */
 public class DateRangeSQLLessOrGreaterClause extends SQLLessOrGreaterBaseClause
 {
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_PARAMETER_TYPE = "date.range.unexpected.parameter.type";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_CLAUSE_ID = "date.range.unknown.clause.id";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_PARAMETER_TYPE = "date.range.unexpected.parameter.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_CLAUSE_ID = "date.range.unknown.clause.id";
 
 	protected static final DateRangeSQLLessOrGreaterClause singleton = new DateRangeSQLLessOrGreaterClause();
 	

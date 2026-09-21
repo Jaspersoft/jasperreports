@@ -78,10 +78,10 @@ import net.sf.jasperreports.repo.SimpleRepositoryContext;
 public class JRCsvDataSource extends JRAbstractTextDataSource// implements JRDataSource
 {
 	protected static final Log log = LogFactory.getLog(JRCsvDataSource.class);
-	public static final String EXCEPTION_MESSAGE_KEY_CSV_FIELD_VALUE_NOT_RETRIEVED = "data.csv.field.value.not.retrieved";
-	public static final String EXCEPTION_MESSAGE_KEY_MALFORMED_QUOTED_FIELD = "data.csv.malformed.quoted.field";
-	public static final String EXCEPTION_MESSAGE_KEY_MISPLACED_QUOTE = "data.csv.misplaced.quote";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_MORE_CHARS = "data.csv.no.more.chars";
+	private static final String EXCEPTION_MESSAGE_KEY_CSV_FIELD_VALUE_NOT_RETRIEVED = "data.csv.field.value.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_MALFORMED_QUOTED_FIELD = "data.csv.malformed.quoted.field";
+	private static final String EXCEPTION_MESSAGE_KEY_MISPLACED_QUOTE = "data.csv.misplaced.quote";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_MORE_CHARS = "data.csv.no.more.chars";
 	
 	/**
 	 * Property specifying the CSV column name for the dataset field.

@@ -134,10 +134,10 @@ import net.sf.jasperreports.util.JsonLoader;
  */
 public class TableReport implements JRReport
 {
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_CHILD_TYPE = "fill.table.report.unknown.child.type";
-	public static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "fill.table.report.field.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_VARIABLE_NOT_FOUND = "fill.table.report.variable.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_UNRECOGNIZED_FILTER_EXPRESSION_TYPE = "fill.table.report.unrecognized.filter.expression.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_CHILD_TYPE = "fill.table.report.unknown.child.type";
+	private static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "fill.table.report.field.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_VARIABLE_NOT_FOUND = "fill.table.report.variable.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_UNRECOGNIZED_FILTER_EXPRESSION_TYPE = "fill.table.report.unrecognized.filter.expression.type";
 	
 	public static final String METADATA_KEY_QUALIFICATION = 
 			ComponentsExtensionsRegistryFactory.TABLE_COMPONENT_NAME;

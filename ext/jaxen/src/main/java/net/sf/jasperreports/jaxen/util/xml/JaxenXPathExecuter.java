@@ -46,8 +46,8 @@ import net.sf.jasperreports.engine.util.xml.JRXPathExecuter;
 public class JaxenXPathExecuter implements JRXPathExecuter
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_XPATH_COMPILATION_FAILURE = "util.xml.jaxen.xpath.compilation.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_XPATH_SELECTION_FAILURE = "util.xml.jaxen.xpath.selection.failure";
+	protected static final String EXCEPTION_MESSAGE_KEY_XPATH_COMPILATION_FAILURE = "util.xml.jaxen.xpath.compilation.failure";
+	protected static final String EXCEPTION_MESSAGE_KEY_XPATH_SELECTION_FAILURE = "util.xml.jaxen.xpath.selection.failure";
 	
 	private final Map<String,XPath> cachedXPaths = new ReferenceMap<>();//soft cache
 	

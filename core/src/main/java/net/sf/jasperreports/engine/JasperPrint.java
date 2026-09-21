@@ -64,7 +64,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEventsSupport
 {
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_STYLE = "engine.jasper.print.duplicate.style";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_STYLE = "engine.jasper.print.duplicate.style";
 	
 	/**
 	 * Prefix for JasperReports properties that specify properties to be

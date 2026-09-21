@@ -63,10 +63,10 @@ import net.sf.jasperreports.engine.util.JRClassLoader;
 public class JRGroovyCompiler extends JRAbstractJavaCompiler 
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_COMPILING_EXPRESSIONS_CLASS_FILE = "compilers.compiling.expressions.class.file";
-	public static final String EXCEPTION_MESSAGE_KEY_TOO_FEW_CLASSES_GENERATED = "compilers.groovy.too.few.classes.generated";
-	public static final String EXCEPTION_MESSAGE_KEY_TOO_MANY_CLASSES_GENERATED = "compilers.groovy.too.many.classes.generated";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_NOT_COMPILED_FOR_CLASS_FILTERING = 
+	private static final String EXCEPTION_MESSAGE_KEY_COMPILING_EXPRESSIONS_CLASS_FILE = "compilers.compiling.expressions.class.file";
+	private static final String EXCEPTION_MESSAGE_KEY_TOO_FEW_CLASSES_GENERATED = "compilers.groovy.too.few.classes.generated";
+	private static final String EXCEPTION_MESSAGE_KEY_TOO_MANY_CLASSES_GENERATED = "compilers.groovy.too.many.classes.generated";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_NOT_COMPILED_FOR_CLASS_FILTERING = 
 			"compilers.groovy.report.not.compiled.for.class.filtering";
 	
 	/**

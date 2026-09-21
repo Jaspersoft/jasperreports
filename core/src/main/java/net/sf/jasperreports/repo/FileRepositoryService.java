@@ -49,7 +49,7 @@ public class FileRepositoryService implements StreamRepositoryService
 	
 	private static final Log log = LogFactory.getLog(FileRepositoryService.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_NOT_IMPLEMENTED = "repo.file.not.implemented";
+	private static final String EXCEPTION_MESSAGE_KEY_NOT_IMPLEMENTED = "repo.file.not.implemented";
 	
 	private JasperReportsContext jasperReportsContext;
 	private String root;

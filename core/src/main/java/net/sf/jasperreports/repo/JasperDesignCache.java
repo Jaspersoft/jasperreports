@@ -60,7 +60,7 @@ public class JasperDesignCache implements Serializable
 	
 	private static final Log log = LogFactory.getLog(JasperDesignCache.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_ENTRY = "repo.invalid.entry";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_ENTRY = "repo.invalid.entry";
 	
 	/**
 	 * 

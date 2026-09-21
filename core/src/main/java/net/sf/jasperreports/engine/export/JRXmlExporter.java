@@ -174,8 +174,8 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 	 */
 	private static final String XML_EXPORTER_PROPERTIES_PREFIX = JRPropertiesUtil.PROPERTY_PREFIX + "export.xml.";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_EMBEDDING_IMAGE_ERROR = "export.xml.embedding.image.error";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_STYLE_NOT_FOUND = "export.xml.report.style.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_EMBEDDING_IMAGE_ERROR = "export.xml.embedding.image.error";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_STYLE_NOT_FOUND = "export.xml.report.style.not.found";
 
 	/**
 	 * The exporter key, as used in

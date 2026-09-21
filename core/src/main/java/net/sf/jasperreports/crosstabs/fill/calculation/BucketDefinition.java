@@ -46,7 +46,7 @@ public class BucketDefinition
 {
 	
 	private static final Log log = LogFactory.getLog(BucketDefinition.class);
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_ORDER_TYPE = "crosstabs.calculation.unsupported.order.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_ORDER_TYPE = "crosstabs.calculation.unsupported.order.type";
 	
 	/**
 	 * Value type used for non-null values.

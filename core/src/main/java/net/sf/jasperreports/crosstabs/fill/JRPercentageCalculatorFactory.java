@@ -40,7 +40,7 @@ import net.sf.jasperreports.engine.fill.JRCalculable;
  */
 public final class JRPercentageCalculatorFactory
 {
-	public static final String EXCEPTION_MESSAGE_KEY_PERCENTAGE_CALCULATOR_INSTANCE_ERROR = "crosstabs.percentage.calculator.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_PERCENTAGE_CALCULATOR_INSTANCE_ERROR = "crosstabs.percentage.calculator.instance.error";
 	
 	private static final Map<String, JRPercentageCalculator> builtInCalculators;
 

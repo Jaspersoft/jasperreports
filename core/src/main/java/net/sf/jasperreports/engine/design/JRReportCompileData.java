@@ -47,8 +47,8 @@ public class JRReportCompileData implements Serializable
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_COMPILE_DATA_FOR_CROSSTAB_NOT_FOUND = "design.compile.data.for.crosstab.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_COMPILE_DATA_FOR_DATASET_NOT_FOUND = "design.compile.data.for.dataset.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_COMPILE_DATA_FOR_CROSSTAB_NOT_FOUND = "design.compile.data.for.crosstab.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_COMPILE_DATA_FOR_DATASET_NOT_FOUND = "design.compile.data.for.dataset.not.found";
 
 	/**
 	 * Main report dataset compile data.

@@ -37,9 +37,9 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public final class ClassUtils
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_INSTANCE_ERROR = "util.class.instance.error";
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_LOADING_ERROR = "util.class.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_UNEXPECTED_TYPE = "util.class.unexpected.type";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_INSTANCE_ERROR = "util.class.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_LOADING_ERROR = "util.class.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_UNEXPECTED_TYPE = "util.class.unexpected.type";
 
 	/**
 	 * Instantiates a class.

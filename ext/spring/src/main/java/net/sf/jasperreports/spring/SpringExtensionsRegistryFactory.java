@@ -63,8 +63,8 @@ public class SpringExtensionsRegistryFactory implements
 	
 	private static final Log log = LogFactory.getLog(
 			SpringExtensionsRegistryFactory.class);
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SPRING_RESOURCE_SET = "extensions.no.spring.resource.set";
-	public static final String EXCEPTION_MESSAGE_KEY_SPRING_RESOURCE_NOT_FOUND = "extensions.spring.resource.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SPRING_RESOURCE_SET = "extensions.no.spring.resource.set";
+	private static final String EXCEPTION_MESSAGE_KEY_SPRING_RESOURCE_NOT_FOUND = "extensions.spring.resource.not.found";
 	
 	/**
 	 * The suffix of the property that gives the Spring beans XML resource name.

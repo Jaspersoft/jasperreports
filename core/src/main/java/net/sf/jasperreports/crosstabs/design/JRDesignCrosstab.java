@@ -94,11 +94,11 @@ public class JRDesignCrosstab extends JRDesignElement implements JRCrosstab
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_COLUMN_GROUP_DOES_NOT_EXIST = "crosstabs.design.column.group.does.not.exist";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_CELL = "crosstabs.design.duplicate.cell";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_GROUP_OR_MEASURE = "crosstabs.design.duplicate.group.or.measure";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_PARAMETER = "crosstabs.design.duplicate.parameter";
-	public static final String EXCEPTION_MESSAGE_KEY_ROW_GROUP_DOES_NOT_EXIST = "crosstabs.design.row.group.does.not.exist";
+	private static final String EXCEPTION_MESSAGE_KEY_COLUMN_GROUP_DOES_NOT_EXIST = "crosstabs.design.column.group.does.not.exist";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_CELL = "crosstabs.design.duplicate.cell";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_GROUP_OR_MEASURE = "crosstabs.design.duplicate.group.or.measure";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_PARAMETER = "crosstabs.design.duplicate.parameter";
+	private static final String EXCEPTION_MESSAGE_KEY_ROW_GROUP_DOES_NOT_EXIST = "crosstabs.design.row.group.does.not.exist";
 	
 	public static final String PROPERTY_COLUMN_BREAK_OFFSET = "columnBreakOffset";
 	

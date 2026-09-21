@@ -148,7 +148,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	 */
 	public static final String PPTX_EXPORTER_KEY = JRPropertiesUtil.PROPERTY_PREFIX + "pptx";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_COLUMN_COUNT_OUT_OF_RANGE = "export.pptx.column.count.out.of.range";
+	private static final String EXCEPTION_MESSAGE_KEY_COLUMN_COUNT_OUT_OF_RANGE = "export.pptx.column.count.out.of.range";
 	
 	public static final String PPTX_EXPORTER_PROPERTIES_PREFIX = JRPropertiesUtil.PROPERTY_PREFIX + "export.pptx.";
 

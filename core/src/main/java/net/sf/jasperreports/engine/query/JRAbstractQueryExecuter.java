@@ -54,13 +54,13 @@ import net.sf.jasperreports.repo.RepositoryContext;
  */
 public abstract class JRAbstractQueryExecuter implements JRQueryExecuter
 {
-	public static final String EXCEPTION_MESSAGE_KEY_NUMERIC_TYPE_REQUIRED = "query.numeric.type.required";
-	public static final String EXCEPTION_MESSAGE_KEY_PARAMETER_NOT_FOUND = "query.parameter.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_CIRCULARLY_NESTED_PARAMETER = "query.clause.circularly.nested.parameter";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_ID_FIRST_TOKEN_MISSING = "query.clause.id.first.token.missing";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_NOT_FOUND = "query.clause.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_CLAUSE_DISABLED = "query.parameter.clause.disabled";
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_PARAMETER_TYPE = "query.unsupported.parameter.type";
+	protected static final String EXCEPTION_MESSAGE_KEY_NUMERIC_TYPE_REQUIRED = "query.numeric.type.required";
+	private static final String EXCEPTION_MESSAGE_KEY_PARAMETER_NOT_FOUND = "query.parameter.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_CIRCULARLY_NESTED_PARAMETER = "query.clause.circularly.nested.parameter";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_ID_FIRST_TOKEN_MISSING = "query.clause.id.first.token.missing";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_CLAUSE_NOT_FOUND = "query.clause.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_CLAUSE_DISABLED = "query.parameter.clause.disabled";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_PARAMETER_TYPE = "query.unsupported.parameter.type";
 
 	/**
 	 * Flag property that determines whether query parameter clause text injection (<code>$P!{}</code>) is enabled.

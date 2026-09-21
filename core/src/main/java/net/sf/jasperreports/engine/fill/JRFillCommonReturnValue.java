@@ -41,7 +41,7 @@ import net.sf.jasperreports.engine.util.JRClassLoader;
  */
 public abstract class JRFillCommonReturnValue implements CommonReturnValue
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INCREMENTER_CLASS_NOT_FOUND = "fill.subreport.return.value.incrementer.class.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_INCREMENTER_CLASS_NOT_FOUND = "fill.subreport.return.value.incrementer.class.not.found";
 
 	protected final String toVariable;
 	protected final String incrementerFactoryClassName;

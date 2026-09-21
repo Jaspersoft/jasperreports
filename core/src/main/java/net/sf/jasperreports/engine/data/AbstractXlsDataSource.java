@@ -53,10 +53,10 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public abstract class AbstractXlsDataSource extends JRAbstractTextDataSource implements JRRewindableDataSource
 {
-	public static final String EXCEPTION_MESSAGE_KEY_XLS_COLUMN_NAMES_MISMATCH_COLUMN_INDEXES = "data.xls.column.names.mismatch.column.indexes";
-	public static final String EXCEPTION_MESSAGE_KEY_XLS_FIELD_VALUE_NOT_RETRIEVED = "data.xls.field.value.not.retrieved";
-	public static final String EXCEPTION_MESSAGE_KEY_XLS_SHEET_INDEX_OUT_OF_RANGE = "data.xls.sheet.index.out.of.range";
-	public static final String EXCEPTION_MESSAGE_KEY_XLS_SHEET_NOT_FOUND = "data.xls.sheet.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_XLS_COLUMN_NAMES_MISMATCH_COLUMN_INDEXES = "data.xls.column.names.mismatch.column.indexes";
+	protected static final String EXCEPTION_MESSAGE_KEY_XLS_FIELD_VALUE_NOT_RETRIEVED = "data.xls.field.value.not.retrieved";
+	protected static final String EXCEPTION_MESSAGE_KEY_XLS_SHEET_INDEX_OUT_OF_RANGE = "data.xls.sheet.index.out.of.range";
+	protected static final String EXCEPTION_MESSAGE_KEY_XLS_SHEET_NOT_FOUND = "data.xls.sheet.not.found";
 	
 	/**
 	 * Property specifying the XLS column name for the dataset field.

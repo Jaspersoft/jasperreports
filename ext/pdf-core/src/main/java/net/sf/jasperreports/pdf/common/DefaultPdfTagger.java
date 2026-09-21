@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.util.StyledTextListWriter;
  */
 public class DefaultPdfTagger implements PdfTagger
 {
-	public static final String EXCEPTION_MESSAGE_KEY_PDF_TAGS_NOT_SUPPORTED = "export.pdf.tags.not.supported";
+	private static final String EXCEPTION_MESSAGE_KEY_PDF_TAGS_NOT_SUPPORTED = "export.pdf.tags.not.supported";
 
 	private boolean silent;
 	

@@ -40,7 +40,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class FileHtmlResourceHandler implements HtmlResourceHandler 
 {
-	public static final String EXCEPTION_MESSAGE_KEY_RESOURCES_DIRECTORY_NOT_SPECIFIED = "export.html.resources.directory.not.specified";
+	private static final String EXCEPTION_MESSAGE_KEY_RESOURCES_DIRECTORY_NOT_SPECIFIED = "export.html.resources.directory.not.specified";
 	
 	/**
 	 * 

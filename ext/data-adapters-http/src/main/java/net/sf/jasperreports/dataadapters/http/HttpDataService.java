@@ -79,8 +79,8 @@ public class HttpDataService implements DataFileService
 	
 	public static final String HTTP_DATA_SERVICE_NAME = "net.sf.jasperreports.data.file.service:HTTP";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_NO_HTTP_URL_SET = "data.http.no.http.url.set";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REQUEST_METHOD = "data.http.unknown.request.method";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_HTTP_URL_SET = "data.http.no.http.url.set";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REQUEST_METHOD = "data.http.unknown.request.method";
 	
 	/**
 	 * @deprecated Replaced by {@link #PROPERTY_URL}.

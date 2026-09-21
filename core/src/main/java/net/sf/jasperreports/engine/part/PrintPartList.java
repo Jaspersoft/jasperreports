@@ -37,8 +37,8 @@ public class PrintPartList
 
 	private static final Log log = LogFactory.getLog(PrintPartList.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_REMOVE_HEAD_PART = "engine.part.queue.cannot.remove.head.part";
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_REPLACE_HEAD_PART = "engine.part.queue.cannot.replace.head.part";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_REMOVE_HEAD_PART = "engine.part.queue.cannot.remove.head.part";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_REPLACE_HEAD_PART = "engine.part.queue.cannot.replace.head.part";
 	
 	private FillPrintPart head;
 	private FillPrintPart tail;

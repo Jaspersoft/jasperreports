@@ -4,4 +4,9 @@
 		<differenceType>7004</differenceType>
 		<method>*</method>
 	</difference>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
+		<differenceType>6010</differenceType>
+		<field>EXCEPTION_MESSAGE_KEY_*</field>
+	</difference>
 </differences>

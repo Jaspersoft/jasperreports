@@ -78,8 +78,8 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 {
 	private static final String JDT_PROPERTIES_PREFIX = "org.eclipse.jdt.core.";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_LOADING_ERROR = "compilers.jdt.class.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_NAME_ENVIRONMENT_ANSWER_INSTANCE_ERROR = "compilers.jdt.name.environment.answer.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_LOADING_ERROR = "compilers.jdt.class.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_NAME_ENVIRONMENT_ANSWER_INSTANCE_ERROR = "compilers.jdt.name.environment.answer.instance.error";
 	
 	/**
 	 *  
@@ -523,8 +523,8 @@ public class JRJdtCompiler extends JRAbstractJavaCompiler
 	 */
 	public static class CompilerRequestor implements ICompilerRequestor
 	{
-		public static final String EXCEPTION_MESSAGE_KEY_METHOD_INVOKING_ERROR = "compilers.jdt.method.invoking.error";
-		public static final String EXCEPTION_MESSAGE_KEY_METHOD_RESOLVING_ERROR = "compilers.jdt.method.resolving.error";
+		private static final String EXCEPTION_MESSAGE_KEY_METHOD_INVOKING_ERROR = "compilers.jdt.method.invoking.error";
+		private static final String EXCEPTION_MESSAGE_KEY_METHOD_RESOLVING_ERROR = "compilers.jdt.method.resolving.error";
 		
 		private final JasperReportsContext jasperReportsContext;
 		protected final JRJdtCompiler compiler;

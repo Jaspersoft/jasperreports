@@ -44,8 +44,8 @@ public class DefaultFormatFactory implements FormatFactory
 {
 	private static final Log log = LogFactory.getLog(DefaultFormatFactory.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_FACTORY_INSTANCE_ERROR = "util.format.factory.instance.error";
-	public static final String EXCEPTION_MESSAGE_KEY_FACTORY_LOADING_ERROR = "util.format.factory.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_FACTORY_INSTANCE_ERROR = "util.format.factory.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_FACTORY_LOADING_ERROR = "util.format.factory.loading.error";
 
 	/**
 	 * Used in the date pattern to specify the default style.

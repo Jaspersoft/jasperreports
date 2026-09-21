@@ -85,8 +85,8 @@ public class SubreportFillPart extends BasePartFillComponent
 
 	private static final Log log = LogFactory.getLog(SubreportFillPart.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REPORT_PRINT_ORDER = "parts.subreport.unknown.report.print.order";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REPORT_SECTION_TYPE = "parts.subreport.unknown.report.section.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REPORT_PRINT_ORDER = "parts.subreport.unknown.report.print.order";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REPORT_SECTION_TYPE = "parts.subreport.unknown.report.section.type";
 	
 	/**
 	 * Property that references the parameter containing the bookmarks data source.

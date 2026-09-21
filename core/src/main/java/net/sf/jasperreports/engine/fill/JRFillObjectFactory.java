@@ -87,7 +87,7 @@ public class JRFillObjectFactory extends JRAbstractObjectFactory
 
 	private static final Log log = LogFactory.getLog(JRFillObjectFactory.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_UNRESOLVED_STYLE = "fill.object.factory.unresolved.style";
+	private static final String EXCEPTION_MESSAGE_KEY_UNRESOLVED_STYLE = "fill.object.factory.unresolved.style";
 	public static final String EXCEPTION_MESSAGE_KEY_STYLE_NOT_FOUND = "fill.object.factory.style.not.found";
 	
 	/**

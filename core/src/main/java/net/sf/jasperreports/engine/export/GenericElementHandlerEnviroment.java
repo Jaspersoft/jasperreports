@@ -51,7 +51,7 @@ public final class GenericElementHandlerEnviroment
 
 	private static final Log log = LogFactory.getLog(
 			GenericElementHandlerEnviroment.class);
-	public static final String EXCEPTION_MESSAGE_KEY_HANDLERS_NOT_FOUND_FOR_NAMESPACE = 
+	private static final String EXCEPTION_MESSAGE_KEY_HANDLERS_NOT_FOUND_FOR_NAMESPACE = 
 			"export.common.handlers.not.found.for.namespace";
 	
 	private final ReferenceMap<Object, List<GenericElementHandlerBundle>> handlersCache = 

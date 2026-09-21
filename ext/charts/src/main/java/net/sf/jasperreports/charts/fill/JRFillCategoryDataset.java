@@ -48,7 +48,7 @@ import net.sf.jasperreports.engine.fill.JRExpressionEvalException;
 public class JRFillCategoryDataset extends JRFillChartDataset implements JRCategoryDataset
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "charts.category.dataset.series.null.name";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "charts.category.dataset.series.null.name";
 	
 	/**
 	 *

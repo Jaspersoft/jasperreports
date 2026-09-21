@@ -42,7 +42,7 @@ import net.sf.jasperreports.repo.RepositoryUtil;
  */
 public class XlsxZip extends FileBufferedZip
 {
-	public static final String EXCEPTION_MESSAGE_KEY_MACRO_TEMPLATE_NOT_FOUND = "export.xlsx.macro.template.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_MACRO_TEMPLATE_NOT_FOUND = "export.xlsx.macro.template.not.found";
 	
 	private final RepositoryUtil repository;
 

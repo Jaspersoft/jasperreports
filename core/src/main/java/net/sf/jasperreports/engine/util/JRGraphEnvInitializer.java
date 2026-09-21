@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public final class JRGraphEnvInitializer
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INITIALIZATION_ERROR = "util.graphic.environment.initialization.error";
+	private static final String EXCEPTION_MESSAGE_KEY_INITIALIZATION_ERROR = "util.graphic.environment.initialization.error";
 
 	/**
 	 *

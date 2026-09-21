@@ -60,7 +60,7 @@ import net.sf.jasperreports.renderers.Renderable;
  */
 public class FillSpiderChart extends BaseFillComponent implements JRFillCloneable
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CUSTOMIZER_INSTANCE_ERROR = "components.spiderchart.customizer.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CUSTOMIZER_INSTANCE_ERROR = "components.spiderchart.customizer.instance.error";
 
 	private final SpiderChartComponent chartComponent;
 	private final FillChartSettings chartSettings;

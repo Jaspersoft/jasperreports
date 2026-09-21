@@ -37,8 +37,8 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class ArbitraryRankComparator implements Comparator<Object>
 {
-	public static final String EXCEPTION_MESSAGE_KEY_FOUND_OBJECTS_WITH_SAME_RANK = "crosstabs.calculation.found.objects.with.same.rank";
-	public static final String EXCEPTION_MESSAGE_KEY_RANK_COMPARATOR_OVERFLOW = "crosstabs.calculation.rank.comparator.overflow";
+	private static final String EXCEPTION_MESSAGE_KEY_FOUND_OBJECTS_WITH_SAME_RANK = "crosstabs.calculation.found.objects.with.same.rank";
+	private static final String EXCEPTION_MESSAGE_KEY_RANK_COMPARATOR_OVERFLOW = "crosstabs.calculation.rank.comparator.overflow";
 
 	// using a weak ref map to store ranks per objects
 	private final ReferenceMap<Object, Long> ranks = 

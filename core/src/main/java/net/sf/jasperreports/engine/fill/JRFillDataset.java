@@ -101,12 +101,12 @@ public class JRFillDataset implements JRDataset, DatasetFillContext
 	
 	private static final Log log = LogFactory.getLog(JRFillDataset.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_FIELD = "fill.dataset.no.such.field";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_PARAMETER = "fill.dataset.no.such.parameter";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_DATA = "fill.dataset.no.such.snapshot.data";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_PARAMETER = "fill.dataset.no.such.snapshot.parameter";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_VARIABLE = "fill.dataset.no.such.variable";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_DISABLED = "query.executer.disabled";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_FIELD = "fill.dataset.no.such.field";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_PARAMETER = "fill.dataset.no.such.parameter";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_DATA = "fill.dataset.no.such.snapshot.data";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_PARAMETER = "fill.dataset.no.such.snapshot.parameter";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_VARIABLE = "fill.dataset.no.such.variable";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_DISABLED = "query.executer.disabled";
 	
 	/**
 	 * The filler that created this object.

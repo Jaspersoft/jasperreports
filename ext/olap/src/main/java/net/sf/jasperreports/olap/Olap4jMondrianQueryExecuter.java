@@ -55,8 +55,8 @@ import org.olap4j.layout.RectangularCellSetFormatter;
 public class Olap4jMondrianQueryExecuter extends JRAbstractQueryExecuter
 {
 	private static final Log log = LogFactory.getLog(Olap4jMondrianQueryExecuter.class);
-	public static final String EXCEPTION_MESSAGE_KEY_CONNECTION_ERROR = "query.mondrian.connection.error";
-	public static final String EXCEPTION_MESSAGE_KEY_EXECUTE_QUERY_ERROR = "query.mondrian.execute.query.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CONNECTION_ERROR = "query.mondrian.connection.error";
+	private static final String EXCEPTION_MESSAGE_KEY_EXECUTE_QUERY_ERROR = "query.mondrian.execute.query.error";
 
 	public static final String OLAP4J_DRIVER = "olap4jDriver";
 	public static final String OLAP4J_URL_PREFIX = "urlPrefix";

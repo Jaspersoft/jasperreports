@@ -30,7 +30,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class Axis
 {
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_AXIS_NOT_FOUND = "data.olap.axis.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_AXIS_NOT_FOUND = "data.olap.axis.not.found";
 	
 	public static final String AXIS0 = "Columns";
 	public static final String AXIS1 = "Rows";

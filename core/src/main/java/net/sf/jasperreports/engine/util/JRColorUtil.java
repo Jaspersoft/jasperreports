@@ -34,7 +34,7 @@ import net.sf.jasperreports.engine.type.ColorEnum;
  */
 public final class JRColorUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_COLOR = "util.color.invalid.color";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_COLOR = "util.color.invalid.color";
 
 	/**
 	 *

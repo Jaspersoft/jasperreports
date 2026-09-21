@@ -133,9 +133,9 @@ import net.sf.jasperreports.renderers.Renderable;
  */
 public class JRFillChart extends JRFillElement implements JRChart
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CUSTOMIZER_INSTANCE_ERROR = "charts.customizer.instance.error";
-	public static final String EXCEPTION_MESSAGE_KEY_MULTIAXIS_PLOT_TYPES_MIX_NOT_ALLOWED = "charts.multiaxis.plot.types.mix.not.allowed";
-	public static final String EXCEPTION_MESSAGE_KEY_MULTIAXIS_PLOT_NOT_SUPPORTED = "charts.multiaxis.plot.not.supported";
+	private static final String EXCEPTION_MESSAGE_KEY_CUSTOMIZER_INSTANCE_ERROR = "charts.customizer.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_MULTIAXIS_PLOT_TYPES_MIX_NOT_ALLOWED = "charts.multiaxis.plot.types.mix.not.allowed";
+	private static final String EXCEPTION_MESSAGE_KEY_MULTIAXIS_PLOT_NOT_SUPPORTED = "charts.multiaxis.plot.not.supported";
 
 	/**
 	 *

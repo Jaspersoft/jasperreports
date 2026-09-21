@@ -33,7 +33,7 @@ import net.sf.jasperreports.engine.JasperReportsContext;
  */
 public class ResourcePathUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CONFIG_PROPERTY_NOT_SET = "web.util.config.property.not.set";
+	private static final String EXCEPTION_MESSAGE_KEY_CONFIG_PROPERTY_NOT_SET = "web.util.config.property.not.set";
 
 	protected JRPropertiesUtil propertiesUtil;
 	

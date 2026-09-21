@@ -43,7 +43,7 @@ import net.sf.jasperreports.engine.JasperReport;
  */
 public class JRCsvDataSourceProvider implements JRDataSourceProvider
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_FIND_SOURCE = "data.csv.cannot.find.source";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_FIND_SOURCE = "data.csv.cannot.find.source";
 	
 	private Reader reader;
 

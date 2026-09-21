@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class ListOfArrayDataSource implements JRRewindableDataSource
 {
-	public static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "data.array.list.field.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "data.array.list.field.not.found";
 
 	/**
 	 *

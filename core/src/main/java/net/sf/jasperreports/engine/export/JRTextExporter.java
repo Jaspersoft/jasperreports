@@ -116,10 +116,10 @@ import net.sf.jasperreports.export.WriterExporterOutput;
 public class JRTextExporter extends JRAbstractExporter<TextReportConfiguration, TextExporterConfiguration, WriterExporterOutput, JRTextExporterContext>
 {
 	private static final String TXT_EXPORTER_PROPERTIES_PREFIX = JRPropertiesUtil.PROPERTY_PREFIX + "export.txt.";
-	public static final String EXCEPTION_MESSAGE_KEY_REQUIRED_POSITIVE_PAGE_OR_CHARACTER_WIDTH = "export.text.required.positive.page.or.character.width";
-	public static final String EXCEPTION_MESSAGE_KEY_CHARACTER_WIDTH_NEGATIVE = "export.text.character.width.negative";
-	public static final String EXCEPTION_MESSAGE_KEY_REQUIRED_POSITIVE_PAGE_OR_CHARACTER_HEIGHT = "export.text.required.positive.page.or.character.height";
-	public static final String EXCEPTION_MESSAGE_KEY_CHARACTER_HEIGHT_NEGATIVE = "export.text.character.height.negative";
+	private static final String EXCEPTION_MESSAGE_KEY_REQUIRED_POSITIVE_PAGE_OR_CHARACTER_WIDTH = "export.text.required.positive.page.or.character.width";
+	private static final String EXCEPTION_MESSAGE_KEY_CHARACTER_WIDTH_NEGATIVE = "export.text.character.width.negative";
+	private static final String EXCEPTION_MESSAGE_KEY_REQUIRED_POSITIVE_PAGE_OR_CHARACTER_HEIGHT = "export.text.required.positive.page.or.character.height";
+	private static final String EXCEPTION_MESSAGE_KEY_CHARACTER_HEIGHT_NEGATIVE = "export.text.character.height.negative";
 
 	protected Writer writer;
 	char[][] pageData;

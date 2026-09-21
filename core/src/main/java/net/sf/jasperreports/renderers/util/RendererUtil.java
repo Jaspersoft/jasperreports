@@ -66,7 +66,7 @@ public class RendererUtil
 	
 	private static final Log log = LogFactory.getLog(RendererUtil.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_IMAGE_ERROR = "engine.renderable.util.image.error";
+	private static final String EXCEPTION_MESSAGE_KEY_IMAGE_ERROR = "engine.renderable.util.image.error";
 	public static final String EXCEPTION_MESSAGE_KEY_RENDERABLE_MUST_IMPLEMENT_INTERFACE = "engine.renderable.must.implement.interface";
 	
 	public static final Renderable NO_IMAGE_RENDERER = ResourceRenderer.getInstance(JRImageLoader.NO_IMAGE_RESOURCE, false); 

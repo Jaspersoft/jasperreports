@@ -49,8 +49,8 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public final class JRFiller
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_THREAD_INTERRUPTED = "fill.common.filler.thread.interrupted";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REPORT_SECTION_TYPE = "fill.common.filler.unknown.report.section.type";
+	private static final String EXCEPTION_MESSAGE_KEY_THREAD_INTERRUPTED = "fill.common.filler.thread.interrupted";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_REPORT_SECTION_TYPE = "fill.common.filler.unknown.report.section.type";
 	
 	/**
 	 * The default locale used to fill reports.

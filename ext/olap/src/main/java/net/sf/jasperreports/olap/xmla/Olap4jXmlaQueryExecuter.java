@@ -68,8 +68,8 @@ import net.sf.jasperreports.olap.JROlapDataSource;
  */
 public class Olap4jXmlaQueryExecuter extends JRAbstractQueryExecuter
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CONNECTION_ERROR = "query.xmla.connection.error";
-	public static final String EXCEPTION_MESSAGE_KEY_EXECUTE_QUERY_ERROR = "query.xmla.execute.query.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CONNECTION_ERROR = "query.xmla.connection.error";
+	private static final String EXCEPTION_MESSAGE_KEY_EXECUTE_QUERY_ERROR = "query.xmla.execute.query.error";
 	
 	public static final String OLAP4J_DRIVER = "olap4jDriver";
 	public static final String OLAP4J_URL_PREFIX = "urlPrefix";

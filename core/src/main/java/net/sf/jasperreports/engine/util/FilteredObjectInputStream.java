@@ -110,7 +110,7 @@ public class FilteredObjectInputStream extends ObjectInputStream
 
 class CountInputStream extends FilterInputStream
 {
-	public static final String EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED = "deserialization.byte.count.limit.exceeded";
+	private static final String EXCEPTION_MESSAGE_KEY_DESERIALIZATION_BYTE_COUNT_LIMIT_EXCEEDED = "deserialization.byte.count.limit.exceeded";
 
 	private long byteCount = 0;
 	private final long byteCountLimit; 

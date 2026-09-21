@@ -36,8 +36,8 @@ import net.sf.jasperreports.engine.data.IndexedDataSource;
  */
 public class ColumnValuesDataSource implements JRRewindableDataSource, IndexedDataSource
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_SNAPSHOT_FIELD_TYPE = "data.cache.invalid.snapshot.field.type";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_FIELD = "data.cache.no.such.snapshot.field";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_SNAPSHOT_FIELD_TYPE = "data.cache.invalid.snapshot.field.type";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_SNAPSHOT_FIELD = "data.cache.no.such.snapshot.field";
 
 	private int size;
 	private int iteratorIndex;

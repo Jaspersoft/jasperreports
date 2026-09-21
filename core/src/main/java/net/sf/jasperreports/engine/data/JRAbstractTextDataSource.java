@@ -45,13 +45,13 @@ import net.sf.jasperreports.engine.util.JRDateLocaleConverter;
 public abstract class JRAbstractTextDataSource implements JRDataSource
 {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_CONVERT_FIELD_TYPE = "data.common.cannot.convert.field.type";
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_MODIFY_PROPERTIES_AFTER_START = "data.common.cannot.modify.properties.after.start";
-	public static final String EXCEPTION_MESSAGE_KEY_NODE_NOT_AVAILABLE = "data.common.xml.node.not.available";
-	public static final String EXCEPTION_MESSAGE_KEY_NULL_DOCUMENT = "data.common.xml.null.document";
-	public static final String EXCEPTION_MESSAGE_KEY_NULL_SELECT_EXPRESSION = "data.common.xml.null.select.expression";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_COLUMN_NAME = "data.common.unknown.column.name";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_NUMBER_TYPE = "data.common.unknown.number.type";
+	protected static final String EXCEPTION_MESSAGE_KEY_CANNOT_CONVERT_FIELD_TYPE = "data.common.cannot.convert.field.type";
+	protected static final String EXCEPTION_MESSAGE_KEY_CANNOT_MODIFY_PROPERTIES_AFTER_START = "data.common.cannot.modify.properties.after.start";
+	protected static final String EXCEPTION_MESSAGE_KEY_NODE_NOT_AVAILABLE = "data.common.xml.node.not.available";
+	protected static final String EXCEPTION_MESSAGE_KEY_NULL_DOCUMENT = "data.common.xml.null.document";
+	protected static final String EXCEPTION_MESSAGE_KEY_NULL_SELECT_EXPRESSION = "data.common.xml.null.select.expression";
+	protected static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_COLUMN_NAME = "data.common.unknown.column.name";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_NUMBER_TYPE = "data.common.unknown.number.type";
 	
 	private LocaleConvertUtilsBean convertBean;
 	

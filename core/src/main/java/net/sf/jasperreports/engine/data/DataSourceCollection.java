@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class DataSourceCollection<D extends JRDataSource, P extends DataSourceProvider<D>> implements JRDataSource
 {
-	public static final String EXCEPTION_MESSAGE_KEY_METHOD_CALL_ERROR = "data.source.collection.method.call.error";
+	private static final String EXCEPTION_MESSAGE_KEY_METHOD_CALL_ERROR = "data.source.collection.method.call.error";
 	
 	protected final boolean empty;
 	protected final ListIterator<? extends P> providerIterator;

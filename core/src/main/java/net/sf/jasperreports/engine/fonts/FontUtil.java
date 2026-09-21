@@ -55,8 +55,8 @@ import net.sf.jasperreports.engine.util.JRTextAttribute;
 public final class FontUtil
 {
 	private static final Log log = LogFactory.getLog(FontUtil.class);
-	public static final String EXCEPTION_MESSAGE_KEY_NULL_FONT = "engine.fonts.null.font";
-	public static final String EXCEPTION_MESSAGE_KEY_FONT_SET_FAMILY_NOT_FOUND = "util.font.set.family.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_NULL_FONT = "engine.fonts.null.font";
+	private static final String EXCEPTION_MESSAGE_KEY_FONT_SET_FAMILY_NOT_FOUND = "util.font.set.family.not.found";
 
 	private static final Object CACHE_NULL_VALUE = new Object();
 	

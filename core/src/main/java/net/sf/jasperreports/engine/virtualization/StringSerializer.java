@@ -32,8 +32,8 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class StringSerializer implements ObjectSerializer<String>
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CHUNK_UNEXPECTED_LENGTH = "virtualization.chunk.unexpected.length";
-	public static final String EXCEPTION_MESSAGE_KEY_CHUNK_UNEXPECTED_LENGTH_REMAINING = "virtualization.chunk.unexpected.length.remaining";
+	private static final String EXCEPTION_MESSAGE_KEY_CHUNK_UNEXPECTED_LENGTH = "virtualization.chunk.unexpected.length";
+	private static final String EXCEPTION_MESSAGE_KEY_CHUNK_UNEXPECTED_LENGTH_REMAINING = "virtualization.chunk.unexpected.length.remaining";
 
 	// smaller than 65535/3, see writeUTF
 	private static final int CHUNK_SIZE = 20000;

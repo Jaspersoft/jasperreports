@@ -102,14 +102,14 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 
 	private static final Log log = LogFactory.getLog(JRBaseFiller.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INFINITE_LOOP_CREATING_NEW_PAGE = "fill.common.filler.infinite.loop.creating.new.page";
-	public static final String EXCEPTION_MESSAGE_KEY_COLUMN_HEADER_OVERFLOW_INFINITE_LOOP = "fill.common.filler.column.header.overflow.infinite.loop";
-	public static final String EXCEPTION_MESSAGE_KEY_CIRCULAR_DEPENDENCY_FOUND = "fill.base.filler.circular.dependency.found";
-	public static final String EXCEPTION_MESSAGE_KEY_EXTERNAL_STYLE_NAME_NOT_SET = "fill.base.filler.external.style.name.not.set";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_GROUP = "fill.base.filler.no.such.group";
-	public static final String EXCEPTION_MESSAGE_KEY_PAGE_HEADER_OVERFLOW_INFINITE_LOOP = "fill.common.filler.page.header.overflow.infinite.loop";
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_REPORT_SECTION_TYPE = "fill.base.filler.unsupported.report.section.type";
-	public static final String EXCEPTION_MESSAGE_KEY_KEEP_TOGETHER_CONTENT_DOES_NOT_FIT = "fill.common.filler.keep.together.content.does.not.fit";
+	protected static final String EXCEPTION_MESSAGE_KEY_INFINITE_LOOP_CREATING_NEW_PAGE = "fill.common.filler.infinite.loop.creating.new.page";
+	protected static final String EXCEPTION_MESSAGE_KEY_COLUMN_HEADER_OVERFLOW_INFINITE_LOOP = "fill.common.filler.column.header.overflow.infinite.loop";
+	private static final String EXCEPTION_MESSAGE_KEY_CIRCULAR_DEPENDENCY_FOUND = "fill.base.filler.circular.dependency.found";
+	private static final String EXCEPTION_MESSAGE_KEY_EXTERNAL_STYLE_NAME_NOT_SET = "fill.base.filler.external.style.name.not.set";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUCH_GROUP = "fill.base.filler.no.such.group";
+	protected static final String EXCEPTION_MESSAGE_KEY_PAGE_HEADER_OVERFLOW_INFINITE_LOOP = "fill.common.filler.page.header.overflow.infinite.loop";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_REPORT_SECTION_TYPE = "fill.base.filler.unsupported.report.section.type";
+	protected static final String EXCEPTION_MESSAGE_KEY_KEEP_TOGETHER_CONTENT_DOES_NOT_FIT = "fill.common.filler.keep.together.content.does.not.fit";
 	
 	private static final int PAGE_HEIGHT_PAGINATION_IGNORED = 0x7d000000;//less than Integer.MAX_VALUE to avoid 
 	private static final int PAGE_WIDTH_IGNORED = 0x7d000000;

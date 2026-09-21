@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.JasperReportsContext;
  */
 public final class SecretsUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_SECRET_NOT_FOUND = "util.secret.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_SECRET_NOT_FOUND = "util.secret.not.found";
 	
 	private final JasperReportsContext jasperReportsContext;
 	

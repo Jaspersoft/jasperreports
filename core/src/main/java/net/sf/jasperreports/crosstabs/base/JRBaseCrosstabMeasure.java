@@ -46,9 +46,9 @@ public class JRBaseCrosstabMeasure implements JRCrosstabMeasure, Serializable, C
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
-	public static final String EXCEPTION_MESSAGE_KEY_MEASURE_INCREMENTER_CLASS_LOAD_ERROR = "crosstabs.measure.incrementer.class.load.error";
-	public static final String EXCEPTION_MESSAGE_KEY_MEASURE_PERCENTAGE_CALCULATOR_CLASS_LOAD_ERROR = "crosstabs.measure.percentage.calculator.class.load.error";
-	public static final String EXCEPTION_MESSAGE_KEY_MEASURE_VALUE_CLASS_LOAD_ERROR = "crosstabs.measure.value.class.load.error";
+	private static final String EXCEPTION_MESSAGE_KEY_MEASURE_INCREMENTER_CLASS_LOAD_ERROR = "crosstabs.measure.incrementer.class.load.error";
+	private static final String EXCEPTION_MESSAGE_KEY_MEASURE_PERCENTAGE_CALCULATOR_CLASS_LOAD_ERROR = "crosstabs.measure.percentage.calculator.class.load.error";
+	private static final String EXCEPTION_MESSAGE_KEY_MEASURE_VALUE_CLASS_LOAD_ERROR = "crosstabs.measure.value.class.load.error";
 	
 	protected String name;
 	protected String valueClassName;

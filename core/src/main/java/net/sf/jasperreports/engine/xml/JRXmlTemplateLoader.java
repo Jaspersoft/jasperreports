@@ -63,10 +63,10 @@ public class JRXmlTemplateLoader
 	
 	private static final Log log = LogFactory.getLog(JRXmlTemplateLoader.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_NOT_FOUND = "xml.template.loader.template.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_PARSING_ERROR = "xml.template.loader.template.parsing.error";
-	public static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_READING_ERROR = "xml.template.loader.template.reading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_URL_CONNECTION_ERROR = "xml.template.loader.url.connection.error";
+	private static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_NOT_FOUND = "xml.template.loader.template.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_PARSING_ERROR = "xml.template.loader.template.parsing.error";
+	private static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_READING_ERROR = "xml.template.loader.template.reading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_URL_CONNECTION_ERROR = "xml.template.loader.url.connection.error";
 	
 	private RepositoryContext repositoryContext;
 	

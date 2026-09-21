@@ -59,8 +59,8 @@ public class JRFillPieDataset extends JRFillChartDataset implements JRPieDataset
 	/**
 	 * 
 	 */
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATED_KEY = "charts.pie.dataset.duplicated.key";
-	public static final String EXCEPTION_MESSAGE_KEY_NULL_KEY = "charts.pie.dataset.null.key";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATED_KEY = "charts.pie.dataset.duplicated.key";
+	private static final String EXCEPTION_MESSAGE_KEY_NULL_KEY = "charts.pie.dataset.null.key";
 
 	/**
 	 *

@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class ElementGridCell extends JRExporterGridCell
 {
-	public static final String EXCEPTION_MESSAGE_KEY_NOT_FRAME_ELEMENT = "export.common.grid.cell.not.frame.element";
+	private static final String EXCEPTION_MESSAGE_KEY_NOT_FRAME_ELEMENT = "export.common.grid.cell.not.frame.element";
 	
 	private GridCellSize size;
 

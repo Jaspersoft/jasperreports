@@ -58,7 +58,7 @@ public class DelayedFillActions implements VirtualizationListener<VirtualElement
 	private static final Log log = LogFactory.getLog(DelayedFillActions.class);
 	
 	protected static final String FILL_CACHE_KEY_ID = DelayedFillActions.class.getName() + "#id";
-	public static final String EXCEPTION_MESSAGE_KEY_ELEMENT_NOT_FOUND = "fill.delayed.fill.actions.element.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_ELEMENT_NOT_FOUND = "fill.delayed.fill.actions.element.not.found";
 	
 	private final int id;
 	private final BaseReportFiller reportFiller;

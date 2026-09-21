@@ -35,8 +35,8 @@ import net.sf.jasperreports.engine.util.JRClassLoader;
  */
 public final class ExporterFilterFactoryUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_FACTORY_CLASS_NOT_FOUND = "export.filter.factory.class.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_FACTORY_CLASS_INSTANCE_FAILURE = "export.filter.factory.class.instance.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_FACTORY_CLASS_NOT_FOUND = "export.filter.factory.class.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_FACTORY_CLASS_INSTANCE_FAILURE = "export.filter.factory.class.instance.failure";
 	
 	//private static final JRSingletonCache cache = new JRSingletonCache(ExporterFilterFactory.class);
 

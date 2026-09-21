@@ -55,7 +55,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public class JRStyledText implements Cloneable
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_COPY_CHARACTERS = "util.styled.text.cannot.copy.characters";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_COPY_CHARACTERS = "util.styled.text.cannot.copy.characters";
 	/**
 	 * 
 	 */

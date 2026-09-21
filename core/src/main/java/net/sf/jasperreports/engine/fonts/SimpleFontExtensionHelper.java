@@ -70,8 +70,8 @@ import net.sf.jasperreports.util.StringBuilderWriter;
 public final class SimpleFontExtensionHelper implements ErrorHandler
 {
 	private static final Log log = LogFactory.getLog(SimpleFontExtensionHelper.class);
-	public static final String EXCEPTION_MESSAGE_KEY_FILE_WRITER_ERROR = "fonts.file.writer.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_WRITER_ERROR = "fonts.output.stream.writer.error";
+	private static final String EXCEPTION_MESSAGE_KEY_FILE_WRITER_ERROR = "fonts.file.writer.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_WRITER_ERROR = "fonts.output.stream.writer.error";
 	
 
 	/**

@@ -76,8 +76,8 @@ public final class JRValueStringUtils
 		Object deserialize(String data);
 	}
 	
-	public static final String EXCEPTION_MESSAGE_KEY_ERROR_PARSING_DATA = "util.value.string.error.parsing.data";
-	public static final String EXCEPTION_MESSAGE_KEY_VALUE_NOT_SERIALIZABLE = "util.value.string.value.not.serializable";
+	private static final String EXCEPTION_MESSAGE_KEY_ERROR_PARSING_DATA = "util.value.string.error.parsing.data";
+	private static final String EXCEPTION_MESSAGE_KEY_VALUE_NOT_SERIALIZABLE = "util.value.string.value.not.serializable";
 	
 	private static final Map<String,ValueSerializer> serializers;
 	private static final ValueSerializer defaultSerializer;
@@ -194,7 +194,7 @@ public final class JRValueStringUtils
 	
 	protected static class CharacterSerializer implements ValueSerializer
 	{
-		public static final String EXCEPTION_MESSAGE_KEY_SINGLE_CHARACTER_EXPECTED = "util.character.serializer.single.character.expected";
+		private static final String EXCEPTION_MESSAGE_KEY_SINGLE_CHARACTER_EXPECTED = "util.character.serializer.single.character.expected";
 
 		@Override
 		public Object deserialize(String data)
@@ -219,7 +219,7 @@ public final class JRValueStringUtils
 	
 	protected static class BooleanSerializer implements ValueSerializer
 	{
-		public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_DATA = "util.boolean.serializer.unknown.data";
+		private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_DATA = "util.boolean.serializer.unknown.data";
 
 		@Override
 		public Object deserialize(String data)

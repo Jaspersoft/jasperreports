@@ -40,11 +40,11 @@ import net.sf.jasperreports.engine.util.JRLoader;
  */
 public final class RepositoryUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_LOADING_ERROR = "repo.byte.data.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_NOT_FOUND = "repo.byte.data.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_INPUT_STREAM_NOT_FOUND = "repo.input.stream.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_NOT_FOUND = "repo.report.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_RESOURCET_NOT_FOUND = "repo.resource.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_LOADING_ERROR = "repo.byte.data.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_NOT_FOUND = "repo.byte.data.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_INPUT_STREAM_NOT_FOUND = "repo.input.stream.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_NOT_FOUND = "repo.report.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_RESOURCET_NOT_FOUND = "repo.resource.not.found";
 	
 	private AtomicReference<List<RepositoryService>> repositoryServices = new AtomicReference<>();
 	

@@ -60,7 +60,7 @@ public class ReportClassFilter extends AbstractClassFilter
 	public static final String PROPERTY_PREFIX_CLASS_WHITELIST = 
 			JRPropertiesUtil.PROPERTY_PREFIX + "report.class.whitelist.";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_VISIBLE = "compilers.class.not.visible";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_VISIBLE = "compilers.class.not.visible";
 	
 	@Override
 	protected String getClassFilterEnabledPropertyName()

@@ -34,9 +34,9 @@ import net.sf.jasperreports.engine.query.JRSqlAbstractEqualClause;
  */
 public abstract class DateRangeBaseSQLEqualityClause implements JRClauseFunction
 {
-	public static final String EXCEPTION_MESSAGE_KEY_EQUAL_CLAUSE_DB_COLUMN_TOKEN_MISSING = "date.range.equal.clause.db.column.token.missing";
-	public static final String EXCEPTION_MESSAGE_KEY_EQUAL_CLAUSE_PARAMETER_TOKEN_MISSING = "date.range.equal.clause.parameter.token.missing";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_PARAMETER_TYPE = "date.range.unexpected.parameter.type";
+	private static final String EXCEPTION_MESSAGE_KEY_EQUAL_CLAUSE_DB_COLUMN_TOKEN_MISSING = "date.range.equal.clause.db.column.token.missing";
+	private static final String EXCEPTION_MESSAGE_KEY_EQUAL_CLAUSE_PARAMETER_TOKEN_MISSING = "date.range.equal.clause.parameter.token.missing";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_PARAMETER_TYPE = "date.range.unexpected.parameter.type";
 	
 	protected DateRangeBaseSQLEqualityClause()
 	{

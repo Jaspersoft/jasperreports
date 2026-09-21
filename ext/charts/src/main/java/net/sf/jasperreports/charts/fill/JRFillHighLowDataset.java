@@ -51,12 +51,12 @@ import net.sf.jasperreports.engine.fill.JRFillHyperlinkHelper;
  */
 public class JRFillHighLowDataset extends JRFillChartDataset implements JRHighLowDataset
 {
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_CLOSE_VALUE = "charts.high.low.dataset.series.null.close.value";
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_DATE_VALUE = "charts.high.low.dataset.series.null.date.value";
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_HIGH_VALUE = "charts.high.low.dataset.series.null.high.value";
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_LOW_VALUE = "charts.high.low.dataset.series.null.low.value";
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_OPEN_VALUE = "charts.high.low.dataset.series.null.open.value";
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_VOLUME_VALUE = "charts.high.low.dataset.series.null.volume.value";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_CLOSE_VALUE = "charts.high.low.dataset.series.null.close.value";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_DATE_VALUE = "charts.high.low.dataset.series.null.date.value";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_HIGH_VALUE = "charts.high.low.dataset.series.null.high.value";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_LOW_VALUE = "charts.high.low.dataset.series.null.low.value";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_OPEN_VALUE = "charts.high.low.dataset.series.null.open.value";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_VOLUME_VALUE = "charts.high.low.dataset.series.null.volume.value";
 
 	/**
 	 *

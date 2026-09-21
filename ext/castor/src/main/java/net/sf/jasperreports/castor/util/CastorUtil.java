@@ -70,7 +70,7 @@ public class CastorUtil
 {
 	private static final Log log = LogFactory.getLog(CastorUtil.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_MAPPINGS_LOADING_ERROR = "util.castor.mappings.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_MAPPINGS_LOADING_ERROR = "util.castor.mappings.loading.error";
 	
 	/**
 	 * 

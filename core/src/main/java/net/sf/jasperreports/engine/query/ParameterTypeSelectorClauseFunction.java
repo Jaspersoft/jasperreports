@@ -46,8 +46,8 @@ public class ParameterTypeSelectorClauseFunction implements JRClauseFunction
 {
 	
 	private static final Log log = LogFactory.getLog(ParameterTypeSelectorClauseFunction.class);
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_TYPE_SELECTOR_CLAUSE_IMPLEMENTATION_NOT_FOUND = "query.parameter.type.selector.clause.implementation.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_TYPE_SELECTOR_CLAUSE_REQUIRED_TOKEN_NOT_FOUND = "query.parameter.type.selector.clause.required.token.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_TYPE_SELECTOR_CLAUSE_IMPLEMENTATION_NOT_FOUND = "query.parameter.type.selector.clause.implementation.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_TYPE_SELECTOR_CLAUSE_REQUIRED_TOKEN_NOT_FOUND = "query.parameter.type.selector.clause.required.token.not.found";
 	
 	private static final String CONTEXT_KEY_FUNCTION_PER_TYPES_CACHE = 
 			"net.sf.jasperreports.engine.query.ParameterTypeSelectorClauseFunction.cache";
@@ -295,7 +295,7 @@ public class ParameterTypeSelectorClauseFunction implements JRClauseFunction
 
 final class TypesCandidateComparator implements Comparator<Pair<List<Class<?>>, JRClauseFunction>>
 {
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_TYPE_SELECTOR_CANDIDATE_TYPE_SIZE_MISMATCH = "query.parameter.type.selector.candidate.type.size.mismatch";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_PARAMETER_TYPE_SELECTOR_CANDIDATE_TYPE_SIZE_MISMATCH = "query.parameter.type.selector.candidate.type.size.mismatch";
 
 	protected static final TypesCandidateComparator INSTANCE = new TypesCandidateComparator();
 	

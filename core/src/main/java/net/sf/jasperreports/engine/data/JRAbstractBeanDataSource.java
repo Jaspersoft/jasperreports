@@ -47,7 +47,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public abstract class JRAbstractBeanDataSource implements JRRewindableDataSource
 {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_BEAN_FIELD_VALUE_NOT_RETRIEVED = "data.bean.field.value.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_BEAN_FIELD_VALUE_NOT_RETRIEVED = "data.bean.field.value.not.retrieved";
 
 	/**
 	 * Property specifying the JavaBean property name for the dataset field.

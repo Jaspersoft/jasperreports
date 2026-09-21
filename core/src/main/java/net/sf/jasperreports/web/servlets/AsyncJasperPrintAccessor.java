@@ -49,10 +49,10 @@ public class AsyncJasperPrintAccessor implements JasperPrintAccessor, Asynchrono
 {
 
 	private static final Log log = LogFactory.getLog(AsyncJasperPrintAccessor.class);
-	public static final String EXCEPTION_MESSAGE_KEY_LOCK_ATTEMPT_INTERRUPTED = "web.servlets.lock.attempt.interrupted";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_JASPERPRINT_GENERATED = "web.servlets.no.jasperprint.generated";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_GENERATION_CANCELLED = "web.servlets.report.generation.cancelled";
-	public static final String EXCEPTION_MESSAGE_KEY_ASYNC_REPORT_GENERATION_ERROR = "web.servlets.async.report.generation.error";
+	private static final String EXCEPTION_MESSAGE_KEY_LOCK_ATTEMPT_INTERRUPTED = "web.servlets.lock.attempt.interrupted";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_JASPERPRINT_GENERATED = "web.servlets.no.jasperprint.generated";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_GENERATION_CANCELLED = "web.servlets.report.generation.cancelled";
+	private static final String EXCEPTION_MESSAGE_KEY_ASYNC_REPORT_GENERATION_ERROR = "web.servlets.async.report.generation.error";
 	
 	private FillHandle fillHandle;
 	private final Lock lock;

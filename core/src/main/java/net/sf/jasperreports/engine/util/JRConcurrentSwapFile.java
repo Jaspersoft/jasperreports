@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class JRConcurrentSwapFile extends JRSwapFile
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INSUFFICIENT_DATA = "util.concurrent.swap.file.insufficient.data";
+	private static final String EXCEPTION_MESSAGE_KEY_INSUFFICIENT_DATA = "util.concurrent.swap.file.insufficient.data";
 	
 	private final FileChannel fileChannel;
 

@@ -52,8 +52,8 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public abstract class BucketingService
 {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_BUCKET_MEASURE_LIMIT = "crosstabs.bucket.measure.limit";
-	public static final String EXCEPTION_MESSAGE_KEY_BUCKET_DATA_PROCESSED = "crosstabs.bucket.data.processed";
+	private static final String EXCEPTION_MESSAGE_KEY_BUCKET_MEASURE_LIMIT = "crosstabs.bucket.measure.limit";
+	private static final String EXCEPTION_MESSAGE_KEY_BUCKET_DATA_PROCESSED = "crosstabs.bucket.data.processed";
 	
 	@Property(
 			category = PropertyConstants.CATEGORY_CROSSTAB,

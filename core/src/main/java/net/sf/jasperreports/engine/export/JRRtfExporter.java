@@ -123,7 +123,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 	
 	public static final String RTF_EXPORTER_PROPERTIES_PREFIX = JRPropertiesUtil.PROPERTY_PREFIX + "export.rtf.";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_TEXT_HEIGHT = "export.rtf.invalid.text.height";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_TEXT_HEIGHT = "export.rtf.invalid.text.height";
 
 	private static final int LINE_SPACING_FACTOR = 240; //(int)(240 * 2/3f);
 

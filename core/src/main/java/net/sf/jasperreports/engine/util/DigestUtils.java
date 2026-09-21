@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public final class DigestUtils
 {
-	public static final String EXCEPTION_MESSAGE_KEY_MD5_NOT_AVAILABLE = "util.digest.md5.not.available";
+	private static final String EXCEPTION_MESSAGE_KEY_MD5_NOT_AVAILABLE = "util.digest.md5.not.available";
 
 	private static final DigestUtils INSTANCE = new DigestUtils();
 	

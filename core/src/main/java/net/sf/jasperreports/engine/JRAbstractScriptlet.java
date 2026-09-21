@@ -41,10 +41,10 @@ import net.sf.jasperreports.engine.fill.JRFillVariable;
  */
 public abstract class JRAbstractScriptlet
 {
-	public static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "scriptlets.field.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_PARAMETER_NOT_FOUND = "scriptlets.parameter.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_VARIABLE_NOT_FOUND = "scriptlets.variable.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_VARIABLE_VALUE_INCOMPATIBLE = "scriptlets.variable.value.incompatible";
+	private static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "scriptlets.field.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_PARAMETER_NOT_FOUND = "scriptlets.parameter.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_VARIABLE_NOT_FOUND = "scriptlets.variable.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_VARIABLE_VALUE_INCOMPATIBLE = "scriptlets.variable.value.incompatible";
 
 	/**
 	 *

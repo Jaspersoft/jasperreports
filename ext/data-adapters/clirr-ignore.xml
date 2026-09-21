@@ -5,4 +5,9 @@
 		<method>*getInstance()</method>
 		<to>net.sf.jasperreports.dataadapters.repo.DataAdapterFileRepositoryPersistenceServiceFactory</to>
 	</difference>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
+		<differenceType>6010</differenceType>
+		<field>EXCEPTION_MESSAGE_KEY_*</field>
+	</difference>
 </differences>

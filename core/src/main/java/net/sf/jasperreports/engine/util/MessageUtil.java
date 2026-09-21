@@ -40,7 +40,7 @@ import net.sf.jasperreports.engine.JasperReportsContext;
  */
 public final class MessageUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_MESSAGE_PROVIDER_NOT_FOUND = "util.message.provider.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_MESSAGE_PROVIDER_NOT_FOUND = "util.message.provider.not.found";
 	
 	private final JasperReportsContext jasperReportsContext;
 	

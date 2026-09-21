@@ -41,11 +41,11 @@ import net.sf.jasperreports.engine.data.JRAbstractBeanDataSource;
  */
 public abstract class JRHibernateAbstractDataSource implements JRDataSource
 {
-	public static final String EXCEPTION_MESSAGE_KEY_FIELD_ALIAS_TYPE_MISMATCH = "data.hibernate.field.alias.type.mismatch";
-	public static final String EXCEPTION_MESSAGE_KEY_MANY_FIELDS_DETECTED = "data.hibernate.many.fields.detected";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_FIELD_ALIAS = "data.hibernate.no.field.alias";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_FIELD_READER = "data.hibernate.no.field.reader";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_RETURN_ALIAS = "data.hibernate.unknown.return.alias";
+	protected static final String EXCEPTION_MESSAGE_KEY_FIELD_ALIAS_TYPE_MISMATCH = "data.hibernate.field.alias.type.mismatch";
+	protected static final String EXCEPTION_MESSAGE_KEY_MANY_FIELDS_DETECTED = "data.hibernate.many.fields.detected";
+	protected static final String EXCEPTION_MESSAGE_KEY_NO_FIELD_ALIAS = "data.hibernate.no.field.alias";
+	protected static final String EXCEPTION_MESSAGE_KEY_NO_FIELD_READER = "data.hibernate.no.field.reader";
+	protected static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_RETURN_ALIAS = "data.hibernate.unknown.return.alias";
 	
 	public static final char NESTED_DELIM = '.';
 	

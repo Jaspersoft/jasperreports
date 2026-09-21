@@ -67,7 +67,7 @@ public class JRPdfaIccProfileNotFoundException extends JRRuntimeException
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_ICC_PROFILE_NOT_AVAILABLE = "util.icc.profile.not.available";
+	private static final String EXCEPTION_MESSAGE_KEY_ICC_PROFILE_NOT_AVAILABLE = "util.icc.profile.not.available";
 
 	/**
 	 * 

@@ -113,8 +113,8 @@ import net.sf.jasperreports.engine.analytics.dataset.MultiAxisDataset;
  */
 public class JRBaseObjectFactory extends JRAbstractObjectFactory
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CROSSTAB_ID_NOT_FOUND = "engine.object.factory.crosstab.id.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_EXPRESSION_ID_NOT_FOUND = "engine.object.factory.expression.id.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_CROSSTAB_ID_NOT_FOUND = "engine.object.factory.crosstab.id.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_EXPRESSION_ID_NOT_FOUND = "engine.object.factory.expression.id.not.found";
 
 	/**
 	 *

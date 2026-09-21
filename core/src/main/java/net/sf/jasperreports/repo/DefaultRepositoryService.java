@@ -95,7 +95,7 @@ public class DefaultRepositoryService implements StreamRepositoryService
 	public static final String PROPERTY_URL_WHITELIST_PREFIX =
 			JRPropertiesUtil.PROPERTY_PREFIX + "repository.url.whitelist.";
 
-	public static final String EXCEPTION_MESSAGE_KEY_NOT_IMPLEMENTED = "repo.default.not.implemented";
+	private static final String EXCEPTION_MESSAGE_KEY_NOT_IMPLEMENTED = "repo.default.not.implemented";
 	
 	/**
 	 * 

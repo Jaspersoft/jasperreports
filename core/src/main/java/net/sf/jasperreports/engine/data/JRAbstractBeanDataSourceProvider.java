@@ -46,7 +46,7 @@ import net.sf.jasperreports.engine.design.JRDesignField;
  */
 public abstract class JRAbstractBeanDataSourceProvider implements JRDataSourceProvider 
 {
-	public static final String EXCEPTION_MESSAGE_KEY_NULL_BEAN_CLASS = "data.bean.constructor.argument.cannot.be.null";
+	private static final String EXCEPTION_MESSAGE_KEY_NULL_BEAN_CLASS = "data.bean.constructor.argument.cannot.be.null";
 
 	/** The introspected bean class */
 	private Class<?> beanClass;

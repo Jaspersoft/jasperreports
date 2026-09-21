@@ -58,8 +58,8 @@ public final class JRPropertiesUtil
 	 * The prefix used by all properties.
 	 */
 	public static final String PROPERTY_PREFIX = "net.sf.jasperreports.";
-	public static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FILE_FAILURE = "engine.load.properties.file.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FAILURE = "engine.load.properties.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FILE_FAILURE = "engine.load.properties.file.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FAILURE = "engine.load.properties.failure";
 
 	private JasperReportsContext jasperReportsContext;
 

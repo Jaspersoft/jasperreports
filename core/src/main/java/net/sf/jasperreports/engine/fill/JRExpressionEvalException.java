@@ -34,7 +34,7 @@ import net.sf.jasperreports.engine.JRExpression;
 public class JRExpressionEvalException extends JRException
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
-	public static final String EXCEPTION_MESSAGE_KEY_EVALUATE_EXPRESSION_ERROR = "fill.common.evaluate.expression.error";
+	private static final String EXCEPTION_MESSAGE_KEY_EVALUATE_EXPRESSION_ERROR = "fill.common.evaluate.expression.error";
 
 	/**
 	 *

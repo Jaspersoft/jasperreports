@@ -48,7 +48,7 @@ import net.sf.jasperreports.engine.JRVirtualizable;
  */
 public class JRGzipVirtualizer extends JRAbstractLRUVirtualizer
 {
-	public static final String EXCEPTION_MESSAGE_KEY_NO_DATA_FOUND = "fill.virtualizer.no.data.found";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_DATA_FOUND = "fill.virtualizer.no.data.found";
 	
 	private final Map<String,byte[]> zippedData;
 

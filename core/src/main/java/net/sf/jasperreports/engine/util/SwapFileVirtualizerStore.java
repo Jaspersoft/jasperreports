@@ -45,9 +45,9 @@ import org.apache.commons.logging.LogFactory;
 public class SwapFileVirtualizerStore implements VirtualizerStore
 {
 	private static final Log log = LogFactory.getLog(SwapFileVirtualizerStore.class);
-	public static final String EXCEPTION_MESSAGE_KEY_DEVIRTUALIZING_ERROR = "util.swap.file.virtualizer.devirtualizing.error";
-	public static final String EXCEPTION_MESSAGE_KEY_UNABLE_TO_READ_DATA = "util.swap.file.virtualizer.unable.to.read.data";
-	public static final String EXCEPTION_MESSAGE_KEY_VIRTUALIZING_ERROR = "util.swap.file.virtualizer.virtualizing.error";
+	private static final String EXCEPTION_MESSAGE_KEY_DEVIRTUALIZING_ERROR = "util.swap.file.virtualizer.devirtualizing.error";
+	private static final String EXCEPTION_MESSAGE_KEY_UNABLE_TO_READ_DATA = "util.swap.file.virtualizer.unable.to.read.data";
+	private static final String EXCEPTION_MESSAGE_KEY_VIRTUALIZING_ERROR = "util.swap.file.virtualizer.virtualizing.error";
 	
 	private final JRSwapFile swap;
 	private final boolean swapOwner;

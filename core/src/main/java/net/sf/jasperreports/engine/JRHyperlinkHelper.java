@@ -34,10 +34,10 @@ import net.sf.jasperreports.engine.type.HyperlinkTypeEnum;
  */
 public final class JRHyperlinkHelper
 {
-	public static final String EXCEPTION_MESSAGE_KEY_TARGET_BYTE_CONSTANT_USED = "engine.hyperlink.target.byte.constant.used";
-	public static final String EXCEPTION_MESSAGE_KEY_TYPE_BYTE_CONSTANT_USED = "engine.hyperlink.type.byte.constant.used";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_HYPERLINK_TARGET = "engine.hyperlink.unknown.hyperlink.target";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_HYPERLINK_TYPE = "engine.hyperlink.unknown.hyperlink.type";
+	private static final String EXCEPTION_MESSAGE_KEY_TARGET_BYTE_CONSTANT_USED = "engine.hyperlink.target.byte.constant.used";
+	private static final String EXCEPTION_MESSAGE_KEY_TYPE_BYTE_CONSTANT_USED = "engine.hyperlink.type.byte.constant.used";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_HYPERLINK_TARGET = "engine.hyperlink.unknown.hyperlink.target";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_HYPERLINK_TYPE = "engine.hyperlink.unknown.hyperlink.type";
 	
 
 	/**

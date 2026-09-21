@@ -45,7 +45,7 @@ public class ValueClassFilter extends AbstractClassFilter
 	public static final String PROPERTY_PREFIX_CLASS_WHITELIST =
 			JRPropertiesUtil.PROPERTY_PREFIX + "value.deserialization.class.whitelist.";
 
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_VISIBLE = "value.deserialization.class.not.visible";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_VISIBLE = "value.deserialization.class.not.visible";
 
 	public ValueClassFilter(JasperReportsContext jasperReportsContext)
 	{

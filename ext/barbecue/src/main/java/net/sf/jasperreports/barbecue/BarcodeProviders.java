@@ -38,8 +38,8 @@ import net.sourceforge.barbecue.linear.ean.UCCEAN128Barcode;
  */
 public final class BarcodeProviders
 {
-	public static final String EXCEPTION_MESSAGE_KEY_BARCODE_PROVIDER_NOT_FOUND = "components.barbecue.barcode.provider.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_ERROR_CREATING_BARCODE = "components.barbecue.error.creating.barcode";
+	private static final String EXCEPTION_MESSAGE_KEY_BARCODE_PROVIDER_NOT_FOUND = "components.barbecue.barcode.provider.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_ERROR_CREATING_BARCODE = "components.barbecue.error.creating.barcode";
 	
 	private static Map<String, BarcodeProvider> providers;
 

@@ -62,7 +62,7 @@ import net.sf.jasperreports.export.type.AccessibilityTagEnum;
 public class Tabulator
 {
 	private static final Log log = LogFactory.getLog(Tabulator.class);
-	public static final String EXCEPTION_MESSAGE_KEY_DROPPING_PARENT_ERROR = "export.tabulator.dropping.parent.error";
+	private static final String EXCEPTION_MESSAGE_KEY_DROPPING_PARENT_ERROR = "export.tabulator.dropping.parent.error";
 	
 	private final ExporterFilter filter;
 	private final List<? extends JRPrintElement> elements;

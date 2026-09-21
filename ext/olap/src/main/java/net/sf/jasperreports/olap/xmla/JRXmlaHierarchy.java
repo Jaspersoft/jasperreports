@@ -44,7 +44,7 @@ public class JRXmlaHierarchy implements JROlapHierarchy
 	
 	private final static Log log = LogFactory.getLog(JRXmlaHierarchy.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_XMLA_INVALID_DIMENSION_HIERARCHY = "data.olap.xmla.invalid.dimension.hierarchy";
+	private static final String EXCEPTION_MESSAGE_KEY_XMLA_INVALID_DIMENSION_HIERARCHY = "data.olap.xmla.invalid.dimension.hierarchy";
 
 	private static final Pattern DIMENSION_HIERARCHY_PATTERN = Pattern.compile("\\[.*\\]\\.\\[.*\\]");
 

@@ -51,7 +51,7 @@ public class JsonUtil {
 	
 	private static final Log log = LogFactory.getLog(JsonUtil.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_OPERATOR = "util.json.unknown.operator";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_OPERATOR = "util.json.unknown.operator";
 	
 	public static boolean evaluateJsonExpression(JsonNode contextNode, String attributeExpression) throws JRException {
 		

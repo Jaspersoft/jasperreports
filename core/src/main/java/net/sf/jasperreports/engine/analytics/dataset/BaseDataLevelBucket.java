@@ -44,7 +44,7 @@ public class BaseDataLevelBucket implements DataLevelBucket, Serializable
 	
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
-	public static final String EXCEPTION_MESSAGE_KEY_BUCKET_LOAD_ERROR = "engine.analytics.dataset.bucket.load.error";
+	private static final String EXCEPTION_MESSAGE_KEY_BUCKET_LOAD_ERROR = "engine.analytics.dataset.bucket.load.error";
 	
 	protected String valueClassName;
 	protected String valueClassRealName;

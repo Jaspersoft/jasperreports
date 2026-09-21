@@ -54,7 +54,7 @@ public class XmlaDataAdapterService extends AbstractDataAdapterService
 
 	private static final Log log = LogFactory.getLog(XmlaDataAdapterService.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_XMLA_CONNECTION = "data.xmla.connection";
+	private static final String EXCEPTION_MESSAGE_KEY_XMLA_CONNECTION = "data.xmla.connection";
 	
 	/**
 	 * 

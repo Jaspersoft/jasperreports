@@ -50,7 +50,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public final class JasperPrintManager
 {
-	public static final String EXCEPTION_MESSAGE_KEY_NO_AVAILABLE_PRINTER = "print.no.available.printer";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_AVAILABLE_PRINTER = "print.no.available.printer";
 	
 	private JasperReportsContext jasperReportsContext;
 

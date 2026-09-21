@@ -48,8 +48,8 @@ public class JavaScriptClassLoader extends DefiningClassLoader
 
 	private static final Log log = LogFactory.getLog(JavaScriptClassLoader.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INSTANCE_ERROR = "compilers.javascript.instance.error";
-	public static final String EXCEPTION_MESSAGE_KEY_LOAD_ERROR = "compilers.javascript.load.error";
+	private static final String EXCEPTION_MESSAGE_KEY_INSTANCE_ERROR = "compilers.javascript.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_LOAD_ERROR = "compilers.javascript.load.error";
 	
 	private volatile ProtectionDomain protectionDomain;
 	

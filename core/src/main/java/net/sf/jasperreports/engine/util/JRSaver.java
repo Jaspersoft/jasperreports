@@ -52,9 +52,9 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public final class JRSaver
 {
-	public static final String EXCEPTION_MESSAGE_KEY_EXPRESSIONS_CLASS_FILE_SAVE_ERROR = "util.saver.expressions.class.file.save.error";
-	public static final String EXCEPTION_MESSAGE_KEY_FILE_SAVE_ERROR = "util.saver.file.save.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_SAVE_ERROR = "util.saver.output.stream.save.error";
+	private static final String EXCEPTION_MESSAGE_KEY_EXPRESSIONS_CLASS_FILE_SAVE_ERROR = "util.saver.expressions.class.file.save.error";
+	private static final String EXCEPTION_MESSAGE_KEY_FILE_SAVE_ERROR = "util.saver.file.save.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_SAVE_ERROR = "util.saver.output.stream.save.error";
 
 	/**
 	 *

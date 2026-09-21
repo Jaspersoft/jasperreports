@@ -43,11 +43,11 @@ public class JRPrintImageArea implements Serializable
 
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_CIRCLE_COORDINATES_ERROR = "engine.print.image.area.circle.coordinates.error";
-	public static final String EXCEPTION_MESSAGE_KEY_POLYGON_COORDINATES_ERROR = "engine.print.image.area.polygon.coordinates.error";
-	public static final String EXCEPTION_MESSAGE_KEY_RECTANGLE_COORDINATES_ERROR = "engine.print.image.area.rectangle.coordinates.error";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_HTML_SHAPE = "engine.print.image.area.unknown.html.shape";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_SHAPE = "engine.print.image.area.unknown.shape";
+	private static final String EXCEPTION_MESSAGE_KEY_CIRCLE_COORDINATES_ERROR = "engine.print.image.area.circle.coordinates.error";
+	private static final String EXCEPTION_MESSAGE_KEY_POLYGON_COORDINATES_ERROR = "engine.print.image.area.polygon.coordinates.error";
+	private static final String EXCEPTION_MESSAGE_KEY_RECTANGLE_COORDINATES_ERROR = "engine.print.image.area.rectangle.coordinates.error";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_HTML_SHAPE = "engine.print.image.area.unknown.html.shape";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_SHAPE = "engine.print.image.area.unknown.shape";
 	
 	public final static byte SHAPE_DEFAULT = 0;
 	public final static byte SHAPE_RECTANGLE = 1;

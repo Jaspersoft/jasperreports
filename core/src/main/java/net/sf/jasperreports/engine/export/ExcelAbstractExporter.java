@@ -87,14 +87,14 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	public static final String DEFAULT_DEFINED_NAME_SCOPE = "workbook";
 	public static final String DEFAULT_DEFINED_NAME_SCOPE_SEPARATOR = "\\u007C";	// the '|' character
 	
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_ADD_CELL = "export.xls.common.cannot.add.cell";
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_MERGE_CELLS = "export.xls.common.cannot.merge.cells";
-	public static final String EXCEPTION_MESSAGE_KEY_CELL_FORMAT_TEMPLATE_ERROR = "export.xls.common.cell.format.template.error";
-	public static final String EXCEPTION_MESSAGE_KEY_COLUMN_INDEX_BEYOND_LIMIT = "export.xls.common.column.index.beyond.limit";
-	public static final String EXCEPTION_MESSAGE_KEY_LOADED_FONTS_ERROR = "export.xls.common.loaded.fonts.error";
-	public static final String EXCEPTION_MESSAGE_KEY_NEGATIVE_COLUMN_INDEX = "export.xls.common.negative.column.index";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_GENERATION_ERROR = "export.xls.common.report.generation.error";
-	public static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_NOT_FOUND = "export.xls.common.template.not.found";
+	protected static final String EXCEPTION_MESSAGE_KEY_CANNOT_ADD_CELL = "export.xls.common.cannot.add.cell";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_MERGE_CELLS = "export.xls.common.cannot.merge.cells";
+	private static final String EXCEPTION_MESSAGE_KEY_CELL_FORMAT_TEMPLATE_ERROR = "export.xls.common.cell.format.template.error";
+	protected static final String EXCEPTION_MESSAGE_KEY_COLUMN_INDEX_BEYOND_LIMIT = "export.xls.common.column.index.beyond.limit";
+	private static final String EXCEPTION_MESSAGE_KEY_LOADED_FONTS_ERROR = "export.xls.common.loaded.fonts.error";
+	private static final String EXCEPTION_MESSAGE_KEY_NEGATIVE_COLUMN_INDEX = "export.xls.common.negative.column.index";
+	protected static final String EXCEPTION_MESSAGE_KEY_REPORT_GENERATION_ERROR = "export.xls.common.report.generation.error";
+	protected static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_NOT_FOUND = "export.xls.common.template.not.found";
 
 	/**
 	 * Property that stores the formula which has to be applied to a given cell in an excel sheet.

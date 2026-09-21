@@ -82,8 +82,8 @@ public class JRExpressionCollector
 	
 	private static final Log log = LogFactory.getLog(JRExpressionCollector.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_EXPRESSION_NOT_FOUND = "engine.expression.collector.expression.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_TWO_GENERATED_IDS = "engine.expression.collector.two.generated.ids";
+	private static final String EXCEPTION_MESSAGE_KEY_EXPRESSION_NOT_FOUND = "engine.expression.collector.expression.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_TWO_GENERATED_IDS = "engine.expression.collector.two.generated.ids";
 	
 	public static JRExpressionCollector collector(JasperReportsContext jasperReportsContext, JRReport report)
 	{

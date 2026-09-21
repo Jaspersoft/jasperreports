@@ -46,8 +46,8 @@ public abstract class AbstractRenderToImageDataRenderer extends AbstractRenderTo
 	 */
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
-	public static final String EXCEPTION_MESSAGE_KEY_DIMENSION_MUST_OVERRIDE = "engine.renderable.svg.dimension.must.override";
-	public static final String EXCEPTION_MESSAGE_KEY_DIMENSION_NULL_NOT_ALLOWED = "engine.renderable.svg.dimension.null.not.allowed";
+	private static final String EXCEPTION_MESSAGE_KEY_DIMENSION_MUST_OVERRIDE = "engine.renderable.svg.dimension.must.override";
+	private static final String EXCEPTION_MESSAGE_KEY_DIMENSION_NULL_NOT_ALLOWED = "engine.renderable.svg.dimension.null.not.allowed";
 
 	
 	@Override

@@ -50,7 +50,7 @@ public class CrosstabBucketingService extends BucketingService implements Bucket
 	
 	private static final Log log = LogFactory.getLog(CrosstabBucketingService.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_DATA_NOT_PROCESSED = "crosstabs.calculation.data.not.processed";
+	private static final String EXCEPTION_MESSAGE_KEY_DATA_NOT_PROCESSED = "crosstabs.calculation.data.not.processed";
 	
 	protected HeaderCell[][] colHeaders;
 	protected HeaderCell[][] rowHeaders;

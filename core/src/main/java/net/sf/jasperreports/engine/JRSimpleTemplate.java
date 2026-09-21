@@ -42,7 +42,7 @@ import net.sf.jasperreports.engine.design.events.JRPropertyChangeSupport;
  */
 public class JRSimpleTemplate implements JRTemplate, Serializable, JRChangeEventsSupport {
 
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_TEMPLATE_STYLE = "engine.template.duplicate.template.style";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_TEMPLATE_STYLE = "engine.template.duplicate.template.style";
 
 	public static final String PROPERTY_STYLE = "style";
 	public static final String PROPERTY_INCLUDED_TEMPLATES = "incluldedTemplates";

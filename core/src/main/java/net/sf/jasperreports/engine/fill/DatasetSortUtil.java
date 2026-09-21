@@ -55,8 +55,8 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public class DatasetSortUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_SORT_FIELD_NOT_FOUND = "fill.dataset.sort.field.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_SORT_VARIABLE_NOT_FOUND = "fill.dataset.sort.variable.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_SORT_FIELD_NOT_FOUND = "fill.dataset.sort.field.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_SORT_VARIABLE_NOT_FOUND = "fill.dataset.sort.variable.not.found";
 
 	@Property(
 			category = PropertyConstants.CATEGORY_FILL,

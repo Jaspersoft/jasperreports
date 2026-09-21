@@ -41,7 +41,7 @@ import net.sf.jasperreports.engine.util.xml.JRXPathExecuter;
  */
 public class XalanXPathExecuter implements JRXPathExecuter {
 
-	public static final String EXCEPTION_MESSAGE_KEY_XPATH_SELECTION_FAILURE = "util.xml.xalan.xpath.selection.failure";
+	protected static final String EXCEPTION_MESSAGE_KEY_XPATH_SELECTION_FAILURE = "util.xml.xalan.xpath.selection.failure";
 
 	// XPath API facade
 	private CachedXPathAPI xpathAPI = new CachedXPathAPI();

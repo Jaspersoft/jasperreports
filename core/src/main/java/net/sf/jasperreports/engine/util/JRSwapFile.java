@@ -306,7 +306,7 @@ public class JRSwapFile
 	
 	protected static class LongQueue
 	{
-		public static final String EXCEPTION_MESSAGE_KEY_QUEUE_UNDERFLOW = "util.long.queue.underflow";
+		private static final String EXCEPTION_MESSAGE_KEY_QUEUE_UNDERFLOW = "util.long.queue.underflow";
 		
 		private final int minGrowCount;
 		private long[] vals;

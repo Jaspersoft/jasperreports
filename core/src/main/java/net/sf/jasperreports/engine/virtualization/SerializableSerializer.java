@@ -33,9 +33,9 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class SerializableSerializer<T extends VirtualizationSerializable> implements ObjectSerializer<T>
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_INSTANCE_ERROR = "engine.virtualization.serializable.serializer.class.instance.error";
-	public static final String EXCEPTION_MESSAGE_KEY_INITIALIZATION_FAILED = "engine.virtualization.serializable.serializer.initialization.failed";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_VALUE_TYPE = "engine.virtualization.serializable.serializer.unexpected.value.type";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_INSTANCE_ERROR = "engine.virtualization.serializable.serializer.class.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_INITIALIZATION_FAILED = "engine.virtualization.serializable.serializer.initialization.failed";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_VALUE_TYPE = "engine.virtualization.serializable.serializer.unexpected.value.type";
 	
 	private static final Class<?>[] NO_ARGS_TYPES = new Class<?>[0];
 	private static final Object[] NO_ARGS = new Object[0];

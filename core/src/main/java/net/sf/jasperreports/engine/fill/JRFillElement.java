@@ -75,7 +75,7 @@ public abstract class JRFillElement implements JRElement, JRFillCloneable, JRSty
 	/**
 	 *
 	 */
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_BOOKMARK_LEVEL = "fill.anchor.bookmark.level.invalid";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_BOOKMARK_LEVEL = "fill.anchor.bookmark.level.invalid";
 
 
 	/**

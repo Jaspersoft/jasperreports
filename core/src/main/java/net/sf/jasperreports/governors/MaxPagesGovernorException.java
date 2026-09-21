@@ -34,7 +34,7 @@ public class MaxPagesGovernorException extends GovernorException
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_MAX_PAGES_LIMIT_EXCEEDED = "governors.max.pages.limit.exceeded";
+	private static final String EXCEPTION_MESSAGE_KEY_MAX_PAGES_LIMIT_EXCEEDED = "governors.max.pages.limit.exceeded";
 
 	private int maxPages;
 	

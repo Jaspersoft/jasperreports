@@ -58,7 +58,7 @@ import net.sf.jasperreports.engine.type.ModeEnum;
  */
 public class JRFillCellContents extends JRFillElementContainer implements JRCellContents, JRStyleSetter
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_SHRINK_CONTENTS = "fill.cell.contents.cannot.shrink.contents";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_SHRINK_CONTENTS = "fill.cell.contents.cannot.shrink.contents";
 
 	private final Map<StretchedContents,JRFillCellContents> transformedContentsCache;
 	private final Map<BoxContents,JRFillCellContents> boxContentsCache;

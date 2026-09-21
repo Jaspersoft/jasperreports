@@ -50,9 +50,9 @@ import net.sf.jasperreports.util.SecretsUtil;
 public class JdbcDataAdapterService extends AbstractClasspathAwareDataAdapterService 
 {
 	private static final Log log = LogFactory.getLog(JdbcDataAdapterService.class);
-	public static final String EXCEPTION_MESSAGE_KEY_PASSWORD_REQUIRED = "data.jdbc.password.required";
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_URL = "data.jdbc.invalid.url";
-	public static final String EXCEPTION_MESSAGE_KEY_CONNECTION_NOT_CREATED = "data.jdbc.connection.not.created";
+	private static final String EXCEPTION_MESSAGE_KEY_PASSWORD_REQUIRED = "data.jdbc.password.required";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_URL = "data.jdbc.invalid.url";
+	private static final String EXCEPTION_MESSAGE_KEY_CONNECTION_NOT_CREATED = "data.jdbc.connection.not.created";
 	
 	private Connection connection = null; 
 

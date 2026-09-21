@@ -94,10 +94,10 @@ public class JRFillSubreport extends JRFillElement implements JRSubreport
 
 	private static final Log log = LogFactory.getLog(JRFillSubreport.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_PROPERTY_NOT_SET = "fill.subreport.property.not.set";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_REWINDABLE_DATA_SOURCE = "fill.subreport.no.rewindable.data.source";
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_SECTION_TYPE = "fill.subreport.unsupported.section.type";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_SOURCE_CLASS = "fill.subreport.unknown.source.class";
+	private static final String EXCEPTION_MESSAGE_KEY_PROPERTY_NOT_SET = "fill.subreport.property.not.set";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_REWINDABLE_DATA_SOURCE = "fill.subreport.no.rewindable.data.source";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_SECTION_TYPE = "fill.subreport.unsupported.section.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_SOURCE_CLASS = "fill.subreport.unknown.source.class";
 			
 	/**
 	 * Property used to specify when rectangle elements should be generated  for subreports during the report filling. 

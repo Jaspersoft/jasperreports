@@ -45,7 +45,7 @@ import net.sf.jasperreports.engine.util.JRXmlUtils;
  */
 public class JRXmlDocumentProducer {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_DOCUMENT_BUILDER_CREATION_FAILURE = "util.xml.document.builder.creation.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_DOCUMENT_BUILDER_CREATION_FAILURE = "util.xml.document.builder.creation.failure";
 
 	private File file;
 	

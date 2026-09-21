@@ -144,7 +144,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class DefaultChartTheme implements ChartTheme
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_CHART_TYPE = "fill.chart.theme.unsupported.chart.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_CHART_TYPE = "fill.chart.theme.unsupported.chart.type";
 	
 	/**
 	 *

@@ -72,9 +72,9 @@ public class JRVirtualizationContext implements Serializable, VirtualizationList
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_LOCKING_INTERRUPTED = "fill.virtualizer.locking.interrupted";
-	public static final String EXCEPTION_MESSAGE_KEY_RENDERER_NOT_FOUND_IN_CONTEXT = "fill.virtualizer.renderer.not.found.in.context";
-	public static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_NOT_FOUND_IN_CONTEXT = "fill.virtualizer.template.not.found.in.context";
+	private static final String EXCEPTION_MESSAGE_KEY_LOCKING_INTERRUPTED = "fill.virtualizer.locking.interrupted";
+	private static final String EXCEPTION_MESSAGE_KEY_RENDERER_NOT_FOUND_IN_CONTEXT = "fill.virtualizer.renderer.not.found.in.context";
+	private static final String EXCEPTION_MESSAGE_KEY_TEMPLATE_NOT_FOUND_IN_CONTEXT = "fill.virtualizer.template.not.found.in.context";
 	
 	private static final Log log = LogFactory.getLog(JRVirtualizationContext.class);
 	

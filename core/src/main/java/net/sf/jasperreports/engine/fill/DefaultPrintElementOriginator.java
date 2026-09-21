@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class DefaultPrintElementOriginator implements PrintElementOriginator
 {
-	public static final String EXCEPTION_MESSAGE_KEY_MAXIMUM_ELEMENTS_NUMBER_REACHED = "fill.print.element.maximum.elements.number.reached";
+	private static final String EXCEPTION_MESSAGE_KEY_MAXIMUM_ELEMENTS_NUMBER_REACHED = "fill.print.element.maximum.elements.number.reached";
 
 	private final int sourceElementId;
 	private final AtomicInteger printIdCounter;

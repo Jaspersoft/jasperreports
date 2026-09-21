@@ -48,7 +48,7 @@ public class SortedDataSource implements JRRewindableDataSource, IndexedDataSour
 	
 	private static final Log log = LogFactory.getLog(SortedDataSource.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "data.sorted.field.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_FIELD_NOT_FOUND = "data.sorted.field.not.found";
 	
 	public static class SortRecord
 	{

@@ -41,7 +41,7 @@ import net.sf.jasperreports.engine.type.WhenResourceMissingTypeEnum;
  */
 public class JRCrosstabExpressionEvaluator implements JRFillExpressionEvaluator
 {
-	public static final String EXCEPTION_MESSAGE_KEY_EVALUATION_TYPE_NOT_SUPPORTED = "crosstabs.evaluation.type.not.supported";
+	private static final String EXCEPTION_MESSAGE_KEY_EVALUATION_TYPE_NOT_SUPPORTED = "crosstabs.evaluation.type.not.supported";
 	
 	private final JREvaluator evaluator;
 	private JRFillDataset dataset;

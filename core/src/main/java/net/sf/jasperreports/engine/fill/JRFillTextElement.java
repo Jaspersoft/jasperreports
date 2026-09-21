@@ -66,7 +66,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public abstract class JRFillTextElement extends JRFillElement implements JRTextElement
 {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_START_INDEX = "fill.text.element.invalid.start.index";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_START_INDEX = "fill.text.element.invalid.start.index";
 
 	@Property(
 			category = PropertyConstants.CATEGORY_FILL,

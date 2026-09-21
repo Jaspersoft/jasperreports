@@ -34,7 +34,7 @@ import net.sf.jasperreports.engine.JasperReport;
  */
 public final class JRReportUtils
 {
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_SUBDATASET_NOT_FOUND = "util.report.subdataset.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_SUBDATASET_NOT_FOUND = "util.report.subdataset.not.found";
 	
 	public static JRDataset findSubdataset(JRDatasetRun datasetRun, JRReport report)
 	{

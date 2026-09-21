@@ -83,7 +83,7 @@ public class ReportConverter
 
 	private static final Log log = LogFactory.getLog(ReportConverter.class);
 	public static final Color GRID_LINE_COLOR = new Color(170, 170, 255);
-	public static final String EXCEPTION_MESSAGE_KEY_CIRCULAR_DEPENDENCY_FOUND = "convert.report.converter.circular.dependency.found";
+	private static final String EXCEPTION_MESSAGE_KEY_CIRCULAR_DEPENDENCY_FOUND = "convert.report.converter.circular.dependency.found";
 	
 	private final JasperReportsContext jasperReportsContext;
 	private final ComponentsEnvironment componentsEnvironment;

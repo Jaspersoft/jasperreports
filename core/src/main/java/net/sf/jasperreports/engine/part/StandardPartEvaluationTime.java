@@ -40,8 +40,8 @@ public class StandardPartEvaluationTime implements PartEvaluationTime, Serializa
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;//FIXMEBOOK readObject to preserve constants
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_EVALUATION_TYPE = "engine.part.invalid.evaluation.type";
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_SIMPLE_EVALUATION_TYPE = "engine.part.invalid.simple.evaluation.type";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_EVALUATION_TYPE = "engine.part.invalid.evaluation.type";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_SIMPLE_EVALUATION_TYPE = "engine.part.invalid.simple.evaluation.type";
 
 	public final static StandardPartEvaluationTime EVALUATION_NOW = new StandardPartEvaluationTime(PartEvaluationTimeType.NOW, null);
 	

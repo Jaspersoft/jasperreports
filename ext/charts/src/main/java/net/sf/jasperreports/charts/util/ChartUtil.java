@@ -70,8 +70,8 @@ import net.sf.jasperreports.engine.util.JRSingletonCache;
  */
 public final class ChartUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CHART_THEME_NOT_FOUND = "charts.util.chart.theme.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_RENDERER_FACTORY_NOT_SPECIFIED = "charts.util.renderer.factory.not.specified";
+	private static final String EXCEPTION_MESSAGE_KEY_CHART_THEME_NOT_FOUND = "charts.util.chart.theme.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_RENDERER_FACTORY_NOT_SPECIFIED = "charts.util.renderer.factory.not.specified";
 	/**
 	 *
 	 */

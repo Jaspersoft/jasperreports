@@ -61,7 +61,7 @@ public class JavaScriptEvaluator extends JREvaluator implements JasperReportsCon
 	public static final String PROPERTY_OPTIMIZATION_LEVEL = JRPropertiesUtil.PROPERTY_PREFIX 
 			+ "javascript.evaluator.optimization.level";
 	
-	public static final String EXCEPTION_MESSAGE_KEY_EVALUATOR_LOAD_ERROR = "compilers.javascript.evaluator.load.error";
+	private static final String EXCEPTION_MESSAGE_KEY_EVALUATOR_LOAD_ERROR = "compilers.javascript.evaluator.load.error";
 	
 	private final JasperReportsContext jrContext;
 	private final JavaScriptCompileData compileData;

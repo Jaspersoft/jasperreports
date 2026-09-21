@@ -62,8 +62,8 @@ import net.sf.jasperreports.repo.SimpleRepositoryContext;
 public class JsonQLDataSource extends JRAbstractTextDataSource implements JsonData<JsonQLDataSource>, RandomAccessDataSource {
 	private static final Log log = LogFactory.getLog(JsonQLDataSource.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_NO_DATA = "data.json.no.data";
-	public static final String EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED = "data.json.field.value.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_DATA = "data.json.no.data";
+	private static final String EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED = "data.json.field.value.not.retrieved";
 
 	/**
 	 * Property specifying the JSONQL expression for the dataset field.

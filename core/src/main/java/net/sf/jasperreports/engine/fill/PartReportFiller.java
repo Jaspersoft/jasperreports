@@ -78,9 +78,9 @@ public class PartReportFiller extends BaseReportFiller
 {
 	private static final Log log = LogFactory.getLog(PartReportFiller.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_EVALUATION_GROUP_NOT_FOUND = "fill.part.filler.evaluation.group.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_EVALUATION_TIME_TYPE = "fill.part.filler.unknown.evaluation.time.type";
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_SECTION_TYPE = "fill.part.filler.unsupported.section.type";
+	private static final String EXCEPTION_MESSAGE_KEY_EVALUATION_GROUP_NOT_FOUND = "fill.part.filler.evaluation.group.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_EVALUATION_TIME_TYPE = "fill.part.filler.unknown.evaluation.time.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_SECTION_TYPE = "fill.part.filler.unsupported.section.type";
 	
 	private FillParts detailParts;
 	private List<GroupFillParts> groupParts;

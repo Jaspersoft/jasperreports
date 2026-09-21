@@ -169,9 +169,9 @@ import net.sf.jasperreports.engine.xml.JRXmlWriter;
  */
 public final class JasperCompileManager
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INSTANTIATE_REPORT_COMPILER_FAILURE = "engine.instantiate.report.compiler.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_COMPILER_CLASS_NOT_FOUND = "engine.report.compiler.class.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_COMPILER_NOT_SET = "engine.report.compiler.not.set";
+	private static final String EXCEPTION_MESSAGE_KEY_INSTANTIATE_REPORT_COMPILER_FAILURE = "engine.instantiate.report.compiler.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_COMPILER_CLASS_NOT_FOUND = "engine.report.compiler.class.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_COMPILER_NOT_SET = "engine.report.compiler.not.set";
 	
 	private JasperReportsContext jasperReportsContext;
 

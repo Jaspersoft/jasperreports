@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.ParameterContributorContext;
  */
 public final class DataAdapterServiceUtil
 {
-	public static final String EXCEPTION_MESSAGE_KEY_SERVICE_FACTORY_NOT_REGISTERED = "data.adapter.service.factory.not.registered";
+	private static final String EXCEPTION_MESSAGE_KEY_SERVICE_FACTORY_NOT_REGISTERED = "data.adapter.service.factory.not.registered";
 	
 	private ParameterContributorContext paramContribContext;
 

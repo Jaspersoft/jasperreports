@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.util.BigDecimalUtils;
  */
 public final class JRBigDecimalIncrementerFactory extends JRAbstractExtendedIncrementerFactory
 {
-	public static final String EXCEPTION_MESSAGE_KEY_VALUE_NOT_SUPPORTED = "fill.big.decimal.value.not.supported";
+	private static final String EXCEPTION_MESSAGE_KEY_VALUE_NOT_SUPPORTED = "fill.big.decimal.value.not.supported";
 
 	/**
 	 *

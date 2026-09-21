@@ -44,7 +44,7 @@ public class JRXmlaResult implements JROlapResult
 
 	private final static Log log = LogFactory.getLog(JRXmlaResult.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_XMLA_AXIS_POSITIONS_NUMBER_ERROR = "data.olap.xmla.axis.positions.number.error";
+	private static final String EXCEPTION_MESSAGE_KEY_XMLA_AXIS_POSITIONS_NUMBER_ERROR = "data.olap.xmla.axis.positions.number.error";
 	
 	private List<JRXmlaResultAxis> axesList = new ArrayList<>();
 	private JRXmlaResultAxis[] axes;

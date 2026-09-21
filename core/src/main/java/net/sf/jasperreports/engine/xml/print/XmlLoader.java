@@ -50,10 +50,10 @@ public class XmlLoader
 	
 	private static final Log log = LogFactory.getLog(XmlLoader.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_ELEMENT = "xml.print.unexpected.element";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_START_ELEMENT = "xml.print.unexpected.start.element";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_END_ELEMENT = "xml.print.unexpected.end.element";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_EVENT_TYPE = "xml.print.unexpected.event.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_ELEMENT = "xml.print.unexpected.element";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_START_ELEMENT = "xml.print.unexpected.start.element";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_END_ELEMENT = "xml.print.unexpected.end.element";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_EVENT_TYPE = "xml.print.unexpected.event.type";
 	
 	private XMLStreamReader reader;
 	private int currentElementLevel;

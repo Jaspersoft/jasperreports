@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.JasperReportsContext;
  */
 public abstract class JRAbstractMultiClassCompiler extends JRAbstractClassCompiler
 {
-	public static final String EXCEPTION_MESSAGE_KEY_JAVA_SOURCE_COMPILE_ERROR = "compilers.java.source.compile.error";
+	protected static final String EXCEPTION_MESSAGE_KEY_JAVA_SOURCE_COMPILE_ERROR = "compilers.java.source.compile.error";
 
 	/**
 	 * 

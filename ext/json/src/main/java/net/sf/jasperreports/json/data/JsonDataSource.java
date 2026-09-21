@@ -66,10 +66,10 @@ import net.sf.jasperreports.repo.SimpleRepositoryContext;
  */
 public class JsonDataSource extends JRAbstractTextDataSource implements JsonData<JsonDataSource>, RandomAccessDataSource {
 
-	public static final String EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED = "data.json.field.value.not.retrieved";
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_ATTRIBUTE_SELECTION = "data.json.invalid.attribute.selection";
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_EXPRESSION = "data.json.invalid.expression";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_DATA = "data.json.no.data";
+	private static final String EXCEPTION_MESSAGE_KEY_JSON_FIELD_VALUE_NOT_RETRIEVED = "data.json.field.value.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_ATTRIBUTE_SELECTION = "data.json.invalid.attribute.selection";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_EXPRESSION = "data.json.invalid.expression";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_DATA = "data.json.no.data";
 
 	/**
 	 * Property specifying the JSON expression for the dataset field.

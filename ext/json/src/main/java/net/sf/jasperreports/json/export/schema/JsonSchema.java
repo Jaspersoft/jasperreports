@@ -42,9 +42,9 @@ public class JsonSchema {
 
 	private static final Log log = LogFactory.getLog(JsonSchema.class);
 
-	protected static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT = "export.json.invalid.json.object";
-	protected static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_SEMANTIC = EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT + ".semantic";
-	protected static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_ARRAY_FOUND = EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT + ".array.found";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT = "export.json.invalid.json.object";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_SEMANTIC = EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT + ".semantic";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT_ARRAY_FOUND = EXCEPTION_MESSAGE_KEY_INVALID_JSON_OBJECT + ".array.found";
 
 	private static final String TYPE_KEY = "_type";
 	private static final String CHILDREN_KEY = "_children";

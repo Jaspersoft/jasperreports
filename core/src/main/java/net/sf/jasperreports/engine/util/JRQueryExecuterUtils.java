@@ -38,7 +38,7 @@ import net.sf.jasperreports.engine.query.QueryExecuterFactory;
  */
 public final class JRQueryExecuterUtils
 {
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_FACTORY_NOT_REGISTERED = "util.query.executer.factory.not.registered";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_EXECUTER_FACTORY_NOT_REGISTERED = "util.query.executer.factory.not.registered";
 	
 	private JasperReportsContext jasperReportsContext;
 

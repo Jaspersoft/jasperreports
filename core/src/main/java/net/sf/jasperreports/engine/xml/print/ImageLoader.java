@@ -49,7 +49,7 @@ import net.sf.jasperreports.util.Base64Util;
 public class ImageLoader
 {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_DECODING_ERROR = "xml.print.image.decoding.error";
+	private static final String EXCEPTION_MESSAGE_KEY_DECODING_ERROR = "xml.print.image.decoding.error";
 	
 	private static final ImageLoader INSTANCE = new ImageLoader();
 	

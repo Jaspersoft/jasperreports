@@ -18,4 +18,9 @@
 		<className>net/sf/jasperreports/json/export/JsonMetadataExporter$ExporterContext</className>
 		<differenceType>8001</differenceType>
 	</difference>
+	<difference>
+		<className>net/sf/jasperreports/**</className>
+		<differenceType>6010</differenceType>
+		<field>EXCEPTION_MESSAGE_KEY_*</field>
+	</difference>
 </differences>

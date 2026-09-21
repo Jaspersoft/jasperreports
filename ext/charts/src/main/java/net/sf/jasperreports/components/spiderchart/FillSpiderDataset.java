@@ -53,7 +53,7 @@ public class FillSpiderDataset extends JRFillElementDataset implements SpiderDat
 	 */
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "components.spiderchart.category.dataset.series.null.name";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "components.spiderchart.category.dataset.series.null.name";
 	/**
 	 *
 	 */

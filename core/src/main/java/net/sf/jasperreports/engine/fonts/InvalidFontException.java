@@ -33,7 +33,7 @@ public class InvalidFontException extends JRRuntimeException
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_ERROR_LOADING = "fonts.error.loading";
+	private static final String EXCEPTION_MESSAGE_KEY_ERROR_LOADING = "fonts.error.loading";
 
 	public InvalidFontException(String font, Exception e)
 	{

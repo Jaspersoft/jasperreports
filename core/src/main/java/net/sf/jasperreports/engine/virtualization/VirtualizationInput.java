@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.fonts.FontUtil;
  */
 public class VirtualizationInput extends ObjectInputStream
 {
-	public static final String EXCEPTION_MESSAGE_KEY_READ_OBJECT_FAILED = "engine.virtualization.input.read.object.failed";
+	private static final String EXCEPTION_MESSAGE_KEY_READ_OBJECT_FAILED = "engine.virtualization.input.read.object.failed";
 
 	private final JRVirtualizationContext virtualizationContext;
 	

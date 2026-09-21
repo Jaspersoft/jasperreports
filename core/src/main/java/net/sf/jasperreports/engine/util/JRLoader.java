@@ -79,19 +79,19 @@ public final class JRLoader
 {
 
 	private static final Log log = LogFactory.getLog(JRLoader.class);
-	public static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_FROM_INPUT_STREAM_ERROR = "util.loader.byte.data.from.input.stream.error";
-	public static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_LOADING_ERROR = "util.loader.byte.data.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND_FROM_FILE = "util.loader.class.not.found.from.file";
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND_FROM_INPUT_STREAM = "util.loader.class.not.found.from.input.stream";
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND_FROM_URL = "util.loader.class.not.found.from.url";
-	public static final String EXCEPTION_MESSAGE_KEY_FILE_OPEN_ERROR = "util.loader.file.open.error";
-	public static final String EXCEPTION_MESSAGE_KEY_INPUT_STREAM_FROM_FILE_OPEN_ERROR = "util.loader.input.stream.from.file.open.error";
-	public static final String EXCEPTION_MESSAGE_KEY_INPUT_STREAM_FROM_URL_OPEN_ERROR = "util.loader.input.stream.from.url.open.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OBJECT_FROM_FILE_LOADING_ERROR = "util.loader.object.from.file.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OBJECT_FROM_INPUT_STREAM_LOADING_ERROR = "util.loader.object.from.input.stream.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OBJECT_FROM_URL_LOADING_ERROR = "util.loader.object.from.url.loading.error";
-	public static final String EXCEPTION_MESSAGE_KEY_RESOURCE_NOT_FOUND = "util.loader.resource.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_URL_OPEN_ERROR = "util.loader.url.open.error";
+	private static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_FROM_INPUT_STREAM_ERROR = "util.loader.byte.data.from.input.stream.error";
+	private static final String EXCEPTION_MESSAGE_KEY_BYTE_DATA_LOADING_ERROR = "util.loader.byte.data.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND_FROM_FILE = "util.loader.class.not.found.from.file";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND_FROM_INPUT_STREAM = "util.loader.class.not.found.from.input.stream";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND_FROM_URL = "util.loader.class.not.found.from.url";
+	private static final String EXCEPTION_MESSAGE_KEY_FILE_OPEN_ERROR = "util.loader.file.open.error";
+	private static final String EXCEPTION_MESSAGE_KEY_INPUT_STREAM_FROM_FILE_OPEN_ERROR = "util.loader.input.stream.from.file.open.error";
+	private static final String EXCEPTION_MESSAGE_KEY_INPUT_STREAM_FROM_URL_OPEN_ERROR = "util.loader.input.stream.from.url.open.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OBJECT_FROM_FILE_LOADING_ERROR = "util.loader.object.from.file.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OBJECT_FROM_INPUT_STREAM_LOADING_ERROR = "util.loader.object.from.input.stream.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OBJECT_FROM_URL_LOADING_ERROR = "util.loader.object.from.url.loading.error";
+	private static final String EXCEPTION_MESSAGE_KEY_RESOURCE_NOT_FOUND = "util.loader.resource.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_URL_OPEN_ERROR = "util.loader.url.open.error";
 
 	private static final String URL_PROTOCOL_FILE = "file";
 	private static final String URL_PROTOCOL_JAR = "jar";

@@ -53,7 +53,7 @@ import net.sf.jasperreports.engine.data.JRAbstractBeanDataSource;
  */
 public class JRJpaDataSource extends JRAbstractBeanDataSource {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INDEX_OUT_OF_BOUNDS = "data.jpa.index.out.of.bounds";
+	protected static final String EXCEPTION_MESSAGE_KEY_INDEX_OUT_OF_BOUNDS = "data.jpa.index.out.of.bounds";
 
 	private static final String MAPPING_INDEX_PREFIX = "COLUMN_";
 	private static final int MAPPING_INDEX_PREFIX_LENGTH = MAPPING_INDEX_PREFIX.length();

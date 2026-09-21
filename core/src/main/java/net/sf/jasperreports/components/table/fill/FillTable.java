@@ -72,7 +72,7 @@ public class FillTable extends SubreportFillComponent
 	private static final Log log = LogFactory.getLog(FillTable.class);
 	
 	protected static final String FILL_CACHE_KEY_TABLE_INSTANCE_COUNTER = FillTable.class.getName() + "#instanceCounter";
-	protected static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_REPORT_DATA_TYPE = "components.table.unsupported.report.data.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_REPORT_DATA_TYPE = "components.table.unsupported.report.data.type";
 	
 	private final TableComponent table;
 	private Map<List<FillColumn>, ComponentFillSubreportFactory> fillSubreportFactories;

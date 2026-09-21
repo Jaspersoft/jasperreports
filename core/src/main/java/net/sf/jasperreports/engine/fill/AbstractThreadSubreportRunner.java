@@ -37,8 +37,8 @@ public abstract class AbstractThreadSubreportRunner extends JRSubreportRunnable 
 {
 	
 	private static final Log log = LogFactory.getLog(AbstractThreadSubreportRunner.class);
-	public static final String EXCEPTION_MESSAGE_KEY_THREAD_REPORT_RUNNER_WAIT_ERROR = "fill.thread.report.runner.wait.error";
-	public static final String EXCEPTION_MESSAGE_KEY_THREAD_SUBREPORT_RUNNER_WAIT_ERROR = "fill.thread.subreport.runner.wait.error";
+	private static final String EXCEPTION_MESSAGE_KEY_THREAD_REPORT_RUNNER_WAIT_ERROR = "fill.thread.report.runner.wait.error";
+	private static final String EXCEPTION_MESSAGE_KEY_THREAD_SUBREPORT_RUNNER_WAIT_ERROR = "fill.thread.subreport.runner.wait.error";
 
 	protected final JRBaseFiller subreportFiller;
 	

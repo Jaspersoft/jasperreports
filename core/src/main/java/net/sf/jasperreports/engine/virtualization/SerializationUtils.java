@@ -34,7 +34,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class SerializationUtils
 {
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_INT_BYTE_READ = "engine.virtualization.utils.invalid.int.byte.read";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_INT_BYTE_READ = "engine.virtualization.utils.invalid.int.byte.read";
 
 	public static void writeIntCompressed(ObjectOutput out, int value)
 			throws IOException

@@ -77,10 +77,10 @@ public class JRXmlaQueryExecuter extends JRAbstractQueryExecuter
 
 	private static final Log log = LogFactory.getLog(JRXmlaQueryExecuter.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_XMLA_CANNOT_RETRIEVE_ELEMENT = "data.olap.xmla.cannot.retrieve.element";
-	public static final String EXCEPTION_MESSAGE_KEY_MESSAGE_CALL_FAILED = "data.olap.xmla.message.call.failed";
-	public static final String EXCEPTION_MESSAGE_KEY_XMLA_NO_LEVEL_NAME = "data.olap.xmla.no.level.name";
-	public static final String EXCEPTION_MESSAGE_KEY_XMLA_NULL_ELEMENT = "data.olap.xmla.null.element";
+	private static final String EXCEPTION_MESSAGE_KEY_XMLA_CANNOT_RETRIEVE_ELEMENT = "data.olap.xmla.cannot.retrieve.element";
+	private static final String EXCEPTION_MESSAGE_KEY_MESSAGE_CALL_FAILED = "data.olap.xmla.message.call.failed";
+	private static final String EXCEPTION_MESSAGE_KEY_XMLA_NO_LEVEL_NAME = "data.olap.xmla.no.level.name";
+	private static final String EXCEPTION_MESSAGE_KEY_XMLA_NULL_ELEMENT = "data.olap.xmla.null.element";
 	
 	private static final String SLICER_AXIS_NAME = "SlicerAxis";
 	private static final String MDD_URI = "urn:schemas-microsoft-com:xml-analysis:mddataset";

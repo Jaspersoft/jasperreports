@@ -41,7 +41,7 @@ import net.sf.jasperreports.engine.fill.JRFillObjectFactory;
  */
 public class FillMultiAxisDataset extends JRFillElementDataset
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_CREATE_BUCKETING_SERVICE = "engine.analytics.dataset.cannot.create.bucketing.service";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_CREATE_BUCKETING_SERVICE = "engine.analytics.dataset.cannot.create.bucketing.service";
 	
 	private final JasperReportsContext jasperReportsContext;
 	private final MultiAxisData data;

@@ -58,8 +58,8 @@ public class JRPrinterAWT implements Printable
 {
 	private static final Log log = LogFactory.getLog(JRPrinterAWT.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_PAGE_RANGE = "print.invalid.page.range";
-	public static final String EXCEPTION_MESSAGE_KEY_ERROR_PRINTING_REPORT = "print.error.printing.report";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_PAGE_RANGE = "print.invalid.page.range";
+	private static final String EXCEPTION_MESSAGE_KEY_ERROR_PRINTING_REPORT = "print.error.printing.report";
 
 	/**
 	 *

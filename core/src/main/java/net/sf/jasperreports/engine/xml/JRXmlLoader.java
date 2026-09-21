@@ -56,7 +56,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class JRXmlLoader
 {
 	
-	public static final String EXCEPTION_MESSAGE_KEY_NO_LOADER = "xml.loader.unknown.subdataset";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_LOADER = "xml.loader.unknown.subdataset";
 
 	/**
 	 *

@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class FileXmlResourceHandler implements XmlResourceHandler 
 {
-	public static final String EXCEPTION_MESSAGE_KEY_RESOURCES_DIRECTORY_NOT_SPECIFIED = "export.xml.resources.directory.not.specified";
+	private static final String EXCEPTION_MESSAGE_KEY_RESOURCES_DIRECTORY_NOT_SPECIFIED = "export.xml.resources.directory.not.specified";
 	
 	/**
 	 * 

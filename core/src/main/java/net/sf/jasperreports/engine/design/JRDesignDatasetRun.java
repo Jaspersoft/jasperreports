@@ -51,7 +51,7 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
 public class JRDesignDatasetRun extends JRBaseDatasetRun implements JRChangeEventsSupport
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_PARAMETER = "design.dataset.run.duplicate.parameter";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_PARAMETER = "design.dataset.run.duplicate.parameter";
 
 	private Map<String, JRDatasetParameter> parametersMap;
 	private List<JRDatasetParameter> parametersList;

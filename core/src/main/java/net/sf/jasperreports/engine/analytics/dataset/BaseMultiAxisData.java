@@ -43,8 +43,8 @@ public class BaseMultiAxisData implements MultiAxisData, Serializable
 {
 
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
-	public static final String EXCEPTION_MESSAGE_KEY_DATA_AXIS_LEVEL_NOT_SPECIFIED = "engine.analytics.dataset.data.axis.level.not.specified";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_AXIS = "engine.analytics.dataset.duplicate.axis";
+	private static final String EXCEPTION_MESSAGE_KEY_DATA_AXIS_LEVEL_NOT_SPECIFIED = "engine.analytics.dataset.data.axis.level.not.specified";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_AXIS = "engine.analytics.dataset.duplicate.axis";
 
 	protected MultiAxisDataset dataset;
 	private DataAxis[] axes = new DataAxis[Axis.axisCount()];

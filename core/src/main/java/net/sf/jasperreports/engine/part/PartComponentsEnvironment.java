@@ -53,7 +53,7 @@ public final class PartComponentsEnvironment
 	
 	private static final Log log = LogFactory.getLog(PartComponentsEnvironment.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_COMPONENT_MANAGER_NOT_FOUND = "engine.part.component.manager.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_COMPONENT_MANAGER_NOT_FOUND = "engine.part.component.manager.not.found";
 	
 	private final ReferenceMap<Object, List<PartComponentsBundle>> cache = 
 		new ReferenceMap<>(

@@ -72,16 +72,16 @@ import net.sf.jasperreports.properties.PropertyConstants;
 public class JROlapDataSource implements JRDataSource, MappingMetadata
 {
 	private static final Log log = LogFactory.getLog(JROlapDataSource.class);
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_AXIS_NOT_FOUND_IN_RESULT = "data.olap.axis.not.found.in.result";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_CANNOT_CONVERT_FIELD_TYPE = "data.olap.cannot.convert.field.type";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_CANNOT_CONVERT_STRING_VALUE_TYPE = "data.olap.cannot.convert.string.value.type";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_DIMENSION_NOT_FOUND = "data.olap.dimension.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_FIELD_VALUE_NOT_RETRIEVED = "data.olap.field.value.not.retrieved";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_INTERNAL_ERROR = "data.olap.internal.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_MISSING_FIELD_MAPPING = "data.olap.missing.field.mapping";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_INVALID_FIELD_MAPPING = "data.olap.invalid.field.mapping";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_LEVEL_NOT_FOUND = "data.olap.level.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_OLAP_TUPLE_NOT_FOUND = "data.olap.tuple.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_AXIS_NOT_FOUND_IN_RESULT = "data.olap.axis.not.found.in.result";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_CANNOT_CONVERT_FIELD_TYPE = "data.olap.cannot.convert.field.type";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_CANNOT_CONVERT_STRING_VALUE_TYPE = "data.olap.cannot.convert.string.value.type";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_DIMENSION_NOT_FOUND = "data.olap.dimension.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_FIELD_VALUE_NOT_RETRIEVED = "data.olap.field.value.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_INTERNAL_ERROR = "data.olap.internal.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_MISSING_FIELD_MAPPING = "data.olap.missing.field.mapping";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_INVALID_FIELD_MAPPING = "data.olap.invalid.field.mapping";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_LEVEL_NOT_FOUND = "data.olap.level.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_OLAP_TUPLE_NOT_FOUND = "data.olap.tuple.not.found";
 
 	/**
 	 * Property specifying the OLAP mapping for the dataset field.
@@ -628,8 +628,8 @@ public class JROlapDataSource implements JRDataSource, MappingMetadata
 
 	protected class DataFieldMatcher extends FieldMatcher
 	{
-		public static final String EXCEPTION_MESSAGE_KEY_OLAP_CELL_CALCULATION_ERROR = "data.olap.cell.calculation.error";
-		public static final String EXCEPTION_MESSAGE_KEY_OLAP_INCORRECT_DATA_MAPPING = "data.olap.incorrect.data.mapping";
+		private static final String EXCEPTION_MESSAGE_KEY_OLAP_CELL_CALCULATION_ERROR = "data.olap.cell.calculation.error";
+		private static final String EXCEPTION_MESSAGE_KEY_OLAP_INCORRECT_DATA_MAPPING = "data.olap.incorrect.data.mapping";
 
 		private final boolean formatted;
 		private final int[] dataPositions;

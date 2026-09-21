@@ -152,8 +152,8 @@ import net.sf.jasperreports.export.WriterExporterOutput;
 public class JRApiWriter
 {
 	private static final Log log = LogFactory.getLog(JRApiWriter.class);
-	public static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_WRITE_ERROR = "util.api.writer.output.stream.write.error";
-	public static final String EXCEPTION_MESSAGE_KEY_FILE_WRITE_ERROR = "util.api.writer.file.write.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_WRITE_ERROR = "util.api.writer.output.stream.write.error";
+	private static final String EXCEPTION_MESSAGE_KEY_FILE_WRITE_ERROR = "util.api.writer.file.write.error";
 
 	/**
 	 *

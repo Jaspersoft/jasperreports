@@ -113,13 +113,13 @@ public class JRResultSetDataSource implements JRDataSource
 	public static final String INDEXED_COLUMN_PREFIX = "COLUMN_";
 	private static final int INDEXED_COLUMN_PREFIX_LENGTH = INDEXED_COLUMN_PREFIX.length();
 	
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_CLOB_VALUE_READ_FAILURE = "data.result.set.clob.value.read.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_COLUMN_INDEX_OUT_OF_RANGE = "data.result.set.column.index.out.of.range";
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_FIELD_VALUE_NOT_RETRIEVED = "data.result.set.field.value.not.retrieved";
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_METADATA_NOT_RETRIEVED = "data.result.set.metadata.not.retrieved";
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_UNKNOWN_COLUMN_NAME = "data.result.set.unknown.column.name";
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_UNKNOWN_COLUMN_LABEL = "data.result.set.unknown.column.label";
-	public static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_NEXT_RECORD_NOT_RETRIEVED = "data.result.set.next.record.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_CLOB_VALUE_READ_FAILURE = "data.result.set.clob.value.read.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_COLUMN_INDEX_OUT_OF_RANGE = "data.result.set.column.index.out.of.range";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_FIELD_VALUE_NOT_RETRIEVED = "data.result.set.field.value.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_METADATA_NOT_RETRIEVED = "data.result.set.metadata.not.retrieved";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_UNKNOWN_COLUMN_NAME = "data.result.set.unknown.column.name";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_UNKNOWN_COLUMN_LABEL = "data.result.set.unknown.column.label";
+	private static final String EXCEPTION_MESSAGE_KEY_RESULT_SET_NEXT_RECORD_NOT_RETRIEVED = "data.result.set.next.record.not.retrieved";
 
 
 	/**

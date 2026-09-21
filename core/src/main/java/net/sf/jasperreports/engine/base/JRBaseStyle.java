@@ -60,7 +60,7 @@ import net.sf.jasperreports.engine.xml.JRXmlConstants;
  */
 public class JRBaseStyle implements JRStyle, Serializable, JRChangeEventsSupport, Deduplicable
 {
-	public static final String EXCEPTION_MESSAGE_KEY_CIRCULAR_DEPENDENCY = "engine.style.circular.dependency";
+	private static final String EXCEPTION_MESSAGE_KEY_CIRCULAR_DEPENDENCY = "engine.style.circular.dependency";
 	
 	/**
 	 *

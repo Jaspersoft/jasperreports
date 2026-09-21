@@ -46,7 +46,7 @@ import net.sf.jasperreports.engine.util.Pair;
  */
 public class JRFillXyzDataset extends JRFillChartDataset implements JRXyzDataset {
 
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "charts.xyz.dataset.series.null.name";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "charts.xyz.dataset.series.null.name";
 	
 	protected JRFillXyzSeries[] xyzSeries;
 

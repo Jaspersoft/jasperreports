@@ -38,7 +38,7 @@ import net.sf.jasperreports.engine.fill.JRVirtualizationContext;
  */
 public class VirtualizationOutput extends ObjectOutputStream
 {
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_REFERENCE_TYPE = "engine.virtualization.output.unsupported.reference.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_REFERENCE_TYPE = "engine.virtualization.output.unsupported.reference.type";
 	
 	private final JRVirtualizationContext virtualizationContext;
 	

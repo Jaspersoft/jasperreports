@@ -125,8 +125,8 @@ public class JasperDesign extends JRBaseReport
 	 */
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_DATASET = "design.duplicate.dataset";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_REPORT_STYLE = "design.duplicate.report.style";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_DATASET = "design.duplicate.dataset";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_REPORT_STYLE = "design.duplicate.report.style";
 
 	public static final String PROPERTY_BACKGROUND = "background";
 

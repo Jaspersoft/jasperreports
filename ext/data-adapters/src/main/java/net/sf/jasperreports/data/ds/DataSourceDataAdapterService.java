@@ -43,7 +43,7 @@ import net.sf.jasperreports.engine.util.JRClassLoader;
 public class DataSourceDataAdapterService extends
 		AbstractClasspathAwareDataAdapterService {
 
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_OBJECT_RETURNED = "data.ds.invalid.object.returned";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_OBJECT_RETURNED = "data.ds.invalid.object.returned";
 	
 	/**
 	 * 

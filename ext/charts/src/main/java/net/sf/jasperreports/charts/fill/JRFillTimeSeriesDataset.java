@@ -53,7 +53,7 @@ import net.sf.jasperreports.engine.fill.JRExpressionEvalException;
 public class JRFillTimeSeriesDataset extends JRFillChartDataset implements JRTimeSeriesDataset 
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "charts.time.series.dataset.series.null.name";
+	private static final String EXCEPTION_MESSAGE_KEY_SERIES_NULL_NAME = "charts.time.series.dataset.series.null.name";
 	
 	/**
 	 * 

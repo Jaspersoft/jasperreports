@@ -116,7 +116,7 @@ public class BreakIteratorSplitCharacter implements SplitCharacter
 	
 	protected static class ArrayCharIterator implements CharacterIterator
 	{
-		public static final String EXCEPTION_MESSAGE_KEY_INVALID_INDEX = "util.array.char.iterator.invalid.index";
+		protected static final String EXCEPTION_MESSAGE_KEY_INVALID_INDEX = "util.array.char.iterator.invalid.index";
 
 		private char[] chars;
 		private int start;

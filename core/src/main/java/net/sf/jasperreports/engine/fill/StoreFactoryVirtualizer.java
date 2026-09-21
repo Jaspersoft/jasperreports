@@ -39,7 +39,7 @@ import net.sf.jasperreports.engine.JRVirtualizable;
 public class StoreFactoryVirtualizer extends JRAbstractLRUVirtualizer
 {
 	private static final Log log = LogFactory.getLog(StoreFactoryVirtualizer.class);
-	public static final String EXCEPTION_MESSAGE_KEY_STORE_NOT_FOUND = "fill.virtualizer.store.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_STORE_NOT_FOUND = "fill.virtualizer.store.not.found";
 	
 	private final VirtualizerStoreFactory storeFactory;
 	private final ReferenceMap<JRVirtualizationContext, VirtualizerStore> contextStores;

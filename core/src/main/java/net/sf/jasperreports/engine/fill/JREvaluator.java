@@ -70,7 +70,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public abstract class JREvaluator implements DatasetExpressionEvaluator
 {
-	public static final String EXCEPTION_MESSAGE_KEY_RESOURCE_NOT_FOUND = "fill.evaluator.resource.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_RESOURCE_NOT_FOUND = "fill.evaluator.resource.not.found";
 	
 	/**
 	 * The expression evaluation engine in JasperReports has always ignored java.lang.NullPointerException 

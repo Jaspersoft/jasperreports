@@ -182,7 +182,7 @@ import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
 public class JRPrintServiceExporter extends JRAbstractExporter<PrintServiceReportConfiguration, PrintServiceExporterConfiguration, ExporterOutput, JRExporterContext> implements Printable
 {
 	protected static final String PRINT_SERVICE_EXPORTER_PROPERTIES_PREFIX = JRPropertiesUtil.PROPERTY_PREFIX + "export.print.service.";
-	public static final String EXCEPTION_MESSAGE_KEY_PRINT_SERVICE_NOT_FOUND = "export.print.service.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_PRINT_SERVICE_NOT_FOUND = "export.print.service.not.found";
 
 	/**
 	 *

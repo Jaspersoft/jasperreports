@@ -74,7 +74,7 @@ public class JRFillContext
 {
 	private static final Log log = LogFactory.getLog(JRFillContext.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_MISSING_MARKUP_PROCESSOR_FACTORY = "fill.text.element.missing.markup.processor.factory";
+	private static final String EXCEPTION_MESSAGE_KEY_MISSING_MARKUP_PROCESSOR_FACTORY = "fill.text.element.missing.markup.processor.factory";
 	
 	private static final JRSingletonCache<MarkupProcessorFactory> markupProcessorFactoryCache = 
 			new JRSingletonCache<>(MarkupProcessorFactory.class);

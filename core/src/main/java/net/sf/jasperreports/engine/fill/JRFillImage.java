@@ -75,7 +75,7 @@ public class JRFillImage extends JRFillGraphicElement implements JRImage
 {
 	private static final Log log = LogFactory.getLog(JRFillImage.class);
 
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_SOURCE_CLASS = "fill.image.unknown.source.class";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_SOURCE_CLASS = "fill.image.unknown.source.class";
 
 	/**
 	 *

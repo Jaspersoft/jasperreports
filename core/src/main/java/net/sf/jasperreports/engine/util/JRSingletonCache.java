@@ -39,9 +39,9 @@ import net.sf.jasperreports.engine.JRException;
 public class JRSingletonCache<T>
 {
 	private static final Object CONTEXT_KEY_NULL = new Object();
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_COMPATIBLE = "util.singleton.cache.class.not.compatible";
-	public static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND = "util.singleton.cache.class.not.found";
-	public static final String EXCEPTION_MESSAGE_KEY_INSTANCE_ERROR = "util.singleton.cache.instance.error";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_COMPATIBLE = "util.singleton.cache.class.not.compatible";
+	private static final String EXCEPTION_MESSAGE_KEY_CLASS_NOT_FOUND = "util.singleton.cache.class.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_INSTANCE_ERROR = "util.singleton.cache.instance.error";
 	
 	private final ReferenceMap<Object, Map<String,T>> cache;
 	private final Class<T> itf;

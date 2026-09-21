@@ -80,7 +80,7 @@ public class MultiAxisDataService
 	
 	protected static final Log log = LogFactory.getLog(MultiAxisDataService.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_INCREMENT_BIDIMENSIONAL_DATASET_ERROR = "engine.analytics.dataset.increment.bidimensional.dataset.error";
+	private static final String EXCEPTION_MESSAGE_KEY_INCREMENT_BIDIMENSIONAL_DATASET_ERROR = "engine.analytics.dataset.increment.bidimensional.dataset.error";
 
 	private final BucketingServiceContext serviceContext;
 	private final MultiAxisData data;
@@ -453,7 +453,7 @@ public class MultiAxisDataService
 	protected class DataSource implements MultiAxisDataSource
 	{
 		private final List<List<AxisLevel>> axisDataLevels;
-		public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_AXIS = "engine.analytics.dataset.unknown.axis";
+		private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_AXIS = "engine.analytics.dataset.unknown.axis";
 		
 		public DataSource()
 		{

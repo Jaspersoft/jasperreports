@@ -46,7 +46,7 @@ public class HorizontalFillList extends BaseFillList
 {
 	
 	private static final Log log = LogFactory.getLog(HorizontalFillList.class);
-	public static final String EXCEPTION_MESSAGE_KEY_ROW_OVERFLOW = "fill.horizontal.list.row.overflow";
+	private static final String EXCEPTION_MESSAGE_KEY_ROW_OVERFLOW = "fill.horizontal.list.row.overflow";
 	
 	private final int contentsWidth;
 	private final boolean ignoreWidth;

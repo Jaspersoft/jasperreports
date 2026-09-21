@@ -43,7 +43,7 @@ import net.sf.jasperreports.properties.PropertyConstants;
  */
 public final class ExtensionsEnvironment
 {
-	public static final String EXCEPTION_MESSAGE_KEY_NULL_EXTENSIONS_REGISTRY = "extensions.null.extensions.registry";
+	private static final String EXCEPTION_MESSAGE_KEY_NULL_EXTENSIONS_REGISTRY = "extensions.null.extensions.registry";
 
 	private ExtensionsEnvironment()
 	{

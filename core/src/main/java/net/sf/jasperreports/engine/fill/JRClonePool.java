@@ -36,7 +36,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class JRClonePool
 {
-	public static final String EXCEPTION_MESSAGE_KEY_PARAMETER_NOT_FOUND = "fill.clone.pool.cannot.release.clone";
+	private static final String EXCEPTION_MESSAGE_KEY_PARAMETER_NOT_FOUND = "fill.clone.pool.cannot.release.clone";
 	
 	private final JRFillCloneable original;
 	private final LinkedList<JRFillCloneable> availableClones;

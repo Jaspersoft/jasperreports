@@ -39,7 +39,7 @@ public class DateRangeSQLBetweenClause extends SQLBetweenBaseClause
 {
 
 	protected static final DateRangeSQLBetweenClause INSTANCE = new DateRangeSQLBetweenClause();
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_PARAMETER_TYPE = "date.range.unsupported.parameter.type";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_PARAMETER_TYPE = "date.range.unsupported.parameter.type";
 	
 	/**
 	 * Returns the singleton function instance.

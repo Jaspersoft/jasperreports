@@ -105,8 +105,8 @@ public class JavaScriptClassCompiler extends JavaScriptCompilerBase
 	
 	private static final Log log = LogFactory.getLog(JavaScriptClassCompiler.class);
 	
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_CLASS_NAME = "compilers.javascript.unexpected.class.name";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_CLASSES_LENGTH = "compilers.javascript.unexpected.classes.length";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_CLASS_NAME = "compilers.javascript.unexpected.class.name";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_CLASSES_LENGTH = "compilers.javascript.unexpected.classes.length";
 
 	/**
 	 * Creates a JavaScript compiler.

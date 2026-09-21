@@ -48,8 +48,8 @@ public enum BucketOrder implements NamedEnum
 	NONE("None");
 
 	private final transient String name;
-	public static final String EXCEPTION_MESSAGE_KEY_CANNOT_TRANSLATE_NONE = "engine.analytics.dataset.cannot.translate.none";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_ORDER_ENUM = "engine.analytics.dataset.unknown.order.enum";
+	private static final String EXCEPTION_MESSAGE_KEY_CANNOT_TRANSLATE_NONE = "engine.analytics.dataset.cannot.translate.none";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_ORDER_ENUM = "engine.analytics.dataset.unknown.order.enum";
 
 	private BucketOrder(String name)
 	{

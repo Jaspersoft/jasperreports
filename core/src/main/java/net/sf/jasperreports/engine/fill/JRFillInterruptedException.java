@@ -33,7 +33,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
 public class JRFillInterruptedException extends JRRuntimeException
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_FILLING_PROCESS_INTERRUPTED = "fill.report.filling.process.interrupted";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_FILLING_PROCESS_INTERRUPTED = "fill.report.filling.process.interrupted";
 	
 	public JRFillInterruptedException() 
 	{

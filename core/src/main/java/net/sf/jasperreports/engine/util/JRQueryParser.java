@@ -40,7 +40,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class JRQueryParser
 {
-	public static final String EXCEPTION_MESSAGE_KEY_TOKEN_SEPARATORS_NOT_CONFIGURED = "util.query.token.separators.not.configured";
+	private static final String EXCEPTION_MESSAGE_KEY_TOKEN_SEPARATORS_NOT_CONFIGURED = "util.query.token.separators.not.configured";
 	
 	private static final JRQueryParser singleton = new JRQueryParser();
 	

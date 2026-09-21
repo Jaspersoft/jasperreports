@@ -43,7 +43,7 @@ import net.sf.jasperreports.engine.util.JRClassLoader;
 public class BeanDataAdapterService extends AbstractClasspathAwareDataAdapterService 
 {
 
-	public static final String EXCEPTION_MESSAGE_KEY_INVALID_RETURN_TYPE = "data.bean.invalid.return.type";
+	private static final String EXCEPTION_MESSAGE_KEY_INVALID_RETURN_TYPE = "data.bean.invalid.return.type";
 	
 	/**
 	 * 

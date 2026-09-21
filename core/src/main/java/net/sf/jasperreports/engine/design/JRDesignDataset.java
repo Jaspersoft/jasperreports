@@ -83,13 +83,13 @@ public class JRDesignDataset extends JRBaseDataset
 {
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_GROUP = "design.dataset.duplicate.group";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_FIELD = "design.dataset.duplicate.field";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_PARAMETER = "design.dataset.duplicate.parameter";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_SCRIPTLET = "design.dataset.duplicate.scriptlet";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_SORT_FIELD = "design.dataset.duplicate.sort.field";
-	public static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_VARIABLE = "design.dataset.duplicate.variable";
-	public static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_BUILTIN_PARAMETER_TYPE = "design.dataset.unknown.builtin.parameter.type";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_GROUP = "design.dataset.duplicate.group";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_FIELD = "design.dataset.duplicate.field";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_PARAMETER = "design.dataset.duplicate.parameter";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_SCRIPTLET = "design.dataset.duplicate.scriptlet";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_SORT_FIELD = "design.dataset.duplicate.sort.field";
+	private static final String EXCEPTION_MESSAGE_KEY_DUPLICATE_VARIABLE = "design.dataset.duplicate.variable";
+	private static final String EXCEPTION_MESSAGE_KEY_UNKNOWN_BUILTIN_PARAMETER_TYPE = "design.dataset.unknown.builtin.parameter.type";
 
 	public static final String PROPERTY_FIELDS = "fields";
 

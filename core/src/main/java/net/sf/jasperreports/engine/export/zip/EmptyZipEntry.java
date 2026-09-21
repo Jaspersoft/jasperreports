@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
  */
 public class EmptyZipEntry implements ExportZipEntry 
 {
-	public static final String EXCEPTION_MESSAGE_KEY_FORBIDDEN_METHOD_CALL = "export.zip.forbidden.method.call";
+	private static final String EXCEPTION_MESSAGE_KEY_FORBIDDEN_METHOD_CALL = "export.zip.forbidden.method.call";
 
 	/**
 	 * 

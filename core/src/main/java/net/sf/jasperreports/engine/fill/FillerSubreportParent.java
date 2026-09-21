@@ -44,8 +44,8 @@ public class FillerSubreportParent implements BandReportFillerParent
 {
 	
 	private static final Log log = LogFactory.getLog(FillerSubreportParent.class);
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_OVERFLOW = "fill.subreport.parent.unsupported.overflow";
-	public static final String EXCEPTION_MESSAGE_KEY_NO_SUBREPORT_RUNNER = "fill.subreport.parent.no.subreport.runner";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_OVERFLOW = "fill.subreport.parent.unsupported.overflow";
+	private static final String EXCEPTION_MESSAGE_KEY_NO_SUBREPORT_RUNNER = "fill.subreport.parent.no.subreport.runner";
 
 	private final JRFillSubreport parentElement;
 	private final JRBaseFiller parentFiller;

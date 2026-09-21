@@ -73,10 +73,10 @@ public class JRXmlWriter
 			)
 	public static final String PROPERTY_REPORT_VERSION = JRPropertiesUtil.PROPERTY_PREFIX + "report.version";
 
-	public static final String EXCEPTION_MESSAGE_KEY_FILE_WRITE_ERROR = "xml.writer.file.write.error";
-	public static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_WRITE_ERROR = "xml.writer.output.stream.write.error";
-	public static final String EXCEPTION_MESSAGE_KEY_REPORT_DESIGN_WRITE_ERROR = "xml.writer.report.design.write.error";
-	public static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_CHART_TYPE = "xml.writer.unsupported.chart.type";
+	private static final String EXCEPTION_MESSAGE_KEY_FILE_WRITE_ERROR = "xml.writer.file.write.error";
+	private static final String EXCEPTION_MESSAGE_KEY_OUTPUT_STREAM_WRITE_ERROR = "xml.writer.output.stream.write.error";
+	private static final String EXCEPTION_MESSAGE_KEY_REPORT_DESIGN_WRITE_ERROR = "xml.writer.report.design.write.error";
+	private static final String EXCEPTION_MESSAGE_KEY_UNSUPPORTED_CHART_TYPE = "xml.writer.unsupported.chart.type";
 	
 	@Property(
 			name = "net.sf.jasperreports.jrxml.writer.exclude.properties.{suffix}",

@@ -65,10 +65,10 @@ public class DefaultJasperReportsContext implements JasperReportsContext
 	 */
 	private static final DefaultJasperReportsContext INSTANCE = new DefaultJasperReportsContext();
 	
-	public static final String EXCEPTION_MESSAGE_KEY_LOAD_DEFAULT_PROPERTIES_FAILURE = "engine.context.load.default.properties.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FAILURE = "engine.context.load.properties.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FILE_FAILURE = "engine.context.load.properties.file.failure";
-	public static final String EXCEPTION_MESSAGE_KEY_DEFAULT_PROPERTIES_FILE_NOT_FOUND = "engine.context.default.properties.file.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_LOAD_DEFAULT_PROPERTIES_FAILURE = "engine.context.load.default.properties.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FAILURE = "engine.context.load.properties.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_LOAD_PROPERTIES_FILE_FAILURE = "engine.context.load.properties.file.failure";
+	private static final String EXCEPTION_MESSAGE_KEY_DEFAULT_PROPERTIES_FILE_NOT_FOUND = "engine.context.default.properties.file.not.found";
 	
 	private Map<String, Object> values = new ConcurrentHashMap<>(16, .75f, 1);// assume low update concurrency
 

@@ -68,12 +68,12 @@ import net.sf.jasperreports.engine.util.JRSingletonCache;
 public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 {
 	private static final Log log = LogFactory.getLog(JRJdbcQueryExecuter.class);
-	public static final String EXCEPTION_MESSAGE_KEY_MULTI_PARAMETERS_CANNOT_CONTAIN_NULL_VALUES = "query.multi.parameters.cannot.contain.null.values";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_CANCEL_ERROR = "query.statement.cancel.error";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_EXECUTE_ERROR = "query.statement.execute.error";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_PREPARE_ERROR = "query.statement.prepare.error";
-	public static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_TIMEOUT_LIMIT_EXCEEDED = "query.statement.timeout.limit.exceeded";
-	public static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_MULTI_PARAMETER_TYPE = "query.unexpected.multi.parameter.type";
+	private static final String EXCEPTION_MESSAGE_KEY_MULTI_PARAMETERS_CANNOT_CONTAIN_NULL_VALUES = "query.multi.parameters.cannot.contain.null.values";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_CANCEL_ERROR = "query.statement.cancel.error";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_EXECUTE_ERROR = "query.statement.execute.error";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_PREPARE_ERROR = "query.statement.prepare.error";
+	private static final String EXCEPTION_MESSAGE_KEY_QUERY_STATEMENT_TIMEOUT_LIMIT_EXCEEDED = "query.statement.timeout.limit.exceeded";
+	private static final String EXCEPTION_MESSAGE_KEY_UNEXPECTED_MULTI_PARAMETER_TYPE = "query.unexpected.multi.parameter.type";
 
 	public static final String CANONICAL_LANGUAGE = "SQL";
 	

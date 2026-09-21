@@ -61,7 +61,7 @@ public abstract class GroovyEvaluator extends JREvaluator implements JasperRepor
 {
 
 	private static final Log log = LogFactory.getLog(GroovyEvaluator.class);
-	public static final String EXCEPTION_MESSAGE_KEY_FUNCTION_NOT_FOUND = "compilers.groovy.function.not.found";
+	private static final String EXCEPTION_MESSAGE_KEY_FUNCTION_NOT_FOUND = "compilers.groovy.function.not.found";
 	
 	//copied from groovy.lang.MetaClassImpl.chooseMostSpecificParams()
 	private static final Pattern GROOVY_EXCEPTION_PATTERN_AMBIGUOUS_NULL = 
