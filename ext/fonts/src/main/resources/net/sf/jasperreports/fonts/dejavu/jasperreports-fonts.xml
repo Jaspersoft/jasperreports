@@ -9,6 +9,15 @@
 		<boldItalic>net/sf/jasperreports/fonts/dejavu/DejaVuSans-BoldOblique.ttf</boldItalic>
 		<pdfEncoding>Identity-H</pdfEncoding>
 		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans', Arial, Helvetica, sans-serif</export>
+		</exportFonts>
+		<!--
+		<locales>
+			<locale>en_US</locale>
+			<locale>de_DE</locale>
+		</locales>
+		-->
 	</fontFamily>
 
 	<fontFamily name="DejaVu Sans Condensed">
@@ -27,6 +36,9 @@
 		<boldItalic>net/sf/jasperreports/fonts/dejavu/DejaVuSerif-BoldItalic.ttf</boldItalic>
 		<pdfEncoding>Identity-H</pdfEncoding>
 		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Serif', 'Times New Roman', Times, serif</export>
+		</exportFonts>
 	</fontFamily>
 
 	<fontFamily name="DejaVu Serif Condensed">
@@ -45,6 +57,9 @@
 		<boldItalic>net/sf/jasperreports/fonts/dejavu/DejaVuSansMono-BoldOblique.ttf</boldItalic>
 		<pdfEncoding>Identity-H</pdfEncoding>
 		<pdfEmbedded>true</pdfEmbedded>
+		<exportFonts>
+			<export key="net.sf.jasperreports.html">'DejaVu Sans Mono', 'Courier New', Courier, monospace</export>
+		</exportFonts>
 	</fontFamily>
 
 	<!--
