@@ -416,7 +416,7 @@ public class JRStyledTextParser implements ErrorHandler
 			sb.append(GREATER);
 		}
 
-		Boolean isNote = (Boolean)attrs.get(JRTextAttribute.REFERENCE);
+		Boolean isNote = (Boolean)attrs.get(JRTextAttribute.NOTE);
 		if (Boolean.TRUE.equals(isNote))
 		{
 			sb.append(LESS);
