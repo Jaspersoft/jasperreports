@@ -293,9 +293,18 @@ public interface PdfTagger
 
 	void endImage();
 
-	void startText(JRPrintText textElement);
-
-	void startText(JRPrintText textElement, String actualText);
+	/**
+	 * Starts the tagging of a text paragraph.
+	 *
+	 * @param textElement the text element that is being exported
+	 * @param actualText the text to be used as replacement text for the paragraph, if any
+	 * @param styledTextHyperlinks whether the styled text of the element contains hyperlinks that
+	 * require Link structure elements nested inside the structure element of the text; when this
+	 * is the case, the marked content of the paragraph is placed in a structure element of its
+	 * own, because a structure element cannot hold both marked content and child structure
+	 * elements
+	 */
+	void startText(JRPrintText textElement, String actualText, boolean styledTextHyperlinks);
 
 	void endText();
 
@@ -303,6 +312,21 @@ public interface PdfTagger
 
 	PdfStructureEntry getCurrentLinkTag();
 	
+	/**
+	 * Creates a Link structure element for a hyperlink that only covers a part of the current
+	 * text paragraph, as specified in the styled text of the element.
+	 *
+	 * <p>
+	 * The Link tag is created as a sibling of the structure element that holds the marked content
+	 * of the paragraph, which is only possible when the paragraph tagging was started with
+	 * <code>styledTextHyperlinks</code> set to <code>true</code>.
+	 * </p>
+	 *
+	 * @return the Link structure element, or <code>null</code> if the current text is not tagged
+	 * @see #startText(JRPrintText, String, boolean)
+	 */
+	PdfStructureEntry createStyledTextLinkTag();
+
 	StyledTextListWriter getListWriter();
 
 	PdfStructureEntry getCurrentContentEntry();

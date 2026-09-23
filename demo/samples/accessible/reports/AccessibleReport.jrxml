@@ -18,6 +18,11 @@
 	</style>
 	<style name="Heading1" fontSize="16.0" bold="true"/>
 	<style name="Heading2" fontSize="10.0" bold="true" italic="true"/>
+	<style name="Note" fontSize="8.0" bold="false" italic="true">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<style name="Crosstab_RowHeader" mode="Opaque" backcolor="#D2B48C">
 		<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -164,8 +169,9 @@
 				</element>
 			</band>
 			<band height="20">
-				<element kind="textField" uuid="9acca496-1625-4b69-838d-384f63788a75" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Sans_Normal">
-					<expression><![CDATA["Cucumber (Cucumis sativus) is a widely-cultivated creeping vine plant in the Cucurbitaceae family that bears usually cylindrical fruits, which are used as vegetables."]]></expression>
+				<element kind="textField" uuid="9acca496-1625-4b69-838d-384f63788a75" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Sans_Normal" markup="styled">
+					<expression><![CDATA["Cucumber (Cucumis sativus) is a widely-cultivated creeping vine plant in the <a href=\"https://en.wikipedia.org/wiki/Cucurbitaceae\">Cucurbitaceae</a> family that bears usually cylindrical fruits, which are used as vegetables."]]></expression>
+					<property name="net.sf.jasperreports.export.pdf.tag.reference" value="full"/>
 				</element>
 			</band>
 			<band height="30"/>
@@ -541,6 +547,12 @@
 					<anchorNameExpression><![CDATA["summary"]]></anchorNameExpression>
 					<hyperlinkAnchorExpression><![CDATA["title"]]></hyperlinkAnchorExpression>
 					<hyperlinkTooltipExpression><![CDATA["Jump back to the title section"]]></hyperlinkTooltipExpression>
+				</element>
+			</band>
+			<band height="20">
+				<element kind="textField" uuid="d7addac5-3ad7-49b3-80ff-698cf84de7c6" x="0" y="0" width="500" height="15" textAdjust="StretchHeight" style="Note">
+					<expression><![CDATA["1) The Cucurbitaceae, also called cucurbits or the gourd family, are a plant family consisting of about 965 species in 101 genera."]]></expression>
+					<property name="net.sf.jasperreports.export.pdf.tag.note" value="full"/>
 				</element>
 			</band>
 		</groupHeader>

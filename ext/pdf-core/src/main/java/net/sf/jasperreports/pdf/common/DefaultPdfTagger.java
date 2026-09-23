@@ -112,12 +112,7 @@ public class DefaultPdfTagger implements PdfTagger
 	}
 
 	@Override
-	public void startText(JRPrintText textElement)
-	{
-	}
-
-	@Override
-	public void startText(JRPrintText textElement, String actualText)
+	public void startText(JRPrintText textElement, String actualText, boolean styledTextHyperlinks)
 	{
 	}
 
@@ -134,6 +129,12 @@ public class DefaultPdfTagger implements PdfTagger
 
 	@Override
 	public PdfStructureEntry getCurrentLinkTag()
+	{
+		return null;
+	}
+
+	@Override
+	public PdfStructureEntry createStyledTextLinkTag()
 	{
 		return null;
 	}

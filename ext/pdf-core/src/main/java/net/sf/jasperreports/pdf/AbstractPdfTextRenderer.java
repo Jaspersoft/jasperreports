@@ -25,11 +25,14 @@ package net.sf.jasperreports.pdf;
 
 import java.text.AttributedCharacterIterator;
 
+import net.sf.jasperreports.engine.JRCommonText;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.export.AbstractTextRenderer;
 import net.sf.jasperreports.engine.type.RunDirectionEnum;
 import net.sf.jasperreports.engine.util.JRStyledText;
+import net.sf.jasperreports.engine.util.JRStyledText.Run;
+import net.sf.jasperreports.engine.util.JRTextAttribute;
 import net.sf.jasperreports.engine.util.StyledTextListWriter;
 import net.sf.jasperreports.pdf.common.PdfProducer;
 import net.sf.jasperreports.pdf.common.PdfTagger;
@@ -50,6 +53,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	protected PdfTextAlignment horizontalAlignment;
 	protected float leftOffsetFactor;
 	protected float rightOffsetFactor;
+	protected boolean styledTextHyperlinks;
 
 	
 	/**
@@ -88,6 +92,15 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 		this.pdfExporter = pdfExporter;
 		this.pdfProducer = pdfProducer;
 		this.pdfTagger = pdfTagger;
+		
+		// hyperlinks set on the element itself are tagged as a Link element that wraps the whole
+		// text, so only the hyperlinks coming from the styled text need Link tags of their own;
+		// the styled text can only contain hyperlinks if the markup of the text was parsed
+		this.styledTextHyperlinks =
+			pdfProducer.getContext().isTagged()
+			&& text.getLinkType() == null
+			&& !JRCommonText.MARKUP_NONE.equals(text.getMarkup())
+			&& hasStyledTextHyperlinks(styledText);
 		
 		horizontalAlignment = PdfTextAlignment.LEFT;
 		leftOffsetFactor = 0f;
@@ -144,6 +157,22 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 		super.initialize(text, styledText, offsetX, offsetY);
 	}
 	
+	/**
+	 * Determines whether the styled text contains hyperlinks set on some of its runs, as opposed
+	 * to a hyperlink set on the text element as a whole.
+	 */
+	protected static boolean hasStyledTextHyperlinks(JRStyledText styledText)
+	{
+		for (Run run : styledText.getRuns())
+		{
+			if (run.attributes != null && run.attributes.containsKey(JRTextAttribute.HYPERLINK))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	protected StyledTextListWriter getListWriter()
 	{
@@ -159,14 +188,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 		String paragraphText
 		) 
 	 {
-		if (addActualText())
-		{
-			pdfTagger.startText(text, paragraphText);
-		}
-		else
-		{
-			pdfTagger.startText(text);
-		}
+		pdfTagger.startText(text, addActualText() ? paragraphText : null, styledTextHyperlinks);
 		
 		super.renderParagraph(allParagraphs, paragraphStart, paragraphText);
 		

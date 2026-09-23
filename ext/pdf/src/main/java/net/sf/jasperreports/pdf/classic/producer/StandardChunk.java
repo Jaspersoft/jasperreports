@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.pdf.classic.producer;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.lowagie.text.Chunk;
@@ -38,6 +39,7 @@ import com.lowagie.text.pdf.PdfNumber;
 import com.lowagie.text.pdf.PdfObject;
 import com.lowagie.text.pdf.PdfString;
 import com.lowagie.text.pdf.PdfStructureElement;
+import com.lowagie.text.pdf.PdfWriter;
 
 import net.sf.jasperreports.pdf.common.PdfChunk;
 import net.sf.jasperreports.pdf.common.PdfStructureEntry;
@@ -58,6 +60,7 @@ public class StandardChunk implements PdfChunk
 	private float linkUrx;
 	private float linkUry;
 	private String linkContents;
+	private Supplier<PdfStructureEntry> styledTextLinkTagSupplier;
 
 	public StandardChunk(StandardPdfProducer pdfProducer, Chunk chunk)
 	{
@@ -90,6 +93,21 @@ public class StandardChunk implements PdfChunk
 	}
 
 	@Override
+	public void setStyledTextLinkTag(Supplier<PdfStructureEntry> linkTagSupplier, String linkContents)
+	{
+		if (!StandardPdfUtils.isCustomStructureTreeRootSupported())
+		{
+			// without the annotation /StructParent support the Link tag would be incomplete anyway,
+			// and stock OpenPDF fails to write a structure element whose only kid is an object
+			// reference; leave the annotation to be created by the library, untagged
+			return;
+		}
+
+		this.styledTextLinkTagSupplier = linkTagSupplier;
+		this.linkContents = linkContents;
+	}
+
+	@Override
 	public void setJavaScriptAction(String script)
 	{
 		if (linkTag != null)
@@ -104,7 +122,16 @@ public class StandardChunk implements PdfChunk
 					)
 				);
 		}
-		else
+		else if (
+			!deferStyledTextLinkAnnotation(
+				rect -> PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					rect,
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					PdfAction.javaScript(script, pdfProducer.getPdfWriter())
+					)
+				)
+			)
 		{
 			chunk.setAction(PdfAction.javaScript(script, pdfProducer.getPdfWriter()));
 		}
@@ -120,7 +147,15 @@ public class StandardChunk implements PdfChunk
 				new PdfAnnotation(pdfProducer.getPdfWriter(), linkLlx, linkLly, linkUrx, linkUry, new PdfAction(reference))
 				);
 		}
-		else
+		else if (
+			!deferStyledTextLinkAnnotation(
+				rect -> new PdfAnnotation(
+					pdfProducer.getPdfWriter(),
+					rect.getLeft(), rect.getBottom(), rect.getRight(), rect.getTop(),
+					new PdfAction(reference)
+					)
+				)
+			)
 		{
 			chunk.setAnchor(reference);
 		}
@@ -141,7 +176,16 @@ public class StandardChunk implements PdfChunk
 					)
 				);
 		}
-		else
+		else if (
+			!deferStyledTextLinkAnnotation(
+				rect -> PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					rect,
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					anchor
+					)
+				)
+			)
 		{
 			chunk.setLocalGoto(anchor);
 		}
@@ -164,7 +208,16 @@ public class StandardChunk implements PdfChunk
 					)
 				);
 		}
-		else
+		else if (
+			!deferStyledTextLinkAnnotation(
+				rect -> PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					rect,
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					action
+					)
+				)
+			)
 		{
 			chunk.setAction(action);
 		}
@@ -185,7 +238,16 @@ public class StandardChunk implements PdfChunk
 					)
 				);
 		}
-		else
+		else if (
+			!deferStyledTextLinkAnnotation(
+				rect -> PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					rect,
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					new PdfAction(reference, anchor)
+					)
+				)
+			)
 		{
 			chunk.setRemoteGoto(reference, anchor);
 		}
@@ -206,10 +268,41 @@ public class StandardChunk implements PdfChunk
 					)
 				);
 		}
-		else
+		else if (
+			!deferStyledTextLinkAnnotation(
+				rect -> PdfAnnotation.createLink(
+					pdfProducer.getPdfWriter(),
+					rect,
+					PdfAnnotation.HIGHLIGHT_INVERT,
+					new PdfAction(reference, page)
+					)
+				)
+			)
 		{
 			chunk.setRemoteGoto(reference, page);
 		}
+	}
+
+	/**
+	 * Defers the creation of the hyperlink annotation of a styled text hyperlink to the moment
+	 * the text layout places this chunk on the page, as the position of the annotation is only
+	 * known then.
+	 *
+	 * @return whether the annotation creation was taken over; when it was not, the annotation is
+	 * left to be created by the PDF library out of the chunk action
+	 */
+	protected boolean deferStyledTextLinkAnnotation(Function<Rectangle, PdfAnnotation> annotationFactory)
+	{
+		if (styledTextLinkTagSupplier == null)
+		{
+			return false;
+		}
+
+		pdfProducer.deferChunkAnnotation(
+			chunk,
+			rect -> addAnnotationToTag(styledTextLinkTagSupplier.get(), annotationFactory.apply(rect))
+			);
+		return true;
 	}
 
 	protected void addAnnotationToTag(PdfStructureEntry linkTag, PdfAnnotation annotation)
@@ -223,12 +316,27 @@ public class StandardChunk implements PdfChunk
 			annotation.put(PdfName.CONTENTS, new PdfString(linkContents));
 		}
 
+		if (linkTag == null)
+		{
+			// the Link tag could not be created, add the annotation on its own
+			pdfProducer.getPdfWriter().addAnnotation(annotation);
+			return;
+		}
+
 		PdfStructureElement element = ((StandardStructureEntry) linkTag).getElement();
 
 		if (StandardPdfUtils.isCustomStructureTreeRootSupported())
 		{
 			StandardPdfStructureTreeRoot treeRoot = (StandardPdfStructureTreeRoot) pdfProducer.getPdfWriter().getStructureTreeRoot();
 			treeRoot.addAnnotationParent(annotation, element.getReference());
+		}
+
+		if (element.get(PdfName.PG) == null)
+		{
+			// the Link tag of a styled text hyperlink holds no marked content, hence it has not
+			// been associated with a page yet
+			PdfWriter pdfWriter = pdfProducer.getPdfWriter();
+			element.put(PdfName.PG, pdfWriter.getPageReference(pdfWriter.getCurrentPageNumber()));
 		}
 
 		pdfProducer.getPdfWriter().addAnnotation(annotation);
@@ -245,6 +353,12 @@ public class StandardChunk implements PdfChunk
 		{
 			PdfArray ar = new PdfArray();
 			ar.add(kObj);
+			ar.add(objr);
+			element.put(PdfName.K, ar);
+		}
+		else if (kObj == null)
+		{
+			PdfArray ar = new PdfArray();
 			ar.add(objr);
 			element.put(PdfName.K, ar);
 		}

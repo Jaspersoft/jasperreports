@@ -133,7 +133,7 @@ public abstract class SimpleAbstractPdfTextRenderer extends AbstractPdfTextRende
 		String paragraphText
 		)
 	{
-		pdfTagger.startText(text);
+		pdfTagger.startText(text, null, styledTextHyperlinks);
 
 		if (bulletChunk != null)
 		{

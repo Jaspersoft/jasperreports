@@ -55,6 +55,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.StringTokenizer;
+import java.util.function.Supplier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -2440,10 +2441,13 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		Locale locale = getTextLocale(textElement);
 
 		boolean firstChunk = true;
+		JRPrintHyperlink styledTextHyperlink = null;
+		StyledTextLinkTagSupplier styledTextLinkTagSupplier = null;
 		while (runLimit < endIndex && (runLimit = iterator.getRunLimit()) <= endIndex)
 		{
 			Map<Attribute,Object> attributes = iterator.getAttributes();
-			PdfTextChunk chunk = getChunk(attributes, text.substring(iterator.getIndex(), runLimit), locale, fontSizeScale);
+			String chunkText = text.substring(iterator.getIndex(), runLimit);
+			PdfTextChunk chunk = getChunk(attributes, chunkText, locale, fontSizeScale);
 
 			if (firstChunk && firstParagraph)
 			{
@@ -2463,13 +2467,31 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			}
 			
 			JRPrintHyperlink hyperlink = textElement;
+			boolean isStyledTextHyperlink = false;
 			if (hyperlink.getHyperlinkType() == HyperlinkTypeEnum.NONE)
 			{
 				hyperlink = (JRPrintHyperlink)attributes.get(JRTextAttribute.HYPERLINK);
+				isStyledTextHyperlink = hyperlink != null;
 			}
 
 			if (pdfTagger.getCurrentLinkTag() == null || (firstChunk && pdfTagger.isFirstLinkParagraph()))
 			{
+				if (isTagged && isStyledTextHyperlink && pdfTagger.getCurrentLinkTag() == null)
+				{
+					// consecutive runs that belong to the same styled text hyperlink share a single
+					// Link tag, as the hyperlink is split into several runs when it has mixed styles
+					if (hyperlink != styledTextHyperlink)
+					{
+						styledTextHyperlink = hyperlink;
+						styledTextLinkTagSupplier = new StyledTextLinkTagSupplier(pdfTagger);
+					}
+
+					chunk.setStyledTextLinkTag(
+						styledTextLinkTagSupplier,
+						hyperlink.getHyperlinkTooltip() == null ? chunkText : hyperlink.getHyperlinkTooltip()
+						);
+				}
+
 				setHyperlinkInfo(chunk, hyperlink);
 			}
 			phrase.add(chunk);
@@ -2479,6 +2501,36 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		}
 
 		firstParagraph = false;
+	}
+
+
+	/**
+	 * Creates on demand the Link structure element shared by all the chunks that make up a single
+	 * styled text hyperlink. The creation is deferred to the moment the first annotation is
+	 * actually created during the text layout, so that no Link tag is left empty in the structure
+	 * tree when the chunks do not get rendered.
+	 */
+	protected static class StyledTextLinkTagSupplier implements Supplier<PdfStructureEntry>
+	{
+		private final PdfTagger pdfTagger;
+		private PdfStructureEntry linkTag;
+		private boolean created;
+
+		protected StyledTextLinkTagSupplier(PdfTagger pdfTagger)
+		{
+			this.pdfTagger = pdfTagger;
+		}
+
+		@Override
+		public PdfStructureEntry get()
+		{
+			if (!created)
+			{
+				linkTag = pdfTagger.createStyledTextLinkTag();
+				created = true;
+			}
+			return linkTag;
+		}
 	}
 
 

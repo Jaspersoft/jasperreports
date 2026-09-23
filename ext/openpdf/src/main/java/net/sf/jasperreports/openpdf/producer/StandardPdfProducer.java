@@ -31,6 +31,7 @@ import java.text.AttributedCharacterIterator.Attribute;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.openpdf.text.Chunk;
 import org.openpdf.text.Document;
@@ -46,6 +47,7 @@ import org.openpdf.text.pdf.PdfContentByte;
 import org.openpdf.text.pdf.PdfFormField;
 import org.openpdf.text.pdf.PdfImportedPage;
 import org.openpdf.text.pdf.PdfOutline;
+import org.openpdf.text.pdf.PdfPageEventHelper;
 import org.openpdf.text.pdf.PdfReader;
 import org.openpdf.text.pdf.PdfTemplate;
 import org.openpdf.text.pdf.PdfWriter;
@@ -91,7 +93,9 @@ import net.sf.jasperreports.renderers.Graphics2DRenderable;
  */
 public class StandardPdfProducer implements PdfProducer
 {
-	
+
+	private static final String CHUNK_ANNOTATION_TAG_PREFIX = "jr.chunk.annotation.";
+
 	private PdfProducerContext context;
 	
 	private StandardPdfStructure pdfStructure;
@@ -109,7 +113,11 @@ public class StandardPdfProducer implements PdfProducer
 	
 	private Map<String, RadioCheckField> radioFieldFactories;
 	private Map<String, PdfFormField> radioGroups;
-	
+
+	private Map<String, Consumer<Rectangle>> deferredChunkAnnotations;
+	private int deferredChunkAnnotationCount;
+	private boolean chunkAnnotationPageEventSet;
+
 	private boolean defaultUseSavedLineBreaks;
 
 	public StandardPdfProducer(PdfProducerContext context)
@@ -261,9 +269,58 @@ public class StandardPdfProducer implements PdfProducer
 		document.getDocument().setPageSize(pageSize);		
 	}
 
+	/**
+	 * Registers a callback that creates an annotation for a chunk once the text layout has
+	 * determined where on the page the chunk is placed.
+	 *
+	 * <p>
+	 * This relies on the generic tag chunk attribute, which the PDF library reports back through
+	 * a page event while it writes the line that contains the chunk. A chunk that gets split
+	 * across lines is reported once for each of its parts.
+	 * </p>
+	 *
+	 * @param chunk the chunk to create the annotation for
+	 * @param annotationCreator called with the position of the chunk on the page
+	 */
+	public void deferChunkAnnotation(Chunk chunk, Consumer<Rectangle> annotationCreator)
+	{
+		if (deferredChunkAnnotations == null)
+		{
+			deferredChunkAnnotations = new HashMap<>();
+		}
+
+		if (!chunkAnnotationPageEventSet)
+		{
+			// setPageEvent chains the events, so an event that was set by someone else is preserved
+			getPdfWriter().setPageEvent(new ChunkAnnotationPageEvent());
+			chunkAnnotationPageEventSet = true;
+		}
+
+		String genericTag = CHUNK_ANNOTATION_TAG_PREFIX + (++deferredChunkAnnotationCount);
+		deferredChunkAnnotations.put(genericTag, annotationCreator);
+		chunk.setGenericTag(genericTag);
+	}
+
+	protected class ChunkAnnotationPageEvent extends PdfPageEventHelper
+	{
+		@Override
+		public void onGenericTag(PdfWriter writer, Document document, Rectangle rect, String text)
+		{
+			Consumer<Rectangle> annotationCreator =
+				deferredChunkAnnotations == null ? null : deferredChunkAnnotations.get(text);
+			if (annotationCreator != null)
+			{
+				annotationCreator.accept(rect);
+			}
+		}
+	}
+
 	@Override
 	public void endPage()
 	{
+		// the annotations of the chunks written on this page have been created by now
+		deferredChunkAnnotations = null;
+
 		if (radioGroups != null)
 		{
 			for (PdfFormField radioGroup : radioGroups.values())
