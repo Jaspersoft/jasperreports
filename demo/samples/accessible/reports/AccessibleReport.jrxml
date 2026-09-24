@@ -170,8 +170,7 @@
 			</band>
 			<band height="20">
 				<element kind="textField" uuid="9acca496-1625-4b69-838d-384f63788a75" x="0" y="0" width="500" height="10" textAdjust="StretchHeight" style="Sans_Normal" markup="styled">
-					<expression><![CDATA["Cucumber (Cucumis sativus) is a widely-cultivated creeping vine plant in the <a href=\"https://en.wikipedia.org/wiki/Cucurbitaceae\">Cucurbitaceae</a> family that bears usually cylindrical fruits, which are used as vegetables."]]></expression>
-					<property name="net.sf.jasperreports.export.pdf.tag.reference" value="full"/>
+					<expression><![CDATA["Cucumber (Cucumis sativus) is a widely-cultivated creeping vine plant in the <a href=\"https://en.wikipedia.org/wiki/Cucurbitaceae\">Cucurbitaceae</a><sup><reference>1</reference></sup> family that bears usually cylindrical fruits, which are used as vegetables."]]></expression>
 				</element>
 			</band>
 			<band height="30"/>
