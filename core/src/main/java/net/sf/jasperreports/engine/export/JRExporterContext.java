@@ -27,6 +27,7 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.export.Exporter;
 import net.sf.jasperreports.repo.RepositoryUtil;
 
@@ -61,6 +62,24 @@ public interface JRExporterContext
 	 * @return currently exported report
 	 */
 	JasperPrint getExportedReport();
+
+	/**
+	 * Returns the page format of the page which is currently exported.
+	 * 
+	 * <p>
+	 * In documents made of parts, pages can have a page format that differs from the
+	 * page format of the document, including the resolution at which they were filled.
+	 * Exporters that iterate the pages of such documents return here the format of the
+	 * page being exported, so that element handlers can rely on it instead of on the
+	 * document level values available from {@link #getExportedReport()}.
+	 * </p>
+	 * 
+	 * @return the page format of the page currently exported
+	 */
+	default public PrintPageFormat getCurrentPageFormat()
+	{
+		return getExportedReport().getPageFormat();
+	}
 
 	/**
 	 * Returns the current X-axis offset at which elements should be exported.

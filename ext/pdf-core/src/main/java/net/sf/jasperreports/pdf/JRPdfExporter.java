@@ -928,7 +928,7 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 			@Override
 			public PrintPageFormat getCurrentPageFormat()
 			{
-				return JRPdfExporter.this.pageFormat;
+				return JRPdfExporter.this.getCurrentPageFormat();
 			}
 		};
 	}
@@ -3742,12 +3742,11 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	}
 
 
-	/**
-	 *
-	 */
+	@Override
 	public PrintPageFormat getCurrentPageFormat()
 	{
-		return pageFormat;
+		// the page format of the page being exported, as long as the page loop has started
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
 	}
 
 

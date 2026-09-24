@@ -66,6 +66,7 @@ import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.base.JRBaseLineBox;
 import net.sf.jasperreports.engine.base.JRBasePen;
 import net.sf.jasperreports.engine.export.CutsInfo;
@@ -243,6 +244,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	protected boolean defaultFrameAsTable;
 
 	protected int reportDpi;
+	protected PrintPageFormat pageFormat;
 
 	/**
 	 * used for counting the total number of sheets
@@ -331,13 +333,21 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	
 
 	@Override
+	public PrintPageFormat getCurrentPageFormat()
+	{
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
+	}
+	
+
+	@Override
 	protected void initReport()
 	{
 		super.initReport();
 		
-		// the document resolution sizes the slides and applies to the pages that do not
+		// the document page format sizes the slides and applies to the pages that do not
 		// belong to a part; exportPage() refreshes it for every page that does
-		reportDpi = jasperPrint.getDpi();
+		pageFormat = jasperPrint.getPageFormat();
+		reportDpi = pageFormat.getDpi();
 
 		if (presentationHelper != null)
 		{
@@ -385,8 +395,9 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 				);
 		
 		// the helper below is created before the first input item is set, so the report
-		// resolution has to be read here; initReport() refreshes it for each item afterwards
-		reportDpi = jasperPrint.getDpi();
+		// page format has to be read here; initReport() refreshes it for each item afterwards
+		pageFormat = jasperPrint.getPageFormat();
+		reportDpi = pageFormat.getDpi();
 		
 		presentationHelper = new PptxPresentationHelper(jasperReportsContext, presentationWriter, fontWriter, reportDpi);
 		presentationHelper.exportHeader(isEmbedFonts);
@@ -618,7 +629,8 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 	 */
 	protected void exportPage(JRPrintPage page, boolean isBackgroundAsSlideMaster, boolean hasToSlideMasterElements) throws JRException
 	{
-		reportDpi = jasperPrint.getPageFormat(pageIndex).getDpi();
+		pageFormat = jasperPrint.getPageFormat(pageIndex);
+		reportDpi = pageFormat.getDpi();
 
 		frameIndexStack = new ArrayList<>();
 

@@ -622,6 +622,12 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 	}
 
 	@Override
+	public PrintPageFormat getCurrentPageFormat() {
+		// the page format of the page being exported, as long as the page loop has started
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
+	}
+
+	@Override
 	protected void initReport() {
 		super.initReport();
 

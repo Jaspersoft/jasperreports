@@ -251,6 +251,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	private boolean defaultJustifyLastLine;
 
 	protected int reportDpi;
+	protected PrintPageFormat pageFormat;
 	private float currentZoomRatio;
 	private String currentSizeUnit;
 
@@ -341,13 +342,21 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 
 	@Override
+	public PrintPageFormat getCurrentPageFormat()
+	{
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
+	}
+
+
+	@Override
 	protected void initReport()
 	{
 		super.initReport();
 
-		// the document resolution applies to the pages that do not belong to a part;
+		// the document page format applies to the pages that do not belong to a part;
 		// exportPage() refreshes it for every page that does
-		reportDpi = jasperPrint.getDpi();
+		pageFormat = jasperPrint.getPageFormat();
+		reportDpi = pageFormat.getDpi();
 
 		HtmlReportConfiguration configuration = getCurrentItemConfiguration();
 		
@@ -590,7 +599,8 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 	
 	protected void exportPage(JRPrintPage page) throws IOException
 	{
-		reportDpi = jasperPrint.getPageFormat(pageIndex).getDpi();
+		pageFormat = jasperPrint.getPageFormat(pageIndex);
+		reportDpi = pageFormat.getDpi();
 
 		HtmlReportConfiguration configuration = getCurrentItemConfiguration();
 
@@ -600,7 +610,6 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		boolean isIgnorePageMargins = configuration.isIgnorePageMargins();
 		if (!isIgnorePageMargins)
 		{
-			PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
 			tabulator.addMargins(pageFormat.getPageWidth(), pageFormat.getPageHeight());
 		}
 		

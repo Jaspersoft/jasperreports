@@ -155,6 +155,7 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	 */
 	protected PrintDrawVisitor drawVisitor;
 	protected int reportDpi;
+	protected PrintPageFormat pageFormat;
 	
 	private boolean whitePageBackground = true;
 	
@@ -234,9 +235,10 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	{
 		super.initReport();
 		
-		// the document resolution applies to the pages that do not belong to a part;
-		// setReportDpi() switches to the resolution of the page being exported
-		reportDpi = jasperPrint.getDpi();
+		// the document page format applies to the pages that do not belong to a part;
+		// setPageFormat() switches to the format of the page being exported
+		pageFormat = jasperPrint.getPageFormat();
+		reportDpi = pageFormat.getDpi();
 
 		setOffset(false);
 
@@ -285,6 +287,25 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	}
 
 	
+	@Override
+	public PrintPageFormat getCurrentPageFormat()
+	{
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
+	}
+
+
+	/**
+	 * Switches to the given page format, whose resolution the page dimensions and the
+	 * elements on the page are expressed in, as parts can have a resolution of their own.
+	 */
+	protected void setPageFormat(PrintPageFormat pageFormat)
+	{
+		this.pageFormat = pageFormat;
+		
+		setReportDpi(pageFormat.getDpi());
+	}
+
+
 	/**
 	 * Switches to the given resolution, recreating the draw visitor when it differs from
 	 * the one currently in use.
@@ -325,10 +346,8 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 		PageRange pageRange = getPageRange();
 		int startPageIndex = (pageRange == null || pageRange.getStartPageIndex() == null) ? 0 : pageRange.getStartPageIndex();
 
-		PrintPageFormat pageFormat = jasperPrint.getPageFormat(startPageIndex);
-		// the page dimensions and the elements on the page are expressed in the resolution
-		// of the page format, which the scaling below turns into points
-		setReportDpi(pageFormat.getDpi());
+		// the scaling below turns the page format resolution into points
+		setPageFormat(jasperPrint.getPageFormat(startPageIndex));
 
 		AffineTransform atrans = new AffineTransform();
 		atrans.translate(
@@ -366,7 +385,7 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 	{
 		List<JRPrintPage> pages = jasperPrint.getPages();
 		JRPrintPage page = pages.get(pageIndex);
-		PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
+		setPageFormat(jasperPrint.getPageFormat(pageIndex));
 
 		if (whitePageBackground)
 		{

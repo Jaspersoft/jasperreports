@@ -238,6 +238,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	protected StyleBuilder styleBuilder;
 
 	protected int reportDpi;
+	protected PrintPageFormat pageFormat;
 
 	protected ExporterNature nature;
 
@@ -319,9 +320,9 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 	{
 		super.initReport();
 		
-		// the document resolution applies to the pages that do not belong to a part;
+		// the document page format applies to the pages that do not belong to a part;
 		// exportPage() refreshes it for every page that does
-		setReportDpi(jasperPrint.getDpi());
+		setPageFormat(jasperPrint.getPageFormat());
 
 		if (jasperPrint.hasProperties() && jasperPrint.getPropertiesMap().containsProperty(JRXmlExporter.PROPERTY_REPLACE_INVALID_CHARS))
 		{
@@ -334,6 +335,25 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 		}
 
 		nature = new JROdtExporterNature(getJasperReportsContext(), filter);
+	}
+
+	
+	@Override
+	public PrintPageFormat getCurrentPageFormat()
+	{
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
+	}
+
+	
+	/**
+	 * Switches to the given page format, whose resolution the page layout and the
+	 * element sizes are expressed in, as parts can have a resolution of their own.
+	 */
+	protected void setPageFormat(PrintPageFormat pageFormat)
+	{
+		this.pageFormat = pageFormat;
+		
+		setReportDpi(pageFormat.getDpi());
 	}
 
 	
@@ -405,13 +425,10 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 				{
 					checkInterrupted();
 
-					PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
+					setPageFormat(jasperPrint.getPageFormat(pageIndex));
 					
 					if (oldPageFormat != pageFormat)
 					{
-						// the page layout is written in physical units, so it needs the
-						// resolution of this page format rather than the document one
-						setReportDpi(pageFormat.getDpi());
 						styleBuilder.buildPageLayout(++pageFormatIndex, pageFormat);
 						oldPageFormat = pageFormat;
 					}
@@ -465,8 +482,7 @@ public class JROdtExporter extends JRAbstractExporter<OdtReportConfiguration, Od
 
 		ReportExportConfiguration configuration = getCurrentItemConfiguration();
 		
-		PrintPageFormat pageFormat = jasperPrint.getPageFormat(pageIndex);
-		setReportDpi(pageFormat.getDpi());
+		setPageFormat(jasperPrint.getPageFormat(pageIndex));
 		
 		JRGridLayout layout =
 			new JRGridLayout(

@@ -67,6 +67,7 @@ import net.sf.jasperreports.engine.JRPrintRectangle;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.TabStop;
 import net.sf.jasperreports.engine.base.JRBaseFont;
 import net.sf.jasperreports.engine.base.JRBasePrintText;
@@ -145,6 +146,7 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 
 	protected int reportIndex;
 	protected int reportDpi;
+	protected PrintPageFormat pageFormat;
 
 	protected List<Color> colors;
 	protected List<String> fonts;
@@ -242,10 +244,18 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 	{
 		super.initReport();
 		
-		// the document resolution sizes the single rtf section and applies to the pages that
-		// do not belong to a part; the page loop refreshes it for every page that does
-		reportDpi = jasperPrint.getDpi();
+		// the document page format sizes the single rtf section and applies to the pages
+		// that do not belong to a part; the page loop refreshes it for every page that does
+		pageFormat = jasperPrint.getPageFormat();
+		reportDpi = pageFormat.getDpi();
 		renderersCache = new RenderersCache(getJasperReportsContext());
+	}
+	
+
+	@Override
+	public PrintPageFormat getCurrentPageFormat()
+	{
+		return pageFormat == null ? super.getCurrentPageFormat() : pageFormat;
 	}
 	
 
@@ -306,7 +316,8 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 
 					JRPrintPage page = pages.get(pageIndex);
 
-					reportDpi = jasperPrint.getPageFormat(pageIndex).getDpi();
+					pageFormat = jasperPrint.getPageFormat(pageIndex);
+					reportDpi = pageFormat.getDpi();
 
 					contentWriter.write("\n");
 

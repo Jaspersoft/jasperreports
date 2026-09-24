@@ -157,6 +157,12 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 		}
 
 		@Override
+		public PrintPageFormat getCurrentPageFormat()
+		{
+			return JRAbstractExporter.this.getCurrentPageFormat();
+		}
+
+		@Override
 		public int getOffsetX()
 		{
 			return JRAbstractExporter.this.getOffsetX();
@@ -720,6 +726,24 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 	protected int getOffsetY()
 	{
 		return elementOffsetY;
+	}
+
+	
+	/**
+	 * Returns the page format of the page which is currently exported.
+	 * 
+	 * <p>
+	 * The implementation here returns the page format of the document, which is the
+	 * correct one for pages that do not belong to a part. Exporters that iterate the
+	 * pages of a document made of parts override this method in order to return the
+	 * format of the page being exported, as parts can have page formats of their own.
+	 * </p>
+	 * 
+	 * @return the page format of the page currently exported
+	 */
+	public PrintPageFormat getCurrentPageFormat()
+	{
+		return jasperPrint == null ? null : jasperPrint.getPageFormat();
 	}
 
 	
