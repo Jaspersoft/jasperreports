@@ -60,7 +60,8 @@ public class StandardChunk implements PdfChunk
 	private float linkUrx;
 	private float linkUry;
 	private String linkContents;
-	private Supplier<PdfStructureEntry> styledTextLinkTagSupplier;
+	private PdfStructureEntry styledTextLinkTag;
+	private StandardStructureEntry markedContentTag;
 
 	public StandardChunk(StandardPdfProducer pdfProducer, Chunk chunk)
 	{
@@ -97,10 +98,22 @@ public class StandardChunk implements PdfChunk
 	}
 
 	@Override
-	public void setStyledTextLinkTag(Supplier<PdfStructureEntry> linkTagSupplier, String linkContents)
+	public void setStyledTextLinkTag(PdfStructureEntry linkTag, String linkContents)
 	{
-		this.styledTextLinkTagSupplier = linkTagSupplier;
+		this.styledTextLinkTag = linkTag;
 		this.linkContents = linkContents;
+	}
+
+	@Override
+	public void setMarkedContentTag(PdfStructureEntry markedContentTag)
+	{
+		this.markedContentTag = (StandardStructureEntry) markedContentTag;
+		pdfProducer.registerChunkMarkedContent(chunk, this.markedContentTag);
+	}
+
+	public StandardStructureEntry getMarkedContentTag()
+	{
+		return markedContentTag;
 	}
 
 	@Override
@@ -305,14 +318,14 @@ public class StandardChunk implements PdfChunk
 	 */
 	protected boolean deferStyledTextLinkAnnotation(Function<Rectangle, PdfAnnotation> annotationFactory)
 	{
-		if (styledTextLinkTagSupplier == null)
+		if (styledTextLinkTag == null)
 		{
 			return false;
 		}
 
 		pdfProducer.deferChunkAnnotation(
 			chunk,
-			rect -> addAnnotationToTag(styledTextLinkTagSupplier.get(), annotationFactory.apply(rect))
+			rect -> addAnnotationToTag(styledTextLinkTag, annotationFactory.apply(rect))
 			);
 		return true;
 	}
@@ -343,8 +356,8 @@ public class StandardChunk implements PdfChunk
 
 		if (element.get(PdfName.PG) == null)
 		{
-			// the Link tag of a styled text hyperlink holds no marked content, hence it has not
-			// been associated with a page yet
+			// the tag holds no marked content of its own, hence it has not been associated with a
+			// page yet
 			element.put(PdfName.PG, pdfProducer.getPdfWriter().getCurrentPage());
 		}
 
@@ -370,6 +383,11 @@ public class StandardChunk implements PdfChunk
 			PdfArray ar = new PdfArray();
 			ar.add(objr);
 			element.put(PdfName.K, ar);
+
+			// the object reference became the first kid of the structure element, and the PDF
+			// library refuses to place marked content in an element whose first kid is not marked
+			// content; this only occurs for a tag whose chunks did not write any text
+			((StandardStructureEntry) linkTag).setMarkedContentDisallowed();
 		}
 	}
 

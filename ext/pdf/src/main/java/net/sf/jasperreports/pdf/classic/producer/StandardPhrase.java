@@ -43,6 +43,7 @@ public class StandardPhrase implements PdfPhrase
 
 	private StandardPdfProducer pdfProducer;
 	private Phrase phrase;
+	private boolean markedContentChunks;
 
 	public StandardPhrase(StandardPdfProducer pdfProducer, Phrase phrase)
 	{
@@ -53,7 +54,9 @@ public class StandardPhrase implements PdfPhrase
 	@Override
 	public void add(PdfChunk chunk)
 	{
-		phrase.add(((StandardChunk) chunk).getChunk());
+		StandardChunk standardChunk = (StandardChunk) chunk;
+		markedContentChunks |= standardChunk.getMarkedContentTag() != null;
+		phrase.add(standardChunk.getChunk());
 	}
 
 	@Override
@@ -61,7 +64,13 @@ public class StandardPhrase implements PdfPhrase
 			float fixedLeading, float multipliedLeading, 
 			PdfTextAlignment alignment, TextDirection runDirection)
 	{
-		ColumnText colText = new ColumnText(pdfProducer.getPdfContentByte());
+		// chunks that carry a structure element need the marked content operators to be written in
+		// between the text showing operators, which requires a content byte of our own
+		StandardPdfProducer.MarkedContentCanvas markedContentCanvas =
+			markedContentChunks ? pdfProducer.createMarkedContentCanvas() : null;
+
+		ColumnText colText =
+			new ColumnText(markedContentCanvas == null ? pdfProducer.getPdfContentByte() : markedContentCanvas);
 		colText.setSimpleColumn(phrase, 
 				llx, lly, urx, ury, 
 				fixedLeading, 
@@ -79,6 +88,13 @@ public class StandardPhrase implements PdfPhrase
 		{
 			throw new JRRuntimeException(e);
 		}
+
+		if (markedContentCanvas != null)
+		{
+			// the text of the column has been appended to it by the layout
+			pdfProducer.getPdfContentByte().add(markedContentCanvas);
+		}
+
 		return colText.getYLine();
 	}
 	

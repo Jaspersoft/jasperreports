@@ -24,10 +24,12 @@
 package net.sf.jasperreports.pdf.common;
 
 import net.sf.jasperreports.engine.JRPrintElement;
+import net.sf.jasperreports.engine.JRPrintHyperlink;
 import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.util.StyledTextListWriter;
+import net.sf.jasperreports.export.type.AccessibilityTagEnum;
 
 
 /**
@@ -112,7 +114,7 @@ public class DefaultPdfTagger implements PdfTagger
 	}
 
 	@Override
-	public void startText(JRPrintText textElement, String actualText, boolean styledTextHyperlinks)
+	public void startText(JRPrintText textElement, String actualText, boolean styledTextChunkTags)
 	{
 	}
 
@@ -134,7 +136,7 @@ public class DefaultPdfTagger implements PdfTagger
 	}
 
 	@Override
-	public PdfStructureEntry createStyledTextLinkTag()
+	public PdfStructureEntry getStyledTextChunkTag(AccessibilityTagEnum accessibilityTag, JRPrintHyperlink hyperlink)
 	{
 		return null;
 	}

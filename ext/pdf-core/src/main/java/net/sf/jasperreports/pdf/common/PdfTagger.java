@@ -35,6 +35,7 @@ package net.sf.jasperreports.pdf.common;
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRPrintElement;
+import net.sf.jasperreports.engine.JRPrintHyperlink;
 import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.util.StyledTextListWriter;
@@ -298,13 +299,15 @@ public interface PdfTagger
 	 *
 	 * @param textElement the text element that is being exported
 	 * @param actualText the text to be used as replacement text for the paragraph, if any
-	 * @param styledTextHyperlinks whether the styled text of the element contains hyperlinks that
-	 * require Link structure elements nested inside the structure element of the text; when this
-	 * is the case, the marked content of the paragraph is placed in a structure element of its
-	 * own, because a structure element cannot hold both marked content and child structure
-	 * elements
+	 * @param styledTextChunkTags whether the styled text of the element has runs that require
+	 * structure elements of their own, that is, accessibility tags such as
+	 * <code>&lt;reference&gt;</code> and <code>&lt;note&gt;</code>, or hyperlinks that only cover
+	 * parts of the text; when this is the case, the paragraph tag holds no marked content of its
+	 * own and the marked content is instead created by the chunks of the text, because a structure
+	 * element can either hold marked content or have child structure elements, but not both
+	 * @see #getStyledTextChunkTag(AccessibilityTagEnum, JRPrintHyperlink)
 	 */
-	void startText(JRPrintText textElement, String actualText, boolean styledTextHyperlinks);
+	void startText(JRPrintText textElement, String actualText, boolean styledTextChunkTags);
 
 	void endText();
 
@@ -313,19 +316,30 @@ public interface PdfTagger
 	PdfStructureEntry getCurrentLinkTag();
 	
 	/**
-	 * Creates a Link structure element for a hyperlink that only covers a part of the current
-	 * text paragraph, as specified in the styled text of the element.
+	 * Returns the structure element that the chunks of the current styled text run belong to,
+	 * which holds both the marked content of their text and the annotations of their hyperlink.
 	 *
 	 * <p>
-	 * The Link tag is created as a sibling of the structure element that holds the marked content
-	 * of the paragraph, which is only possible when the paragraph tagging was started with
-	 * <code>styledTextHyperlinks</code> set to <code>true</code>.
+	 * The chunks of a paragraph whose styled text has runs that require structure elements of
+	 * their own each carry the structure element that they belong to, because the marked content
+	 * sequences can only be opened and closed while the text is laid out, and because the
+	 * hyperlink annotations can only be created once the layout has placed the chunk on the page.
+	 * Consecutive chunks that belong to the same styled text run share the structure element
+	 * returned here, and a new structure element is created whenever the accessibility tag or the
+	 * hyperlink changes from one chunk to the next.
 	 * </p>
 	 *
-	 * @return the Link structure element, or <code>null</code> if the current text is not tagged
+	 * @param accessibilityTag the accessibility tag of the styled text run that the chunk belongs
+	 * to, or <code>null</code> when the run carries no accessibility tag
+	 * @param hyperlink the hyperlink of the styled text run that the chunk belongs to, or
+	 * <code>null</code> when the run carries no hyperlink of its own; consecutive runs are
+	 * considered to belong to the same hyperlink as determined by
+	 * {@link JRPdfExporter#isSameStyledTextHyperlink(JRPrintHyperlink, JRPrintHyperlink)}
+	 * @return the structure element that the chunk is to be added to, or <code>null</code> when
+	 * the marked content of the current paragraph is not created by its chunks
 	 * @see #startText(JRPrintText, String, boolean)
 	 */
-	PdfStructureEntry createStyledTextLinkTag();
+	PdfStructureEntry getStyledTextChunkTag(AccessibilityTagEnum accessibilityTag, JRPrintHyperlink hyperlink);
 
 	StyledTextListWriter getListWriter();
 

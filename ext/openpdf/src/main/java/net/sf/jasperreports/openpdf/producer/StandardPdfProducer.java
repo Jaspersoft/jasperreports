@@ -50,6 +50,7 @@ import org.openpdf.text.pdf.PdfOutline;
 import org.openpdf.text.pdf.PdfPageEventHelper;
 import org.openpdf.text.pdf.PdfReader;
 import org.openpdf.text.pdf.PdfTemplate;
+import org.openpdf.text.pdf.PdfTextArray;
 import org.openpdf.text.pdf.PdfWriter;
 import org.openpdf.text.pdf.RadioCheckField;
 import org.openpdf.text.pdf.TextField;
@@ -94,7 +95,7 @@ import net.sf.jasperreports.renderers.Graphics2DRenderable;
 public class StandardPdfProducer implements PdfProducer
 {
 
-	private static final String CHUNK_ANNOTATION_TAG_PREFIX = "jr.chunk.annotation.";
+	private static final String CHUNK_EVENT_TAG_PREFIX = "jr.chunk.";
 
 	private PdfProducerContext context;
 	
@@ -114,9 +115,11 @@ public class StandardPdfProducer implements PdfProducer
 	private Map<String, RadioCheckField> radioFieldFactories;
 	private Map<String, PdfFormField> radioGroups;
 
-	private Map<String, Consumer<Rectangle>> deferredChunkAnnotations;
-	private int deferredChunkAnnotationCount;
-	private boolean chunkAnnotationPageEventSet;
+	private Map<String, ChunkEvent> chunkEvents;
+	private int chunkEventCount;
+	private boolean chunkPageEventSet;
+	private StandardStructureEntry pendingMarkedContentTag;
+	private Runnable pendingChunkAnnotation;
 
 	private boolean defaultUseSavedLineBreaks;
 
@@ -270,47 +273,230 @@ public class StandardPdfProducer implements PdfProducer
 	}
 
 	/**
-	 * Registers a callback that creates an annotation for a chunk once the text layout has
-	 * determined where on the page the chunk is placed.
+	 * Returns the record of the callbacks that the PDF library reports back for a chunk through
+	 * the generic tag page event, creating it if the chunk does not carry one yet.
 	 *
 	 * <p>
-	 * This relies on the generic tag chunk attribute, which the PDF library reports back through
-	 * a page event while it writes the line that contains the chunk. A chunk that gets split
-	 * across lines is reported once for each of its parts.
+	 * The event is fired while the line that contains the chunk is written, right before the text
+	 * of the chunk goes into the content stream, and a chunk that gets split across lines is
+	 * reported once for each of its parts. A chunk can only carry a single generic tag, so all the
+	 * callbacks that it needs share one record.
 	 * </p>
+	 *
+	 * @param chunk the chunk to register the callbacks for
+	 */
+	protected ChunkEvent getChunkEvent(Chunk chunk)
+	{
+		if (chunkEvents == null)
+		{
+			chunkEvents = new HashMap<>();
+		}
+
+		if (!chunkPageEventSet)
+		{
+			// setPageEvent chains the events, so an event that was set by someone else is preserved
+			getPdfWriter().setPageEvent(new ChunkPageEvent());
+			chunkPageEventSet = true;
+		}
+
+		Map<String, Object> chunkAttributes = chunk.getChunkAttributes();
+		Object eventTag = chunkAttributes == null ? null : chunkAttributes.get(Chunk.GENERICTAG);
+		ChunkEvent chunkEvent = eventTag == null ? null : chunkEvents.get(eventTag);
+
+		if (chunkEvent == null)
+		{
+			chunkEvent = new ChunkEvent();
+			String newEventTag = CHUNK_EVENT_TAG_PREFIX + (++chunkEventCount);
+			chunkEvents.put(newEventTag, chunkEvent);
+			chunk.setGenericTag(newEventTag);
+		}
+
+		return chunkEvent;
+	}
+
+	/**
+	 * Registers a callback that creates an annotation for a chunk once the text layout has
+	 * determined where on the page the chunk is placed. When the chunk carries a structure
+	 * element as well, the callback is called after the marked content sequence of the chunk has
+	 * been opened in that element.
 	 *
 	 * @param chunk the chunk to create the annotation for
 	 * @param annotationCreator called with the position of the chunk on the page
 	 */
 	public void deferChunkAnnotation(Chunk chunk, Consumer<Rectangle> annotationCreator)
 	{
-		if (deferredChunkAnnotations == null)
-		{
-			deferredChunkAnnotations = new HashMap<>();
-		}
-
-		if (!chunkAnnotationPageEventSet)
-		{
-			// setPageEvent chains the events, so an event that was set by someone else is preserved
-			getPdfWriter().setPageEvent(new ChunkAnnotationPageEvent());
-			chunkAnnotationPageEventSet = true;
-		}
-
-		String genericTag = CHUNK_ANNOTATION_TAG_PREFIX + (++deferredChunkAnnotationCount);
-		deferredChunkAnnotations.put(genericTag, annotationCreator);
-		chunk.setGenericTag(genericTag);
+		getChunkEvent(chunk).annotationCreator = annotationCreator;
 	}
 
-	protected class ChunkAnnotationPageEvent extends PdfPageEventHelper
+	/**
+	 * Registers the structure element that the text of a chunk belongs to, so that its marked
+	 * content sequence can be opened right before the text of the chunk is written.
+	 *
+	 * @param chunk the chunk whose text is to be tagged
+	 * @param markedContentTag the structure element to add the marked content of the chunk to
+	 * @see MarkedContentCanvas
+	 */
+	public void registerChunkMarkedContent(Chunk chunk, StandardStructureEntry markedContentTag)
+	{
+		getChunkEvent(chunk).markedContentTag = markedContentTag;
+	}
+
+	protected static class ChunkEvent
+	{
+		private Consumer<Rectangle> annotationCreator;
+		private StandardStructureEntry markedContentTag;
+	}
+
+	protected class ChunkPageEvent extends PdfPageEventHelper
 	{
 		@Override
 		public void onGenericTag(PdfWriter writer, Document document, Rectangle rect, String text)
 		{
-			Consumer<Rectangle> annotationCreator =
-				deferredChunkAnnotations == null ? null : deferredChunkAnnotations.get(text);
-			if (annotationCreator != null)
+			ChunkEvent chunkEvent = chunkEvents == null ? null : chunkEvents.get(text);
+			if (chunkEvent == null)
 			{
-				annotationCreator.accept(rect);
+				return;
+			}
+
+			// an annotation still pending belongs to a chunk that wrote no text; create it now,
+			// before the event of this chunk replaces it
+			createPendingChunkAnnotation();
+
+			// the event comes right before the text of the chunk is written, which is when the
+			// marked content sequence that the text is to go into has to be switched
+			pendingMarkedContentTag = chunkEvent.markedContentTag;
+
+			if (chunkEvent.annotationCreator != null)
+			{
+				Consumer<Rectangle> annotationCreator = chunkEvent.annotationCreator;
+				if (chunkEvent.markedContentTag == null)
+				{
+					annotationCreator.accept(rect);
+				}
+				else
+				{
+					// the object reference of the annotation goes into the same structure element
+					// as the text of the chunk, and the PDF library only accepts marked content in
+					// an element whose first kid is marked content; the annotation is therefore
+					// created after the marked content sequence of the chunk has been opened
+					pendingChunkAnnotation = () -> annotationCreator.accept(rect);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Creates the annotation of the chunk whose text is being written, if it was postponed until
+	 * the marked content sequence of the chunk was opened.
+	 *
+	 * @see ChunkPageEvent#onGenericTag(PdfWriter, Document, Rectangle, String)
+	 */
+	protected void createPendingChunkAnnotation()
+	{
+		if (pendingChunkAnnotation != null)
+		{
+			Runnable annotationCreator = pendingChunkAnnotation;
+			pendingChunkAnnotation = null;
+			annotationCreator.run();
+		}
+	}
+
+	/**
+	 * Creates the content byte that a phrase which has chunks carrying structure elements is to be
+	 * laid out on.
+	 *
+	 * @see MarkedContentCanvas
+	 */
+	public MarkedContentCanvas createMarkedContentCanvas()
+	{
+		return new MarkedContentCanvas(getPdfWriter());
+	}
+
+	/**
+	 * Content byte that opens and closes the marked content sequences of the chunks that carry a
+	 * structure element, as the text of a phrase is written.
+	 *
+	 * <p>
+	 * A marked content sequence that is referenced from the structure tree has to be opened and
+	 * closed in between the text showing operators of the chunks, and the PDF library offers no
+	 * hook for that. Writing the operators from the generic tag page event is not an option
+	 * either: the text of a column goes to a duplicate of the canvas that the column was created
+	 * with and is only appended to that canvas once the whole column has been laid out, so
+	 * anything written to the canvas from the event would end up before all of the text. Instead,
+	 * the phrase is laid out on one of these content bytes, whose duplicate is one as well, and
+	 * the text showing methods of the duplicate open the sequence of the chunk that the page event
+	 * announced just before.
+	 * </p>
+	 *
+	 * <p>
+	 * Consecutive chunks that carry the same structure element share a single sequence, and the
+	 * sequences are closed at the end of the text object, so that they stay properly nested inside
+	 * it.
+	 * </p>
+	 */
+	public class MarkedContentCanvas extends PdfContentByte
+	{
+		private StandardStructureEntry openTag;
+
+		protected MarkedContentCanvas(PdfWriter pdfWriter)
+		{
+			super(pdfWriter);
+		}
+
+		@Override
+		public PdfContentByte getDuplicate()
+		{
+			// the text of the column is written to the duplicate and appended to this canvas at
+			// the end of the layout, so the duplicate has to intercept the text as well
+			return new MarkedContentCanvas(getPdfWriter());
+		}
+
+		@Override
+		public void showText(String text)
+		{
+			switchMarkedContent();
+			createPendingChunkAnnotation();
+			super.showText(text);
+		}
+
+		@Override
+		public void showText(PdfTextArray text)
+		{
+			switchMarkedContent();
+			createPendingChunkAnnotation();
+			super.showText(text);
+		}
+
+		@Override
+		public void endText()
+		{
+			// an annotation still pending belongs to a chunk that wrote no text
+			createPendingChunkAnnotation();
+			endMarkedContent();
+			super.endText();
+		}
+
+		protected void switchMarkedContent()
+		{
+			StandardStructureEntry markedContentTag = pendingMarkedContentTag;
+			if (markedContentTag != openTag)
+			{
+				endMarkedContent();
+
+				if (markedContentTag != null && !markedContentTag.isMarkedContentDisallowed())
+				{
+					beginMarkedContentSequence(markedContentTag.getElement());
+					openTag = markedContentTag;
+				}
+			}
+		}
+
+		protected void endMarkedContent()
+		{
+			if (openTag != null)
+			{
+				endMarkedContentSequence();
+				openTag = null;
 			}
 		}
 	}
@@ -318,8 +504,10 @@ public class StandardPdfProducer implements PdfProducer
 	@Override
 	public void endPage()
 	{
-		// the annotations of the chunks written on this page have been created by now
-		deferredChunkAnnotations = null;
+		// the callbacks of the chunks written on this page have been called by now
+		chunkEvents = null;
+		pendingMarkedContentTag = null;
+		pendingChunkAnnotation = null;
 
 		if (radioGroups != null)
 		{

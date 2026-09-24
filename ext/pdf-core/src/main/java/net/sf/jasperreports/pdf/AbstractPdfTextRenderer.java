@@ -53,7 +53,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	protected PdfTextAlignment horizontalAlignment;
 	protected float leftOffsetFactor;
 	protected float rightOffsetFactor;
-	protected boolean styledTextHyperlinks;
+	protected boolean styledTextChunkTags;
 
 	
 	/**
@@ -93,14 +93,16 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 		this.pdfProducer = pdfProducer;
 		this.pdfTagger = pdfTagger;
 		
-		// hyperlinks set on the element itself are tagged as a Link element that wraps the whole
-		// text, so only the hyperlinks coming from the styled text need Link tags of their own;
-		// the styled text can only contain hyperlinks if the markup of the text was parsed
-		this.styledTextHyperlinks =
+		// accessibility tags and hyperlinks that only cover parts of the text require the marked
+		// content of the paragraph to be created by its chunks, each of them going into a
+		// structure element of its own; hyperlinks set on the element itself are tagged as a Link
+		// element that wraps the whole text, so they do not need structure elements per run; the
+		// styled text can only contain tags or hyperlinks if the markup of the text was parsed
+		this.styledTextChunkTags =
 			pdfProducer.getContext().isTagged()
-			&& text.getLinkType() == null
+			&& supportsStyledTextChunkTags()
 			&& !JRCommonText.MARKUP_NONE.equals(text.getMarkup())
-			&& hasStyledTextHyperlinks(styledText);
+			&& hasStyledTextChunkTags(styledText, text.getLinkType() == null);
 		
 		horizontalAlignment = PdfTextAlignment.LEFT;
 		leftOffsetFactor = 0f;
@@ -158,14 +160,21 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	}
 	
 	/**
-	 * Determines whether the styled text contains hyperlinks set on some of its runs, as opposed
-	 * to a hyperlink set on the text element as a whole.
+	 * Determines whether the styled text has runs that require structure elements of their own,
+	 * that is, runs carrying accessibility tags (<code>&lt;reference&gt;</code> or
+	 * <code>&lt;note&gt;</code>) or, when the text element as a whole has no hyperlink, runs
+	 * carrying hyperlinks of their own.
 	 */
-	protected static boolean hasStyledTextHyperlinks(JRStyledText styledText)
+	protected static boolean hasStyledTextChunkTags(JRStyledText styledText, boolean includeHyperlinks)
 	{
 		for (Run run : styledText.getRuns())
 		{
-			if (run.attributes != null && run.attributes.containsKey(JRTextAttribute.HYPERLINK))
+			if (
+				run.attributes != null
+				&& (run.attributes.containsKey(JRTextAttribute.REFERENCE)
+					|| run.attributes.containsKey(JRTextAttribute.NOTE)
+					|| (includeHyperlinks && run.attributes.containsKey(JRTextAttribute.HYPERLINK)))
+				)
 			{
 				return true;
 			}
@@ -181,6 +190,23 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 	
 	public abstract boolean addActualText();
 	
+	/**
+	 * Determines whether this renderer writes the text of a paragraph as chunks, each of which can
+	 * carry the structure element that it belongs to.
+	 *
+	 * <p>
+	 * This is what the accessibility tags and the hyperlinks in the styled text require, because
+	 * the marked content sequence of a tagged portion of the text can only be created while the
+	 * text is laid out, and because the position of a hyperlink annotation is only known then.
+	 * Renderers that draw the text themselves, without going through chunks, do not support them
+	 * and leave the marked content of the whole paragraph in the tag of the paragraph.
+	 * </p>
+	 */
+	protected boolean supportsStyledTextChunkTags()
+	{
+		return true;
+	}
+	
 	 @Override
 	protected void renderParagraph(
 		AttributedCharacterIterator allParagraphs, 
@@ -188,7 +214,7 @@ public abstract class AbstractPdfTextRenderer extends AbstractTextRenderer
 		String paragraphText
 		) 
 	 {
-		pdfTagger.startText(text, addActualText() ? paragraphText : null, styledTextHyperlinks);
+		pdfTagger.startText(text, addActualText() ? paragraphText : null, styledTextChunkTags);
 		
 		super.renderParagraph(allParagraphs, paragraphStart, paragraphText);
 		

@@ -194,4 +194,12 @@ public class PdfGlyphRenderer extends AbstractPdfTextRenderer
 	}
 	
 
+	@Override
+	protected boolean supportsStyledTextChunkTags()
+	{
+		// the text is drawn as glyph vectors, not as chunks that could carry structure elements
+		return false;
+	}
+	
+
 }

@@ -57,8 +57,13 @@ public interface PdfChunk
 	 * Unlike {@link #setLinkTag(PdfStructureEntry, float, float, float, float, String)}, the
 	 * position of the annotation is not known when this method is called, as it depends on where
 	 * the chunk ends up when the text is laid out. The annotation is therefore created while the
-	 * text is written, and the Link structure element is only requested from the supplier at that
-	 * moment, so that no empty Link tag is created for a chunk that does not get rendered.
+	 * text is written.
+	 * </p>
+	 *
+	 * <p>
+	 * The Link structure element is the one that the text of the chunk goes into as well, as set
+	 * by {@link #setMarkedContentTag(PdfStructureEntry)}, so that it holds both the text of the
+	 * hyperlink and the reference to its annotation.
 	 * </p>
 	 *
 	 * <p>
@@ -66,9 +71,28 @@ public interface PdfChunk
 	 * library, in which case the annotation is not referenced from the structure tree.
 	 * </p>
 	 *
-	 * @param linkTagSupplier supplier of the Link structure element to attach the annotation to
+	 * @param linkTag the Link structure element to attach the annotation to
 	 * @param linkContents the alternate description of the link
 	 */
-	void setStyledTextLinkTag(Supplier<PdfStructureEntry> linkTagSupplier, String linkContents);
+	void setStyledTextLinkTag(PdfStructureEntry linkTag, String linkContents);
+
+	/**
+	 * Sets the structure element that the text of this chunk belongs to, for a chunk that is part
+	 * of a text paragraph whose marked content is created by its chunks.
+	 *
+	 * <p>
+	 * The marked content sequence that the text of the chunk goes into can only be opened and
+	 * closed while the text is laid out, because that is when the position of the chunk inside the
+	 * content stream is decided. Consecutive chunks that were given the same structure element end
+	 * up in a single marked content sequence.
+	 * </p>
+	 *
+	 * <p>
+	 * Producers that do not support this leave the text of the chunk untagged.
+	 * </p>
+	 *
+	 * @param markedContentTag the structure element to add the marked content of the chunk to
+	 */
+	void setMarkedContentTag(PdfStructureEntry markedContentTag);
 
 }

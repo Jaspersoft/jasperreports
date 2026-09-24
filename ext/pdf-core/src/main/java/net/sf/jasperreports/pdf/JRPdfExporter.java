@@ -53,9 +53,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.StringTokenizer;
-import java.util.function.Supplier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -78,6 +78,8 @@ import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintEllipse;
 import net.sf.jasperreports.engine.JRPrintFrame;
 import net.sf.jasperreports.engine.JRPrintHyperlink;
+import net.sf.jasperreports.engine.JRPrintHyperlinkParameter;
+import net.sf.jasperreports.engine.JRPrintHyperlinkParameters;
 import net.sf.jasperreports.engine.JRPrintImage;
 import net.sf.jasperreports.engine.JRPrintLine;
 import net.sf.jasperreports.engine.JRPrintPage;
@@ -118,6 +120,7 @@ import net.sf.jasperreports.engine.util.JRTypeSniffer;
 import net.sf.jasperreports.engine.util.Pair;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.OutputStreamExporterOutput;
+import net.sf.jasperreports.export.type.AccessibilityTagEnum;
 import net.sf.jasperreports.pdf.common.FontRecipient;
 import net.sf.jasperreports.pdf.common.LineCapStyle;
 import net.sf.jasperreports.pdf.common.PdfChunk;
@@ -2441,8 +2444,6 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		Locale locale = getTextLocale(textElement);
 
 		boolean firstChunk = true;
-		JRPrintHyperlink styledTextHyperlink = null;
-		StyledTextLinkTagSupplier styledTextLinkTagSupplier = null;
 		while (runLimit < endIndex && (runLimit = iterator.getRunLimit()) <= endIndex)
 		{
 			Map<Attribute,Object> attributes = iterator.getAttributes();
@@ -2474,24 +2475,38 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 				isStyledTextHyperlink = hyperlink != null;
 			}
 
+			// a hyperlink set on the element itself is tagged as a single Link that wraps the whole
+			// text, in which case the hyperlinks of the styled text get no Link tags of their own
+			JRPrintHyperlink styledTextHyperlink =
+				isStyledTextHyperlink && pdfTagger.getCurrentLinkTag() == null ? hyperlink : null;
+
+			if (isTagged)
+			{
+				// the accessibility tag and the hyperlink of the styled text run decide the
+				// structure element that the chunk belongs to; consecutive runs that share both,
+				// as happens when a hyperlink is split into several runs because it has mixed
+				// styles, are placed in a single structure element
+				PdfStructureEntry chunkTag =
+					pdfTagger.getStyledTextChunkTag(getStyledTextTag(attributes), styledTextHyperlink);
+				if (chunkTag != null)
+				{
+					chunk.setMarkedContentTag(chunkTag);
+
+					if (styledTextHyperlink != null)
+					{
+						// the annotations of the hyperlink are attached to the same Link structure
+						// element that the text of its chunks goes into
+						chunk.setStyledTextLinkTag(
+							chunkTag,
+							styledTextHyperlink.getHyperlinkTooltip() == null
+								? chunkText : styledTextHyperlink.getHyperlinkTooltip()
+							);
+					}
+				}
+			}
+
 			if (pdfTagger.getCurrentLinkTag() == null || (firstChunk && pdfTagger.isFirstLinkParagraph()))
 			{
-				if (isTagged && isStyledTextHyperlink && pdfTagger.getCurrentLinkTag() == null)
-				{
-					// consecutive runs that belong to the same styled text hyperlink share a single
-					// Link tag, as the hyperlink is split into several runs when it has mixed styles
-					if (hyperlink != styledTextHyperlink)
-					{
-						styledTextHyperlink = hyperlink;
-						styledTextLinkTagSupplier = new StyledTextLinkTagSupplier(pdfTagger);
-					}
-
-					chunk.setStyledTextLinkTag(
-						styledTextLinkTagSupplier,
-						hyperlink.getHyperlinkTooltip() == null ? chunkText : hyperlink.getHyperlinkTooltip()
-						);
-				}
-
 				setHyperlinkInfo(chunk, hyperlink);
 			}
 			phrase.add(chunk);
@@ -2505,32 +2520,97 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 
 	/**
-	 * Creates on demand the Link structure element shared by all the chunks that make up a single
-	 * styled text hyperlink. The creation is deferred to the moment the first annotation is
-	 * actually created during the text layout, so that no Link tag is left empty in the structure
-	 * tree when the chunks do not get rendered.
+	 * Returns the accessibility tag that a styled text run carries, as specified by the
+	 * <code>&lt;reference&gt;</code> and <code>&lt;note&gt;</code> styled text tags.
+	 *
+	 * @param attributes the attributes of the styled text run
+	 * @return the accessibility tag of the run, or <code>null</code> if the run carries none
 	 */
-	protected static class StyledTextLinkTagSupplier implements Supplier<PdfStructureEntry>
+	protected static AccessibilityTagEnum getStyledTextTag(Map<Attribute,Object> attributes)
 	{
-		private final PdfTagger pdfTagger;
-		private PdfStructureEntry linkTag;
-		private boolean created;
-
-		protected StyledTextLinkTagSupplier(PdfTagger pdfTagger)
+		if (Boolean.TRUE.equals(attributes.get(JRTextAttribute.REFERENCE)))
 		{
-			this.pdfTagger = pdfTagger;
+			return AccessibilityTagEnum.REFERENCE;
+		}
+		
+		if (Boolean.TRUE.equals(attributes.get(JRTextAttribute.NOTE)))
+		{
+			return AccessibilityTagEnum.NOTE;
+		}
+		
+		return null;
+	}
+
+
+	/**
+	 * Determines whether two styled text runs carry the same hyperlink and can therefore be placed
+	 * in a single Link structure element.
+	 *
+	 * <p>
+	 * The runs of a styled text hyperlink that has mixed styles each carry a hyperlink object of
+	 * their own, because the hyperlink is written out per run when the styled text of a print text
+	 * element is produced. The hyperlinks are therefore compared by their contents and not by
+	 * identity, which also means that two adjacent hyperlinks with identical contents cannot be
+	 * told apart from a single hyperlink that was split into several runs.
+	 * </p>
+	 *
+	 * @param hyperlink1 the hyperlink of a styled text run, or <code>null</code> if it has none
+	 * @param hyperlink2 the hyperlink of another styled text run, or <code>null</code>
+	 * @return whether the two runs belong to the same hyperlink
+	 */
+	public static boolean isSameStyledTextHyperlink(JRPrintHyperlink hyperlink1, JRPrintHyperlink hyperlink2)
+	{
+		if (hyperlink1 == hyperlink2)
+		{
+			return true;
 		}
 
-		@Override
-		public PdfStructureEntry get()
+		if (hyperlink1 == null || hyperlink2 == null)
 		{
-			if (!created)
+			return false;
+		}
+
+		return hyperlink1.getHyperlinkType() == hyperlink2.getHyperlinkType()
+			&& Objects.equals(hyperlink1.getLinkType(), hyperlink2.getLinkType())
+			&& Objects.equals(hyperlink1.getLinkTarget(), hyperlink2.getLinkTarget())
+			&& Objects.equals(hyperlink1.getHyperlinkReference(), hyperlink2.getHyperlinkReference())
+			&& Objects.equals(hyperlink1.getHyperlinkAnchor(), hyperlink2.getHyperlinkAnchor())
+			&& Objects.equals(hyperlink1.getHyperlinkPage(), hyperlink2.getHyperlinkPage())
+			&& Objects.equals(hyperlink1.getHyperlinkTooltip(), hyperlink2.getHyperlinkTooltip())
+			&& hasSameHyperlinkParameters(hyperlink1.getHyperlinkParameters(), hyperlink2.getHyperlinkParameters());
+	}
+
+
+	protected static boolean hasSameHyperlinkParameters(JRPrintHyperlinkParameters parameters1,
+		JRPrintHyperlinkParameters parameters2)
+	{
+		List<JRPrintHyperlinkParameter> list1 = parameters1 == null ? null : parameters1.getParameters();
+		List<JRPrintHyperlinkParameter> list2 = parameters2 == null ? null : parameters2.getParameters();
+
+		if (list1 == null || list1.isEmpty())
+		{
+			return list2 == null || list2.isEmpty();
+		}
+
+		if (list2 == null || list1.size() != list2.size())
+		{
+			return false;
+		}
+
+		for (int i = 0; i < list1.size(); i++)
+		{
+			JRPrintHyperlinkParameter parameter1 = list1.get(i);
+			JRPrintHyperlinkParameter parameter2 = list2.get(i);
+			if (
+				!Objects.equals(parameter1.getName(), parameter2.getName())
+				|| !Objects.equals(parameter1.getValue(), parameter2.getValue())
+				)
 			{
-				linkTag = pdfTagger.createStyledTextLinkTag();
-				created = true;
+				return false;
 			}
-			return linkTag;
 		}
+
+		return true;
 	}
 
 

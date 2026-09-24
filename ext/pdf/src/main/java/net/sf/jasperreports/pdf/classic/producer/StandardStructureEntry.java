@@ -42,6 +42,7 @@ public class StandardStructureEntry implements PdfStructureEntry
 
 	private StandardPdfStructure pdfStructure;
 	private PdfStructureElement element;
+	private boolean markedContentDisallowed;
 	
 	public StandardStructureEntry(StandardPdfStructure pdfStructure, PdfStructureElement element)
 	{
@@ -52,6 +53,20 @@ public class StandardStructureEntry implements PdfStructureEntry
 	public PdfStructureElement getElement()
 	{
 		return element;
+	}
+
+	/**
+	 * Records that no marked content can be placed in this structure element anymore, because it
+	 * already has a kid which is not marked content.
+	 */
+	public void setMarkedContentDisallowed()
+	{
+		markedContentDisallowed = true;
+	}
+
+	public boolean isMarkedContentDisallowed()
+	{
+		return markedContentDisallowed;
 	}
 
 	@Override
