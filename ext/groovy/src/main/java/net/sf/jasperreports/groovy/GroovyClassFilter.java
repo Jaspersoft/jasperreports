@@ -23,6 +23,13 @@
  */
 package net.sf.jasperreports.groovy;
 
+import groovy.lang.MetaClass;
+import groovy.lang.MetaClassImpl;
+import groovy.lang.MetaMethod;
+import groovy.lang.MetaProperty;
+
+import org.codehaus.groovy.runtime.InvokerHelper;
+import org.codehaus.groovy.runtime.MetaClassHelper;
 import org.kohsuke.groovy.sandbox.GroovyValueFilter;
 
 import net.sf.jasperreports.compilers.ReportClassFilter;
@@ -40,6 +47,107 @@ public class GroovyClassFilter extends GroovyValueFilter
 	{
 		this.classFilter = classFilter;
 		this.groovyEvaluator = groovyEvaluator;
+	}
+
+	@Override
+	public Object onMethodCall(Invoker invoker, Object receiver, 
+			String method, Object... args) throws Throwable
+	{
+		checkReturnTypeVisibility(receiver, method, args);
+
+		return super.onMethodCall(invoker, receiver, method, args);
+	}
+
+	protected void checkReturnTypeVisibility(Object receiver, String method, Object[] args)
+	{
+		if (receiver == null)
+		{
+			return;
+		}
+
+		MetaMethod metaMethod = InvokerHelper.getMetaClass(receiver).pickMethod(method,
+				MetaClassHelper.convertToTypeArray(args));
+		if (metaMethod != null)
+		{
+			checkResolvedReturnType(metaMethod.getReturnType());
+		}
+	}
+
+	@Override
+	public Object onStaticCall(Invoker invoker, @SuppressWarnings("rawtypes") Class receiver, 
+			String method, Object... args) throws Throwable
+	{
+		checkStaticReturnTypeVisibility(receiver, method, args);
+
+		return super.onStaticCall(invoker, receiver, method, args);
+	}
+
+	protected void checkStaticReturnTypeVisibility(Class<?> receiver, String method, Object[] args)
+	{
+		MetaClass metaClass = InvokerHelper.getMetaClass(receiver);
+		if (metaClass instanceof MetaClassImpl)
+		{
+			MetaMethod metaMethod = ((MetaClassImpl) metaClass).retrieveStaticMethod(method, args);
+			if (metaMethod != null)
+			{
+				checkResolvedReturnType(metaMethod.getReturnType());
+			}
+		}
+	}
+
+	@Override
+	public Object onSuperCall(Invoker invoker, @SuppressWarnings("rawtypes") Class senderType, 
+			Object receiver, String method, Object... args) throws Throwable
+	{
+		checkReturnTypeVisibility(receiver, method, args);
+
+		Object filteredReceiver = filterReceiver(receiver);
+		Object[] filteredArgs = new Object[args.length];
+		for (int i = 0; i < args.length; i++)
+		{
+			filteredArgs[i] = filterArgument(args[i]);
+		}
+
+		return filterReturnValue(super.onSuperCall(invoker, senderType, 
+				filteredReceiver, method, filteredArgs));
+	}
+
+	@Override
+	public Object onGetProperty(Invoker invoker, Object receiver, String property) throws Throwable
+	{
+		checkPropertyTypeVisibility(receiver, property);
+
+		return super.onGetProperty(invoker, receiver, property);
+	}
+
+	@Override
+	public Object onGetAttribute(Invoker invoker, Object receiver, String attribute) throws Throwable
+	{
+		checkPropertyTypeVisibility(receiver, attribute);
+
+		return super.onGetAttribute(invoker, receiver, attribute);
+	}
+
+	protected void checkPropertyTypeVisibility(Object receiver, String property)
+	{
+		if (receiver == null)
+		{
+			return;
+		}
+
+		MetaProperty metaProperty = InvokerHelper.getMetaClass(receiver).getMetaProperty(property);
+		if (metaProperty != null)
+		{
+			checkResolvedReturnType(metaProperty.getType());
+		}
+	}
+
+	protected void checkResolvedReturnType(Class<?> returnType)
+	{
+		if (returnType != null && !returnType.isPrimitive())
+		{
+			classFilter.checkClassVisibility(returnType.getName());
+		}
 	}
 
 	@Override
