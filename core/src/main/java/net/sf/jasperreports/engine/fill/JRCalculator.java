@@ -171,6 +171,7 @@ public class JRCalculator implements JRFillExpressionEvaluator
 				Object expressionValue = evaluate(variable.getExpression());
 				Object newValue = variable.getIncrementer().increment(variable, expressionValue, AbstractValueProvider.getCurrentValueProvider());
 				variable.setValue(newValue);
+				variable.setPreviousInitialized(variable.isInitialized());
 				variable.setInitialized(false);
 				variable.setPreviousIncrementedValue(variable.getIncrementedValue());
 
@@ -196,6 +197,18 @@ public class JRCalculator implements JRFillExpressionEvaluator
 	}
 
 
+	/**
+	 * Undoes the last {@link #calculateVariables(boolean) calculateVariables(true)} call and
+	 * redoes it, so that a band which is refilled after a page or column break does not
+	 * increment the variables a second time.
+	 * <p>
+	 * Both the incremented value and the initialized flag have to be restored, because the
+	 * incrementers rely on the two of them together. Restoring only the incremented value
+	 * would lose the value of a variable which was initialized right before the current
+	 * record, as the initialized flag is what tells a "first" calculation to pick up that
+	 * record instead of keeping the incremented value.
+	 * </p>
+	 */
 	protected void recalculateVariables() throws JRException
 	{
 		if (variables != null)
@@ -203,6 +216,7 @@ public class JRCalculator implements JRFillExpressionEvaluator
 			for (JRFillVariable variable : variables)
 			{
 				variable.setIncrementedValue(variable.getPreviousIncrementedValue());
+				variable.setInitialized(variable.isPreviousInitialized());
 			}
 		}
 		
@@ -512,6 +526,7 @@ public class JRCalculator implements JRFillExpressionEvaluator
 					evaluate(variable.getInitialValueExpression())
 					);
 				variable.setInitialized(true);
+				variable.setPreviousInitialized(true);
 				variable.setIncrementedValue(null);
 				if (toSetOldValue)
 				{

@@ -58,6 +58,7 @@ public class JRFillVariable implements JRVariable, JRCalculable
 	private Object incrementedValue;
 	private Object value;
 	private boolean isInitialized;
+	private boolean previousInitialized;
 	private Object savedValue;
 	
 	private JRFillVariable[] helperVariables;
@@ -99,6 +100,7 @@ public class JRFillVariable implements JRVariable, JRCalculable
 		incrementedValue = null;
 		value = null;
 		isInitialized = false;
+		previousInitialized = false;
 		savedValue = null;
 	}
 
@@ -278,6 +280,25 @@ public class JRFillVariable implements JRVariable, JRCalculable
 	public void setInitialized(boolean isInitialized)
 	{
 		this.isInitialized = isInitialized;
+	}
+
+	/**
+	 * Returns the initialized flag as it was before the last variable calculation,
+	 * so that it can be restored when a band is refilled after a page or column break.
+	 * 
+	 * @see JRCalculator#recalculateVariables()
+	 */
+	public boolean isPreviousInitialized()
+	{
+		return previousInitialized;
+	}
+
+	/**
+	 *
+	 */
+	public void setPreviousInitialized(boolean previousInitialized)
+	{
+		this.previousInitialized = previousInitialized;
 	}
 
 		

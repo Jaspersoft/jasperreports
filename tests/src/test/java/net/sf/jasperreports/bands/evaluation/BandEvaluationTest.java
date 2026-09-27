@@ -35,6 +35,6 @@ public class BandEvaluationTest extends AbstractXmlTest
 	@DataProvider
 	public Object[][] testArgs()
 	{
-		return runReportArgs("net/sf/jasperreports/bands/evaluation", "BandEvaluationReport", 40);
+		return runReportArgs("net/sf/jasperreports/bands/evaluation", "BandEvaluationReport", 44);
 	}
 }

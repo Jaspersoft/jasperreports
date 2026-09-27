@@ -1,0 +1,124 @@
+<jasperReport name="BandEvaluationReport.42" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="88f77d48-50b1-4da8-91f5-466d2bf0b22b">
+	<property name="net.sf.jasperreports.data.adapter" value="net/sf/jasperreports/data/SimpleCsvDataAdapter.12.jrdax"/>
+	<!--
+	Variable values across a detail band refill: the non splitting detail belongs to the first record of the report, so the report reset variables are the ones at risk.
+	The detail band printed for record 1 is non splitting and stretches beyond the page,
+	so it is refilled on the next page and the variables are recalculated for it.
+	-->
+	<style name="Sans_Normal" default="true" fontName="DejaVu Sans Mono" fontSize="9.0" bold="false" italic="false" underline="false" strikeThrough="false">
+		<pen lineWidth="0.0"/>
+		<box>
+			<pen lineWidth="0.1"/>
+		</box>
+	</style>
+	<parameter name="TEST" class="net.sf.jasperreports.AbstractTest"/>
+	<field name="simple" class="java.lang.String">
+		<property name="net.sf.jasperreports.csv.field.column.index" value="0"/>
+	</field>
+	<variable name="Amount" resetType="None" class="java.lang.Integer">
+		<expression><![CDATA[$F{simple}.length()]]></expression>
+	</variable>
+	<variable name="GroupFirst" resetType="Group" resetGroup="dummy" calculation="First" class="java.lang.String">
+		<expression><![CDATA[$F{simple}]]></expression>
+	</variable>
+	<variable name="GroupCount" resetType="Group" resetGroup="dummy" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="GroupSum" resetType="Group" resetGroup="dummy" calculation="Sum" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="GroupAverage" resetType="Group" resetGroup="dummy" calculation="Average" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="GroupLowest" resetType="Group" resetGroup="dummy" calculation="Lowest" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="GroupHighest" resetType="Group" resetGroup="dummy" calculation="Highest" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="GroupDistinct" resetType="Group" resetGroup="dummy" calculation="DistinctCount" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="ReportFirst" resetType="Report" calculation="First" class="java.lang.String">
+		<expression><![CDATA[$F{simple}]]></expression>
+	</variable>
+	<variable name="ReportSum" resetType="Report" calculation="Sum" class="java.lang.Integer">
+		<expression><![CDATA[$V{Amount}]]></expression>
+	</variable>
+	<variable name="PageFirst" resetType="Page" calculation="First" class="java.lang.String">
+		<expression><![CDATA[$F{simple}]]></expression>
+	</variable>
+	<variable name="ColumnFirst" resetType="Column" calculation="First" class="java.lang.String">
+		<expression><![CDATA[$F{simple}]]></expression>
+	</variable>
+	<variable name="All" resetType="None" class="java.lang.String">
+		<expression><![CDATA["gF " + $V{GroupFirst} + " gC " + $V{GroupCount} + " gS " + $V{GroupSum} + " gA " + $V{GroupAverage} + " gL " + $V{GroupLowest} + " gH " + $V{GroupHighest} + " gD " + $V{GroupDistinct}
++ "\n" + "rF " + $V{ReportFirst} + " rS " + $V{ReportSum} + " pF " + $V{PageFirst} + " cF " + $V{ColumnFirst} + " RC " + $V{REPORT_COUNT}]]></expression>
+	</variable>
+	<group name="dummy">
+		<expression><![CDATA[$V{dummy_COUNT} > 3]]></expression>
+		<groupHeader>
+			<band height="30">
+				<element kind="textField" uuid="ffc553f6-af99-42cb-b408-84e0ae43df96" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+					<expression><![CDATA["Group Header\n" + $V{All}]]></expression>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="30">
+				<element kind="textField" uuid="1ccd9c90-7ab2-4ba4-8cfb-ccd57dbde8fd" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+					<expression><![CDATA["Group Footer\n" + $V{All}]]></expression>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<!--
+	The title leaves just enough room at the bottom of the first page for the detail band
+	to be started but not completed, which is what forces the refill on the very first record.
+	-->
+	<title height="300">
+		<element kind="staticText" uuid="0b045bc0-0bf0-4b95-8d66-283bbd4b8f06" x="0" y="0" width="515" height="20">
+			<text><![CDATA[Title]]></text>
+		</element>
+	</title>
+	<pageHeader height="30">
+		<element kind="textField" uuid="67c58679-3697-4ecf-b322-458c53fe24e8" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+			<expression><![CDATA["Page Header\n" + $V{All}]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="30">
+		<element kind="textField" uuid="5de9e900-8665-42f1-994b-f9f6c363bd8d" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+			<expression><![CDATA["Column Header\n" + $V{All}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="40">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT} != 1]]></printWhenExpression>
+			<element kind="textField" uuid="224cac1c-4864-41a3-9b06-82c4ae28f134" x="0" y="0" width="515" height="40" textAdjust="StretchHeight">
+				<expression><![CDATA["Detail " + $F{simple} + "\n" + $V{All}]]></expression>
+			</element>
+		</band>
+		<band height="40" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
+			<element kind="textField" uuid="45483f64-08c6-48e7-b47d-8f130edfdd8f" x="0" y="0" width="515" height="40" textAdjust="StretchHeight">
+				<expression><![CDATA["Detail " + $F{simple} + "\n" + $V{All}
++ "\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nmore."]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="30">
+		<element kind="textField" uuid="a7b11f6b-873f-4f7c-9d5b-ed7efcae075b" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+			<expression><![CDATA["Column Footer\n" + $V{All}]]></expression>
+		</element>
+	</columnFooter>
+	<pageFooter height="30">
+		<element kind="textField" uuid="8389cfad-7ca0-433f-acc8-ef8132f9661c" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+			<expression><![CDATA["Page Footer\n" + $V{All}]]></expression>
+		</element>
+	</pageFooter>
+	<summary height="30">
+		<element kind="textField" uuid="95d28f1b-f36d-428f-a976-8148801beb07" x="0" y="0" width="515" height="30" textAdjust="StretchHeight">
+			<expression><![CDATA["Summary\n" + $V{All}]]></expression>
+		</element>
+	</summary>
+</jasperReport>
