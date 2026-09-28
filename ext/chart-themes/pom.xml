@@ -17,6 +17,9 @@
 		<tag>${revision}</tag>
 		<url>${scmUrl}</url>
 	</scm>
+	<properties>
+		<enforcer.max.jdk.version>17</enforcer.max.jdk.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.jfree</groupId>

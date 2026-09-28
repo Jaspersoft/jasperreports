@@ -49,8 +49,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>${source.version}</source>
-					<target>${target.version}</target>
 					<compilerArgument>-Xlint:deprecation,-unchecked,-options</compilerArgument>
 				</configuration>
 			</plugin>
@@ -69,7 +67,6 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
-					<source>8</source>
 					<quiet>true</quiet>
 					<doclint>none</doclint>
 				</configuration>

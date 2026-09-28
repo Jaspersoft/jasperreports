@@ -39,8 +39,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>${source.version}</source>
-					<target>${target.version}</target>
 					<showWarnings>true</showWarnings>
 					<fork>true</fork><!-- TODO lucianc is this ok? -->
 					<compilerArgument>-Xlint:deprecation,-unchecked,-options</compilerArgument>

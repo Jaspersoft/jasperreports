@@ -84,11 +84,12 @@
 		<!--
 			config properties
 		-->
+		<enforcer.max.jdk.version>1.8</enforcer.max.jdk.version>
 		<jasperreports.root.dir>${basedir}</jasperreports.root.dir>
-		<maven.buildNumber.doCheck>true</maven.buildNumber.doCheck>
+		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<owasp.ossindex.enabled>true</owasp.ossindex.enabled>
-		<source.version>8</source.version>
-		<target.version>8</target.version>
 		<!--
 			plugin version properties
 		-->
@@ -200,6 +201,81 @@
 							<goal>create</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>check-before-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+						<configuration>
+							<doCheck>true</doCheck>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>clirr-maven-plugin</artifactId>
+				<version>${clirr-maven-plugin.version}</version>
+				<configuration>
+					<comparisonVersion>7.0.8</comparisonVersion>
+					<ignoredDifferencesFile>${basedir}/clirr-ignore.xml</ignoredDifferencesFile>
+					<failOnError>true</failOnError>
+					<logResults>true</logResults>
+				</configuration>
+				<executions>
+					<execution>
+						<id>check-before-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.6.3</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>extra-enforcer-rules</artifactId>
+						<version>1.12.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<rules>
+						<enforceBytecodeVersion>
+							<maxJdkVersion>${enforcer.max.jdk.version}</maxJdkVersion>
+							<ignoredScopes>
+								<ignoreScope>test</ignoreScope>
+							</ignoredScopes>
+						</enforceBytecodeVersion>
+					</rules>
+				</configuration>
+				<executions>
+					<execution>
+						<id>check-before-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources-before-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -230,6 +306,19 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>${maven-deploy-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>none</phase>
+					</execution>
+					<execution>
+						<id>deploy-after-check</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -240,11 +329,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>${maven-source-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -272,25 +356,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>3.6.3</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>extra-enforcer-rules</artifactId>
-						<version>1.12.0</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<rules>
-						<enforceBytecodeVersion>
-							<maxJdkVersion>1.8</maxJdkVersion>
-						</enforceBytecodeVersion>
-					</rules>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
 				<version>${dependency-check-maven.version}</version>
@@ -298,17 +363,6 @@
 					<suppressionFile>${jasperreports.root.dir}/owasp-suppressions.xml</suppressionFile>
 					<ossindexAnalyzerEnabled>${owasp.ossindex.enabled}</ossindexAnalyzerEnabled>
 					<ossIndexServerId>ossindex</ossIndexServerId>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>clirr-maven-plugin</artifactId>
-				<version>${clirr-maven-plugin.version}</version>
-				<configuration>
-					<comparisonVersion>7.0.8</comparisonVersion>
-					<ignoredDifferencesFile>${basedir}/clirr-ignore.xml</ignoredDifferencesFile>
-					<failOnError>true</failOnError>
-					<logResults>true</logResults>
 				</configuration>
 			</plugin>
 		</plugins>

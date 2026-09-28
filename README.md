@@ -92,23 +92,14 @@ using the following command:
 
     mvn clean install source:jar javadoc:jar
 
-Building the core and extensions JAR artifacts having local non-committed Git modifications requires the suppression of the build number plugin check as follows:
-
-    mvn clean install -Dmaven.buildNumber.doCheck=false
-
-From time to time, verifying that the core and extensions artifacts are still compatible with JDK version 1.8 is needed and this is done by turning on the enforcer plugin
-while building these artifacts:
-
-    mvn clean install -Denforcer.skip=false -pl '!ext/ejbql, !ext/hibernate, !ext/servlets'
-
 The project has a separate artifact for tests under the `/tests`, which can be run using the following command:
 
-    mvn clean test
+    mvn clean test -f tests
 
 The project documentation consists of general overview, configuration reference, samples reference, functions reference and the aggregated Javadoc.
-It can be all generated using the following command in the `/docs` folder of the project:
+It can be all generated using the following command:
 
-    mvn clean compile
+    mvn clean compile -f docs
 
 The generated documentation is to be found under the `/docs/target/docs` folder of the project.
 

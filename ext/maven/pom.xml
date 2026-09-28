@@ -20,6 +20,7 @@
 	<properties>
 		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
 		<maven-plugin-api.version>3.9.16</maven-plugin-api.version>
+		<enforcer.max.jdk.version>11</enforcer.max.jdk.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -64,8 +65,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>${source.version}</source>
-					<target>${target.version}</target>
 					<showWarnings>true</showWarnings>
 					<fork>true</fork><!-- TODO lucianc is this ok? -->
 					<compilerArgument>-Xlint:deprecation,-unchecked,-options</compilerArgument>
