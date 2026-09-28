@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
-			<version>77.1</version>
+			<version>78.2</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
@@ -208,6 +208,31 @@
 			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven-enforcer-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>extra-enforcer-rules</artifactId>
+						<version>${extra-enforcer-rules.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<rules>
+						<enforceBytecodeVersion>
+							<maxJdkVersion>${enforcer.max.jdk.version}</maxJdkVersion>
+							<ignoredScopes>
+								<ignoreScope>test</ignoreScope>
+							</ignoredScopes>
+							<excludes>
+								<exclude>com.ibm.icu:icu4j</exclude>
+							</excludes>
+						</enforceBytecodeVersion>
+					</rules>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
