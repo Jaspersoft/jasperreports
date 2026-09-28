@@ -31,6 +31,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -117,7 +118,7 @@ public abstract class AbstractSampleApp
 				File file = new File(parentFile, fileName);
 				if (file.isDirectory())
 				{
-					fileList.addAll(List.of(getFiles(file, extension)));
+					fileList.addAll(Arrays.asList(getFiles(file, extension)));
 				}
 				else
 				{
