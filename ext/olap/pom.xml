@@ -37,7 +37,7 @@
 					<groupId>xerces</groupId>
 					<artifactId>xercesImpl</artifactId>
 				</exclusion>
-				<!-- xml-apis requires xerces, so it must be excluded -->
+				<!-- xml-apis duplicates JDK XML APIs whose factories default to Xerces/Xalan implementations, so it must be excluded -->
 				<exclusion>
 					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>

@@ -87,8 +87,7 @@
 		<enforcer.max.jdk.version>1.8</enforcer.max.jdk.version>
 		<jasperreports.root.dir>${basedir}</jasperreports.root.dir>
 		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.release>8</maven.compiler.release>
 		<owasp.ossindex.enabled>true</owasp.ossindex.enabled>
 		<!--
 			plugin version properties
@@ -145,6 +144,7 @@
 		<rhino.version>1.8.1</rhino.version>
 		<spring.version>6.2.19</spring.version>
 		<xchart.version>3.2.2</xchart.version>
+		<xml-apis.version>1.4.01</xml-apis.version>
 		<xml-apis-ext.version>1.3.04</xml-apis-ext.version>
 	</properties>
 	<repositories>
@@ -254,6 +254,17 @@
 								<ignoreScope>test</ignoreScope>
 							</ignoredScopes>
 						</enforceBytecodeVersion>
+						<!--
+							xml-apis duplicates JDK XML APIs whose factories default to Xerces/Xalan implementations;
+							it is excluded from every dependency that brings it, and this rule catches any path
+							that is missed, since Maven applies an exclusion only on the path it happens to resolve first
+						-->
+						<bannedDependencies>
+							<excludes>
+								<exclude>xml-apis:xml-apis:*:*:compile</exclude>
+								<exclude>xml-apis:xml-apis:*:*:runtime</exclude>
+							</excludes>
+						</bannedDependencies>
 					</rules>
 				</configuration>
 				<executions>

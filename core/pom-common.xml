@@ -90,15 +90,11 @@
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
-			<!-- xml-apis requires xerces, so it must be excluded -->
+			<!-- xml-apis duplicates JDK XML APIs whose factories default to Xerces/Xalan implementations, so it must be excluded -->
 			<exclusions>
 				<exclusion>
 					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis-ext</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -108,15 +104,11 @@
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
-			<!-- xml-apis requires xerces, so it must be excluded -->
+			<!-- xml-apis duplicates JDK XML APIs whose factories default to Xerces/Xalan implementations, so it must be excluded -->
 			<exclusions>
 				<exclusion>
 					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis-ext</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -126,6 +118,13 @@
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
+			<!-- xml-apis duplicates JDK XML APIs whose factories default to Xerces/Xalan implementations, so it must be excluded -->
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
@@ -160,6 +159,20 @@
 			<artifactId>xml-apis-ext</artifactId>
 			<version>${xml-apis-ext.version}</version>
 			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<!--
+			the org.w3c.dom.svg interfaces from xml-apis-ext extend org.w3c.dom.css interfaces,
+			which were part of the JDK 8 runtime but not of the Java SE 8 API, so they are
+			not visible to javac when compiling with release 8;
+			xml-apis provides them at compile time only, as the JDK has them at runtime
+			and xml-apis must stay off the runtime classpath (see the exclusions above)
+		-->
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>${xml-apis.version}</version>
+			<scope>provided</scope>
 			<optional>false</optional>
 		</dependency>
 		<dependency>
@@ -281,6 +294,8 @@
 				<configuration>
 					<ignoredUnusedDeclaredDependencies>
 						<dependency>org.apache.commons:commons-lang3</dependency>
+						<!-- only needed by javac to resolve supertypes of org.w3c.dom.svg interfaces -->
+						<dependency>xml-apis:xml-apis</dependency>
 					</ignoredUnusedDeclaredDependencies>
 					<ignoredUsedUndeclaredDependencies>
 						<!-- used through com.fasterxml.jackson.dataformat:jackson-format-xml -->

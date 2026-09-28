@@ -52,15 +52,11 @@
 			<version>${batik.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
-			<!-- xml-apis requires xerces, so it must be excluded -->
+			<!-- xml-apis duplicates JDK XML APIs whose factories default to Xerces/Xalan implementations, so it must be excluded -->
 			<exclusions>
 				<exclusion>
 					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis-ext</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
