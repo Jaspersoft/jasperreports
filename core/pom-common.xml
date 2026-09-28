@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
-			<version>78.2</version>
+			<version>77.1</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
