@@ -242,6 +242,7 @@
 							<arguments>
 								<argument>exec:java</argument>
 								<argument>-Dpdf.producer=${pdf.producer}</argument>
+								<argument>-Djava.awt.headless=true</argument>
 							</arguments>
 							<workingDirectory>${project.basedir}</workingDirectory>
 						</configuration>
