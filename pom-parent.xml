@@ -119,7 +119,7 @@
 		<!--
 			dependency version properties
 		-->
-		<ant.version>1.10.14</ant.version>
+		<ant.version>1.10.18</ant.version>
 		<antlr.version>2.7.7</antlr.version>
 		<batik.version>1.19</batik.version>
 		<castor.version>1.4.1</castor.version>
@@ -131,12 +131,13 @@
 		<hibernate.j2ee.version>5.6.15.Final</hibernate.j2ee.version>
 		<hsqldb.version>2.7.2</hsqldb.version>
 		<imageio-webp.version>3.9.4</imageio-webp.version>
-		<jackson.version>2.18.8</jackson.version>
+		<jackson.version>2.22.3</jackson.version>
+		<jackson-annotations.version>2.22</jackson-annotations.version>
 		<jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version>
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 		<javax.persistence-api.version>2.2</javax.persistence-api.version>
 		<jaxen.version>2.0.0</jaxen.version>
-		<log4j.version>2.25.4</log4j.version>
+		<log4j.version>2.26.1</log4j.version>
 		<jfreechart.version>1.5.6</jfreechart.version>
 		<openpdf.classic.version>1.3.43.jaspersoft.2</openpdf.classic.version>
 		<openpdf.version>3.0.5.jaspersoft.1-SNAPSHOT</openpdf.version>
