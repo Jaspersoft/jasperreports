@@ -86,7 +86,6 @@
 		-->
 		<enforcer.max.jdk.version>1.8</enforcer.max.jdk.version>
 		<jasperreports.root.dir>${basedir}</jasperreports.root.dir>
-		<maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
 		<maven.compiler.release>8</maven.compiler.release>
 		<owasp.ossindex.enabled>true</owasp.ossindex.enabled>
 		<!--
@@ -203,6 +202,9 @@
 						<goals>
 							<goal>create</goal>
 						</goals>
+						<configuration>
+							<doCheck>false</doCheck>
+						</configuration>
 					</execution>
 					<execution>
 						<id>check-before-deploy</id>
@@ -212,6 +214,11 @@
 						</goals>
 						<configuration>
 							<doCheck>true</doCheck>
+							<!--
+								check the whole working tree, not just the module basedir (the default),
+								so that uncommitted changes to parent POMs outside the module also fail the deploy
+							-->
+							<scmDirectory>${jasperreports.root.dir}</scmDirectory>
 						</configuration>
 					</execution>
 				</executions>
