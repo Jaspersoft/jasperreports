@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -44,11 +45,11 @@ public class GroupKeepTogetherTest
 	private Report report;
 
 	@BeforeClass
-	public void initReport() throws JRException, IOException
+	public void initReport(ITestContext testContext) throws JRException, IOException
 	{
 		report = new Report("net/sf/jasperreports/virtualization/GroupKeepTogether.jrxml", 
 				"net/sf/jasperreports/virtualization/GroupKeepTogether.reference.jrpxml");
-		report.init();
+		report.init(testContext);
 	}
 	
 	@Test
@@ -64,6 +65,6 @@ public class GroupKeepTogetherTest
 		JRGzipVirtualizer virtualizer = new JRGzipVirtualizer(3);
 		params.put(JRParameter.REPORT_VIRTUALIZER, virtualizer);
 		
-		report.runReport(params);
+		report.runReport("virtualized", params);
 	}
 }

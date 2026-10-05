@@ -59,7 +59,7 @@ public class AsyncReport extends Report
 			AsyncJasperPrintAccessor accessor = new AsyncJasperPrintAccessor(asyncHandle);
 			asyncHandle.startFill();
 			JasperPrint print = accessor.getFinalJasperPrint();
-			reportComplete(reportParams, print);
+			reportComplete(null, reportParams, print);
 		}
 		catch (JRException e)
 		{

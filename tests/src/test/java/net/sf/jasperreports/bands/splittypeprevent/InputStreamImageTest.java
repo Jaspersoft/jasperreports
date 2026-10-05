@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 import net.sf.jasperreports.Report;
@@ -42,11 +43,11 @@ public class InputStreamImageTest
 {
 
 	@Test
-	public void test()
+	public void test(ITestContext testContext)
 	{
 		Report report = new Report("net/sf/jasperreports/bands/splittypeprevent/InputStreamImage.jrxml", 
 				"net/sf/jasperreports/bands/splittypeprevent/InputStreamImage.reference.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		

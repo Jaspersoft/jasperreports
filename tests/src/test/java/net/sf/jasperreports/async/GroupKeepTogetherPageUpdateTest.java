@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,11 +44,11 @@ public class GroupKeepTogetherPageUpdateTest
 	private AsyncReport report;
 
 	@BeforeClass
-	public void initReport() throws JRException, IOException
+	public void initReport(ITestContext testContext) throws JRException, IOException
 	{
 		report = new AsyncReport("net/sf/jasperreports/async/GroupKeepTogether.jrxml", 
 				"net/sf/jasperreports/async/GroupKeepTogether.reference.jrpxml");
-		report.init();
+		report.init(testContext);
 	}
 	
 	@Test

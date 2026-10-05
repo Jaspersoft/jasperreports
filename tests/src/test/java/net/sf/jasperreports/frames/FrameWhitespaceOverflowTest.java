@@ -28,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -48,11 +49,11 @@ public class FrameWhitespaceOverflowTest
 	private Report report;
 
 	@BeforeClass
-	public void initReport() throws JRException, IOException
+	public void initReport(ITestContext testContext) throws JRException, IOException
 	{
 		report = new Report("net/sf/jasperreports/frames/FrameWhitespaceOverflow.jrxml", 
 				"net/sf/jasperreports/frames/FrameWhitespaceOverflow.reference.jrpxml");
-		report.init();
+		report.init(testContext);
 	}
 	
 	@Test

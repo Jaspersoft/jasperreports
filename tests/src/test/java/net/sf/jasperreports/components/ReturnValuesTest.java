@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 import net.sf.jasperreports.Report;
@@ -37,25 +38,25 @@ public class ReturnValuesTest
 {
 	
 	@Test
-	public void tableReturn() throws JRException, IOException
+	public void tableReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/TableReturn.jrxml", 
 				"net/sf/jasperreports/components/TableReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);
 	}
 	
 	@Test
-	public void tableWithSubreportReturn() throws JRException, IOException
+	public void tableWithSubreportReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report subreport = new Report("net/sf/jasperreports/components/SubreportForReturn.jrxml", null);
 		JasperReport compiledSubreport = subreport.compileReport();
 		
 		Report report = new Report("net/sf/jasperreports/components/TableWithSubreportReturn.jrxml", 
 				"net/sf/jasperreports/components/TableWithSubreportReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("subreport", compiledSubreport);
@@ -63,36 +64,36 @@ public class ReturnValuesTest
 	}
 	
 	@Test
-	public void tableWithListReturn() throws JRException, IOException
+	public void tableWithListReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/TableWithListReturn.jrxml", 
 				"net/sf/jasperreports/components/TableWithListReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);
 	}
 	
 	@Test
-	public void tableWithTableReturn() throws JRException, IOException
+	public void tableWithTableReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/TableWithTableReturn.jrxml", 
 				"net/sf/jasperreports/components/TableWithTableReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);
 	}
 	
 	@Test
-	public void listWithSubreportReturn() throws JRException, IOException
+	public void listWithSubreportReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report subreport = new Report("net/sf/jasperreports/components/SubreportForReturn.jrxml", null);
 		JasperReport compiledSubreport = subreport.compileReport();
 		
 		Report report = new Report("net/sf/jasperreports/components/ListWithSubreportReturn.jrxml", 
 				"net/sf/jasperreports/components/ListWithSubreportReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("subreport", compiledSubreport);
@@ -100,22 +101,22 @@ public class ReturnValuesTest
 	}
 	
 	@Test
-	public void listWithListReturn() throws JRException, IOException
+	public void listWithListReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/ListWithListReturn.jrxml", 
 				"net/sf/jasperreports/components/ListWithListReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);
 	}
 	
 	@Test
-	public void listWithTableReturn() throws JRException, IOException
+	public void listWithTableReturn(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/ListWithTableReturn.jrxml", 
 				"net/sf/jasperreports/components/ListWithTableReturn.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);

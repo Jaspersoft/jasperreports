@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 import net.sf.jasperreports.Report;
@@ -36,11 +37,11 @@ public class HorizontalListOverflowTest
 {
 	
 	@Test
-	public void noOverflow() throws JRException, IOException
+	public void noOverflow(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/HorizontalListOverflow.jrxml", 
 				"net/sf/jasperreports/components/HorizontalListOverflow-6.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("ItemCount", 6);
@@ -48,11 +49,11 @@ public class HorizontalListOverflowTest
 	}
 	
 	@Test
-	public void oneRecordOverflow() throws JRException, IOException
+	public void oneRecordOverflow(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/HorizontalListOverflow.jrxml", 
 				"net/sf/jasperreports/components/HorizontalListOverflow-7.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("ItemCount", 7);
@@ -60,11 +61,11 @@ public class HorizontalListOverflowTest
 	}
 	
 	@Test
-	public void twoRecordsOverflow() throws JRException, IOException
+	public void twoRecordsOverflow(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/HorizontalListOverflow.jrxml", 
 				"net/sf/jasperreports/components/HorizontalListOverflow-8.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("ItemCount", 8);

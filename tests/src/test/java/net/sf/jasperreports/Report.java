@@ -34,13 +34,16 @@ import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.function.BiConsumer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.ITestContext;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
@@ -85,9 +88,13 @@ public class Report
 	protected JasperReport report;
 	private JasperFillManager fillManager;
 	private String referenceJRPXMLDigest;
+	private ITestContext testContext;
+	private String runName;
+	private Set<String> outputFileNames = new HashSet<>();
 
-	public void init()
+	public void init(ITestContext testContext)
 	{
+		this.testContext = testContext;
 		jasperReportsContext = new SimpleJasperReportsContext();
 		
 		try
@@ -143,11 +150,23 @@ public class Report
 	
 	public void runReport(Map<String, Object> params)
 	{
+		runReport(null, params);
+	}
+	
+	/**
+	 * Runs the report and checks the result.
+	 * 
+	 * @param runName name that distinguishes the output files of this run from the ones of other runs of the same report,
+	 * or <code>null</code> if the report is run only once
+	 * @param params the report parameters
+	 */
+	public void runReport(String runName, Map<String, Object> params)
+	{
 		Map<String, Object> reportParams = reportParams(params);
 		try
 		{
 			JasperPrint print = fillManager.fill(report, reportParams);
-			reportComplete(reportParams, print);
+			reportComplete(runName, reportParams, print);
 		}
 		catch (JRException e)
 		{
@@ -166,7 +185,7 @@ public class Report
 		return params;
 	}
 
-	protected void reportComplete(Map<String, Object> params, JasperPrint print)
+	protected void reportComplete(String runName, Map<String, Object> params, JasperPrint print)
 	{
 		JRVirtualizer virtualizer = (JRVirtualizer) params.get(JRParameter.REPORT_VIRTUALIZER);
 		if (virtualizer instanceof JRAbstractLRUVirtualizer)
@@ -176,7 +195,15 @@ public class Report
 		
 		assert !print.getPages().isEmpty();
 		
-		printConsumer.accept(this, print);
+		this.runName = runName;
+		try
+		{
+			printConsumer.accept(this, print);
+		}
+		finally
+		{
+			this.runName = null;
+		}
 		
 		if (virtualizer != null)
 		{
@@ -186,11 +213,25 @@ public class Report
 
 	public void checkDigest(JasperPrint print)
 	{
+		checkDigest(print, null);
+	}
+
+	/**
+	 * Checks the export of the report against the reference JRPXML.
+	 * 
+	 * @param print the report
+	 * @param checkName name that distinguishes the output file of this check from the ones of other checks of the same run,
+	 * such as the ones of print consumers, or <code>null</code> for the check of the filled report
+	 */
+	public void checkDigest(JasperPrint print, String checkName)
+	{
 		try
 		{
-			String digestString = xmlDigest(print);
+			File outputFile = createXmlOutputFile(checkName);
+			String digestString = xmlDigest(print, outputFile);
 			log.debug("Report " + jrxml + " got " + digestString);
-			assert digestString.equals(referenceJRPXMLDigest);
+			assert digestString.equals(referenceJRPXMLDigest)
+				: "Report " + jrxml + " output at " + outputFile.getAbsolutePath() + " does not match " + jrpxml;
 		} 
 		catch (NoSuchAlgorithmException | JRException | IOException e)
 		{
@@ -198,10 +239,9 @@ public class Report
 		}
 	}
 
-	protected String xmlDigest(JasperPrint print) 
+	protected String xmlDigest(JasperPrint print, File outputFile) 
 			throws NoSuchAlgorithmException, FileNotFoundException, JRException, IOException
 	{
-		File outputFile = createXmlOutputFile();
 		log.debug("XML export output at " + outputFile.getAbsolutePath());
 		
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
@@ -230,24 +270,32 @@ public class Report
 		return digestString.toString();
 	}
 	
-	protected File createXmlOutputFile() throws IOException
+	/**
+	 * Creates the export file under the TestNG output directory, at the path of the reference JRPXML.
+	 * The file is not deleted, so that it can be compared with the reference when the digests differ.
+	 * The same report can be checked several times (several runs, or print consumers such as {@link PrintSerializer}),
+	 * so the run name and the check name, when present, are added to the file name to give each check its own file.
+	 */
+	protected File createXmlOutputFile(String checkName) throws IOException
 	{
-		String outputDirPath = System.getProperty("xmlOutputDir");
-		File outputFile;
-		if (outputDirPath == null)
+		String suffix = (runName == null ? "" : "." + runName) + (checkName == null ? "" : "." + checkName);
+		String extension = ".jrpxml";
+		String outputFileName = jrpxml.endsWith(extension)
+			? jrpxml.substring(0, jrpxml.length() - extension.length()) + suffix + extension
+			: jrpxml + suffix;
+		// a check with the same name would overwrite the output of an earlier one, which might be the one that failed
+		if (!outputFileNames.add(outputFileName))
 		{
-			outputFile = File.createTempFile("jr_tests_", ".jrpxml");
+			throw new IllegalStateException("Report " + jrxml + " already has a check with output " + outputFileName 
+				+ ", the runs or the checks need distinct names");
 		}
-		else
+		
+		File outputFile = new File(new File(testContext.getOutputDirectory()), outputFileName);
+		File outputDir = outputFile.getParentFile();
+		if (!outputDir.exists())
 		{
-			File outputDir = new File(outputDirPath);
-			if (!outputDir.exists())
-			{
-				outputDir.mkdirs(); // for some reason, File.createTempFile method below does not create missing parent folders on Windows
-			}
-			outputFile = File.createTempFile("jr_tests_", ".jrpxml", outputDir);
+			outputDir.mkdirs();
 		}
-		outputFile.deleteOnExit();
 		return outputFile;
 	}
 

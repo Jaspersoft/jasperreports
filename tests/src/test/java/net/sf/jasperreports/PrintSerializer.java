@@ -44,17 +44,23 @@ public class PrintSerializer implements BiConsumer<Report, JasperPrint>
 
 	private static final Log log = LogFactory.getLog(PrintSerializer.class);
 	
-	private static final PrintSerializer INSTANCE_NO_VIRTUALIZER = new PrintSerializer(new NoVirtualizerContainer());
+	private static final PrintSerializer INSTANCE_NO_VIRTUALIZER = new PrintSerializer("serialized", new NoVirtualizerContainer());
 	
 	public static PrintSerializer instance()
 	{
 		return INSTANCE_NO_VIRTUALIZER;
 	}
 
+	private String checkName;
 	private VirtualizerContainer virtualizerContainer;
 	
-	public PrintSerializer(VirtualizerContainer virtualizerContainer)
+	/**
+	 * @param checkName name of the digest check, distinguishes its output file from the ones of other checks of the report
+	 * @param virtualizerContainer provides the virtualizer used to load the serialized report
+	 */
+	public PrintSerializer(String checkName, VirtualizerContainer virtualizerContainer)
 	{
+		this.checkName = checkName;
 		this.virtualizerContainer = virtualizerContainer;
 	}
 	
@@ -81,7 +87,7 @@ public class PrintSerializer implements BiConsumer<Report, JasperPrint>
 				
 				JasperPrint savedPrint = JRLoader.loadJasperPrint(new ByteArrayInputStream(printOut.toByteArray()), virtualizer);
 				virtualizerContainer.setReadOnly();
-				report.checkDigest(savedPrint);
+				report.checkDigest(savedPrint, checkName);
 			}
 			finally
 			{

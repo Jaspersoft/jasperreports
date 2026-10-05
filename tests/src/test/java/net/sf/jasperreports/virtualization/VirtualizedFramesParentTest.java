@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -46,13 +47,13 @@ public class VirtualizedFramesParentTest
 	private Report report;
 
 	@BeforeClass
-	public void initReport() throws JRException, IOException
+	public void initReport(ITestContext testContext) throws JRException, IOException
 	{
 		report = new Report("net/sf/jasperreports/virtualization/VirtualizedFramesParent.jrxml", 
 				"net/sf/jasperreports/virtualization/VirtualizedFramesParent.reference.jrpxml");
 		report.addPrintConsumer(PrintSerializer.instance());
-		report.addPrintConsumer(new PrintSerializer(new OwnVirtualizerContainer(new JRGzipVirtualizer(5))));
-		report.init();
+		report.addPrintConsumer(new PrintSerializer("serialized-virtualized", new OwnVirtualizerContainer(new JRGzipVirtualizer(5))));
+		report.init(testContext);
 	}
 	
 	@Test

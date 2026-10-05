@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 import net.sf.jasperreports.Report;
@@ -36,22 +37,22 @@ public class Barcode4JTest
 {
 	
 	@Test
-	public void nullBarcode() throws JRException, IOException
+	public void nullBarcode(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/barcode4j/Barcode4JNull.jrxml", 
 				"net/sf/jasperreports/components/barcode4j/Barcode4JNull.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);
 	}
 	
 	@Test
-	public void nullQRCode() throws JRException, IOException
+	public void nullQRCode(ITestContext testContext) throws JRException, IOException
 	{
 		Report report = new Report("net/sf/jasperreports/components/barcode4j/QRCodeNull.jrxml", 
 				"net/sf/jasperreports/components/barcode4j/QRCodeNull.jrpxml");
-		report.init();
+		report.init(testContext);
 		
 		Map<String, Object> params = new HashMap<>();
 		report.runReport(params);

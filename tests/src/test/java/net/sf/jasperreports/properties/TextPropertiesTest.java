@@ -25,6 +25,7 @@ package net.sf.jasperreports.properties;
 
 import java.util.HashMap;
 
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 import net.sf.jasperreports.Report;
@@ -36,28 +37,28 @@ public class TextPropertiesTest
 {
 
 	@Test
-	public void keepFullText()
+	public void keepFullText(ITestContext testContext)
 	{
 		Report report = new Report("net/sf/jasperreports/properties/KeepFullTextProperty");
-		report.init();
+		report.init(testContext);
 		
 		report.runReport(new HashMap<>());
 	}
 
 	@Test
-	public void keepFullTextExpression()
+	public void keepFullTextExpression(ITestContext testContext)
 	{
 		Report report = new Report("net/sf/jasperreports/properties/KeepFullTextPropertyExpression");
-		report.init();
+		report.init(testContext);
 		
 		report.runReport(new HashMap<>());
 	}
 
 	@Test
-	public void keepFullTextGroup()
+	public void keepFullTextGroup(ITestContext testContext)
 	{
 		Report report = new Report("net/sf/jasperreports/properties/KeepFullTextPropertyGroup");
-		report.init();
+		report.init(testContext);
 		
 		report.runReport(new HashMap<>());
 	}

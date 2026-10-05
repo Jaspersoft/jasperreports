@@ -25,6 +25,7 @@ package net.sf.jasperreports.bands.infinite;
 
 import java.util.HashMap;
 
+import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 import net.sf.jasperreports.Report;
@@ -38,10 +39,10 @@ public class HorizontalColumnHeaderTest
 {
 
 	@Test
-	public void test()
+	public void test(ITestContext testContext)
 	{
 		Report report = new Report("net/sf/jasperreports/bands/infinite/ColumnOverflowTest");
-		report.init();
+		report.init(testContext);
 		
 		HashMap<String, Object> params = new HashMap<>();
 		params.put(JRParameter.REPORT_DATA_SOURCE, new JREmptyDataSource());
