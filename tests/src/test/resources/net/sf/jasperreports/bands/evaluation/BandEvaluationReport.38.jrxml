@@ -82,7 +82,7 @@
 + "\n" + $V{All}]]></expression>
 			</element>
 			<element kind="image" uuid="deaf226c-cf74-4f72-abc9-7dddce05c9ac" x="155" y="0" width="100" height="15" printRepeatedValues="false" hImageAlign="Right">
-				<expression><![CDATA["net/sf/jasperreports/images/" + ($V{REPORT_COUNT} % 2 == 0 ? "jasperreports.png" : "tibcosoftware.png")]]></expression>
+				<expression><![CDATA["net/sf/jasperreports/images/" + ($V{REPORT_COUNT} % 2 == 0 ? "jasperreports.png" : "jaspersoft.png")]]></expression>
 			</element>
 		</band>
 		<band height="400" splitType="Prevent">
@@ -95,7 +95,7 @@
 + "\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nm\no\nr\ne\nmore."]]></expression>
 			</element>
 			<element kind="image" uuid="d709675f-9140-4603-be69-791e56ba9767" x="155" y="0" width="100" height="15" printRepeatedValues="false" hImageAlign="Right">
-				<expression><![CDATA["net/sf/jasperreports/images/" + ($V{REPORT_COUNT} % 2 == 0 ? "jasperreports.png" : "tibcosoftware.png")]]></expression>
+				<expression><![CDATA["net/sf/jasperreports/images/" + ($V{REPORT_COUNT} % 2 == 0 ? "jasperreports.png" : "jaspersoft.png")]]></expression>
 			</element>
 		</band>
 	</detail>

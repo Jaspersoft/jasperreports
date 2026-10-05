@@ -53,7 +53,7 @@ public class InputStreamImageTest
 		
 		List<Map<String, ?>> records = new ArrayList<>();
 		records.add(Collections.singletonMap("image", 
-				InputStreamImageTest.class.getResourceAsStream("/net/sf/jasperreports/images/tibcosoftware.png")));
+				InputStreamImageTest.class.getResourceAsStream("/net/sf/jasperreports/images/jaspersoft.png")));
 		records.add(Collections.singletonMap("image", 
 				InputStreamImageTest.class.getResourceAsStream("/net/sf/jasperreports/images/jasperreports.png")));
 		records.add(Collections.singletonMap("image", 
