@@ -36,8 +36,10 @@ import net.sf.jasperreports.engine.JRImage;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.base.JRBasePrintImage;
 import net.sf.jasperreports.engine.type.OnErrorTypeEnum;
+import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRExpressionUtil;
 import net.sf.jasperreports.renderers.ResourceRenderer;
+import net.sf.jasperreports.renderers.util.RendererUtil;
 
 
 /**
@@ -82,14 +84,19 @@ public final class ImageConverter extends ElementConverter
 		printImage.setOnErrorType(OnErrorTypeEnum.ICON);
 		printImage.setVerticalImageAlign(image.getOwnVerticalImageAlign());
 		
-		printImage.setRenderer(
-			ResourceRenderer.getInstance(
-				JRExpressionUtil.getSimpleExpressionText(image.getExpression()),
-				image.isLazy()
-				)
-			);
+		String location = JRExpressionUtil.getSimpleExpressionText(image.getExpression());
+		if (location == null)
+		{
+			// no static location to load from; show the no-image icon at its natural size
+			printImage.setRenderer(RendererUtil.NO_IMAGE_RENDERER);
+			printImage.setScaleImage(ScaleImageEnum.CLIP);
+		}
+		else
+		{
+			printImage.setRenderer(ResourceRenderer.getInstance(location, image.isLazy()));
+			printImage.setScaleImage(image.getOwnScaleImage());
+		}
 
-		printImage.setScaleImage(image.getOwnScaleImage());
 		printImage.setRotation(image.getOwnRotation());
 		
 		return printImage;
