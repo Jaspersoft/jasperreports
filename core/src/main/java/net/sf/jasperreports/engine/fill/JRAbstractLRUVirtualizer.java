@@ -2,10 +2,10 @@
  * JasperReports - Free Java Reporting Library.
  * Copyright (C) 2005 Works, Inc. All rights reserved.
  * http://www.works.com
- * Copyright (C) 2005 - 2025 Cloud Software Group, Inc. All rights reserved.
+ * Copyright (C) 2005 - 2026 Actian Corporation, a division of HCL Software. All rights reserved.
  * http://www.jaspersoft.com
  *
- * Unless you have purchased a commercial license agreement from Jaspersoft,
+ * Unless you have purchased a commercial license agreement from Actian,
  * the following license terms apply:
  *
  * This program is part of JasperReports.

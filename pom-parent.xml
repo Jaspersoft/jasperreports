@@ -9,7 +9,7 @@
 	<description>Free Java Reporting Library</description>
 	<url>http://jasperreports.sourceforge.net</url>
 	<organization>
-		<name>Cloud Software Group, Inc.</name>
+		<name>Actian Corporation, a division of HCL Software</name>
 		<url>https://www.jaspersoft.com/</url>
 	</organization>
 	<licenses>
@@ -25,7 +25,7 @@
 			<name>Teodor Danciu</name>
 			<email>teodord@users.sourceforge.net</email>
 			<url>http://sourceforge.net/users/teodord</url>
-			<organization>Cloud Software Group, Inc.</organization>
+			<organization>Actian Corporation, a division of HCL Software</organization>
 			<organizationUrl>http://www.jaspersoft.com</organizationUrl>
 			<roles>
 				<role>architect</role>
@@ -38,7 +38,7 @@
 			<name>Lucian Chirita</name>
 			<email>lucianc@users.sourceforge.net</email>
 			<url>http://sourceforge.net/users/lucianc</url>
-			<organization>Cloud Software Group, Inc.</organization>
+			<organization>Actian Corporation, a division of HCL Software</organization>
 			<organizationUrl>http://www.jaspersoft.com</organizationUrl>
 			<roles>
 				<role>architect</role>
@@ -51,7 +51,7 @@
 			<name>Sanda Zaharia</name>
 			<email>shertage@users.sourceforge.net</email>
 			<url>http://sourceforge.net/users/shertage</url>
-			<organization>Cloud Software Group, Inc.</organization>
+			<organization>Actian Corporation, a division of HCL Software</organization>
 			<organizationUrl>http://www.jaspersoft.com</organizationUrl>
 			<roles>
 				<role>developer</role>
@@ -63,7 +63,7 @@
 			<name>Narcis Marcu</name>
 			<email>narcism@users.sourceforge.net</email>
 			<url>http://sourceforge.net/users/narcism</url>
-			<organization>Cloud Software Group, Inc.</organization>
+			<organization>Actian Corporation, a division of HCL Software</organization>
 			<organizationUrl>http://www.jaspersoft.com</organizationUrl>
 			<roles>
 				<role>developer</role>

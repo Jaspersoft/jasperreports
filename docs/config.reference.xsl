@@ -179,7 +179,7 @@ ga('send', 'pageview');
   </tr>
   <tr>
     <td colspan="5" align="center">
-      <span class="copy">&#169; 2001-<script language="javascript">document.write((new Date()).getFullYear())</script> Cloud Software Group, Inc. <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span>
+      <span class="copy">&#169; 2001 - <script language="javascript">document.write((new Date()).getFullYear())</script> Actian Corporation, a division of HCL Software. All rights reserved. <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span>
     </td>
   </tr>
 </table>
