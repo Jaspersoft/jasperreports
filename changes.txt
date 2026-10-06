@@ -2,6 +2,15 @@
 JasperReports Library Change Log
 =============================================
 
+JasperReports 7.1.0 (2026-1x-xx)
+---------------------------------------------
+
+- minor bug fixes and improvements;
+
+
+
+
+
 JasperReports 7.0.8 (2026-07-07)
 ---------------------------------------------
 
