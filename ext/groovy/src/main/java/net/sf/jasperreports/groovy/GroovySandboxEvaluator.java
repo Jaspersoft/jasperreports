@@ -37,9 +37,9 @@ public abstract class GroovySandboxEvaluator extends GroovyEvaluator
 	
 	private GroovyInterceptor interceptor;
 
-	public void setReportClassFilter(ReportClassFilter reportClassFilter)
+	public void setReportClassFilter(ReportClassFilter reportClassFilter, GroovyMethodWhitelist methodWhitelist)
 	{
-		interceptor = new GroovyClassFilter(reportClassFilter, this);
+		interceptor = new GroovyClassFilter(reportClassFilter, methodWhitelist, this);
 	}
 	
 	@Override

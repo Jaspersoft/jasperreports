@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.groovy;
 
+import groovy.lang.MetaBeanProperty;
 import groovy.lang.MetaClass;
 import groovy.lang.MetaClassImpl;
 import groovy.lang.MetaMethod;
@@ -30,6 +31,7 @@ import groovy.lang.MetaProperty;
 
 import org.codehaus.groovy.runtime.InvokerHelper;
 import org.codehaus.groovy.runtime.MetaClassHelper;
+import org.codehaus.groovy.runtime.metaclass.MultipleSetterProperty;
 import org.kohsuke.groovy.sandbox.GroovyValueFilter;
 
 import net.sf.jasperreports.compilers.ReportClassFilter;
@@ -41,11 +43,14 @@ public class GroovyClassFilter extends GroovyValueFilter
 {
 	
 	private ReportClassFilter classFilter;
+	private GroovyMethodWhitelist methodWhitelist;
 	private GroovySandboxEvaluator groovyEvaluator;
 	
-	public GroovyClassFilter(ReportClassFilter classFilter, GroovySandboxEvaluator groovyEvaluator)
+	public GroovyClassFilter(ReportClassFilter classFilter, GroovyMethodWhitelist methodWhitelist,
+			GroovySandboxEvaluator groovyEvaluator)
 	{
 		this.classFilter = classFilter;
+		this.methodWhitelist = methodWhitelist;
 		this.groovyEvaluator = groovyEvaluator;
 	}
 
@@ -53,12 +58,12 @@ public class GroovyClassFilter extends GroovyValueFilter
 	public Object onMethodCall(Invoker invoker, Object receiver, 
 			String method, Object... args) throws Throwable
 	{
-		checkReturnTypeVisibility(receiver, method, args);
+		checkMethodCall(receiver, method, args);
 
 		return super.onMethodCall(invoker, receiver, method, args);
 	}
 
-	protected void checkReturnTypeVisibility(Object receiver, String method, Object[] args)
+	protected void checkMethodCall(Object receiver, String method, Object[] args)
 	{
 		if (receiver == null)
 		{
@@ -69,7 +74,7 @@ public class GroovyClassFilter extends GroovyValueFilter
 				MetaClassHelper.convertToTypeArray(args));
 		if (metaMethod != null)
 		{
-			checkResolvedReturnType(metaMethod.getReturnType());
+			checkResolvedMethod(metaMethod);
 		}
 	}
 
@@ -77,12 +82,12 @@ public class GroovyClassFilter extends GroovyValueFilter
 	public Object onStaticCall(Invoker invoker, @SuppressWarnings("rawtypes") Class receiver, 
 			String method, Object... args) throws Throwable
 	{
-		checkStaticReturnTypeVisibility(receiver, method, args);
+		checkStaticMethodCall(receiver, method, args);
 
 		return super.onStaticCall(invoker, receiver, method, args);
 	}
 
-	protected void checkStaticReturnTypeVisibility(Class<?> receiver, String method, Object[] args)
+	protected void checkStaticMethodCall(Class<?> receiver, String method, Object[] args)
 	{
 		MetaClass metaClass = InvokerHelper.getMetaClass(receiver);
 		if (metaClass instanceof MetaClassImpl)
@@ -90,7 +95,7 @@ public class GroovyClassFilter extends GroovyValueFilter
 			MetaMethod metaMethod = ((MetaClassImpl) metaClass).retrieveStaticMethod(method, args);
 			if (metaMethod != null)
 			{
-				checkResolvedReturnType(metaMethod.getReturnType());
+				checkResolvedMethod(metaMethod);
 			}
 		}
 	}
@@ -99,7 +104,7 @@ public class GroovyClassFilter extends GroovyValueFilter
 	public Object onSuperCall(Invoker invoker, @SuppressWarnings("rawtypes") Class senderType, 
 			Object receiver, String method, Object... args) throws Throwable
 	{
-		checkReturnTypeVisibility(receiver, method, args);
+		checkMethodCall(receiver, method, args);
 
 		Object filteredReceiver = filterReceiver(receiver);
 		Object[] filteredArgs = new Object[args.length];
@@ -115,7 +120,7 @@ public class GroovyClassFilter extends GroovyValueFilter
 	@Override
 	public Object onGetProperty(Invoker invoker, Object receiver, String property) throws Throwable
 	{
-		checkPropertyTypeVisibility(receiver, property);
+		checkPropertyGet(receiver, property);
 
 		return super.onGetProperty(invoker, receiver, property);
 	}
@@ -123,23 +128,75 @@ public class GroovyClassFilter extends GroovyValueFilter
 	@Override
 	public Object onGetAttribute(Invoker invoker, Object receiver, String attribute) throws Throwable
 	{
-		checkPropertyTypeVisibility(receiver, attribute);
-
-		return super.onGetAttribute(invoker, receiver, attribute);
-	}
-
-	protected void checkPropertyTypeVisibility(Object receiver, String property)
-	{
-		if (receiver == null)
-		{
-			return;
-		}
-
-		MetaProperty metaProperty = InvokerHelper.getMetaClass(receiver).getMetaProperty(property);
+		//attributes are accessed directly as fields, no getter involved
+		MetaProperty metaProperty = resolveProperty(receiver, attribute);
 		if (metaProperty != null)
 		{
 			checkResolvedReturnType(metaProperty.getType());
 		}
+
+		return super.onGetAttribute(invoker, receiver, attribute);
+	}
+
+	protected void checkPropertyGet(Object receiver, String property)
+	{
+		MetaProperty metaProperty = resolveProperty(receiver, property);
+		if (metaProperty != null)
+		{
+			MetaMethod getter = propertyGetter(metaProperty);
+			if (getter != null)
+			{
+				methodWhitelist.checkMethod(getter);
+			}
+			
+			checkResolvedReturnType(metaProperty.getType());
+		}
+	}
+
+	@Override
+	public Object onSetProperty(Invoker invoker, Object receiver, String property, Object value) throws Throwable
+	{
+		checkPropertySet(receiver, property);
+
+		return super.onSetProperty(invoker, receiver, property, value);
+	}
+
+	protected void checkPropertySet(Object receiver, String property)
+	{
+		MetaProperty metaProperty = resolveProperty(receiver, property);
+		if (metaProperty instanceof MetaBeanProperty)
+		{
+			MetaMethod setter = ((MetaBeanProperty) metaProperty).getSetter();
+			if (setter != null)
+			{
+				methodWhitelist.checkMethod(setter);
+			}
+		}
+	}
+
+	protected MetaProperty resolveProperty(Object receiver, String property)
+	{
+		return receiver == null ? null : InvokerHelper.getMetaClass(receiver).getMetaProperty(property);
+	}
+
+	protected MetaMethod propertyGetter(MetaProperty metaProperty)
+	{
+		if (metaProperty instanceof MetaBeanProperty)
+		{
+			return ((MetaBeanProperty) metaProperty).getGetter();
+		}
+		if (metaProperty instanceof MultipleSetterProperty)
+		{
+			return ((MultipleSetterProperty) metaProperty).getGetter();
+		}
+		return null;
+	}
+
+	protected void checkResolvedMethod(MetaMethod metaMethod)
+	{
+		methodWhitelist.checkMethod(metaMethod);
+		
+		checkResolvedReturnType(metaMethod.getReturnType());
 	}
 
 	protected void checkResolvedReturnType(Class<?> returnType)

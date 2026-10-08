@@ -55,9 +55,10 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
  * These cover ways a report expression can reach a class that isn't on the report class
  * whitelist without the class ever appearing as the receiver or argument of the expression's
  * own calls: Groovy extension methods that dispatch to a different, hidden class
- * ({@code execute()}), synthetic properties/methods that expose the JVM's own {@code Class}
- * objects ({@code getClass()}, {@code .class}), and {@code super} calls, which bypass the
- * sandbox filtering entirely unless explicitly re-implemented.
+ * ({@code execute()}), methods that dispatch dynamically to other methods ({@code invokeMethod}),
+ * synthetic properties/methods that expose the JVM's own {@code Class} objects ({@code getClass()},
+ * {@code .class}), and {@code super} calls, which bypass the sandbox filtering entirely unless
+ * explicitly re-implemented.
  * </p>
  *
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -73,7 +74,7 @@ public class GroovyClassFilterTest
 		jasperReportsContext.setProperty(ReportClassFilter.PROPERTY_CLASS_FILTER_ENABLED, "true");
 	}
 
-	protected JasperReport compile(String expression) throws JRException
+	protected JasperReport compile(JasperReportsContext jasperReportsContext, String expression) throws JRException
 	{
 		String jrxml = "<jasperReport name=\"classFilterTest\" language=\"groovy\">"
 				+ "<title height=\"20\">"
@@ -87,9 +88,9 @@ public class GroovyClassFilterTest
 		return JasperCompileManager.getInstance(jasperReportsContext).compile(design);
 	}
 
-	protected String fillAndGetText(String expression) throws JRException
+	protected String fillAndGetText(JasperReportsContext jasperReportsContext, String expression) throws JRException
 	{
-		JasperReport report = compile(expression);
+		JasperReport report = compile(jasperReportsContext, expression);
 		JasperPrint print = JasperFillManager.getInstance(jasperReportsContext).fill(
 				report, new HashMap<>(), new JREmptyDataSource());
 		JRPrintText printText = (JRPrintText) print.getPages().get(0).getElements().get(0);
@@ -100,11 +101,12 @@ public class GroovyClassFilterTest
 	 * Fills a report with the given expression, asserting that it is rejected, and returns the
 	 * root cause of the resulting exception.
 	 */
-	protected Throwable rejectedExpressionCause(String expression) throws JRException
+	protected Throwable rejectedExpressionCause(JasperReportsContext jasperReportsContext, 
+			String expression) throws JRException
 	{
 		try
 		{
-			String text = fillAndGetText(expression);
+			String text = fillAndGetText(jasperReportsContext, expression);
 
 			throw new AssertionError("expected the expression to be rejected, but it evaluated to \""
 					+ text + "\": " + expression);
@@ -123,7 +125,7 @@ public class GroovyClassFilterTest
 	@Test(dataProvider = "allowedExpressions")
 	public void allowedExpression(String expression, String expectedText) throws JRException
 	{
-		assert fillAndGetText(expression).equals(expectedText);
+		assert fillAndGetText(jasperReportsContext, expression).equals(expectedText);
 	}
 
 	@DataProvider
@@ -141,13 +143,22 @@ public class GroovyClassFilterTest
 			{"\"v=\" + [10,20,30][1]", "v=20"},
 			{"(\"abc\" instanceof String) ? \"yes\" : \"no\"", "yes"},
 			{"super.toString() != null ? \"ok\" : \"no\"", "ok"},
+			//extension methods on the default method whitelist
+			{"\"sum=\" + (1 + 2)", "sum=3"},
+			{"\"total=\" + [1,2,3].sum()", "total=6"},
+			{"\"int=\" + (\"5\".toInteger() + 1)", "int=6"},
+			{"\"cap=\" + \"abc\".capitalize()", "cap=Abc"},
+			{"\"pad=\" + \"7\".padLeft(3, \"0\")", "pad=007"},
+			{"\"rep=\" + (\"ab\" * 2)", "rep=abab"},
+			{"\"list=\" + ([1,2] + [3])", "list=[1, 2, 3]"},
+			{"\"cmp=\" + (\"a\" <=> \"b\")", "cmp=-1"},
 		};
 	}
 
 	@Test(dataProvider = "blockedExpressions")
 	public void blockedExpression(String expression, String expectedRejectedClassName) throws JRException
 	{
-		Throwable cause = rejectedExpressionCause(expression);
+		Throwable cause = rejectedExpressionCause(jasperReportsContext, expression);
 		assert cause instanceof JRRuntimeException : "unexpected exception for \"" + expression + "\": " + cause;
 		assert cause.getMessage() != null && cause.getMessage().contains(expectedRejectedClassName)
 				: "unexpected exception message for \"" + expression + "\": " + cause.getMessage();
@@ -161,9 +172,19 @@ public class GroovyClassFilterTest
 			//(org.codehaus.groovy.runtime.ProcessGroovyMethods) rather than as a call on a receiver
 			//class of its own, so the whitelisted List/String receiver never reveals what's really
 			//being invoked; caught here via the declared return type (java.lang.Process) of the
-			//resolved method, which is never whitelisted
-			{"[\"echo\", \"pwned\"].execute()", "java.lang.Process"},
-			{"\"echo pwned\".execute()", "java.lang.Process"},
+			//resolved method, which is not on the Groovy method whitelist
+			{"[\"echo\", \"pwned\"].execute()", "org.codehaus.groovy.runtime.ProcessGroovyMethods.execute"},
+			{"\"echo pwned\".execute()", "org.codehaus.groovy.runtime.ProcessGroovyMethods.execute"},
+			//invokeMethod is declared to return Object, so the return type check doesn't catch it,
+			//but it dispatches to execute() outside the sandbox
+			{"\"echo pwned\".invokeMethod(\"execute\", null)", "org.codehaus.groovy.runtime.DefaultGroovyMethods.invokeMethod"},
+			{"\"runtime \" + (\"echo pwned\").invokeMethod(\"execute\", null)", "org.codehaus.groovy.runtime.DefaultGroovyMethods.invokeMethod"},
+			{"this.invokeMethod(\"toString\", null)", "groovy.lang.GroovyObject.invokeMethod"},
+			//extension methods with side effects, both instance and static
+			{"println(\"pwned\")", "org.codehaus.groovy.runtime.DefaultGroovyMethods.println"},
+			{"Math.sleep(1)", "org.codehaus.groovy.runtime.DefaultGroovyStaticMethods.sleep"},
+			//extension property setter
+			{"(\"abc\".metaClass = null) == null ? \"x\" : \"y\"", "org.codehaus.groovy.runtime.DefaultGroovyMethods.setMetaClass"},
 			//getClass() and the equivalent ".class" property must never yield a Class object,
 			//regardless of what class they would return
 			{"\"abc\".getClass()", "java.lang.Class"},
@@ -180,5 +201,21 @@ public class GroovyClassFilterTest
 			//visible, including through its own constructor
 			{"new java.util.Random()", "java.util.Random"},
 		};
+	}
+
+	@Test
+	public void configuredMethodWhitelist() throws JRException
+	{
+		String expression = "\"abc\".inspect()";
+		Throwable cause = rejectedExpressionCause(jasperReportsContext, expression);
+		assert cause instanceof JRRuntimeException 
+				&& cause.getMessage().contains("org.codehaus.groovy.runtime.DefaultGroovyMethods.inspect")
+				: "unexpected exception for \"" + expression + "\": " + cause;
+
+		SimpleJasperReportsContext whitelistContext = new SimpleJasperReportsContext(jasperReportsContext);
+		whitelistContext.setProperty(GroovyMethodWhitelist.PROPERTY_PREFIX_METHOD_WHITELIST + "test", 
+				"org.codehaus.groovy.runtime.DefaultGroovyMethods.inspect");
+		String text = fillAndGetText(whitelistContext, expression);
+		assert text.equals("'abc'") : text;
 	}
 }
