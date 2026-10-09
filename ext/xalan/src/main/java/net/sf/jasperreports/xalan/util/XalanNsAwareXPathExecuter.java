@@ -29,8 +29,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -38,6 +36,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.util.JRXmlUtils;
 
 import org.apache.xpath.CachedXPathAPI;
 import org.apache.xpath.objects.XObject;
@@ -95,14 +94,7 @@ public class XalanNsAwareXPathExecuter extends XalanXPathExecuter {
 		
 		if (xmlNamespaceMap != null && xmlNamespaceMap.size() > 0) {
 			if (namespaceElement == null) {
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				factory.setNamespaceAware(true);
-				DocumentBuilder builder = null;
-				try {
-					builder = factory.newDocumentBuilder();
-				} catch (ParserConfigurationException e) {
-					throw new JRException(e);
-				}	
+				DocumentBuilder builder = JRXmlUtils.createDocumentBuilder(true);
 				DOMImplementation impl = builder.getDOMImplementation();
 				
 				Set<String> nsSet = xmlNamespaceMap.keySet();

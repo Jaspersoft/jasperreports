@@ -32,7 +32,6 @@ import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -54,6 +53,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.util.JRColorUtil;
+import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.renderers.Renderable;
 import net.sf.jasperreports.renderers.SimpleRenderToImageAwareDataRenderer;
 
@@ -176,7 +176,7 @@ public class QRCodeSVGImageProducer implements QRCodeImageProducer
 
 		try
 		{
-			Transformer transformer = TransformerFactory.newInstance()
+			Transformer transformer = JRXmlUtils.createTransformerFactory()
 					.newTransformer();
 			transformer.transform(source, output);
 

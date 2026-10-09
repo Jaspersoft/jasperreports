@@ -28,9 +28,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,6 +70,9 @@ public final class JRXmlUtils
 	public static final String PROPERTY_ALLOW_DOCTYPE = JRPropertiesUtil.PROPERTY_PREFIX + "xml.allow.doctype";
 	
 	public static final String FEATURE_DISALLOW_DOCTYPE = "http://apache.org/xml/features/disallow-doctype-decl";
+	public static final String FEATURE_EXTERNAL_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
+	public static final String FEATURE_EXTERNAL_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
+	public static final String FEATURE_LOAD_EXTERNAL_DTD = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
 	
 	public static Document parse(InputSource is) throws JRException
 	{
@@ -226,12 +232,12 @@ public final class JRXmlUtils
 	 */
 	public static DocumentBuilder createDocumentBuilder(boolean isNamespaceAware) throws JRException
 	{
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		dbf.setValidating(false);
-		dbf.setIgnoringComments(true);
-		dbf.setNamespaceAware(isNamespaceAware);
 		try
 		{
+			DocumentBuilderFactory dbf = createDocumentBuilderFactory();
+			dbf.setValidating(false);
+			dbf.setIgnoringComments(true);
+			dbf.setNamespaceAware(isNamespaceAware);
 			if (!allowDoctype())
 			{
 				dbf.setFeature(FEATURE_DISALLOW_DOCTYPE, true);
@@ -247,6 +253,26 @@ public final class JRXmlUtils
 				null,
 				e);
 		}
+	}
+
+	/**
+	 * Creates a XML document builder factory with secure processing enabled and
+	 * with external entities, external DTDs and XInclude disabled.
+	 * DOCTYPE declarations are still accepted; set {@link #FEATURE_DISALLOW_DOCTYPE}
+	 * on the returned factory when they are not needed.
+	 * 
+	 * @return a XML document builder factory
+	 * @throws ParserConfigurationException if the parser does not support one of the features
+	 */
+	public static DocumentBuilderFactory createDocumentBuilderFactory() throws ParserConfigurationException
+	{
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		documentBuilderFactory.setFeature(FEATURE_EXTERNAL_GENERAL_ENTITIES, false);
+		documentBuilderFactory.setFeature(FEATURE_EXTERNAL_PARAMETER_ENTITIES, false);
+		documentBuilderFactory.setFeature(FEATURE_LOAD_EXTERNAL_DTD, false);
+		documentBuilderFactory.setXIncludeAware(false);
+		return documentBuilderFactory;
 	}
 
 	protected static boolean allowDoctype()
@@ -283,6 +309,41 @@ public final class JRXmlUtils
 		doc.appendChild(node);
 		
 		return doc;
+	}
+	
+	
+	/**
+	 * Creates a XML transformer factory with secure processing enabled and,
+	 * when the implementation supports it, access to external DTDs and
+	 * stylesheets disabled.
+	 * 
+	 * @return a XML transformer factory
+	 */
+	public static TransformerFactory createTransformerFactory()
+	{
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		try
+		{
+			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		}
+		catch (TransformerConfigurationException e)
+		{
+			log.warn("Secure processing not supported by " + transformerFactory.getClass().getName(), e);
+		}
+		try
+		{
+			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+		}
+		catch (IllegalArgumentException e)
+		{
+			//not supported by some implementations, e.g. Apache Xalan 2.7
+			if (log.isDebugEnabled())
+			{
+				log.debug("External access attributes not supported by " + transformerFactory.getClass().getName());
+			}
+		}
+		return transformerFactory;
 	}
 	
 	
