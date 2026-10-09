@@ -330,25 +330,20 @@ public final class JRXmlUtils
 		{
 			log.warn("Secure processing not supported by " + transformerFactory.getClass().getName(), e);
 		}
-		setTransformerFactoryAttribute(transformerFactory, XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		setTransformerFactoryAttribute(transformerFactory, XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-		return transformerFactory;
-	}
-
-	private static void setTransformerFactoryAttribute(TransformerFactory transformerFactory, String name, Object value)
-	{
 		try
 		{
-			transformerFactory.setAttribute(name, value);
+			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 		}
 		catch (IllegalArgumentException e)
 		{
 			//not supported by some implementations, e.g. Apache Xalan 2.7
 			if (log.isDebugEnabled())
 			{
-				log.debug("Attribute " + name + " not supported by " + transformerFactory.getClass().getName());
+				log.debug("External access attributes not supported by " + transformerFactory.getClass().getName());
 			}
 		}
+		return transformerFactory;
 	}
 	
 	

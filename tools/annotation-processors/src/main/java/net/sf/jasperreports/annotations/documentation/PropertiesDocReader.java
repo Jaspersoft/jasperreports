@@ -458,16 +458,14 @@ public class PropertiesDocReader
 	{
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		for (String attribute : new String[] {XMLConstants.ACCESS_EXTERNAL_DTD, XMLConstants.ACCESS_EXTERNAL_STYLESHEET})
+		try
 		{
-			try
-			{
-				transformerFactory.setAttribute(attribute, "");
-			}
-			catch (IllegalArgumentException e)
-			{
-				//not supported by some implementations, e.g. Apache Xalan 2.7
-			}
+			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+		}
+		catch (IllegalArgumentException e)
+		{
+			//not supported by some implementations, e.g. Apache Xalan 2.7
 		}
 		return transformerFactory;
 	}
