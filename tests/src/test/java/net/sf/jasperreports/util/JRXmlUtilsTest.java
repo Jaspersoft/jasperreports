@@ -36,11 +36,13 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import net.sf.jasperreports.engine.util.JRXmlUtils;
 
 /**
- * Checks that {@link JRXmlUtils#createTransformerFactory()} does not resolve external entities.
+ * Checks that the XML factories created by {@link JRXmlUtils} do not resolve external entities.
  */
 public class JRXmlUtilsTest
 {
@@ -49,12 +51,8 @@ public class JRXmlUtilsTest
 	@Test
 	public void transformerFactoryDoesNotResolveExternalEntities() throws Exception
 	{
-		File secretFile = File.createTempFile("jr-xxe", ".txt");
-		secretFile.deleteOnExit();
-		Files.write(secretFile.toPath(), SECRET.getBytes(StandardCharsets.UTF_8));
-
 		String xml = "<?xml version=\"1.0\"?>"
-				+ "<!DOCTYPE root [<!ENTITY xxe SYSTEM \"" + secretFile.toURI() + "\">]>"
+				+ "<!DOCTYPE root [<!ENTITY xxe SYSTEM \"" + secretFile().toURI() + "\">]>"
 				+ "<root>&xxe;</root>";
 
 		StringWriter output = new StringWriter();
@@ -83,5 +81,56 @@ public class JRXmlUtilsTest
 				new DOMSource(document), new StreamResult(output));
 
 		assert output.toString().contains("<root/>") : output;
+	}
+
+	@Test
+	public void documentBuilderFactoryDoesNotResolveExternalEntities() throws Exception
+	{
+		String xml = "<?xml version=\"1.0\"?>"
+				+ "<!DOCTYPE root [<!ENTITY xxe SYSTEM \"" + secretFile().toURI() + "\">]>"
+				+ "<root>&xxe;</root>";
+
+		Document document;
+		try
+		{
+			document = JRXmlUtils.createDocumentBuilderFactory().newDocumentBuilder().parse(
+					new InputSource(new StringReader(xml)));
+		}
+		catch (SAXException e)
+		{
+			//the external entity was refused
+			return;
+		}
+
+		String text = document.getDocumentElement().getTextContent();
+		assert !text.contains(SECRET) : "external entity resolved: " + text;
+	}
+
+	@Test
+	public void documentBuilderFactoryExpandsInternalEntities() throws Exception
+	{
+		String xml = "<?xml version=\"1.0\"?>"
+				+ "<!DOCTYPE root [<!ENTITY value \"internal\">]>"
+				+ "<root>&value;</root>";
+
+		Document document = JRXmlUtils.createDocumentBuilderFactory().newDocumentBuilder().parse(
+				new InputSource(new StringReader(xml)));
+
+		assert "internal".equals(document.getDocumentElement().getTextContent()) : document.getDocumentElement().getTextContent();
+	}
+
+	@Test(expectedExceptions = SAXException.class)
+	public void documentBuilderRejectsDoctype() throws Exception
+	{
+		JRXmlUtils.createDocumentBuilder().parse(new InputSource(new StringReader(
+				"<?xml version=\"1.0\"?><!DOCTYPE root [<!ENTITY value \"internal\">]><root>&value;</root>")));
+	}
+
+	private static File secretFile() throws Exception
+	{
+		File secretFile = File.createTempFile("jr-xxe", ".txt");
+		secretFile.deleteOnExit();
+		Files.write(secretFile.toPath(), SECRET.getBytes(StandardCharsets.UTF_8));
+		return secretFile;
 	}
 }

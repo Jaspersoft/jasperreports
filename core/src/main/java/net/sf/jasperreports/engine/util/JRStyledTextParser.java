@@ -220,7 +220,7 @@ public class JRStyledTextParser implements ErrorHandler
 	{
 		try
 		{
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory factory = JRXmlUtils.createDocumentBuilderFactory();
 			factory.setFeature(JRXmlUtils.FEATURE_DISALLOW_DOCTYPE, true);
 			
 			documentBuilder = factory.newDocumentBuilder();

@@ -94,6 +94,9 @@ public class PropertiesDocReader
 	private static final String[] SORTED_DUPLICATE_CLASSES = {"JRJpaQueryExecuter"};
 
 	private static final String FEATURE_DISALLOW_DOCTYPE = "http://apache.org/xml/features/disallow-doctype-decl";
+	private static final String FEATURE_EXTERNAL_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
+	private static final String FEATURE_EXTERNAL_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
+	private static final String FEATURE_LOAD_EXTERNAL_DTD = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
 			
 	private ProcessingEnvironment environment;
 	private CompiledPropertiesMetadata properties;
@@ -443,6 +446,9 @@ public class PropertiesDocReader
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		documentBuilderFactory.setFeature(FEATURE_DISALLOW_DOCTYPE, true);
+		documentBuilderFactory.setFeature(FEATURE_EXTERNAL_GENERAL_ENTITIES, false);
+		documentBuilderFactory.setFeature(FEATURE_EXTERNAL_PARAMETER_ENTITIES, false);
+		documentBuilderFactory.setFeature(FEATURE_LOAD_EXTERNAL_DTD, false);
 		documentBuilderFactory.setXIncludeAware(false);
 		documentBuilderFactory.setExpandEntityReferences(false);
 		return documentBuilderFactory;

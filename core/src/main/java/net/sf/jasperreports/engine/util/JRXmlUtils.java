@@ -70,6 +70,9 @@ public final class JRXmlUtils
 	public static final String PROPERTY_ALLOW_DOCTYPE = JRPropertiesUtil.PROPERTY_PREFIX + "xml.allow.doctype";
 	
 	public static final String FEATURE_DISALLOW_DOCTYPE = "http://apache.org/xml/features/disallow-doctype-decl";
+	public static final String FEATURE_EXTERNAL_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
+	public static final String FEATURE_EXTERNAL_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
+	public static final String FEATURE_LOAD_EXTERNAL_DTD = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
 	
 	public static Document parse(InputSource is) throws JRException
 	{
@@ -229,12 +232,12 @@ public final class JRXmlUtils
 	 */
 	public static DocumentBuilder createDocumentBuilder(boolean isNamespaceAware) throws JRException
 	{
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		dbf.setValidating(false);
-		dbf.setIgnoringComments(true);
-		dbf.setNamespaceAware(isNamespaceAware);
 		try
 		{
+			DocumentBuilderFactory dbf = createDocumentBuilderFactory();
+			dbf.setValidating(false);
+			dbf.setIgnoringComments(true);
+			dbf.setNamespaceAware(isNamespaceAware);
 			if (!allowDoctype())
 			{
 				dbf.setFeature(FEATURE_DISALLOW_DOCTYPE, true);
@@ -250,6 +253,26 @@ public final class JRXmlUtils
 				null,
 				e);
 		}
+	}
+
+	/**
+	 * Creates a XML document builder factory with secure processing enabled and
+	 * with external entities, external DTDs and XInclude disabled.
+	 * DOCTYPE declarations are still accepted; set {@link #FEATURE_DISALLOW_DOCTYPE}
+	 * on the returned factory when they are not needed.
+	 * 
+	 * @return a XML document builder factory
+	 * @throws ParserConfigurationException if the parser does not support one of the features
+	 */
+	public static DocumentBuilderFactory createDocumentBuilderFactory() throws ParserConfigurationException
+	{
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		documentBuilderFactory.setFeature(FEATURE_EXTERNAL_GENERAL_ENTITIES, false);
+		documentBuilderFactory.setFeature(FEATURE_EXTERNAL_PARAMETER_ENTITIES, false);
+		documentBuilderFactory.setFeature(FEATURE_LOAD_EXTERNAL_DTD, false);
+		documentBuilderFactory.setXIncludeAware(false);
+		return documentBuilderFactory;
 	}
 
 	protected static boolean allowDoctype()
