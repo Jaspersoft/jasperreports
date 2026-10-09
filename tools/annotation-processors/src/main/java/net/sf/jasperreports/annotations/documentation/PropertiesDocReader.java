@@ -41,6 +41,7 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -91,6 +92,8 @@ public class PropertiesDocReader
 	// This array is used for binary searches, maintain it sorted
 
 	private static final String[] SORTED_DUPLICATE_CLASSES = {"JRJpaQueryExecuter"};
+
+	private static final String FEATURE_DISALLOW_DOCTYPE = "http://apache.org/xml/features/disallow-doctype-decl";
 			
 	private ProcessingEnvironment environment;
 	private CompiledPropertiesMetadata properties;
@@ -107,7 +110,7 @@ public class PropertiesDocReader
 		
 		try
 		{
-			documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			documentBuilder = createDocumentBuilderFactory().newDocumentBuilder();
 		}
 		catch (ParserConfigurationException e)
 		{
@@ -426,13 +429,41 @@ public class PropertiesDocReader
 	{
 		try
 		{
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			Transformer transformer = createTransformerFactory().newTransformer();
 			transformer.transform(new DOMSource(refDoc), new StreamResult(new File(refFile)));
 		}
 		catch (TransformerFactoryConfigurationError | TransformerException e)
 		{
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected static DocumentBuilderFactory createDocumentBuilderFactory() throws ParserConfigurationException
+	{
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		documentBuilderFactory.setFeature(FEATURE_DISALLOW_DOCTYPE, true);
+		documentBuilderFactory.setXIncludeAware(false);
+		documentBuilderFactory.setExpandEntityReferences(false);
+		return documentBuilderFactory;
+	}
+
+	protected static TransformerFactory createTransformerFactory() throws TransformerException
+	{
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		for (String attribute : new String[] {XMLConstants.ACCESS_EXTERNAL_DTD, XMLConstants.ACCESS_EXTERNAL_STYLESHEET})
+		{
+			try
+			{
+				transformerFactory.setAttribute(attribute, "");
+			}
+			catch (IllegalArgumentException e)
+			{
+				//not supported by some implementations, e.g. Apache Xalan 2.7
+			}
+		}
+		return transformerFactory;
 	}
 
 }

@@ -28,9 +28,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -283,6 +286,46 @@ public final class JRXmlUtils
 		doc.appendChild(node);
 		
 		return doc;
+	}
+	
+	
+	/**
+	 * Creates a XML transformer factory with secure processing enabled and,
+	 * when the implementation supports it, access to external DTDs and
+	 * stylesheets disabled.
+	 * 
+	 * @return a XML transformer factory
+	 */
+	public static TransformerFactory createTransformerFactory()
+	{
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		try
+		{
+			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		}
+		catch (TransformerConfigurationException e)
+		{
+			log.warn("Secure processing not supported by " + transformerFactory.getClass().getName(), e);
+		}
+		setTransformerFactoryAttribute(transformerFactory, XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		setTransformerFactoryAttribute(transformerFactory, XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+		return transformerFactory;
+	}
+
+	private static void setTransformerFactoryAttribute(TransformerFactory transformerFactory, String name, Object value)
+	{
+		try
+		{
+			transformerFactory.setAttribute(name, value);
+		}
+		catch (IllegalArgumentException e)
+		{
+			//not supported by some implementations, e.g. Apache Xalan 2.7
+			if (log.isDebugEnabled())
+			{
+				log.debug("Attribute " + name + " not supported by " + transformerFactory.getClass().getName());
+			}
+		}
 	}
 	
 	
