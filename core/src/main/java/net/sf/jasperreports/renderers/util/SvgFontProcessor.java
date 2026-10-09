@@ -47,6 +47,7 @@ import org.w3c.dom.svg.SVGDocument;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.export.HtmlFontFamily;
+import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.renderers.BatikUserAgent;
 
 
@@ -96,7 +97,7 @@ public abstract class SvgFontProcessor
 			process(document);
 			
 			TransformerFactory tFactory =
-				TransformerFactory.newInstance();
+				JRXmlUtils.createTransformerFactory();
 			Transformer transformer = 
 				tFactory.newTransformer();
 			

@@ -48,7 +48,6 @@ import javax.xml.soap.SOAPPart;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -62,6 +61,7 @@ import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRValueParameter;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.query.JRAbstractQueryExecuter;
+import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.olap.JRMdxQueryExecuterFactory;
 import net.sf.jasperreports.olap.JROlapDataSource;
 import net.sf.jasperreports.olap.result.JROlapResult;
@@ -842,7 +842,7 @@ public class JRXmlaQueryExecuter extends JRAbstractQueryExecuter
 
 		try
 		{
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			Transformer transformer = JRXmlUtils.createTransformerFactory().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			transformer.transform(
