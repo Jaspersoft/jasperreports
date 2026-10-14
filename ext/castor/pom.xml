@@ -83,8 +83,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>${maven-dependency-plugin.version}</version>
 				<configuration>
-					<ignoredUnusedDeclaredDependencies>
-						<dependency>net.sf.jasperreports:jasperreports-metadata</dependency>
+					<ignoredUnusedDeclaredDependencies combine.children="append">
 						<dependency>org.apache.commons:commons-lang3</dependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>
