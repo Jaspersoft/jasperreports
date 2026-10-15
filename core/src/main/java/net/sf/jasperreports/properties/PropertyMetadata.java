@@ -73,6 +73,13 @@ public interface PropertyMetadata
 	String getDescription();
 	
 	/**
+	 * Full description of the property, as HTML.
+	 * 
+	 * @return the property description as HTML, or <code>null</code> if not available
+	 */
+	String getDescriptionHTML();
+	
+	/**
 	 * The default value of the property.
 	 * 
 	 * @return the default property value

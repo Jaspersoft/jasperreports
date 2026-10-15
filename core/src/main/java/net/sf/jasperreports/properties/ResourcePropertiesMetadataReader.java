@@ -143,6 +143,7 @@ public class ResourcePropertiesMetadataReader
 		property.setConstantFieldName(compiledProperty.getConstantFieldName());
 		property.setLabel(messageProvider.getMessage(PropertyMetadataConstants.PROPERTY_LABEL_PREFIX + name));
 		property.setDescription(messageProvider.getMessage(PropertyMetadataConstants.PROPERTY_DESCRIPTION_PREFIX + name));
+		property.setDescriptionHTML(messageProvider.getMessage(PropertyMetadataConstants.PROPERTY_DESCRIPTION_HTML_PREFIX + name));
 		property.setDefaultValue(compiledProperty.getDefaultValue());
 		property.setScopes(compiledProperty.getScopes());//TODO lucianc copy?
 		property.setScopeQualifications(compiledProperty.getScopeQualifications());//TODO lucianc copy?

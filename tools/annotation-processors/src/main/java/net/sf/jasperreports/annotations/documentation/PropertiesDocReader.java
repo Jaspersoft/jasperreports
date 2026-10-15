@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.text.BreakIterator;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -45,12 +46,15 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -70,6 +74,11 @@ import net.sf.jasperreports.metadata.properties.PropertyMetadataConstants;
 public class PropertiesDocReader
 {
 	
+	/**
+	 * The stylesheet used to transform property descriptions into HTML, also used to generate the configuration reference.
+	 */
+	public static final String DESCRIPTION_XSL_RESOURCE = "config.reference.xsl";
+
 	private static final String ELEMENT_ROOT = "configReference";
 	private static final String ELEMENT_CATEGORY = "category";
 	private static final String ATTR_CATEGORY_KEY = "key";
@@ -97,15 +106,23 @@ public class PropertiesDocReader
 	private CompiledPropertiesMetadata properties;
 	private DocumentBuilder documentBuilder;
 	private Properties propertyMessages;
-	
+	private Templates descriptionTemplates;
+	private String apiUrl;
+
 	private Map<String, CategoryDoc> categories = new LinkedHashMap<>();
 	private Map<String, Element> propertyDocNodes = new LinkedHashMap<>();
 
-	public PropertiesDocReader(ProcessingEnvironment environment, CompiledPropertiesMetadata properties)
+	/**
+	 * @param apiUrl the API (Javadoc) base URL used for links in property description HTML,
+	 * if <code>null</code> the stylesheet default (relative) URL is used
+	 */
+	public PropertiesDocReader(ProcessingEnvironment environment, CompiledPropertiesMetadata properties,
+			String apiUrl)
 	{
 		this.environment = environment;
 		this.properties = properties;
-		
+		this.apiUrl = apiUrl;
+
 		try
 		{
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -118,6 +135,7 @@ public class PropertiesDocReader
 			throw new RuntimeException(e);
 		}
 		
+		descriptionTemplates = loadDescriptionTemplates();
 		readMessages();
 	}
 	
@@ -140,6 +158,37 @@ public class PropertiesDocReader
 		{
 			environment.getMessager().printMessage(Kind.WARNING, "Failed to read source of " 
 					+ properties.getMessagesName() + ".properties: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Creates a transformer factory with secure processing enabled and external DTD/stylesheet access disabled.
+	 * 
+	 * Similar to JRXmlUtils.createTransformerFactory(), which cannot be used here because
+	 * this module cannot depend on the core library.
+	 */
+	private static TransformerFactory createTransformerFactory() throws TransformerConfigurationException
+	{
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+		return transformerFactory;
+	}
+
+	private static Templates loadDescriptionTemplates()
+	{
+		try (InputStream xsl = PropertiesDocReader.class.getResourceAsStream(DESCRIPTION_XSL_RESOURCE))
+		{
+			if (xsl == null)
+			{
+				throw new IllegalStateException("Resource " + DESCRIPTION_XSL_RESOURCE + " not found");
+			}
+			return createTransformerFactory().newTemplates(new StreamSource(xsl));
+		}
+		catch (TransformerConfigurationException | IOException e)
+		{
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -229,22 +278,30 @@ public class PropertiesDocReader
 		for (CompiledPropertyMetadata prop : properties.getProperties())
 		{
 			String descriptionMessage = PropertyMetadataConstants.PROPERTY_DESCRIPTION_PREFIX + prop.getName();
+			Element docNode = propertyDocNodes.get(prop.getName());
+			if (docNode == null)
+			{
+				continue;
+			}
+			
+			String descriptionHtmlMessage = PropertyMetadataConstants.PROPERTY_DESCRIPTION_HTML_PREFIX + prop.getName();
+			if (propertyMessages == null || !propertyMessages.containsKey(descriptionHtmlMessage))
+			{
+				defaultMessages.setProperty(descriptionHtmlMessage, toHtml(docNode));
+			}
+			
 			if (propertyMessages == null || !propertyMessages.containsKey(descriptionMessage))
 			{
-				Element docNode = propertyDocNodes.get(prop.getName());
-				if (docNode != null)
-				{
-					String docText = docNode.getTextContent();
-					sentenceBreaks.setText(docText);
-					int first = sentenceBreaks.first();
-					int next = sentenceBreaks.next();
-					
-					String firstSentence = docText.substring(first, next);
-					firstSentence = PATTERN_LEADING_WHITE_SPACE.matcher(firstSentence).replaceAll("");
-					firstSentence = PATTERN_TRAILING_WHITE_SPACE.matcher(firstSentence).replaceAll("");
-					
-					defaultMessages.setProperty(descriptionMessage, firstSentence);
-				}
+				String docText = docNode.getTextContent();
+				sentenceBreaks.setText(docText);
+				int first = sentenceBreaks.first();
+				int next = sentenceBreaks.next();
+				
+				String firstSentence = docText.substring(first, next);
+				firstSentence = PATTERN_LEADING_WHITE_SPACE.matcher(firstSentence).replaceAll("");
+				firstSentence = PATTERN_TRAILING_WHITE_SPACE.matcher(firstSentence).replaceAll("");
+				
+				defaultMessages.setProperty(descriptionMessage, firstSentence);
 			}
 		}
 		
@@ -265,6 +322,33 @@ public class PropertiesDocReader
 			{
 				throw new RuntimeException(e);
 			}
+		}
+	}
+	
+	/**
+	 * Transforms a description element into HTML by applying the configuration reference stylesheet.
+	 */
+	protected String toHtml(Element descriptionElement)
+	{
+		try
+		{
+			// using a standalone document so that the description is the only content to be transformed
+			Document descriptionDoc = documentBuilder.newDocument();
+			descriptionDoc.appendChild(descriptionDoc.importNode(descriptionElement, true));
+			
+			Transformer transformer = descriptionTemplates.newTransformer();
+			transformer.setParameter("description.only", "true");
+			if (apiUrl != null)
+			{
+				transformer.setParameter("api.url", apiUrl);
+			}
+			StringWriter writer = new StringWriter();
+			transformer.transform(new DOMSource(descriptionDoc), new StreamResult(writer));
+			return writer.toString().trim();
+		}
+		catch (TransformerException e)
+		{
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -430,11 +514,7 @@ public class PropertiesDocReader
 	{
 		try
 		{
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-			transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-			Transformer transformer = transformerFactory.newTransformer();
+			Transformer transformer = createTransformerFactory().newTransformer();
 			transformer.transform(new DOMSource(refDoc), new StreamResult(new File(refFile)));
 		}
 		catch (TransformerFactoryConfigurationError | TransformerException e)

@@ -66,7 +66,8 @@ import net.sf.jasperreports.metadata.properties.StandardPropertiesMetadataSerial
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions({PropertyProcessor.OPTION_MESSAGES_NAME,
 	PropertyProcessor.OPTION_PROPERTIES_DOC,
-	PropertyProcessor.OPTION_CONFIG_REFERENCE_OUT})
+	PropertyProcessor.OPTION_CONFIG_REFERENCE_OUT,
+	PropertyProcessor.OPTION_API_URL})
 public class PropertyProcessor extends AbstractProcessor
 {
 
@@ -75,6 +76,8 @@ public class PropertyProcessor extends AbstractProcessor
 	public static final String OPTION_PROPERTIES_DOC = "propertiesDoc";
 
 	public static final String OPTION_CONFIG_REFERENCE_OUT = "configReferenceOut";
+
+	public static final String OPTION_API_URL = "apiUrl";
 	
 	public PropertyProcessor()
 	{
@@ -142,7 +145,8 @@ public class PropertyProcessor extends AbstractProcessor
 			String propertiesDoc = processingEnv.getOptions().get(OPTION_PROPERTIES_DOC);
 			if (propertiesDoc != null)
 			{
-				PropertiesDocReader docReader = new PropertiesDocReader(processingEnv, props);
+				PropertiesDocReader docReader = new PropertiesDocReader(processingEnv, props,
+						processingEnv.getOptions().get(OPTION_API_URL));
 				docReader.readPropertiesDoc(propertiesDoc);
 				docReader.writeDefaultMessages();
 				
