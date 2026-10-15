@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet version="1.0" exclude-result-prefixes="xsd jr" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
 
 <xsl:output method = "html" />
 <xsl:param name="sf.net"/>
 <xsl:param name="version"/>
-<!-- set to true to only output the HTML of the description element (used when generating property metadata) -->
-<xsl:param name="description.only"/>
 
-<!-- base URL for API (Javadoc) links, relative by default -->
-<xsl:param name="api.url">api/</xsl:param>
+<xsl:variable name="api.url">api/</xsl:variable>
 
 <xsl:template match="/">
-<xsl:choose>
-<xsl:when test="$description.only = 'true'"><xsl:apply-templates select="description"/></xsl:when>
-<xsl:otherwise><xsl:call-template name="page"/></xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
-<xsl:template name="page">
 <html>
 <head>
 <title>JasperReports <xsl:value-of select="$version"/> - Configuration Reference</title>

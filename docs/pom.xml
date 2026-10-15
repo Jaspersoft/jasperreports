@@ -27,31 +27,6 @@
 		<outputDirectory>${project.build.directory}/docs</outputDirectory>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${maven-dependency-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>unpack-config-reference-xsl</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>net.sf.jasperreports</groupId>
-									<artifactId>jasperreports-annotation-processors</artifactId>
-									<version>${revision}</version>
-									<includes>**/config.reference.xsl</includes>
-									<outputDirectory>${project.build.directory}/xsl</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>${maven-resources-plugin.version}</version>
 				<executions>
@@ -356,7 +331,7 @@
 						<transformationSet>
 							<dir>${project.build.directory}</dir>
 							<includes>config.reference.xml</includes>
-							<stylesheet>${project.build.directory}/xsl/net/sf/jasperreports/annotations/documentation/config.reference.xsl</stylesheet>
+							<stylesheet>config.reference.xsl</stylesheet>
 							<outputDir>${project.build.directory}/docs</outputDir>
 							<fileMappers>
 								<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">

@@ -55,7 +55,6 @@
 						<arg>-ApropertiesDoc=${project.basedir}/config.reference.xml</arg>
 						<arg>-Xlint:deprecation,-unchecked,-options</arg>
 						<arg>-AconfigReferenceOut=${project.build.directory}/config.reference.xml</arg>
-						<arg>-AapiUrl=${jasperreports.api.url}</arg>
 					</compilerArgs>
 					<annotationProcessorPaths>
 						<path>

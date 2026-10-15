@@ -87,7 +87,6 @@
 		<enforcer.max.jdk.version>1.8</enforcer.max.jdk.version>
 		<gpg.skip>true</gpg.skip>
 		<jasperreports.root.dir>${basedir}</jasperreports.root.dir>
-		<jasperreports.api.url>https://jasperreports.sourceforge.net/api/</jasperreports.api.url>
 		<maven.compiler.release>8</maven.compiler.release>
 		<owasp.ossindex.enabled>true</owasp.ossindex.enabled>
 		<!--

@@ -34,8 +34,6 @@ public interface PropertyMetadataConstants
 
 	String PROPERTY_DESCRIPTION_PREFIX = "property.description.";
 	
-	String PROPERTY_DESCRIPTION_HTML_PREFIX = "property.description.html.";
-	
 	String MESSAGES_DEFAULTS_SUFFIX = "-defaults.properties";
 
 	String CATEGORY_OTHER = "net.sf.jasperreports.metadata.property.category:other";

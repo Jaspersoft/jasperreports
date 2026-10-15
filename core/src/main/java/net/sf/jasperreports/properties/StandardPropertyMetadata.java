@@ -41,7 +41,6 @@ public class StandardPropertyMetadata implements PropertyMetadata
 	private String constantFieldName;
 	private String label;
 	private String description;
-	private String descriptionHTML;
 	private String defaultValue;
 	private List<PropertyScope> scopes;
 	private List<String> scopeQualifications;
@@ -75,17 +74,6 @@ public class StandardPropertyMetadata implements PropertyMetadata
 	public void setDescription(String description)
 	{
 		this.description = description;
-	}
-
-	@Override
-	public String getDescriptionHTML()
-	{
-		return descriptionHTML;
-	}
-
-	public void setDescriptionHTML(String descriptionHTML)
-	{
-		this.descriptionHTML = descriptionHTML;
 	}
 
 	@Override
