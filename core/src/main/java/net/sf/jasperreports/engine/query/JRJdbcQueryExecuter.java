@@ -55,6 +55,9 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JRValueParameter;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.type.JdbcConcurrencyEnum;
+import net.sf.jasperreports.engine.type.JdbcHoldabilityEnum;
+import net.sf.jasperreports.engine.type.JdbcResultSetTypeEnum;
 import net.sf.jasperreports.engine.util.JRSingletonCache;
 
 
@@ -93,14 +96,42 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 	public static final String CLAUSE_ID_BETWEEN_LEFT_CLOSED = "[BETWEEN";
 	public static final String CLAUSE_ID_BETWEEN_RIGHT_CLOSED = "BETWEEN]";
 	
+	/**
+	 * @deprecated Replaced by {@link JdbcResultSetTypeEnum#FORWARD_ONLY}.
+	 */
+	@Deprecated
 	protected static final String TYPE_FORWARD_ONLY = "forwardOnly";
+	/**
+	 * @deprecated Replaced by {@link JdbcResultSetTypeEnum#SCROLL_INSENSITIVE}.
+	 */
+	@Deprecated
 	protected static final String TYPE_SCROLL_INSENSITIVE = "scrollInsensitive";
+	/**
+	 * @deprecated Replaced by {@link JdbcResultSetTypeEnum#SCROLL_SENSITIVE}.
+	 */
+	@Deprecated
 	protected static final String TYPE_SCROLL_SENSITIVE = "scrollSensitive";
 	
+	/**
+	 * @deprecated Replaced by {@link JdbcConcurrencyEnum#READ_ONLY}.
+	 */
+	@Deprecated
 	protected static final String CONCUR_READ_ONLY = "readOnly";
+	/**
+	 * @deprecated Replaced by {@link JdbcConcurrencyEnum#UPDATABLE}.
+	 */
+	@Deprecated
 	protected static final String CONCUR_UPDATABLE = "updatable";
 	
+	/**
+	 * @deprecated Replaced by {@link JdbcHoldabilityEnum#HOLD}.
+	 */
+	@Deprecated
 	protected static final String HOLD_CURSORS_OVER_COMMIT = "hold";
+	/**
+	 * @deprecated Replaced by {@link JdbcHoldabilityEnum#CLOSE}.
+	 */
+	@Deprecated
 	protected static final String CLOSE_CURSORS_AT_COMMIT = "close";
 	
 	protected static final String CACHED_ROWSET_CLASS = "com.sun.rowset.CachedRowSetImpl";
@@ -406,8 +437,8 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 				}
 				else
 				{
-					type = type == null ? TYPE_FORWARD_ONLY : type; 
-					concurrency = concurrency == null ? CONCUR_READ_ONLY : concurrency; 
+					int resultSetType = toResultSetType(type).getJdbcValue();
+					int resultSetConcurrency = toConcurrency(concurrency).getJdbcValue();
 			
 					if (holdability == null)
 					{
@@ -416,8 +447,8 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 							statement = callableStatement =
 									connection.prepareCall(
 										queryString, 
-										getResultSetType(type), 
-										getConcurrency(concurrency)
+										resultSetType, 
+										resultSetConcurrency
 										);
 						}
 						else
@@ -425,21 +456,25 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 							statement = 
 									connection.prepareStatement(
 										queryString, 
-										getResultSetType(type), 
-										getConcurrency(concurrency)
+										resultSetType, 
+										resultSetConcurrency
 										);
 						}
 					}
 					else
 					{
+						JdbcHoldabilityEnum holdabilityEnum = toHoldability(holdability);
+						int resultSetHoldability = holdabilityEnum == null 
+								? connection.getHoldability() : holdabilityEnum.getJdbcValue();
+						
 						if (isProcedureCall)
 						{
 							statement = callableStatement =
 									connection.prepareCall(
 										queryString, 
-										getResultSetType(type), 
-										getConcurrency(concurrency),
-										getHoldability(holdability, connection)
+										resultSetType, 
+										resultSetConcurrency,
+										resultSetHoldability
 										);
 						}
 						else
@@ -447,9 +482,9 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 							statement = 
 									connection.prepareStatement(
 										queryString, 
-										getResultSetType(type), 
-										getConcurrency(concurrency),
-										getHoldability(holdability, connection)
+										resultSetType, 
+										resultSetConcurrency,
+										resultSetHoldability
 										);
 						}
 					}
@@ -996,50 +1031,88 @@ public class JRJdbcQueryExecuter extends JRAbstractQueryExecuter
 		return false;
 	}
 	
+	/**
+	 * Converts a result set type property value to the corresponding enum constant.
+	 * 
+	 * @return the enum constant, or {@link JdbcResultSetTypeEnum#FORWARD_ONLY} if the value is <code>null</code> or unknown
+	 */
+	private static JdbcResultSetTypeEnum toResultSetType(String type)
+	{
+		JdbcResultSetTypeEnum typeEnum = JdbcResultSetTypeEnum.getByName(type);
+		if (typeEnum == null)
+		{
+			if (type != null && log.isWarnEnabled())
+			{
+				log.warn("Unknown result set type \"" + type + "\", using " 
+						+ JdbcResultSetTypeEnum.FORWARD_ONLY.getName());
+			}
+			typeEnum = JdbcResultSetTypeEnum.FORWARD_ONLY;
+		}
+		return typeEnum;
+	}
+	
+	/**
+	 * Converts a result set concurrency property value to the corresponding enum constant.
+	 * 
+	 * @return the enum constant, or {@link JdbcConcurrencyEnum#READ_ONLY} if the value is <code>null</code> or unknown
+	 */
+	private static JdbcConcurrencyEnum toConcurrency(String concurrency)
+	{
+		JdbcConcurrencyEnum concurrencyEnum = JdbcConcurrencyEnum.getByName(concurrency);
+		if (concurrencyEnum == null)
+		{
+			if (concurrency != null && log.isWarnEnabled())
+			{
+				log.warn("Unknown result set concurrency \"" + concurrency + "\", using " 
+						+ JdbcConcurrencyEnum.READ_ONLY.getName());
+			}
+			concurrencyEnum = JdbcConcurrencyEnum.READ_ONLY;
+		}
+		return concurrencyEnum;
+	}
+	
+	/**
+	 * Converts a result set holdability property value to the corresponding enum constant.
+	 * 
+	 * @return the enum constant, or <code>null</code> if the value is <code>null</code> or unknown,
+	 * in which case the connection holdability should be used
+	 */
+	private static JdbcHoldabilityEnum toHoldability(String holdability)
+	{
+		JdbcHoldabilityEnum holdabilityEnum = JdbcHoldabilityEnum.getByName(holdability);
+		if (holdabilityEnum == null && holdability != null && log.isWarnEnabled())
+		{
+			log.warn("Unknown result set holdability \"" + holdability + "\", using the connection holdability");
+		}
+		return holdabilityEnum;
+	}
+	
+	/**
+	 * @deprecated Replaced by {@link JdbcResultSetTypeEnum#getByName(String)} and {@link JdbcResultSetTypeEnum#getJdbcValue()}.
+	 */
+	@Deprecated
 	protected static int getResultSetType(String type)
 	{
-		if (TYPE_FORWARD_ONLY.equals(type))
-		{
-			return ResultSet.TYPE_FORWARD_ONLY;
-		}
-		else if (TYPE_SCROLL_INSENSITIVE.equals(type))
-		{
-			return ResultSet.TYPE_SCROLL_INSENSITIVE;
-		}
-		else if (TYPE_SCROLL_SENSITIVE.equals(type))
-		{
-			return ResultSet.TYPE_SCROLL_SENSITIVE;
-		}
-		
-		return ResultSet.TYPE_FORWARD_ONLY;
+		return toResultSetType(type).getJdbcValue();
 	}
 	
+	/**
+	 * @deprecated Replaced by {@link JdbcConcurrencyEnum#getByName(String)} and {@link JdbcConcurrencyEnum#getJdbcValue()}.
+	 */
+	@Deprecated
 	protected static int getConcurrency(String concurrency)
 	{
-		if (CONCUR_READ_ONLY.equals(concurrency))
-		{
-			return ResultSet.CONCUR_READ_ONLY;
-		}
-		else if (CONCUR_UPDATABLE.equals(concurrency))
-		{
-			return ResultSet.CONCUR_UPDATABLE;
-		}
-		
-		return ResultSet.CONCUR_READ_ONLY;
+		return toConcurrency(concurrency).getJdbcValue();
 	}
 	
+	/**
+	 * @deprecated Replaced by {@link JdbcHoldabilityEnum#getByName(String)} and {@link JdbcHoldabilityEnum#getJdbcValue()}.
+	 */
+	@Deprecated
 	protected static int getHoldability(String holdability, Connection connection) throws SQLException
 	{
-		if (HOLD_CURSORS_OVER_COMMIT.equals(holdability))
-		{
-			return ResultSet.HOLD_CURSORS_OVER_COMMIT;
-		}
-		else if (CLOSE_CURSORS_AT_COMMIT.equals(holdability))
-		{
-			return ResultSet.CLOSE_CURSORS_AT_COMMIT;
-		}
-		
-		return connection.getHoldability();
+		JdbcHoldabilityEnum holdabilityEnum = toHoldability(holdability);
+		return holdabilityEnum == null ? connection.getHoldability() : holdabilityEnum.getJdbcValue();
 	}
 	
 }
