@@ -1,33 +1,33 @@
 <differences>
 	<difference>
-		<className>net/sf/jasperreports/engine/JRExpressionCollector</className>
-		<differenceType>7009</differenceType>
-		<method>*collect(net.sf.jasperreports.engine.JRStyle, boolean)</method>
+		<className>net/sf/jasperreports/engine/export/ooxml/XlsxStyleInfo</className>
+		<differenceType>6001</differenceType>
+		<field>whitePageBackground</field>
 	</difference>
 	<difference>
-		<className>net/sf/jasperreports/**</className>
-		<differenceType>7002</differenceType>
-		<method>*get*LineWidth(*)</method>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/**</className>
+		<className>net/sf/jasperreports/engine/PrintPageFormat</className>
 		<differenceType>7012</differenceType>
-		<method>*</method>
+		<method>java.awt.Color getBackcolor()</method>
 	</difference>
 	<difference>
-		<className>net/sf/jasperreports/**</className>
-		<differenceType>7004</differenceType>
-		<method>*</method>
-	</difference>
-	<difference>
-		<className>net/sf/jasperreports/**</className>
+		<className>net/sf/jasperreports/engine/export/HtmlExporter</className>
 		<differenceType>7005</differenceType>
-		<method>*</method>
-		<to>*</to>
+		<method>*exportTable(net.sf.jasperreports.engine.export.HtmlExporter$TableVisitor, net.sf.jasperreports.engine.export.tabulator.Table, boolean, boolean)</method>
+		<to>*exportTable(net.sf.jasperreports.engine.export.HtmlExporter$TableVisitor, net.sf.jasperreports.engine.export.tabulator.Table, java.awt.Color, boolean)</to>
 	</difference>
 	<difference>
-		<className>net/sf/jasperreports/**</className>
-		<differenceType>6010</differenceType>
-		<field>EXCEPTION_MESSAGE_KEY_*</field>
+		<className>net/sf/jasperreports/engine/export/oasis/CellStyle</className>
+		<differenceType>7004</differenceType>
+		<method>*CellStyle(net.sf.jasperreports.engine.export.oasis.WriterHelper, net.sf.jasperreports.engine.export.JRExporterGridCell, boolean, boolean, int)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/engine/export/ooxml/DocxSettingsHelper</className>
+		<differenceType>7004</differenceType>
+		<method>*export(net.sf.jasperreports.engine.JasperPrint, boolean)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/engine/export/ooxml/PptxSlideHelper</className>
+		<differenceType>7004</differenceType>
+		<method>*exportHeader(boolean, boolean)</method>
 	</difference>
 </differences>
