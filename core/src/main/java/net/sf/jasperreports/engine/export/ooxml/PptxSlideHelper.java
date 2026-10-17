@@ -23,9 +23,11 @@
  */
 package net.sf.jasperreports.engine.export.ooxml;
 
+import java.awt.Color;
 import java.io.Writer;
 
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.util.JRColorUtil;
 
 
 /**
@@ -54,7 +56,7 @@ public class PptxSlideHelper extends BaseHelper
 	/**
 	 *
 	 */
-	public void exportHeader(boolean isSlideMaster, boolean hideSlideMaster)
+	public void exportHeader(boolean isSlideMaster, boolean hideSlideMaster, Color backcolor)
 	{
 		write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
 		write("<p:sld" + (isSlideMaster ? "Master" : "") + (hideSlideMaster ? " showMasterSp=\"0\"" : "") + "\n");
@@ -62,6 +64,10 @@ public class PptxSlideHelper extends BaseHelper
 		write("xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"\n"); 
 		write("xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\">\n");
 		write("<p:cSld>\n");
+		if (backcolor != null)
+		{
+			write("<p:bg><p:bgPr><a:solidFill><a:srgbClr val=\"" + JRColorUtil.getColorHexa(backcolor) + "\"/></a:solidFill><a:effectLst/></p:bgPr></p:bg>\n");
+		}
 		write("<p:spTree>\n");
 		write("<p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>\n");
 		write("<p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/><a:chExt cx=\"0\" cy=\"0\"/></a:xfrm></p:grpSpPr>\n");

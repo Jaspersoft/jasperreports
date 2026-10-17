@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.export;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
@@ -82,6 +83,18 @@ public class ReadOnlyPartJasperPrint extends JasperPrint
 
 	@Override
 	public void setDpi(int dpi)
+	{
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Color getBackcolor()
+	{
+		return part == null ? parentJasperPrint.getBackcolor() : part.getPageFormat().getBackcolor();
+	}
+
+	@Override
+	public void setBackcolor(Color backcolor)
 	{
 		throw new UnsupportedOperationException();
 	}

@@ -679,7 +679,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 //		
 		runHelper = new PptxRunHelper(jasperReportsContext, slideMasterWriter, fontHelper);
 		
-		slideHelper.exportHeader(true, false);
+		slideHelper.exportHeader(true, false, null);
 		slideRelsHelper.exportHeader(true);
 	}
 
@@ -704,7 +704,7 @@ public class JRPptxExporter extends JRAbstractExporter<PptxReportConfiguration, 
 //		
 		runHelper = new PptxRunHelper(jasperReportsContext, slideWriter, fontHelper);
 		
-		slideHelper.exportHeader(false, hideSlideMaster);
+		slideHelper.exportHeader(false, hideSlideMaster, jasperPrint.getPageFormat(pageIndex).getBackcolor());
 		slideRelsHelper.exportHeader(false);
 	}
 

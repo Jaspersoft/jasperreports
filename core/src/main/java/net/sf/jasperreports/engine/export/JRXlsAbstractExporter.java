@@ -247,6 +247,11 @@ public abstract class JRXlsAbstractExporter<RC extends XlsReportConfiguration, C
 		public Boolean ignoreCellBorder;
 		public Boolean ignoreCellBackground;
 		public Boolean whitePageBackground;
+		/**
+		 * The color used to fill the sheet cells that have no background of their own, resolved from
+		 * the page background color and the {@link #whitePageBackground} flag.
+		 */
+		public Color pageBackcolor;
 		public Integer columnFreezeIndex;
 		public Integer rowFreezeIndex;
 		public Float columnWidthRatio;
@@ -274,6 +279,8 @@ public abstract class JRXlsAbstractExporter<RC extends XlsReportConfiguration, C
 			private OrientationEnum orientation;
 			
 			private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
+			
+			private Color backcolor;
 			
 			public SheetPrintSettings() 
 			{
@@ -432,6 +439,15 @@ public abstract class JRXlsAbstractExporter<RC extends XlsReportConfiguration, C
 
 			public void setDpi(int dpi) {
 				this.dpi = dpi;
+			}
+
+			@Override
+			public Color getBackcolor() {
+				return backcolor;
+			}
+
+			public void setBackcolor(Color backcolor) {
+				this.backcolor = backcolor;
 			}
 
 			@Override
@@ -971,6 +987,8 @@ public abstract class JRXlsAbstractExporter<RC extends XlsReportConfiguration, C
 		// in case these properties are set per configuration
 		updatePrintSettings(sheetInfo.printSettings, configuration);
 		updateHeaderFooter(sheetInfo.printSettings, configuration);
+		
+		sheetInfo.pageBackcolor = getSheetBackcolor(sheetInfo.whitePageBackground);
 		
 		return sheetInfo;
 	}

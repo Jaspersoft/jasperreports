@@ -2431,6 +2431,7 @@ public class XlsxMetadataExporter extends ExcelAbstractExporter<XlsxMetadataRepo
 			sheetInfo.ignoreCellBackground = configuration.isIgnoreCellBackground();
 			sheetInfo.ignoreCellBorder = configuration.isIgnoreCellBorder();
 			sheetInfo.whitePageBackground = configuration.isWhitePageBackground();
+			sheetInfo.pageBackcolor = getSheetBackcolor(sheetInfo.whitePageBackground);
 			sheetInfo.sheetFirstPageNumber = configuration.getFirstPageNumber();		
 			sheetInfo.sheetPageScale = configuration.getPageScale();		
 			sheetInfo.sheetShowGridlines = configuration.isShowGridLines() ;

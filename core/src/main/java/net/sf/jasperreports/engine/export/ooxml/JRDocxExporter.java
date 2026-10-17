@@ -218,6 +218,12 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	protected DocxRunHelper crtRunHelper;
 
 	protected int reportDpi;
+	
+	/**
+	 * The page background color of the first document, used for the entire output since
+	 * DOCX does not allow the page background color to change from one page to another.
+	 */
+	protected Color pageBackcolor;
 
 	protected ExporterNature backgroundNature;
 	protected ExporterNature pageNature;
@@ -394,7 +400,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 		reportDpi = jasperPrint.getDpi();
 		
 		docHelper = new DocxDocumentHelper(jasperReportsContext, docWriter, reportDpi);
-		docHelper.exportHeader(pageFormat);
+		docHelper.exportHeader(pageFormat, pageBackcolor);
 		
 		relsHelper = new DocxRelsHelper(jasperReportsContext, docxZip.getRelsEntry().getWriter());
 		relsHelper.exportHeader();
@@ -465,7 +471,7 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 				docxZip.getSettingsEntry().getWriter(),
 				reportDpi
 				);
-		settingsHelper.export(jasperPrint, isEmbedFonts);
+		settingsHelper.export(jasperPrint, isEmbedFonts, pageBackcolor != null);
 		settingsHelper.close();
 
 		docxFontTableHelper = new DocxFontTableHelper(jasperReportsContext, docxZip.getFontTableEntry().getWriter());
@@ -2048,6 +2054,9 @@ public class JRDocxExporter extends JRAbstractExporter<DocxReportConfiguration, 
 	protected void ensureInput()
 	{
 		super.ensureInput();
+
+		// read before unrolling the parts, which can have their own page background colors
+		pageBackcolor = exporterInput.getItems().get(0).getJasperPrint().getBackcolor();
 
 		exporterInput = new PrintPartUnrollExporterInput(exporterInput, getItemConfigurationInterface());
 

@@ -293,7 +293,7 @@ public class JRPrinterAWT implements Printable
 		Graphics graphics = imageGraphics.create();
 		//filling the image background here because JRGraphics2DExporter.exportPage uses the page size
 		//which can be smaller than the image size due to Math.ceil above
-		graphics.setColor(Color.white);
+		graphics.setColor(pageFormat.getBackcolor() == null ? Color.white : pageFormat.getBackcolor());
 		graphics.fillRect(0, 0, rasterWidth, rasterHeight);
 
 		JRGraphics2DExporter exporter = new JRGraphics2DExporter(jasperReportsContext);

@@ -52,6 +52,7 @@ import org.apache.commons.javaflow.api.continuable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.sf.jasperreports.engine.DatasetPropertyExpression;
 import net.sf.jasperreports.engine.JRBand;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRException;
@@ -213,6 +214,13 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	 * @deprecated To be removed.
 	 */
 	private boolean isLegacyTextMeasuring;
+
+	/**
+	 * Flag indicating that the page background color depends on a property expression
+	 * evaluated at report level, so pages are not final until the fill ends.
+	 * Volatile as it is read by threads checking page status.
+	 */
+	private volatile boolean pageBackcolorPending;
 
 	/**
 	 *
@@ -613,6 +621,9 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 			propertiesUtil.transferProperties(mainDataset, jasperPrint, 
 				JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX);
 
+			setPageBackcolor();
+			pageBackcolorPending = hasReportPageBackcolorExpression();
+
 			jasperPrint.setDefaultStyle(defaultStyle);
 
 			/*   */
@@ -637,6 +648,11 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 				jasperPrint, 
 				JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX
 				);
+
+			// the page background color can come from a property expression evaluated at report level
+			setPageBackcolor();
+			pageBackcolorPending = false;
+			updateDetectedParts();
 
 			// add consolidates styles as normal styles in the print object
 //			for (Iterator it = consolidatedStyles.values().iterator(); it.hasNext();)
@@ -1617,12 +1633,42 @@ public abstract class JRBaseFiller extends BaseReportFiller implements JRDefault
 	public boolean isPageFinal(int pageIdx)
 	{
 		JRPrintPage page = jasperPrint.getPages().get(pageIdx);
-		return !hasBoundActions(page);
+		return isPageFinal(page);
 	}
 
 	public boolean isPageFinal(JRPrintPage page)
 	{
-		return !hasBoundActions(page);
+		return !pageBackcolorPending && !hasBoundActions(page);
+	}
+
+	/**
+	 * Determines whether the {@link JasperPrint#PROPERTY_PAGE_BACKCOLOR} property
+	 * of the report is set by an expression evaluated at report level.
+	 */
+	protected boolean hasReportPageBackcolorExpression()
+	{
+		PropertyEvaluationTimeEnum defaultEvaluationTime = null;
+		for (DatasetPropertyExpression propertyExpression : mainDataset.getPropertyExpressions())
+		{
+			if (JasperPrint.PROPERTY_PAGE_BACKCOLOR.equals(propertyExpression.getName()))
+			{
+				PropertyEvaluationTimeEnum evaluationTime = propertyExpression.getEvaluationTime();
+				if (evaluationTime == null)
+				{
+					if (defaultEvaluationTime == null)
+					{
+						defaultEvaluationTime = mainDataset.getDefaultPropertyEvaluationTime();
+					}
+					evaluationTime = defaultEvaluationTime;
+				}
+
+				if (evaluationTime == PropertyEvaluationTimeEnum.REPORT)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	protected boolean hasBoundActions(JRPrintPage page)

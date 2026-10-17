@@ -615,18 +615,23 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		
 		Table table = tabulator.getTable();
 		
-		boolean isWhitePageBackground = configuration.isWhitePageBackground();
-		if (isWhitePageBackground)
+		// the page background color takes precedence over the white page background flag
+		Color pageBackcolor = pageFormat.getBackcolor();
+		if (pageBackcolor == null && configuration.isWhitePageBackground())
 		{
-			setBackcolor(Color.white);
+			pageBackcolor = Color.white;
+		}
+		if (pageBackcolor != null)
+		{
+			setBackcolor(pageBackcolor);
 		}
 		
 		CellElementVisitor elementVisitor = new CellElementVisitor();
 		TableVisitor tableVisitor = new TableVisitor(tabulator, elementVisitor);
 		
-		exportTable(tableVisitor, table, isWhitePageBackground, true);
+		exportTable(tableVisitor, table, pageBackcolor, true);
 		
-		if (isWhitePageBackground)
+		if (pageBackcolor != null)
 		{
 			restoreBackcolor();
 		}
@@ -648,10 +653,10 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 		CellElementVisitor elementVisitor = new CellElementVisitor();
 		TableVisitor tableVisitor = new TableVisitor(tabulator, elementVisitor);
 		
-		exportTable(tableVisitor, table, false, false);
+		exportTable(tableVisitor, table, null, false);
 	}
 
-	protected void exportTable(TableVisitor tableVisitor, Table table, boolean whiteBackground, boolean isMainReportTable) throws IOException
+	protected void exportTable(TableVisitor tableVisitor, Table table, Color backcolor, boolean isMainReportTable) throws IOException
 	{
 		SortedSet<Column> columns = table.getColumns().getUserEntries();
 		SortedSet<Row> rows = table.getRows().getUserEntries();
@@ -696,9 +701,13 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			writer.write(";");
 		}
 		
-		if (whiteBackground)
+		if (backcolor != null)
 		{
-			writer.write(" background-color: white;");
+			writer.write(" background-color: ");
+			// white is written by name, as it was before page background colors were introduced, 
+			// so that the output of documents having a white page background does not change
+			writer.write(Color.white.equals(backcolor) ? "white" : JRColorUtil.getCssColor(backcolor));
+			writer.write(";");
 		}
 		writer.write("\">\n");
 
@@ -2174,7 +2183,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 			writer.write("\">\n");
 
 			++pointerEventsNoneStack;
-			exportTable(tableVisitor, table, false, false);
+			exportTable(tableVisitor, table, null, false);
 			--pointerEventsNoneStack;
 			
 			writer.write("</div>\n");
@@ -2199,7 +2208,7 @@ public class HtmlExporter extends AbstractHtmlExporter<HtmlReportConfiguration, 
 
 		finishStartCell();
 
-		exportTable(tableVisitor, table, false, false);
+		exportTable(tableVisitor, table, null, false);
 
 		endCell(cell.getCellType());
 	}

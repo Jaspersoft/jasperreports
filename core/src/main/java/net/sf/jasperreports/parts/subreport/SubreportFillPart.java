@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.parts.subreport;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -274,6 +275,7 @@ public class SubreportFillPart extends BasePartFillComponent
 		private final EvaluatedPart evaluatedPart;
 		private final EvaluatedSubreportPart evaluatedSubreport;
 		private final PartPrintOutput output;
+		private final List<PrintPartCreator> partCreators = new ArrayList<>();
 
 		protected PartBandParent(EvaluatedPart evaluatedPart, EvaluatedSubreportPart evaluatedSubreport, 
 				PartPrintOutput output)
@@ -317,7 +319,13 @@ public class SubreportFillPart extends BasePartFillComponent
 		@Override
 		public void unregisterSubfiller(JRBaseFiller filler)
 		{
-			//NOP
+			// the filler is done, including the evaluation of report level property expressions, 
+			// which can change the page background color after the parts have copied the page format
+			for (PrintPartCreator partCreator : partCreators)
+			{
+				partCreator.updatePageFormat();
+			}
+			partCreators.clear();
 		}
 
 		@Override
@@ -372,6 +380,7 @@ public class SubreportFillPart extends BasePartFillComponent
 			{
 				FillerPrintPart fillingPart = new FillerPrintPart(pageAdded.getFiller());//FIXMEBOOK strange
 				output.startPart(partCreator.getPart(), fillingPart);
+				partCreators.add(partCreator);
 			}
 			
 			output.addPage(pageAdded.getPage(), pageAdded.getDelayedActions());

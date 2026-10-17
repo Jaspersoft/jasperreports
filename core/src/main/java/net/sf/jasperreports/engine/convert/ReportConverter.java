@@ -70,6 +70,7 @@ import net.sf.jasperreports.engine.fill.JRFiller;
 import net.sf.jasperreports.engine.type.LineStyleEnum;
 import net.sf.jasperreports.engine.type.PrintOrderEnum;
 import net.sf.jasperreports.engine.type.RunDirectionEnum;
+import net.sf.jasperreports.engine.util.JRColorUtil;
 import net.sf.jasperreports.engine.util.JRDataUtils;
 import net.sf.jasperreports.engine.util.JRExpressionUtil;
 import net.sf.jasperreports.engine.util.StyleUtil;
@@ -174,7 +175,11 @@ public class ReportConverter
 		jasperPrint.setRightMargin(report.getRightMargin());
 		jasperPrint.setDpi(report.getDpi());
 		
-		JRPropertiesUtil.getInstance(jasperReportsContext).transferProperties(report, jasperPrint, JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX);
+		JRPropertiesUtil propertiesUtil = JRPropertiesUtil.getInstance(jasperReportsContext);
+		propertiesUtil.transferProperties(report, jasperPrint, JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX);
+		// property expressions are not evaluated in the design preview, so only a static value applies
+		jasperPrint.setBackcolor(JRColorUtil.getColor(
+				propertiesUtil.getProperty(report, JasperPrint.PROPERTY_PAGE_BACKCOLOR), null));
 
 		setStyles(report);
 

@@ -387,9 +387,15 @@ public class JRGraphics2DExporter extends JRAbstractExporter<Graphics2DReportCon
 		JRPrintPage page = pages.get(pageIndex);
 		setPageFormat(jasperPrint.getPageFormat(pageIndex));
 
-		if (whitePageBackground)
+		// the page background color takes precedence over the white page background flag
+		Color backcolor = pageFormat.getBackcolor();
+		if (backcolor == null && whitePageBackground)
 		{
-			grx.setColor(Color.white);
+			backcolor = Color.white;
+		}
+		if (backcolor != null)
+		{
+			grx.setColor(backcolor);
 			grx.fillRect(
 				0, 
 				0, 

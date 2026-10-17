@@ -56,7 +56,7 @@ public class XlsxStyleInfo
 	protected boolean isShrinkToFit;
 	protected boolean isIgnoreTextFormatting;
 	protected int rotation;
-	protected boolean whitePageBackground;
+	protected String pageBackcolor;
 	protected boolean ignoreCellBackground;
 	protected boolean ignoreCellBorder;
 	protected LineDirectionEnum direction;
@@ -89,9 +89,9 @@ public class XlsxStyleInfo
 		this.rotation = rotation;
 		if (sheetInfo != null)
 		{
-			if (sheetInfo.whitePageBackground != null)
+			if (sheetInfo.pageBackcolor != null)
 			{
-				this.whitePageBackground = sheetInfo.whitePageBackground;
+				this.pageBackcolor = JRColorUtil.getColorHexa(sheetInfo.pageBackcolor);
 			}
 			if (sheetInfo.ignoreCellBackground != null)
 			{
@@ -347,7 +347,7 @@ public class XlsxStyleInfo
 		hash = 29 * hash + Boolean.hashCode(isLocked);
 		hash = 29 * hash + Boolean.hashCode(isShrinkToFit);
 		hash = 29 * hash + rotation;
-		hash = 29 * hash + Boolean.hashCode(whitePageBackground);
+		hash = 29 * hash + ObjectUtils.hashCode(pageBackcolor);
 		hash = 29 * hash + Boolean.hashCode(ignoreCellBackground);
 		hash = 29 * hash + Boolean.hashCode(ignoreCellBorder);
 		hash = 29 * hash + ObjectUtils.hashCode(direction);
@@ -374,7 +374,7 @@ public class XlsxStyleInfo
 				&& isLocked == info.isLocked
 				&& isShrinkToFit == info.isShrinkToFit
 				&& rotation == info.rotation
-				&& whitePageBackground == info.whitePageBackground
+				&& ObjectUtils.equals(pageBackcolor, info.pageBackcolor)
 				&& ignoreCellBackground == info.ignoreCellBackground
 				&& ignoreCellBorder == info.ignoreCellBorder
 				&& direction == info.direction;

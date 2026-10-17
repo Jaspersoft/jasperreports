@@ -199,6 +199,9 @@ public class JROdsExporter extends JRXlsAbstractExporter<OdsReportConfiguration,
 	{
 		startPage = true;
 		
+		// spreadsheet cells hide the page background, so the cells themselves are filled with it
+		styleCache.setCellBackcolor(sheetInfo.pageBackcolor);
+		
 //		CutsInfo xCuts = gridLayout.getXCuts();
 //		JRExporterGridCell[][] grid = gridLayout.getGrid();
 

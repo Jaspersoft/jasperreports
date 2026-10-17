@@ -418,6 +418,7 @@ public abstract class JRXlsAbstractMetadataExporter<RC extends XlsMetadataReport
 		sheetInfo.ignoreCellBackground = configuration.isIgnoreCellBackground();
 		sheetInfo.ignoreCellBorder = configuration.isIgnoreCellBorder();
 		sheetInfo.whitePageBackground = configuration.isWhitePageBackground();
+		sheetInfo.pageBackcolor = getSheetBackcolor(sheetInfo.whitePageBackground);
 		sheetInfo.sheetFirstPageIndex = pageIndex;
 		sheetInfo.sheetFirstPageNumber = configuration.getFirstPageNumber();		
 		sheetInfo.sheetPageScale = configuration.getPageScale();		

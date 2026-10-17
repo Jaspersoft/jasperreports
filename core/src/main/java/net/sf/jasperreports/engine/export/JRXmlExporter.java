@@ -359,6 +359,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		xmlWriter.startElement(JRXmlConstants.ELEMENT_jasperPrint, getNamespace());
 		xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, jasperPrint.getName());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_dpi, jasperPrint.getDpi(), JasperPrint.DEFAULT_REPORT_DPI);
+		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_backcolor, jasperPrint.getBackcolor());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_pageWidth, jasperPrint.getPageWidth());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_pageHeight, jasperPrint.getPageHeight());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_topMargin, jasperPrint.getTopMargin());
@@ -601,6 +602,7 @@ public class JRXmlExporter extends JRAbstractExporter<ReportExportConfiguration,
 		xmlWriter.addEncodedAttribute(JRXmlConstants.ATTRIBUTE_name, part.getName());
 		PrintPageFormat pageFormat = part.getPageFormat();
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_dpi, pageFormat.getDpi(), JasperPrint.DEFAULT_REPORT_DPI);
+		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_backcolor, pageFormat.getBackcolor());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_pageWidth, pageFormat.getPageWidth());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_pageHeight, pageFormat.getPageHeight());
 		xmlWriter.addAttribute(JRXmlConstants.ATTRIBUTE_topMargin, pageFormat.getTopMargin());

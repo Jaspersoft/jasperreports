@@ -309,6 +309,15 @@ public class JRRtfExporter extends JRAbstractExporter<RtfReportConfiguration, Rt
 					contentWriter.write("\\lndscpsxn");
 				}
 
+				// RTF has a single background for the entire document, so the page background color of the first document is used;
+				// it has to follow the document formatting properties
+				if (reportIndex == 0 && jasperPrint.getBackcolor() != null)
+				{
+					contentWriter.write("\\viewbksp1{\\*\\background{\\shp{\\*\\shpinst{\\sp{\\sn fFilled}{\\sv 1}}{\\sp{\\sn fillColor}{\\sv ");
+					contentWriter.write(String.valueOf(getColorRGB(jasperPrint.getBackcolor())));
+					contentWriter.write("}}}}}");
+				}
+
 
 				for (int pageIndex = startPageIndex; pageIndex <= endPageIndex; pageIndex++) 
 				{

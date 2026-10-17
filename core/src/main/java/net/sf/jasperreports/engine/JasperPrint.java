@@ -30,6 +30,7 @@
 
 package net.sf.jasperreports.engine;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -105,11 +106,40 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 	public static final String PROPERTY_COLLAPSE_MISSING_BOOKMARK_LEVELS = 
 		JRPropertiesUtil.PROPERTY_PREFIX + "print.collapse.missing.bookmark.levels";
 	
+	/**
+	 * Property specifying the background color of the paper on which the report pages are rendered.
+	 * <p>
+	 * The property is read when the report fill starts and again when it ends, so its value can also be given
+	 * by a property expression having <code>evaluationTime="Report"</code>, except for book reports, which do not
+	 * evaluate such property expressions. Pages viewed while the report is still being filled show the color
+	 * read when the fill started.
+	 * The resulting color is stored in the page format of the generated document or part,
+	 * so that each part of a document can have its own page background color. Parts do not inherit 
+	 * the page background color of the book report they belong to, like they do not inherit any of its properties.
+	 * Exporters paint this color as page background, and it takes precedence over the white page background
+	 * flags of the various exporters. Document formats that do not allow the page background color to 
+	 * change from one page to another use the color of the first document being exported.
+	 * <p>
+	 * The value can be a color name, a hexadecimal color code such as <code>#FFF8E7</code>,
+	 * or a CSS-like <code>rgb(...)</code> or <code>rgba(...)</code> value.
+	 * No page background color is used by default.
+	 * 
+	 * @see PrintPageFormat#getBackcolor()
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_FILL,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT},
+			sinceVersion = PropertyConstants.VERSION_7_1_1,
+			valueType = Color.class
+			)
+	public static final String PROPERTY_PAGE_BACKCOLOR = JRPropertiesUtil.PROPERTY_PREFIX + "page.backcolor";
+	
 	public static final int DEFAULT_REPORT_DPI = 72;
 
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_PAGE_WIDTH = "pageWidth";
 	public static final String PROPERTY_PAGE_HEIGHT = "pageHeight";
+	public static final String PROPERTY_BACKCOLOR = "backcolor";
 	public static final String PROPERTY_TOP_MARGIN = "topMargin";
 	public static final String PROPERTY_LEFT_MARGIN = "leftMargin";
 	public static final String PROPERTY_BOTTOM_MARGIN = "bottomMargin";
@@ -181,6 +211,7 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 	private int pageWidth;
 	private int pageHeight;
 	private int dpi = DEFAULT_REPORT_DPI;
+	private Color backcolor;
 	private Integer topMargin = 0;
 	private Integer leftMargin = 0;
 	private Integer bottomMargin = 0;
@@ -224,6 +255,11 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 		@Override
 		public int getDpi() {
 			return JasperPrint.this.getDpi();
+		}
+
+		@Override
+		public Color getBackcolor() {
+			return JasperPrint.this.getBackcolor();
 		}
 
 		@Override
@@ -563,6 +599,31 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 	public void setDpi(int dpi)
 	{
 		this.dpi = dpi;
+	}
+
+	/**
+	 * Returns the page background color, or <code>null</code> if the pages do not have a background color.
+	 * 
+	 * @see #PROPERTY_PAGE_BACKCOLOR
+	 */
+	public Color getBackcolor()
+	{
+		return backcolor;
+	}
+
+	/**
+	 * Sets the page background color.
+	 * 
+	 * @see #PROPERTY_PAGE_BACKCOLOR
+	 */
+	public void setBackcolor(Color backcolor)
+	{
+		Object old = this.backcolor;
+		this.backcolor = backcolor;
+		if (hasEventSupport())
+		{
+			getEventSupport().firePropertyChange(PROPERTY_BACKCOLOR, old, this.backcolor);
+		}
 	}
 
 	/**
@@ -1052,6 +1113,8 @@ public class JasperPrint implements Serializable, JRPropertiesHolder, JRChangeEv
 		this.name = jasperPrint.name;
 		this.pageWidth = jasperPrint.pageWidth;
 		this.pageHeight = jasperPrint.pageHeight;
+		this.dpi = jasperPrint.dpi;
+		this.backcolor = jasperPrint.backcolor;
 		this.topMargin = jasperPrint.topMargin;
 		this.leftMargin = jasperPrint.leftMargin;
 		this.bottomMargin = jasperPrint.bottomMargin;

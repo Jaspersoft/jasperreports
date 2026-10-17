@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.engine;
 
+import java.awt.Color;
+
 import net.sf.jasperreports.engine.type.OrientationEnum;
 
 
@@ -71,6 +73,18 @@ public interface PrintPageFormat
 	 * resolution of the document as a whole.
 	 */
 	public int getDpi();
+
+	/**
+	 * Returns the background color of the pages described by this page format,
+	 * or <code>null</code> if the pages do not have a background color.
+	 * <p>
+	 * Parts of a document can come from reports having different page background colors,
+	 * so this is the color that applies to the pages of the part, which is not necessarily
+	 * the color of the document as a whole.
+	 * 
+	 * @see JasperPrint#PROPERTY_PAGE_BACKCOLOR
+	 */
+	public Color getBackcolor();
 
 	/**
 	 * Returns the page orientation.

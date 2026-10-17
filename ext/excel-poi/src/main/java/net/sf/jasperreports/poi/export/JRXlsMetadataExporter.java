@@ -200,6 +200,10 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 	protected short customColorIndex = MIN_COLOR_INDEX;
 
 	protected FillPatternType backgroundMode = FillPatternType.SOLID_FOREGROUND;
+	/**
+	 * The palette index of the color used to fill the cells that have no background of their own.
+	 */
+	protected short pageBackcolorIndex = whiteIndex;
 
 	protected HSSFDataFormat dataFormat;
 
@@ -424,9 +428,27 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 		}
 		sheet.setDisplayGridlines(showGridlines);
 		
-		backgroundMode = Boolean.TRUE.equals(sheetInfo.whitePageBackground) 
-				? FillPatternType.SOLID_FOREGROUND 
-				: FillPatternType.NO_FILL;
+		// the page background color takes precedence over the white page background flag
+		if (sheetInfo.pageBackcolor == null)
+		{
+			backgroundMode = FillPatternType.NO_FILL;
+			pageBackcolorIndex = whiteIndex;
+		}
+		else
+		{
+			backgroundMode = FillPatternType.SOLID_FOREGROUND;
+			pageBackcolorIndex = getWorkbookColor(sheetInfo.pageBackcolor).getIndex();
+		}
+		if (
+			emptyCellStyle.getFillPattern() != backgroundMode 
+			|| emptyCellStyle.getFillForegroundColor() != pageBackcolorIndex
+			)
+		{
+			// blank cells follow the background of the sheet, which can differ from one sheet to another
+			emptyCellStyle = workbook.createCellStyle();
+			emptyCellStyle.setFillForegroundColor(pageBackcolorIndex);
+			emptyCellStyle.setFillPattern(backgroundMode);
+		}
 		
 		
 //		maxRowFreezeIndex = 0;
@@ -744,7 +766,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			BoxStyle boxStyle = new BoxStyle(side, line.getLinePen(), JRPenUtil.getLineWidth(line, reportDpi));
 
 			FillPatternType mode = backgroundMode;
-			short backcolor = whiteIndex;
+			short backcolor = pageBackcolorIndex;
 			if (!Boolean.TRUE.equals(sheetInfo.ignoreCellBackground) && line.getBackcolor() != null) {
 				mode = FillPatternType.SOLID_FOREGROUND;
 				backcolor = getWorkbookColor(line.getBackcolor()).getIndex();
@@ -781,7 +803,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			short forecolor = getWorkbookColor(element.getLinePen().getLineColor()).getIndex();
 
 			FillPatternType mode = backgroundMode;
-			short backcolor = whiteIndex;
+			short backcolor = pageBackcolorIndex;
 			if (!Boolean.TRUE.equals(sheetInfo.ignoreCellBackground) && element.getBackcolor() != null) {
 				mode = FillPatternType.SOLID_FOREGROUND;
 				backcolor = getWorkbookColor(element.getBackcolor()).getIndex();
@@ -826,7 +848,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			short rotation = getRotation(textAlignHolder);
 			
 			FillPatternType mode = backgroundMode;
-			short backcolor = whiteIndex;
+			short backcolor = pageBackcolorIndex;
 			if (!Boolean.TRUE.equals(sheetInfo.ignoreCellBackground) && textElement.getBackcolor() != null) {
 				mode = FillPatternType.SOLID_FOREGROUND;
 				backcolor = getWorkbookColor(textElement.getBackcolor()).getIndex();
@@ -835,7 +857,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 			final StyleInfo baseStyle = isIgnoreTextFormatting(textElement) 
 				? new StyleInfo(
 					mode,
-					whiteIndex,
+					pageBackcolorIndex,
 					horizontalAlignment,
 					verticalAlignment,
 					(short)0,
@@ -1230,7 +1252,7 @@ public class JRXlsMetadataExporter extends JRXlsAbstractMetadataExporter<XlsMeta
 				if (imageProcessorResult != null)//FIXMEXLS background for null images like the other exporters
 				{
 					FillPatternType mode = backgroundMode;
-					short backcolor = whiteIndex;
+					short backcolor = pageBackcolorIndex;
 					if (!Boolean.TRUE.equals(sheetInfo.ignoreCellBackground) && element.getBackcolor() != null) {
 						mode = FillPatternType.SOLID_FOREGROUND;
 						backcolor = getWorkbookColor(element.getBackcolor()).getIndex();

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine.export.ooxml;
 
+import java.awt.Color;
 import java.io.Writer;
 
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -32,6 +33,7 @@ import net.sf.jasperreports.engine.export.JRGridLayout;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.export.ooxml.type.PaperSizeEnum;
 import net.sf.jasperreports.engine.type.OrientationEnum;
+import net.sf.jasperreports.engine.util.JRColorUtil;
 
 
 /**
@@ -62,6 +64,14 @@ public class DocxDocumentHelper extends BaseHelper
 	 */
 	public void exportHeader(PrintPageFormat pageFormat)
 	{
+		exportHeader(pageFormat, null);
+	}
+
+	/**
+	 *
+	 */
+	public void exportHeader(PrintPageFormat pageFormat, Color backcolor)
+	{
 		write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		write("<w:document\n");
 		write(" xmlns:ve=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"\n");
@@ -75,6 +85,10 @@ public class DocxDocumentHelper extends BaseHelper
 		write(" xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\"\n");
 		write(" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\"\n");
 		write(" xmlns:pic=\"http://schemas.openxmlformats.org/drawingml/2006/picture\">\n"); 
+		if (backcolor != null)
+		{
+			write(" <w:background w:color=\"" + JRColorUtil.getColorHexa(backcolor) + "\"/>\n");
+		}
 		write(" <w:body>\n");
 	}
 

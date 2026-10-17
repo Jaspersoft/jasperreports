@@ -23,9 +23,11 @@
  */
 package net.sf.jasperreports.engine.fill;
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,11 +52,13 @@ import net.sf.jasperreports.engine.JRVirtualizer;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.PrintPart;
 import net.sf.jasperreports.engine.ReportContext;
 import net.sf.jasperreports.engine.SimplePrintPart;
 import net.sf.jasperreports.engine.type.CalculationEnum;
 import net.sf.jasperreports.engine.util.DefaultFormatFactory;
 import net.sf.jasperreports.engine.util.FormatFactory;
+import net.sf.jasperreports.engine.util.JRColorUtil;
 import net.sf.jasperreports.engine.util.JRGraphEnvInitializer;
 import net.sf.jasperreports.repo.RepositoryContext;
 import net.sf.jasperreports.repo.SimpleRepositoryContext;
@@ -446,6 +450,38 @@ public abstract class BaseReportFiller implements ReportFiller
 			boolean collapseMissingLevels = propertiesUtil.getBooleanProperty(mainDataset, 
 				JasperPrint.PROPERTY_COLLAPSE_MISSING_BOOKMARK_LEVELS, false);
 			bookmarkHelper = new BookmarkHelper(collapseMissingLevels);
+		}
+	}
+
+	/**
+	 * Sets the page background color of the generated document from the 
+	 * {@link JasperPrint#PROPERTY_PAGE_BACKCOLOR} property of the report.
+	 * <p>
+	 * This happens before the first page is produced, because parts copy the page format
+	 * of the document when their first page is added, and again after the report level
+	 * property expressions are evaluated.
+	 */
+	protected void setPageBackcolor()
+	{
+		Color backcolor = JRColorUtil.getColor(
+				propertiesUtil.getProperty(mainDataset, JasperPrint.PROPERTY_PAGE_BACKCOLOR), null);
+		jasperPrint.setBackcolor(backcolor);
+	}
+
+	/**
+	 * Recreates the parts detected while filling, which have copied the page format of the document 
+	 * when they started, before the report level property expressions were evaluated.
+	 */
+	protected void updateDetectedParts()
+	{
+		if (jasperPrint.hasParts())
+		{
+			for (Iterator<Map.Entry<Integer, PrintPart>> it = jasperPrint.getParts().partsIterator(); it.hasNext();)
+			{
+				Map.Entry<Integer, PrintPart> partEntry = it.next();
+				PrintPart part = partEntry.getValue();
+				jasperPrint.addPart(partEntry.getKey(), SimplePrintPart.fromJasperPrint(jasperPrint, part.getName(), part));
+			}
 		}
 	}
 
