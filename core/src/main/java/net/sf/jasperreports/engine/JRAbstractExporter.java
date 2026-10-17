@@ -456,6 +456,12 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 				elementOffsetY = 0;
 			}
 		}
+		else
+		{
+			// the offsets are applied by other means (e.g. a graphics transform)
+			elementOffsetX = 0;
+			elementOffsetY = 0;
+		}
 	}
 	
 
