@@ -116,6 +116,10 @@ public class ReportClassFilter extends AbstractClassFilter
 			}
 		}
 		whitelists.add(functionsWhitelist);
+
+		List<ReportClassWhitelist> extensionWhitelists = jasperReportsContext.getExtensions(
+				ReportClassWhitelist.class);
+		whitelists.addAll(extensionWhitelists);
 	}
 
 }
