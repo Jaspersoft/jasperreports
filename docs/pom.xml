@@ -20,8 +20,6 @@
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
 		<maven.install.skip>true</maven.install.skip>
-		<!-- set this property right here to true to enable online statistics -->
-		<sf.net>false</sf.net>
 	</properties>
 	<build>
 		<outputDirectory>${project.build.directory}/docs</outputDirectory>
@@ -114,7 +112,7 @@
 						<configuration>
 							<inputDirectory>${project.build.directory}/markdown/samples</inputDirectory>
 							<outputDirectory>${project.build.directory}/docs/sample.reference</outputDirectory>
-							<headerHtmlFile>${project.build.directory}/docs/resources/sf-net-${sf.net}.html</headerHtmlFile>
+							<headerHtmlFile>${project.build.directory}/docs/resources/header.html</headerHtmlFile>
 							<footerHtmlFile>${project.build.directory}/docs/resources/footer.html</footerHtmlFile>
 							<inputEncoding>UTF-8</inputEncoding>
 							<outputEncoding>UTF-8</outputEncoding>
@@ -132,7 +130,7 @@
 						<configuration>
 							<inputDirectory>${project.build.directory}/markdown/root</inputDirectory>
 							<outputDirectory>${project.build.directory}/docs</outputDirectory>
-							<headerHtmlFile>${project.build.directory}/docs/resources/sf-net-${sf.net}.html</headerHtmlFile>
+							<headerHtmlFile>${project.build.directory}/docs/resources/header.html</headerHtmlFile>
 							<footerHtmlFile>${project.build.directory}/docs/resources/footer.html</footerHtmlFile>
 							<inputEncoding>UTF-8</inputEncoding>
 							<outputEncoding>UTF-8</outputEncoding>
@@ -155,8 +153,8 @@
 							<goal>replace</goal>
 						</goals>
 						<configuration>
-							<file>${project.build.directory}/docs/resources/sf-net-${sf.net}.html</file>
-							<outputFile>${project.build.directory}/docs/resources/sf-net-${sf.net}.html</outputFile>
+							<file>${project.build.directory}/docs/resources/header.html</file>
+							<outputFile>${project.build.directory}/docs/resources/header.html</outputFile>
 							<regex>false</regex>
 							<token>@version</token>
 							<value>${revision}</value>
@@ -322,10 +320,6 @@
 									<name>version</name>
 									<value>${revision}</value>
 								</parameter>
-								<parameter>
-									<name>sf.net</name>
-									<value>${sf.net}</value>
-								</parameter>
 							</parameters>							
 						</transformationSet>
 						<transformationSet>
@@ -343,10 +337,6 @@
 									<name>version</name>
 									<value>${revision}</value>
 								</parameter>
-								<parameter>
-									<name>sf.net</name>
-									<value>${sf.net}</value>
-								</parameter>
 							</parameters>							
 						</transformationSet>
 						<transformationSet>
@@ -363,10 +353,6 @@
 								<parameter>
 									<name>version</name>
 									<value>${revision}</value>
-								</parameter>
-								<parameter>
-									<name>sf.net</name>
-									<value>${sf.net}</value>								
 								</parameter>
 							</parameters>							
 						</transformationSet>
