@@ -255,6 +255,10 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 	private ReportContext reportContext;
 	protected E exporterContext;
 
+	/**
+	 * Set from a different thread via {@link #cancelExport()}, hence volatile.
+	 */
+	private volatile boolean exportCancelled;
 
 	/**
 	 *
@@ -413,10 +417,36 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 	@Override
 	public abstract void exportReport() throws JRException;
 	
+	/**
+	 * Requests the cancellation of a running export.
+	 * <p>
+	 * This method is meant to be called from a thread other than the one performing the export.
+	 * The export is not stopped immediately; the exporter checks the cancellation request
+	 * between pages, after which {@link #exportReport()} fails with an {@link ExportInterruptedException}.
+	 * The output produced up to that point is incomplete and should be discarded.
+	 * <p>
+	 * The cancellation request is not reset, any subsequent export performed with this exporter
+	 * instance will also be interrupted.
+	 *
+	 * @see #isExportCancelled()
+	 */
+	public void cancelExport()
+	{
+		exportCancelled = true;
+	}
+
+	/**
+	 * Determines whether the export has been cancelled via {@link #cancelExport()}.
+	 */
+	public boolean isExportCancelled()
+	{
+		return exportCancelled;
+	}
+
 	protected void checkInterrupted() throws ExportInterruptedException
 	{
 		boolean interrupted = Thread.interrupted();
-		if (interrupted)
+		if (interrupted || exportCancelled)
 		{
 			throw new ExportInterruptedException();
 		}
