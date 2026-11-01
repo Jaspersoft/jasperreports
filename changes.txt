@@ -2,8 +2,12 @@
 JasperReports Library Change Log
 =============================================
 
-JasperReports 7.1.1 (2026-1x-xx)
+JasperReports 7.1.1 (2026-11-02)
 ---------------------------------------------
+
+- add support for page backcolor in report templates;
+
+- introducing possibility to cancel long running report export processes;
 
 - minor bug fixes and improvements;
 
