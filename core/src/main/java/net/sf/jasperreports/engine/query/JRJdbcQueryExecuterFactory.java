@@ -35,6 +35,9 @@ import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JRValueParameter;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.type.JdbcConcurrencyEnum;
+import net.sf.jasperreports.engine.type.JdbcHoldabilityEnum;
+import net.sf.jasperreports.engine.type.JdbcResultSetTypeEnum;
 import net.sf.jasperreports.engine.util.Designated;
 import net.sf.jasperreports.properties.PropertyConstants;
 
@@ -72,7 +75,8 @@ public class JRJdbcQueryExecuterFactory extends AbstractQueryExecuterFactory imp
 			defaultValue = "forwardOnly",
 			scopes = {PropertyScope.CONTEXT, PropertyScope.DATASET},
 			scopeQualifications = {QUERY_EXECUTER_NAME},
-			sinceVersion = PropertyConstants.VERSION_3_5_3
+			sinceVersion = PropertyConstants.VERSION_3_5_3,
+			valueType = JdbcResultSetTypeEnum.class
 			)
 	public static final String PROPERTY_JDBC_RESULT_SET_TYPE = JRPropertiesUtil.PROPERTY_PREFIX + "jdbc.result.set.type";
 
@@ -84,7 +88,8 @@ public class JRJdbcQueryExecuterFactory extends AbstractQueryExecuterFactory imp
 			defaultValue = "readOnly",
 			scopes = {PropertyScope.CONTEXT, PropertyScope.DATASET},
 			scopeQualifications = {QUERY_EXECUTER_NAME},
-			sinceVersion = PropertyConstants.VERSION_3_5_3
+			sinceVersion = PropertyConstants.VERSION_3_5_3,
+			valueType = JdbcConcurrencyEnum.class
 			)
 	public static final String PROPERTY_JDBC_CONCURRENCY = JRPropertiesUtil.PROPERTY_PREFIX + "jdbc.concurrency";
 
@@ -96,7 +101,8 @@ public class JRJdbcQueryExecuterFactory extends AbstractQueryExecuterFactory imp
 			defaultValue = "hold",
 			scopes = {PropertyScope.CONTEXT, PropertyScope.DATASET},
 			scopeQualifications = {QUERY_EXECUTER_NAME},
-			sinceVersion = PropertyConstants.VERSION_3_5_3
+			sinceVersion = PropertyConstants.VERSION_3_5_3,
+			valueType = JdbcHoldabilityEnum.class
 			)
 	public static final String PROPERTY_JDBC_HOLDABILITY = JRPropertiesUtil.PROPERTY_PREFIX + "jdbc.holdability";
 
