@@ -47,7 +47,7 @@
 		<element kind="staticText" uuid="63b7698e-e4a1-4fff-9ea0-a9772dd5b2c4" x="0" y="250" width="100" height="30" style="Barcode">
 			<text><![CDATA[Code39]]></text>
 		</element>
-		<element kind="component" uuid="7fc9f508-28ba-4b6e-bf7d-2e5e39b98ed8" x="130" y="250" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="7fc9f508-28ba-4b6e-bf7d-2e5e39b98ed8" x="130" y="250" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:Code39">
 				<codeExpression><![CDATA["0123456789"]]></codeExpression>
 			</component>
@@ -55,7 +55,7 @@
 		<element kind="staticText" uuid="8ca7d2e2-c66f-4c25-ab3d-2fb15453b8b0" x="0" y="285" width="100" height="30" style="Barcode">
 			<text><![CDATA[USPS Intelligent Mail]]></text>
 		</element>
-		<element kind="component" uuid="8fdd4d61-26b7-4a0e-b569-18d70d929c10" x="130" y="285" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="8fdd4d61-26b7-4a0e-b569-18d70d929c10" x="130" y="285" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:USPSIntelligentMail" ascenderHeight="8.0" trackHeight="10.0">
 				<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
 			</component>
@@ -63,7 +63,7 @@
 		<element kind="staticText" uuid="df0b440d-9a4f-49ea-aa1d-c860c2ad3911" x="0" y="320" width="100" height="30" style="Barcode">
 			<text><![CDATA[Royal Mail Customer]]></text>
 		</element>
-		<element kind="component" uuid="4d2d0a42-1318-4873-8572-3cca99ebde50" x="130" y="320" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="4d2d0a42-1318-4873-8572-3cca99ebde50" x="130" y="320" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:RoyalMailCustomer" ascenderHeight="8.0" intercharGapWidth="2.5" trackHeight="10.0">
 				<codeExpression><![CDATA["0123456789"]]></codeExpression>
 			</component>
@@ -71,7 +71,7 @@
 		<element kind="staticText" uuid="dc520315-36de-4535-9d40-2dc5b96e07bc" x="0" y="355" width="100" height="30" style="Barcode">
 			<text><![CDATA[Interleaved 2 of 5]]></text>
 		</element>
-		<element kind="component" uuid="26bab176-29df-4677-ba6a-e8df79eea8e1" x="130" y="355" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="26bab176-29df-4677-ba6a-e8df79eea8e1" x="130" y="355" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:Interleaved2Of5">
 				<codeExpression><![CDATA["0123456789"]]></codeExpression>
 			</component>
@@ -79,7 +79,7 @@
 		<element kind="staticText" uuid="ddcf57ba-86e5-4b2c-8293-89cc3c044890" x="0" y="390" width="100" height="30" style="Barcode">
 			<text><![CDATA[UPC-A]]></text>
 		</element>
-		<element kind="component" uuid="234c47ef-0149-43aa-9595-44eb81a2bd54" x="130" y="390" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="234c47ef-0149-43aa-9595-44eb81a2bd54" x="130" y="390" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:UPCA">
 				<codeExpression><![CDATA["01234567890"]]></codeExpression>
 			</component>
@@ -87,7 +87,7 @@
 		<element kind="staticText" uuid="1ee2c6c4-54d0-4bae-af20-03970939c63c" x="0" y="425" width="100" height="30" style="Barcode">
 			<text><![CDATA[UPC-E]]></text>
 		</element>
-		<element kind="component" uuid="51b4da4c-b93b-4757-9f6e-8757a6716ea1" x="130" y="425" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="51b4da4c-b93b-4757-9f6e-8757a6716ea1" x="130" y="425" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:UPCE">
 				<codeExpression><![CDATA["01234133"]]></codeExpression>
 			</component>
@@ -95,7 +95,7 @@
 		<element kind="staticText" uuid="2cb2f39b-a468-4d35-9047-2066f52aec84" x="0" y="460" width="100" height="30" style="Barcode">
 			<text><![CDATA[EAN-13]]></text>
 		</element>
-		<element kind="component" uuid="35e15c85-135e-4e4a-ada4-3caab948d304" x="130" y="460" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="35e15c85-135e-4e4a-ada4-3caab948d304" x="130" y="460" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:EAN13">
 				<codeExpression><![CDATA["012345678901"]]></codeExpression>
 			</component>
@@ -103,7 +103,7 @@
 		<element kind="staticText" uuid="9399924d-03f6-4825-adfd-0a51cca77964" x="0" y="495" width="100" height="30" style="Barcode">
 			<text><![CDATA[EAN-8]]></text>
 		</element>
-		<element kind="component" uuid="00eb6f75-bdf7-408a-ba56-f76ecca2f8e6" x="130" y="495" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="00eb6f75-bdf7-408a-ba56-f76ecca2f8e6" x="130" y="495" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:EAN8">
 				<codeExpression><![CDATA["01234565"]]></codeExpression>
 			</component>
@@ -111,7 +111,7 @@
 		<element kind="staticText" uuid="6ffb2cc2-63fd-4754-b8c3-48828cca8ab1" x="0" y="530" width="100" height="20" style="Barcode">
 			<text><![CDATA[POSTNET]]></text>
 		</element>
-		<element kind="component" uuid="16fee5fe-1e0f-4f56-b240-64a2ff904744" x="130" y="530" width="400" height="20" style="Barcode">
+		<element kind="component" uuid="16fee5fe-1e0f-4f56-b240-64a2ff904744" x="130" y="530" width="385" height="20" style="Barcode">
 			<component kind="barcode4j:POSTNET" shortBarHeight="10.0" checksumMode="add">
 				<codeExpression><![CDATA["01234"]]></codeExpression>
 			</component>
@@ -119,7 +119,7 @@
 		<element kind="staticText" uuid="c1127dd1-6cde-483c-8b1c-927b5fd285a3" x="0" y="555" width="100" height="30" style="Barcode">
 			<text><![CDATA[PDF417]]></text>
 		</element>
-		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" x="130" y="555" width="400" height="30" style="Barcode">
+		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" x="130" y="555" width="385" height="30" style="Barcode">
 			<component kind="barcode4j:PDF417" moduleWidth="4.0">
 				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
 			</component>
@@ -127,7 +127,7 @@
 		<element kind="staticText" uuid="c1127dd1-6cde-483c-8b1c-927b5fd285a3" x="0" y="600" width="100" height="80" style="Barcode">
 			<text><![CDATA[QRCode]]></text>
 		</element>
-		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" mode="Opaque" x="130" y="600" width="400" height="80" forecolor="#0000FF" backcolor="#FFFF00" style="Barcode">
+		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" mode="Opaque" x="130" y="600" width="385" height="80" forecolor="#0000FF" backcolor="#FFFF00" style="Barcode">
 			<component kind="barcode4j:QRCode" margin="2" errorCorrectionLevel="M">
 				<codeExpression><![CDATA["http://barcode4j.sourceforge.net/"]]></codeExpression>
 			</component>

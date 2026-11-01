@@ -64,5 +64,16 @@ public class PrintPartCreator
 	{
 		return part;
 	}
+	
+	/**
+	 * Recreates the page format of the part from the current state of the part document.
+	 */
+	public void updatePageFormat()
+	{
+		if (part != null)
+		{
+			part.setPageFormat(SimplePrintPart.createPageFormat(jasperPrint));
+		}
+	}
 
 }

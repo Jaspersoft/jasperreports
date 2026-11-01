@@ -56,6 +56,7 @@ public class StyleCache
 	private Set<String> fontFaces = new HashSet<>();
 	private final String exporterKey;
 	private int reportDpi;
+	private Color cellBackcolor;
 
 	/**
 	 *
@@ -99,6 +100,13 @@ public class StyleCache
 		this.reportDpi = reportDpi;
 	}
 
+	/**
+	 * Sets the background color of the cells that have no background of their own.
+	 */
+	public void setCellBackcolor(Color cellBackcolor)
+	{
+		this.cellBackcolor = cellBackcolor;
+	}
 
 	/**
 	 * Returns the cache key of a style whose output depends on the report resolution.
@@ -291,7 +299,7 @@ public class StyleCache
 	 */
 	public String getCellStyle(JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText)
 	{
-		CellStyle cellStyle  = new CellStyle(styleWriter, gridCell, shrinkToFit, wrapText, reportDpi);
+		CellStyle cellStyle  = new CellStyle(styleWriter, gridCell, shrinkToFit, wrapText, reportDpi, cellBackcolor);
 		
 //		JRPrintElement element = gridCell.getElement();
 //

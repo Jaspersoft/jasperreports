@@ -42,11 +42,12 @@ optimized to share, secure, and centrally manage your Jaspersoft reports and ana
 <br/>
 <br/>
 
-**JasperReports Web Studio** - *web-based version of the desktop Jaspersoft® Studio*
+**Jaspersoft Desktop** - *design and edit reports with conversational AI*
 
-[JasperReports Web Studio](https://www.jaspersoft.com/products/jaspersoft-commercial) is a new web visual designer that 
-creates and edits report templates for the *JasperReports® Library* reporting engine and the whole *Jaspersoft®* family of 
-products that use the open-source library to produce dynamic content and rich data visualizations.
+A fast, modern report designer built around AI. Describe the report you want and 
+[Jaspersoft Desktop](https://community.jaspersoft.com/knowledgebase/getting-started/coming-soon-jaspersoft-desktop-ai-beta/) builds it, 
+however complex, and fixes errors along the way. Create reports for applications that embed the JasperReports Library, 
+or work directly with your JasperReports Server repositories. It starts instantly, runs locally, and works with your existing reports and projects.
 <br/>
 <br/>
 

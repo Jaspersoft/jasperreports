@@ -54,11 +54,16 @@ public class DocxSettingsHelper extends BaseHelper
 	/**
 	 * 
 	 */
-	public void export(JasperPrint jasperPrint, boolean isEmbedFonts)
+	public void export(JasperPrint jasperPrint, boolean isEmbedFonts, boolean isDisplayBackgroundShape)
 	{
 		write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
 		write("<w:settings\n");
 		write(" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">\n"); 
+		if (isDisplayBackgroundShape)
+		{
+			// without it, Word does not show the page background color in print layout view
+			write("  <w:displayBackgroundShape/>\n"); 
+		}
 		if (isEmbedFonts)
 		{
 			write("  <w:embedTrueTypeFonts w:val=\"true\" />\n"); 

@@ -241,6 +241,8 @@ public class PartReportFiller extends BaseReportFiller
 			propertiesUtil.transferProperties(mainDataset, jasperPrint, 
 				JasperPrint.PROPERTIES_PRINT_TRANSFER_PREFIX);
 
+			setPageBackcolor();
+
 /*			jasperPrint.setDefaultStyle(defaultStyle);
 
 			if (styles != null && styles.length > 0)

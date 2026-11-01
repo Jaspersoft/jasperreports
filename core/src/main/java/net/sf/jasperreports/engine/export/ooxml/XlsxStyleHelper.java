@@ -233,9 +233,9 @@ public class XlsxStyleHelper extends BaseHelper
 		{
 			if (sheetInfo != null && (Boolean.TRUE.equals(sheetInfo.ignoreCellBackground) || styleInfo.backcolor == null))
 			{
-				if (Boolean.TRUE.equals(sheetInfo.whitePageBackground))
+				if (styleInfo.pageBackcolor != null)
 				{
-					fillsWriter.write("<fill><patternFill patternType=\"solid\"><fgColor rgb=\"FFFFFF\"/></patternFill></fill>\n");
+					fillsWriter.write("<fill><patternFill patternType=\"solid\"><fgColor rgb=\"" + styleInfo.pageBackcolor + "\"/></patternFill></fill>\n");
 				}
 				else
 				{

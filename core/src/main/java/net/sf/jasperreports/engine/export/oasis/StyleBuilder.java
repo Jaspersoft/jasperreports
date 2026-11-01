@@ -36,6 +36,7 @@ import net.sf.jasperreports.engine.PrintPageFormat;
 import net.sf.jasperreports.engine.base.JRBasePrintText;
 import net.sf.jasperreports.engine.export.LengthUtil;
 import net.sf.jasperreports.engine.type.OrientationEnum;
+import net.sf.jasperreports.engine.util.JRColorUtil;
 
 
 /**
@@ -132,6 +133,11 @@ public class StyleBuilder
 			else
 			{
 				writer.write(" style:print-orientation=\"portrait\"");
+			}
+			
+			if (pageFormat.getBackcolor() != null)
+			{
+				writer.write(" fo:background-color=\"#" + JRColorUtil.getColorHexa(pageFormat.getBackcolor()) + "\"");
 			}
 			
 			writer.write("/>\n");

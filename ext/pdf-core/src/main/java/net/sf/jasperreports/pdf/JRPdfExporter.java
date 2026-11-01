@@ -641,6 +641,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 
 	private int crtPageOffsetX;
 	private int crtPageOffsetY;
+	private int crtPageWidth;
+	private int crtPageHeight;
 	private int crtOddPageOffsetX;
 	private int crtOddPageOffsetY;
 	private int crtEvenPageOffsetX;
@@ -1301,6 +1303,9 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		pageWidth = pageWidth < pageFormat.getPageWidth() ? pageFormat.getPageWidth() : pageWidth; 
 		pageHeight = pageHeight < pageFormat.getPageHeight() ? pageFormat.getPageHeight() : pageHeight; 
 		
+		crtPageWidth = pageWidth;
+		crtPageHeight = pageHeight;
+		
 		pdfProducer.setPageSize(pageFormat, toPoints(pageWidth), toPoints(pageHeight));
 	}
 
@@ -1310,6 +1315,8 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 	protected void exportPage(JRPrintPage page) throws JRException, IOException
 	{
 		pdfTagger.startPage();
+		
+		exportPageBackground();
 		
 		Collection<JRPrintElement> elements = page.getElements();
 		exportElements(elements);
@@ -1322,6 +1329,23 @@ public class JRPdfExporter extends JRAbstractExporter<PdfReportConfiguration, Pd
 		if (progressMonitor != null)
 		{
 			progressMonitor.afterPageExport();
+		}
+	}
+
+	/**
+	 * Fills the entire page with the page background color, if any.
+	 */
+	protected void exportPageBackground()
+	{
+		Color backcolor = pageFormat.getBackcolor();
+		if (backcolor != null)
+		{
+			pdfTagger.beginArtifact();
+			pdfContent.setFillColor(backcolor);
+			// the page size can be larger than the one of the page format when sizing pages to content
+			pdfContent.fillRectangle(0, 0, toPoints(crtPageWidth), toPoints(crtPageHeight));
+			pdfContent.resetFillColor();
+			pdfTagger.endArtifact();
 		}
 	}
 

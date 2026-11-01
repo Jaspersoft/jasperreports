@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.engine;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -44,6 +45,7 @@ public class SimplePrintPageFormat implements PrintPageFormat, Serializable
 	private Integer bottomMargin;
 	private Integer rightMargin;
 	private int dpi = JasperPrint.DEFAULT_REPORT_DPI;
+	private Color backcolor;
 	private OrientationEnum orientation;
 
 	/**
@@ -163,6 +165,23 @@ public class SimplePrintPageFormat implements PrintPageFormat, Serializable
 	public void setDpi(int dpi)
 	{
 		this.dpi = dpi;
+	}
+	
+	/**
+	 * Returns the page background color.
+	 */
+	@Override
+	public Color getBackcolor()
+	{
+		return backcolor;
+	}
+		
+	/**
+	 *
+	 */
+	public void setBackcolor(Color backcolor)
+	{
+		this.backcolor = backcolor;
 	}
 	
 	/**

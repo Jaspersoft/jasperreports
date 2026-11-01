@@ -19,7 +19,7 @@
 	</scm>
 	<properties>
 		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
-		<maven-plugin-api.version>3.9.16</maven-plugin-api.version>
+		<maven-plugin-api.version>3.10.0</maven-plugin-api.version>
 		<enforcer.max.jdk.version>11</enforcer.max.jdk.version>
 	</properties>
 	<dependencies>

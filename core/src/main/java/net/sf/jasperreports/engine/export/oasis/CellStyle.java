@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.engine.export.oasis;
 
+import java.awt.Color;
+
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JRTextAlignment;
@@ -49,9 +51,9 @@ public class CellStyle extends BorderStyle
 
 	
 	/**
-	 *
+	 * @param defaultBackcolor the background color of the cell when neither the element nor the grid cell has one
 	 */
-	public CellStyle(WriterHelper styleWriter, JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText, int reportDpi)
+	public CellStyle(WriterHelper styleWriter, JRExporterGridCell gridCell, boolean shrinkToFit, boolean wrapText, int reportDpi, Color defaultBackcolor)
 	{
 		super(styleWriter, reportDpi);
 
@@ -68,6 +70,10 @@ public class CellStyle extends BorderStyle
 			if (gridCell.getBackcolor() != null)
 			{
 				backcolor = JRColorUtil.getColorHexa(gridCell.getBackcolor());
+			}
+			else if (defaultBackcolor != null)
+			{
+				backcolor = JRColorUtil.getColorHexa(defaultBackcolor);
 			}
 		}
 

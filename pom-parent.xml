@@ -132,7 +132,7 @@
 		<hibernate.j2ee.version>5.6.15.Final</hibernate.j2ee.version>
 		<hsqldb.version>2.7.2</hsqldb.version>
 		<imageio-webp.version>3.9.4</imageio-webp.version>
-		<jackson.version>2.22.3</jackson.version>
+		<jackson.version>2.22.4</jackson.version>
 		<jackson-annotations.version>2.22</jackson-annotations.version>
 		<jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version>
 		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
@@ -231,7 +231,7 @@
 				<artifactId>clirr-maven-plugin</artifactId>
 				<version>${clirr-maven-plugin.version}</version>
 				<configuration>
-					<comparisonVersion>7.0.8</comparisonVersion>
+					<comparisonVersion>7.1.0</comparisonVersion>
 					<ignoredDifferencesFile>${basedir}/clirr-ignore.xml</ignoredDifferencesFile>
 					<failOnError>true</failOnError>
 					<logResults>true</logResults>

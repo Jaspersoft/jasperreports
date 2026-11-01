@@ -293,6 +293,10 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 		lblPage.setBackground(java.awt.Color.white);
 		lblPage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		lblPage.setOpaque(true);
+		// the page image is anchored at the top left corner, like the directly painted page;
+		// its partially covered last pixel row and column, if any, end up under the border
+		lblPage.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+		lblPage.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
@@ -816,9 +820,11 @@ public class JRViewerPanel extends JPanel implements JRHyperlinkListener, JRView
 		float dpiScale = getDpiScale();
 		float displayWidth = pageFormat.getPageWidth() * dpiScale;
 		float displayHeight = pageFormat.getPageHeight() * dpiScale;
+		// the page area is rounded down so that the page covers it completely; the partially
+		// covered last pixel row and column, if any, end up under the border
 		Dimension dim = new Dimension(
-			(int)(displayWidth * realZoom) + 8, // 2 from border, 5 from shadow and 1 extra pixel for image
-			(int)(displayHeight * realZoom) + 8
+			(int)(displayWidth * realZoom) + 7, // 2 from border and 5 from shadow
+			(int)(displayHeight * realZoom) + 7
 			);
 		pnlPage.setMaximumSize(dim);
 		pnlPage.setMinimumSize(dim);

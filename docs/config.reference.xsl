@@ -5,7 +5,6 @@
 	xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
 
 <xsl:output method = "html" />
-<xsl:param name="sf.net"/>
 <xsl:param name="version"/>
 
 <xsl:variable name="api.url">api/</xsl:variable>
@@ -17,19 +16,6 @@
 <link rel="stylesheet" href="resources/stylesheet.css"/>
 </head>
 <body bgcolor="#FFFFFF">
-<xsl:if test="$sf.net = 'true'">
-<!-- Tracker -->
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-399158-5', 'sourceforge.net');
-ga('send', 'pageview');
-</script>
-<!-- End Tracker Tag -->
-</xsl:if>
-
 <a name="top"/>
 <table class="top0">
   <tr>

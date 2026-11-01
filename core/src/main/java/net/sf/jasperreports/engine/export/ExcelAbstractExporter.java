@@ -29,6 +29,7 @@
 
 package net.sf.jasperreports.engine.export;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -662,11 +663,32 @@ public abstract class ExcelAbstractExporter<RC extends XlsReportConfiguration, C
 		imageBorderFixEnabled = configuration.isImageBorderFixEnabled();
 	}
 
+	/**
+	 * Returns the color used to fill the sheet cells that have no background of their own.
+	 * <p>
+	 * Spreadsheets have no page background color, so the page background color of the
+	 * document of the current input item, which is a single part when the input carries parts,
+	 * is applied to the cells. It takes precedence over the white page background flag.
+	 * 
+	 * @param whitePageBackground the white page background flag of the sheet
+	 * @return the color to fill the sheet cells with, or <code>null</code> if they are not to be filled
+	 */
+	protected Color getSheetBackcolor(Boolean whitePageBackground)
+	{
+		Color backcolor = jasperPrint.getBackcolor();
+		if (backcolor == null && Boolean.TRUE.equals(whitePageBackground))
+		{
+			backcolor = Color.white;
+		}
+		return backcolor;
+	}
+
 	protected void updatePrintSettings(SheetInfo.SheetPrintSettings printSettings,
 			XlsReportConfiguration configuration) {
 		// the page dimensions below come from the document of the current input item, which
 		// is a single part when the input carries parts, so they share its resolution
 		printSettings.setDpi(reportDpi);
+		printSettings.setBackcolor(jasperPrint.getBackcolor());
 		if (printSettings.getPageHeight() == null) {
 			printSettings.setPageHeight(configuration.getPrintPageHeight() == null ? jasperPrint.getPageHeight()
 					: configuration.getPrintPageHeight());
