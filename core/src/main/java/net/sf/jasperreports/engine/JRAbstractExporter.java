@@ -86,11 +86,11 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 	private static final String EXCEPTION_MESSAGE_KEY_EMPTY_INPUT_SOURCE_IN_BATCH_MODE = "export.common.empty.input.source.in.batch.mode";
 	private static final String EXCEPTION_MESSAGE_KEY_NO_INPUT_SOURCE = "export.common.no.input.source";
 	private static final String EXCEPTION_MESSAGE_KEY_NO_OUTPUT_SPECIFIED = "export.common.no.output.specified";
-	private static final String EXCEPTION_MESSAGE_KEY_START_PAGE_INDEX_OUT_OF_RANGE = "export.common.start.page.index.out.of.range";
-	private static final String EXCEPTION_MESSAGE_KEY_END_PAGE_INDEX_OUT_OF_RANGE = "export.common.end.page.index.out.of.range";
+	public static final String EXCEPTION_MESSAGE_KEY_START_PAGE_INDEX_OUT_OF_RANGE = "export.common.start.page.index.out.of.range";
+	public static final String EXCEPTION_MESSAGE_KEY_END_PAGE_INDEX_OUT_OF_RANGE = "export.common.end.page.index.out.of.range";
 	public static final String EXCEPTION_MESSAGE_KEY_INVALID_IMAGE_NAME = "export.common.invalid.image.name";
 	protected static final String EXCEPTION_MESSAGE_KEY_INVALID_ZOOM_RATIO = "export.common.invalid.zoom.ratio";
-	private static final String EXCEPTION_MESSAGE_KEY_PAGE_INDEX_OUT_OF_RANGE = "export.common.page.index.out.of.range";
+	public static final String EXCEPTION_MESSAGE_KEY_PAGE_INDEX_OUT_OF_RANGE = "export.common.page.index.out.of.range";
 	protected static final String EXCEPTION_MESSAGE_KEY_OUTPUT_WRITER_ERROR = "export.common.output.writer.error";
 
 	/**
