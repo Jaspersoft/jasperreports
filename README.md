@@ -45,7 +45,7 @@ optimized to share, secure, and centrally manage your Jaspersoft reports and ana
 **Jaspersoft Desktop** - *design and edit reports with conversational AI*
 
 A fast, modern report designer built around AI. Describe the report you want and 
-[Jaspersoft Desktop](https://community.jaspersoft.com/knowledgebase/getting-started/coming-soon-jaspersoft-desktop-ai-beta/) builds it, 
+[Jaspersoft Desktop](https://www.jaspersoft.com/articles/announcing-early-access-for-jaspersoft-desktop-with-built-in-ai-assistant) builds it, 
 however complex, and fixes errors along the way. Create reports for applications that embed the JasperReports Library, 
 or work directly with your JasperReports Server repositories. It starts instantly, runs locally, and works with your existing reports and projects.
 <br/>
