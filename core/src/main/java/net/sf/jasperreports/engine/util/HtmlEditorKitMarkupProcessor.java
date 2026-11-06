@@ -39,7 +39,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLDocument.RunElement;
-import javax.swing.text.html.HTMLEditorKit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -120,7 +119,8 @@ public class HtmlEditorKitMarkupProcessor extends EditorKitMarkupProcessor
 	@Override
 	protected EditorKit getEditorKit()
 	{
-		return new HTMLEditorKit();
+		// the default HTMLEditorKit is not safe for concurrent parsing
+		return new PooledDtdHtmlEditorKit();
 	}
 	
 	
