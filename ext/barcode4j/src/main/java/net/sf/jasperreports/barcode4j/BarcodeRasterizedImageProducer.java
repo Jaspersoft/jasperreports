@@ -23,11 +23,13 @@
  */
 package net.sf.jasperreports.barcode4j;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 import org.krysalis.barcode4j.BarcodeGenerator;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.output.bitmap.BitmapEncoderRegistry;
 
 import net.sf.jasperreports.annotations.properties.Property;
 import net.sf.jasperreports.annotations.properties.PropertyScope;
@@ -45,6 +47,8 @@ import net.sf.jasperreports.renderers.SimpleDataRenderer;
  */
 public class BarcodeRasterizedImageProducer implements BarcodeImageProducer
 {
+
+	private static final String MIME_TYPE = "image/x-png";
 	
 	@Property(
 			category = PropertyConstants.CATEGORY_BARCODE,
@@ -100,16 +104,19 @@ public class BarcodeRasterizedImageProducer implements BarcodeImageProducer
 			int imageType = gray ? BufferedImage.TYPE_BYTE_GRAY 
 					: BufferedImage.TYPE_BYTE_BINARY;
 			
-			BitmapCanvasProvider provider = 
+			BitmapCanvasProvider provider =
 				new BitmapCanvasProvider(
-					out, "image/x-png", resolution, imageType, antiAlias, 
+					resolution, imageType, antiAlias,
 					OrientationEnum.getValueOrDefault(
 						((Barcode4jComponent)componentElement.getComponent()).getOrientation()
 						).getValue()
 					);
 			barcode.generateBarcode(provider, message);
 			provider.finish();
-			
+
+			BufferedImage image = colorize(provider.getBufferedImage(), componentElement.getForecolor());
+			BitmapEncoderRegistry.getInstance(MIME_TYPE).encode(image, out, MIME_TYPE, resolution);
+
 			byte[] imageData = out.toByteArray();
 			return SimpleDataRenderer.getInstance(imageData);
 		}
@@ -117,6 +124,31 @@ public class BarcodeRasterizedImageProducer implements BarcodeImageProducer
 		{
 			throw new JRRuntimeException(e);
 		}
+	}
+
+	/**
+	 * Turns the gray or black and white bitmap drawn by the Barcode4J canvas provider, which has hardcoded
+	 * black bars on a white background, into an image with bars in the given color on a transparent background,
+	 * so that the element backcolor shows through when opaque.
+	 * The darkness of each pixel becomes its opacity, which preserves the anti-aliased edges of a gray bitmap.
+	 */
+	protected BufferedImage colorize(BufferedImage barcodeImage, Color color)
+	{
+		int width = barcodeImage.getWidth();
+		int height = barcodeImage.getHeight();
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		int rgb = color.getRGB() & 0xFFFFFF;
+		int alpha = color.getAlpha();
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < height; y++)
+			{
+				int darkness = 255 - (barcodeImage.getRGB(x, y) & 0xFF);//gray and binary images have equal RGB components
+				int pixelAlpha = (darkness * alpha + 127) / 255;
+				image.setRGB(x, y, (pixelAlpha << 24) | rgb);
+			}
+		}
+		return image;
 	}
 
 }

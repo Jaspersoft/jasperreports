@@ -119,7 +119,7 @@
 		<element kind="staticText" uuid="c1127dd1-6cde-483c-8b1c-927b5fd285a3" x="0" y="555" width="100" height="30" style="Barcode">
 			<text><![CDATA[PDF417]]></text>
 		</element>
-		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" x="130" y="555" width="385" height="30" style="Barcode">
+		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" x="130" y="555" width="385" height="30" forecolor="#0000FF" mode="Opaque" backcolor="#FFFF00" style="Barcode">
 			<component kind="barcode4j:PDF417" moduleWidth="4.0">
 				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
 			</component>
