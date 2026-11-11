@@ -2,6 +2,7 @@
 	<parameter name="Code" class="java.lang.String">
 		<defaultValueExpression><![CDATA["01234567890"]]></defaultValueExpression>
 	</parameter>
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="20.0"/>
 	<title height="742">
 		<element kind="line" uuid="6ef683b5-e354-4fe0-a9df-8ac96bd9082a" x="0" y="0" width="515" height="1"/>
 		<element kind="staticText" uuid="e2e11563-7a3c-41c0-a934-bf0fa76d505d" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
@@ -14,22 +15,22 @@
 			<expression><![CDATA["http://barbecue.sourceforge.net/"]]></expression>
 			<hyperlinkReferenceExpression><![CDATA["http://barbecue.sourceforge.net/"]]></hyperlinkReferenceExpression>
 		</element>
-		<element kind="component" uuid="ed79454e-21f5-4f98-9130-a44a512a7e51" x="0" y="100" width="400" height="50">
+		<element kind="component" uuid="ed79454e-21f5-4f98-9130-a44a512a7e51" x="0" y="100" width="400" height="50" style="Barcode">
 			<component kind="barbecue" type="Code128" drawText="true" checksumRequired="false">
 				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="component" uuid="a40ff8c2-0095-4e42-a18b-76e6afe0d290" x="0" y="160" width="400" height="50">
+		<element kind="component" uuid="a40ff8c2-0095-4e42-a18b-76e6afe0d290" x="0" y="160" width="400" height="50" style="Barcode">
 			<component kind="barbecue" type="Codabar" drawText="true" checksumRequired="false">
 				<codeExpression><![CDATA[$P{Code}]]></codeExpression>
 			</component>
 		</element>
-		<element kind="component" uuid="9f4c02e5-65c8-4666-b20b-fcdabe863b6a" x="0" y="220" width="400" height="50">
+		<element kind="component" uuid="9f4c02e5-65c8-4666-b20b-fcdabe863b6a" x="0" y="220" width="400" height="50" style="Barcode">
 			<component kind="barbecue" type="Int2of5" drawText="true" checksumRequired="true" barWidth="3" barHeight="20">
 				<codeExpression><![CDATA[$P{Code}]]></codeExpression>
 			</component>
 		</element>
-		<element kind="component" uuid="b566897b-ff4d-4a89-a9ed-de38db807f14" x="0" y="280" width="400" height="50">
+		<element kind="component" uuid="b566897b-ff4d-4a89-a9ed-de38db807f14" x="0" y="280" width="400" height="50" mode="Opaque" forecolor="blue" backcolor="yellow">
 			<component kind="barbecue" type="Std2of5" drawText="false" checksumRequired="false">
 				<codeExpression><![CDATA[$P{Code}]]></codeExpression>
 			</component>

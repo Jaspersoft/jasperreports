@@ -145,10 +145,18 @@ public class BarbecueFillComponent extends BaseFillComponent
 		barcodeInfo.setRequiresChecksum(barcodeComponent.isChecksumRequired());
 		barcodeInfo.setBarWidth(barcodeComponent.getBarWidth());
 		barcodeInfo.setBarHeight(barcodeComponent.getBarHeight());
-		
+		barcodeInfo.setFont(
+			BarbecueStyleResolver.getFont(
+				fillContext.getFiller().getJasperReportsContext(),
+				image,
+				fillContext.getReportLocale()
+				)
+			);
+
 		Barcode barcode = BarcodeProviders.createBarcode(barcodeInfo);
 		BarbecueRendererImpl renderer = new BarbecueRendererImpl(barcode);
 		renderer.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
+		renderer.setFont(barcodeInfo.getFont());
 		
 		image.setRenderer(renderer);
 	}

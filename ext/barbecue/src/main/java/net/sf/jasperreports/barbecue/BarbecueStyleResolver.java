@@ -23,9 +23,16 @@
  */
 package net.sf.jasperreports.barbecue;
 
+import java.awt.Font;
+import java.util.Locale;
+
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRStyle;
+import net.sf.jasperreports.engine.JRStyleContainer;
+import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.base.JRBaseFont;
+import net.sf.jasperreports.engine.fonts.FontUtil;
 import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.util.StyleResolver;
 
@@ -72,6 +79,15 @@ public final class BarbecueStyleResolver {
 			}
 		}
 		return RotationEnum.NONE;
+	}
+
+	/**
+	 * Returns the AWT font for the barcode text, as set or inherited through style by the given element,
+	 * resolved through the font extensions.
+	 */
+	public static Font getFont(JasperReportsContext jasperReportsContext, JRStyleContainer styleContainer, Locale locale)
+	{
+		return FontUtil.getInstance(jasperReportsContext).getAwtFont(new JRBaseFont(styleContainer), locale);
 	}
 
 }

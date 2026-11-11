@@ -39,6 +39,11 @@ public abstract class BaseBarcodeProvider implements BarcodeProvider
 	{
 		Barcode barcode = createBaseBarcode(barcodeInfo);
 		barcode.setDrawingText(barcodeInfo.isDrawText());
+		if (barcodeInfo.getFont() != null)
+		{
+			// keeping the library default font for callers that do not provide one
+			barcode.setFont(barcodeInfo.getFont());
+		}
 		if (barcodeInfo.getBarWidth() != null)
 		{
 			barcode.setBarWidth(barcodeInfo.getBarWidth());

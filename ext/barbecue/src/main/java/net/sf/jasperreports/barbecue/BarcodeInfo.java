@@ -23,6 +23,8 @@
  */
 package net.sf.jasperreports.barbecue;
 
+import java.awt.Font;
+
 /**
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -37,6 +39,7 @@ public class BarcodeInfo
 	private boolean requiresChecksum;
 	private Integer barWidth;
 	private Integer barHeight;
+	private Font font;
 
 	public String getCode()
 	{
@@ -76,6 +79,21 @@ public class BarcodeInfo
 	public void setBarHeight(Integer barHeight)
 	{
 		this.barHeight = barHeight;
+	}
+
+	public Font getFont()
+	{
+		return font;
+	}
+
+	/**
+	 * Sets the font used for the barcode text.
+	 * When not set, the Barbecue library default applies, which is <code>null</code>
+	 * (no text drawn) in headless environments.
+	 */
+	public void setFont(Font font)
+	{
+		this.font = font;
 	}
 
 	public String getType()
