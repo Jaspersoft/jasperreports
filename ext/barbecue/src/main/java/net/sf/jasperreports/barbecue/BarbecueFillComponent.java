@@ -145,6 +145,8 @@ public class BarbecueFillComponent extends BaseFillComponent
 		barcodeInfo.setRequiresChecksum(barcodeComponent.isChecksumRequired());
 		barcodeInfo.setBarWidth(barcodeComponent.getBarWidth());
 		barcodeInfo.setBarHeight(barcodeComponent.getBarHeight());
+		barcodeInfo.setForeground(image.getForecolor());
+		barcodeInfo.setBackground(BarbecueStyleResolver.getBackground(image));
 		barcodeInfo.setFont(
 			BarbecueStyleResolver.getFont(
 				fillContext.getFiller().getJasperReportsContext(),
@@ -170,6 +172,8 @@ public class BarbecueFillComponent extends BaseFillComponent
 			templateImage = new JRTemplateImage(
 					fillContext.getElementOrigin(), 
 					fillContext.getDefaultStyleProvider());
+			// own mode, forecolor and backcolor
+			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
 			templateImage.setUsingCache(false);

@@ -91,6 +91,8 @@ public class BarbecueDesignConverter implements ComponentDesignConverter
 			barcodeInfo.setRequiresChecksum(component.isChecksumRequired());
 			barcodeInfo.setBarWidth(component.getBarWidth());
 			barcodeInfo.setBarHeight(component.getBarHeight());
+			barcodeInfo.setForeground(image.getForecolor());
+			barcodeInfo.setBackground(BarbecueStyleResolver.getBackground(image));
 			barcodeInfo.setFont(
 				BarbecueStyleResolver.getFont(
 					reportConverter.getJasperReportsContext(),

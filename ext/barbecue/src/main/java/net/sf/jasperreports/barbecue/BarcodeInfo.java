@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.barbecue;
 
+import java.awt.Color;
 import java.awt.Font;
 
 /**
@@ -40,6 +41,8 @@ public class BarcodeInfo
 	private Integer barWidth;
 	private Integer barHeight;
 	private Font font;
+	private Color foreground;
+	private Color background;
 
 	public String getCode()
 	{
@@ -94,6 +97,35 @@ public class BarcodeInfo
 	public void setFont(Font font)
 	{
 		this.font = font;
+	}
+
+	public Color getForeground()
+	{
+		return foreground;
+	}
+
+	/**
+	 * Sets the color of the bars and of the barcode text.
+	 * When not set, the Barbecue library default applies, which is black.
+	 */
+	public void setForeground(Color foreground)
+	{
+		this.foreground = foreground;
+	}
+
+	public Color getBackground()
+	{
+		return background;
+	}
+
+	/**
+	 * Sets the color of the spaces between the bars and of the area behind the barcode text.
+	 * A fully transparent color leaves these areas unpainted.
+	 * When not set, the Barbecue library default applies, which is white.
+	 */
+	public void setBackground(Color background)
+	{
+		this.background = background;
 	}
 
 	public String getType()

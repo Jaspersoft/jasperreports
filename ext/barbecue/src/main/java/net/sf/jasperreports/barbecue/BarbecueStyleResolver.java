@@ -23,16 +23,19 @@
  */
 package net.sf.jasperreports.barbecue;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.Locale;
 
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
+import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JRStyleContainer;
 import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.base.JRBaseFont;
 import net.sf.jasperreports.engine.fonts.FontUtil;
+import net.sf.jasperreports.engine.type.ModeEnum;
 import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.util.StyleResolver;
 
@@ -41,6 +44,11 @@ import net.sf.jasperreports.engine.util.StyleResolver;
  * @author Narcis Marcu (narcism@users.sourceforge.net)
  */
 public final class BarbecueStyleResolver {
+	
+	/**
+	 * The barcode background color used for transparent elements, which leaves the background unpainted.
+	 */
+	private static final Color TRANSPARENT_BACKGROUND = new Color(0, 0, 0, 0);
 	
 	private BarbecueStyleResolver()
 	{
@@ -88,6 +96,15 @@ public final class BarbecueStyleResolver {
 	public static Font getFont(JasperReportsContext jasperReportsContext, JRStyleContainer styleContainer, Locale locale)
 	{
 		return FontUtil.getInstance(jasperReportsContext).getAwtFont(new JRBaseFont(styleContainer), locale);
+	}
+
+	/**
+	 * Returns the barcode background color for the given element, which is its backcolor when the element is opaque,
+	 * and a fully transparent color otherwise, so that whatever lies behind the element shows through.
+	 */
+	public static Color getBackground(JRPrintElement element)
+	{
+		return element.getMode() == ModeEnum.OPAQUE ? element.getBackcolor() : TRANSPARENT_BACKGROUND;
 	}
 
 }
