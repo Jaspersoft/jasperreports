@@ -23,14 +23,21 @@
  */
 package net.sf.jasperreports.barbecue;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.io.InvalidObjectException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.linear.ean.UCCEAN128Barcode;
+import net.sourceforge.barbecue.twod.pdf417.PDF417Barcode;
 
 /**
  * 
@@ -290,7 +297,78 @@ public final class BarcodeProviders
 		protected Barcode createBaseBarcode(BarcodeInfo barcodeInfo)
 				throws BarcodeException
 		{
-			return BarcodeFactory.createPDF417(barcodeInfo.getCode());
+			return new SerializablePDF417Barcode(barcodeInfo.getCode());
+		}
+	}
+
+	/**
+	 * PDF417 barcode that can be serialized as part of a filled report.
+	 * The library barcode creates its non serializable encoding module in the constructor,
+	 * so it is serialized as the code and the settings that apply to PDF417, from which it is created again.
+	 * Text drawing, bar width and bar height are fixed by the library barcode, so they are not kept.
+	 */
+	private static class SerializablePDF417Barcode extends PDF417Barcode
+	{
+		private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
+
+		// the library barcode keeps its font in a private field without a getter
+		private Font barcodeFont;
+
+		private SerializablePDF417Barcode(String data) throws BarcodeException
+		{
+			super(data);
+		}
+
+		@Override
+		public void setFont(Font font)
+		{
+			super.setFont(font);
+			this.barcodeFont = font;
+		}
+
+		private Object writeReplace()
+		{
+			return new SerializedPDF417Barcode(getData(), barcodeFont, getForeground(), getBackground());
+		}
+	}
+
+	private static class SerializedPDF417Barcode implements Serializable
+	{
+		private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
+
+		private final String data;
+		private final Font font;
+		private final Color foreground;
+		private final Color background;
+
+		private SerializedPDF417Barcode(String data, Font font, Color foreground, Color background)
+		{
+			this.data = data;
+			this.font = font;
+			this.foreground = foreground;
+			this.background = background;
+		}
+
+		private Object readResolve() throws ObjectStreamException
+		{
+			SerializablePDF417Barcode barcode;
+			try
+			{
+				barcode = new SerializablePDF417Barcode(data);
+			}
+			catch (BarcodeException e)
+			{
+				InvalidObjectException exception = new InvalidObjectException(e.getMessage());
+				exception.initCause(e);
+				throw exception;
+			}
+			if (font != null)
+			{
+				barcode.setFont(font);
+			}
+			barcode.setForeground(foreground);
+			barcode.setBackground(background);
+			return barcode;
 		}
 	}
 

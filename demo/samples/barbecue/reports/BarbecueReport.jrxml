@@ -1395,6 +1395,67 @@ backcolor="#FFE699" drawText="true"]]></text>
 					</component>
 				</element>
 			</band>
+			<band height="686">
+				<element kind="line" uuid="9b6ecb1c-94e2-5149-a55a-a40a90400401" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="daeb8d90-91c6-50cd-843f-ba56022af69b" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="PDF417"]]></text>
+				</element>
+				<element kind="staticText" uuid="bd3c7353-5355-5f5b-9196-3261550471ab" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Two-dimensional stacked symbology encoding any 8-bit characters in 12 data columns, with rows added as the code gets longer. The size of the symbol is fixed, so drawText, barWidth and barHeight have no effect and the element size is chosen to keep its proportions. Code: "JasperReports".]]></text>
+				</element>
+				<element kind="staticText" uuid="193a454a-1837-555e-a2c3-e3176abd40b5" x="0" y="55" width="515" height="40" forecolor="#B00000" bold="true" style="Type Note">
+					<text><![CDATA[The symbols drawn by Barbecue 1.5beta1 do not conform to the PDF417 specification (wrong start pattern and row indicators), so barcode readers are not expected to decode them, a long-standing Barbecue issue (Barbecue bug #19). They are shown here only to illustrate the component settings; use the PDF417 component of the barcode4j sample for barcodes that need to be read.]]></text>
+				</element>
+				<element kind="staticText" uuid="1b6716e8-2e82-5edc-b210-95574c4b1eeb" x="0" y="100" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="71cacabc-1544-5b21-8c34-6a5b2255a219" x="0" y="127" width="515" height="26">
+					<component kind="barbecue" type="PDF417">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1c172a08-5229-509b-9ebd-bbb88de101c1" x="0" y="163" width="165" height="27" style="Caption">
+					<text><![CDATA[code of 80 characters]]></text>
+				</element>
+				<element kind="component" uuid="1ba16cf0-2dda-53d5-bb4d-fe25e88bf884" x="0" y="190" width="515" height="46">
+					<component kind="barbecue" type="PDF417">
+						<codeExpression><![CDATA["JasperReports, the open source Java reporting library, drawing a PDF417 barcode."]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="32647970-f5e0-5d75-af0f-575f2818d5cf" x="0" y="246" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="a627fbb5-17e9-5c2f-9fc5-ae1383a39b82" mode="Opaque" x="0" y="273" width="515" height="26" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="PDF417">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5f3ff432-8bb1-5486-b1f5-8a8a42400ff7" x="0" y="309" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="afde22b1-675c-518b-8fc7-5403e8a8d2d3" x="0" y="336" width="515" height="26">
+					<component kind="barbecue" type="PDF417" rotation="UpsideDown">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cb6270f8-6177-558e-af9a-25d18ecf9e8b" x="0" y="372" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="c12c34fa-5ae7-51b7-8670-23567506084a" x="0" y="399" width="14" height="277">
+					<component kind="barbecue" type="PDF417" rotation="Left">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7d8750cc-1e6c-5e3e-983b-4ce8448506eb" x="175" y="372" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="4c7107d0-2641-5b5f-b7e6-4ba7df7259a9" x="175" y="399" width="14" height="277">
+					<component kind="barbecue" type="PDF417" rotation="Right">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+			</band>
 			<band height="421">
 				<element kind="line" uuid="1d036e69-32cc-5c40-a959-031676b1fc53" x="0" y="0" width="515" height="1"/>
 				<element kind="staticText" uuid="7a03e1d8-b3ef-5dcf-a3c1-1b5c6a736f78" x="0" y="5" width="515" height="20" style="Type Title">
