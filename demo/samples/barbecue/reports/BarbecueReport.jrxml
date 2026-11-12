@@ -1,39 +1,2379 @@
-<jasperReport name="BarbecueReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="1d7cf054-80bc-4b63-933e-e2f7736c3e3f">
-	<parameter name="Code" class="java.lang.String">
-		<defaultValueExpression><![CDATA["01234567890"]]></defaultValueExpression>
-	</parameter>
-	<style name="Barcode" fontName="DejaVu Sans" fontSize="20.0"/>
-	<title height="742">
-		<element kind="line" uuid="6ef683b5-e354-4fe0-a9df-8ac96bd9082a" x="0" y="0" width="515" height="1"/>
-		<element kind="staticText" uuid="e2e11563-7a3c-41c0-a934-bf0fa76d505d" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
-			<text><![CDATA[Barcode Sample]]></text>
-		</element>
-		<element kind="textField" uuid="85dc966e-8084-4441-ba86-3926ef9b72cb" x="0" y="50" width="515" height="20" fontSize="12.0" hTextAlign="Center">
-			<expression><![CDATA["This sample uses Barbecue Version 1.5beta1\n" + ""]]></expression>
-		</element>
-		<element kind="textField" uuid="6e11e2f3-0ed2-4b0a-b063-4aabe40bdbd2" x="0" y="70" width="515" height="20" fontSize="12.0" linkType="Reference" hTextAlign="Center">
-			<expression><![CDATA["http://barbecue.sourceforge.net/"]]></expression>
-			<hyperlinkReferenceExpression><![CDATA["http://barbecue.sourceforge.net/"]]></hyperlinkReferenceExpression>
-		</element>
-		<element kind="component" uuid="ed79454e-21f5-4f98-9130-a44a512a7e51" x="0" y="100" width="400" height="50" style="Barcode">
-			<component kind="barbecue" type="Code128" drawText="true" checksumRequired="false">
-				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="component" uuid="a40ff8c2-0095-4e42-a18b-76e6afe0d290" x="0" y="160" width="400" height="50" style="Barcode">
-			<component kind="barbecue" type="Codabar" drawText="true" checksumRequired="false">
-				<codeExpression><![CDATA[$P{Code}]]></codeExpression>
-			</component>
-		</element>
-		<element kind="component" uuid="9f4c02e5-65c8-4666-b20b-fcdabe863b6a" x="0" y="220" width="400" height="50" style="Barcode">
-			<component kind="barbecue" type="Int2of5" drawText="true" checksumRequired="true" barWidth="3" barHeight="20">
-				<codeExpression><![CDATA[$P{Code}]]></codeExpression>
-			</component>
-		</element>
-		<element kind="component" uuid="b566897b-ff4d-4a89-a9ed-de38db807f14" x="0" y="280" width="400" height="50" mode="Opaque" forecolor="blue" backcolor="yellow">
-			<component kind="barbecue" type="Std2of5" drawText="false" checksumRequired="false">
-				<codeExpression><![CDATA[$P{Code}]]></codeExpression>
-			</component>
-		</element>
-	</title>
+<jasperReport name="BarbecueReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" whenNoDataType="AllSectionsNoDetail" uuid="1d7cf054-80bc-4b63-933e-e2f7736c3e3f">
+	<style name="Type Title" fontName="DejaVu Sans" fontSize="14.0" bold="true"/>
+	<style name="Type Note" fontName="DejaVu Sans" fontSize="8.0"/>
+	<style name="Caption" fontName="DejaVu Sans Mono" fontSize="7.0" vTextAlign="Bottom"/>
+	<style name="Serif Bold Italic" fontName="DejaVu Serif" fontSize="12.0" bold="true" italic="true"/>
+	<group name="Dummy">
+		<groupHeader>
+			<band height="140">
+				<element kind="line" uuid="6ef683b5-e354-4fe0-a9df-8ac96bd9082a" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="e2e11563-7a3c-41c0-a934-bf0fa76d505d" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
+					<text><![CDATA[Barcode Sample]]></text>
+				</element>
+				<element kind="textField" uuid="85dc966e-8084-4441-ba86-3926ef9b72cb" x="0" y="50" width="515" height="20" fontSize="12.0" hTextAlign="Center">
+					<expression><![CDATA["This sample uses Barbecue Version 1.5beta1\n" + ""]]></expression>
+				</element>
+				<element kind="textField" uuid="6e11e2f3-0ed2-4b0a-b063-4aabe40bdbd2" x="0" y="70" width="515" height="20" fontSize="12.0" linkType="Reference" hTextAlign="Center">
+					<expression><![CDATA["http://barbecue.sourceforge.net/"]]></expression>
+					<hyperlinkReferenceExpression><![CDATA["http://barbecue.sourceforge.net/"]]></hyperlinkReferenceExpression>
+				</element>
+				<element kind="staticText" uuid="8f568064-c266-54ab-aeb1-472a17174fb6" x="0" y="100" width="515" height="30" style="Type Note">
+					<text><![CDATA[Each of the following sections shows one barcode type, first with the default settings, then with each setting supported by the type. The caption above each barcode lists the settings that differ from the defaults.]]></text>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="930cb9fe-1087-58b5-9e25-43125a6eb2b5" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="caaf80c8-b5ec-5c18-8ac3-37fbec2d8573" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="2of7"]]></text>
+				</element>
+				<element kind="staticText" uuid="65aaa40e-c2f1-5dea-bc77-e133d20dcbf0" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Same symbology as Codabar. Digits and - $ : / . + between the start and stop characters A, B, C or D (A is used when they are missing). Code: "A0123456789B".]]></text>
+				</element>
+				<element kind="staticText" uuid="8f8fa7c4-816a-5c3b-8e5c-3ec969e6e7ca" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="b590fc72-b91f-515f-a84b-fa0d88214281" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="2of7">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="701ebe7b-1ae4-552c-aa5a-68d9de0216c9" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="faeb7302-6624-5876-8d2b-9853f90ec6b0" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="2of7" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="403ef450-e1eb-5a67-81fd-000f2d6afa4c" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="b99cda25-c03c-5308-aa41-5e7cb31b6b26" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="2of7" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c5678f47-7309-5bcd-9d90-cc797fa7b8bc" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="1ff97c4c-3122-5deb-bc52-145283d9f474" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="2of7" barWidth="3">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a1def88e-d779-5ec8-9c98-4e4b74f3bc2c" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="65d74b0f-c483-5cb5-a028-c9ca922037a9" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="2of7" barHeight="100">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="43b544b2-e011-5873-9aae-390519b40c47" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="56be13d7-ee6a-527f-a25c-3aa681c2b30a" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="2of7" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="15c4fa07-148a-5640-ac50-6975ceccbb80" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="66bbc225-07fc-5d91-910d-b82161e79990" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="2of7" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="56798a48-a7b2-509a-b489-2236eabca549" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="74bce12c-29e5-552d-8196-484b8dd4f8b9" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="2of7" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8f722c7b-a1ed-5601-9547-556bbcb844a0" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="8c5c098a-3432-5600-a923-b18166b83ea7" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="2of7" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="669cca89-6563-519a-8db0-0155c9ffcc86" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="9fbbcc32-d7a2-5f5b-881d-248f91d85461" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="3of9"]]></text>
+				</element>
+				<element kind="staticText" uuid="abf798f2-e9fb-5392-bbff-67ccf42f1168" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Same symbology as Code 39. Upper case letters, digits, space and - . $ / + %. Code: "JASPER-123".]]></text>
+				</element>
+				<element kind="staticText" uuid="3a44fbde-9ef1-5757-a137-89ee0a165883" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="9ccd2330-6408-5d72-93b6-5a165d6a01bc" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="3of9">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7fd1fb5f-1cdf-5d2d-a521-73e61fd85e03" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="fd01b4ef-91f3-5be2-9597-42c7a222ef29" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="3of9" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="359a5f56-c896-5c3f-b84c-97c8791043fe" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="d18192ce-9943-58d0-ba45-8f9dcd1f6b7a" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="3of9" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ccf2f8d0-06ca-58e2-8cdb-c5e271f4a213" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="6fd88540-7d02-51ed-91fe-6c23e7027e23" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="3of9" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dab8ea38-8d77-5d90-989a-4d05bda55b45" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="1e45959b-14dc-584a-9707-77c516896fbb" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="3of9" barWidth="3">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7b9d73c2-fd2e-5b16-a054-25bb83df0b3e" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="fa31fbc3-d230-5bad-a1e1-b78aad9b62a6" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="3of9" barHeight="100">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7b8e06ff-21c2-52ec-84c3-c6d4432cd8cc" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="b6d87630-01ea-5ac0-a726-f1db25a67303" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="3of9" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b2bb3f73-833f-5191-894a-11ced6db6a74" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="28bd387f-426d-5f7e-b232-b26d0fa71ba5" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="3of9" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="27817cc5-b624-561a-99e0-d67b00a9afbb" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="22445ec7-c7a2-554e-ab2e-4f47664f2498" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="3of9" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8ab7da07-29ac-5b1f-a997-7e51e63e4f8f" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="d7e29f8c-93cc-5d88-a443-46de4c05e147" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="3of9" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="ee7a5cd6-a3c5-5cfc-8c2a-23270e8ddadc" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="1fc2d5e7-e5a8-5471-acdd-d1fe6420afa6" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Bookland"]]></text>
+				</element>
+				<element kind="staticText" uuid="d7f69bd0-06db-534d-b4ec-faf2d9554caa" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[EAN-13 for books, made of the 978 prefix and a 10 digit ISBN (dashes are removed), whose check digit is replaced by the EAN-13 one. Code: "0-306-40615-2".]]></text>
+				</element>
+				<element kind="staticText" uuid="6a28f1ff-a25d-515c-be14-08fba841ed61" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="a5f64e1d-4533-5e48-a374-be3cd1f4b572" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Bookland">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f1993cf8-175d-5698-9e4f-b7fec28f0f61" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="c8b007a7-fe77-5cc2-83ce-52b8f5ce0477" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Bookland" drawText="true">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="14314568-c903-596f-ade9-7521a96337c7" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="a453a3b3-53b8-5e32-85dd-fed0b703c7c8" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Bookland" drawText="true">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0089a032-1da2-5216-95d6-5bb3a99f32db" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="a1347da0-5d01-5da4-b9a5-a4b92bc4a532" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Bookland" barWidth="3">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="022aa6c4-2400-5ee6-bb83-59a3ca0ebedc" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="6ff85e41-4da6-5ab9-a835-b9803e899e64" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Bookland" barHeight="100">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d93b61a5-079a-500a-b3aa-ccb3976107ca" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="055f5675-f3c0-59df-a3b8-16828940b6f9" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Bookland" drawText="true">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0f649384-c1de-56f1-a357-88ab3530f099" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="99b25278-fab4-5b0c-b94c-92ee036adcf0" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Bookland" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7294166a-146e-567d-b2a9-2e4ad5de1055" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="9c451d42-9b09-59fd-bf63-547e2eba405f" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Bookland" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f39224cb-b581-569e-8293-5241aa406b58" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="207110c5-0efe-540c-b3ec-83d37d42dbb2" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Bookland" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["0-306-40615-2"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="e1105282-159b-5eca-801d-e413474e0ac9" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="e1f86557-0874-504b-a153-efc947c229d1" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Codabar"]]></text>
+				</element>
+				<element kind="staticText" uuid="173f5d7e-dbf0-5d39-aaf7-13725572a1a1" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Digits and - $ : / . + between the start and stop characters A, B, C or D (A is used when they are missing). Code: "A0123456789B".]]></text>
+				</element>
+				<element kind="staticText" uuid="0953c474-95d4-5db9-bbbb-610a9c070055" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="f434deed-af09-5236-8e8b-2e7419cbf87b" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Codabar">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dd02ddcd-0e66-5ec8-9b30-4a78df8584bb" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="30a3715f-220d-5398-a5c0-15ae4ac84d0d" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Codabar" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="be345988-eab8-5ccb-bed5-53688c8d136d" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="b8adf37b-3589-51c5-be62-7a77beefa5dd" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Codabar" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8d57706c-7eca-5b06-863a-9b1971b93a5e" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="c8b0e1ea-7476-5dad-98de-9955d2f14f5e" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Codabar" barWidth="3">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2ba480ce-5d16-5192-9196-555f76c9c592" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="8e7754d2-ee9b-53e1-b3b6-a9258ef79838" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Codabar" barHeight="100">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4092d7dd-b123-50e4-9b75-499f733dcab6" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="5061df1c-502b-5f12-bb1c-1291d760cd32" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Codabar" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="179d3592-607e-5a95-b741-91d54b0835ae" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="4ecbb33f-7277-5e2e-8c47-f8d98d06c220" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Codabar" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5a999dca-afef-543c-9687-de048e5b4caa" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="3e9a69cb-1195-5a46-8313-da53fe55f067" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Codabar" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="882ea436-ccd4-52ff-82e1-37ae367f6eae" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="e0ab1243-b110-526f-a5fc-ccef2678ae7d" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Codabar" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="1bc8287c-99df-5b6e-b7bf-e2b23f3ab6de" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="80724356-e839-52f4-9acf-b8070c466453" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Code128"]]></text>
+				</element>
+				<element kind="staticText" uuid="744d8b96-af1d-525c-9768-09fa178273ab" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Code 128 switching between the A, B and C character sets to get the shortest encoding. Code: "Jasper-12345678".]]></text>
+				</element>
+				<element kind="staticText" uuid="30609ebb-19ce-587d-ab21-06e36acd2fe0" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="9412b4b7-d142-53bf-adaa-cf0f45f67442" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="522df65c-ac84-57e7-b8cb-d24dcd1bdf4d" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="ab443a3f-3693-5a6a-93d4-139d90364b1d" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128" drawText="true">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f6d673e0-b6c6-5a35-9de1-e540a0fb52b1" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="2b6afc97-5673-53c1-8b3b-5d340b8976ab" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Code128" drawText="true">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a6f0118c-593d-55fb-a3a3-4c06e1dd2a3d" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="ca77d264-cf70-5832-864b-1d6dec1e6000" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128" barWidth="3">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1f6ca948-b894-515e-8096-3589d95ae4db" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="072374e6-1605-59db-a2bf-88ac81087737" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128" barHeight="100">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4e5db182-d2d3-5ee5-9a87-0ca167532084" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="e2ac76b5-23e4-5b2d-b6d3-def13e21c45a" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Code128" drawText="true">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="729f29ea-65b5-5b85-80a7-fcddb3cf3519" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="bc9c3b6b-d50d-5be0-9e2c-3bbfc044b2fd" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="68c12fa4-9ef8-510f-8f11-e7699b661c04" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="41163800-658c-591d-aaa2-10b3eab773cd" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1fb3a9ca-5eaa-5ccb-aa11-2ab3c58632b8" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="59ac3c7e-1bf9-5ac7-96ac-1b3272121cea" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Code128" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="f64d071a-f30f-5306-b8e0-647a1a0d08c2" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="cdf7277a-77d0-58f2-b23a-87073322b82b" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Code128A"]]></text>
+				</element>
+				<element kind="staticText" uuid="f6ebebed-6e0a-59e6-accd-bcddebc9a452" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Code 128 using character set A: upper case letters, digits, punctuation and control characters. Code: "JASPER-12345".]]></text>
+				</element>
+				<element kind="staticText" uuid="8de861d9-0767-58b5-b086-92bc8123e42e" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="5486b630-f2e9-5268-a44a-c7768972f926" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128A">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="17ec47b1-d659-510f-9497-c32d8abc3c02" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="27d68362-7b60-577a-8d8a-92c4dfbf94a9" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128A" drawText="true">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="47dcee27-0303-50fa-9daa-ac5006ab2088" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="867fc559-e2d0-5528-bab7-975cea1156c9" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Code128A" drawText="true">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="59088645-fe58-5f93-91ed-dc7b650db479" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="c72af121-9852-5f4d-ae61-91d209e840b8" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128A" barWidth="3">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a5c24322-6f39-501c-916d-d48ccf0f0d2a" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="bc2564c5-ad68-5c9c-a0b2-f5d43614a959" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128A" barHeight="100">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cbb003ee-71bf-5eac-bc25-67fb9064c523" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="1d6f2e14-dc1e-5b77-86d4-3b290a568f97" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Code128A" drawText="true">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c0a046f7-53a4-5708-b2bc-6b18a8c907a4" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="f1062799-9d1d-5024-b020-11b4db07b4d0" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128A" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="edd9a055-b666-56f6-9acb-e9c38ef2940c" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="2638e92b-07e5-50fa-a45f-def7e55fe889" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128A" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5148f9f2-f627-520c-b02c-4f120a3b722a" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="271075cb-899c-5e09-85ee-38336442f098" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Code128A" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["JASPER-12345"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="787502a6-ce18-51d8-bd40-f56721842cfa" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="163e52ff-3e0d-5f23-8b9f-3e844d08b6d9" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Code128B"]]></text>
+				</element>
+				<element kind="staticText" uuid="267425ae-f164-5563-97b6-cd6b769beec3" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Code 128 using character set B: upper and lower case letters, digits and punctuation. Code: "Jasper-12345678".]]></text>
+				</element>
+				<element kind="staticText" uuid="e25ada1c-d95a-5ac2-9e54-15bd03732e53" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="79827dcc-3f3a-54c3-8b02-887b5b1b0afb" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128B">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b9fb4017-8a81-5227-bddc-6752106846b6" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="5333818a-eac5-5bc7-a88e-d81c333c3af8" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128B" drawText="true">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="27804f24-b146-51a2-8928-27dc703612c1" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="00f0d98b-fb67-5e71-a68c-52f06c8345b5" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Code128B" drawText="true">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5291d226-e8fd-56b0-911e-55c23a89fc3a" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="367e1b45-7cac-5618-8b64-66fe65be5f3d" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128B" barWidth="3">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="327081e1-53b7-5c66-b1be-a78c02b3bd7f" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="de765098-48de-5993-81e1-f7367fa680cb" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128B" barHeight="100">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d017a7b0-45ce-5be2-a60f-4a5d061548fe" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="0bb17378-7fb1-59ab-81d5-a1e4d50b5634" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Code128B" drawText="true">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4e0868e2-cec0-5765-b1f5-10e6cd27226c" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="2ea971bc-759c-5b98-a1b6-00fcd2d53e0b" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128B" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dec8f505-2bb4-57db-b445-1f91bfc0269e" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="a09f0684-3dcf-5a20-b515-a1180d43eae1" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128B" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="545d6679-41e1-59dd-95cd-d6eda40f389a" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="8a0bbe42-5af2-52cd-8e80-c00ece52b0b2" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Code128B" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="5ddc7a92-b6fd-5772-bd1e-5d76b7372028" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="13151f59-d100-5e89-a4ad-9074cc201997" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Code128C"]]></text>
+				</element>
+				<element kind="staticText" uuid="4c250887-d4c7-5eb7-bcc3-ad5ca6766726" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Code 128 using character set C, which encodes pairs of digits. Code: "0123456789".]]></text>
+				</element>
+				<element kind="staticText" uuid="c0abc2f3-ca08-5f66-b2fd-0314f06f3bd6" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="a3d6e88b-088c-5232-ac60-2abe2424fc39" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128C">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="48048361-03f0-5fee-a1b0-5630ee87dd70" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="7d090501-ece7-5671-a4b4-1cfd90cd89e6" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code128C" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6d51132e-b12f-5f5a-b20a-751f7fd52cc8" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="d6354d8d-f84f-530b-b636-53faeb01061b" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Code128C" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d81bc3e2-4dd7-5fa9-b40e-dca86acf2147" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="f1a84659-f717-523b-b085-1d4bf9899e8f" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128C" barWidth="3">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8ff67982-0346-5358-8ba3-45cb7c101bf1" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="06143b52-03ce-5075-a5d1-1ef4feff5629" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code128C" barHeight="100">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d3e47a09-2fb8-5633-aa80-0f3f200977d7" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="c6f2d4de-8d0f-5f13-b9ba-a475f92590e6" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Code128C" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d66521c4-c644-52d6-b665-e6c050183f9e" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="96d248be-43c9-54cc-b3aa-5ebca1c69e74" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128C" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e64f7cff-494b-5be0-bd56-eb82594236b0" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="26abcccf-bb00-5b19-ae6e-40866f91d406" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Code128C" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f684c464-19d1-59e6-a387-70d0c459990e" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="bcb750d9-41c2-59d4-b80b-63ab8928d5b7" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Code128C" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="ef9ceb5f-18a2-5b9a-b325-e55214854ade" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="f4afc32d-235a-5a2d-a3e3-70244a992dc6" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Code39"]]></text>
+				</element>
+				<element kind="staticText" uuid="be2c74f2-c417-5c2c-84d4-9d54d8308ced" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Upper case letters, digits, space and - . $ / + %. Code: "JASPER-123".]]></text>
+				</element>
+				<element kind="staticText" uuid="68793823-8e1b-5ff1-befb-93e488a65694" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="9f824183-4ba3-505a-a06f-c3a02ff54950" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code39">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="04f25523-b37c-5d10-904b-cd4f9434454a" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="11fcb2e1-a892-58ce-8166-f07c3ea402b4" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code39" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b9325a90-8877-50d0-a5c4-724cc35c33d1" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="8869b9a2-e6de-5817-8d0d-13a1baef872b" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code39" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="33e8e0d4-73c8-5f6e-8c18-a754d3a26a9c" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="7d247a82-aab4-5d87-88f0-2005bc2fe2da" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Code39" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="624d305c-b373-5c68-80ae-63e009781c18" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="67195a9f-0d6e-575a-8e56-3876eba99ed8" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code39" barWidth="3">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d607614b-9059-56ac-9696-4785d1075ccb" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="cf7632c4-1f85-58d0-9e96-22969b22538c" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code39" barHeight="100">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f94e753d-ec29-5c84-a677-309689f09139" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="937491f2-8393-53b9-ae87-ac865c1e79ef" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Code39" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="da6b80e2-f879-53eb-9e84-15af2012abf5" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="859a11db-f9da-5e48-9c37-67846ba96871" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="Code39" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="788a25e3-41f6-55d2-9b56-06b2ef2bb4d3" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="0805780d-197b-58e9-b06e-e09c3a5b169d" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="Code39" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7e6b85dd-aff5-5d67-b18f-befda9175d2f" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="24203a4b-6561-5d83-ac1c-560643590441" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="Code39" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="77ec8bc3-4054-506f-89e1-1a019d8eda87" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="25c9ccef-e5d3-5a2d-b360-cdd3ec5a3ed7" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Code39 (Extended)"]]></text>
+				</element>
+				<element kind="staticText" uuid="50d810d1-9074-5ac4-85e2-556042d9ee9d" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Code 39 encoding the full ASCII character set, using two characters for those outside the Code 39 set. Code: "Jasper".]]></text>
+				</element>
+				<element kind="staticText" uuid="85166857-1d3c-5c59-b469-7974d43fa8f5" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="2b901fab-2a6c-52f4-a8c6-2b96cba951af" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code39 (Extended)">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="956e7c31-2199-538f-9826-62b0465268e8" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="5e1dd6eb-0906-50e8-a903-a432ca8ee685" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="25b033c9-1540-5d54-97e5-002866682825" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="e93828bb-e30b-569c-b437-855cbd016060" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9146da5e-be5f-55dd-a190-fc14c475c48b" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="7fa119ad-1bc6-54e3-9848-94c5c73cc612" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e8b0d2d9-ff15-5c5d-a106-e09172a4b319" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="3c5a2865-433d-56e9-b2af-4aaf6a51f8f9" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code39 (Extended)" barWidth="3">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f8748ca1-4fa4-5570-a71c-9287d1dace20" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="2b53dffb-7395-5b07-ab13-a6dc70fc604e" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="Code39 (Extended)" barHeight="100">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="02136aed-50d1-5b5c-9f46-6e6f6745b966" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="03a7dbda-7ac6-5917-ab78-e4f0f1d3c674" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="75d2874e-7fe0-5de0-8d4e-789346841a8b" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="bed3cf15-f484-5055-a150-8b2198ac1f11" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="bdf1a474-a5ac-5013-ac99-004eb01c80d1" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="0536eff0-8702-5919-9a6b-7767a2775cdb" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a3005b35-df0e-595d-be51-00776549b257" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="54b18f2c-f5d0-5e6b-b97d-6fae4d98143e" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="Code39 (Extended)" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["Jasper"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="2a328bc1-7df6-53bf-a7f5-05b83b8af79f" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="f0e0a57a-4bb9-52d3-8f34-891caa55148a" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="EAN128"]]></text>
+				</element>
+				<element kind="staticText" uuid="fe980b7b-a4e7-5ec5-b520-e91fee7afa3f" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier 01 (GTIN) prepended to the data. Code: "0950110153000".]]></text>
+				</element>
+				<element kind="staticText" uuid="7de73623-7e14-5830-a823-ef0839c9f338" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="41da0a6c-c222-5c75-8862-df7b8abae047" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="EAN128">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="55c3ff8f-e428-5c66-bbf5-2a72f2cdd70b" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="53a19d1c-7e60-5c76-b182-c6f3cbb876bf" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="EAN128" drawText="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9d44b81d-9d9f-5f02-bb73-a799072bc0d1" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="ab4aee32-df0b-54fd-8cda-cf01af9d3820" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="EAN128" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="280edef0-3d23-59fa-bad2-1e451ffeeab5" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="e7a89242-cb7b-541f-ba14-625872110a5b" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="EAN128" drawText="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cc25a3e6-1cbe-520f-8cf7-e5ba9947d05f" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="cce27f92-de69-5902-a414-3ad146547ce1" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="EAN128" barWidth="3">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="60c5f943-3446-5adb-9388-501c2b6baf5f" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="bc110619-2021-5d7f-8e10-c44312fe3ab7" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="EAN128" barHeight="100">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8a45cbc7-fbd2-5b46-a3fb-feff9d3ff6c4" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="4751e951-0099-52ee-8261-25d646b50a90" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="EAN128" drawText="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cc831b98-9f55-5174-b3fe-cbeb3af18846" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="8b728684-0106-58f8-a032-26e96a999973" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="EAN128" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b8618ec0-68d6-5127-a689-81d7c1e86257" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="8aba2c1a-63c9-546f-98b5-c85857160b37" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="EAN128" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c48a0567-b81c-5876-b261-d23e91af9b8a" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="391ae6d5-8f56-53b7-ab80-1a12df27c02d" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="EAN128" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="729294ff-c9df-5fe2-9c0e-a487dbcb1378" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="6a47020d-61c7-5927-b694-a7e36c11dbeb" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="EAN13"]]></text>
+				</element>
+				<element kind="staticText" uuid="8ea2f590-b98f-586d-9fee-1d2a2fc356ec" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[12 digits, to which the check digit is always appended. Code: "501234567890".]]></text>
+				</element>
+				<element kind="staticText" uuid="7d5781a5-2faa-592f-97e1-88bee2a98d0d" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="ed7488a1-5512-5658-8449-db7425301733" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="EAN13">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8f87a519-2c66-5042-9178-6a45a903fd3e" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="1713b1b1-a036-5418-9f65-58911cc6b429" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="EAN13" drawText="true">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="601dcf32-6a44-5fb2-91d0-52bbb946d04c" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="f083e050-07e0-5893-af33-e14a43d5cb52" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="EAN13" drawText="true">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a36db219-c087-5158-8f11-aadcbb6f3e48" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="f84b5b98-c255-5fa0-ab2c-ccba599749c1" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="EAN13" barWidth="3">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e75d809a-392c-55e3-b77d-732f95511941" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="10102ceb-b286-5b3c-be32-6f9ed8ee903e" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="EAN13" barHeight="100">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="55a61605-78b2-5cc8-a9db-891a7b258a11" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="94e6103e-e12e-5a72-9eb4-00e569c80f22" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="EAN13" drawText="true">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e5186fbe-6667-5fb5-9403-733ba83ca424" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="ea1a07bb-3f61-5055-af47-b05003b526ba" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="EAN13" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1c1cbc33-ad14-56f1-b72e-047d4275e2d2" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="b7b593a1-21f1-55ea-b215-5a2e0eed231e" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="EAN13" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6e42975b-15ce-589c-beea-d64c7eb0ffa0" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="e55e61c1-57a2-5bff-a471-f58a59403bf2" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="EAN13" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["501234567890"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="1d53d2c7-3c49-5a1c-b538-23f8dd5f0ebd" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="42735891-8f32-5705-ad85-ed1f006a428e" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="GlobalTradeItemNumber"]]></text>
+				</element>
+				<element kind="staticText" uuid="de9f326a-ed0d-563e-a7ab-aac525ad4a99" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier 01 (GTIN) prepended to the 13 digits, to which the check digit is always appended. Code: "0950110153000".]]></text>
+				</element>
+				<element kind="staticText" uuid="3c01f0ac-7e96-5f6d-8398-97d65c064a47" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="842ebbfc-ac74-5c12-b6ca-f9a4d0fbe193" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="GlobalTradeItemNumber">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9d02bf94-4237-5b7b-b491-8c9d10e98863" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="add07da3-6df3-558b-bfce-f3dd6dee56f3" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="GlobalTradeItemNumber" drawText="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="70a4abeb-aa9a-51e9-acf7-4cefb71dbd6e" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="61a56e47-b330-5f63-a8b1-7a059b55378c" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="GlobalTradeItemNumber" drawText="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c4c5837b-2e29-5939-ae59-d3eeac9cab58" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="8292ce5f-0cba-5141-bc85-cacdb1b9804c" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="GlobalTradeItemNumber" barWidth="3">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c01860a2-c761-51e0-9431-12f8688d4748" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="ab419d07-e904-536f-a60a-c16e18f9b8f7" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="GlobalTradeItemNumber" barHeight="100">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e97c617e-21e7-5f64-841f-9af50b618ae7" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="b48b689a-6193-5e43-ae6d-c66df7c324f6" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="GlobalTradeItemNumber" drawText="true">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="27dc0c6f-24dd-529b-90cf-bc86666a2867" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="7dcc48f4-1d2d-50d0-aed9-aaa93cdb4b38" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="GlobalTradeItemNumber" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="338e1ed5-2ba5-5171-9fe1-79740c38f1d2" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="c3e08f4d-ca5f-58bc-b874-7e5adff26ef2" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="GlobalTradeItemNumber" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d12868e1-67bc-5f3e-8476-79e4f03ef269" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="8206a44a-c8d5-57e5-940e-fbc708baa6dc" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="GlobalTradeItemNumber" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="c45b8414-c8fb-5bdd-9155-110af57dd294" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="f9990664-5864-5d95-938a-e8ca4b85ae28" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Int2of5"]]></text>
+				</element>
+				<element kind="staticText" uuid="cd2082b9-ed8b-5ee4-a1a8-b0f8aea0f62c" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Interleaved 2 of 5: an even number of digits, the check digit included, so the checksum variant uses one digit less. Code: "0123456789".]]></text>
+				</element>
+				<element kind="staticText" uuid="7e6e17c7-0ff2-5e0e-8389-d8b713e894d5" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="a09192e2-2300-5790-9a0e-c4fb34470092" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Int2of5">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="25c44d62-2a57-5cef-a576-daeaa8101a9d" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="ebd7e62e-ab59-5552-b150-0a109c6d104b" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Int2of5" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="504c28a5-eb8e-53b1-9d34-7d339d26d1cb" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true", 
+code="012345678"]]></text>
+				</element>
+				<element kind="component" uuid="82f1bbde-ea58-5b22-b051-a67a50e88979" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="Int2of5" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["012345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a13db4d2-c2ff-550b-a441-990640c6b915" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="1d8c7f61-3566-5e9b-bbbf-a8578bb02dfc" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Int2of5" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="426273d7-6284-52d2-93d3-9be9a56c1d19" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="20f30ffb-8027-56d2-9c4f-c16de8543a13" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Int2of5" barWidth="3">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5f655d79-4a40-5e3b-b347-406f2d16d00b" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="6ef1f589-3cbe-52d4-bd05-2332b592b638" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="Int2of5" barHeight="100">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="673078e3-b7ec-53f9-b635-c1652758c267" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="83e37513-3317-5233-b759-dce2bf4b28bb" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Int2of5" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1141e771-4450-5b16-a7a3-dcf9ebe15b40" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="083422e3-69d8-5f47-ab3e-159c1e5c73cd" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="Int2of5" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4c69ba17-cdf2-53fd-9e91-28b5d9628d54" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="0fb6bf97-1b73-5128-977b-4f6af19731ee" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="Int2of5" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="897e1d5f-1530-5f3d-9a6f-930b574b8bab" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="fe1ea930-5527-55b7-ae7e-3863b6c35391" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="Int2of5" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="43afc872-3486-5b72-95ec-5ec19dc1314d" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="b976ba19-8950-5d79-bf97-cd28ca0eef5f" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Monarch"]]></text>
+				</element>
+				<element kind="staticText" uuid="1af2a1eb-563d-5526-9eb7-aa7b870a5bd9" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Same symbology as Codabar. Digits and - $ : / . + between the start and stop characters A, B, C or D (A is used when they are missing). Code: "A0123456789B".]]></text>
+				</element>
+				<element kind="staticText" uuid="64522218-5b94-56b8-a646-dd22bf01439b" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="9a64b2d4-9abf-57eb-b7be-28283a486f8b" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Monarch">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ad0a79c7-5660-597f-a22f-5ec7d8faf552" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="1711bcf2-cadf-5cb6-8dda-20f1da047bee" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Monarch" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8c7760c9-f88e-50c3-8e37-e0f15cd8df1c" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="931b3631-a95b-5814-9e95-baf95934459a" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Monarch" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7b902d0a-e1b8-5b8f-85cf-b9c4f22ae132" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="d42c576c-ba58-5534-a5a0-70efb4bd236b" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="Monarch" barWidth="3">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="844c9987-ae1d-5908-a223-f20b8dc68068" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="a3b8b8de-58d9-5ea1-805c-358546eabf89" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Monarch" barHeight="100">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="347bf2ef-b844-5e58-bea3-94f1500100ae" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="88aa85fd-8fd7-52ee-bd48-1370c0119334" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Monarch" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="fafd961f-38a4-56ff-96b8-26c02632d70d" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="7d24e551-b06a-5865-8cd8-6b54273ea494" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="Monarch" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d122c3be-64bd-54c9-a548-cb29c4f54c8a" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="23aaf2e6-7372-5eb0-97d2-51081383c388" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="Monarch" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3d04a757-9f62-5316-98bb-b8be879f882d" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="3f744763-2d4c-5a46-a935-02fe0f81e09d" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="Monarch" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="d82af5f4-81c3-51f0-8be9-4340a8bd614e" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="b64b2c2a-a163-552d-95d6-d7b640d7efe2" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="NW7"]]></text>
+				</element>
+				<element kind="staticText" uuid="8acdc175-d640-5f4e-8f5d-e1d2d6f9aede" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Same symbology as Codabar. Digits and - $ : / . + between the start and stop characters A, B, C or D (A is used when they are missing). Code: "A0123456789B".]]></text>
+				</element>
+				<element kind="staticText" uuid="464e67bb-2349-5ab7-ab81-d0bf28789562" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="8a21135d-0a42-50c0-b490-d4da2f255904" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="NW7">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e90297e9-67c7-5f8f-a593-e045c656ce37" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="be272f66-5cd9-586d-9a14-51c924c04f20" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="NW7" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="91448226-caf1-5667-a9e7-fc393abe2ad7" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="8902b44a-dee4-5e82-840a-196e070d6d2e" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="NW7" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b8180f23-05ee-5711-96e8-037a71505670" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="923469d6-461f-5334-96a6-dd7d46494de1" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="NW7" barWidth="3">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c5603815-5d39-5dee-9b3d-13e33f3fafbd" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="bfbb0d8f-9283-583c-8227-ad38030d36e2" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="NW7" barHeight="100">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="52ec3bd6-e8d0-54d6-8192-df96620fe290" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="ad3af01f-c499-5c2d-a6fc-37ebe464d29e" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="NW7" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2c4b99e3-569b-5631-9e7a-4e893ccac292" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="f12f7b1a-b7bf-529b-a7fd-cb0fe6c5110e" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="NW7" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="01c22d08-5c9e-5742-8bc4-5c25be59c1d9" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="7ca84c07-7e7e-56ef-87be-907cbd1ac2e8" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="NW7" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="70924188-2f81-50c4-8b0d-f8003dfb681c" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="a092581e-00c6-5a5b-a8a4-fae0e6fa5f09" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="NW7" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="1d036e69-32cc-5c40-a959-031676b1fc53" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="7a03e1d8-b3ef-5dcf-a3c1-1b5c6a736f78" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="PostNet"]]></text>
+				</element>
+				<element kind="staticText" uuid="8fe8a0c8-11f0-5129-a648-dabb57ebf99d" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[US Postal Service ZIP code digits. Code: "12345".]]></text>
+				</element>
+				<element kind="staticText" uuid="61536f62-1205-55a6-a56a-003b2090890d" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="20e3435f-58ec-50f5-81ba-b3e0b081522b" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="PostNet">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="67d4d75d-efd2-5786-a797-c0a88ca50cb7" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="bdbdc593-706c-59df-8313-3918e6793e06" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="PostNet" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="52772a96-3558-56a3-9511-9581d9dd7891" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="2d57257c-f6d1-5a4a-8f40-241405719495" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="PostNet" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="436fec9b-1fa9-5abe-aea2-f4ed899e60ce" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="fa07034a-300f-5371-807c-c67b22ac9db9" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="PostNet" barWidth="3">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8d149ff1-bc8a-52f0-9c88-e5175d0278f5" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="0394b002-0d2c-514c-bce0-6ac4917913ee" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="PostNet" barHeight="100">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="65a0bb19-f7cc-53ce-bc47-ec6c1e20fe3c" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="e856ccd4-363a-5d99-b72d-cf1b2e4a9472" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="PostNet" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8f0f6b11-6b46-5147-9eb6-2e9817296a71" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="88efb8be-9be1-5728-8180-799a61c64b39" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="PostNet" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="79a091af-7f7b-5889-aebe-fb8b066b4a81" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="d169180d-8a61-598e-b003-b6c3ff84f71c" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="PostNet" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c04d32dc-a430-58d1-9768-1ca65b72df8c" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="ff94eef6-1521-54a9-8e20-8bd1027e5bf1" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="PostNet" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="90a2e6e6-e88d-5d07-95e8-0bcc85f4add7" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="59bfe33a-4fca-52cb-898e-cff6833dbd41" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="RandomWeightUPCA"]]></text>
+				</element>
+				<element kind="staticText" uuid="13736c49-67d8-5d77-8cea-fe0362cbbfdc" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UPC-A for random weight items: 11 digits, the last four being the price, preceded by the price check digit, which is computed. Code: "21234500299".]]></text>
+				</element>
+				<element kind="staticText" uuid="7580d1e3-4266-595c-8a89-c15baed2978b" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="dadf9b1a-3a1c-508e-830f-c5f44935f2ad" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="RandomWeightUPCA">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f4e30e12-9a2c-5e88-b06a-f36eaa5872c9" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="9a75f31a-13d3-5a7e-b9c7-d3ff9262cc2b" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="RandomWeightUPCA" drawText="true">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4dcf057e-ce3d-5122-99ee-7211f6e8610d" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="466dc2ee-eb2b-523b-b96c-49ecbbd78a2f" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="RandomWeightUPCA" drawText="true">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f3fd6fe5-134f-5775-8bee-31a1d2565606" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="b50598d0-9cf5-5106-9415-f1b60ec4005e" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="RandomWeightUPCA" barWidth="3">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1fdd929c-d632-519a-8e1e-9321787ac65d" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="08f2600b-f3bf-56ff-a84d-81ada605cacd" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="RandomWeightUPCA" barHeight="100">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="87276a14-a744-58e8-bf05-cd0696e78a2f" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="024db1a6-665f-5a81-8fe5-cf0004fcf50f" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="RandomWeightUPCA" drawText="true">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6f498557-5994-5b5e-97a3-5b9d86d2478a" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="463c5b40-990a-5fbf-93b9-2ff57956c006" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="RandomWeightUPCA" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="46bb8a7f-8f6a-5da2-80a3-d4c1e2d373aa" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="c80abf09-9623-5edd-99e7-6d752ae810ea" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="RandomWeightUPCA" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9c9f3220-f59e-593c-bc5e-ae9053db69e2" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="923611cd-cbbf-5358-be5a-5113016a907c" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="RandomWeightUPCA" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["21234500299"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="6826c17a-0275-5ced-95df-e740970f09e8" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="4fe3080e-aa55-568f-a872-81dd1c97b21a" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="SCC14ShippingCode"]]></text>
+				</element>
+				<element kind="staticText" uuid="1f926c9c-298c-5639-b061-eef2ccea17a6" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier 01 prepended to the 13 digits, to which the check digit is always appended. Code: "1234567890123".]]></text>
+				</element>
+				<element kind="staticText" uuid="7a261070-7b6f-5675-a900-b81a21763fcd" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="cdccb116-5553-57a3-9a49-1e3f05cd7114" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="SCC14ShippingCode">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="aed99b39-7e55-52da-aef8-92fa5b398fdd" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="9026644f-904f-5c90-867d-2533b6c53bb5" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="SCC14ShippingCode" drawText="true">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b4e21e87-2fab-5f2e-bf93-75692cac51dc" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="7aa7ea9b-16d0-57d8-b11b-1f51a764ed39" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="SCC14ShippingCode" drawText="true">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e6fbf974-6472-5dec-b60a-32a3799a5409" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="bb529149-571e-5b0a-9e72-29e558cdb0c2" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="SCC14ShippingCode" barWidth="3">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4533927d-e242-57ed-9423-a2c3c00f9c52" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="7eb1c0cd-c79e-5f33-a2bb-5528e5e0b3ba" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="SCC14ShippingCode" barHeight="100">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b39f9297-1844-5844-ac35-2009de857924" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="18c11ac5-d636-55ad-ab94-a84d1c00d1f4" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="SCC14ShippingCode" drawText="true">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ffe9ac04-572f-5fed-ae3e-db87c27164b3" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="a99a5197-82ed-554c-884c-9c1791c82a82" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="SCC14ShippingCode" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0170649c-e737-56a1-bedc-d6ab7fbe0371" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="d67a361a-fb9e-5d75-80fe-d98c4d460b9f" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="SCC14ShippingCode" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="768d12db-fbe7-577c-92c3-bbb83c187f62" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="4a52300a-83d2-5944-8d3c-b5084f81b5ee" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="SCC14ShippingCode" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["1234567890123"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="84718391-72c5-5427-85d9-6dfcbfebf902" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="8383bd51-2193-56f0-8a1e-36fa6191dbb6" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="ShipmentIdentificationNumber"]]></text>
+				</element>
+				<element kind="staticText" uuid="af8f6a7f-d293-58c3-aa3e-e4716dccbf5e" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier 402 prepended to the 16 digits, to which the check digit is always appended. Code: "1234567890123456".]]></text>
+				</element>
+				<element kind="staticText" uuid="4560eae7-8c33-5872-9218-d1f5af3050f5" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="ac71ce68-299a-5a71-92bb-74c5b66c2cd2" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="ShipmentIdentificationNumber">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="48bf4b2e-6398-58bb-a390-f6f415a02450" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="60d4ce68-6aae-5fb9-ba1e-600deb993638" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" drawText="true">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="06099a6c-7065-551a-a341-235483fb8714" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="c8e5d9da-cd92-5f08-b491-a27709f3c624" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" drawText="true">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cc905c4e-b407-5226-af84-d7d0863a9ca5" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="9f294bfb-c8e6-5004-8ac3-759c2fab6102" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" barWidth="3">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1e9fc73c-eb58-595f-a1c3-929e44997a1f" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="339b866c-040d-518e-95ac-c595f8862473" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" barHeight="100">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0be9670e-9321-54bb-a596-d44e5805d0ab" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="deee6887-4e5a-57e8-a967-887a3910ae80" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" drawText="true">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="73ff85b7-5d1b-57c8-84e2-74d2275f6a50" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="30aa826f-1dbe-53cd-a9fe-2ff5597e7995" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="81e7acb1-86a2-55bf-aeb6-f6d07f62947b" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="9824cb8c-5ceb-52b4-8b01-6fbea94e1ec4" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dcf75429-2767-5b96-ad4f-6e7c8567581a" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="a48615c1-ebea-5137-b694-b8c2914bf493" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="ShipmentIdentificationNumber" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["1234567890123456"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="becfc3e4-f08a-54b9-8e24-0eff338726cb" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="15e3f6f4-897a-5dd7-b332-3fb01826fddf" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="SSCC18"]]></text>
+				</element>
+				<element kind="staticText" uuid="a089c6eb-5442-5032-9fd2-07fcd8a11dce" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier 00 (SSCC) prepended to the 17 digits. Code: "12345678901234567".]]></text>
+				</element>
+				<element kind="staticText" uuid="24419ee4-158f-5b8d-becf-5d46bfc37c1f" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="0d5a5a6d-057f-55c0-88ed-c9e0ec30baaa" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="SSCC18">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="776fbd00-2fd2-5204-a51b-39db428735bd" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="509ab956-1d9f-58bc-b863-f515faabc615" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="SSCC18" drawText="true">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="80b469e0-9283-5ada-9da0-a0aab5fbae05" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="9ec8685a-ac47-5fa2-a927-c5258b8c6250" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="SSCC18" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8fe661c5-c8ba-51ac-ad9a-f7108ac78594" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="5d7592b1-6bd5-564a-9ab5-6efb0a5bc5b8" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="SSCC18" drawText="true">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1c9f680c-5d2a-5afe-a15d-905c7a5262e3" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="bebded3f-cbd9-556d-95d5-8bdbf6ed020e" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="SSCC18" barWidth="3">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7d44604f-9198-5d4e-829e-62cc6b73ffdc" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="3ba5f2e3-fe52-55fd-8cb1-41aa4176691c" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="SSCC18" barHeight="100">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6c43ebaf-14be-5397-afe3-1fbb59f5d074" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="f991c103-ad5f-5ed4-9c9c-157d1c72c0da" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="SSCC18" drawText="true">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="57568c95-9224-55fa-9ce9-221411b70ee9" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="1e76691c-f809-5a57-ab21-ee2b26bfd01e" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="SSCC18" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e56626d8-f874-596d-a52f-a200a99c3115" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="201b6572-eafe-50e1-85bf-aef5cff7b2fb" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="SSCC18" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="861dd394-4df9-5621-af5a-c43cc858d641" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="084e180d-d469-5dc0-9ee0-822e2c7c9439" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="SSCC18" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["12345678901234567"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="dbb0975f-e387-5c40-9008-3a2df316b1c5" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="5911ecf1-35ff-516c-b99b-ad3dab0aaf4f" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="Std2of5"]]></text>
+				</element>
+				<element kind="staticText" uuid="0bdef1b8-2888-5f81-a121-3dbf3a82f006" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Standard 2 of 5: digits. Code: "0123456789".]]></text>
+				</element>
+				<element kind="staticText" uuid="b1ae400b-c40e-536b-89cc-36e8d1e71354" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="1c516ab5-f2fa-5ac0-9e1f-2cdfdf2fb749" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="Std2of5">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4371e08e-c4cf-519a-ac29-344675f24f70" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="16602078-786b-5ef3-8a20-a8413cdc20c6" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="Std2of5" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8ba1906c-c2c7-5081-b07f-ca063e240083" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="3fb00811-d99d-5160-83ca-fbc97071cd9f" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="Std2of5" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="70015df6-ea46-5ecd-a366-da4a481b56e6" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="d2299fb5-3513-5acd-af6e-0c4653c85b1b" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="Std2of5" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3d4d053e-511b-50d9-bb42-0be9105f061a" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="c2981a7f-eca0-5f26-9116-9131eecc5b45" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="Std2of5" barWidth="3">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="01df04e2-e32e-5aa5-94a2-0233d79e4b9c" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="fcbce60e-1a45-5970-a125-0f48c3dc10a2" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="Std2of5" barHeight="100">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7aa3387b-661d-5187-bbc8-6860837b2af7" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="9690ed1a-1d0a-568e-bd63-457467ef0d17" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="Std2of5" drawText="true">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1be2fd6f-97e1-541a-a767-ebf50581b58c" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="8b84d30a-bdf8-51e5-8ae9-e3a1d87039e5" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="Std2of5" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a137928a-1575-5e2c-b1d7-db92950e815c" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="ae3710a8-4afc-5328-832c-a68f31937e06" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="Std2of5" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9a06967b-638b-5139-b0f8-c7869792ce5b" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="3888b7a6-39d5-50fe-bc71-928a9f385b52" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="Std2of5" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="7fb2c0f8-e80d-5e62-995c-01b8d2cccb7f" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="5ad1b545-8658-559e-b0bc-396c36cf804d" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="UCC128"]]></text>
+				</element>
+				<element kind="staticText" uuid="35f9b04b-7b1e-5b3e-b009-372e6167ab6b" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier given by applicationIdentifierExpression prepended to the digits. Code: "12345", application identifier: "10".]]></text>
+				</element>
+				<element kind="staticText" uuid="1b78fe03-93a6-5015-a424-1f6906d41a45" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="794c7e60-f7e4-5613-92a0-9a06f0fef8df" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="UCC128">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1e0c02a6-6abc-546d-b097-aa847eb4a914" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="90271064-8f36-5fe2-adc3-f5f7a0e8b622" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="UCC128" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="01d891dd-b86e-5166-bfbf-d20ea1d2069f" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="a410bc54-1793-5e35-96ea-78e576b5f3d4" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="UCC128" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2cd27527-4bc4-5293-ab54-59fb622351b7" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="a0206847-e03a-5a10-be18-1a21d0b58abf" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="UCC128" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ae52799f-20cb-5b90-b577-d3db0dfaad8c" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="30fa2e03-ec67-5963-83b4-08148256f37c" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="UCC128" barWidth="3">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d41640bd-d333-5be8-81ad-7ce7a48f3409" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="5de87c8b-9762-5217-9703-28d868183542" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="UCC128" barHeight="100">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c3169653-c3ec-5090-9896-398c4f9e348c" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="56d30150-95bd-5094-993a-9a8a6a3b1f2c" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="UCC128" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="99964ae1-7fa7-53e6-aa00-6ec295846a7c" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true", application
+identifier "21", code "98765"]]></text>
+				</element>
+				<element kind="component" uuid="94c01566-54c2-5cbf-8126-354cf993d92c" x="175" y="261" width="165" height="50">
+					<component kind="barbecue" type="UCC128" drawText="true">
+						<codeExpression><![CDATA["98765"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["21"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="116a71f2-3a3e-5d72-a97a-c4090c4d14f3" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true", application
+identifier "15", code "261231"]]></text>
+				</element>
+				<element kind="component" uuid="9c319c05-f816-5277-b554-9b85d1cc5026" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="UCC128" drawText="true">
+						<codeExpression><![CDATA["261231"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["15"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="120c46ef-7d01-59ee-95e9-03317d12db5c" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="d5a4f87d-8a97-50f0-9421-02d5508d9cb3" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="UCC128" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3ccf2d93-8bfb-54c1-b8fa-dc2ae14a132b" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="88ccd02e-563c-5c72-b7ac-d2d0d0b8268e" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="UCC128" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3a3dce38-b709-577f-bcaf-0b4d66c942e9" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="714fc365-08ff-5789-8d7c-2dcb7a635115" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="UCC128" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<applicationIdentifierExpression><![CDATA["10"]]></applicationIdentifierExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="0b330da5-9658-5d96-990e-2e9726d74643" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="75752398-c387-5dc3-9bd7-9dcd8f3f2e3c" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="UPCA"]]></text>
+				</element>
+				<element kind="staticText" uuid="9ee39f00-15f5-556d-b224-db05a6b357c7" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[11 digits, to which the check digit is always appended. Code: "01234567890".]]></text>
+				</element>
+				<element kind="staticText" uuid="f176328e-d570-5a51-804b-7c28e46e999c" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="d4963e00-2f7b-5e03-a5d1-be59ee16cc75" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="UPCA">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e3098f70-bf46-5cba-b14d-544f19959f19" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="95f3322f-1705-5a91-b114-6ec046da64b0" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="UPCA" drawText="true">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7d077251-3e1e-58dd-a7e4-241157243860" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="30d15a26-f170-52c8-9cd5-7d9eca9de390" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="UPCA" drawText="true">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="81e8a453-63f1-569b-9be2-ead29eb8acc7" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="6264f93d-c604-5305-b8dc-748e1da4630e" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="UPCA" barWidth="3">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="58e6d96f-81d8-5b1b-ab3d-d24215e38f4a" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="302aa9d0-b380-5f36-9e76-0c5cf8513c4a" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="UPCA" barHeight="100">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="597c9f6d-7270-5533-afa3-b407b5298546" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="1b02dc24-f702-5c80-8bfa-6686aede754c" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="UPCA" drawText="true">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e09002a3-ecae-54e7-8c4f-6f16560995df" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="8daa7394-27e0-57b2-841e-da427fc1aef9" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="UPCA" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="22608159-c4ab-5ab1-8da1-f62f09da0c48" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="6edb956e-7b1e-555e-b103-e8cc2fc4d52e" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="UPCA" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8bc0b9bd-8565-53c5-81b0-ba8dfd1f964f" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="9b99dcc3-5f7e-5d6f-b16b-ae66c5888d4b" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="UPCA" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["01234567890"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="ce0f48ea-ea63-532f-bfa6-64103e31ea44" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="a9c634f4-f017-5cd3-82b7-709cc94bc494" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="USD3"]]></text>
+				</element>
+				<element kind="staticText" uuid="879b5bfc-e845-5f36-bb0b-da71e0a3fc1f" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Same symbology as Code 39. Upper case letters, digits, space and - . $ / + %. Code: "JASPER-123".]]></text>
+				</element>
+				<element kind="staticText" uuid="212feb08-c606-5d75-a6ae-276e10451820" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="7a2c6843-4cc4-567a-bcef-61eac4fc926f" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="USD3">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="bb260e4b-1c53-53b1-87d8-99f6e394eaf7" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="430fdcd5-115e-5da4-a7f2-1b954ee30b7f" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="USD3" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ced720df-fae9-53cf-9eb7-cc37a5bb1a8b" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"
+checksumRequired="true"]]></text>
+				</element>
+				<element kind="component" uuid="784ddac1-756f-5ec5-8925-4d46a0a9f302" x="350" y="87" width="165" height="50">
+					<component kind="barbecue" type="USD3" drawText="true" checksumRequired="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c9003f1f-78be-508d-8c44-e57de20b7a8c" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="e5ed56ac-0b4a-5ca6-90aa-6b859b87052e" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="USD3" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0273744e-7a74-50bb-b092-78b0f3a2e6e3" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="3c784cde-3933-5a20-997d-15cd7df38814" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="USD3" barWidth="3">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1e44e418-f487-5d1d-b760-315ac4886fa8" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="830b8bca-37d2-5f1a-a2bb-e62e2e95d804" x="350" y="174" width="165" height="50">
+					<component kind="barbecue" type="USD3" barHeight="100">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="fa5d52b1-f927-5a75-a488-5e72c3aef624" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="760a4e1a-2ef3-5d88-be4f-00108914187b" mode="Opaque" x="0" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="USD3" drawText="true">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c13b0b4c-a7f8-5dea-8d8e-040212e2c1fc" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="46c1ae4c-60ab-54fe-b5db-baa6216f20ae" x="0" y="348" width="50" height="150">
+					<component kind="barbecue" type="USD3" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="997d5556-2622-5099-891b-2f579a576ca8" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="bd668b40-2d26-5d7d-8f49-164115489b0b" x="175" y="348" width="50" height="150">
+					<component kind="barbecue" type="USD3" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="56d5282a-ac76-5465-8fd5-af5d02243ed6" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="b751fdf2-6579-5f29-92ba-2f47e6276d48" x="350" y="348" width="165" height="50">
+					<component kind="barbecue" type="USD3" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["JASPER-123"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="85563a25-1830-5d5a-af80-9687f06924e7" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="7d46cd84-d301-5d4f-b26e-6d64c60c434a" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="USD4"]]></text>
+				</element>
+				<element kind="staticText" uuid="2dd080a4-950a-5bf6-8b92-00b3dd182ec4" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Same symbology as Codabar. Digits and - $ : / . + between the start and stop characters A, B, C or D (A is used when they are missing). Code: "A0123456789B".]]></text>
+				</element>
+				<element kind="staticText" uuid="3945311e-da18-597e-9783-11944127b026" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="e6bed411-ce11-571d-ba0c-c51adb50fa29" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="USD4">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="918664af-8e25-5c92-b511-f743cccea14b" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="abed79fd-cb6c-5920-86db-665cda596e41" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="USD4" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f0412fde-f3ab-5a5d-a39b-7d55d9b01fab" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="c3587a34-baa1-5f67-b8ea-da80617c50b0" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="USD4" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c2207b8e-ca16-5ed3-b2a7-8a62ec94fd7a" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="e0d89a24-7273-58cb-bd8f-756299cf6b28" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="USD4" barWidth="3">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="78811423-8873-576c-9b2a-a60f72f5e310" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="5339ba65-9b59-5b9d-84b8-202de481503b" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="USD4" barHeight="100">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c41f9f66-18f5-55b9-9e70-b6b72361d63d" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="b12ab0d6-5c4a-5179-8909-f66b7abc32fe" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="USD4" drawText="true">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c56d6e5f-ba44-50c4-a4c1-c77df19299db" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="9ffa850d-5ec7-5111-b5ab-3dfc36c4ca6c" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="USD4" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9ba1bc7a-3b56-5b05-9378-1ab4a7f53f7b" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="e22334c4-56bf-5a9b-9690-7452d3d62123" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="USD4" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2c7a5dac-0ee0-53ac-a151-5ed19e3f9a55" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="82b28368-a87d-50a4-9b0a-213e0bb48c56" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="USD4" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="421">
+				<element kind="line" uuid="bacc83ef-462c-59bd-a043-635c1a4708e1" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="3125999b-37ad-5922-8593-bd517b25d4a4" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[type="USPS"]]></text>
+				</element>
+				<element kind="staticText" uuid="b06ae277-c6c6-5ff2-a9b1-20ea2a0f3d92" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[UCC/EAN-128 with the application identifier 420 (ship to ZIP code) prepended to the digits, to which the check digit is always appended. Code: "12345".]]></text>
+				</element>
+				<element kind="staticText" uuid="59c019f3-a30b-5bf5-b26d-b236662823b7" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="cb6c984c-cce5-507d-b349-1db35477384e" x="0" y="87" width="165" height="50">
+					<component kind="barbecue" type="USPS">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="eb6c8ab1-5879-587b-aeb1-9fccefeeae65" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="862ed42d-f006-5a2e-9ba1-8559278a2c05" x="175" y="87" width="165" height="50">
+					<component kind="barbecue" type="USPS" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c83e3741-40e8-5638-82ca-e3a237ce1d50" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="d4ed5db8-4636-5153-8d25-79c9d3051417" x="350" y="87" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barbecue" type="USPS" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e25e4fbc-05d4-599b-b448-91e9cb75bcc7" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="b96335f4-1322-5cb7-9894-3b32d8571358" x="0" y="174" width="165" height="50">
+					<component kind="barbecue" type="USPS" barWidth="3">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="56e0e45f-c26c-597c-8e2b-fe8d6fb40511" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[barHeight="100"]]></text>
+				</element>
+				<element kind="component" uuid="8d308590-d790-5ca6-82d9-cb37873a7c45" x="175" y="174" width="165" height="50">
+					<component kind="barbecue" type="USPS" barHeight="100">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="15b4dcfc-0a36-5d0a-ac4b-402e65e2f183" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699" drawText="true"]]></text>
+				</element>
+				<element kind="component" uuid="a7f447b5-abf8-56b5-8207-6b51b15770ec" mode="Opaque" x="350" y="174" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barbecue" type="USPS" drawText="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4380698e-af4a-50f2-a230-1b0481984947" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Left"]]></text>
+				</element>
+				<element kind="component" uuid="7418ce11-0d67-5db8-88dc-84150e0160c2" x="0" y="261" width="50" height="150">
+					<component kind="barbecue" type="USPS" drawText="true" rotation="Left">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e22884a3-9551-5d28-a92d-3ed1cfa499c1" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="Right"]]></text>
+				</element>
+				<element kind="component" uuid="581ba7be-da79-59d9-a8ec-5d16171c6e35" x="175" y="261" width="50" height="150">
+					<component kind="barbecue" type="USPS" drawText="true" rotation="Right">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="78c6f574-f9fd-5ecc-8120-ae1c19bc4a20" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[rotation="UpsideDown"]]></text>
+				</element>
+				<element kind="component" uuid="c59fb480-9103-566a-a7d8-e519173fca00" x="350" y="261" width="165" height="50">
+					<component kind="barbecue" type="USPS" drawText="true" rotation="UpsideDown">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+		</groupHeader>
+	</group>
 </jasperReport>
