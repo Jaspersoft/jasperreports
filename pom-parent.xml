@@ -232,7 +232,7 @@
 				<artifactId>clirr-maven-plugin</artifactId>
 				<version>${clirr-maven-plugin.version}</version>
 				<configuration>
-					<comparisonVersion>7.1.0</comparisonVersion>
+					<comparisonVersion>7.1.1</comparisonVersion>
 					<ignoredDifferencesFile>${basedir}/clirr-ignore.xml</ignoredDifferencesFile>
 					<failOnError>true</failOnError>
 					<logResults>true</logResults>
