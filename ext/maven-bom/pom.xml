@@ -21,7 +21,7 @@
 		<jasperreports.root.dir>${basedir}/../../</jasperreports.root.dir>
 		<maven.deploy.skip>false</maven.deploy.skip>
 		<maven.install.skip>false</maven.install.skip>
-		<enforcer.max.jdk.version>11</enforcer.max.jdk.version>
+		<enforcer.max.jdk.version>17</enforcer.max.jdk.version>
 	</properties>
 	<dependencies>
 		<dependency>
