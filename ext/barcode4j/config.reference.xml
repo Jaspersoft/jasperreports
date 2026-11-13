@@ -95,6 +95,21 @@ Property that specify the barcode image resolution (ppi). Default value is 300.
   </configProperty>
   
   
+  <!-- net.sf.jasperreports.components.barcode4j.legacy.code39.interchar.gap.width -->
+  
+  <configProperty name="net.sf.jasperreports.components.barcode4j.legacy.code39.interchar.gap.width">
+    <description>
+Flag that makes the <code>intercharGapWidth</code> attribute of Code39 barcodes be interpreted as millimetres.
+<br/>
+Before version 7.1.2, the <code>intercharGapWidth</code> attribute of Code39 barcodes was passed unconverted to the Barcode4J library, 
+which interprets it in millimetres, while the same attribute of POSTNET, RoyalMailCustomer and USPSIntelligentMail barcodes, 
+as well as all the other barcode lengths, are expressed in report pixels.
+Starting from version 7.1.2, the Code39 <code>intercharGapWidth</code> attribute is also expressed in report pixels.
+This flag can be set to reinstate the pre 7.1.2 behaviour. Default value is <code>false</code>.
+    </description>
+  </configProperty>
+  
+  
   <!-- net.sf.jasperreports.components.barcode4j.qrcode.producer.{alias} -->
   
   <configProperty name="net.sf.jasperreports.components.barcode4j.qrcode.producer.{alias}">

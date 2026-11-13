@@ -368,10 +368,10 @@ code "Jasper-100"]]></text>
 					</component>
 				</element>
 				<element kind="staticText" uuid="ca3e3c97-7ae8-532b-8e83-5eb629384b65" x="175" y="408" width="165" height="27" style="Caption">
-					<text><![CDATA[intercharGapWidth="1"]]></text>
+					<text><![CDATA[intercharGapWidth="3"]]></text>
 				</element>
 				<element kind="component" uuid="bd6557d9-0c27-50af-9188-a7e178c62dfd" x="175" y="435" width="165" height="50">
-					<component kind="barcode4j:Code39" intercharGapWidth="1">
+					<component kind="barcode4j:Code39" intercharGapWidth="3">
 						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
 					</component>
 				</element>

@@ -288,4 +288,6 @@ public interface PropertyConstants
 
 	String VERSION_7_1_1 = "7.1.1";
 
+	String VERSION_7_1_2 = "7.1.2";
+
 }

@@ -49,6 +49,7 @@ import org.krysalis.barcode4j.tools.UnitConv;
 
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -339,7 +340,12 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		}
 		if (code39.getIntercharGapWidth() != null)
 		{
-			code39Bean.setIntercharGapWidth(code39.getIntercharGapWidth());
+			boolean legacyMillimeters = JRPropertiesUtil.getInstance(jasperReportsContext).getBooleanProperty(
+					componentElement, Code39Component.LEGACY_INTERCHAR_GAP_WIDTH, false);
+			code39Bean.setIntercharGapWidth(
+					legacyMillimeters
+					? code39.getIntercharGapWidth()
+					: UnitConv.pt2mm(toPoints(code39.getIntercharGapWidth())));
 		}
 		if (code39.getWideFactor() != null)
 		{

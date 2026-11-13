@@ -28,7 +28,10 @@ import org.krysalis.barcode4j.ChecksumMode;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import net.sf.jasperreports.annotations.properties.Property;
+import net.sf.jasperreports.annotations.properties.PropertyScope;
 import net.sf.jasperreports.engine.JRConstants;
+import net.sf.jasperreports.properties.PropertyConstants;
 
 /**
  * 
@@ -46,6 +49,21 @@ public class Code39Component extends Barcode4jComponent
 	public static final String PROPERTY_EXTENDED_CHARSET_ENABLED = "extendedCharSetEnabled";
 	public static final String PROPERTY_INTERCHAR_GAP_WIDTH = "intercharGapWidth";
 	public static final String PROPERTY_WIDE_FACTOR = "wideFactor";
+
+	/**
+	 * Flag that makes the <code>intercharGapWidth</code> attribute of Code39 barcodes be interpreted as millimetres,
+	 * as it was before version 7.1.2, instead of report pixels like all the other barcode lengths.
+	 */
+	@Property(
+			category = PropertyConstants.CATEGORY_BARCODE,
+			scopes = {PropertyScope.CONTEXT, PropertyScope.REPORT, PropertyScope.COMPONENT},
+			scopeQualifications = {Barcode4jComponent.COMPONENT_DESIGNATION},
+			sinceVersion = PropertyConstants.VERSION_7_1_2,
+			valueType = Boolean.class,
+			defaultValue = PropertyConstants.BOOLEAN_FALSE
+			)
+	public static final String LEGACY_INTERCHAR_GAP_WIDTH = 
+		BarcodeComponent.PROPERTY_PREFIX + "legacy.code39.interchar.gap.width";
 
 	private String checksumMode;
 	private Boolean displayChecksum;
