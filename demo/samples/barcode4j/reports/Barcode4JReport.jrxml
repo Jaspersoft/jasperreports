@@ -1,136 +1,1927 @@
-<jasperReport name="Barcode4JReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="432a7055-07f0-43d2-8d4c-00337bfe4d0a">
-	<style name="Barcode" fontName="DejaVu Sans" fontSize="10.0"/>
-	<title height="742">
-		<element kind="line" uuid="f980135d-c40f-42a7-93cd-d9d82925d5e2" x="0" y="0" width="515" height="1"/>
-		<element kind="staticText" uuid="df70158b-7d84-4c11-ae3e-a7bd238bcf3f" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
-			<text><![CDATA[Barcode Sample]]></text>
-		</element>
-		<element kind="textField" uuid="50f14e7a-b548-4a5d-9395-a387ea2e7e81" x="0" y="50" width="515" height="20" fontSize="12.0" hTextAlign="Center">
-			<expression><![CDATA["This sample uses Barcode4J Version 2.0"]]></expression>
-		</element>
-		<element kind="textField" uuid="55317c38-260d-4fb5-8c73-693d6425c411" x="0" y="70" width="515" height="20" fontSize="12.0" linkType="Reference" hTextAlign="Center">
-			<expression><![CDATA["http://barcode4j.sourceforge.net/"]]></expression>
-			<hyperlinkReferenceExpression><![CDATA["http://barcode4j.sourceforge.net/"]]></hyperlinkReferenceExpression>
-		</element>
-		<element kind="staticText" uuid="e3c8aa4c-a571-4288-b6ab-9eca96752649" x="0" y="100" width="100" height="30" style="Barcode">
-			<text><![CDATA[Code 128]]></text>
-		</element>
-		<element kind="component" uuid="17dc8c86-0d9c-4542-b153-71844a13bfe5" x="130" y="100" width="200" height="30" style="Barcode">
-			<component kind="barcode4j:Code128" moduleWidth="1.0">
-				<codeExpression><![CDATA["0123456789"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="038aa527-7c7f-48b5-9547-7ba91470754c" x="0" y="135" width="100" height="30" style="Barcode">
-			<text><![CDATA[Codabar]]></text>
-		</element>
-		<element kind="component" uuid="a8dd7541-3d7d-44fc-9281-2bf0bd7ff556" x="130" y="135" width="200" height="30" style="Barcode">
-			<component kind="barcode4j:Codabar" moduleWidth="1.2" textPosition="none" wideFactor="4.0">
-				<codeExpression><![CDATA["01234567890"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="e819db15-0b87-47b8-8474-cbe17cc7a37a" x="0" y="170" width="100" height="40" style="Barcode">
-			<text><![CDATA[DataMatrix]]></text>
-		</element>
-		<element kind="component" uuid="3955570e-f418-4cf2-9a94-cbed633f8e68" x="130" y="170" width="70" height="40" style="Barcode">
-			<component kind="barcode4j:DataMatrix" moduleWidth="4.0">
-				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="079dc326-5af1-4979-927c-3d9d75bfe21b" x="0" y="215" width="100" height="30" style="Barcode">
-			<text><![CDATA[EAN-128]]></text>
-		</element>
-		<element kind="component" uuid="d5a009ab-4cd5-401e-96c8-9ba64b1fc8e9" x="130" y="215" width="250" height="30" style="Barcode">
-			<component kind="barcode4j:EAN128" moduleWidth="1.4" checksumMode="check">
-				<codeExpression><![CDATA["0101234567890128"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="63b7698e-e4a1-4fff-9ea0-a9772dd5b2c4" x="0" y="250" width="100" height="30" style="Barcode">
-			<text><![CDATA[Code39]]></text>
-		</element>
-		<element kind="component" uuid="7fc9f508-28ba-4b6e-bf7d-2e5e39b98ed8" x="130" y="250" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:Code39">
-				<codeExpression><![CDATA["0123456789"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="8ca7d2e2-c66f-4c25-ab3d-2fb15453b8b0" x="0" y="285" width="100" height="30" style="Barcode">
-			<text><![CDATA[USPS Intelligent Mail]]></text>
-		</element>
-		<element kind="component" uuid="8fdd4d61-26b7-4a0e-b569-18d70d929c10" x="130" y="285" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:USPSIntelligentMail" ascenderHeight="8.0" trackHeight="10.0">
-				<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="df0b440d-9a4f-49ea-aa1d-c860c2ad3911" x="0" y="320" width="100" height="30" style="Barcode">
-			<text><![CDATA[Royal Mail Customer]]></text>
-		</element>
-		<element kind="component" uuid="4d2d0a42-1318-4873-8572-3cca99ebde50" x="130" y="320" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:RoyalMailCustomer" ascenderHeight="8.0" intercharGapWidth="2.5" trackHeight="10.0">
-				<codeExpression><![CDATA["0123456789"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="dc520315-36de-4535-9d40-2dc5b96e07bc" x="0" y="355" width="100" height="30" style="Barcode">
-			<text><![CDATA[Interleaved 2 of 5]]></text>
-		</element>
-		<element kind="component" uuid="26bab176-29df-4677-ba6a-e8df79eea8e1" x="130" y="355" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:Interleaved2Of5">
-				<codeExpression><![CDATA["0123456789"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="ddcf57ba-86e5-4b2c-8293-89cc3c044890" x="0" y="390" width="100" height="30" style="Barcode">
-			<text><![CDATA[UPC-A]]></text>
-		</element>
-		<element kind="component" uuid="234c47ef-0149-43aa-9595-44eb81a2bd54" x="130" y="390" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:UPCA">
-				<codeExpression><![CDATA["01234567890"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="1ee2c6c4-54d0-4bae-af20-03970939c63c" x="0" y="425" width="100" height="30" style="Barcode">
-			<text><![CDATA[UPC-E]]></text>
-		</element>
-		<element kind="component" uuid="51b4da4c-b93b-4757-9f6e-8757a6716ea1" x="130" y="425" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:UPCE">
-				<codeExpression><![CDATA["01234133"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="2cb2f39b-a468-4d35-9047-2066f52aec84" x="0" y="460" width="100" height="30" style="Barcode">
-			<text><![CDATA[EAN-13]]></text>
-		</element>
-		<element kind="component" uuid="35e15c85-135e-4e4a-ada4-3caab948d304" x="130" y="460" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:EAN13">
-				<codeExpression><![CDATA["012345678901"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="9399924d-03f6-4825-adfd-0a51cca77964" x="0" y="495" width="100" height="30" style="Barcode">
-			<text><![CDATA[EAN-8]]></text>
-		</element>
-		<element kind="component" uuid="00eb6f75-bdf7-408a-ba56-f76ecca2f8e6" x="130" y="495" width="385" height="30" style="Barcode">
-			<component kind="barcode4j:EAN8">
-				<codeExpression><![CDATA["01234565"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="6ffb2cc2-63fd-4754-b8c3-48828cca8ab1" x="0" y="530" width="100" height="20" style="Barcode">
-			<text><![CDATA[POSTNET]]></text>
-		</element>
-		<element kind="component" uuid="16fee5fe-1e0f-4f56-b240-64a2ff904744" x="130" y="530" width="385" height="20" style="Barcode">
-			<component kind="barcode4j:POSTNET" shortBarHeight="10.0" checksumMode="add">
-				<codeExpression><![CDATA["01234"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="c1127dd1-6cde-483c-8b1c-927b5fd285a3" x="0" y="555" width="100" height="30" style="Barcode">
-			<text><![CDATA[PDF417]]></text>
-		</element>
-		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" x="130" y="555" width="385" height="30" forecolor="#0000FF" mode="Opaque" backcolor="#FFFF00" style="Barcode">
-			<component kind="barcode4j:PDF417" moduleWidth="4.0">
-				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
-			</component>
-		</element>
-		<element kind="staticText" uuid="c1127dd1-6cde-483c-8b1c-927b5fd285a3" x="0" y="600" width="100" height="80" style="Barcode">
-			<text><![CDATA[QRCode]]></text>
-		</element>
-		<element kind="component" uuid="f8257c9c-cc13-40f4-8c1e-b2dda037fb3d" mode="Opaque" x="130" y="600" width="385" height="80" forecolor="#0000FF" backcolor="#FFFF00" style="Barcode">
-			<component kind="barcode4j:QRCode" margin="2" errorCorrectionLevel="M">
-				<codeExpression><![CDATA["http://barcode4j.sourceforge.net/"]]></codeExpression>
-			</component>
-		</element>
-	</title>
+<jasperReport name="Barcode4JReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" whenNoDataType="AllSectionsNoDetail" uuid="432a7055-07f0-43d2-8d4c-00337bfe4d0a">
+	<style name="Type Title" fontName="DejaVu Sans" fontSize="14.0" bold="true"/>
+	<style name="Type Note" fontName="DejaVu Sans" fontSize="8.0"/>
+	<style name="Caption" fontName="DejaVu Sans Mono" fontSize="7.0" vTextAlign="Bottom">
+		<box bottomPadding="2"/>
+	</style>
+	<style name="Serif Bold Italic" fontName="DejaVu Serif" fontSize="7.0" bold="true" italic="true"/>
+	<group name="Dummy">
+		<groupHeader>
+			<band height="140">
+				<element kind="line" uuid="f980135d-c40f-42a7-93cd-d9d82925d5e2" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="df70158b-7d84-4c11-ae3e-a7bd238bcf3f" x="0" y="10" width="515" height="30" fontSize="22.0" hTextAlign="Center">
+					<text><![CDATA[Barcode Sample]]></text>
+				</element>
+				<element kind="textField" uuid="50f14e7a-b548-4a5d-9395-a387ea2e7e81" x="0" y="50" width="515" height="20" fontSize="12.0" hTextAlign="Center">
+					<expression><![CDATA["This sample uses Barcode4J Version 2.1"]]></expression>
+				</element>
+				<element kind="textField" uuid="55317c38-260d-4fb5-8c73-693d6425c411" x="0" y="70" width="515" height="20" fontSize="12.0" linkType="Reference" hTextAlign="Center">
+					<expression><![CDATA["http://barcode4j.sourceforge.net/"]]></expression>
+					<hyperlinkReferenceExpression><![CDATA["http://barcode4j.sourceforge.net/"]]></hyperlinkReferenceExpression>
+				</element>
+				<element kind="staticText" uuid="129ceab1-ac52-5da1-b73e-b3579b803ca3" x="0" y="100" width="515" height="30" style="Type Note">
+					<text><![CDATA[Each of the following sections shows one barcode type, first with the default settings, then with each setting supported by the type. The caption above each barcode lists the settings that differ from the defaults. In patternExpression, each _ is replaced by the next character of the text, each # removes the next character of the text, and \ escapes the character that follows it.]]></text>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="ceff4aef-05da-56ef-b010-c477137e8b86" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="c1c6cb2f-4cdc-5e17-8068-f1747ad35467" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:Codabar"]]></text>
+				</element>
+				<element kind="staticText" uuid="f5046267-7111-535b-8fdf-26b599c573f7" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Digits and - $ : / . + between the start and stop characters a, b, c or d, which Barcode4J only accepts in lower case. Code: "a0123456789b".]]></text>
+				</element>
+				<element kind="staticText" uuid="f9e5c7c8-ba52-54d3-bf57-122ab1d16f66" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="d525a3a3-0a5e-59b3-ad8e-b4803aa54c66" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:Codabar">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1efd4814-97ad-53c3-833a-4cb39062d42c" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="d68edc10-cd17-5960-8d1b-0bafdc6ffa96" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:Codabar" textPosition="top">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dc71db4c-e598-5c63-9303-99fd4438ebee" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="89c7e31d-9ca3-5c86-a0cc-c7ab2e134155" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:Codabar" textPosition="none">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9c7f97b1-debe-56b7-a965-8d092c685a63" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="3a665296-78c8-5584-ac4d-5e60b4c02857" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:Codabar">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="71e38db1-2667-5b67-884c-b05505ca5f9c" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.2"]]></text>
+				</element>
+				<element kind="component" uuid="3eb83cfa-91c8-57f3-acb9-fdd3925a0d9e" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:Codabar" moduleWidth="1.2">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="976750a2-a1f7-573b-83a2-99570c243d1e" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="f14031e2-e0a2-5c9a-b5b7-6ce2e8ab8083" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:Codabar" quietZone="30">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5e911330-0dbb-5262-bf82-9d65b1297cb7" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"
+textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="406c3c51-6265-53d0-89c3-8b3055845a89" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:Codabar" textPosition="none" verticalQuietZone="10">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dfe504f3-a9f1-5289-a1bd-ad8130dc4c01" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"_ ___ ___ ___ ___ _"]]></text>
+				</element>
+				<element kind="component" uuid="ec28353f-42a7-58db-9204-d73b5f339b64" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:Codabar">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+						<patternExpression><![CDATA["_ ___ ___ ___ ___ _"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d10367e7-3a57-5dae-bcba-07478acfc37d" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[wideFactor="2"]]></text>
+				</element>
+				<element kind="component" uuid="2e38acde-8963-559d-a5c2-5101669a513f" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:Codabar" wideFactor="2">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="58cb7a32-808c-59b2-9cf8-1760663871cf" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="e24fbf9c-3e3a-563b-8cd1-19fc3f4f6c19" mode="Opaque" x="0" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:Codabar">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cd33b316-0d83-5f57-a270-1bb2f46fa461" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="3f447b5f-a734-5d34-916f-f2e41e92c0f4" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:Codabar" orientation="left">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7f0e045f-8c22-590f-851f-c884e5bdb2de" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="c3f205ae-2eb4-5ef0-844f-2c9976f5fb27" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:Codabar" orientation="right">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="178bd16b-8ef8-5499-978c-f4444484473e" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="613b0c90-9f4a-522b-a6c2-36e31478b358" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:Codabar" orientation="down">
+						<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="508">
+				<element kind="line" uuid="ce39fbfe-734b-5f2c-8792-263ba11d5ddd" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="75d6981a-9ec3-50b2-99b0-e19ea70f30ff" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:Code128"]]></text>
+				</element>
+				<element kind="staticText" uuid="063d7a97-f68b-5966-98e7-5c83bcb7a4dc" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Code 128 switching between the A, B and C character sets to get the shortest encoding. Code: "Jasper-12345678".]]></text>
+				</element>
+				<element kind="staticText" uuid="2be1cdfb-c6fe-5cc3-b345-67d1d7394b76" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="b90d8aa2-7cc5-5778-bf8f-4650cca9b54d" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:Code128">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="723ab307-1878-5e45-8136-f9442a55db82" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="337f3d42-20d4-5f7b-86af-ea1a89d37ce9" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:Code128" textPosition="top">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0bbfee42-0525-5e84-808d-b138cd7df056" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="915bc635-e116-5328-979b-bc8f518c11e2" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:Code128" textPosition="none">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a983591a-2329-5684-9050-0642093b855e" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="7c356853-8c67-5c1d-8d98-439bbf854455" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:Code128">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="658959a3-a06c-5e50-a38a-02c8b73678fd" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.2"]]></text>
+				</element>
+				<element kind="component" uuid="9ba35eb3-7722-5d05-bb78-aa0f432706fb" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:Code128" moduleWidth="1.2">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="48dc9177-a7a5-5b59-a0e0-9c1fb2c3ea61" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="0e4efe54-e8c8-5973-98f9-489202b29059" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:Code128" quietZone="30">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d96a9a8d-1a0f-5d3a-95ee-3cb2aeb3e31e" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"
+textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="8efbb8be-c603-50eb-9150-aa3d27c0392c" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:Code128" textPosition="none" verticalQuietZone="10">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c8cca3a8-c4d8-5404-a47c-6e75d834956c" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"______#: ________"]]></text>
+				</element>
+				<element kind="component" uuid="2e6a5750-145b-5157-9ec1-abc68ae6f697" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:Code128">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+						<patternExpression><![CDATA["______#: ________"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5b38f34a-1242-5144-8f03-1434ebd7c1e3" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="88bc2186-f68f-5c78-a885-8c88bd8a5ca6" mode="Opaque" x="350" y="261" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:Code128">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="892f1dbd-26b5-5c2f-8206-d350f426e67c" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="f0742c41-bfe2-5ca2-a6e0-dba0295fc2e1" x="0" y="348" width="50" height="150">
+					<component kind="barcode4j:Code128" orientation="left">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cb73a1cc-ff6d-5de1-a2d5-5c05068c5346" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="ac2118eb-7349-5397-8132-5329944b14ff" x="175" y="348" width="50" height="150">
+					<component kind="barcode4j:Code128" orientation="right">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5aa1562e-9c71-5c2b-9f7c-042d26b36c87" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="c7446969-8c33-50c2-83c1-a7da57e64bc2" x="350" y="348" width="165" height="50">
+					<component kind="barcode4j:Code128" orientation="down">
+						<codeExpression><![CDATA["Jasper-12345678"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="582">
+				<element kind="line" uuid="e8a09ef6-37cd-58aa-9fca-a1cf1fe19d5d" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="1d20e065-f6b8-56ae-aad6-f101fc31c3ee" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:Code39"]]></text>
+				</element>
+				<element kind="staticText" uuid="ff1a0154-7ec2-5f80-8c85-8796f8737c53" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Upper case letters, digits, space and - . $ / + %. The checksum is a modulo 43 check character, which is not added by default. Code: "JASPER-100", whose check character is "V".]]></text>
+				</element>
+				<element kind="staticText" uuid="5835c655-e9d7-50a0-8db4-ccdd75c420ab" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="2c54c288-f27f-5805-adef-37df3eadfce1" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:Code39">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c301c443-5b77-5a2c-903a-427ba3d18ed3" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="4ab446e3-2011-5753-80af-abdb4d6568a7" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:Code39" textPosition="top">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7b1679a1-4cfa-59f6-9218-6298ac9f5bd0" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="099d9a4d-1e8f-5475-8a19-fdb0c4510538" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:Code39" textPosition="none">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f9a89f0b-9946-55f9-bbda-5da1afcdae58" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="4bc08b83-2929-5807-93e4-8585046f2a47" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:Code39">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="bbb7e7ae-3212-5268-9af3-d654936cf3ee" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.1"]]></text>
+				</element>
+				<element kind="component" uuid="ff0577c2-725c-5697-ac7c-2d06e3da84aa" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:Code39" moduleWidth="1.1">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c4e591ea-6374-55d1-adfc-bb434b3d6541" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="286db902-8359-5879-9ca3-c5d654e9813d" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:Code39" quietZone="30">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2c3230bd-26cc-5c6d-918c-d039348e44f8" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"
+textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="344e702e-7272-5cfc-8310-2d980c988214" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:Code39" textPosition="none" verticalQuietZone="10">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="485902ec-2498-574e-a4cd-edc3ba3a9494" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"______#: ___"]]></text>
+				</element>
+				<element kind="component" uuid="c57f8361-64d9-5c5d-bb36-a8dc28c87888" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:Code39">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+						<patternExpression><![CDATA["______#: ___"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f6fcdb3a-bb92-58a7-9adc-8e80e4007cc2" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"]]></text>
+				</element>
+				<element kind="component" uuid="d62d11b4-2b0b-586b-bb80-a9fcaebe8efa" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:Code39" checksumMode="add">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="96d91a15-d5a4-55fc-9e17-36a7c4aacae5" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"
+displayChecksum="true"]]></text>
+				</element>
+				<element kind="component" uuid="fece9066-da16-5050-be44-692a40fb9f7b" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:Code39" checksumMode="add" displayChecksum="true">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f83780b3-9bff-5cda-8580-16f5e309d2e8" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "JASPER-100V"]]></text>
+				</element>
+				<element kind="component" uuid="7f3c9b56-85d9-5dbe-b315-5e3fbc7ec479" x="175" y="348" width="165" height="50">
+					<component kind="barcode4j:Code39" checksumMode="check">
+						<codeExpression><![CDATA["JASPER-100V"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="28aea109-72fb-5c8b-88cd-5797a3e9b6fa" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[displayStartStop="true"]]></text>
+				</element>
+				<element kind="component" uuid="a0913487-d1dc-5aa8-bd2d-d8c3714b4b8f" x="350" y="348" width="165" height="50">
+					<component kind="barcode4j:Code39" displayStartStop="true">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="76dece84-a5f1-5bdb-bd97-390ca0b99cbe" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[extendedCharSetEnabled="true",
+code "Jasper-100"]]></text>
+				</element>
+				<element kind="component" uuid="2a8f9e0b-e898-53d5-9165-42af942826f8" x="0" y="435" width="165" height="50">
+					<component kind="barcode4j:Code39" extendedCharSetEnabled="true">
+						<codeExpression><![CDATA["Jasper-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ca3e3c97-7ae8-532b-8e83-5eb629384b65" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[intercharGapWidth="1"]]></text>
+				</element>
+				<element kind="component" uuid="bd6557d9-0c27-50af-9188-a7e178c62dfd" x="175" y="435" width="165" height="50">
+					<component kind="barcode4j:Code39" intercharGapWidth="1">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7044f3db-26f8-5d84-8b8a-15ec1d57c73f" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[wideFactor="3"]]></text>
+				</element>
+				<element kind="component" uuid="967364ec-ce38-5b44-bbe6-bfd7b3c43a6c" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:Code39" wideFactor="3">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="982ef2a2-63ce-53ec-afa6-535211dc2fcb" x="0" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="8e8a980c-f2cd-5ef0-a044-dc3fba33e6ab" mode="Opaque" x="0" y="522" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:Code39">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="187">
+				<element kind="staticText" uuid="d39b642e-67d9-5dbb-9a91-542ce2fc24bf" x="0" y="0" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="24b3eb26-e18b-544a-b95c-7aeb23989bc5" x="0" y="27" width="50" height="150">
+					<component kind="barcode4j:Code39" orientation="left">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="59910bc6-8007-5972-84e1-596feb8b5a84" x="175" y="0" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="885c6791-2588-5d12-81ab-8130bcb5d3fb" x="175" y="27" width="50" height="150">
+					<component kind="barcode4j:Code39" orientation="right">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4466760d-6913-531a-9a91-5cbed4db914d" x="350" y="0" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="03e45ea4-1109-5ef9-badc-d81ab493db87" x="350" y="27" width="165" height="50">
+					<component kind="barcode4j:Code39" orientation="down">
+						<codeExpression><![CDATA["JASPER-100"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="695">
+				<element kind="line" uuid="0db01eea-6e89-5b2b-930a-d4d00ad841fb" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="4dd5a940-ff1e-5c98-a1d2-e499dcb4cc3b" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:DataMatrix"]]></text>
+				</element>
+				<element kind="staticText" uuid="cdece451-ce2f-5470-a5a0-c9ab048f8ad3" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Two-dimensional matrix symbology, without human readable text. The symbol is scaled to fit the element, so the module width only shows relative to the quiet zone, which applies to all four sides. Code: "JasperReports".]]></text>
+				</element>
+				<element kind="staticText" uuid="a2b44360-a623-5120-8124-2c0071fe0ed4" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="cdb888ae-dcc8-5429-b879-1ce160c5f969" x="0" y="87" width="90" height="90">
+					<component kind="barcode4j:DataMatrix">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="85414839-e189-5b70-b557-ca578aa27c09" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="3"]]></text>
+				</element>
+				<element kind="component" uuid="8f324c35-415d-5173-9018-a830bb601ff8" x="175" y="87" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" moduleWidth="3">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="70c6552b-6d2b-5970-bdfe-a6376c889364" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="3853ac31-62df-584c-8ac6-aa26df5d25fd" x="350" y="87" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" quietZone="10">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="69444c1a-85d1-5298-a772-9d45527754bc" x="0" y="187" width="165" height="27" style="Caption">
+					<text><![CDATA[shape="force-square"]]></text>
+				</element>
+				<element kind="component" uuid="f2ccd9c4-3d27-5c81-905a-cde643607ab8" x="0" y="214" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" shape="force-square">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cfecbe04-633e-530e-b8c5-fd4bdee0535d" x="175" y="187" width="165" height="27" style="Caption">
+					<text><![CDATA[shape="force-rectangle"]]></text>
+				</element>
+				<element kind="component" uuid="df05f3e5-4d73-5d78-a013-eb00a81ce21c" x="175" y="214" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" shape="force-rectangle">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a4295776-5cb8-5aa7-b76e-32e164eb851b" x="350" y="187" width="165" height="27" style="Caption">
+					<text><![CDATA[minSymbolWidth="32"]]></text>
+				</element>
+				<element kind="component" uuid="32ae2ad0-b9ae-5e6a-a429-2945db953e15" x="350" y="214" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" minSymbolWidth="32">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="115e55a9-a90c-5f21-b5ba-bf5c82ae2c56" x="0" y="314" width="165" height="27" style="Caption">
+					<text><![CDATA[minSymbolHeight="26"]]></text>
+				</element>
+				<element kind="component" uuid="92f023bc-710d-5997-975b-8b4af2aba9d4" x="0" y="341" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" minSymbolHeight="26">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="77929543-9d38-5157-a206-25f8baa176ce" x="175" y="314" width="165" height="27" style="Caption">
+					<text><![CDATA[shape="force-rectangle"
+minSymbolWidth="36"
+minSymbolHeight="16"]]></text>
+				</element>
+				<element kind="component" uuid="aa092e27-11be-534f-9cb0-c832a477a9f0" x="175" y="341" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" shape="force-rectangle" minSymbolWidth="36" minSymbolHeight="16">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="fdfe0bc4-c356-5171-a8af-4afbd0f4e88f" x="350" y="314" width="165" height="27" style="Caption">
+					<text><![CDATA[maxSymbolWidth="32"
+maxSymbolHeight="12"]]></text>
+				</element>
+				<element kind="component" uuid="29de5431-59fb-5286-a349-ba0e4db2a5af" x="350" y="341" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" maxSymbolWidth="32" maxSymbolHeight="12">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f81591a7-0d3a-5807-87fa-697a1315eca6" x="0" y="441" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="ffb77ce8-50d6-5e98-b912-b4e519532914" mode="Opaque" x="0" y="468" width="90" height="90" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:DataMatrix">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4736582f-c75e-5ccc-aa84-f01a70d81c38" x="0" y="568" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="1da5462b-8dda-59ec-b70d-94e29e261e93" x="0" y="595" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" orientation="left">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="979564c8-61fe-55b5-9b59-3dba2caa30b5" x="175" y="568" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="1ec4feed-0fef-5520-86e0-9763d0dad464" x="175" y="595" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" orientation="right">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7d50ad8f-da59-5497-ae31-3dda0fb8994a" x="350" y="568" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="366a4a18-c621-5a45-a214-11e2587822bb" x="350" y="595" width="90" height="90">
+					<component kind="barcode4j:DataMatrix" orientation="down">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="582">
+				<element kind="line" uuid="cef0e9b1-817c-577c-b4c4-8ff999c47f0a" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="b4217a98-8f83-555e-bcc4-3f271f5fa603" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:EAN128"]]></text>
+				</element>
+				<element kind="staticText" uuid="31b91151-5033-51e6-9dd8-22ef13d8c55d" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[GS1-128: application identifiers (AI) each followed by its data. Code: "0109501101020917" + "10ABCD1234", i.e. AI (01) for the GTIN and AI (10) for the batch number. Barcode4J does not support checksumMode="ignore" for this type.]]></text>
+				</element>
+				<element kind="staticText" uuid="4fb508e9-4a3b-59c8-86de-774634755185" x="0" y="60" width="250" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="d9419019-f212-5fe4-99ec-032f31c5ac0e" x="0" y="87" width="250" height="50">
+					<component kind="barcode4j:EAN128">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f205acb0-d432-5dcb-97c5-e43e5cabecb9" x="265" y="60" width="250" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="c17726ea-4886-5ead-94e2-9633e61825c7" x="265" y="87" width="250" height="50">
+					<component kind="barcode4j:EAN128" textPosition="top">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d0018f59-bbc5-533c-9b6b-5968da95d737" x="0" y="147" width="250" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="d82a3576-4817-5618-a2dc-799aef013c1d" x="0" y="174" width="250" height="50">
+					<component kind="barcode4j:EAN128" textPosition="none">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d2320dd0-4d00-50aa-b05f-92b73bb6ce9b" x="265" y="147" width="250" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="b68f14f6-4b7c-5b3b-9015-0781332094cd" x="265" y="174" width="250" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:EAN128">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a6eb82bb-27b0-58a6-9790-9ddbf96ba2a8" x="0" y="234" width="250" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1"]]></text>
+				</element>
+				<element kind="component" uuid="9b96d7ab-7174-5b59-9c60-c1b553d27692" x="0" y="261" width="250" height="50">
+					<component kind="barcode4j:EAN128" moduleWidth="1">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="30d8780e-ae57-5179-8eb2-47988ef945d6" x="265" y="234" width="250" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="27d3fcf7-7969-5df9-97df-5e30d7a4072d" x="265" y="261" width="250" height="50">
+					<component kind="barcode4j:EAN128" quietZone="30">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a15a69b6-42e4-50b9-9110-ba59a0b3d397" x="0" y="321" width="250" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"
+textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="51e7dc21-c780-5941-a80e-751154e18e22" x="0" y="348" width="250" height="50">
+					<component kind="barcode4j:EAN128" textPosition="none" verticalQuietZone="10">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2c546420-534a-5b0b-8622-98f1243edcf3" x="265" y="321" width="250" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"#__# ______________ #__# ________"]]></text>
+				</element>
+				<element kind="component" uuid="16aedbfd-394c-5c6b-9427-430600e361e3" x="265" y="348" width="250" height="50">
+					<component kind="barcode4j:EAN128">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+						<patternExpression><![CDATA["#__# ______________ #__# ________"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5de36adf-9ae1-50be-9f6a-1244580ee332" x="0" y="408" width="250" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add", code "010950110102091"]]></text>
+				</element>
+				<element kind="component" uuid="c0d315a8-1364-5c9c-8fc9-93a229d0b254" x="0" y="435" width="250" height="50">
+					<component kind="barcode4j:EAN128" checksumMode="add">
+						<codeExpression><![CDATA["010950110102091"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9762e922-8d17-53a0-bb26-178c14500164" x="265" y="408" width="250" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check"]]></text>
+				</element>
+				<element kind="component" uuid="df9c292f-a8a2-59ed-bb99-e8480a4f6e34" x="265" y="435" width="250" height="50">
+					<component kind="barcode4j:EAN128" checksumMode="check">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f2e6b663-23ae-579b-8412-738df7cf2c8e" x="0" y="495" width="250" height="27" style="Caption">
+					<text><![CDATA[templateExpression "(01)n13+cd(10)an1-20"]]></text>
+				</element>
+				<element kind="component" uuid="f88d747d-7874-5f67-8ffd-ad2e1cdad05f" x="0" y="522" width="250" height="50">
+					<component kind="barcode4j:EAN128">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+						<templateExpression><![CDATA["(01)n13+cd(10)an1-20"]]></templateExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="092c06c2-0d0d-529f-adfa-60bd0cada6b2" x="265" y="495" width="250" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="8245b37f-0800-59d6-be11-5369f57a6030" mode="Opaque" x="265" y="522" width="250" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:EAN128">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="374">
+				<element kind="staticText" uuid="d41a756f-4411-5a21-85c3-2f4664d3ec8a" x="0" y="0" width="250" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="aec50cf1-cf74-56f9-92f2-4f0463c36cc4" x="0" y="27" width="50" height="250">
+					<component kind="barcode4j:EAN128" orientation="left">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="51eb5a37-48ce-5f7e-9be1-3af3e21c8b96" x="265" y="0" width="250" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="08576726-2f36-5403-a0c0-48bdfae09632" x="265" y="27" width="50" height="250">
+					<component kind="barcode4j:EAN128" orientation="right">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5081ad71-e0e9-558d-a781-c49e57922b45" x="0" y="287" width="250" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="13b2744c-1a1e-536e-81af-c1e801ad634b" x="0" y="314" width="250" height="50">
+					<component kind="barcode4j:EAN128" orientation="down">
+						<codeExpression><![CDATA["010950110102091710ABCD1234"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="b2b9cea5-3dc2-51c2-ac84-ca4f90ce2f60" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="59400c6e-8087-5c82-ad5d-58553a229b8a" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:EAN13"]]></text>
+				</element>
+				<element kind="staticText" uuid="6fc015ec-48d0-5374-95de-b97e5e06a5f7" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[12 digits followed by the check digit, which is added when missing and checked when present. Code: "590123412345".]]></text>
+				</element>
+				<element kind="staticText" uuid="18c6a58c-389d-54ef-b0db-e12f4f6352da" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="faa098d1-789b-556e-a1da-577c36754271" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:EAN13">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7b0f6f4d-9cae-52a2-9e85-ec470d76e881" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="86512f2e-a394-5566-8b8c-4cb506e27925" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:EAN13" textPosition="top">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9350fef2-9598-5f67-98cb-c3bdf802ed4c" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="af545907-7169-547d-9ce2-03e4c27db42e" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:EAN13" textPosition="none">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="07140d23-17e6-561d-b2a6-c391ee45f53f" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="9507463b-26c4-5e08-9aa5-eed0d8dc1ead" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:EAN13">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f033bde0-265e-5bf8-920f-06d050c83bb5" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.2"]]></text>
+				</element>
+				<element kind="component" uuid="0817dfe4-05f0-5b84-8971-1f0494f98250" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:EAN13" moduleWidth="1.2">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a2fc90cc-95a9-53d9-971b-405968257efc" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="0d9ed542-4b57-5c0d-ae4b-73a8c3d26b63" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:EAN13" quietZone="30">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9b6e45b8-fd7e-5e61-9dd3-b86a0b3c67f7" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="fc77d49f-4e9b-5212-8fc6-b1d8103f7443" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:EAN13" verticalQuietZone="10">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="40091cf5-98a4-5c0d-84c5-5a326e0990d1" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"]]></text>
+				</element>
+				<element kind="component" uuid="52db8d6a-5204-53ea-b757-a8a6c624c0c7" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:EAN13" checksumMode="add">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="67baea7b-dc3c-5553-8ab4-c7a863989e9f" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "5901234123457"]]></text>
+				</element>
+				<element kind="component" uuid="07d804a7-4799-5c87-8e30-d4f2ba4510f0" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:EAN13" checksumMode="check">
+						<codeExpression><![CDATA["5901234123457"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9ccb927c-64d0-5ce3-acac-c59416e6319a" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="ignore",
+code "5901234123450"]]></text>
+				</element>
+				<element kind="component" uuid="c2d67db4-18c3-53a7-ace7-eb23445c2a1f" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:EAN13" checksumMode="ignore">
+						<codeExpression><![CDATA["5901234123450"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="99be3880-f5c4-5467-b95a-3d32ce27ca52" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="272ff13b-8a0f-515c-8e8d-f89e213a4cf7" mode="Opaque" x="175" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:EAN13">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a44474e9-31a7-5cde-a257-c7e231ad8c93" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="4f627beb-6e4b-5f87-be23-bb1dcfe6f666" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:EAN13" orientation="left">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="02a0bca7-1ab7-5bea-8f93-452d31f04cb8" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="c5b1c15b-e2ea-5ea2-94f4-6706dc142117" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:EAN13" orientation="right">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ab3aab2e-37f1-5343-91c5-ec535555970e" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="4cff3032-72a6-5f4e-b10f-570b1c54a1e6" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:EAN13" orientation="down">
+						<codeExpression><![CDATA["590123412345"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="cd8585f6-69ce-5c51-a8c0-d10d7c6d3f2d" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="fb8c1dbd-d070-5c4a-b719-9c4f92cc9ec0" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:EAN8"]]></text>
+				</element>
+				<element kind="staticText" uuid="d16e8eb1-e667-5448-b109-5563880f6427" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[7 digits followed by the check digit, which is added when missing and checked when present. Code: "9638507".]]></text>
+				</element>
+				<element kind="staticText" uuid="5dcdcad7-801f-5e92-b2c1-eb928195f2c1" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="5894575e-99e8-5a3b-a3b3-91a967445d34" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:EAN8">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="985a9862-b909-5761-baeb-427665691c7b" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="9de24bbf-0b05-5a20-89a1-f4849d0e7b3d" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:EAN8" textPosition="top">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="267da159-e051-5789-908f-f4a0e5a8cf21" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="887dbb3b-cd0f-5b94-98f5-83849ab65979" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:EAN8" textPosition="none">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5e2990e5-961a-5a34-892a-0c2aff73e1b0" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="81af9307-73a5-50ef-b9a0-479b7b0aea07" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:EAN8">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d550a168-0d96-5dd8-b68b-cf2437d65e12" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.5"]]></text>
+				</element>
+				<element kind="component" uuid="23febce6-c333-5d97-a709-a292b6919deb" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:EAN8" moduleWidth="1.5">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b6874fb1-2907-5e55-a342-9ad3fa47e810" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="d28ba294-655b-5d13-be61-016a4eff2408" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:EAN8" quietZone="30">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3dfea480-a452-5659-b282-32c0cd895463" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="3dd43273-555d-51b4-9af1-3606a896f6dc" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:EAN8" verticalQuietZone="10">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="67aec2d0-5f97-5b93-a7af-9903d7cb81d0" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"]]></text>
+				</element>
+				<element kind="component" uuid="a9926c77-4f07-539a-8211-b36f9497975b" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:EAN8" checksumMode="add">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="de137861-90c7-507f-adbc-18374a5eb802" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "96385074"]]></text>
+				</element>
+				<element kind="component" uuid="486493ba-bef6-5d36-8c91-685576e0fc97" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:EAN8" checksumMode="check">
+						<codeExpression><![CDATA["96385074"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="508aaa48-c04d-50b5-95fe-1f8a65b47ece" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="ignore",
+code "96385070"]]></text>
+				</element>
+				<element kind="component" uuid="a3028d76-80a6-59e2-a5e2-d8cdadb85722" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:EAN8" checksumMode="ignore">
+						<codeExpression><![CDATA["96385070"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4f455b22-3ab3-5959-9080-c7c913039a34" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="1918b7b1-b0f3-597a-b096-dec033b55cc5" mode="Opaque" x="175" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:EAN8">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e311de22-7bb3-5af9-b130-79e9597a8838" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="0261a6cd-448c-502b-bdb6-251c725a9e59" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:EAN8" orientation="left">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0a18c2b8-af8b-5bd2-afef-60601b427761" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="1fd111c5-7154-5be0-a093-e65e52adf21a" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:EAN8" orientation="right">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dc6f023d-4ae3-562a-9c12-31c9037a89c7" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="ce2a03ed-b3e6-5d52-aa8c-9e98c541e86d" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:EAN8" orientation="down">
+						<codeExpression><![CDATA["9638507"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="682">
+				<element kind="line" uuid="89f005e7-1c7a-55ba-90fc-7803059bade2" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="061b7d0d-0e66-5dce-ad58-2e5f82f2af3f" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:Interleaved2Of5"]]></text>
+				</element>
+				<element kind="staticText" uuid="79c73f16-b578-57c4-9c53-05b883084bab" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Pairs of digits. The checksum is a modulo 10 check digit, which is not added by default. Code: "0123456789".]]></text>
+				</element>
+				<element kind="staticText" uuid="9aa23937-50ea-5d7a-bade-43b38b64891d" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="b60fb81e-13c7-562d-98ad-52a301adea26" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="96a8c162-a9cb-5ea1-b88e-b4348c315286" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="43d3816b-c587-598c-8e07-69bedf3d1c4f" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" textPosition="top">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7397351b-026b-53a8-9da8-fc7d4cf893c0" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="b808ff7b-16b5-5819-852d-8d502ee19932" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" textPosition="none">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a0240c17-6b3c-5b63-9444-b9749bc6fb57" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="ef11fef4-4ae8-52f5-b11c-bfc081d9773a" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:Interleaved2Of5">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="06db53d5-e0bd-5f3c-8de4-3f23873f8bfa" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.2"]]></text>
+				</element>
+				<element kind="component" uuid="99d57d68-154c-5ae7-964f-5574da8890f3" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" moduleWidth="1.2">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1884d889-ef23-59cd-acc0-ff2b627603e7" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="c06041dc-4c3c-56e8-b851-4657da24bb5f" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" quietZone="30">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="05eed848-94a3-53ea-9419-7177ba669c54" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"
+textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="135065b0-443b-592e-b98a-b1600e1f989d" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" textPosition="none" verticalQuietZone="10">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e85e7851-f49c-52a3-bf86-847b0e77428d" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"_____ _____"]]></text>
+				</element>
+				<element kind="component" uuid="cfcee749-6678-5a7e-945e-6b9273a70cc5" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+						<patternExpression><![CDATA["_____ _____"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6631bcd3-1f41-54d4-b1cc-47f3b3cc9cee" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add",
+code "012345678"]]></text>
+				</element>
+				<element kind="component" uuid="fb3b8382-6171-56e1-8108-d2708ffe7fc8" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" checksumMode="add">
+						<codeExpression><![CDATA["012345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9bfc98d1-5920-50a9-ad3d-27a12c1fb759" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add",
+code "012345678"
+displayChecksum="true"]]></text>
+				</element>
+				<element kind="component" uuid="f2ef59e6-33be-5aa7-80ec-842177b5ad4d" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" checksumMode="add" displayChecksum="true">
+						<codeExpression><![CDATA["012345678"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d8bfd683-63f7-5b33-a0ba-28b014efd612" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "0123456784"]]></text>
+				</element>
+				<element kind="component" uuid="b1df85c9-dd22-5885-9188-1b86b8916db8" x="175" y="348" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" checksumMode="check">
+						<codeExpression><![CDATA["0123456784"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="19ec74c1-4dc6-5309-a226-fd9de74cc1fc" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[wideFactor="2"]]></text>
+				</element>
+				<element kind="component" uuid="7d76cf43-06c3-5f61-8c95-b87f4256d42c" x="350" y="348" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" wideFactor="2">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="59f21c60-8313-517b-ba36-49892a758673" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="68c7ef78-5a9c-5c46-abf8-a165cecd3f7f" mode="Opaque" x="0" y="435" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:Interleaved2Of5">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1cbc6139-8c3d-587e-8b17-97132013e1bc" x="0" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="e4750ded-182a-504a-a7b0-2e4d78f3b907" x="0" y="522" width="50" height="150">
+					<component kind="barcode4j:Interleaved2Of5" orientation="left">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1e1ea3fd-7ae9-5ed2-a08d-1387999dc157" x="175" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="4cc3ca65-79f0-55f1-8529-a410c4ea5537" x="175" y="522" width="50" height="150">
+					<component kind="barcode4j:Interleaved2Of5" orientation="right">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="dc55dd91-b611-5aa4-b242-f9bcdfef6b7c" x="350" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="65de211e-30fe-5d79-b6a3-5f4df818fa67" x="350" y="522" width="165" height="50">
+					<component kind="barcode4j:Interleaved2Of5" orientation="down">
+						<codeExpression><![CDATA["0123456789"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="650">
+				<element kind="line" uuid="b5b40cd4-b758-50e7-abfe-318078834e2e" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="b66a12b0-ebd0-5488-b0c1-770c4063b656" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:PDF417"]]></text>
+				</element>
+				<element kind="staticText" uuid="0e558e0f-aba1-58dd-8343-b19b29d9a5e5" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Two-dimensional stacked symbology, without human readable text. Rows are three modules high and the symbol is scaled to fit the element, so the module width does not change its shape. By default, there are exactly 2 data columns; within the allowed range, the column count closest to the width to height ratio is chosen. Code: "JasperReports".]]></text>
+				</element>
+				<element kind="staticText" uuid="ea44feb6-e1cc-5b2b-a99d-2f35ea66e594" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="2cd6b7d2-8b95-515f-ad54-28b932cbd123" x="0" y="87" width="165" height="60">
+					<component kind="barcode4j:PDF417">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="346ac178-ab8f-57a4-bf0b-f8ecbb0597ff" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="20"]]></text>
+				</element>
+				<element kind="component" uuid="91292afd-c450-5d45-9b4c-eaf8ae755505" x="175" y="87" width="165" height="60">
+					<component kind="barcode4j:PDF417" moduleWidth="20">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="7b7d1f30-6e15-5232-8be5-69958ce89cad" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="49e872c4-17a2-5d79-86cf-c72b9ea2b493" x="350" y="87" width="165" height="60">
+					<component kind="barcode4j:PDF417" quietZone="10">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ac93f136-e00e-5593-aa88-76f30106f832" x="0" y="157" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="8c9eb37f-bd5c-5c56-89a7-d59b674bd091" x="0" y="184" width="165" height="60">
+					<component kind="barcode4j:PDF417" verticalQuietZone="10">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2286a284-8af2-5cc9-bcfc-b342ac60fdff" x="175" y="157" width="165" height="27" style="Caption">
+					<text><![CDATA[minColumns="1"]]></text>
+				</element>
+				<element kind="component" uuid="421c2827-8a3b-527a-9246-8166fc4b58ce" x="175" y="184" width="165" height="60">
+					<component kind="barcode4j:PDF417" minColumns="1">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="16863c45-78c9-5ca3-8cdf-f7e488fbc290" x="350" y="157" width="165" height="27" style="Caption">
+					<text><![CDATA[minColumns="4" maxColumns="6"]]></text>
+				</element>
+				<element kind="component" uuid="ce6ec4fd-f981-5a67-9d91-3ef10e1bacfe" x="350" y="184" width="165" height="60">
+					<component kind="barcode4j:PDF417" minColumns="4" maxColumns="6">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4baebd3b-4481-5ab8-aabb-0a03a613f724" x="0" y="254" width="165" height="27" style="Caption">
+					<text><![CDATA[maxColumns="6" widthToHeightRatio="10"]]></text>
+				</element>
+				<element kind="component" uuid="d56f6480-1058-56d5-86c2-cde09cd4ee0c" x="0" y="281" width="165" height="60">
+					<component kind="barcode4j:PDF417" maxColumns="6" widthToHeightRatio="10">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c76a3e97-35bf-5442-ac9f-21034f84df5a" x="175" y="254" width="165" height="27" style="Caption">
+					<text><![CDATA[maxColumns="6"
+minRows="5" widthToHeightRatio="10"]]></text>
+				</element>
+				<element kind="component" uuid="48b41883-22ea-506f-a7d3-4514b7b90de9" x="175" y="281" width="165" height="60">
+					<component kind="barcode4j:PDF417" maxColumns="6" minRows="5" widthToHeightRatio="10">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ba109f93-e38b-5b61-bac2-30bfee64f7db" x="350" y="254" width="165" height="27" style="Caption">
+					<text><![CDATA[minColumns="1" maxRows="10"]]></text>
+				</element>
+				<element kind="component" uuid="a5b168ac-12b4-5bd3-a764-6c7cec22c674" x="350" y="281" width="165" height="60">
+					<component kind="barcode4j:PDF417" minColumns="1" maxRows="10">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8856cff5-398b-5494-9af5-7f55729c35a7" x="0" y="351" width="165" height="27" style="Caption">
+					<text><![CDATA[errorCorrectionLevel="4"]]></text>
+				</element>
+				<element kind="component" uuid="8acded95-d483-5716-a97f-a0eb7b3bb229" x="0" y="378" width="165" height="60">
+					<component kind="barcode4j:PDF417" errorCorrectionLevel="4">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c0c37164-3b64-54a6-9f18-9c85ebdda226" x="175" y="351" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque"
+forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="be45ca0f-d125-539e-80ea-aff95087a432" mode="Opaque" x="175" y="378" width="165" height="60" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:PDF417">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="04576c96-fd9b-5fcb-bdab-b79f4ba3dc1c" x="0" y="448" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="78446bbc-a5fa-581a-95a4-5d4cdb2a6f43" x="0" y="475" width="60" height="165">
+					<component kind="barcode4j:PDF417" orientation="left">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0173f5ec-7abc-56ef-94ef-d4e0b6fa430d" x="175" y="448" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="c4165d76-285a-5bcf-b595-4d41f94e8a5c" x="175" y="475" width="60" height="165">
+					<component kind="barcode4j:PDF417" orientation="right">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="fec6e16f-f40e-5e00-bf5b-eefe399d5dbf" x="350" y="448" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="f3eaa2d8-c790-5178-826f-cf367d574349" x="350" y="475" width="165" height="60">
+					<component kind="barcode4j:PDF417" orientation="down">
+						<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="682">
+				<element kind="line" uuid="74416f83-be88-5a35-9d13-c18810b9420d" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="f5bd95e7-d224-52ee-ada4-f751696b6ce6" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:POSTNET"]]></text>
+				</element>
+				<element kind="staticText" uuid="dfd8b402-6fb1-5bdc-8433-6f3bcc5c6488" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[US Postal Service ZIP code made of tall and short bars, without text by default. The checksum is a modulo 10 check digit, which is not added by default. Code: "12345".]]></text>
+				</element>
+				<element kind="staticText" uuid="992b4df7-2b6d-59aa-9ca3-4e27306744ce" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="2ef8647a-eecf-54fb-9d35-802e34050a7f" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:POSTNET">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="da41ea32-16e6-5f36-b59e-4cc8d7e4eadf" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="59728419-2774-5b12-86e6-d3a7b6ac8752" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:POSTNET" textPosition="bottom">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="20f01ff3-b6ad-5d20-806b-64f57fc43b49" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="0f6a3291-1b3f-5c5d-8d88-4a01b76d3d75" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:POSTNET" textPosition="top">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cf1400d0-5264-55ee-a5fb-706c4d3702ab" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="bb82c500-c900-577a-9e01-5563e1024899" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:POSTNET" textPosition="bottom">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="b376083d-e767-5c8b-8d7e-7f24c7fc3a7e" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="2.5"]]></text>
+				</element>
+				<element kind="component" uuid="83842d67-f162-56c1-8521-b28c1640b74e" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:POSTNET" moduleWidth="2.5">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="32c3e938-4707-5c1f-8936-a7d66bb34c4c" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="be6d23fe-a807-5812-b37f-afb5b758dcbe" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:POSTNET" quietZone="30">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="4d3a64bb-f560-5515-8cc1-d6315f6d57a4" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="52c6e07a-527b-501a-9adf-206b19209825" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:POSTNET" verticalQuietZone="10">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ef87463e-3790-5865-a2c6-7d2503ebd9da" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"__-___"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="6eeb377b-1c8f-52be-8b30-1664d954ea2f" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:POSTNET" textPosition="bottom">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+						<patternExpression><![CDATA["__-___"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5aa462f8-362d-5a06-8afd-6b38873ba1fe" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[shortBarHeight="15"]]></text>
+				</element>
+				<element kind="component" uuid="49cdfb7e-df98-5a02-a0e4-6a9c1d644c74" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:POSTNET" shortBarHeight="15">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e33747d4-caa3-5f93-afca-fbfe6feea993" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[baselinePosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="3f6b82fc-ba4e-5bab-8c27-5748bdff1774" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:POSTNET" baselinePosition="top">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="49527cfb-078b-5585-89e1-470d9b44ffc1" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[intercharGapWidth="5"]]></text>
+				</element>
+				<element kind="component" uuid="dc7b1a0d-4a36-5976-b088-031fb9a7bf0a" x="175" y="348" width="165" height="50">
+					<component kind="barcode4j:POSTNET" intercharGapWidth="5">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="bc69cf59-35ce-54c0-843d-9063cec69d94" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="122b87f1-39c0-5855-93b4-401ee7073dfd" x="350" y="348" width="165" height="50">
+					<component kind="barcode4j:POSTNET" textPosition="bottom" checksumMode="add">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="545616f1-a545-53f8-9665-3e4ea985c04c" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"
+displayChecksum="true"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="3fb1bcb9-7507-598b-a696-141f88cb82f3" x="0" y="435" width="165" height="50">
+					<component kind="barcode4j:POSTNET" textPosition="bottom" checksumMode="add" displayChecksum="true">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0fa69226-3277-57c7-a00b-0f1c1537362e" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check", code "123455"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="e39e1445-50fb-5d28-aeba-3ee9d80257ae" x="175" y="435" width="165" height="50">
+					<component kind="barcode4j:POSTNET" textPosition="bottom" checksumMode="check">
+						<codeExpression><![CDATA["123455"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="57aaf71c-3b8e-5dbb-980a-cecdfe7561a5" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="b9fcd0e5-27b5-5d71-8c92-f6d5c0544636" mode="Opaque" x="350" y="435" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:POSTNET">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8cca1ed0-c24e-50dc-8379-0f3f5912773c" x="0" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="0d9f55f4-27b2-57a9-af11-8fe99ec8e75a" x="0" y="522" width="50" height="150">
+					<component kind="barcode4j:POSTNET" orientation="left">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9c88da82-d66e-50d3-b39d-2ee3cbad64a4" x="175" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="dde6263d-d788-5d53-85dd-8395f333e247" x="175" y="522" width="50" height="150">
+					<component kind="barcode4j:POSTNET" orientation="right">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="1d8c2cd8-a155-56d7-b85b-d538bad1ecaa" x="350" y="495" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="e18a9996-807e-5745-90fb-10da04d24d7c" x="350" y="522" width="165" height="50">
+					<component kind="barcode4j:POSTNET" orientation="down">
+						<codeExpression><![CDATA["12345"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="441">
+				<element kind="line" uuid="ac69b6c1-a340-5722-afe9-8345f3483113" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="211b06e9-3093-5595-bcdf-919242a34785" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:QRCode"]]></text>
+				</element>
+				<element kind="staticText" uuid="f094938b-daea-5dd5-a1e4-b31cac68c9b5" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Two-dimensional matrix symbology, generated with the ZXing library. Unlike the other types, it has no text, module width, quiet zone or orientation settings. Code: "https://jasperreports.sourceforge.net".]]></text>
+				</element>
+				<element kind="staticText" uuid="24e907f5-a2eb-5f95-8b25-3a9ebf46cd5d" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="ac59a7dc-a5f7-5b14-b63e-f5f3d3ecd436" x="0" y="87" width="90" height="90">
+					<component kind="barcode4j:QRCode">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f7780daf-f1ca-53b5-a6de-7b8eafdee225" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[margin="0"]]></text>
+				</element>
+				<element kind="component" uuid="5da698b0-af41-5c3d-bd7f-355f7f27abd2" x="175" y="87" width="90" height="90">
+					<component kind="barcode4j:QRCode" margin="0">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="67bcade9-e4df-54a7-91a4-c44b4c906338" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[margin="10"]]></text>
+				</element>
+				<element kind="component" uuid="ea75a068-149e-598d-9495-cfe04795fa2e" x="350" y="87" width="90" height="90">
+					<component kind="barcode4j:QRCode" margin="10">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="20b2dbed-8b71-5281-b433-07b3a5b74db2" x="0" y="187" width="165" height="27" style="Caption">
+					<text><![CDATA[errorCorrectionLevel="M"]]></text>
+				</element>
+				<element kind="component" uuid="a00f1405-b57e-5bb1-8276-00b650a46e2c" x="0" y="214" width="90" height="90">
+					<component kind="barcode4j:QRCode" errorCorrectionLevel="M">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="57f6ec6a-92af-57f1-92d6-8f890e9788de" x="175" y="187" width="165" height="27" style="Caption">
+					<text><![CDATA[errorCorrectionLevel="Q"]]></text>
+				</element>
+				<element kind="component" uuid="1f3cdcfc-5551-5aeb-a424-ed46d505ad62" x="175" y="214" width="90" height="90">
+					<component kind="barcode4j:QRCode" errorCorrectionLevel="Q">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="29ed7ac8-f33c-5aa7-af75-17c8fa543f9a" x="350" y="187" width="165" height="27" style="Caption">
+					<text><![CDATA[errorCorrectionLevel="H"]]></text>
+				</element>
+				<element kind="component" uuid="451cb7fa-823b-5800-8e42-6b24bf37c727" x="350" y="214" width="90" height="90">
+					<component kind="barcode4j:QRCode" errorCorrectionLevel="H">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f0d9061d-8dab-5896-9778-10ef208a774c" x="0" y="314" width="165" height="27" style="Caption">
+					<text><![CDATA[qrVersion="10"]]></text>
+				</element>
+				<element kind="component" uuid="984997f6-7b83-5e6f-a74e-fddca711453b" x="0" y="341" width="90" height="90">
+					<component kind="barcode4j:QRCode" qrVersion="10">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3381351c-ab50-5d92-9844-6d9b80fe67da" x="175" y="314" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="34e27549-509c-55d8-b8e1-a7cf4e28b6b5" mode="Opaque" x="175" y="341" width="90" height="90" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:QRCode">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="2515fc43-658f-531c-a796-e4a28fd94d45" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="8dab028d-6ff6-5a64-ac17-22391c8fc7b8" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:RoyalMailCustomer"]]></text>
+				</element>
+				<element kind="staticText" uuid="d01a644a-4fbc-5f6b-880d-4b6701b0cd61" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Royal Mail 4-State Customer Code: upper case letters and digits, followed by a check character, which is added by default. The symbology has no human readable text. Code: "SN34RD1A", whose check character is "K".]]></text>
+				</element>
+				<element kind="staticText" uuid="99c055b4-8ade-5aa3-ba7e-3814c415fc3b" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="9cd028a0-2a11-5119-be57-5d93a43a2f42" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="c79d5b3f-cac5-53f4-9fdf-df76f400e98f" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="2.5"]]></text>
+				</element>
+				<element kind="component" uuid="97d6aff7-9836-5678-a516-86eb8df7ac66" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" moduleWidth="2.5">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="46d72d39-beab-5beb-8eda-11ee6069ae48" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="15"]]></text>
+				</element>
+				<element kind="component" uuid="1d8ca391-1760-5ed9-a597-4fe90049b40c" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" quietZone="15">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="aa7e58ed-eb87-59a9-bc4d-64cd480a0c49" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="b62a4744-0763-5ba9-83bf-97c8a560f28a" x="0" y="174" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" verticalQuietZone="10">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="2b3e8ca2-28a9-5570-8549-3ae9aa950a7c" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[ascenderHeight="10"]]></text>
+				</element>
+				<element kind="component" uuid="6a52b943-866f-590d-9b08-20b176548025" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" ascenderHeight="10">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0a0d2888-4c12-5c3c-864a-4e032e6c8f0d" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[trackHeight="10"]]></text>
+				</element>
+				<element kind="component" uuid="2ba64331-5b3e-55ef-a9c0-52fddddd098a" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" trackHeight="10">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="726f9e57-c3c8-5e7f-b798-827863844356" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[intercharGapWidth="4"]]></text>
+				</element>
+				<element kind="component" uuid="0e0b7abe-7ad6-5988-97a4-d2d955bbf86d" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" intercharGapWidth="4">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ef89d0ae-4099-5615-b324-4011c2b0a2ac" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "SN34RD1AK"]]></text>
+				</element>
+				<element kind="component" uuid="8f32ea53-5af3-5506-9c0a-c6c97b7c0dc9" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" checksumMode="check">
+						<codeExpression><![CDATA["SN34RD1AK"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ea360ce2-9347-57d9-b4f5-85d20d24c999" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="ignore"]]></text>
+				</element>
+				<element kind="component" uuid="c3de7b3e-99ab-57f8-99a1-37403e4d87e1" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" checksumMode="ignore">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cc542a8c-6eec-5803-9bad-0f5a4d6e1685" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="d73423b6-6ad8-5e77-9812-b22db4bd2583" mode="Opaque" x="0" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:RoyalMailCustomer">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cc40f5bc-6901-5c62-b552-2a73dfd0333d" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="d8901c7a-bfdb-5d53-b2f7-fa784f9e1a3e" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:RoyalMailCustomer" orientation="left">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="736a8316-4bf2-5e6d-b04c-83cb1ee00008" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="e8d4c349-73d6-523f-afe0-533fb7b186df" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:RoyalMailCustomer" orientation="right">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="71fef44e-6942-5d39-b0d1-d751afa999ee" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="222f75d8-ed4a-5b79-b3f5-9775ff007cf1" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:RoyalMailCustomer" orientation="down">
+						<codeExpression><![CDATA["SN34RD1A"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="764a13e6-15fd-5513-9fb5-e5cbbf4e6272" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="9b98e4f7-1625-5cc6-a297-7ada9f13c9fa" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:UPCA"]]></text>
+				</element>
+				<element kind="staticText" uuid="81e3d1ea-0a08-51cb-8751-ecddc1897a05" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[11 digits followed by the check digit, which is added when missing and checked when present. Code: "03600029145".]]></text>
+				</element>
+				<element kind="staticText" uuid="384b208c-db6a-512d-a520-81b53f42bd8e" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="8bcfd18f-3afd-58e1-90d1-5478431369b9" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:UPCA">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="af9899b6-7b76-5919-b3f1-298d4cef3e50" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="52251622-db98-5c5b-a4d5-f79af0408456" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:UPCA" textPosition="top">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="33731eb3-c404-59e7-a255-f0e46228664c" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="9d68306c-724b-53f1-85cc-451d04cc7683" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:UPCA" textPosition="none">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="677f0a17-1f70-5342-8d71-595abe0531ae" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="1aef7fd6-4d47-589e-8495-7e01123a4ca1" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:UPCA">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="75d811ef-2404-57cf-81a9-7f09effe5df8" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.1"]]></text>
+				</element>
+				<element kind="component" uuid="d45fbb72-5e4c-5478-ac9d-a93adbc10168" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:UPCA" moduleWidth="1.1">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="73b5e258-23e7-58aa-b7c1-6aedf3f2b7b2" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="f94582cd-3c2b-56ca-bf22-bd97cbfb968b" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:UPCA" quietZone="30">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="86a2c945-5c9c-5d3c-bcd5-ef2938dc7b90" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="d43f9321-1091-5149-98fe-b5be690de832" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:UPCA" verticalQuietZone="10">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="94d0a231-fdd3-538b-b48f-42cba7fdd04d" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"]]></text>
+				</element>
+				<element kind="component" uuid="f37bd99f-d95f-52c9-81e4-7ca69fb5ddef" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:UPCA" checksumMode="add">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="ac5d40fb-536b-550a-80ff-bd328069cfa9" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "036000291452"]]></text>
+				</element>
+				<element kind="component" uuid="f628ba45-5a0c-5c86-a756-d054b7a30633" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:UPCA" checksumMode="check">
+						<codeExpression><![CDATA["036000291452"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="04499275-e967-52ee-af5f-288b5aea9daf" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="ignore",
+code "036000291450"]]></text>
+				</element>
+				<element kind="component" uuid="6c4cffeb-397a-51bd-b637-ed9e4d511a16" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:UPCA" checksumMode="ignore">
+						<codeExpression><![CDATA["036000291450"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="af26bba8-3353-5e55-9ac5-6c9723b07b85" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="3f343bf2-270c-56d0-a4e8-2528c1caa0d7" mode="Opaque" x="175" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:UPCA">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cd322ed1-fa6b-5735-b654-576e98e3d32d" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="15aa6542-d48b-571f-bd42-bfeaba3a99bf" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:UPCA" orientation="left">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="467a384b-148b-5d8d-997a-ac34de446b02" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="3a10dc84-f172-5720-b3cd-8fd3a9d2b19c" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:UPCA" orientation="right">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e8699df3-c4ff-5263-a3ee-6fa004c04ec9" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="c3d8bf93-00ee-5a9c-af1b-29fe766416c0" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:UPCA" orientation="down">
+						<codeExpression><![CDATA["03600029145"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="2389f2b1-6438-5c6b-b539-a62759c98b34" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="b9b66a5d-ec8d-5212-a465-37815f7a6fd5" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:UPCE"]]></text>
+				</element>
+				<element kind="staticText" uuid="3d52ddcd-a6de-57f3-9af8-bfd1fea4ed8b" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[Zero-suppressed UPC-A: the number system 0 or 1 and 6 digits, followed by the check digit, which is added when missing and checked when present. Code: "0123413".]]></text>
+				</element>
+				<element kind="staticText" uuid="9f04eb6d-f982-5499-9076-287471906c0d" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="a1436f99-ecb8-5eb3-8deb-fda3209ebfc3" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:UPCE">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="61e07073-8ebf-54bb-a648-20eb573c7679" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="dff8cfdc-0dad-539c-a697-dd6bee4dbb2f" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:UPCE" textPosition="top">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="081c55f0-e815-56f3-9782-ae99a7cf2067" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="none"]]></text>
+				</element>
+				<element kind="component" uuid="3c535eea-9963-526d-8165-0f37f17f4a69" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:UPCE" textPosition="none">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="5975bff2-a960-5697-bc4c-b803fd16deb2" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"]]></text>
+				</element>
+				<element kind="component" uuid="1c59f049-fd8b-5350-b284-b63bdc82a48c" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:UPCE">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0c6f4f38-afed-58b3-8a09-9840b9f303eb" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1.1"]]></text>
+				</element>
+				<element kind="component" uuid="ca4c6b0f-f926-572c-a9c9-3efb18871bb0" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:UPCE" moduleWidth="1.1">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="34dbbb25-4637-51d3-82d1-a941f5fefe4d" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="be7ae09d-f56c-5ec7-af9e-8dfa350d7429" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:UPCE" quietZone="30">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="97324ebb-aa2d-5eec-ae74-c395c5540017" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="bb733e99-88b2-5882-bede-afc7d7afb143" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:UPCE" verticalQuietZone="10">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="9e4674db-8484-54ef-8003-c09073c976ed" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="add"]]></text>
+				</element>
+				<element kind="component" uuid="80263ed9-4986-5965-adb4-17e6bcdf898c" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:UPCE" checksumMode="add">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="8f0fbae6-1abc-51d5-9866-ee4e8e9672cc" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="check",
+code "01234133"]]></text>
+				</element>
+				<element kind="component" uuid="5d5ca926-0b6b-5b6f-b60a-ff0a1aa39943" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:UPCE" checksumMode="check">
+						<codeExpression><![CDATA["01234133"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="f828d348-78eb-5415-8ba9-d09293424183" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[checksumMode="ignore",
+code "01234130"]]></text>
+				</element>
+				<element kind="component" uuid="fbea728e-995a-5ef1-8d35-1a4d3f9665b4" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:UPCE" checksumMode="ignore">
+						<codeExpression><![CDATA["01234130"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="fcd42290-03e2-5cf6-9d61-fe8f3bc51ec9" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="dfcc289a-bf4d-5bfa-af58-3428299e9668" mode="Opaque" x="175" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:UPCE">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="fb3e5715-98ba-5641-82a1-709c792dfc5a" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="9d7f9a48-6765-5c69-a7ac-91306c787bca" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:UPCE" orientation="left">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6cda5233-7b3f-5bad-a9fb-c247ad8e73d5" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="78368365-35af-5ba5-874d-74ffcc65eba9" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:UPCE" orientation="right">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e1c295a2-01b1-5db0-b862-43ebd2f1f202" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="0a73b9e2-a296-5732-8199-ff0f8bbe384c" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:UPCE" orientation="down">
+						<codeExpression><![CDATA["0123413"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+			<band height="595">
+				<element kind="line" uuid="9ff4a75a-cbc8-531f-a6a8-ca1269803b24" x="0" y="0" width="515" height="1"/>
+				<element kind="staticText" uuid="f6ac8a05-cae4-5afc-ab59-098efd7a57ca" x="0" y="5" width="515" height="20" style="Type Title">
+					<text><![CDATA[kind="barcode4j:USPSIntelligentMail"]]></text>
+				</element>
+				<element kind="staticText" uuid="7cd28582-dd61-5238-aac9-a961dfad7f83" x="0" y="25" width="515" height="30" style="Type Note">
+					<text><![CDATA[US Postal Service Intelligent Mail: a 20 digit tracking code followed by a 0, 5, 9 or 11 digit routing code, without text by default. Code: "00040123456200800001987654321".]]></text>
+				</element>
+				<element kind="staticText" uuid="8e17d08d-6238-5940-8656-b093171754a1" x="0" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[defaults]]></text>
+				</element>
+				<element kind="component" uuid="13f6408f-e946-5e4f-9123-1cbf86f85102" x="0" y="87" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e280d91a-ffb5-5141-a3ab-2bad1834b17d" x="175" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="326db594-b97a-5d8a-90bf-ee4de6fab32d" x="175" y="87" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" textPosition="bottom">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6ed23f79-b7df-56d0-83c4-6dc5c88674dd" x="350" y="60" width="165" height="27" style="Caption">
+					<text><![CDATA[textPosition="top"]]></text>
+				</element>
+				<element kind="component" uuid="936595e1-7012-53e6-8b88-bf43e3abad9e" x="350" y="87" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" textPosition="top">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="a6e3141d-8249-5660-aeb6-51c08bec9ce1" x="0" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Serif Bold Italic"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="5da3e4b2-0eb2-57cd-9fe8-6aaf2f8220fd" x="0" y="174" width="165" height="50" style="Serif Bold Italic">
+					<component kind="barcode4j:USPSIntelligentMail" textPosition="bottom">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="810a8686-5866-5a17-b01c-98f13c889aae" x="175" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[moduleWidth="1"]]></text>
+				</element>
+				<element kind="component" uuid="d7a56184-4b8e-5070-b1d2-0276b81e89a4" x="175" y="174" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" moduleWidth="1">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="be962408-3785-559d-88ac-4bf01602fff9" x="350" y="147" width="165" height="27" style="Caption">
+					<text><![CDATA[quietZone="30"]]></text>
+				</element>
+				<element kind="component" uuid="390197f4-1d75-56b9-a943-f0eea9e1e478" x="350" y="174" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" quietZone="30">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="d2976279-936d-52e0-ba55-0fe878f098ee" x="0" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[verticalQuietZone="10"]]></text>
+				</element>
+				<element kind="component" uuid="1389259d-2e4c-5b91-9f1c-b8782b47a754" x="0" y="261" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" verticalQuietZone="10">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="343ea283-d2fd-597a-94a0-db7bdc4befc4" x="175" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[patternExpression
+"__ ___ ______ _________ _________"
+textPosition="bottom"]]></text>
+				</element>
+				<element kind="component" uuid="318b275c-96a3-5c6d-be3c-8cbcbc88d7e5" x="175" y="261" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" textPosition="bottom">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+						<patternExpression><![CDATA["__ ___ ______ _________ _________"]]></patternExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="0029d0b1-a910-5cc4-a058-c19e34bbbfe1" x="350" y="234" width="165" height="27" style="Caption">
+					<text><![CDATA[ascenderHeight="10"]]></text>
+				</element>
+				<element kind="component" uuid="cb164610-1d92-5a1f-a6d1-bfc43e9f9dcf" x="350" y="261" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" ascenderHeight="10">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="728cb0ef-329d-5922-b8c8-5e1b517c5f6c" x="0" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[trackHeight="10"]]></text>
+				</element>
+				<element kind="component" uuid="5a602efa-1aa3-5c74-9982-cc29764538aa" x="0" y="348" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" trackHeight="10">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="428e4091-b6dc-5b85-b7f8-2af28796615b" x="175" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[intercharGapWidth="1"]]></text>
+				</element>
+				<element kind="component" uuid="154a0888-9fc6-50a9-a5ad-c453681975c9" x="175" y="348" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" intercharGapWidth="1">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="3484c9e4-b4ee-5837-ad5c-2e040617e387" x="350" y="321" width="165" height="27" style="Caption">
+					<text><![CDATA[mode="Opaque" forecolor="#1F3A93"
+backcolor="#FFE699"]]></text>
+				</element>
+				<element kind="component" uuid="ff571cba-dc9d-5cb3-adec-f1509075dcbb" mode="Opaque" x="350" y="348" width="165" height="50" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:USPSIntelligentMail">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="58cbc506-7236-57e1-8eb3-c52d62376ed8" x="0" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="left"]]></text>
+				</element>
+				<element kind="component" uuid="dcfe9dd6-9aeb-5d47-9c18-80c4dd46f26f" x="0" y="435" width="50" height="150">
+					<component kind="barcode4j:USPSIntelligentMail" orientation="left">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="05f49d2e-e02e-5623-8af2-d527155d166f" x="175" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="right"]]></text>
+				</element>
+				<element kind="component" uuid="067eba37-f1dc-5266-aacc-2186e56808e3" x="175" y="435" width="50" height="150">
+					<component kind="barcode4j:USPSIntelligentMail" orientation="right">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="6dd002c1-23e7-59d6-819d-bd67035b4851" x="350" y="408" width="165" height="27" style="Caption">
+					<text><![CDATA[orientation="down"]]></text>
+				</element>
+				<element kind="component" uuid="efa839e5-62f1-5345-824a-d2008078059a" x="350" y="435" width="165" height="50">
+					<component kind="barcode4j:USPSIntelligentMail" orientation="down">
+						<codeExpression><![CDATA["00040123456200800001987654321"]]></codeExpression>
+					</component>
+				</element>
+			</band>
+		</groupHeader>
+	</group>
 </jasperReport>

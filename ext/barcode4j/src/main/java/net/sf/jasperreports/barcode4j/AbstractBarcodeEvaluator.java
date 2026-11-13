@@ -547,7 +547,12 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		barcodeBean = pdf417Bean;
 		evaluatePDF417(pdf417);
 		setBaseAttributes(pdf417);
-		
+		// the base attributes set the element height as barcode height, which for PDF417
+		// is the height of each row; use the 3:1 row height to module width ratio that
+		// Barcode4J itself defaults to (PDF417Bean.DEFAULT_X_TO_Y_FACTOR, not accessible),
+		// the element being filled by RETAIN_SHAPE scaling anyway
+		pdf417Bean.setRowHeight(3 * pdf417Bean.getModuleWidth());
+
 		if (pdf417.getMinColumns() != null)
 		{
 			pdf417Bean.setMinCols(pdf417.getMinColumns());
