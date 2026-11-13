@@ -64,6 +64,11 @@ public class BarbecueCompiler implements ComponentCompiler
 		{
 			verifier.addBrokenRule("No barcode type set", barcode);
 		}
+		else if (!BarcodeProviders.isTypeSupported(type))
+		{
+			// failing here rather than when the barcode gets created at fill time
+			verifier.addBrokenRule("Unsupported barcode type \"" + type + "\"", barcode);
+		}
 		
 		JRExpression codeExpression = barcode.getCodeExpression();
 		if (codeExpression == null)

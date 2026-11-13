@@ -94,7 +94,6 @@ public class BarbecueFillComponent extends BaseFillComponent
 	@Override
 	public FillPrepareResult prepare(int availableHeight, boolean isOverflowAllowed)
 	{
-		//FIXMENOW do like for map and spider chart, because it crashes with null code one evaluationTime != NOW; check barbecue too
 		return isEvaluateNow() && code == null 
 				? FillPrepareResult.NO_PRINT_NO_OVERFLOW
 				: FillPrepareResult.PRINT_NO_STRETCH;
@@ -137,6 +136,13 @@ public class BarbecueFillComponent extends BaseFillComponent
 
 	protected void setBarcodeImage(JRTemplatePrintImage image)
 	{
+		if (code == null)
+		{
+			// a delayed barcode is already printed when its code turns out to be null,
+			// so it is left without a renderer, which draws nothing, as barcode4j does
+			return;
+		}
+
 		BarcodeInfo barcodeInfo = new BarcodeInfo();
 		barcodeInfo.setType(barcodeComponent.getType());
 		barcodeInfo.setCode(code);

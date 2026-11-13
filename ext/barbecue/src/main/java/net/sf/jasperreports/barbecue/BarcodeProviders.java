@@ -64,7 +64,7 @@ public final class BarcodeProviders
 		providers.put("Codabar", new CodabarProvider());
 		providers.put("Code128", new Code128Provider());
 		providers.put("Code128A", new Code128AProvider());
-		providers.put("Code128B", new Code128Provider());
+		providers.put("Code128B", new Code128BProvider());
 		providers.put("Code128C", new Code128CProvider());
 		providers.put("Code39", new Code39Provider());
 		providers.put("Code39 (Extended)", 
