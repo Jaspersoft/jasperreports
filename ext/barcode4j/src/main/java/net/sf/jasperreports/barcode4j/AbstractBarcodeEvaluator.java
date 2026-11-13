@@ -308,7 +308,15 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		setBaseAttributes(ean128);
 		if (ean128.getChecksumMode() != null)
 		{
-			ean128Bean.setChecksumMode(ChecksumMode.byName(ean128.getChecksumMode()));
+			ChecksumMode checksumMode = ChecksumMode.byName(ean128.getChecksumMode());
+			// Barcode4J's EAN128 does not handle the ignore mode and throws an internal error,
+			// while its check mode neither adds nor verifies the check digits, which is what
+			// ignore stands for
+			if (checksumMode == ChecksumMode.CP_IGNORE)
+			{
+				checksumMode = ChecksumMode.CP_CHECK;
+			}
+			ean128Bean.setChecksumMode(checksumMode);
 		}
 		evaluateBarcodeRenderable(ean128);
 	}

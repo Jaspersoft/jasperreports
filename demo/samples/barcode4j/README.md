@@ -143,8 +143,19 @@ Barcode4J 2.1 limitations of `verticalQuietZone`:
 
 - For `Codabar`, `Code128`, `Code39`, `EAN128` and `Interleaved2Of5`, the bars are moved down by the vertical quiet zone, but the human-readable text is not. With `textPosition="bottom"` (the default), the text overlaps the bars by the height of the vertical quiet zone, and with `textPosition="top"` it is separated from the bars by that height. The sample therefore uses `textPosition="none"` for these components when it sets `verticalQuietZone`.
 - For `EAN13`, `EAN8`, `UPCA` and `UPCE`, the attribute is ignored.
+- For `DataMatrix`, the attribute is ignored and the `quietZone` value is used above and below the barcode as well.
+
+Other Barcode4J 2.1 limitations of the common attributes:
+
+- `RoyalMailCustomer` has no human-readable text, so `textPosition`, `patternExpression` and the font of the element style have no effect.
+- For `EAN13`, `EAN8`, `UPCA` and `UPCE`, `patternExpression` is ignored.
 
 Another attribute available for almost all Barcode4j elements is the `checksumMode`. Allowed values are `auto, ignore, add` and `check`.
+
+Barcode4J 2.1 limitations of `checksumMode`:
+
+- For `EAN128`, `check` does not verify the check digits in the data; it behaves like `ignore`, neither adding nor verifying them.
+- For `USPSIntelligentMail`, the attribute is ignored.
 
 Starting with JasperReports 5.1.2 a `templateExpression` is available for the `EAN128` component, in order to allow custom configuration for the human readable part of the barcode. The format of the `templateExpression` must conform to rules specified in the official documentation:
 
