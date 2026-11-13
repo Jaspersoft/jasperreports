@@ -729,7 +729,8 @@ backcolor="#FFE699"]]></text>
 					</component>
 				</element>
 				<element kind="staticText" uuid="9b6e45b8-fd7e-5e61-9dd3-b86a0b3c67f7" x="0" y="234" width="165" height="27" style="Caption">
-					<text><![CDATA[verticalQuietZone="10"]]></text>
+					<text><![CDATA[verticalQuietZone="10"
+(ignored by Barcode4J)]]></text>
 				</element>
 				<element kind="component" uuid="fc77d49f-4e9b-5212-8fc6-b1d8103f7443" x="0" y="261" width="165" height="50">
 					<component kind="barcode4j:EAN13" verticalQuietZone="10">
@@ -853,7 +854,8 @@ backcolor="#FFE699"]]></text>
 					</component>
 				</element>
 				<element kind="staticText" uuid="3dfea480-a452-5659-b282-32c0cd895463" x="0" y="234" width="165" height="27" style="Caption">
-					<text><![CDATA[verticalQuietZone="10"]]></text>
+					<text><![CDATA[verticalQuietZone="10"
+(ignored by Barcode4J)]]></text>
 				</element>
 				<element kind="component" uuid="3dd43273-555d-51b4-9af1-3606a896f6dc" x="0" y="261" width="165" height="50">
 					<component kind="barcode4j:EAN8" verticalQuietZone="10">
@@ -1597,7 +1599,8 @@ backcolor="#FFE699"]]></text>
 					</component>
 				</element>
 				<element kind="staticText" uuid="86a2c945-5c9c-5d3c-bcd5-ef2938dc7b90" x="0" y="234" width="165" height="27" style="Caption">
-					<text><![CDATA[verticalQuietZone="10"]]></text>
+					<text><![CDATA[verticalQuietZone="10"
+(ignored by Barcode4J)]]></text>
 				</element>
 				<element kind="component" uuid="d43f9321-1091-5149-98fe-b5be690de832" x="0" y="261" width="165" height="50">
 					<component kind="barcode4j:UPCA" verticalQuietZone="10">
@@ -1721,7 +1724,8 @@ backcolor="#FFE699"]]></text>
 					</component>
 				</element>
 				<element kind="staticText" uuid="97324ebb-aa2d-5eec-ae74-c395c5540017" x="0" y="234" width="165" height="27" style="Caption">
-					<text><![CDATA[verticalQuietZone="10"]]></text>
+					<text><![CDATA[verticalQuietZone="10"
+(ignored by Barcode4J)]]></text>
 				</element>
 				<element kind="component" uuid="bb733e99-88b2-5882-bede-afc7d7afb143" x="0" y="261" width="165" height="50">
 					<component kind="barcode4j:UPCE" verticalQuietZone="10">

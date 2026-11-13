@@ -139,6 +139,11 @@ and contains the following attributes:
 - `quietZone` - specifies the width of the quiet zone left and right of the barcode in points. This will be converted in mm at runtime.
 - `verticalQuietZone` - specifies the height of the vertical quiet zone above and below the barcode in points. This will be converted in mm at runtime.
 
+Barcode4J 2.1 limitations of `verticalQuietZone`:
+
+- For `Codabar`, `Code128`, `Code39`, `EAN128` and `Interleaved2Of5`, the bars are moved down by the vertical quiet zone, but the human-readable text is not. With `textPosition="bottom"` (the default), the text overlaps the bars by the height of the vertical quiet zone, and with `textPosition="top"` it is separated from the bars by that height. The sample therefore uses `textPosition="none"` for these components when it sets `verticalQuietZone`.
+- For `EAN13`, `EAN8`, `UPCA` and `UPCE`, the attribute is ignored.
+
 Another attribute available for almost all Barcode4j elements is the `checksumMode`. Allowed values are `auto, ignore, add` and `check`.
 
 Starting with JasperReports 5.1.2 a `templateExpression` is available for the `EAN128` component, in order to allow custom configuration for the human readable part of the barcode. The format of the `templateExpression` must conform to rules specified in the official documentation:
