@@ -104,12 +104,11 @@ public class BarcodeRasterizedImageProducer implements BarcodeImageProducer
 			int imageType = gray ? BufferedImage.TYPE_BYTE_GRAY 
 					: BufferedImage.TYPE_BYTE_BINARY;
 			
+			// the barcode is drawn upright and the image is rotated instead, see BarcodeUtils.getRotation()
 			BitmapCanvasProvider provider =
 				new BitmapCanvasProvider(
 					resolution, imageType, antiAlias,
-					OrientationEnum.getValueOrDefault(
-						((Barcode4jComponent)componentElement.getComponent()).getOrientation()
-						).getValue()
+					OrientationEnum.UP.getValue()
 					);
 			barcode.generateBarcode(provider, message);
 			provider.finish();

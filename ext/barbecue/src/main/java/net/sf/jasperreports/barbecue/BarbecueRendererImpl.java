@@ -52,7 +52,11 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
 	private Barcode barcode;
-	
+
+	/**
+	 * The rotation applied by the renderer itself, which is only set in renderers of reports filled
+	 * before the rotation was moved to the image, see {@link #setRotation(RotationEnum)}.
+	 */
 	private RotationEnum rotation;
 
 	private Font font;
@@ -199,6 +203,12 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 		}
 	}
 
+	/**
+	 * Sets a rotation for the renderer to apply when drawing the barcode.
+	 * The barbecue component no longer calls this, as it draws the barcode upright and rotates the image instead,
+	 * so that rotation and image alignment work as for any other image. The rotation is still applied
+	 * when set, as it is in renderers of reports filled and saved before that, whose images are not rotated.
+	 */
 	public void setRotation(RotationEnum rotation){
 		this.rotation = rotation;
 	}

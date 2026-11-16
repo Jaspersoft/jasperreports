@@ -115,6 +115,8 @@ To completely determine a barcode, the following pieces are needed:
         - `Left`
         - `Right`
         - `UpsideDown`
+      
+      When not set, the `rotation` of the element style applies. The barcode is drawn upright and the image is rotated, so the rotation works like the `rotation` of an image element, and the `hImageAlign` and `vImageAlign` style attributes position the barcode within the element as they would a rotated image.
 
 ### The Barbecue Sample
 

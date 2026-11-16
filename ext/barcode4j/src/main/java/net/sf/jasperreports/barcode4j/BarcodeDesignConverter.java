@@ -31,7 +31,6 @@ import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.base.JRBasePrintImage;
 import net.sf.jasperreports.engine.component.ComponentDesignConverter;
 import net.sf.jasperreports.engine.convert.ReportConverter;
-import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.renderers.Renderable;
 
@@ -52,8 +51,8 @@ public class BarcodeDesignConverter implements ComponentDesignConverter
 				reportConverter.getDefaultStyleProvider());
 		reportConverter.copyBaseAttributes(element, printImage);
 		printImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
-		// the barcode is rotated by its orientation attribute, see BarcodeFillComponent.getTemplateImage()
-		printImage.setRotation(RotationEnum.NONE);
+		// the image is rotated rather than the barcode, see BarcodeFillComponent.getTemplateImage()
+		printImage.setRotation(BarcodeUtils.getRotation(element));
 		
 		Renderable barcodeImage = evaluateBarcode(reportConverter, element);
 		printImage.setRenderer(barcodeImage);

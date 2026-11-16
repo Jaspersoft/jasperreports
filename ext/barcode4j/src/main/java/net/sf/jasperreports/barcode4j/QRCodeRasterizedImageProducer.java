@@ -85,16 +85,20 @@ public class QRCodeRasterizedImageProducer implements QRCodeImageProducer
 
 		int resolution = JRPropertiesUtil.getInstance(jasperReportsContext).getIntegerProperty(
 				componentElement, BarcodeRasterizedImageProducer.PROPERTY_RESOLUTION, 300);
+		// the QR code is drawn upright and the image is rotated by 90 degrees, see BarcodeUtils.getRotation()
+		boolean vertical = BarcodeUtils.isVertical(componentElement);
+		int imageWidth = vertical ? componentElement.getHeight() : componentElement.getWidth();
+		int imageHeight = vertical ? componentElement.getWidth() : componentElement.getHeight();
 		try
 		{
-			BitMatrix matrix = 
+			BitMatrix matrix =
 				writer.encode(
 					message,
 					BarcodeFormat.QR_CODE,
-//					(int)((72f / 2.54f) * componentElement.getWidth()), 
-//					(int)((72f / 2.54f) * componentElement.getHeight()), 
-					(int)((resolution / 72f) * componentElement.getWidth()), 
-					(int)((resolution / 72f) * componentElement.getHeight()), 
+//					(int)((72f / 2.54f) * componentElement.getWidth()),
+//					(int)((72f / 2.54f) * componentElement.getHeight()),
+					(int)((resolution / 72f) * imageWidth),
+					(int)((resolution / 72f) * imageHeight),
 					hints
 					);
 			BufferedImage image = getImage(matrix, componentElement.getForecolor());

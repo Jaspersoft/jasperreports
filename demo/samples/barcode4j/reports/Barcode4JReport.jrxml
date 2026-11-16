@@ -5,6 +5,9 @@
 		<box bottomPadding="2"/>
 	</style>
 	<style name="Serif Bold Italic" fontName="DejaVu Serif" fontSize="7.0" bold="true" italic="true"/>
+	<style name="Rotated Left" rotation="Left"/>
+	<style name="Rotated Right" rotation="Right"/>
+	<style name="Rotated UpsideDown" rotation="UpsideDown"/>
 	<group name="Dummy">
 		<groupHeader>
 			<band height="140">
@@ -1353,13 +1356,13 @@ backcolor="#FFE699"]]></text>
 					</component>
 				</element>
 			</band>
-			<band height="441">
+			<band height="568">
 				<element kind="line" uuid="ac69b6c1-a340-5722-afe9-8345f3483113" x="0" y="0" width="515" height="1"/>
 				<element kind="staticText" uuid="211b06e9-3093-5595-bcdf-919242a34785" x="0" y="5" width="515" height="20" style="Type Title">
 					<text><![CDATA[kind="barcode4j:QRCode"]]></text>
 				</element>
 				<element kind="staticText" uuid="f094938b-daea-5dd5-a1e4-b31cac68c9b5" x="0" y="25" width="515" height="30" style="Type Note">
-					<text><![CDATA[Two-dimensional matrix symbology, generated with the ZXing library. Unlike the other types, it has no text, module width, quiet zone or orientation settings. Code: "https://jasperreports.sourceforge.net".]]></text>
+					<text><![CDATA[Two-dimensional matrix symbology, generated with the ZXing library. Unlike the other types, it has no text, module width, quiet zone or orientation settings, but it is rotated by the rotation of its style, like an image. Code: "https://jasperreports.sourceforge.net".]]></text>
 				</element>
 				<element kind="staticText" uuid="24e907f5-a2eb-5f95-8b25-3a9ebf46cd5d" x="0" y="60" width="165" height="27" style="Caption">
 					<text><![CDATA[defaults]]></text>
@@ -1422,6 +1425,33 @@ backcolor="#FFE699"]]></text>
 backcolor="#FFE699"]]></text>
 				</element>
 				<element kind="component" uuid="34e27549-509c-55d8-b8e1-a7cf4e28b6b5" mode="Opaque" x="175" y="341" width="90" height="90" forecolor="#1F3A93" backcolor="#FFE699">
+					<component kind="barcode4j:QRCode">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="54993aab-840a-47bc-9cc7-1a442fa39bcb" x="350" y="314" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Rotated Left"
+(rotation="Left")]]></text>
+				</element>
+				<element kind="component" uuid="0edf09c2-0c7f-4a5a-b657-511c27bfc763" x="350" y="341" width="90" height="90" style="Rotated Left">
+					<component kind="barcode4j:QRCode">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="cc433994-0536-4aaf-9cd6-1ab62a18b67c" x="0" y="441" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Rotated Right"
+(rotation="Right")]]></text>
+				</element>
+				<element kind="component" uuid="b9ecc527-ae6a-4d5f-956e-c294b5bb6cd9" x="0" y="468" width="90" height="90" style="Rotated Right">
+					<component kind="barcode4j:QRCode">
+						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+					</component>
+				</element>
+				<element kind="staticText" uuid="e1987e13-1e9f-47b7-a0fb-e873abea43d8" x="175" y="441" width="165" height="27" style="Caption">
+					<text><![CDATA[style="Rotated UpsideDown"
+(rotation="UpsideDown")]]></text>
+				</element>
+				<element kind="component" uuid="8534c020-b60f-4869-87ec-3df2e9de4073" x="175" y="468" width="90" height="90" style="Rotated UpsideDown">
 					<component kind="barcode4j:QRCode">
 						<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
 					</component>

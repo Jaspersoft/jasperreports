@@ -133,7 +133,7 @@ and contains the following attributes:
 
 - `evaluationTime` - the evaluationTime attribute of any JR report element
 - `evaluationGroup` - the evaluationGroup attribute of any JR report element
-- `orientation` - specifies the rotation of the generated barcode image in degrees (allowed values are: `0, 90, 180, 270`), or their text equivalents: `up, left, right, down`. The default value is 0.
+- `orientation` - specifies the rotation of the generated barcode image in degrees (allowed values are: `0, 90, 180, 270`), or their text equivalents: `up, left, right, down`. When not set, the `rotation` of the element style applies, and when neither is set, the barcode is not rotated. The barcode is drawn upright and the image is rotated, so `orientation` works like the `rotation` of an image element: `left` (90) and `right` (270) correspond to the `Left` and `Right` image rotations, `down` (180) to `UpsideDown`, and the `hImageAlign` and `vImageAlign` style attributes position the barcode within the element as they would a rotated image.
 - `moduleWidth` - specifies the narrow module width (in points). This will be converted in mm at runtime.
 - `textPosition` - specifies the text presence and its position relative to the bar. Allowed values are: `none, bottom, top`.
 - `quietZone` - specifies the width of the quiet zone left and right of the barcode in points. This will be converted in mm at runtime.
@@ -175,6 +175,8 @@ Specific attributes for this component are enumerated below:
 
 - `margin` - number of pixels reserved as margin around the barcode graphic.
 - `errorCorrectionLevel` - enabled; single uppercase character representing the error correction level. Possible values are: `L, M, Q, H`. Default is `L`.
+
+The QR code has no `orientation` attribute, but it is rotated by the `rotation` of the element style, the same way as an image element.
 
 ### Barcode4J Samples
 

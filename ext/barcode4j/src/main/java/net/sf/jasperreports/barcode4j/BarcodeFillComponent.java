@@ -35,7 +35,6 @@ import net.sf.jasperreports.engine.component.FillPrepareResult;
 import net.sf.jasperreports.engine.fill.JRTemplateImage;
 import net.sf.jasperreports.engine.fill.JRTemplatePrintImage;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
-import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.export.HtmlReportConfiguration;
 import net.sf.jasperreports.renderers.Renderable;
@@ -143,9 +142,9 @@ public class BarcodeFillComponent extends BaseFillComponent
 			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);//already set by setElement, but keeping for safety
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
-			// the barcode is rotated by its orientation attribute, which also sizes it to fit the element;
-			// not letting the image inherit a rotation from the style, as that would rotate it a second time
-			templateImage.setRotation(RotationEnum.NONE);
+			// the barcode is drawn upright and the image is rotated instead, by the orientation of the barcode
+			// or else the rotation inherited from the style, so that rotation and image alignment work as for any other image
+			templateImage.setRotation(BarcodeUtils.getRotation(fillContext.getComponentElement()));
 			templateImage.setUsingCache(false);
 
 			templateImage = deduplicate(templateImage);

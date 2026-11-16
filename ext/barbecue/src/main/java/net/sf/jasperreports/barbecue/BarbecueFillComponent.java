@@ -35,7 +35,6 @@ import net.sf.jasperreports.engine.component.FillPrepareResult;
 import net.sf.jasperreports.engine.fill.JRTemplateImage;
 import net.sf.jasperreports.engine.fill.JRTemplatePrintImage;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
-import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sourceforge.barbecue.Barcode;
@@ -164,7 +163,6 @@ public class BarbecueFillComponent extends BaseFillComponent
 
 		Barcode barcode = BarcodeProviders.createBarcode(barcodeInfo);
 		BarbecueRendererImpl renderer = new BarbecueRendererImpl(barcode);
-		renderer.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
 		renderer.setFont(barcodeInfo.getFont());
 		
 		image.setRenderer(renderer);
@@ -183,9 +181,9 @@ public class BarbecueFillComponent extends BaseFillComponent
 			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
-			// the renderer already applies the rotation, including one inherited from the style;
-			// not letting the image inherit it as well, as that would rotate the barcode a second time
-			templateImage.setRotation(RotationEnum.NONE);
+			// the renderer draws the barcode upright and the image is rotated instead, by the own rotation of the component
+			// or else the one inherited from the style, so that rotation and image alignment work as for any other image
+			templateImage.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
 			templateImage.setUsingCache(false);
 			
 			templateImage = deduplicate(templateImage);

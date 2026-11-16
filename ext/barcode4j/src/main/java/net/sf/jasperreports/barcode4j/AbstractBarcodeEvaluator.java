@@ -192,7 +192,7 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 
 		// FIXME DataMatrix?
 		double barcodeHeight;
-		if (BarcodeUtils.isVertical(barcodeComponent))
+		if (BarcodeUtils.isVertical(componentElement))
 		{
 			barcodeHeight = UnitConv.pt2mm(toPoints(componentElement.getWidth()));
 		}
