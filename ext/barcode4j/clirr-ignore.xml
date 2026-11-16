@@ -1,2 +1,8 @@
 <differences>
+	<difference>
+		<className>net/sf/jasperreports/barcode4j/BarcodeUtils</className>
+		<differenceType>7005</differenceType>
+		<method>*isVertical(net.sf.jasperreports.barcode4j.Barcode4jComponent)</method>
+		<to>*isVertical(net.sf.jasperreports.engine.JRComponentElement)</to>
+	</difference>
 </differences>
