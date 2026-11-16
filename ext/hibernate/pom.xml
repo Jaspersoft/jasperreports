@@ -18,7 +18,7 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<enforcer.max.jdk.version>11</enforcer.max.jdk.version>
+		<enforcer.max.jdk.version>17</enforcer.max.jdk.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
-			<version>3.1.0</version>
+			<version>${hibernate.jakarta.persistence-api.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>

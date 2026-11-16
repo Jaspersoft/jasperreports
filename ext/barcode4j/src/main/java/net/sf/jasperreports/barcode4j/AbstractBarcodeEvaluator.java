@@ -49,6 +49,7 @@ import org.krysalis.barcode4j.tools.UnitConv;
 
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRDefaultStyleProvider;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReportsContext;
@@ -307,7 +308,15 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		setBaseAttributes(ean128);
 		if (ean128.getChecksumMode() != null)
 		{
-			ean128Bean.setChecksumMode(ChecksumMode.byName(ean128.getChecksumMode()));
+			ChecksumMode checksumMode = ChecksumMode.byName(ean128.getChecksumMode());
+			// Barcode4J's EAN128 does not handle the ignore mode and throws an internal error,
+			// while its check mode neither adds nor verifies the check digits, which is what
+			// ignore stands for
+			if (checksumMode == ChecksumMode.CP_IGNORE)
+			{
+				checksumMode = ChecksumMode.CP_CHECK;
+			}
+			ean128Bean.setChecksumMode(checksumMode);
 		}
 		evaluateBarcodeRenderable(ean128);
 	}
@@ -339,7 +348,12 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		}
 		if (code39.getIntercharGapWidth() != null)
 		{
-			code39Bean.setIntercharGapWidth(code39.getIntercharGapWidth());
+			boolean legacyMillimeters = JRPropertiesUtil.getInstance(jasperReportsContext).getBooleanProperty(
+					componentElement, Code39Component.LEGACY_INTERCHAR_GAP_WIDTH, false);
+			code39Bean.setIntercharGapWidth(
+					legacyMillimeters
+					? code39.getIntercharGapWidth()
+					: UnitConv.pt2mm(toPoints(code39.getIntercharGapWidth())));
 		}
 		if (code39.getWideFactor() != null)
 		{
@@ -547,7 +561,12 @@ public abstract class AbstractBarcodeEvaluator implements BarcodeVisitor
 		barcodeBean = pdf417Bean;
 		evaluatePDF417(pdf417);
 		setBaseAttributes(pdf417);
-		
+		// the base attributes set the element height as barcode height, which for PDF417
+		// is the height of each row; use the 3:1 row height to module width ratio that
+		// Barcode4J itself defaults to (PDF417Bean.DEFAULT_X_TO_Y_FACTOR, not accessible),
+		// the element being filled by RETAIN_SHAPE scaling anyway
+		pdf417Bean.setRowHeight(3 * pdf417Bean.getModuleWidth());
+
 		if (pdf417.getMinColumns() != null)
 		{
 			pdf417Bean.setMinCols(pdf417.getMinColumns());

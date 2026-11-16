@@ -94,7 +94,6 @@ public class BarbecueFillComponent extends BaseFillComponent
 	@Override
 	public FillPrepareResult prepare(int availableHeight, boolean isOverflowAllowed)
 	{
-		//FIXMENOW do like for map and spider chart, because it crashes with null code one evaluationTime != NOW; check barbecue too
 		return isEvaluateNow() && code == null 
 				? FillPrepareResult.NO_PRINT_NO_OVERFLOW
 				: FillPrepareResult.PRINT_NO_STRETCH;
@@ -137,6 +136,13 @@ public class BarbecueFillComponent extends BaseFillComponent
 
 	protected void setBarcodeImage(JRTemplatePrintImage image)
 	{
+		if (code == null)
+		{
+			// a delayed barcode is already printed when its code turns out to be null,
+			// so it is left without a renderer, which draws nothing, as barcode4j does
+			return;
+		}
+
 		BarcodeInfo barcodeInfo = new BarcodeInfo();
 		barcodeInfo.setType(barcodeComponent.getType());
 		barcodeInfo.setCode(code);
@@ -145,10 +151,20 @@ public class BarbecueFillComponent extends BaseFillComponent
 		barcodeInfo.setRequiresChecksum(barcodeComponent.isChecksumRequired());
 		barcodeInfo.setBarWidth(barcodeComponent.getBarWidth());
 		barcodeInfo.setBarHeight(barcodeComponent.getBarHeight());
-		
+		barcodeInfo.setForeground(image.getForecolor());
+		barcodeInfo.setBackground(BarbecueStyleResolver.getBackground(image));
+		barcodeInfo.setFont(
+			BarbecueStyleResolver.getFont(
+				fillContext.getFiller().getJasperReportsContext(),
+				image,
+				fillContext.getReportLocale()
+				)
+			);
+
 		Barcode barcode = BarcodeProviders.createBarcode(barcodeInfo);
 		BarbecueRendererImpl renderer = new BarbecueRendererImpl(barcode);
 		renderer.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
+		renderer.setFont(barcodeInfo.getFont());
 		
 		image.setRenderer(renderer);
 	}
@@ -162,6 +178,8 @@ public class BarbecueFillComponent extends BaseFillComponent
 			templateImage = new JRTemplateImage(
 					fillContext.getElementOrigin(), 
 					fillContext.getDefaultStyleProvider());
+			// own mode, forecolor and backcolor
+			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
 			templateImage.setUsingCache(false);

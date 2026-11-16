@@ -36,8 +36,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
-import org.hibernate.query.BindableType;
 import org.hibernate.query.Query;
+import org.hibernate.type.BindableType;
 import org.hibernate.type.StandardBasicTypes;
 
 import jakarta.persistence.Tuple;

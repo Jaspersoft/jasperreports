@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.barcode4j;
 
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 
 import javax.xml.transform.Result;
@@ -34,10 +35,12 @@ import javax.xml.transform.stream.StreamResult;
 import org.krysalis.barcode4j.BarcodeGenerator;
 import org.krysalis.barcode4j.output.svg.SVGCanvasProvider;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import net.sf.jasperreports.engine.JRComponentElement;
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.util.JRColorUtil;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.renderers.Renderable;
 import net.sf.jasperreports.renderers.SimpleRenderToImageAwareDataRenderer;
@@ -68,6 +71,16 @@ public class BarcodeSVGImageProducer implements BarcodeImageProducer
 					);
 			barcode.generateBarcode(provider, message);
 			Document svgDoc = provider.getDOM();
+
+			// the SVG canvas provider draws everything inside a single group with a hardcoded black fill,
+			// and paints no background, so that the element backcolor shows through when opaque
+			Element detailGroup = (Element) svgDoc.getDocumentElement().getFirstChild();
+			Color color = componentElement.getForecolor();
+			detailGroup.setAttribute("fill", "#" + JRColorUtil.getColorHexa(color));
+			if (color.getAlpha() < 255)
+			{
+				detailGroup.setAttribute("fill-opacity", Float.toString(((float) color.getAlpha()) / 255));
+			}
 
 			Source source = new DOMSource(svgDoc);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();

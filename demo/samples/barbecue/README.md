@@ -41,7 +41,7 @@ The [Barbecue](http://barbecue.sourceforge.net/) library supports the following 
 - Interleave 2 of 5
 - Monarch
 - NW7
-- PDF417
+- PDF417 (see the note below)
 - PostNet
 - Random Weight UPCA
 - SCC-14 Shipping Code
@@ -53,6 +53,13 @@ The [Barbecue](http://barbecue.sourceforge.net/) library supports the following 
 - USD-3
 - USD-4
 - USPS
+
+> **Note:** Barbecue 1.5beta1 draws PDF417 symbols that do not conform to the
+> PDF417 specification (the start pattern and the row indicators are wrong), so
+> barcode readers are not expected to decode them. This is a long-standing Barbecue
+> issue, see [Barbecue bug #19](https://sourceforge.net/p/barbecue/bugs/19/). The sample
+> shows them only to illustrate the component settings. For PDF417 barcodes that
+> need to be read, use the PDF417 component of the [Barcode4J sample](../barcode4j/README.md).
 
 It also provides support for multiple output formats:
 
@@ -85,7 +92,7 @@ To completely determine a barcode, the following pieces are needed:
         - `Int2of5`
         - `Monarch`
         - `NW7`
-        - `PDF417`
+        - `PDF417` - the symbols drawn are not expected to scan, see the note above
         - `PostNet`
         - `RandomWeightUPCA`
         - `SCC14ShippingCode`

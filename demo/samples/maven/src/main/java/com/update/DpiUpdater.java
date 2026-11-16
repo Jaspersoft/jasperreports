@@ -33,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 
 import net.sf.jasperreports.barcode4j.Barcode4jComponent;
 import net.sf.jasperreports.barcode4j.BarcodeComponent;
+import net.sf.jasperreports.barcode4j.Code39Component;
 import net.sf.jasperreports.barcode4j.FourStateBarcodeComponent;
 import net.sf.jasperreports.barcode4j.POSTNETComponent;
 import net.sf.jasperreports.components.iconlabel.IconLabelComponent;
@@ -693,6 +694,11 @@ public class DpiUpdater implements ReportUpdater
 			POSTNETComponent postnet = (POSTNETComponent)barcode;
 			postnet.setIntercharGapWidth(scaler.scale(postnet.getIntercharGapWidth()));
 			postnet.setShortBarHeight(scaler.scale(postnet.getShortBarHeight()));
+		}
+		else if (barcode instanceof Code39Component)
+		{
+			Code39Component code39 = (Code39Component)barcode;
+			code39.setIntercharGapWidth(scaler.scale(code39.getIntercharGapWidth()));
 		}
 	}
 

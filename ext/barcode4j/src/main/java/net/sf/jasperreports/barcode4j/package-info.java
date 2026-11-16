@@ -34,7 +34,8 @@
 * <p>
 * All barcodes in this library include a code expression, which provides the textual data to 
 * be encoded in the barcode, and an optional expression that provides a pattern to be 
-* applied on the message displayed in the barcode. Delayed evaluation of the barcode can 
+* applied on the message displayed in the barcode (ignored by EAN13, EAN8, UPCA and UPCE
+* barcodes). Delayed evaluation of the barcode can
 * be configured using the two evaluation attributes and works in the same way as for 
 * Barbecue barcodes. 
 * </p>
@@ -58,7 +59,9 @@
 * is set to 180 and the text position to top, the code appears reversed and the text 
 * appears upside down beneath the image.</li>
 * <li><code>quietZone</code> - Specifies the width of the quiet zone (in pixels).</li>
-* <li><code>verticalQuietZone</code> - Specifies the height of the vertical quiet zone (in pixels).</li>
+* <li><code>verticalQuietZone</code> - Specifies the height of the vertical quiet zone (in pixels).
+* EAN13, EAN8, UPCA and UPCE barcodes ignore it, and so do Data Matrix barcodes, which use the
+* <code>quietZone</code> value vertically as well.</li>
 * </ul>
 * Concrete barcode types extend the base type by adding further attributes supported by the specific symboloy:
 * <ul>
@@ -72,9 +75,11 @@
 * <li><code>add</code> - adds the checksum to the data;</li>
 * <li><code>check</code> - indicates that the data should already contain a checksum;</li>
 * <li><code>ignore</code> - doesn't expect or add a checksum to the data;</li>
-* <li><code>auto</code> - attempts to detect whether a checksum is already present in the 
+* <li><code>auto</code> - attempts to detect whether a checksum is already present in the
 * data or one should be added.</li>
-* </ul></li>
+* </ul>
+* For EAN128 barcodes, <code>check</code> does not verify the check digits in the data,
+* behaving like <code>ignore</code>.</li>
 * <li>Data Matrix barcodes can be configured to render as a square or rectangle by the 
 * <code>shape</code> attribute.</li>
 * <li>Code39 barcodes have a <code>checksumMode</code> attribute, a <code>displayChecksum</code> 
@@ -88,8 +93,11 @@
 * <code>wideFactor</code> attributes with the same meanings as in Code39 barcodes.</li>
 * <li>RoyalMailCustomer and USPSIntelligentMail barcodes have a <code>checksumMode</code> 
 * attribute, an <code>intercharGapWidth</code> attribute, an <code>ascenderHeight</code> attribute which 
-* sets the length of the bar ascender/descender, and a <code>trackHeight</code> attribute which 
-* provides the height of the barcode track.</li>
+* sets the length of the bar ascender/descender, and a <code>trackHeight</code> attribute which
+* provides the height of the barcode track. USPSIntelligentMail barcodes ignore the
+* <code>checksumMode</code> attribute, and RoyalMailCustomer barcodes have no human-readable
+* text, so <code>textPosition</code>, <code>patternExpression</code> and the element style font
+* have no effect on them.</li>
 * <li>POSTNET barcodes can specify <code>checksumMode</code>, <code>displayChecksum</code> and 
 * <code>intercharGapWidth</code> attributes, plus <code>shortBarHeight</code> for setting the height of 
 * the short bar, and <code>baselinePosition</code> which can be <code>top</code> or <code>bottom</code> 

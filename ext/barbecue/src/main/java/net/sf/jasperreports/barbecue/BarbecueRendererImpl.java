@@ -24,10 +24,12 @@
 package net.sf.jasperreports.barbecue;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JRRuntimeException;
@@ -53,9 +55,43 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 	
 	private RotationEnum rotation;
 
+	private Font font;
+
+	private transient Dimension barcodeSize;
+
 	public BarbecueRendererImpl(Barcode barcode) 
 	{
 		this.barcode = barcode;
+	}
+
+	/**
+	 * Returns the size of the barcode, measured by drawing it on a scratch graphics context.
+	 * Barbecue measures the barcode text only when not in headless mode, otherwise the text has no height,
+	 * so it falls outside the barcode size and gets clipped when rendering. Drawing the barcode stores
+	 * the size of what was actually drawn, text included, regardless of the environment.
+	 * Measuring is done here at export time rather than at fill time, because drawing leaves
+	 * non serializable encoding state in some barcodes (e.g. Code128), which would prevent saving the filled report.
+	 */
+	protected Dimension getBarcodeSize()
+	{
+		if (barcodeSize == null)
+		{
+			Graphics2D grx = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB).createGraphics();
+			try
+			{
+				barcode.draw(grx, 0, 0);
+			}
+			catch (OutputException e)
+			{
+				throw new JRRuntimeException(e);
+			}
+			finally
+			{
+				grx.dispose();
+			}
+			barcodeSize = barcode.getSize();
+		}
+		return barcodeSize;
 	}
 	
 	@Override
@@ -67,13 +103,13 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 			{
 				case LEFT:
 				case RIGHT:
-					return new Dimension((int)barcode.getSize().getHeight(),(int)barcode.getSize().getWidth());
+					return new Dimension((int)getBarcodeSize().getHeight(),(int)getBarcodeSize().getWidth());
 				default:
-					return barcode.getSize();
+					return getBarcodeSize();
 			}
 		} else 
 		{
-			return barcode.getSize();
+			return getBarcodeSize();
 		}
 	}
 
@@ -83,7 +119,7 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 		AffineTransform origTransform = grx.getTransform();
 		try
 		{
-			Dimension size = barcode.getSize();
+			Dimension size = getBarcodeSize();
 
 			if (rotation != null)
 			{
@@ -142,7 +178,16 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 				}
 			}
 			
-			barcode.draw(grx, 0, 0);
+			if (font == null)
+			{
+				// renderers deserialized from reports filled before the font was kept here,
+				// or created by callers that do not provide the font; the library layout applies
+				barcode.draw(grx, 0, 0);
+			}
+			else
+			{
+				barcode.output(new BarbecueGraphicsOutput(grx, font, barcode.getForeground(), barcode.getBackground()));
+			}
 		}
 		catch (OutputException e)
 		{
@@ -153,9 +198,19 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 			grx.setTransform(origTransform);
 		}
 	}
-	
+
 	public void setRotation(RotationEnum rotation){
 		this.rotation = rotation;
+	}
+
+	/**
+	 * Sets the font of the barcode text, which needs to be the font set on the barcode.
+	 * Barbecue does not expose the font of the barcode, and the font is needed for drawing the barcode text
+	 * inside its label area, see {@link BarbecueGraphicsOutput}.
+	 */
+	public void setFont(Font font)
+	{
+		this.font = font;
 	}
 	
 }

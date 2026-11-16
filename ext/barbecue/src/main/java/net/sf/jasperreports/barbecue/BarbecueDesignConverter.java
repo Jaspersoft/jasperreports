@@ -91,10 +91,20 @@ public class BarbecueDesignConverter implements ComponentDesignConverter
 			barcodeInfo.setRequiresChecksum(component.isChecksumRequired());
 			barcodeInfo.setBarWidth(component.getBarWidth());
 			barcodeInfo.setBarHeight(component.getBarHeight());
-			
+			barcodeInfo.setForeground(image.getForecolor());
+			barcodeInfo.setBackground(BarbecueStyleResolver.getBackground(image));
+			barcodeInfo.setFont(
+				BarbecueStyleResolver.getFont(
+					reportConverter.getJasperReportsContext(),
+					image,
+					reportConverter.getLocale()
+					)
+				);
+
 			Barcode barcode = BarcodeProviders.createBarcode(barcodeInfo);
 			BarbecueRendererImpl renderer = new BarbecueRendererImpl(barcode);
 			renderer.setRotation(BarbecueStyleResolver.getRotation(element));
+			renderer.setFont(barcodeInfo.getFont());
 			image.setRenderer(renderer);
 			return image;
 		}

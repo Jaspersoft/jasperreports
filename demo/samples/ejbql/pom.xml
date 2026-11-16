@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
-			<version>${jakarta.persistence-api.version}</version>
+			<version>${hibernate.jakarta.persistence-api.version}</version>
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
