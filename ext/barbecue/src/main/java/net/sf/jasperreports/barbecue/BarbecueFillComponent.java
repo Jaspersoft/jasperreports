@@ -35,6 +35,7 @@ import net.sf.jasperreports.engine.component.FillPrepareResult;
 import net.sf.jasperreports.engine.fill.JRTemplateImage;
 import net.sf.jasperreports.engine.fill.JRTemplatePrintImage;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
+import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRStringUtil;
 import net.sourceforge.barbecue.Barcode;
@@ -182,6 +183,9 @@ public class BarbecueFillComponent extends BaseFillComponent
 			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
+			// the renderer already applies the rotation, including one inherited from the style;
+			// not letting the image inherit it as well, as that would rotate the barcode a second time
+			templateImage.setRotation(RotationEnum.NONE);
 			templateImage.setUsingCache(false);
 			
 			templateImage = deduplicate(templateImage);

@@ -31,6 +31,7 @@ import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.base.JRBasePrintImage;
 import net.sf.jasperreports.engine.component.ComponentDesignConverter;
 import net.sf.jasperreports.engine.convert.ReportConverter;
+import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRExpressionUtil;
 import net.sourceforge.barbecue.Barcode;
@@ -62,6 +63,8 @@ public class BarbecueDesignConverter implements ComponentDesignConverter
 					reportConverter.getDefaultStyleProvider());
 			reportConverter.copyBaseAttributes(element, image);
 			image.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
+			// the renderer applies the rotation, see BarbecueFillComponent.getTemplateImage()
+			image.setRotation(RotationEnum.NONE);
 			
 			String code = null;
 			if (component.getCodeExpression() != null)
