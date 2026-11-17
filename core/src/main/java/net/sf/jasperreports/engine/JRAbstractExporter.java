@@ -238,10 +238,26 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 	private Pair<String, Locale> lastTextLocale;
 	
 	/*
-	 * cache of text value class to avoid calling JRClassLoader.loadClassForRealName() each time.
+	 * cache of text value class to avoid calling JRClassLoader.resolveClassForName() each time.
 	 * note that we're assuming single threaded exporting.
 	 */
 	protected Map<String, Class<?>> textValueClasses = new HashMap<>();
+	
+	/*
+	 * common text value classes, matched by name so that they do not need to be resolved.
+	 */
+	private static final Map<String, Class<?>> KNOWN_TEXT_VALUE_CLASSES = new HashMap<>();
+	static
+	{
+		for (Class<?> knownClass : new Class<?>[] {
+				String.class, Boolean.class, Character.class,
+				Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class,
+				BigInteger.class, BigDecimal.class, Number.class,
+				Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class})
+		{
+			KNOWN_TEXT_VALUE_CLASSES.put(knownClass.getName(), knownClass);
+		}
+	}
 	
 	/**
 	 *
@@ -843,12 +859,7 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 		{
 			try
 			{
-				Class<?> valueClass = textValueClasses.get(valueClassName);
-				if (valueClass == null)
-				{
-					valueClass = JRClassLoader.loadClassForRealName(valueClassName);
-					textValueClasses.put(valueClassName, valueClass);
-				}
+				Class<?> valueClass = getTextValueClass(text, valueClassName);
 				
 				if (java.lang.Number.class.isAssignableFrom(valueClass))
 				{
@@ -874,6 +885,32 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 			}			
 		}
 		return textValue;
+	}
+
+	/**
+	 * Determines the value class of a text, avoiding loading classes by name where possible.
+	 * The class name can come from an untrusted print file, so classes that do need to be resolved
+	 * are not initialized, i.e. their static initializers do not run.
+	 */
+	private Class<?> getTextValueClass(JRPrintText text, String valueClassName) throws ClassNotFoundException
+	{
+		Object value = text.getValue();
+		if (value != null)
+		{
+			return value.getClass();
+		}
+		
+		Class<?> valueClass = KNOWN_TEXT_VALUE_CLASSES.get(valueClassName);
+		if (valueClass == null)
+		{
+			valueClass = textValueClasses.get(valueClassName);
+			if (valueClass == null)
+			{
+				valueClass = JRClassLoader.resolveClassForName(valueClassName);
+				textValueClasses.put(valueClassName, valueClass);
+			}
+		}
+		return valueClass;
 	}
 
 	protected TextValue getTextValueString(JRPrintText text, String textStr)
@@ -920,7 +957,7 @@ public abstract class JRAbstractExporter<RC extends ReportExportConfiguration, C
 			{
 				if (textStr != null && textStr.length() > 0)
 				{
-					Number value = defaultParseNumber(textStr, JRClassLoader.loadClassForRealName(text.getValueClassName()));
+					Number value = defaultParseNumber(textStr, getTextValueClass(text, text.getValueClassName()));
 
 					if (value != null)
 					{
