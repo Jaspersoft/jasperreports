@@ -2358,7 +2358,7 @@ backcolor="#FFE699" drawText="true"]]></text>
 					<text><![CDATA[type="USPS"]]></text>
 				</element>
 				<element kind="staticText" uuid="b06ae277-c6c6-5ff2-a9b1-20ea2a0f3d92" x="0" y="25" width="515" height="30" style="Type Note">
-					<text><![CDATA[UCC/EAN-128 with the application identifier 420 (ship to ZIP code) prepended to the digits, to which the check digit is always appended. Code: "12345".]]></text>
+					<text><![CDATA[UCC/EAN-128 with the application identifier 420 (ship to ZIP code) prepended to the digits. A check digit is appended to the text, but the bars keep it only when the code has an even number of digits, so here they encode (420)12345. Code: "12345".]]></text>
 				</element>
 				<element kind="staticText" uuid="59c019f3-a30b-5bf5-b26d-b236662823b7" x="0" y="60" width="165" height="27" style="Caption">
 					<text><![CDATA[defaults]]></text>
