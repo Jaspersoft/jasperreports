@@ -1,0 +1,15 @@
+<jasperReport name="OkapiNull" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c301">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="10.0"/>
+	<title height="742">
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c302" x="0" y="0" width="200" height="30" style="Barcode">
+			<component kind="okapi:Code128">
+				<codeExpression><![CDATA[null]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c303" x="0" y="40" width="100" height="100" style="Barcode">
+			<component kind="okapi:QRCode" evaluationTime="Report">
+				<codeExpression><![CDATA[null]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

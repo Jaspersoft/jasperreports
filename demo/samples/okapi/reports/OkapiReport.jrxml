@@ -1,0 +1,145 @@
+<jasperReport name="OkapiReport" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" whenNoDataType="AllSectionsNoDetail" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d001">
+	<style name="Type Title" fontName="DejaVu Sans" fontSize="14.0" bold="true"/>
+	<style name="Caption" fontName="DejaVu Sans Mono" fontSize="7.0" vTextAlign="Bottom">
+		<box bottomPadding="2"/>
+	</style>
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0">
+		<box>
+			<pen lineWidth="0.25" lineColor="#C0C0C0"/>
+		</box>
+	</style>
+	<style name="Rotated Right" style="Barcode" rotation="Right"/>
+	<title height="762">
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d002" x="0" y="0" width="515" height="20" style="Type Title">
+			<text><![CDATA[Code 128]]></text>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d003" x="0" y="20" width="160" height="20" style="Caption">
+			<text><![CDATA[no module width: fills the element]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d004" x="0" y="40" width="160" height="50" style="Barcode">
+			<component kind="okapi:Code128">
+				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d005" x="177" y="20" width="160" height="20" style="Caption">
+			<text><![CDATA[moduleWidth="1" hImageAlign="Center"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d006" x="177" y="40" width="160" height="50" style="Barcode">
+			<component kind="okapi:Code128" moduleWidth="1.0" hImageAlign="Center">
+				<codeExpression><![CDATA["12345678"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d007" x="355" y="20" width="160" height="20" style="Caption">
+			<text><![CDATA[humanReadableLocation="Top"
+humanReadableAlignment="Left"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d008" x="355" y="40" width="160" height="50" style="Barcode">
+			<component kind="okapi:Code128" humanReadableLocation="Top" humanReadableAlignment="Left">
+				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d009" x="0" y="100" width="250" height="20" style="Caption">
+			<text><![CDATA[dataType="GS1" (GS1-128)]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d010" x="0" y="120" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code128" dataType="GS1">
+				<codeExpression><![CDATA["[01]09501101530003[17]261231"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d011" x="265" y="100" width="250" height="20" style="Caption">
+			<text><![CDATA[dataType="HIBC"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d012" x="265" y="120" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code128" dataType="HIBC">
+				<codeExpression><![CDATA["A123BJC5D6E71"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d013" x="0" y="180" width="160" height="20" style="Caption">
+			<text><![CDATA[rotation="Left"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d014" x="0" y="200" width="50" height="160" style="Barcode">
+			<component kind="okapi:Code128" rotation="Left">
+				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d015" x="177" y="180" width="160" height="20" style="Caption">
+			<text><![CDATA[rotation from the style (Right)
+moduleWidth="1" hImageAlign="Center"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d016" x="177" y="200" width="50" height="160" style="Rotated Right">
+			<component kind="okapi:Code128" moduleWidth="1.0" hImageAlign="Center">
+				<codeExpression><![CDATA["12345678"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d017" x="355" y="180" width="160" height="20" style="Caption">
+			<text><![CDATA[rotation="UpsideDown"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d018" x="355" y="200" width="160" height="50" style="Barcode">
+			<component kind="okapi:Code128" rotation="UpsideDown">
+				<codeExpression><![CDATA["JasperReports"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d019" x="0" y="380" width="515" height="20" style="Type Title">
+			<text><![CDATA[EAN]]></text>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d020" x="0" y="400" width="160" height="20" style="Caption">
+			<text><![CDATA[EAN-13, check digit added]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d021" x="0" y="420" width="160" height="70" style="Barcode">
+			<component kind="okapi:EAN">
+				<codeExpression><![CDATA["590123412345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d022" x="177" y="400" width="160" height="20" style="Caption">
+			<text><![CDATA[mode="EAN8"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d023" x="177" y="420" width="160" height="70" style="Barcode">
+			<component kind="okapi:EAN" mode="EAN8" moduleWidth="1.5" hImageAlign="Center">
+				<codeExpression><![CDATA["1234567"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d024" x="355" y="400" width="160" height="20" style="Caption">
+			<text><![CDATA[EAN-13 with a 5 digit add-on]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d025" x="355" y="420" width="160" height="70" style="Barcode">
+			<component kind="okapi:EAN">
+				<codeExpression><![CDATA["590123412345+52495"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d026" x="0" y="510" width="515" height="20" style="Type Title">
+			<text><![CDATA[QR Code]]></text>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d027" x="0" y="530" width="120" height="20" style="Caption">
+			<text><![CDATA[no module size: fills]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d028" x="0" y="550" width="120" height="100" style="Barcode">
+			<component kind="okapi:QRCode">
+				<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d029" x="130" y="530" width="120" height="20" style="Caption">
+			<text><![CDATA[moduleWidth="2", centered]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d030" x="130" y="550" width="120" height="100" style="Barcode">
+			<component kind="okapi:QRCode" moduleWidth="2.0" hImageAlign="Center" vImageAlign="Middle">
+				<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d031" x="260" y="530" width="120" height="20" style="Caption">
+			<text><![CDATA[preferredEccLevel="H"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d032" x="260" y="550" width="120" height="100" style="Barcode">
+			<component kind="okapi:QRCode" preferredEccLevel="H">
+				<codeExpression><![CDATA["https://jasperreports.sourceforge.net"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d033" x="390" y="530" width="125" height="20" style="Caption">
+			<text><![CDATA[evaluationTime="Report"]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d034" x="390" y="550" width="125" height="100" style="Barcode" forecolor="#1F4E79">
+			<component kind="okapi:QRCode" evaluationTime="Report">
+				<codeExpression><![CDATA["Pages: " + $V{PAGE_NUMBER}]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

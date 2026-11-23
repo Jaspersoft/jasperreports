@@ -1,0 +1,23 @@
+<jasperReport name="OkapiInvalid" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c201">
+	<title height="400">
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c202" x="0" y="0" width="200" height="50">
+			<component kind="okapi:Code128" moduleWidth="0.0"/>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c203" x="0" y="60" width="200" height="50">
+			<component kind="okapi:Code128" quietZoneHorizontal="-1.0" evaluationTime="Group" evaluationGroup="missing">
+				<codeExpression><![CDATA["A"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c204" x="0" y="120" width="100" height="100">
+			<component kind="okapi:QRCode" preferredVersion="41">
+				<codeExpression><![CDATA["A"]]></codeExpression>
+				<structuredAppendPositionExpression><![CDATA[1]]></structuredAppendPositionExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c205" x="0" y="230" width="100" height="100">
+			<component kind="okapi:QRCode" eciMode="1000" evaluationTime="Auto">
+				<codeExpression><![CDATA["A"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

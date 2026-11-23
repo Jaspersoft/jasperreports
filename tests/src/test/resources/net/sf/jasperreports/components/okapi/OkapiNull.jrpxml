@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperPrint xmlns="http://jasperreports.sourceforge.net/jasperreports/print" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/print http://jasperreports.sourceforge.net/xsd/jasperprint.xsd" name="OkapiNull" pageWidth="595" pageHeight="842" topMargin="50" leftMargin="40" bottomMargin="50" rightMargin="40" locale="en_US" timezone="GMT">
+	<property name="net.sf.jasperreports.export.xml.start.page.index" value="0"/>
+	<property name="net.sf.jasperreports.export.xml.end.page.index" value="0"/>
+	<property name="net.sf.jasperreports.export.xml.page.count" value="1"/>
+	<origin band="title"/>
+	<origin band="detail"/>
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="10"/>
+	<page>
+		<image scaleImage="RetainShape" rotation="None">
+			<reportElement uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c303" style="Barcode" x="40" y="90" width="100" height="100" origin="0" srcId="2" printId="1">
+				<property name="net.sf.jasperreports.export.html.embed.image" value="true"/>
+				<property name="net.sf.jasperreports.export.html.embedded.svg.use.fonts" value="true"/>
+			</reportElement>
+		</image>
+	</page>
+</jasperPrint>

@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.sf.jasperreports</groupId>
+		<artifactId>jasperreports-ext-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../pom-parent.xml</relativePath>
+	</parent>
+	<artifactId>jasperreports-okapi</artifactId>
+	<packaging>jar</packaging>
+	<name>JasperReports Okapi Barcode</name>
+	<description>JasperReports Okapi Barcode</description>
+	<url>http://jasperreports.sourceforge.net</url>
+	<scm>
+		<connection>${scmConnection}</connection>
+		<tag>${revision}</tag>
+		<url>${scmUrl}</url>
+	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson-annotations.version}</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${jackson.version}</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons-logging.version}</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.okapibarcode</groupId>
+			<artifactId>okapibarcode</artifactId>
+			<version>0.5.7</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+			<exclusions>
+				<!-- only the Okapi command line classes use it -->
+				<exclusion>
+					<groupId>com.beust</groupId>
+					<artifactId>jcommander</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>
