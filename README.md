@@ -9,6 +9,7 @@ formats including HTML, PDF, Excel, OpenOffice, MS Word and other.
 _**Documentation:**_
 
 - [Samples Reference](https://jasperreports.sourceforge.net/sample.reference/README.html)
+- [Schema Reference](https://jasperreports.sourceforge.net/schema.reference.html)
 - [Configuration Reference](https://jasperreports.sourceforge.net/config.reference.html)
 - [Functions Reference](https://jasperreports.sourceforge.net/function.reference.html)
 - [FAQ](http://community.jaspersoft.com/wiki/jasperreports-library-faqs)
@@ -76,7 +77,7 @@ The project has a separate artifact for tests under the `/tests`, which can be r
 
     mvn clean test -f tests
 
-The project documentation consists of general overview, configuration reference, samples reference, functions reference and the aggregated Javadoc.
+The project documentation consists of general overview, schema reference, configuration reference, samples reference, functions reference and the aggregated Javadoc.
 It can be all generated using the following command:
 
     mvn clean compile -f docs

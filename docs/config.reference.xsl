@@ -25,6 +25,7 @@
 <span class="element"><xsl:element name="a">
 <xsl:attribute name="href">README.html</xsl:attribute>Home</xsl:element> - <xsl:element name="a">
 <xsl:attribute name="href">sample.reference/README.html</xsl:attribute>Samples</xsl:element> - <xsl:element name="a">
+<xsl:attribute name="href">schema.reference.html</xsl:attribute>Schema</xsl:element> - <xsl:element name="a">
 <xsl:attribute name="href">config.reference.html</xsl:attribute>Configuration</xsl:element> - <xsl:element name="a">
 <xsl:attribute name="href">function.reference.html</xsl:attribute>Functions</xsl:element> - <xsl:element name="a">
 <xsl:attribute name="href">http://community.jaspersoft.com/wiki/jasperreports-library-faqs</xsl:attribute>FAQ</xsl:element> - <xsl:element name="a">
