@@ -147,7 +147,7 @@ public class BaseDataMeasure implements DataMeasure, Serializable
 			{
 				try
 				{
-					incrementerFactoryClass = JRClassLoader.loadClassForName(className);
+					incrementerFactoryClass = JRClassLoader.resolveClassForName(className);
 				}
 				catch (ClassNotFoundException e)
 				{
