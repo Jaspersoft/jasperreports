@@ -144,16 +144,22 @@ public class OkapiConvertTest
 		EANComponent ean13 = (EANComponent) after.get("ean13Add").getComponent();
 		assertEquals(ean13.getMode(), EANModeEnum.EAN13);
 		assertNull(ean13.getHumanReadableLocation(), "unset text position stays unset");
+		// barcode4j's default module width, 0.33 mm for EAN and 0.21 mm for Code 128, in report units at
+		// 72 dpi, by barcode4j's own 2.835 points per millimetre
+		assertEquals(ean13.getModuleWidth(), 0.33 * 2.835, 1e-6);
 		EANComponent ean8 = (EANComponent) after.get("ean8Add").getComponent();
 		assertEquals(ean8.getMode(), EANModeEnum.EAN8);
 		assertEquals(ean8.getHumanReadableLocation(), HumanReadableLocationEnum.NONE);
+		assertEquals(ean8.getModuleWidth(), 0.33 * 2.835, 1e-6);
 
 		QRCodeComponent qrCode = (QRCodeComponent) after.get("qrCode").getComponent();
 		assertEquals(qrCode.getPreferredEccLevel(), QRCodeEccLevelEnum.H);
 		assertEquals(qrCode.getPreferredVersion(), Integer.valueOf(3));
 		assertNull(qrCode.getQuietZoneHorizontal(), "margin in modules is dropped");
 
-		assertTrue(after.get("inFrame").getComponent() instanceof Code128Component, "element in a frame converted");
+		Code128Component inFrame = (Code128Component) after.get("inFrame").getComponent();
+		assertEquals(inFrame.getModuleWidth(), 0.21 * 2.835, 1e-6,
+			"element in a frame converted, with the default module width");
 		QRCodeComponent inTable = (QRCodeComponent) after.get("inTable").getComponent();
 		assertEquals(inTable.getPreferredEccLevel(), QRCodeEccLevelEnum.L, "legacy default error correction");
 

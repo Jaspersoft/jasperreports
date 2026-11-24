@@ -23,6 +23,12 @@
  */
 package net.sf.jasperreports.okapi.convert;
 
+import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
+import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
+import org.krysalis.barcode4j.tools.UnitConv;
+
 import net.sf.jasperreports.barcode4j.Barcode4jComponent;
 import net.sf.jasperreports.barcode4j.BarcodeComponent;
 import net.sf.jasperreports.barcode4j.EAN128Component;
@@ -33,6 +39,7 @@ import net.sf.jasperreports.barcode4j.OrientationEnum;
 import net.sf.jasperreports.barcode4j.QRCodeSVGImageProducer;
 import net.sf.jasperreports.barcode4j.TextPositionEnum;
 import net.sf.jasperreports.engine.JRPropertiesMap;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.okapi.Code128Component;
@@ -56,6 +63,9 @@ import net.sf.jasperreports.okapi.QRCodeEccLevelEnum;
  * check digit, EAN-128, and QR Code with a character encoding other than UTF-8 set on the element or
  * the report. Other types are left unconverted until they have an <code>okapi:*</code> element. Each of
  * these, and each setting that has no <code>okapi:*</code> equivalent, is logged as a warning.
+ * <p>
+ * A linear barcode with no module width gets the default module width of the barcode4j library for
+ * its type, so that it keeps its printed length.
  *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
@@ -87,17 +97,17 @@ public class Barcode4jConverter extends LegacyConverter
 	{
 		if (component instanceof net.sf.jasperreports.barcode4j.Code128Component)
 		{
-			return text(new Code128Component(), (Barcode4jComponent) component, conversion);
+			return text(new Code128Component(), (Barcode4jComponent) component, new Code128Bean(), conversion);
 		}
 		if (component instanceof EAN13Component)
 		{
 			return ean(EANModeEnum.EAN13, ((EAN13Component) component).getChecksumMode(),
-				(Barcode4jComponent) component, conversion);
+				(Barcode4jComponent) component, new EAN13Bean(), conversion);
 		}
 		if (component instanceof EAN8Component)
 		{
 			return ean(EANModeEnum.EAN8, ((EAN8Component) component).getChecksumMode(),
-				(Barcode4jComponent) component, conversion);
+				(Barcode4jComponent) component, new EAN8Bean(), conversion);
 		}
 		if (component instanceof EAN128Component)
 		{
@@ -115,7 +125,7 @@ public class Barcode4jConverter extends LegacyConverter
 
 
 	private static OkapiComponent ean(EANModeEnum mode, String checksumMode, Barcode4jComponent barcode4j,
-			ElementConversion conversion)
+			AbstractBarcodeBean bean, ElementConversion conversion)
 	{
 		// only with "add" is the data known to have no check digit, which Okapi always computes and
 		// rejects in the input; with "check", "ignore" or "auto" (the default), the data may carry one
@@ -125,21 +135,27 @@ public class Barcode4jConverter extends LegacyConverter
 				+ ": " + REASON_DATA);
 		}
 
-		EANComponent ean = text(new EANComponent(), barcode4j, conversion);
+		EANComponent ean = text(new EANComponent(), barcode4j, bean, conversion);
 		ean.setMode(mode);
 		return ean;
 	}
 
 
+	/**
+	 * @param bean a barcode4j bean of the legacy type, for its default module width
+	 */
 	private static <C extends OkapiTextComponent> C text(C component, Barcode4jComponent barcode4j,
-			ElementConversion conversion)
+			AbstractBarcodeBean bean, ElementConversion conversion)
 	{
 		common(component, barcode4j.getCodeExpression(), barcode4j.getEvaluationTime(), barcode4j.getEvaluationGroup());
 		// the own orientation only: when not set, both components take the rotation of the style
 		component.setRotation(rotation(barcode4j.getOrientation()));
 		component.setHumanReadableLocation(location(barcode4j.getTextPosition()));
 		// both in report units
-		component.setModuleWidth(barcode4j.getModuleWidth());
+		Double moduleWidth = barcode4j.getModuleWidth();
+		// with no module width, barcode4j draws at the default of its library, while okapi:* would fill
+		// the element width; carrying the default over keeps the printed length of the barcode
+		component.setModuleWidth(moduleWidth != null ? moduleWidth : defaultModuleWidth(bean, conversion));
 		component.setQuietZoneHorizontal(barcode4j.getQuietZone());
 		component.setQuietZoneVertical(barcode4j.getVerticalQuietZone());
 		if (barcode4j.getPatternExpression() != null)
@@ -147,6 +163,18 @@ public class Barcode4jConverter extends LegacyConverter
 			conversion.dropped("patternExpression", "Okapi draws the human-readable text");
 		}
 		return component;
+	}
+
+
+	/**
+	 * The default module width of the barcode4j bean, in millimetres, converted to the units of the
+	 * report, as the legacy component converts the other way.
+	 */
+	private static double defaultModuleWidth(AbstractBarcodeBean bean, ElementConversion conversion)
+	{
+		double points = UnitConv.mm2pt(bean.getModuleWidth());
+		int dpi = conversion.getReport().getDpi();
+		return dpi == JasperPrint.DEFAULT_REPORT_DPI ? points : points * dpi / JasperPrint.DEFAULT_REPORT_DPI;
 	}
 
 
