@@ -90,6 +90,10 @@ and charts by their <span class="code">chartType</span> attribute.</span>
 <a href="{$schema.path}/jasperreport-1.1.xsd"><xsl:value-of select="$schema.path"/>/jasperreport-1.1.xsd</a> for strict validation with an XSD 1.1 validator,
 and <a href="{$schema.path}/jasperreport-1.0.xsd"><xsl:value-of select="$schema.path"/>/jasperreport-1.0.xsd</a>, less strict, for XML editors that only support XSD 1.0.
 These schemas do not apply to JasperReports 6.x JRXML files, which have a different format.</span>
+<br/><br/>
+<span class="description"><b>Note:</b> The schemas are provided only for validating JRXML files with external tools, such as XML editors and XSD validators.
+The JasperReports Library does not use them when loading or compiling report templates,
+and JRXML files do not need to reference them.</span>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
