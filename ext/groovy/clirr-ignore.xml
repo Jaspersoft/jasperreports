@@ -1,2 +1,12 @@
 <differences>
+	<difference>
+		<className>net/sf/jasperreports/groovy/GroovyClassFilter</className>
+		<differenceType>7004</differenceType>
+		<method>GroovyClassFilter(net.sf.jasperreports.compilers.ReportClassFilter, net.sf.jasperreports.groovy.GroovySandboxEvaluator)</method>
+	</difference>
+	<difference>
+		<className>net/sf/jasperreports/groovy/GroovySandboxEvaluator</className>
+		<differenceType>7004</differenceType>
+		<method>void setReportClassFilter(net.sf.jasperreports.compilers.ReportClassFilter)</method>
+	</difference>
 </differences>

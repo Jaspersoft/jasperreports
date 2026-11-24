@@ -41,6 +41,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>net.sourceforge.barbecue</groupId>
+			<artifactId>barbecue</artifactId>
+			<version>1.5-beta1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-barcode4j</artifactId>
 			<version>${revision}</version>
@@ -55,6 +61,12 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-fonts</artifactId>
+			<version>${revision}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-groovy</artifactId>
 			<version>${revision}</version>
 			<scope>test</scope>
 		</dependency>
@@ -152,6 +164,7 @@
 						<dependency>net.sf.jasperreports:jasperreports-barcode4j</dependency>
 						<dependency>net.sf.jasperreports:jasperreports-data-adapters</dependency>
 						<dependency>net.sf.jasperreports:jasperreports-fonts</dependency>
+						<dependency>net.sf.jasperreports:jasperreports-groovy</dependency>
 						<dependency>org.apache.logging.log4j:log4j-core</dependency>
 						<dependency>org.apache.logging.log4j:log4j-jcl</dependency>
 					</ignoredUnusedDeclaredDependencies>

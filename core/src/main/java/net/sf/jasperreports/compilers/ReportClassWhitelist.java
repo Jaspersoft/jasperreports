@@ -23,12 +23,11 @@
  */
 package net.sf.jasperreports.compilers;
 
+import net.sf.jasperreports.engine.util.ClassWhitelist;
+
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public interface ReportClassWhitelist
+public interface ReportClassWhitelist extends ClassWhitelist
 {
-
-	boolean includesClass(String className);
-
 }

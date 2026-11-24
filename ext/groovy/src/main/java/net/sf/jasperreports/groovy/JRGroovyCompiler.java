@@ -190,7 +190,8 @@ public class JRGroovyCompiler extends JRAbstractJavaCompiler
 				throw new JRException(EXCEPTION_MESSAGE_KEY_REPORT_NOT_COMPILED_FOR_CLASS_FILTERING);
 			}
 			
-			((GroovySandboxEvaluator) evaluator).setReportClassFilter(reportClassFilter);
+			((GroovySandboxEvaluator) evaluator).setReportClassFilter(reportClassFilter, 
+					new GroovyMethodWhitelist(jasperReportsContext));
 		}
 		return evaluator;
 	}

@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.groovy;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +40,12 @@ import org.codehaus.groovy.ast.expr.Expression;
 import org.codehaus.groovy.ast.expr.ListExpression;
 import org.codehaus.groovy.ast.expr.MethodCallExpression;
 import org.codehaus.groovy.control.SourceUnit;
+import org.codehaus.groovy.reflection.CachedMethod;
+import org.codehaus.groovy.runtime.InvokerHelper;
 import org.kohsuke.groovy.sandbox.SandboxTransformer;
+
+import groovy.lang.MetaClass;
+import groovy.lang.MetaMethod;
 
 /**
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
@@ -78,6 +84,39 @@ public class GroovyClassFilterTransformer extends SandboxTransformer
 	protected boolean allowed(ClassNode type)
 	{
 		return BUILTIN_ALLOWED_TYPES.contains(type.getName());
+	}
+	
+	/**
+	 * Determines whether a method name can only resolve to plain methods of the type,
+	 * as opposed to Groovy extension methods (e.g. <code>invokeMethod</code>, <code>execute</code>)
+	 * which are implemented elsewhere and need to be checked by the sandbox.
+	 */
+	protected boolean onlyTypeMethods(ClassNode type, String methodName)
+	{
+		if (methodName == null || !type.isResolved())
+		{
+			//dynamic method name or type not available
+			return false;
+		}
+		
+		MetaClass metaClass = InvokerHelper.getMetaClass(type.getTypeClass());
+		List<MetaMethod> methods = new ArrayList<>(metaClass.getMethods());
+		//extension methods are not necessarily included in getMethods()
+		methods.addAll(metaClass.getMetaMethods());
+		
+		boolean found = false;
+		for (MetaMethod metaMethod : methods)
+		{
+			if (methodName.equals(metaMethod.getName()))
+			{
+				if (!(metaMethod instanceof CachedMethod))
+				{
+					return false;
+				}
+				found = true;
+			}
+		}
+		return found;
 	}
 	
 	@Override
@@ -158,7 +197,8 @@ public class GroovyClassFilterTransformer extends SandboxTransformer
 				Expression transformedObject, Expression transformedMethod, Expression transformedArgs)
 		{
 			Expression originalObject = originalCall.getObjectExpression();
-			if (allowed(originalObject.getType()))
+			if (allowed(originalObject.getType()) 
+					&& onlyTypeMethods(originalObject.getType(), originalCall.getMethodAsString()))
 			{
 				Expression originalMethod = originalCall.getMethod();
 				Expression originalArgs = originalCall.getArguments();
