@@ -1,0 +1,72 @@
+<jasperReport name="BarbecueConvert" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="0b8e7f10-5a11-4c3e-9d21-000000000001">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<dataset name="Rows" uuid="0b8e7f10-5a11-4c3e-9d21-000000000002"/>
+	<title height="520">
+		<!-- converted -->
+		<element kind="component" key="code128" uuid="0b8e7f10-5a11-4c3e-9d21-000000000010" x="450" y="0" width="60" height="250" style="Barcode">
+			<component kind="barbecue" type="Code128" drawText="true" barWidth="1" barHeight="40" rotation="Left" evaluationTime="Report">
+				<codeExpression><![CDATA["BARBECUE-128"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code128B" uuid="0b8e7f10-5a11-4c3e-9d21-000000000011" x="0" y="0" width="250" height="50" style="Barcode">
+			<component kind="barbecue" type="Code128B">
+				<codeExpression><![CDATA["Code128B"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean13" uuid="0b8e7f10-5a11-4c3e-9d21-000000000012" x="0" y="60" width="150" height="70" style="Barcode">
+			<component kind="barbecue" type="EAN13" drawText="true">
+				<codeExpression><![CDATA["590123412345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="frame" uuid="0b8e7f10-5a11-4c3e-9d21-000000000013" x="160" y="60" width="260" height="70">
+			<element kind="component" key="inFrame" uuid="0b8e7f10-5a11-4c3e-9d21-000000000014" x="0" y="0" width="250" height="50" style="Barcode">
+				<component kind="barbecue" type="Code128">
+					<codeExpression><![CDATA["FRAME"]]></codeExpression>
+				</component>
+			</element>
+		</element>
+		<element kind="component" uuid="0b8e7f10-5a11-4c3e-9d21-000000000015" x="0" y="140" width="260" height="60">
+			<component kind="table">
+				<datasetRun uuid="0b8e7f10-5a11-4c3e-9d21-000000000016" subDataset="Rows">
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+				</datasetRun>
+				<column kind="single" uuid="0b8e7f10-5a11-4c3e-9d21-000000000017" width="260">
+					<columnHeader height="60">
+						<element kind="component" key="inTable" uuid="0b8e7f10-5a11-4c3e-9d21-000000000018" x="0" y="0" width="250" height="50" style="Barcode">
+							<component kind="barbecue" type="Code128">
+								<codeExpression><![CDATA["TABLE"]]></codeExpression>
+							</component>
+						</element>
+					</columnHeader>
+				</column>
+			</component>
+		</element>
+		<!-- left unconverted: could encode different data -->
+		<element kind="component" key="gtin" uuid="0b8e7f10-5a11-4c3e-9d21-000000000020" x="0" y="210" width="250" height="50" style="Barcode">
+			<component kind="barbecue" type="GlobalTradeItemNumber">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codabar" uuid="0b8e7f10-5a11-4c3e-9d21-000000000021" x="260" y="210" width="250" height="50" style="Barcode">
+			<component kind="barbecue" type="Codabar">
+				<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="std2of5Checksum" uuid="0b8e7f10-5a11-4c3e-9d21-000000000022" x="0" y="270" width="250" height="50" style="Barcode">
+			<component kind="barbecue" type="Std2of5" checksumRequired="true">
+				<codeExpression><![CDATA["123456"]]></codeExpression>
+			</component>
+		</element>
+		<!-- left unconverted: no okapi:* element yet -->
+		<element kind="component" key="int2of5" uuid="0b8e7f10-5a11-4c3e-9d21-000000000023" x="260" y="270" width="250" height="50" style="Barcode">
+			<component kind="barbecue" type="Int2of5">
+				<codeExpression><![CDATA["123456"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pdf417" uuid="0b8e7f10-5a11-4c3e-9d21-000000000024" x="0" y="330" width="250" height="100" style="Barcode">
+			<component kind="barbecue" type="PDF417">
+				<codeExpression><![CDATA["PDF417"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

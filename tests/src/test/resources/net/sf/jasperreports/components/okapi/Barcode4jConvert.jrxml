@@ -1,0 +1,80 @@
+<jasperReport name="Barcode4jConvert" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="0b8e7f10-5a11-4c3e-9d22-000000000001">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<dataset name="Rows" uuid="0b8e7f10-5a11-4c3e-9d22-000000000002"/>
+	<title height="600">
+		<!-- converted -->
+		<element kind="component" key="code128" uuid="0b8e7f10-5a11-4c3e-9d22-000000000010" x="0" y="0" width="50" height="250" style="Barcode">
+			<component kind="barcode4j:Code128" moduleWidth="1.0" textPosition="top" orientation="left" quietZone="5.0" verticalQuietZone="2.0" evaluationTime="Report">
+				<codeExpression><![CDATA["BARCODE4J-128"]]></codeExpression>
+				<patternExpression><![CDATA["_ _"]]></patternExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean13Add" uuid="0b8e7f10-5a11-4c3e-9d22-000000000011" x="60" y="0" width="150" height="70" style="Barcode">
+			<component kind="barcode4j:EAN13" checksumMode="add">
+				<codeExpression><![CDATA["590123412345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean8Add" uuid="0b8e7f10-5a11-4c3e-9d22-000000000012" x="220" y="0" width="120" height="70" style="Barcode">
+			<component kind="barcode4j:EAN8" checksumMode="add" textPosition="none">
+				<codeExpression><![CDATA["9638507"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="qrCode" uuid="0b8e7f10-5a11-4c3e-9d22-000000000013" x="350" y="0" width="100" height="100" style="Barcode">
+			<component kind="barcode4j:QRCode" errorCorrectionLevel="H" qrVersion="3" margin="2">
+				<codeExpression><![CDATA["BARCODE4J QR"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="frame" uuid="0b8e7f10-5a11-4c3e-9d22-000000000014" x="60" y="110" width="260" height="70">
+			<element kind="component" key="inFrame" uuid="0b8e7f10-5a11-4c3e-9d22-000000000015" x="0" y="0" width="250" height="50" style="Barcode">
+				<component kind="barcode4j:Code128">
+					<codeExpression><![CDATA["FRAME"]]></codeExpression>
+				</component>
+			</element>
+		</element>
+		<element kind="component" uuid="0b8e7f10-5a11-4c3e-9d22-000000000016" x="330" y="110" width="110" height="110">
+			<component kind="table">
+				<datasetRun uuid="0b8e7f10-5a11-4c3e-9d22-000000000017" subDataset="Rows">
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+				</datasetRun>
+				<column kind="single" uuid="0b8e7f10-5a11-4c3e-9d22-000000000018" width="110">
+					<columnHeader height="110">
+						<element kind="component" key="inTable" uuid="0b8e7f10-5a11-4c3e-9d22-000000000019" x="0" y="0" width="100" height="100" style="Barcode">
+							<component kind="barcode4j:QRCode">
+								<codeExpression><![CDATA["TABLE"]]></codeExpression>
+							</component>
+						</element>
+					</columnHeader>
+				</column>
+			</component>
+		</element>
+		<!-- left unconverted: could encode different data -->
+		<element kind="component" key="ean13Auto" uuid="0b8e7f10-5a11-4c3e-9d22-000000000020" x="0" y="260" width="150" height="70" style="Barcode">
+			<component kind="barcode4j:EAN13">
+				<codeExpression><![CDATA["5901234123457"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean13Check" uuid="0b8e7f10-5a11-4c3e-9d22-000000000021" x="160" y="260" width="150" height="70" style="Barcode">
+			<component kind="barcode4j:EAN13" checksumMode="check">
+				<codeExpression><![CDATA["5901234123457"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean128" uuid="0b8e7f10-5a11-4c3e-9d22-000000000022" x="320" y="260" width="190" height="70" style="Barcode">
+			<component kind="barcode4j:EAN128">
+				<codeExpression><![CDATA["0101234567890128"]]></codeExpression>
+				<templateExpression><![CDATA["(01)n14"]]></templateExpression>
+			</component>
+		</element>
+		<element kind="component" key="qrLatin1" uuid="0b8e7f10-5a11-4c3e-9d22-000000000023" x="0" y="340" width="100" height="100" style="Barcode">
+			<property name="net.sf.jasperreports.components.qrcode.character.encoding" value="ISO-8859-1"/>
+			<component kind="barcode4j:QRCode">
+				<codeExpression><![CDATA["LATIN-1"]]></codeExpression>
+			</component>
+		</element>
+		<!-- left unconverted: no okapi:* element yet -->
+		<element kind="component" key="code39" uuid="0b8e7f10-5a11-4c3e-9d22-000000000024" x="110" y="340" width="250" height="50" style="Barcode">
+			<component kind="barcode4j:Code39">
+				<codeExpression><![CDATA["CODE39"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

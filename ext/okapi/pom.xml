@@ -53,5 +53,21 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-barbecue</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+			<!-- only the legacy converters use it, run with the barbecue extension present -->
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-barcode4j</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+			<!-- only the legacy converters use it, run with the barcode4j extension present -->
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 </project>

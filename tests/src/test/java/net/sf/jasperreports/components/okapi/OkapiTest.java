@@ -349,7 +349,7 @@ public class OkapiTest
 		return JasperFillManager.fillReport(report, params);
 	}
 
-	private static Map<String, JRPrintImage> images(JasperPrint print)
+	static Map<String, JRPrintImage> images(JasperPrint print)
 	{
 		Map<String, JRPrintImage> images = new HashMap<>();
 		for (JRPrintPage page : print.getPages())
@@ -382,7 +382,7 @@ public class OkapiTest
 	/**
 	 * Draws the barcode upright at 4 pixels per point, with a white margin, and decodes it.
 	 */
-	private static String decode(JRPrintImage image) throws JRException, NotFoundException
+	static String decode(JRPrintImage image) throws JRException, NotFoundException
 	{
 		Dimension2D size = size(image);
 		int zoom = 4;
