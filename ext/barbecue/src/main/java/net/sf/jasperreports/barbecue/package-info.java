@@ -68,7 +68,7 @@
 * {@link net.sf.jasperreports.barbecue.StandardBarbecueComponent StandardBarbecueComponent}. 
 * </p><p>
 * When the report is filled, a barcode renderer of type 
-* {@link net.sf.jasperreports.barbecue.BarbecueRendererImpl BarbecueRendererImpl} is
+* {@link net.sf.jasperreports.barbecue.BarbecueBarcodeRenderer BarbecueBarcodeRenderer} is
 * created. It is used for the image included in the generated report. The image takes its 
 * scale type from the <code>RetainShape</code> attribute and its size from the <code>size</code> defined 
 * for the barcode element in the report. 

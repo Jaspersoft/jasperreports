@@ -25,13 +25,18 @@ package net.sf.jasperreports.barbecue;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.Serializable;
+
+import net.sf.jasperreports.engine.JRConstants;
 
 /**
  * 
  * @author Lucian Chirita (lucianc@users.sourceforge.net)
  */
-public class BarcodeInfo
+public class BarcodeInfo implements Serializable
 {
+
+	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 
 	private String type;
 	private String code;

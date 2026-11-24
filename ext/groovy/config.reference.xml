@@ -6,6 +6,9 @@
     <name>Report Compilation</name>
   </category>
 
+  <category key="net.sf.jasperreports.metadata.property.category:security">
+    <name>Security</name>
+  </category>
 
   <!-- net.sf.jasperreports.compiler.max.groovy.method.size -->
   
@@ -15,5 +18,27 @@ Property that determines the maximum size of a generated groovy method.
     </description>
   </configProperty>
   
+
+
+  <!-- net.sf.jasperreports.report.groovy.method.whitelist.{arbitrary_name} -->
+
+  <configProperty name="net.sf.jasperreports.report.groovy.method.whitelist.{arbitrary_name}">
+    <description>
+Defines a list of Groovy methods that are allowed in report expressions when the report class filter is enabled via
+<a href="#net.sf.jasperreports.report.class.filter.enabled">net.sf.jasperreports.report.class.filter.enabled</a>.
+<br/>
+The list applies to Groovy extension methods (such as the ones in <code>org.codehaus.groovy.runtime.DefaultGroovyMethods</code>
+or in other extension modules) and to the <code>groovy.lang.GroovyObject</code> meta methods (such as <code>invokeMethod</code>),
+which are implemented in classes other than the class of the object they are called on and are therefore not
+covered by the report class whitelist.
+Plain methods of whitelisted classes are not affected.
+<br/>
+The property value should be a comma separated list of methods in the form <code>implementingClassName.methodName</code>,
+e.g. <code>org.codehaus.groovy.runtime.StringGroovyMethods.capitalize</code>.
+Wildcards are supported in the same way as for
+<a href="#net.sf.jasperreports.report.class.whitelist.{arbitrary_name}">net.sf.jasperreports.report.class.whitelist.{arbitrary_name}</a>,
+e.g. <code>com.example.MyExtension.*</code> allows all methods of the <code>com.example.MyExtension</code> extension class.
+    </description>
+  </configProperty>
   
 </configReference>

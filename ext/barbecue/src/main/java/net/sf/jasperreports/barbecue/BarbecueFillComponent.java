@@ -37,7 +37,6 @@ import net.sf.jasperreports.engine.fill.JRTemplatePrintImage;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRStringUtil;
-import net.sourceforge.barbecue.Barcode;
 
 /**
  * 
@@ -161,10 +160,8 @@ public class BarbecueFillComponent extends BaseFillComponent
 				)
 			);
 
-		Barcode barcode = BarcodeProviders.createBarcode(barcodeInfo);
-		BarbecueRendererImpl renderer = new BarbecueRendererImpl(barcode);
+		BarbecueBarcodeRenderer renderer = new BarbecueBarcodeRenderer(barcodeInfo);
 		renderer.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
-		renderer.setFont(barcodeInfo.getFont());
 		
 		image.setRenderer(renderer);
 	}

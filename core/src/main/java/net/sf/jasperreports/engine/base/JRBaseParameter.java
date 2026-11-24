@@ -173,7 +173,7 @@ public class JRBaseParameter implements JRParameter, Serializable, JRChangeEvent
 		{
 			try
 			{
-				nestedType = JRClassLoader.loadClassForName(nestedTypeName);
+				nestedType = JRClassLoader.resolveClassForName(nestedTypeName);
 			}
 			catch(ClassNotFoundException e)
 			{

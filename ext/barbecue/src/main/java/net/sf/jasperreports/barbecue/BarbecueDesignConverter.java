@@ -33,7 +33,6 @@ import net.sf.jasperreports.engine.component.ComponentDesignConverter;
 import net.sf.jasperreports.engine.convert.ReportConverter;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import net.sf.jasperreports.engine.util.JRExpressionUtil;
-import net.sourceforge.barbecue.Barcode;
 
 /**
  * 
@@ -101,10 +100,8 @@ public class BarbecueDesignConverter implements ComponentDesignConverter
 					)
 				);
 
-			Barcode barcode = BarcodeProviders.createBarcode(barcodeInfo);
-			BarbecueRendererImpl renderer = new BarbecueRendererImpl(barcode);
+			BarbecueBarcodeRenderer renderer = new BarbecueBarcodeRenderer(barcodeInfo);
 			renderer.setRotation(BarbecueStyleResolver.getRotation(element));
-			renderer.setFont(barcodeInfo.getFont());
 			image.setRenderer(renderer);
 			return image;
 		}
