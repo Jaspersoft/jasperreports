@@ -121,6 +121,13 @@ public class OkapiTest
 			"<structuredAppendPositionExpression><![CDATA[1]]></structuredAppendPositionExpression>",
 			"<structuredAppendTotalExpression><![CDATA[2]]></structuredAppendTotalExpression>",
 			"<structuredAppendParityExpression><![CDATA[7]]></structuredAppendParityExpression>",
+			"kind=\"okapi:Code39\"", "moduleWidthRatio=\"2.5\"", "checkDigit=\"Mod43\"",
+			"kind=\"okapi:Code39Extended\"", "checkDigit=\"None\"",
+			"kind=\"okapi:Codabar\"", "moduleWidthRatio=\"2.25\"",
+			"kind=\"okapi:Code2Of5\"", "mode=\"DPIdentcode\"",
+			"kind=\"okapi:Interleaved2Of5\"", "checkDigit=\"Mod10\"",
+			"kind=\"okapi:ITF14\"", "moduleWidthRatio=\"2.4\"",
+			"kind=\"okapi:UPC\"", "mode=\"UPCE\"", "showCheckDigit=\"false\"", "guardPatternExtraHeight=\"4.0\"",
 		};
 		for (String text : expected)
 		{
@@ -152,6 +159,8 @@ public class OkapiTest
 			"Barcode evaluation group \"missing\" not found",
 			"Barcode structured append needs both structuredAppendPositionExpression and structuredAppendTotalExpression",
 			"Auto evaluation time is not supported for barcodes",
+			"Barcode moduleWidthRatio must be positive: 0.0",
+			"Barcode guardPatternExtraHeight must not be negative: -2.0",
 		};
 		for (String message : expected)
 		{
@@ -242,6 +251,36 @@ public class OkapiTest
 	}
 
 	@Test
+	public void linear() throws JRException, IOException, NotFoundException
+	{
+		Map<String, JRPrintImage> images = images(fill("OkapiLinear.jrxml"));
+
+		check(images.get("code39"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI-39");
+		// the decoder doesn't strip the check character
+		check(images.get("code39Mod43"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI-39G");
+
+		// a larger wide bar ratio makes the same data longer at the same module width
+		check(images.get("code39Ratio2"), ScaleImageEnum.CLIP, RotationEnum.NONE, "OKAPI-39");
+		check(images.get("code39Ratio3"), ScaleImageEnum.CLIP, RotationEnum.NONE, "OKAPI-39");
+		assertTrue(size(images.get("code39Ratio3")).getWidth() > size(images.get("code39Ratio2")).getWidth());
+
+		// the decoder isn't in Full ASCII mode: lower-case letters read as their + pairs
+		check(images.get("code39Extended"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "O+K+A+P+I 39");
+		// the decoder strips the start/stop characters
+		check(images.get("codabar"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "0123456789");
+
+		// no decoder reads these: sized as set, and as wide as the element
+		assertEquals(images.get("code2Of5Industrial").getScaleImage(), ScaleImageEnum.CLIP);
+		assertEquals(size(images.get("code2Of5Leitcode")).getWidth(), 250, TOLERANCE);
+
+		check(images.get("itf"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "0123456789");
+		check(images.get("itfMod10"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "1234567895");
+		check(images.get("itf14"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "15400141288763");
+		check(images.get("upcA"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "036000291452");
+		check(images.get("upcE"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "01234565");
+	}
+
+	@Test
 	public void designPreview() throws JRException, IOException, NotFoundException
 	{
 		JasperDesign design = load("OkapiFill.jrxml");
@@ -322,7 +361,7 @@ public class OkapiTest
 				}
 			}
 		}
-		assertEquals(concrete, 3, "concrete component classes found");
+		assertEquals(concrete, 10, "concrete component classes found");
 	}
 
 	@Test
@@ -384,8 +423,15 @@ public class OkapiTest
 	 */
 	static String decode(JRPrintImage image) throws JRException, NotFoundException
 	{
+		return decode(image, 4);
+	}
+
+	/**
+	 * Draws the barcode upright at the given pixels per point, with a white margin, and decodes it.
+	 */
+	static String decode(JRPrintImage image, int zoom) throws JRException, NotFoundException
+	{
 		Dimension2D size = size(image);
-		int zoom = 4;
 		int margin = 40;
 		int width = (int) Math.ceil(size.getWidth() * zoom) + 2 * margin;
 		int height = (int) Math.ceil(size.getHeight() * zoom) + 2 * margin;

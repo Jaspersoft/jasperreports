@@ -25,31 +25,44 @@ package net.sf.jasperreports.okapi.convert;
 
 import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.impl.int2of5.Interleaved2Of5Bean;
 import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
 import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
+import org.krysalis.barcode4j.impl.upcean.UPCABean;
+import org.krysalis.barcode4j.impl.upcean.UPCEBean;
 import org.krysalis.barcode4j.tools.UnitConv;
 
 import net.sf.jasperreports.barcode4j.Barcode4jComponent;
 import net.sf.jasperreports.barcode4j.BarcodeComponent;
+import net.sf.jasperreports.barcode4j.CodabarComponent;
 import net.sf.jasperreports.barcode4j.EAN128Component;
 import net.sf.jasperreports.barcode4j.EAN13Component;
 import net.sf.jasperreports.barcode4j.EAN8Component;
 import net.sf.jasperreports.barcode4j.ErrorCorrectionLevelEnum;
+import net.sf.jasperreports.barcode4j.Interleaved2Of5Component;
 import net.sf.jasperreports.barcode4j.OrientationEnum;
 import net.sf.jasperreports.barcode4j.QRCodeSVGImageProducer;
 import net.sf.jasperreports.barcode4j.TextPositionEnum;
+import net.sf.jasperreports.barcode4j.UPCAComponent;
+import net.sf.jasperreports.barcode4j.UPCEComponent;
 import net.sf.jasperreports.engine.JRPropertiesMap;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.okapi.Code128Component;
+import net.sf.jasperreports.okapi.Code39CheckDigitEnum;
+import net.sf.jasperreports.okapi.Code39ExtendedComponent;
 import net.sf.jasperreports.okapi.EANComponent;
 import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
+import net.sf.jasperreports.okapi.Interleaved2Of5CheckDigitEnum;
 import net.sf.jasperreports.okapi.OkapiComponent;
 import net.sf.jasperreports.okapi.OkapiTextComponent;
 import net.sf.jasperreports.okapi.QRCodeComponent;
 import net.sf.jasperreports.okapi.QRCodeEccLevelEnum;
+import net.sf.jasperreports.okapi.UPCComponent;
+import net.sf.jasperreports.okapi.UPCModeEnum;
 
 
 /**
@@ -57,15 +70,19 @@ import net.sf.jasperreports.okapi.QRCodeEccLevelEnum;
  * elements, for use with the <code>update</code> goal of the JasperReports Maven plugin or the
  * <code>update</code> Ant task. The barcode4j extension and its libraries have to be on the classpath.
  * <p>
- * Code 128, QR Code, and EAN-13 and EAN-8 barcodes whose checksum mode is <code>add</code> are converted.
- * Barcodes whose conversion could encode different data are left unconverted, so that their data can
- * be reviewed first: EAN-13 and EAN-8 with any other checksum mode, since their data may then carry a
- * check digit, EAN-128, and QR Code with a character encoding other than UTF-8 set on the element or
- * the report. Other types are left unconverted until they have an <code>okapi:*</code> element. Each of
- * these, and each setting that has no <code>okapi:*</code> equivalent, is logged as a warning.
+ * Code 128, Interleaved 2 of 5, QR Code, Code 39 with the extended character set and a checksum mode
+ * other than <code>check</code>, and EAN-13, EAN-8, UPC-A and UPC-E barcodes whose checksum mode is
+ * <code>add</code> are converted. Barcodes whose conversion could encode different data are left
+ * unconverted, so that their data can be reviewed first: EAN-13, EAN-8, UPC-A and UPC-E with any other
+ * checksum mode, since their data may then carry a check digit, EAN-128, Code 39 with the extended
+ * character set and the checksum mode <code>check</code>, and QR Code with a character encoding other
+ * than UTF-8 set on the element or the report. So are barcodes whose data Okapi may reject: Codabar,
+ * and Code 39 without the extended character set. Other types are left unconverted until they have an
+ * <code>okapi:*</code> element. Each of these, and each setting that has no <code>okapi:*</code>
+ * equivalent, is logged as a warning.
  * <p>
  * A linear barcode with no module width gets the default module width of the barcode4j library for
- * its type, so that it keeps its printed length.
+ * its type, and one with no wide factor the default wide factor, so that it keeps its printed length.
  *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
@@ -73,9 +90,12 @@ public class Barcode4jConverter extends LegacyConverter
 {
 
 	private static final String REASON_DATA = "converting it could encode different data; review the data first";
+	private static final String REASON_REJECTED = "Okapi rejects data the legacy barcode accepts; review the data first";
 	private static final String REASON_NO_ELEMENT = "there is no okapi:* element for this type yet";
+	private static final String REASON_TEXT = "Okapi draws the human-readable text";
 
 	private static final String CHECKSUM_MODE_ADD = "add";
+	private static final String CHECKSUM_MODE_CHECK = "check";
 
 
 	@Override
@@ -109,6 +129,30 @@ public class Barcode4jConverter extends LegacyConverter
 			return ean(EANModeEnum.EAN8, ((EAN8Component) component).getChecksumMode(),
 				(Barcode4jComponent) component, new EAN8Bean(), conversion);
 		}
+		if (component instanceof UPCAComponent)
+		{
+			return upc(UPCModeEnum.UPCA, ((UPCAComponent) component).getChecksumMode(),
+				(Barcode4jComponent) component, new UPCABean(), conversion);
+		}
+		if (component instanceof UPCEComponent)
+		{
+			return upc(UPCModeEnum.UPCE, ((UPCEComponent) component).getChecksumMode(),
+				(Barcode4jComponent) component, new UPCEBean(), conversion);
+		}
+		if (component instanceof net.sf.jasperreports.barcode4j.Code39Component)
+		{
+			return code39((net.sf.jasperreports.barcode4j.Code39Component) component, conversion);
+		}
+		if (component instanceof Interleaved2Of5Component)
+		{
+			return interleaved2Of5((Interleaved2Of5Component) component, conversion);
+		}
+		if (component instanceof CodabarComponent)
+		{
+			// Okapi takes only A, B, C and D in upper case as start/stop characters, while barcode4j also takes
+			// them in lower case, the alternate names T, N, * and E, and data with no start/stop characters
+			return conversion.notConverted(REASON_REJECTED);
+		}
 		if (component instanceof EAN128Component)
 		{
 			// the message has its application identifiers without the brackets that Okapi's GS1 data
@@ -127,17 +171,99 @@ public class Barcode4jConverter extends LegacyConverter
 	private static OkapiComponent ean(EANModeEnum mode, String checksumMode, Barcode4jComponent barcode4j,
 			AbstractBarcodeBean bean, ElementConversion conversion)
 	{
-		// only with "add" is the data known to have no check digit, which Okapi always computes and
-		// rejects in the input; with "check", "ignore" or "auto" (the default), the data may carry one
 		if (!CHECKSUM_MODE_ADD.equals(checksumMode))
 		{
-			return conversion.notConverted("checksum mode " + (checksumMode == null ? "auto (default)" : checksumMode)
-				+ ": " + REASON_DATA);
+			return checksumNotAdded(checksumMode, conversion);
 		}
 
 		EANComponent ean = text(new EANComponent(), barcode4j, bean, conversion);
 		ean.setMode(mode);
 		return ean;
+	}
+
+
+	private static OkapiComponent upc(UPCModeEnum mode, String checksumMode, Barcode4jComponent barcode4j,
+			AbstractBarcodeBean bean, ElementConversion conversion)
+	{
+		// as for EAN
+		if (!CHECKSUM_MODE_ADD.equals(checksumMode))
+		{
+			return checksumNotAdded(checksumMode, conversion);
+		}
+
+		UPCComponent upc = text(new UPCComponent(), barcode4j, bean, conversion);
+		upc.setMode(mode);
+		return upc;
+	}
+
+
+	/**
+	 * Leaves an EAN or UPC barcode unconverted: only with the checksum mode "add" is the data known to have
+	 * no check digit, which Okapi always computes and rejects in the input; with "check", "ignore" or "auto"
+	 * (the default), the data may carry one.
+	 */
+	private static OkapiComponent checksumNotAdded(String checksumMode, ElementConversion conversion)
+	{
+		return conversion.notConverted("checksum mode " + (checksumMode == null ? "auto (default)" : checksumMode)
+			+ ": " + REASON_DATA);
+	}
+
+
+	private static OkapiComponent code39(net.sf.jasperreports.barcode4j.Code39Component legacy,
+			ElementConversion conversion)
+	{
+		if (!Boolean.TRUE.equals(legacy.isExtendedCharSetEnabled()))
+		{
+			// barcode4j removes a * start/stop pair around the data, which Okapi rejects
+			return conversion.notConverted("standard character set: " + REASON_REJECTED);
+		}
+		String checksumMode = legacy.getChecksumMode();
+		if (CHECKSUM_MODE_CHECK.equals(checksumMode))
+		{
+			// the data ends with a check character that barcode4j computes over its own escapes of - and .
+			// (/M and /N), while Okapi encodes them as they are
+			return conversion.notConverted("checksum mode check: " + REASON_DATA);
+		}
+
+		Code39Bean bean = new Code39Bean();
+		Code39ExtendedComponent code39 = text(new Code39ExtendedComponent(), legacy, bean, conversion);
+		code39.setModuleWidthRatio(legacy.getWideFactor() != null ? legacy.getWideFactor() : bean.getWideFactor());
+		// with "ignore" or "auto" (the default), barcode4j encodes the data as it is
+		if (CHECKSUM_MODE_ADD.equals(checksumMode))
+		{
+			code39.setCheckDigit(Code39CheckDigitEnum.MOD43);
+		}
+		droppedIfSet(conversion, "displayChecksum", legacy.isDisplayChecksum(), REASON_TEXT);
+		droppedIfSet(conversion, "displayStartStop", legacy.isDisplayStartStop(), REASON_TEXT);
+		droppedIfSet(conversion, "intercharGapWidth", legacy.getIntercharGapWidth(),
+			"Okapi draws the gap between characters as wide as a narrow bar");
+		return code39;
+	}
+
+
+	private static OkapiComponent interleaved2Of5(Interleaved2Of5Component legacy, ElementConversion conversion)
+	{
+		Interleaved2Of5Bean bean = new Interleaved2Of5Bean();
+		net.sf.jasperreports.okapi.Interleaved2Of5Component itf =
+			text(new net.sf.jasperreports.okapi.Interleaved2Of5Component(), legacy, bean, conversion);
+		itf.setModuleWidthRatio(legacy.getWideFactor() != null ? legacy.getWideFactor() : bean.getWideFactor());
+		// barcode4j's check digit and its leading zero for an odd number of digits are Okapi's; with "check",
+		// "ignore" or "auto" (the default), barcode4j encodes the data as it is
+		if (CHECKSUM_MODE_ADD.equals(legacy.getChecksumMode()))
+		{
+			itf.setCheckDigit(Interleaved2Of5CheckDigitEnum.MOD10);
+		}
+		droppedIfSet(conversion, "displayChecksum", legacy.isDisplayChecksum(), REASON_TEXT);
+		return itf;
+	}
+
+
+	private static void droppedIfSet(ElementConversion conversion, String setting, Object value, String reason)
+	{
+		if (value != null)
+		{
+			conversion.dropped(setting, reason);
+		}
 	}
 
 
@@ -160,7 +286,7 @@ public class Barcode4jConverter extends LegacyConverter
 		component.setQuietZoneVertical(barcode4j.getVerticalQuietZone());
 		if (barcode4j.getPatternExpression() != null)
 		{
-			conversion.dropped("patternExpression", "Okapi draws the human-readable text");
+			conversion.dropped("patternExpression", REASON_TEXT);
 		}
 		return component;
 	}

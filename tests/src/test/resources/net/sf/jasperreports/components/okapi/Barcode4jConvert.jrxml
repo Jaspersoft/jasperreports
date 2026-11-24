@@ -1,7 +1,7 @@
 <jasperReport name="Barcode4jConvert" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="0b8e7f10-5a11-4c3e-9d22-000000000001">
 	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
 	<dataset name="Rows" uuid="0b8e7f10-5a11-4c3e-9d22-000000000002"/>
-	<title height="600">
+	<title height="760">
 		<!-- converted -->
 		<element kind="component" key="code128" uuid="0b8e7f10-5a11-4c3e-9d22-000000000010" x="0" y="0" width="50" height="250" style="Barcode">
 			<component kind="barcode4j:Code128" moduleWidth="1.0" textPosition="top" orientation="left" quietZone="5.0" verticalQuietZone="2.0" evaluationTime="Report">
@@ -74,6 +74,46 @@
 		<element kind="component" key="code39" uuid="0b8e7f10-5a11-4c3e-9d22-000000000024" x="110" y="340" width="250" height="50" style="Barcode">
 			<component kind="barcode4j:Code39">
 				<codeExpression><![CDATA["CODE39"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code39Extended" uuid="0b8e7f10-5a11-4c3e-9d22-000000000025" x="0" y="400" width="250" height="50" style="Barcode">
+			<component kind="barcode4j:Code39" extendedCharSetEnabled="true" checksumMode="add" displayChecksum="true" wideFactor="3.0">
+				<codeExpression><![CDATA["Barcode4j-39"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code39ExtendedCheck" uuid="0b8e7f10-5a11-4c3e-9d22-000000000026" x="260" y="400" width="250" height="50" style="Barcode">
+			<component kind="barcode4j:Code39" extendedCharSetEnabled="true" checksumMode="check">
+				<codeExpression><![CDATA["CODE39W"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="itfAdd" uuid="0b8e7f10-5a11-4c3e-9d22-000000000027" x="0" y="460" width="250" height="50" style="Barcode">
+			<component kind="barcode4j:Interleaved2Of5" checksumMode="add" wideFactor="2.5">
+				<codeExpression><![CDATA["123456789"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="itfAuto" uuid="0b8e7f10-5a11-4c3e-9d22-000000000028" x="260" y="460" width="250" height="50" style="Barcode">
+			<component kind="barcode4j:Interleaved2Of5">
+				<codeExpression><![CDATA["0123456789"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="upcaAdd" uuid="0b8e7f10-5a11-4c3e-9d22-000000000029" x="0" y="520" width="150" height="70" style="Barcode">
+			<component kind="barcode4j:UPCA" checksumMode="add">
+				<codeExpression><![CDATA["03600029145"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="upceAdd" uuid="0b8e7f10-5a11-4c3e-9d22-000000000030" x="160" y="520" width="120" height="70" style="Barcode">
+			<component kind="barcode4j:UPCE" checksumMode="add">
+				<codeExpression><![CDATA["0123456"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="upcaAuto" uuid="0b8e7f10-5a11-4c3e-9d22-000000000031" x="290" y="520" width="150" height="70" style="Barcode">
+			<component kind="barcode4j:UPCA">
+				<codeExpression><![CDATA["03600029145"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codabar" uuid="0b8e7f10-5a11-4c3e-9d22-000000000032" x="0" y="600" width="250" height="50" style="Barcode">
+			<component kind="barcode4j:Codabar">
+				<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
 			</component>
 		</element>
 	</title>

@@ -27,11 +27,15 @@ import net.sf.jasperreports.barbecue.BarbecueComponent;
 import net.sf.jasperreports.engine.component.Component;
 import net.sf.jasperreports.okapi.Code128CodeSetEnum;
 import net.sf.jasperreports.okapi.Code128Component;
+import net.sf.jasperreports.okapi.Code39CheckDigitEnum;
+import net.sf.jasperreports.okapi.Code39Component;
 import net.sf.jasperreports.okapi.EANComponent;
 import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
 import net.sf.jasperreports.okapi.OkapiComponent;
 import net.sf.jasperreports.okapi.OkapiTextComponent;
+import net.sf.jasperreports.okapi.UPCComponent;
+import net.sf.jasperreports.okapi.UPCModeEnum;
 
 
 /**
@@ -39,11 +43,11 @@ import net.sf.jasperreports.okapi.OkapiTextComponent;
  * elements, for use with the <code>update</code> goal of the JasperReports Maven plugin or the
  * <code>update</code> Ant task. The barbecue extension has to be on the classpath.
  * <p>
- * Code 128 (with any of its code sets) and EAN-13 barcodes are converted. Barcodes whose conversion
- * could encode different data are left unconverted, so that their data can be reviewed first: the
- * GS1 types (EAN128, UCC128, GlobalTradeItemNumber, SCC14ShippingCode, SSCC18,
- * ShipmentIdentificationNumber, USPS), Bookland, RandomWeightUPCA, the Codabar types (2of7, Codabar,
- * Monarch, NW7, USD4), and Int2of5 and Std2of5 with a required checksum. Other types are left
+ * Code 128 (with any of its code sets), Code 39 (3of9, Code39, USD3), EAN-13 and UPC-A barcodes are
+ * converted. Barcodes whose conversion could encode different data are left unconverted, so that their
+ * data can be reviewed first: the GS1 types (EAN128, UCC128, GlobalTradeItemNumber, SCC14ShippingCode,
+ * SSCC18, ShipmentIdentificationNumber, USPS), Bookland, RandomWeightUPCA, the Codabar types (2of7,
+ * Codabar, Monarch, NW7, USD4), Code39 (Extended), and Int2of5 and Std2of5. Other types are left
  * unconverted until they have an <code>okapi:*</code> element. Each of these, and each setting that
  * has no <code>okapi:*</code> equivalent, is logged as a warning.
  *
@@ -53,6 +57,7 @@ public class BarbecueConverter extends LegacyConverter
 {
 
 	private static final String REASON_DATA = "converting it could encode different data; review the data first";
+	private static final String REASON_REJECTED = "Okapi rejects data the legacy barcode accepts; review the data first";
 	private static final String REASON_NO_ELEMENT = "there is no okapi:* element for this type yet";
 
 
@@ -98,6 +103,25 @@ public class BarbecueConverter extends LegacyConverter
 				ean.setMode(EANModeEnum.EAN13);
 				return ean;
 			}
+			case "UPCA":
+			{
+				// barbecue takes the 11 digits without the check digit, and adds the standard one, as Okapi does
+				UPCComponent upc = text(new UPCComponent(), barbecue, conversion);
+				upc.setMode(UPCModeEnum.UPCA);
+				return upc;
+			}
+			case "3of9":
+			case "Code39":
+			case "USD3":
+			{
+				// barbecue's character set and mod 43 check character are the standard ones, as Okapi's
+				Code39Component code39 = text(new Code39Component(), barbecue, conversion);
+				if (barbecue.isChecksumRequired())
+				{
+					code39.setCheckDigit(Code39CheckDigitEnum.MOD43);
+				}
+				return code39;
+			}
 			// barbecue's own application identifiers and check digits, which are not the standard GS1 ones
 			case "EAN128":
 			case "UCC128":
@@ -115,13 +139,16 @@ public class BarbecueConverter extends LegacyConverter
 			case "Monarch":
 			case "NW7":
 			case "USD4":
+			// barbecue encodes '<' as the four characters of "null"
+			case "Code39 (Extended)":
 				return conversion.notConverted("type " + type + ": " + REASON_DATA);
 			case "Int2of5":
 			case "Std2of5":
 				// barbecue's Int2of5 check digit uses non-standard weights, and Okapi has none for Std2of5
 				return barbecue.isChecksumRequired()
 					? conversion.notConverted("type " + type + " with a required checksum: " + REASON_DATA)
-					: conversion.notConverted("type " + type + ": " + REASON_NO_ELEMENT);
+					// barbecue removes whitespace from the data, which Okapi rejects
+					: conversion.notConverted("type " + type + ": " + REASON_REJECTED);
 			default:
 				return conversion.notConverted("type " + type + ": " + REASON_NO_ELEMENT);
 		}

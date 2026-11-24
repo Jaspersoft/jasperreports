@@ -28,11 +28,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.design.JRVerifier;
+import uk.org.okapibarcode.backend.Codabar;
 import uk.org.okapibarcode.backend.Code128;
+import uk.org.okapibarcode.backend.Code2Of5;
+import uk.org.okapibarcode.backend.Code3Of9;
+import uk.org.okapibarcode.backend.Code3Of9Extended;
 import uk.org.okapibarcode.backend.Ean;
 import uk.org.okapibarcode.backend.HumanReadableLocation;
 import uk.org.okapibarcode.backend.QrCode;
 import uk.org.okapibarcode.backend.Symbol;
+import uk.org.okapibarcode.backend.Upc;
 import uk.org.okapibarcode.graphics.TextAlignment;
 
 
@@ -55,6 +61,13 @@ final class OkapiElementTypes
 		register(types, new Code128Type());
 		register(types, new EanType());
 		register(types, new QrCodeType());
+		register(types, new Code39Type());
+		register(types, new Code39ExtendedType());
+		register(types, new CodabarType());
+		register(types, new Code2Of5Type());
+		register(types, new Interleaved2Of5Type());
+		register(types, new Itf14Type());
+		register(types, new UpcType());
 		TYPES = Collections.unmodifiableMap(types);
 	}
 
@@ -241,9 +254,15 @@ final class OkapiElementTypes
 			Double extraHeight = component.getGuardPatternExtraHeight();
 			if (extraHeight != null)
 			{
-				((Ean) symbol).setGuardPatternExtraHeight(
-						(int) Math.round(extraHeight * unitsToPoints / modulePt));
+				((Ean) symbol).setGuardPatternExtraHeight(toModules(extraHeight, modulePt, unitsToPoints));
 			}
+		}
+
+		@Override
+		public void verify(EANComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyNotNegative(verifier, component, EANComponent.PROPERTY_GUARD_PATTERN_EXTRA_HEIGHT,
+					component.getGuardPatternExtraHeight());
 		}
 
 		@Override
@@ -358,6 +377,18 @@ final class OkapiElementTypes
 		}
 
 		@Override
+		public void verify(QRCodeComponent component, JRVerifier verifier)
+		{
+			if ((component.getStructuredAppendPositionExpression() == null)
+					!= (component.getStructuredAppendTotalExpression() == null))
+			{
+				verifier.addBrokenRule("Barcode structured append needs both "
+						+ QRCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION + " and "
+						+ QRCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component);
+			}
+		}
+
+		@Override
 		public int getDefaultQuietZoneHorizontal(QRCodeComponent component)
 		{
 			// ISO/IEC 18004
@@ -374,6 +405,417 @@ final class OkapiElementTypes
 		public String getDefaultPreviewCode(QRCodeComponent component)
 		{
 			return "https://jasperreports.sourceforge.net";
+		}
+	}
+
+	/**
+	 * A size in report units in whole modules, rounded to the nearest.
+	 */
+	static int toModules(double units, double modulePt, double unitsToPoints)
+	{
+		return (int) Math.round(units * unitsToPoints / modulePt);
+	}
+
+	static class Code39Type extends OkapiElementType<Code39Component>
+	{
+		Code39Type()
+		{
+			super(Code39Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(Code39Component component)
+		{
+			Code3Of9 symbol = new Code3Of9();
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			if (component.getCheckDigit() != null)
+			{
+				switch (component.getCheckDigit())
+				{
+					case MOD43:
+						symbol.setCheckDigit(Code3Of9.CheckDigit.MOD43);
+						break;
+					case NONE:
+					default:
+						symbol.setCheckDigit(Code3Of9.CheckDigit.NONE);
+						break;
+				}
+			}
+			if (component.getDataType() == Code39DataTypeEnum.HIBC)
+			{
+				symbol.setDataType(Symbol.DataType.HIBC);
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(Code39Component component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, Code39Component.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code39Component component)
+		{
+			// ISO/IEC 16388
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code39Component component)
+		{
+			return "OKAPI-39";
+		}
+	}
+
+	static class Code39ExtendedType extends OkapiElementType<Code39ExtendedComponent>
+	{
+		Code39ExtendedType()
+		{
+			super(Code39ExtendedComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(Code39ExtendedComponent component)
+		{
+			Code3Of9Extended symbol = new Code3Of9Extended();
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			if (component.getCheckDigit() != null)
+			{
+				switch (component.getCheckDigit())
+				{
+					case MOD43:
+						symbol.setCheckDigit(Code3Of9Extended.CheckDigit.MOD43);
+						break;
+					case NONE:
+					default:
+						symbol.setCheckDigit(Code3Of9Extended.CheckDigit.NONE);
+						break;
+				}
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(Code39ExtendedComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, Code39ExtendedComponent.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code39ExtendedComponent component)
+		{
+			// ISO/IEC 16388
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code39ExtendedComponent component)
+		{
+			return "Okapi 39";
+		}
+	}
+
+	static class CodabarType extends OkapiElementType<CodabarComponent>
+	{
+		CodabarType()
+		{
+			super(CodabarComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(CodabarComponent component)
+		{
+			Codabar symbol = new Codabar();
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(CodabarComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, CodabarComponent.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(CodabarComponent component)
+		{
+			// ANSI/AIM BC3
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(CodabarComponent component)
+		{
+			return "A0123456789B";
+		}
+	}
+
+	static class Code2Of5Type extends OkapiElementType<Code2Of5Component>
+	{
+		Code2Of5Type()
+		{
+			super(Code2Of5Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		private static Code2Of5ModeEnum getMode(Code2Of5Component component)
+		{
+			return component.getMode() == null ? Code2Of5ModeEnum.MATRIX : component.getMode();
+		}
+
+		@Override
+		public Symbol createSymbol(Code2Of5Component component)
+		{
+			Code2Of5 symbol = new Code2Of5();
+			switch (getMode(component))
+			{
+				case INDUSTRIAL:
+					symbol.setMode(Code2Of5.ToFMode.INDUSTRIAL);
+					break;
+				case IATA:
+					symbol.setMode(Code2Of5.ToFMode.IATA);
+					break;
+				case DATA_LOGIC:
+					symbol.setMode(Code2Of5.ToFMode.DATA_LOGIC);
+					break;
+				case DP_LEITCODE:
+					symbol.setMode(Code2Of5.ToFMode.DP_LEITCODE);
+					break;
+				case DP_IDENTCODE:
+					symbol.setMode(Code2Of5.ToFMode.DP_IDENTCODE);
+					break;
+				case MATRIX:
+				default:
+					symbol.setMode(Code2Of5.ToFMode.MATRIX);
+					break;
+			}
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(Code2Of5Component component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, Code2Of5Component.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code2Of5Component component)
+		{
+			// as for Interleaved 2 of 5, ISO/IEC 16390
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code2Of5Component component)
+		{
+			switch (getMode(component))
+			{
+				case DP_LEITCODE:
+					// 13 digits, the check digit is added
+					return "2163100011102";
+				case DP_IDENTCODE:
+					// 11 digits, the check digit is added
+					return "56310243031";
+				default:
+					return "0123456789";
+			}
+		}
+	}
+
+	static class Interleaved2Of5Type extends OkapiElementType<Interleaved2Of5Component>
+	{
+		Interleaved2Of5Type()
+		{
+			super(Interleaved2Of5Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(Interleaved2Of5Component component)
+		{
+			Code2Of5 symbol = new Code2Of5(component.getCheckDigit() == Interleaved2Of5CheckDigitEnum.MOD10
+					? Code2Of5.ToFMode.INTERLEAVED_WITH_CHECK_DIGIT : Code2Of5.ToFMode.INTERLEAVED);
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(Interleaved2Of5Component component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, Interleaved2Of5Component.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Interleaved2Of5Component component)
+		{
+			// ISO/IEC 16390
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Interleaved2Of5Component component)
+		{
+			return "0123456789";
+		}
+	}
+
+	static class Itf14Type extends OkapiElementType<ITF14Component>
+	{
+		Itf14Type()
+		{
+			super(ITF14Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(ITF14Component component)
+		{
+			Code2Of5 symbol = new Code2Of5(Code2Of5.ToFMode.ITF14);
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(ITF14Component component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, ITF14Component.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(ITF14Component component)
+		{
+			// GS1 General Specifications: at least 10 times the narrow bar
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(ITF14Component component)
+		{
+			// the check digit is added
+			return "1540014128876";
+		}
+	}
+
+	static class UpcType extends OkapiElementType<UPCComponent>
+	{
+		UpcType()
+		{
+			super(UPCComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		private static boolean isUpcE(UPCComponent component)
+		{
+			return component.getMode() == UPCModeEnum.UPCE;
+		}
+
+		@Override
+		public Symbol createSymbol(UPCComponent component)
+		{
+			Upc symbol = new Upc();
+			symbol.setMode(isUpcE(component) ? Upc.Mode.UPCE : Upc.Mode.UPCA);
+			if (component.getShowCheckDigit() != null)
+			{
+				symbol.setShowCheckDigit(component.getShowCheckDigit());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void applySizes(UPCComponent component, Symbol symbol, double modulePt, double unitsToPoints)
+		{
+			Double extraHeight = component.getGuardPatternExtraHeight();
+			if (extraHeight != null)
+			{
+				((Upc) symbol).setGuardPatternExtraHeight(toModules(extraHeight, modulePt, unitsToPoints));
+			}
+		}
+
+		@Override
+		public void verify(UPCComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyNotNegative(verifier, component, UPCComponent.PROPERTY_GUARD_PATTERN_EXTRA_HEIGHT,
+					component.getGuardPatternExtraHeight());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(UPCComponent component)
+		{
+			// GS1 General Specifications: 9 modules on each side of UPC-A, and left of UPC-E;
+			// Okapi draws the outer digits in them
+			return 9;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(UPCComponent component)
+		{
+			// the check digit is added
+			return isUpcE(component) ? "0123456" : "03600029145";
 		}
 	}
 }

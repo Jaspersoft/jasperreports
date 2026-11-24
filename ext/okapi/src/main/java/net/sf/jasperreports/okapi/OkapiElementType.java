@@ -30,6 +30,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import net.sf.jasperreports.engine.JRExpression;
+import net.sf.jasperreports.engine.design.JRVerifier;
 import uk.org.okapibarcode.backend.Symbol;
 
 
@@ -175,6 +176,14 @@ abstract class OkapiElementType<C extends OkapiComponent>
 	 * The code drawn in the design preview when the code expression is not a literal.
 	 */
 	public abstract String getDefaultPreviewCode(C component);
+
+	/**
+	 * Checks the settings of the type that Okapi doesn't validate in its setters, at compile time.
+	 */
+	public void verify(C component, JRVerifier verifier)
+	{
+		// most types have none
+	}
 
 	/**
 	 * Applies settings in report units that need the module size: called by {@link OkapiLayout}

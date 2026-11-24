@@ -110,34 +110,16 @@ class OkapiCompiler implements ComponentCompiler
 		verifyNotNegative(verifier, barcode, OkapiComponent.PROPERTY_QUIET_ZONE_VERTICAL, barcode.getQuietZoneVertical());
 		if (barcode instanceof OkapiSizedComponent)
 		{
-			Double moduleWidth = ((OkapiSizedComponent) barcode).getModuleWidth();
-			if (moduleWidth != null && !(moduleWidth > 0))
-			{
-				verifier.addBrokenRule("Barcode " + OkapiSizedComponent.PROPERTY_MODULE_WIDTH
-						+ " must be positive: " + moduleWidth, barcode);
-			}
+			verifyPositive(verifier, barcode, OkapiSizedComponent.PROPERTY_MODULE_WIDTH,
+					((OkapiSizedComponent) barcode).getModuleWidth());
 		}
-		if (barcode instanceof EANComponent)
-		{
-			verifyNotNegative(verifier, barcode, EANComponent.PROPERTY_GUARD_PATTERN_EXTRA_HEIGHT,
-					((EANComponent) barcode).getGuardPatternExtraHeight());
-		}
-		if (barcode instanceof QRCodeComponent)
-		{
-			QRCodeComponent qrCode = (QRCodeComponent) barcode;
-			if ((qrCode.getStructuredAppendPositionExpression() == null)
-					!= (qrCode.getStructuredAppendTotalExpression() == null))
-			{
-				verifier.addBrokenRule("Barcode structured append needs both "
-						+ QRCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION + " and "
-						+ QRCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, barcode);
-			}
-		}
+		OkapiElementType<OkapiComponent> type = OkapiElementTypes.getType(barcode);
+		type.verify(barcode, verifier);
 
 		// Okapi validates the static settings in its setters
 		try
 		{
-			OkapiElementTypes.getType(barcode).createSymbol(barcode);
+			type.createSymbol(barcode);
 		}
 		catch (RuntimeException e)
 		{
@@ -145,11 +127,19 @@ class OkapiCompiler implements ComponentCompiler
 		}
 	}
 
-	private void verifyNotNegative(JRVerifier verifier, OkapiComponent barcode, String property, Double value)
+	static void verifyNotNegative(JRVerifier verifier, OkapiComponent barcode, String property, Double value)
 	{
 		if (value != null && !(value >= 0))
 		{
 			verifier.addBrokenRule("Barcode " + property + " must not be negative: " + value, barcode);
+		}
+	}
+
+	static void verifyPositive(JRVerifier verifier, OkapiComponent barcode, String property, Double value)
+	{
+		if (value != null && !(value > 0))
+		{
+			verifier.addBrokenRule("Barcode " + property + " must be positive: " + value, barcode);
 		}
 	}
 }

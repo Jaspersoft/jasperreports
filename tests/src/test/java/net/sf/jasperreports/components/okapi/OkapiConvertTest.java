@@ -61,11 +61,18 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.engine.xml.JRXmlWriter;
 import net.sf.jasperreports.okapi.Code128CodeSetEnum;
 import net.sf.jasperreports.okapi.Code128Component;
+import net.sf.jasperreports.okapi.Code39CheckDigitEnum;
+import net.sf.jasperreports.okapi.Code39Component;
+import net.sf.jasperreports.okapi.Code39ExtendedComponent;
 import net.sf.jasperreports.okapi.EANComponent;
 import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
+import net.sf.jasperreports.okapi.Interleaved2Of5CheckDigitEnum;
+import net.sf.jasperreports.okapi.Interleaved2Of5Component;
 import net.sf.jasperreports.okapi.QRCodeComponent;
 import net.sf.jasperreports.okapi.QRCodeEccLevelEnum;
+import net.sf.jasperreports.okapi.UPCComponent;
+import net.sf.jasperreports.okapi.UPCModeEnum;
 import net.sf.jasperreports.okapi.convert.BarbecueConverter;
 import net.sf.jasperreports.okapi.convert.Barcode4jConverter;
 
@@ -113,7 +120,14 @@ public class OkapiConvertTest
 		assertTrue(after.get("inFrame").getComponent() instanceof Code128Component, "element in a frame converted");
 		assertTrue(after.get("inTable").getComponent() instanceof Code128Component, "element in a table converted");
 
-		for (String key : new String[] {"gtin", "codabar", "std2of5Checksum", "int2of5", "pdf417"})
+		Code39Component code39 = (Code39Component) after.get("code39").getComponent();
+		assertEquals(code39.getCheckDigit(), Code39CheckDigitEnum.MOD43);
+		assertEquals(code39.getModuleWidth(), 1.0);
+		assertNull(((Code39Component) after.get("usd3").getComponent()).getCheckDigit());
+		assertEquals(((UPCComponent) after.get("upca").getComponent()).getMode(), UPCModeEnum.UPCA);
+
+		for (String key : new String[] {"gtin", "codabar", "std2of5Checksum", "int2of5", "pdf417",
+			"code39Extended", "std2of5"})
 		{
 			assertTrue(after.get(key).getComponent() instanceof BarbecueComponent, key + " left unconverted");
 		}
@@ -123,6 +137,10 @@ public class OkapiConvertTest
 		assertEquals(OkapiTest.decode(images.get("code128B")), "Code128B");
 		// barbecue adds the check digit to the 12 digits, as Okapi does
 		assertEquals(OkapiTest.decode(images.get("ean13")), "5901234123457");
+		// the decoder doesn't strip the mod 43 check character, 5
+		assertEquals(OkapiTest.decode(images.get("code39")), "BARBECUE-395");
+		assertEquals(OkapiTest.decode(images.get("usd3")), "USD3");
+		assertEquals(OkapiTest.decode(images.get("upca")), "036000291452");
 	}
 
 
@@ -163,7 +181,24 @@ public class OkapiConvertTest
 		QRCodeComponent inTable = (QRCodeComponent) after.get("inTable").getComponent();
 		assertEquals(inTable.getPreferredEccLevel(), QRCodeEccLevelEnum.L, "legacy default error correction");
 
-		for (String key : new String[] {"ean13Auto", "ean13Check", "ean128", "qrLatin1", "code39"})
+		Code39ExtendedComponent code39 = (Code39ExtendedComponent) after.get("code39Extended").getComponent();
+		assertEquals(code39.getCheckDigit(), Code39CheckDigitEnum.MOD43);
+		assertEquals(code39.getModuleWidthRatio(), 3.0);
+		assertEquals(code39.getModuleWidth(), 0.19 * 2.835, 1e-6);
+		Interleaved2Of5Component itfAdd = (Interleaved2Of5Component) after.get("itfAdd").getComponent();
+		assertEquals(itfAdd.getCheckDigit(), Interleaved2Of5CheckDigitEnum.MOD10);
+		assertEquals(itfAdd.getModuleWidthRatio(), 2.5);
+		Interleaved2Of5Component itfAuto = (Interleaved2Of5Component) after.get("itfAuto").getComponent();
+		assertNull(itfAuto.getCheckDigit());
+		assertEquals(itfAuto.getModuleWidthRatio(), 3.0, "barcode4j's default wide factor");
+		assertEquals(itfAuto.getModuleWidth(), 0.21 * 2.835, 1e-6);
+		assertEquals(((UPCComponent) after.get("upcaAdd").getComponent()).getMode(), UPCModeEnum.UPCA);
+		UPCComponent upce = (UPCComponent) after.get("upceAdd").getComponent();
+		assertEquals(upce.getMode(), UPCModeEnum.UPCE);
+		assertEquals(upce.getModuleWidth(), 0.33 * 2.835, 1e-6);
+
+		for (String key : new String[] {"ean13Auto", "ean13Check", "ean128", "qrLatin1", "code39",
+			"code39ExtendedCheck", "upcaAuto", "codabar"})
 		{
 			assertTrue(after.get(key).getComponent() instanceof BarcodeComponent, key + " left unconverted");
 		}
@@ -173,6 +208,13 @@ public class OkapiConvertTest
 		assertEquals(OkapiTest.decode(images.get("ean13Add")), "5901234123457");
 		assertEquals(OkapiTest.decode(images.get("ean8Add")), "96385074");
 		assertEquals(OkapiTest.decode(images.get("qrCode")), "BARCODE4J QR");
+		// the decoder isn't in Full ASCII mode and doesn't strip the mod 43 check character, $
+		assertEquals(OkapiTest.decode(images.get("code39Extended")), "B+A+R+C+O+D+E4+J-39$");
+		assertEquals(OkapiTest.decode(images.get("itfAdd")), "1234567895");
+		// barcode4j's default module, 0.21 mm, with its default wide factor of 3 is too fine for the decoder at 288 dpi
+		assertEquals(OkapiTest.decode(images.get("itfAuto"), 8), "0123456789");
+		assertEquals(OkapiTest.decode(images.get("upcaAdd")), "036000291452");
+		assertEquals(OkapiTest.decode(images.get("upceAdd")), "01234565");
 	}
 
 
