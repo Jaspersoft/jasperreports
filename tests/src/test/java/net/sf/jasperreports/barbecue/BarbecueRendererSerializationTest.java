@@ -183,13 +183,11 @@ public class BarbecueRendererSerializationTest
 		JasperReportsContext jasperReportsContext = DefaultJasperReportsContext.getInstance();
 		BarcodeInfo barcodeInfo = createBarcodeInfo(type);
 		BarbecueBarcodeRenderer renderer = new BarbecueBarcodeRenderer(barcodeInfo);
-		renderer.setRotation(RotationEnum.LEFT);
 		Dimension2D dimension = renderer.getDimension(jasperReportsContext);
 
 		BarbecueBarcodeRenderer deserialized = (BarbecueBarcodeRenderer) deserialize(jasperReportsContext, serialize(renderer));
 
 		assert deserialized.getId().equals(renderer.getId());
-		assert deserialized.getRotation() == RotationEnum.LEFT;
 		assert deserialized.getBarcodeInfo().getCode().equals(barcodeInfo.getCode());
 		assertRenders(jasperReportsContext, dimension, deserialized);
 	}

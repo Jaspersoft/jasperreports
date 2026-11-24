@@ -33,7 +33,6 @@ import java.io.ObjectInputStream;
 
 import net.sf.jasperreports.engine.JRConstants;
 import net.sf.jasperreports.engine.JasperReportsContext;
-import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.renderers.AbstractRenderer;
 import net.sf.jasperreports.renderers.DimensionRenderable;
 import net.sf.jasperreports.renderers.Graphics2DRenderable;
@@ -56,8 +55,6 @@ public class BarbecueBarcodeRenderer extends AbstractRenderer implements Graphic
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
 	private final BarcodeInfo barcodeInfo;
-	
-	private RotationEnum rotation;
 	
 	private transient Barcode barcode;
 	
@@ -94,23 +91,14 @@ public class BarbecueBarcodeRenderer extends AbstractRenderer implements Graphic
 	@Override
 	public Dimension2D getDimension(JasperReportsContext jasperReportsContext)
 	{
-		return BarbecueRenderingUtil.getDimension(getBarcodeSize(), rotation);
+		// the barcode is drawn upright, the image element carries the rotation
+		return BarbecueRenderingUtil.getDimension(getBarcodeSize(), null);
 	}
 
 	@Override
 	public void render(JasperReportsContext jasperReportsContext, Graphics2D grx, Rectangle2D rectangle) 
 	{
-		BarbecueRenderingUtil.render(barcode, getBarcodeSize(), barcodeInfo.getFont(), rotation, grx, rectangle);
-	}
-	
-	public RotationEnum getRotation()
-	{
-		return rotation;
-	}
-	
-	public void setRotation(RotationEnum rotation)
-	{
-		this.rotation = rotation;
+		BarbecueRenderingUtil.render(barcode, getBarcodeSize(), barcodeInfo.getFont(), null, grx, rectangle);
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException

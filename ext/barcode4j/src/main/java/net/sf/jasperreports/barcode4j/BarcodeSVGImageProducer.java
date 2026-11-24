@@ -62,12 +62,11 @@ public class BarcodeSVGImageProducer implements BarcodeImageProducer
 	{
 		try
 		{
-			SVGCanvasProvider provider = 
+			// the barcode is drawn upright and the image is rotated instead, see BarcodeUtils.getRotation()
+			SVGCanvasProvider provider =
 				new SVGCanvasProvider(
-					false, 
-					OrientationEnum.getValueOrDefault(
-						((Barcode4jComponent)componentElement.getComponent()).getOrientation()
-						).getValue()
+					false,
+					OrientationEnum.UP.getValue()
 					);
 			barcode.generateBarcode(provider, message);
 			Document svgDoc = provider.getDOM();

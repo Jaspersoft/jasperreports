@@ -161,7 +161,6 @@ public class BarbecueFillComponent extends BaseFillComponent
 			);
 
 		BarbecueBarcodeRenderer renderer = new BarbecueBarcodeRenderer(barcodeInfo);
-		renderer.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
 		
 		image.setRenderer(renderer);
 	}
@@ -179,6 +178,9 @@ public class BarbecueFillComponent extends BaseFillComponent
 			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
+			// the renderer draws the barcode upright and the image is rotated instead, by the own rotation of the component
+			// or else the one inherited from the style, so that rotation and image alignment work as for any other image
+			templateImage.setRotation(BarbecueStyleResolver.getRotation(fillContext.getComponentElement()));
 			templateImage.setUsingCache(false);
 			
 			templateImage = deduplicate(templateImage);

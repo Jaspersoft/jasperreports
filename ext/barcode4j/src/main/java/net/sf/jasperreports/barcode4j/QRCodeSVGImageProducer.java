@@ -117,7 +117,14 @@ public class QRCodeSVGImageProducer implements QRCodeImageProducer
 				: (elementStyle.getLineBox().getLeftPadding() + elementStyle.getLineBox().getRightPadding()));
 		int elementHeight = componentElement.getHeight() - (elementStyle == null ? 0
 				: (elementStyle.getLineBox().getTopPadding() + elementStyle.getLineBox().getBottomPadding()));
-		
+		if (BarcodeUtils.isVertical(componentElement))
+		{
+			// the QR code is drawn upright and the image is rotated by 90 degrees, see BarcodeUtils.getRotation()
+			int swap = elementWidth;
+			elementWidth = elementHeight;
+			elementHeight = swap;
+		}
+
 		int margin = qrCodeBean.getMargin() == null ? DEFAULT_MARGIN : qrCodeBean.getMargin();
 		int matrixWidth = codeWidth + 2 * margin;
 		int matrixHeight = codeHeight + 2 * margin;

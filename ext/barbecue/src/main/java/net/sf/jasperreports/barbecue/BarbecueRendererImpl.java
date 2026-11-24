@@ -24,7 +24,6 @@
 package net.sf.jasperreports.barbecue;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
@@ -52,10 +51,12 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 	private static final long serialVersionUID = JRConstants.SERIAL_VERSION_UID;
 	
 	private Barcode barcode;
-	
-	private RotationEnum rotation;
 
-	private Font font;
+	/**
+	 * The rotation applied by the renderer itself, which is only set in renderers of reports filled
+	 * before the rotation was moved to the image, see {@link #setRotation(RotationEnum)}.
+	 */
+	private RotationEnum rotation;
 
 	private transient Dimension barcodeSize;
 
@@ -88,23 +89,18 @@ public class BarbecueRendererImpl extends AbstractRenderer implements Graphics2D
 	@Override
 	public void render(JasperReportsContext jasperReportsContext, Graphics2D grx, Rectangle2D rectangle) 
 	{
-		// the font is null for renderers deserialized from reports filled before the font was kept here,
-		// or created by callers that do not provide the font; the library layout applies then
-		BarbecueRenderingUtil.render(barcode, getBarcodeSize(), font, rotation, grx, rectangle);
+		// no font, so the barcode draws its text itself, as this renderer always did
+		BarbecueRenderingUtil.render(barcode, getBarcodeSize(), null, rotation, grx, rectangle);
 	}
-	
+
+	/**
+	 * Sets a rotation for the renderer to apply when drawing the barcode.
+	 * The barbecue component no longer calls this, as it draws the barcode upright and rotates the image instead,
+	 * so that rotation and image alignment work as for any other image. The rotation is still applied
+	 * when set, as it is in renderers of reports filled and saved before that, whose images are not rotated.
+	 */
 	public void setRotation(RotationEnum rotation){
 		this.rotation = rotation;
-	}
-	
-	/**
-	 * Sets the font of the barcode text, which needs to be the font set on the barcode.
-	 * Barbecue does not expose the font of the barcode, and the font is needed for drawing the barcode text
-	 * inside its label area, see {@link BarbecueGraphicsOutput}.
-	 */
-	public void setFont(Font font)
-	{
-		this.font = font;
 	}
 	
 }

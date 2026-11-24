@@ -23,12 +23,18 @@
  */
 package net.sf.jasperreports.barcode4j;
 
+import net.sf.jasperreports.engine.JRComponentElement;
+import net.sf.jasperreports.engine.JRDefaultStyleProvider;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPropertiesHolder;
 import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JRStyle;
 import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.component.Component;
+import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.engine.util.JRSingletonCache;
+import net.sf.jasperreports.engine.util.StyleResolver;
 
 /**
  * 
@@ -115,10 +121,51 @@ public final class BarcodeUtils
 	}
 
 	
-	public static boolean isVertical(Barcode4jComponent barcode)
+	/**
+	 * Returns the rotation of the image of the given barcode element, which is the own orientation of the barcode
+	 * when set, or else the rotation inherited from the style of the element.
+	 * The barcode is always drawn upright and the image is rotated instead, so that rotation and
+	 * image alignment work as for any other image.
+	 */
+	public static RotationEnum getRotation(JRComponentElement element)
 	{
-		OrientationEnum orientation = barcode.getOrientation();
-		return orientation == OrientationEnum.LEFT
-				|| orientation == OrientationEnum.RIGHT;
+		Component component = element.getComponent();
+		OrientationEnum orientation = component instanceof Barcode4jComponent
+				? ((Barcode4jComponent) component).getOrientation()
+				: null;
+		if (orientation != null)
+		{
+			switch (orientation)
+			{
+				case LEFT:
+					return RotationEnum.LEFT;
+				case DOWN:
+					return RotationEnum.UPSIDE_DOWN;
+				case RIGHT:
+					return RotationEnum.RIGHT;
+				case UP:
+				default:
+					return RotationEnum.NONE;
+			}
+		}
+
+		JRDefaultStyleProvider defaultStyleProvider = element.getDefaultStyleProvider();
+		StyleResolver styleResolver = defaultStyleProvider == null
+				? StyleResolver.getInstance()
+				: defaultStyleProvider.getStyleResolver();
+		JRStyle style = styleResolver.getBaseStyle(element);
+		RotationEnum rotation = style == null ? null : style.getRotation();
+		return rotation == null ? RotationEnum.NONE : rotation;
+	}
+
+	/**
+	 * Tells whether the image of the given barcode element is rotated by 90 degrees one way or the other,
+	 * in which case the barcode is drawn upright for the swapped element width and height.
+	 */
+	public static boolean isVertical(JRComponentElement element)
+	{
+		RotationEnum rotation = getRotation(element);
+		return rotation == RotationEnum.LEFT
+				|| rotation == RotationEnum.RIGHT;
 	}
 }

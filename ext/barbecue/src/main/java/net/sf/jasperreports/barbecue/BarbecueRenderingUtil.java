@@ -165,7 +165,7 @@ final class BarbecueRenderingUtil
 			
 			if (font == null)
 			{
-				// legacy renderers deserialized from old reports, or barcode information without a font
+				// the deprecated BarbecueRendererImpl, or barcode information without a font
 				barcode.draw(grx, 0, 0);
 			}
 			else

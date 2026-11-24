@@ -61,6 +61,8 @@ public class BarbecueDesignConverter implements ComponentDesignConverter
 					reportConverter.getDefaultStyleProvider());
 			reportConverter.copyBaseAttributes(element, image);
 			image.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
+			// the image is rotated rather than the barcode, see BarbecueFillComponent.getTemplateImage()
+			image.setRotation(BarbecueStyleResolver.getRotation(element));
 			
 			String code = null;
 			if (component.getCodeExpression() != null)
@@ -101,7 +103,6 @@ public class BarbecueDesignConverter implements ComponentDesignConverter
 				);
 
 			BarbecueBarcodeRenderer renderer = new BarbecueBarcodeRenderer(barcodeInfo);
-			renderer.setRotation(BarbecueStyleResolver.getRotation(element));
 			image.setRenderer(renderer);
 			return image;
 		}

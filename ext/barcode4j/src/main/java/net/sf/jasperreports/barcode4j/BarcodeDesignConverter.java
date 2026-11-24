@@ -51,6 +51,8 @@ public class BarcodeDesignConverter implements ComponentDesignConverter
 				reportConverter.getDefaultStyleProvider());
 		reportConverter.copyBaseAttributes(element, printImage);
 		printImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
+		// the image is rotated rather than the barcode, see BarcodeFillComponent.getTemplateImage()
+		printImage.setRotation(BarcodeUtils.getRotation(element));
 		
 		Renderable barcodeImage = evaluateBarcode(reportConverter, element);
 		printImage.setRenderer(barcodeImage);

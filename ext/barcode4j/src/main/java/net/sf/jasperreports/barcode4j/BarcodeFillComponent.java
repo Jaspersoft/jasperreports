@@ -142,6 +142,9 @@ public class BarcodeFillComponent extends BaseFillComponent
 			templateImage.setElement(fillContext.getComponentElement());
 			templateImage.setStyle(elementStyle);//already set by setElement, but keeping for safety
 			templateImage.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
+			// the barcode is drawn upright and the image is rotated instead, by the orientation of the barcode
+			// or else the rotation inherited from the style, so that rotation and image alignment work as for any other image
+			templateImage.setRotation(BarcodeUtils.getRotation(fillContext.getComponentElement()));
 			templateImage.setUsingCache(false);
 
 			templateImage = deduplicate(templateImage);
