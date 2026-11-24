@@ -20,6 +20,9 @@
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
 		<maven.install.skip>true</maven.install.skip>
+		<!-- site path of the JRXML schemas, versioned by the JasperReports major version that defines the JRXML format;
+			6.x JRXML files reference the 6.x schema as xsd/jasperreport.xsd, which must not be replaced -->
+		<jrxml.schema.path>xsd/7</jrxml.schema.path>
 	</properties>
 	<build>
 		<outputDirectory>${project.build.directory}/docs</outputDirectory>
@@ -75,6 +78,24 @@
 									<directory>${project.parent.basedir}/.</directory>
 									<includes>
 										<include>README.md</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-jrxml-schemas</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/docs/${jrxml.schema.path}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/${jrxml.schema.path}</directory>
+									<includes>
+										<include>*.xsd</include>
 									</includes>
 								</resource>
 							</resources>
@@ -338,6 +359,27 @@
 									<value>${revision}</value>
 								</parameter>
 							</parameters>							
+						</transformationSet>
+						<transformationSet>
+							<dir>${basedir}/${jrxml.schema.path}</dir>
+							<includes>jasperreport-1.1.xsd</includes>
+							<stylesheet>schema.reference.xsl</stylesheet>
+							<outputDir>${project.build.directory}/docs</outputDir>
+							<fileMappers>
+								<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+									<targetName>schema.reference.html</targetName>
+								</fileMapper>
+							</fileMappers>
+							<parameters>
+								<parameter>
+									<name>version</name>
+									<value>${revision}</value>
+								</parameter>
+								<parameter>
+									<name>schema.path</name>
+									<value>${jrxml.schema.path}</value>
+								</parameter>
+							</parameters>
 						</transformationSet>
 						<transformationSet>
 							<dir>${basedir}</dir>
