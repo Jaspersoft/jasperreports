@@ -10,7 +10,7 @@ Shows how barcodes can be included in reports using the Okapi barcode components
 
 **Description / Goal** \
 How to draw Code 128, Code 39, Codabar, 2 of 5, ITF-14, EAN, UPC, GS1 DataBar, QR Code, Data Matrix, Aztec Code,
-MaxiCode and other barcodes with the `okapi:*` components, which use the
+MaxiCode, PDF417, postal and other barcodes with the `okapi:*` components, which use the
 [Okapi Barcode](https://github.com/woo-j/OkapiBarcode) library.
 
 **Other Samples**\
@@ -111,6 +111,29 @@ identifier of the series, such as `structuredAppendFileIdExpression` for Data Ma
 MaxiCode has a fixed size, about 28 x 27 mm, so it has no `moduleWidth`: it fills the element, keeping its
 shape, and the element sets its printed size. The Swiss QR-bill requires its QR code to print at 46 x 46 mm.
 
+The stacked and postal types are:
+
+| Component | Encodes | Own settings |
+| --- | --- | --- |
+| `okapi:PDF417` | any text; HIBC data | `mode` (`Normal`, `Truncated`, `Micro`), `dataColumns`, `rows`, `preferredEccLevel` (0 to 8), `variant` (MicroPDF417), `forceByteCompaction`, `barHeight`, `dataType`, `eciMode`, `readerInit`, structured append (Macro PDF417) |
+| `okapi:CodablockF` | any ASCII text; GS1 and HIBC data | `barHeight`, `dataType` |
+| `okapi:Code16k` | any ASCII text; GS1 data | `dataType`, `readerInit` |
+| `okapi:Code49` | any ASCII text; GS1 data | `dataType` |
+| `okapi:POSTNET` | digits; the check digit is added | `mode` (`Postnet`, `Planet`), `moduleWidthRatio` |
+| `okapi:USPSIntelligentMail` | a 20 digit tracking code, and a dash and a 5, 9 or 11 digit routing code | `moduleWidthRatio`, `shortHeightPercentage`, `longHeightPercentage` |
+| `okapi:KoreaPost` | a 6 digit postal code; the check digit is added | |
+| `okapi:RoyalMail4State` | upper-case letters and digits; the check character is added | |
+| `okapi:KIXCode` | upper-case letters and digits | |
+| `okapi:JapanPost` | digits, upper-case letters and the dash; the check character is added | |
+| `okapi:AustraliaPost` | an 8 digit Delivery Point Identifier, and customer information | `mode` (`Post`, `Reply`, `Route`, `Redirect`) |
+
+PDF417 and Codablock F rows share the element height, but they are never lower than the symbology
+allows (3 modules for PDF417, 2 for MicroPDF417, at least 8 for Codablock F); when the element is too
+low, the barcode is shrunk to fit it. `barHeight`, the height of a row in report units, sets a lower
+row height. Code 16K, Code 49, Royal Mail, KIX, Japan Post and Australia Post have a fixed shape and no
+`moduleWidth`: they fill the element, keeping their shape. POSTNET and USPS Intelligent Mail draw no
+human-readable text unless `humanReadableLocation` is set.
+
 ### Running the Sample
 
 Run the commands below in the sample directory:
@@ -121,4 +144,5 @@ mvn clean compile exec:java
 
 The report is compiled, filled and exported to `target/reports`, in PDF and the other supported formats.
 Its first page shows Code 128, EAN and QR Code, its second page Code 39, Codabar, 2 of 5 and UPC,
-its third page the other linear types, and its fourth page the 2D types.
+its third page the other linear types, its fourth page the 2D types, and its fifth page the stacked and
+postal types.

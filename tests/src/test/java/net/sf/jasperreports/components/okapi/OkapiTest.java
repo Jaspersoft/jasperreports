@@ -154,6 +154,16 @@ public class OkapiTest
 			"kind=\"okapi:MaxiCode\"", "mode=\"Mode3\"",
 			"<primaryExpression><![CDATA[\"B1050    056999\"]]></primaryExpression>",
 			"kind=\"okapi:SwissQRCode\"", "kind=\"okapi:UPNQR\"",
+			"kind=\"okapi:PDF417\"", "mode=\"Truncated\"", "dataColumns=\"4\"", "rows=\"10\"", "preferredEccLevel=\"3\"",
+			"barHeight=\"6.0\"", "structuredAppendIncludeSegmentCount=\"true\"", "mode=\"Micro\"", "variant=\"7\"",
+			"<structuredAppendFileIdExpression><![CDATA[\"001002\"]]></structuredAppendFileIdExpression>",
+			"<structuredAppendFileNameExpression><![CDATA[\"okapi.txt\"]]></structuredAppendFileNameExpression>",
+			"kind=\"okapi:CodablockF\"", "barHeight=\"10.0\"",
+			"kind=\"okapi:Code16k\"", "kind=\"okapi:Code49\"",
+			"kind=\"okapi:POSTNET\"", "mode=\"Planet\"", "moduleWidthRatio=\"2.0\"",
+			"kind=\"okapi:USPSIntelligentMail\"", "shortHeightPercentage=\"0.3\"", "longHeightPercentage=\"0.6\"",
+			"kind=\"okapi:KoreaPost\"", "kind=\"okapi:RoyalMail4State\"", "kind=\"okapi:KIXCode\"",
+			"kind=\"okapi:JapanPost\"", "kind=\"okapi:AustraliaPost\"", "mode=\"Redirect\"",
 		};
 		for (String text : expected)
 		{
@@ -195,15 +205,19 @@ public class OkapiTest
 			"Barcode preferredSize 5 is not allowed in mode Compact",
 			"Barcode primaryExpression is required in mode Mode2",
 			"Barcode primaryExpression is not allowed in mode Mode4",
+			"Barcode dataColumns must be from 1 to 30: 31",
+			"Barcode preferredEccLevel is not allowed in mode Micro",
+			"Barcode variant is not allowed with dataColumns or rows",
+			"Barcode barHeight must be positive: 0.0",
 		};
 		for (String message : expected)
 		{
 			assertTrue(messages.contains(message), "missing fault \"" + message + "\" in " + messages);
 		}
-		// a second moduleWidthRatio fault, of Code 11, a second structured append fault, of Data Matrix, and
-		// Okapi's own setter checks: the QR version, the ECI mode, the Code 11 check digit count, the Channel Code
-		// channels, the DataBar Expanded columns and the Micro QR version
-		assertEquals(messages.size(), expected.length + 2 + 6, "faults: " + messages);
+		// second moduleWidthRatio faults, of Code 11 and POSTNET, a second structured append fault, of Data Matrix,
+		// and Okapi's own setter checks: the QR version, the ECI mode, the Code 11 check digit count, the Channel
+		// Code channels, the DataBar Expanded columns and the Micro QR version
+		assertEquals(messages.size(), expected.length + 3 + 6, "faults: " + messages);
 	}
 
 	@Test
@@ -395,6 +409,55 @@ public class OkapiTest
 		}
 	}
 
+	@Test
+	public void stackedAndPostal() throws JRException, IOException, NotFoundException
+	{
+		Map<String, JRPrintImage> images = images(fill("OkapiStacked.jrxml"));
+
+		// PDF417 rows share the element height
+		check(images.get("pdf417"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI PDF417");
+		assertEquals(size(images.get("pdf417")).getWidth(), 250, TOLERANCE);
+		check(images.get("pdf417Truncated"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI PDF417");
+		assertTrue(size(images.get("pdf417Truncated")).getWidth() <= 250 + TOLERANCE);
+		// rows of the set 4 modules of 1 point, with the 2 module quiet zones above and below
+		check(images.get("pdf417Rows"), ScaleImageEnum.CLIP, RotationEnum.NONE, "OKAPI PDF417");
+		assertEquals(size(images.get("pdf417Rows")).getHeight() % 4, 0, TOLERANCE);
+		// the element is too low for rows of 3 modules: the symbol keeps them and the image shrinks it
+		check(images.get("pdf417Low"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI PDF417");
+		assertTrue(size(images.get("pdf417Low")).getHeight() > 12, "taller than the element");
+		assertEquals(size(images.get("pdf417Low")).getWidth(), 250, TOLERANCE);
+
+		// no decoder reads the others
+		// stacked rows across the element width, at least their minimum height, shrunk by the image when that overflows
+		for (String key : new String[]{"pdf417Micro", "codablockF"})
+		{
+			assertEquals(images.get(key).getScaleImage(), ScaleImageEnum.RETAIN_SHAPE, key);
+			assertEquals(size(images.get(key)).getWidth(), 250, TOLERANCE, key);
+		}
+		assertTrue(size(images.get("pdf417Micro")).getHeight() > 100, "MicroPDF417 rows of 2 modules overflow the element");
+		// the fixed shapes within the element
+		for (String key : new String[]{"code16k", "code49", "royalMail", "kix", "japanPost", "australiaPost"})
+		{
+			assertEquals(images.get(key).getScaleImage(), ScaleImageEnum.RETAIN_SHAPE, key);
+			assertTrue(size(images.get(key)).getWidth() <= 250 + TOLERANCE, key);
+			assertTrue(size(images.get(key)).getHeight() <= images.get(key).getHeight() + TOLERANCE, key);
+		}
+		// the postal linear codes across the element width
+		for (String key : new String[]{"postnet", "planet", "uspsIntelligentMail", "koreaPost"})
+		{
+			assertEquals(images.get(key).getScaleImage(), ScaleImageEnum.RETAIN_SHAPE, key);
+			assertEquals(size(images.get(key)).getWidth(), 250, TOLERANCE, key);
+			assertTrue(size(images.get(key)).getHeight() <= 40 + TOLERANCE, key);
+		}
+		// the fixed geometry fills the element width or height, keeping its shape
+		for (String key : new String[]{"code16k", "code49", "royalMail", "kix", "japanPost", "australiaPost"})
+		{
+			Dimension2D size = size(images.get(key));
+			assertTrue(Math.abs(size.getWidth() - 250) < TOLERANCE
+					|| Math.abs(size.getHeight() - images.get(key).getHeight()) < TOLERANCE, key + " " + size);
+		}
+	}
+
 	private static long fromBase32(String code)
 	{
 		String digits = "0123456789BCDFGHJKLMNPQRSTUVWXYZ";
@@ -507,7 +570,7 @@ public class OkapiTest
 				}
 			}
 		}
-		assertEquals(concrete, 36, "concrete component classes found");
+		assertEquals(concrete, 47, "concrete component classes found");
 	}
 
 	@Test

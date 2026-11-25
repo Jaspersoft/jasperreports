@@ -142,6 +142,74 @@
 			</component>
 		</element>
 	</title>
+	<detail>
+		<band height="700">
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c110" x="0" y="0" width="200" height="90">
+				<component kind="okapi:PDF417" mode="Truncated" dataColumns="4" rows="10" preferredEccLevel="3" forceByteCompaction="true" barHeight="6.0" dataType="HIBC" eciMode="3" readerInit="true" structuredAppendIncludeSegmentCount="true" structuredAppendForced="true">
+					<codeExpression><![CDATA["A123BJC5D6E71"]]></codeExpression>
+					<structuredAppendPositionExpression><![CDATA[1]]></structuredAppendPositionExpression>
+					<structuredAppendTotalExpression><![CDATA[2]]></structuredAppendTotalExpression>
+					<structuredAppendFileIdExpression><![CDATA["001002"]]></structuredAppendFileIdExpression>
+					<structuredAppendFileNameExpression><![CDATA["okapi.txt"]]></structuredAppendFileNameExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c111" x="310" y="0" width="200" height="90">
+				<component kind="okapi:PDF417" mode="Micro" variant="7">
+					<codeExpression><![CDATA["OKAPI"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c112" x="0" y="100" width="200" height="90">
+				<component kind="okapi:CodablockF" barHeight="10.0" dataType="GS1">
+					<codeExpression><![CDATA["[01]09501101530003"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c113" x="310" y="100" width="200" height="90">
+				<component kind="okapi:Code16k" dataType="GS1" readerInit="true">
+					<codeExpression><![CDATA["[01]09501101530003"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c114" x="0" y="200" width="200" height="90">
+				<component kind="okapi:Code49" dataType="GS1">
+					<codeExpression><![CDATA["[01]09501101530003"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c115" x="310" y="200" width="200" height="90">
+				<component kind="okapi:POSTNET" mode="Planet" moduleWidthRatio="2.0" humanReadableLocation="Bottom">
+					<codeExpression><![CDATA["12345678901"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c116" x="0" y="300" width="200" height="90">
+				<component kind="okapi:USPSIntelligentMail" moduleWidthRatio="1.5" shortHeightPercentage="0.3" longHeightPercentage="0.6">
+					<codeExpression><![CDATA["01234567094987654321"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c117" x="310" y="300" width="200" height="90">
+				<component kind="okapi:KoreaPost" humanReadableLocation="None">
+					<codeExpression><![CDATA["123456"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c118" x="0" y="400" width="200" height="90">
+				<component kind="okapi:RoyalMail4State">
+					<codeExpression><![CDATA["LE28HS9Z"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c119" x="310" y="400" width="200" height="90">
+				<component kind="okapi:KIXCode">
+					<codeExpression><![CDATA["2500GG30250"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c120" x="0" y="500" width="200" height="90">
+				<component kind="okapi:JapanPost">
+					<codeExpression><![CDATA["15400233-16-4-205"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c121" x="310" y="500" width="200" height="90">
+				<component kind="okapi:AustraliaPost" mode="Redirect">
+					<codeExpression><![CDATA["96184209"]]></codeExpression>
+				</component>
+			</element>
+		</band>
+	</detail>
 	<summary height="500">
 		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c101" x="0" y="0" width="200" height="90">
 			<component kind="okapi:DataMatrix" forceMode="Square" preferredSize="5" dataType="GS1" eciMode="3" readerInit="true" gs1SeparatorGs="true" structuredAppendForced="true">

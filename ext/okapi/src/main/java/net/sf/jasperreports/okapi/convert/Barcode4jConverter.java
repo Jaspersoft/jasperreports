@@ -27,6 +27,8 @@ import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.impl.int2of5.Interleaved2Of5Bean;
+import org.krysalis.barcode4j.impl.pdf417.PDF417Bean;
+import org.krysalis.barcode4j.impl.postnet.POSTNETBean;
 import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
 import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
 import org.krysalis.barcode4j.impl.upcean.UPCABean;
@@ -43,10 +45,13 @@ import net.sf.jasperreports.barcode4j.EAN8Component;
 import net.sf.jasperreports.barcode4j.ErrorCorrectionLevelEnum;
 import net.sf.jasperreports.barcode4j.Interleaved2Of5Component;
 import net.sf.jasperreports.barcode4j.OrientationEnum;
+import net.sf.jasperreports.barcode4j.POSTNETComponent;
 import net.sf.jasperreports.barcode4j.QRCodeSVGImageProducer;
+import net.sf.jasperreports.barcode4j.RoyalMailCustomerComponent;
 import net.sf.jasperreports.barcode4j.TextPositionEnum;
 import net.sf.jasperreports.barcode4j.UPCAComponent;
 import net.sf.jasperreports.barcode4j.UPCEComponent;
+import net.sf.jasperreports.barcode4j.USPSIntelligentMailComponent;
 import net.sf.jasperreports.engine.JRPropertiesMap;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.component.Component;
@@ -61,6 +66,8 @@ import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
 import net.sf.jasperreports.okapi.Interleaved2Of5CheckDigitEnum;
 import net.sf.jasperreports.okapi.OkapiComponent;
 import net.sf.jasperreports.okapi.OkapiTextComponent;
+import net.sf.jasperreports.okapi.PDF417Component;
+import net.sf.jasperreports.okapi.RoyalMail4StateComponent;
 import net.sf.jasperreports.okapi.QRCodeComponent;
 import net.sf.jasperreports.okapi.QRCodeEccLevelEnum;
 import net.sf.jasperreports.okapi.UPCComponent;
@@ -72,17 +79,20 @@ import net.sf.jasperreports.okapi.UPCModeEnum;
  * elements, for use with the <code>update</code> goal of the JasperReports Maven plugin or the
  * <code>update</code> Ant task. The barcode4j extension and its libraries have to be on the classpath.
  * <p>
- * Code 128, Interleaved 2 of 5, QR Code, Data Matrix without symbol size bounds, Code 39 with the extended
- * character set and a checksum mode other than <code>check</code>, and EAN-13, EAN-8, UPC-A and UPC-E
- * barcodes whose checksum mode is <code>add</code> are converted. Barcodes whose conversion could encode different data are left
- * unconverted, so that their data can be reviewed first: EAN-13, EAN-8, UPC-A and UPC-E with any other
- * checksum mode, since their data may then carry a check digit, EAN-128, Code 39 with the extended
- * character set and the checksum mode <code>check</code>, and QR Code with a character encoding other
- * than UTF-8 set on the element or the report. So are barcodes whose data Okapi may reject: Codabar,
- * and Code 39 without the extended character set. So is Data Matrix with symbol size bounds, since barcode4j
- * picks its size within them for each record's data. Other types are left unconverted until they have an
- * <code>okapi:*</code> element. Each of these, and each setting that has no <code>okapi:*</code>
- * equivalent, is logged as a warning.
+ * Code 128, Interleaved 2 of 5, QR Code, Code 39 with the extended character set and a checksum mode
+ * other than <code>check</code>, EAN-13, EAN-8, UPC-A, UPC-E and POSTNET barcodes whose checksum mode is
+ * <code>add</code>, Royal Mail customer barcodes whose checksum mode is <code>add</code> or
+ * <code>auto</code>, Data Matrix without symbol size bounds and PDF417 with a fixed column count are
+ * converted. Barcodes whose conversion could encode different data are left unconverted, so that their
+ * data can be reviewed first: EAN-13, EAN-8, UPC-A, UPC-E and POSTNET with any other checksum mode, since
+ * their data may then carry a check digit, Royal Mail with the checksum mode <code>check</code> or
+ * <code>ignore</code>, EAN-128, Code 39 with the extended character set and the checksum mode
+ * <code>check</code>, and QR Code with a character encoding other than UTF-8 set on the element or the
+ * report. So are barcodes whose data Okapi may reject: Codabar, Code 39 without the extended character
+ * set, and USPS Intelligent Mail, whose routing code Okapi takes only after a dash. So are Data Matrix with
+ * symbol size bounds and PDF417 with column count bounds, since barcode4j picks the size within them for
+ * each record's data. Other types are left unconverted until they have an <code>okapi:*</code> element.
+ * Each of these, and each setting that has no <code>okapi:*</code> equivalent, is logged as a warning.
  * <p>
  * A linear barcode with no module width gets the default module width of the barcode4j library for
  * its type, and one with no wide factor the default wide factor, so that it keeps its printed length.
@@ -96,9 +106,11 @@ public class Barcode4jConverter extends LegacyConverter
 	private static final String REASON_REJECTED = "Okapi rejects data the legacy barcode accepts; review the data first";
 	private static final String REASON_NO_ELEMENT = "there is no okapi:* element for this type yet";
 	private static final String REASON_TEXT = "Okapi draws the human-readable text";
+	private static final String REASON_BOUNDS = "barcode4j only rejects data that doesn't fit within it";
 
 	private static final String CHECKSUM_MODE_ADD = "add";
 	private static final String CHECKSUM_MODE_CHECK = "check";
+	private static final String CHECKSUM_MODE_IGNORE = "ignore";
 
 
 	@Override
@@ -171,6 +183,24 @@ public class Barcode4jConverter extends LegacyConverter
 		{
 			return dataMatrix((DataMatrixComponent) component, conversion);
 		}
+		if (component instanceof net.sf.jasperreports.barcode4j.PDF417Component)
+		{
+			return pdf417((net.sf.jasperreports.barcode4j.PDF417Component) component, conversion);
+		}
+		if (component instanceof POSTNETComponent)
+		{
+			return postnet((POSTNETComponent) component, conversion);
+		}
+		if (component instanceof RoyalMailCustomerComponent)
+		{
+			return royalMail((RoyalMailCustomerComponent) component, conversion);
+		}
+		if (component instanceof USPSIntelligentMailComponent)
+		{
+			// barcode4j takes the routing code right after the 20 digit tracking code, while Okapi
+			// needs a dash between them and rejects longer data without it
+			return conversion.notConverted("routing code without a dash: " + REASON_REJECTED);
+		}
 		return conversion.notConverted(REASON_NO_ELEMENT);
 	}
 
@@ -205,9 +235,9 @@ public class Barcode4jConverter extends LegacyConverter
 
 
 	/**
-	 * Leaves an EAN or UPC barcode unconverted: only with the checksum mode "add" is the data known to have
-	 * no check digit, which Okapi always computes and rejects in the input; with "check", "ignore" or "auto"
-	 * (the default), the data may carry one.
+	 * Leaves an EAN, UPC or POSTNET barcode unconverted: only with the checksum mode "add" is the data known
+	 * to have no check digit, which Okapi always computes and adds; with "check", "ignore" or "auto" (the
+	 * default), the data may carry one, and for POSTNET barcode4j then adds none.
 	 */
 	private static OkapiComponent checksumNotAdded(String checksumMode, ElementConversion conversion)
 	{
@@ -305,9 +335,105 @@ public class Barcode4jConverter extends LegacyConverter
 	 */
 	private static double defaultModuleWidth(AbstractBarcodeBean bean, ElementConversion conversion)
 	{
-		double points = UnitConv.mm2pt(bean.getModuleWidth());
+		return toReportUnits(bean.getModuleWidth(), conversion);
+	}
+
+
+	/**
+	 * A barcode4j size in millimetres in the units of the report.
+	 */
+	private static double toReportUnits(double millimetres, ElementConversion conversion)
+	{
+		double points = UnitConv.mm2pt(millimetres);
 		int dpi = conversion.getReport().getDpi();
 		return dpi == JasperPrint.DEFAULT_REPORT_DPI ? points : points * dpi / JasperPrint.DEFAULT_REPORT_DPI;
+	}
+
+
+	private static OkapiComponent pdf417(net.sf.jasperreports.barcode4j.PDF417Component legacy,
+			ElementConversion conversion)
+	{
+		PDF417Bean bean = new PDF417Bean();
+		int minColumns = legacy.getMinColumns() != null ? legacy.getMinColumns() : bean.getMinCols();
+		int maxColumns = legacy.getMaxColumns() != null ? legacy.getMaxColumns() : bean.getMaxCols();
+		if (minColumns != maxColumns)
+		{
+			// barcode4j picks the column count within the bounds for the data of each record
+			return conversion.notConverted("column count bounds depend on the data");
+		}
+
+		PDF417Component pdf417 = common(new PDF417Component(), legacy.getCodeExpression(),
+			legacy.getEvaluationTime(), legacy.getEvaluationGroup());
+		pdf417.setRotation(rotation(legacy.getOrientation()));
+		// both in report units
+		pdf417.setQuietZoneHorizontal(legacy.getQuietZone());
+		pdf417.setQuietZoneVertical(legacy.getVerticalQuietZone());
+		pdf417.setDataColumns(minColumns);
+		pdf417.setPreferredEccLevel(legacy.getErrorCorrectionLevel() != null
+			? legacy.getErrorCorrectionLevel() : bean.getErrorCorrectionLevel());
+		// as Data Matrix: the legacy image stretches the symbol, whose rows are 3 modules high, to fill the
+		// element, while the okapi:* rows share the element height
+		droppedIfSet(conversion, "moduleWidth", legacy.getModuleWidth(),
+			"the legacy barcode fills the element whatever its module width");
+		droppedIfSet(conversion, "minRows", legacy.getMinRows(), REASON_BOUNDS);
+		droppedIfSet(conversion, "maxRows", legacy.getMaxRows(), REASON_BOUNDS);
+		droppedIfSet(conversion, "widthToHeightRatio", legacy.getWidthToHeightRatio(),
+			"it only chooses between column counts, and the column count is fixed");
+		droppedIfSet(conversion, "patternExpression", legacy.getPatternExpression(), REASON_TEXT);
+		return pdf417;
+	}
+
+
+	private static OkapiComponent postnet(POSTNETComponent legacy, ElementConversion conversion)
+	{
+		if (!CHECKSUM_MODE_ADD.equals(legacy.getChecksumMode()))
+		{
+			return checksumNotAdded(legacy.getChecksumMode(), conversion);
+		}
+
+		POSTNETBean bean = new POSTNETBean();
+		net.sf.jasperreports.okapi.POSTNETComponent postnet =
+			text(new net.sf.jasperreports.okapi.POSTNETComponent(), legacy, bean, conversion);
+		// Okapi's ratio is of the space to the bar; barcode4j's space is the inter-character gap
+		double gap = legacy.getIntercharGapWidth() != null
+			? legacy.getIntercharGapWidth() : toReportUnits(bean.getIntercharGapWidth(), conversion);
+		postnet.setModuleWidthRatio(gap / postnet.getModuleWidth());
+		droppedIfSet(conversion, "shortBarHeight", legacy.getShortBarHeight(),
+			"Okapi draws the short bars at 40% of the full bars");
+		droppedIfSet(conversion, "baselinePosition", legacy.getBaselinePosition(),
+			"Okapi aligns the bars at the bottom");
+		droppedIfSet(conversion, "displayChecksum", legacy.getDisplayChecksum(), REASON_TEXT);
+		return postnet;
+	}
+
+
+	private static OkapiComponent royalMail(RoyalMailCustomerComponent legacy, ElementConversion conversion)
+	{
+		String checksumMode = legacy.getChecksumMode();
+		if (CHECKSUM_MODE_CHECK.equals(checksumMode) || CHECKSUM_MODE_IGNORE.equals(checksumMode))
+		{
+			// the data may carry the check character, which Okapi always adds; with "add" and "auto"
+			// (the default), barcode4j adds it too
+			return conversion.notConverted("checksum mode " + checksumMode + ": " + REASON_DATA);
+		}
+
+		RoyalMail4StateComponent royalMail = common(new RoyalMail4StateComponent(), legacy.getCodeExpression(),
+			legacy.getEvaluationTime(), legacy.getEvaluationGroup());
+		royalMail.setRotation(rotation(legacy.getOrientation()));
+		// both in report units
+		royalMail.setQuietZoneHorizontal(legacy.getQuietZone());
+		royalMail.setQuietZoneVertical(legacy.getVerticalQuietZone());
+		String reason = "Okapi draws this barcode at a fixed shape that fills the element";
+		droppedIfSet(conversion, "moduleWidth", legacy.getModuleWidth(), reason);
+		droppedIfSet(conversion, "ascenderHeight", legacy.getAscenderHeight(), reason);
+		droppedIfSet(conversion, "trackHeight", legacy.getTrackHeight(), reason);
+		droppedIfSet(conversion, "intercharGapWidth", legacy.getIntercharGapWidth(), reason);
+		if (legacy.getTextPosition() != null && legacy.getTextPosition() != TextPositionEnum.NONE)
+		{
+			conversion.dropped("textPosition", "Okapi draws no human-readable text for this barcode");
+		}
+		droppedIfSet(conversion, "patternExpression", legacy.getPatternExpression(), REASON_TEXT);
+		return royalMail;
 	}
 
 

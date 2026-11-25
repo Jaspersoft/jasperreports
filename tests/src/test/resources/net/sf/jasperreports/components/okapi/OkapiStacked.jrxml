@@ -1,0 +1,85 @@
+<jasperReport name="OkapiStacked" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a401">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<title height="760">
+		<element kind="component" key="pdf417" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a402" x="0" y="0" width="250" height="100" style="Barcode">
+			<component kind="okapi:PDF417">
+				<codeExpression><![CDATA["OKAPI PDF417"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pdf417Truncated" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a403" x="260" y="0" width="250" height="100" style="Barcode">
+			<component kind="okapi:PDF417" mode="Truncated">
+				<codeExpression><![CDATA["OKAPI PDF417"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pdf417Micro" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a404" x="0" y="106" width="250" height="100" style="Barcode">
+			<component kind="okapi:PDF417" mode="Micro">
+				<codeExpression><![CDATA["OKAPI MICRO"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pdf417Rows" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a405" x="260" y="106" width="250" height="100" style="Barcode">
+			<component kind="okapi:PDF417" moduleWidth="1.0" barHeight="4.0">
+				<codeExpression><![CDATA["OKAPI PDF417"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pdf417Low" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a406" x="0" y="212" width="250" height="12" style="Barcode">
+			<component kind="okapi:PDF417">
+				<codeExpression><![CDATA["OKAPI PDF417"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codablockF" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a407" x="260" y="212" width="250" height="100" style="Barcode">
+			<component kind="okapi:CodablockF">
+				<codeExpression><![CDATA["OKAPI CODABLOCK F"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code16k" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a408" x="0" y="230" width="250" height="100" style="Barcode">
+			<component kind="okapi:Code16k">
+				<codeExpression><![CDATA["OKAPI CODE 16K"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code49" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a409" x="260" y="318" width="250" height="100" style="Barcode">
+			<component kind="okapi:Code49">
+				<codeExpression><![CDATA["OKAPI CODE 49"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="postnet" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a410" x="0" y="336" width="250" height="40" style="Barcode">
+			<component kind="okapi:POSTNET">
+				<codeExpression><![CDATA["12345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="planet" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a411" x="260" y="424" width="250" height="40" style="Barcode">
+			<component kind="okapi:POSTNET" mode="Planet" humanReadableLocation="Bottom">
+				<codeExpression><![CDATA["12345678901"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="uspsIntelligentMail" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a412" x="0" y="382" width="250" height="40" style="Barcode">
+			<component kind="okapi:USPSIntelligentMail" humanReadableLocation="Bottom">
+				<codeExpression><![CDATA["01234567094987654321-01234567891"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="koreaPost" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a413" x="260" y="470" width="250" height="40" style="Barcode">
+			<component kind="okapi:KoreaPost">
+				<codeExpression><![CDATA["123456"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="royalMail" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a414" x="0" y="428" width="250" height="40" style="Barcode">
+			<component kind="okapi:RoyalMail4State">
+				<codeExpression><![CDATA["LE28HS9Z"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="kix" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a415" x="260" y="516" width="250" height="40" style="Barcode">
+			<component kind="okapi:KIXCode">
+				<codeExpression><![CDATA["2500GG30250"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="japanPost" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a416" x="0" y="474" width="250" height="40" style="Barcode">
+			<component kind="okapi:JapanPost">
+				<codeExpression><![CDATA["15400233-16-4-205"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="australiaPost" uuid="a15d4e96-7b72-4d93-be42-6e98f3d9a417" x="260" y="562" width="250" height="40" style="Barcode">
+			<component kind="okapi:AustraliaPost">
+				<codeExpression><![CDATA["96184209"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

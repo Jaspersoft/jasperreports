@@ -93,5 +93,10 @@
 				<codeExpression><![CDATA["123456"]]></codeExpression>
 			</component>
 		</element>
+		<element kind="component" key="postnet" uuid="0b8e7f10-5a11-4c3e-9d21-000000000030" x="260" y="580" width="250" height="50" style="Barcode">
+			<component kind="barbecue" type="PostNet" drawText="true">
+				<codeExpression><![CDATA["12345"]]></codeExpression>
+			</component>
+		</element>
 	</title>
 </jasperReport>

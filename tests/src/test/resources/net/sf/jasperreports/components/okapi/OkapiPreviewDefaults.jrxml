@@ -1,6 +1,6 @@
-<jasperReport name="OkapiPreviewDefaults" pageWidth="595" pageHeight="1100" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e500">
+<jasperReport name="OkapiPreviewDefaults" pageWidth="595" pageHeight="1400" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e500">
 	<parameter name="code" class="java.lang.String"/>
-	<title height="1000">
+	<title height="1300">
 		<element kind="component" key="code128" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e501" x="0" y="0" width="125" height="80">
 			<component kind="okapi:Code128">
 				<codeExpression><![CDATA[$P{code}]]></codeExpression>
@@ -221,6 +221,66 @@
 			<component kind="okapi:MaxiCode" mode="Mode3">
 				<codeExpression><![CDATA[$P{code}]]></codeExpression>
 				<primaryExpression><![CDATA[$P{code}]]></primaryExpression>
+			</component>
+		</element>
+		<element kind="component" key="pDF417" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e545" x="0" y="990" width="125" height="80">
+			<component kind="okapi:PDF417">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pDF417Micro" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e546" x="130" y="990" width="125" height="80">
+			<component kind="okapi:PDF417" mode="Micro">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codablockF" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e547" x="260" y="990" width="125" height="80">
+			<component kind="okapi:CodablockF">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code16k" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e548" x="390" y="990" width="125" height="80">
+			<component kind="okapi:Code16k">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code49" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e549" x="0" y="1080" width="125" height="80">
+			<component kind="okapi:Code49">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pOSTNET" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e550" x="130" y="1080" width="125" height="80">
+			<component kind="okapi:POSTNET">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="uSPSIntelligentMail" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e551" x="260" y="1080" width="125" height="80">
+			<component kind="okapi:USPSIntelligentMail">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="koreaPost" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e552" x="390" y="1080" width="125" height="80">
+			<component kind="okapi:KoreaPost">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="royalMail4State" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e553" x="0" y="1170" width="125" height="80">
+			<component kind="okapi:RoyalMail4State">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="kIXCode" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e554" x="130" y="1170" width="125" height="80">
+			<component kind="okapi:KIXCode">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="japanPost" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e555" x="260" y="1170" width="125" height="80">
+			<component kind="okapi:JapanPost">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="australiaPost" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e556" x="390" y="1170" width="125" height="80">
+			<component kind="okapi:AustraliaPost">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
 			</component>
 		</element>
 	</title>

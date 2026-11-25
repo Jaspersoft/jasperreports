@@ -34,6 +34,8 @@ import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
 import net.sf.jasperreports.okapi.OkapiComponent;
 import net.sf.jasperreports.okapi.OkapiTextComponent;
+import net.sf.jasperreports.okapi.PDF417Component;
+import net.sf.jasperreports.okapi.POSTNETComponent;
 import net.sf.jasperreports.okapi.UPCComponent;
 import net.sf.jasperreports.okapi.UPCModeEnum;
 
@@ -43,8 +45,8 @@ import net.sf.jasperreports.okapi.UPCModeEnum;
  * elements, for use with the <code>update</code> goal of the JasperReports Maven plugin or the
  * <code>update</code> Ant task. The barbecue extension has to be on the classpath.
  * <p>
- * Code 128 (with any of its code sets), Code 39 (3of9, Code39, USD3), EAN-13 and UPC-A barcodes are
- * converted. Barcodes whose conversion could encode different data are left unconverted, so that their
+ * Code 128 (with any of its code sets), Code 39 (3of9, Code39, USD3), EAN-13, UPC-A, PostNet and PDF417
+ * barcodes are converted. Barcodes whose conversion could encode different data are left unconverted, so that their
  * data can be reviewed first: the GS1 types (EAN128, UCC128, GlobalTradeItemNumber, SCC14ShippingCode,
  * SSCC18, ShipmentIdentificationNumber, USPS), Bookland, RandomWeightUPCA, the Codabar types (2of7,
  * Codabar, Monarch, NW7, USD4), Code39 (Extended), and Int2of5 and Std2of5. Other types are left
@@ -109,6 +111,20 @@ public class BarbecueConverter extends LegacyConverter
 				UPCComponent upc = text(new UPCComponent(), barbecue, conversion);
 				upc.setMode(UPCModeEnum.UPCA);
 				return upc;
+			}
+			case "PostNet":
+				// barbecue adds the standard check digit, as Okapi does
+				return text(new POSTNETComponent(), barbecue, conversion);
+			case "PDF417":
+			{
+				PDF417Component pdf417 = common(new PDF417Component(), barbecue.getCodeExpression(),
+					barbecue.getEvaluationTime(), barbecue.getEvaluationGroup());
+				pdf417.setRotation(barbecue.getOwnRotation());
+				// barbecue's PDF417 always has 12 data columns and error correction level 0, and a fixed
+				// size: its drawText, barWidth and barHeight have no effect, so nothing is dropped
+				pdf417.setDataColumns(12);
+				pdf417.setPreferredEccLevel(0);
+				return pdf417;
 			}
 			case "3of9":
 			case "Code39":

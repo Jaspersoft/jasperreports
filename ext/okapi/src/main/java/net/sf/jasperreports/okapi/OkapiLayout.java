@@ -40,8 +40,10 @@ import uk.org.okapibarcode.backend.Symbol;
  * Linear codes have no bar height setting: the bars take the element height less the text
  * and the vertical quiet zones, in whole modules. Stacked linear codes share that height between
  * their rows, after the separators and the rows Okapi draws at a fixed height; a set row height
- * ({@link OkapiElementType#getBarHeight}) caps it. A linear code whose rows all have a fixed
- * height, such as DataBar Stacked, is sized in both directions, like a 2D code.
+ * ({@link OkapiElementType#getBarHeight}) caps it, and the symbology's minimum row height
+ * ({@link OkapiElementType#getMinBarHeight}) is kept even when the element is too low. A linear
+ * code whose rows all have a fixed height, such as DataBar Stacked, is sized in both directions,
+ * like a 2D code.
  * </p>
  *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
@@ -167,6 +169,8 @@ final class OkapiLayout
 					// a set row height is never exceeded, but rows get lower when the element doesn't fit them
 					barHeight = Math.min(barHeight, Math.max(1, (int) Math.round(setBarHeight / module)));
 				}
+				// nor lower than the symbology allows: the image then shrinks the symbol
+				barHeight = Math.max(barHeight, type.getMinBarHeight(component, bare));
 			}
 			if (barHeight != spec.barHeight)
 			{

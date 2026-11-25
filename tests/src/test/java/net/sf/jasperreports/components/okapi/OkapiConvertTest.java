@@ -72,8 +72,11 @@ import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
 import net.sf.jasperreports.okapi.Interleaved2Of5CheckDigitEnum;
 import net.sf.jasperreports.okapi.Interleaved2Of5Component;
+import net.sf.jasperreports.okapi.PDF417Component;
+import net.sf.jasperreports.okapi.POSTNETComponent;
 import net.sf.jasperreports.okapi.QRCodeComponent;
 import net.sf.jasperreports.okapi.QRCodeEccLevelEnum;
+import net.sf.jasperreports.okapi.RoyalMail4StateComponent;
 import net.sf.jasperreports.okapi.UPCComponent;
 import net.sf.jasperreports.okapi.UPCModeEnum;
 import net.sf.jasperreports.okapi.convert.BarbecueConverter;
@@ -129,7 +132,13 @@ public class OkapiConvertTest
 		assertNull(((Code39Component) after.get("usd3").getComponent()).getCheckDigit());
 		assertEquals(((UPCComponent) after.get("upca").getComponent()).getMode(), UPCModeEnum.UPCA);
 
-		for (String key : new String[] {"gtin", "codabar", "std2of5Checksum", "int2of5", "pdf417",
+		PDF417Component barbecuePdf417 = (PDF417Component) after.get("pdf417").getComponent();
+		assertEquals(barbecuePdf417.getDataColumns(), Integer.valueOf(12), "barbecue's fixed data columns");
+		assertEquals(barbecuePdf417.getPreferredEccLevel(), Integer.valueOf(0));
+		POSTNETComponent barbecuePostnet = (POSTNETComponent) after.get("postnet").getComponent();
+		assertEquals(barbecuePostnet.getHumanReadableLocation(), HumanReadableLocationEnum.BOTTOM);
+
+		for (String key : new String[] {"gtin", "codabar", "std2of5Checksum", "int2of5",
 			"code39Extended", "std2of5"})
 		{
 			assertTrue(after.get(key).getComponent() instanceof BarbecueComponent, key + " left unconverted");
@@ -143,6 +152,7 @@ public class OkapiConvertTest
 		// the decoder doesn't strip the mod 43 check character, 5
 		assertEquals(OkapiTest.decode(images.get("code39")), "BARBECUE-395");
 		assertEquals(OkapiTest.decode(images.get("usd3")), "USD3");
+		assertEquals(OkapiTest.decode(images.get("pdf417")), "PDF417");
 		assertEquals(OkapiTest.decode(images.get("upca")), "036000291452");
 	}
 
@@ -206,9 +216,20 @@ public class OkapiConvertTest
 		assertNull(dataMatrix.getForceMode());
 		DataMatrixComponent dataMatrixRectangle = (DataMatrixComponent) after.get("dataMatrixRectangle").getComponent();
 		assertEquals(dataMatrixRectangle.getForceMode(), DataMatrixForceModeEnum.RECTANGULAR);
+		PDF417Component pdf417 = (PDF417Component) after.get("pdf417").getComponent();
+		assertEquals(pdf417.getDataColumns(), Integer.valueOf(2), "barcode4j's default column bounds, 2 to 2");
+		assertEquals(pdf417.getPreferredEccLevel(), Integer.valueOf(2));
+		assertNull(pdf417.getModuleWidth(), "the legacy 2D barcode fills the element whatever its module width");
+		POSTNETComponent postnet = (POSTNETComponent) after.get("postnetAdd").getComponent();
+		assertEquals(postnet.getModuleWidth(), 1.0);
+		assertEquals(postnet.getModuleWidthRatio(), 1.5, 1e-6, "the inter-character gap over the module width");
+		assertEquals(postnet.getHumanReadableLocation(), HumanReadableLocationEnum.BOTTOM);
+		// the checksum mode auto, the default, adds the check character as Okapi does
+		assertTrue(after.get("royalMail").getComponent() instanceof RoyalMail4StateComponent, "royalMail converted");
 
 		for (String key : new String[] {"ean13Auto", "ean13Check", "ean128", "qrLatin1", "code39",
-			"code39ExtendedCheck", "upcaAuto", "codabar", "dataMatrixBounds"})
+			"code39ExtendedCheck", "upcaAuto", "codabar", "dataMatrixBounds", "pdf417Columns", "postnetAuto",
+			"royalMailCheck", "uspsIntelligentMail"})
 		{
 			assertTrue(after.get(key).getComponent() instanceof BarcodeComponent, key + " left unconverted");
 		}
@@ -226,6 +247,7 @@ public class OkapiConvertTest
 		assertEquals(OkapiTest.decode(images.get("upcaAdd")), "036000291452");
 		assertEquals(OkapiTest.decode(images.get("upceAdd")), "01234565");
 		assertEquals(OkapiTest.decode(images.get("dataMatrix")), "BARCODE4J DM");
+		assertEquals(OkapiTest.decode(images.get("pdf417")), "BARCODE4J PDF417");
 		// the decoder doesn't find the 8 x 32 symbol; zxing-cpp reads it
 		Dimension2D rectangle = OkapiTest.size(images.get("dataMatrixRectangle"));
 		assertTrue(rectangle.getWidth() > 2 * rectangle.getHeight(), "rectangular in a square element: " + rectangle);

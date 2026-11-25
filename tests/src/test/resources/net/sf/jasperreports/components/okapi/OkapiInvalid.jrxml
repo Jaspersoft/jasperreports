@@ -1,5 +1,5 @@
 <jasperReport name="OkapiInvalid" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="50" bottomMargin="50" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c201">
-	<title height="560">
+	<title height="600">
 		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c202" x="0" y="0" width="200" height="50">
 			<component kind="okapi:Code128" moduleWidth="0.0"/>
 		</element>
@@ -79,6 +79,31 @@
 		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c217" x="210" y="480" width="200" height="50">
 			<component kind="okapi:MicroQRCode" preferredVersion="5">
 				<codeExpression><![CDATA["A"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c218" x="0" y="540" width="100" height="50">
+			<component kind="okapi:PDF417" dataColumns="31">
+				<codeExpression><![CDATA["1"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c219" x="105" y="540" width="100" height="50">
+			<component kind="okapi:PDF417" mode="Micro" preferredEccLevel="2">
+				<codeExpression><![CDATA["1"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c220" x="210" y="540" width="100" height="50">
+			<component kind="okapi:PDF417" mode="Micro" variant="3" rows="5">
+				<codeExpression><![CDATA["1"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c221" x="315" y="540" width="100" height="50">
+			<component kind="okapi:CodablockF" barHeight="0.0">
+				<codeExpression><![CDATA["1"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c222" x="420" y="540" width="100" height="50">
+			<component kind="okapi:POSTNET" moduleWidthRatio="0.0">
+				<codeExpression><![CDATA["1"]]></codeExpression>
 			</component>
 		</element>
 	</title>

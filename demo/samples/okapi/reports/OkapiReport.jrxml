@@ -463,126 +463,255 @@ moduleWidth="1" hImageAlign="Center"]]></text>
 				</component>
 			</element>
 		</band>
+		<band height="750">
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d148" x="0" y="0" width="515" height="20" style="Type Title">
+				<text><![CDATA[Data Matrix]]></text>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d149" x="0" y="20" width="160" height="20" style="Caption">
+				<text><![CDATA[forceMode="Square"]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d150" x="0" y="40" width="160" height="95" style="Barcode">
+				<component kind="okapi:DataMatrix" forceMode="Square">
+					<codeExpression><![CDATA["OKAPI DATA MATRIX"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d151" x="177" y="20" width="160" height="20" style="Caption">
+				<text><![CDATA[forceMode="Rectangular"]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d152" x="177" y="40" width="160" height="95" style="Barcode">
+				<component kind="okapi:DataMatrix" forceMode="Rectangular">
+					<codeExpression><![CDATA["OKAPI DATA MATRIX"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d153" x="355" y="20" width="160" height="20" style="Caption">
+				<text><![CDATA[dataType="GS1"]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d154" x="355" y="40" width="160" height="95" style="Barcode">
+				<component kind="okapi:DataMatrix" dataType="GS1">
+					<codeExpression><![CDATA["[01]09501101530003[17]261231[10]ABC123"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d155" x="0" y="145" width="515" height="20" style="Type Title">
+				<text><![CDATA[Aztec Code]]></text>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d156" x="0" y="165" width="160" height="20" style="Caption">
+				<text><![CDATA[Aztec Code]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d157" x="0" y="185" width="160" height="95" style="Barcode">
+				<component kind="okapi:AztecCode">
+					<codeExpression><![CDATA["OKAPI AZTEC CODE"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d158" x="177" y="165" width="160" height="20" style="Caption">
+				<text><![CDATA[mode="Normal"]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d159" x="177" y="185" width="160" height="95" style="Barcode">
+				<component kind="okapi:AztecCode" mode="Normal">
+					<codeExpression><![CDATA["OKAPI AZTEC CODE"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d160" x="355" y="165" width="160" height="20" style="Caption">
+				<text><![CDATA[Aztec Rune]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d161" x="355" y="185" width="160" height="95" style="Barcode">
+				<component kind="okapi:AztecRune">
+					<codeExpression><![CDATA["42"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d162" x="0" y="290" width="515" height="20" style="Type Title">
+				<text><![CDATA[Code One, Grid Matrix and Micro QR Code]]></text>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d163" x="0" y="310" width="160" height="20" style="Caption">
+				<text><![CDATA[Code One]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d164" x="0" y="330" width="160" height="95" style="Barcode">
+				<component kind="okapi:CodeOne">
+					<codeExpression><![CDATA["Okapi Code One"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d165" x="177" y="310" width="160" height="20" style="Caption">
+				<text><![CDATA[Grid Matrix]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d166" x="177" y="330" width="160" height="95" style="Barcode">
+				<component kind="okapi:GridMatrix">
+					<codeExpression><![CDATA["Okapi Grid Matrix"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d167" x="355" y="310" width="160" height="20" style="Caption">
+				<text><![CDATA[Micro QR Code]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d168" x="355" y="330" width="160" height="95" style="Barcode">
+				<component kind="okapi:MicroQRCode">
+					<codeExpression><![CDATA["OKAPI 12345"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d169" x="0" y="435" width="515" height="20" style="Type Title">
+				<text><![CDATA[MaxiCode]]></text>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d170" x="0" y="455" width="160" height="20" style="Caption">
+				<text><![CDATA[mode 4 (default)]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d171" x="0" y="475" width="160" height="95" style="Barcode">
+				<component kind="okapi:MaxiCode">
+					<codeExpression><![CDATA["OKAPI MAXICODE"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d172" x="177" y="455" width="160" height="20" style="Caption">
+				<text><![CDATA[mode="Mode2", primaryExpression]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d173" x="177" y="475" width="160" height="95" style="Barcode">
+				<component kind="okapi:MaxiCode" mode="Mode2">
+					<codeExpression><![CDATA["OKAPI MAXICODE"]]></codeExpression>
+					<primaryExpression><![CDATA["152382802840001"]]></primaryExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d174" x="0" y="580" width="515" height="20" style="Type Title">
+				<text><![CDATA[Payment QR codes]]></text>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d175" x="0" y="600" width="160" height="20" style="Caption">
+				<text><![CDATA[Swiss QR Code]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d176" x="0" y="620" width="130" height="130" style="Barcode">
+				<component kind="okapi:SwissQRCode">
+					<codeExpression><![CDATA["SPC\n0200\n1\nCH4431999123000889012\nS\nRobert Schneider AG\nRue du Lac\n1268\n2501\nBiel\nCH\n\n\n\n\n\n\n\n199.95\nCHF\nS\nPia-Maria Rutschmann-Schnyder\nGrosse Marktgasse\n28\n9400\nRorschach\nCH\nQRR\n210000000003139471430009017\nOrder of 15 June 2020\nEPD"]]></codeExpression>
+				</component>
+			</element>
+			<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d177" x="177" y="600" width="160" height="20" style="Caption">
+				<text><![CDATA[UPN QR]]></text>
+			</element>
+			<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d178" x="177" y="620" width="130" height="130" style="Barcode">
+				<component kind="okapi:UPNQR">
+					<codeExpression><![CDATA["UPNQR"]]></codeExpression>
+				</component>
+			</element>
+		</band>
 	</detail>
-	<summary height="750">
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d148" x="0" y="0" width="515" height="20" style="Type Title">
-			<text><![CDATA[Data Matrix]]></text>
+	<summary height="560">
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d179" x="0" y="0" width="515" height="20" style="Type Title">
+			<text><![CDATA[PDF417]]></text>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d149" x="0" y="20" width="160" height="20" style="Caption">
-			<text><![CDATA[forceMode="Square"]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d180" x="0" y="20" width="160" height="20" style="Caption">
+			<text><![CDATA[PDF417]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d150" x="0" y="40" width="160" height="95" style="Barcode">
-			<component kind="okapi:DataMatrix" forceMode="Square">
-				<codeExpression><![CDATA["OKAPI DATA MATRIX"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d181" x="0" y="40" width="160" height="80" style="Barcode">
+			<component kind="okapi:PDF417">
+				<codeExpression><![CDATA["OKAPI PDF417 BARCODE"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d151" x="177" y="20" width="160" height="20" style="Caption">
-			<text><![CDATA[forceMode="Rectangular"]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d182" x="177" y="20" width="160" height="20" style="Caption">
+			<text><![CDATA[mode="Truncated"]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d152" x="177" y="40" width="160" height="95" style="Barcode">
-			<component kind="okapi:DataMatrix" forceMode="Rectangular">
-				<codeExpression><![CDATA["OKAPI DATA MATRIX"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d183" x="177" y="40" width="160" height="80" style="Barcode">
+			<component kind="okapi:PDF417" mode="Truncated">
+				<codeExpression><![CDATA["OKAPI PDF417 BARCODE"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d153" x="355" y="20" width="160" height="20" style="Caption">
-			<text><![CDATA[dataType="GS1"]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d184" x="355" y="20" width="160" height="20" style="Caption">
+			<text><![CDATA[mode="Micro"]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d154" x="355" y="40" width="160" height="95" style="Barcode">
-			<component kind="okapi:DataMatrix" dataType="GS1">
-				<codeExpression><![CDATA["[01]09501101530003[17]261231[10]ABC123"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d185" x="355" y="40" width="160" height="80" style="Barcode">
+			<component kind="okapi:PDF417" mode="Micro">
+				<codeExpression><![CDATA["OKAPI MICRO"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d155" x="0" y="145" width="515" height="20" style="Type Title">
-			<text><![CDATA[Aztec Code]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d186" x="0" y="130" width="515" height="20" style="Type Title">
+			<text><![CDATA[Codablock F, Code 16K and Code 49]]></text>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d156" x="0" y="165" width="160" height="20" style="Caption">
-			<text><![CDATA[Aztec Code]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d187" x="0" y="150" width="160" height="20" style="Caption">
+			<text><![CDATA[Codablock F]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d157" x="0" y="185" width="160" height="95" style="Barcode">
-			<component kind="okapi:AztecCode">
-				<codeExpression><![CDATA["OKAPI AZTEC CODE"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d188" x="0" y="170" width="160" height="80" style="Barcode">
+			<component kind="okapi:CodablockF">
+				<codeExpression><![CDATA["OKAPI CODABLOCK F"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d158" x="177" y="165" width="160" height="20" style="Caption">
-			<text><![CDATA[mode="Normal"]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d189" x="177" y="150" width="160" height="20" style="Caption">
+			<text><![CDATA[Code 16K]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d159" x="177" y="185" width="160" height="95" style="Barcode">
-			<component kind="okapi:AztecCode" mode="Normal">
-				<codeExpression><![CDATA["OKAPI AZTEC CODE"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d190" x="177" y="170" width="160" height="80" style="Barcode">
+			<component kind="okapi:Code16k">
+				<codeExpression><![CDATA["OKAPI CODE 16K"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d160" x="355" y="165" width="160" height="20" style="Caption">
-			<text><![CDATA[Aztec Rune]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d191" x="355" y="150" width="160" height="20" style="Caption">
+			<text><![CDATA[Code 49]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d161" x="355" y="185" width="160" height="95" style="Barcode">
-			<component kind="okapi:AztecRune">
-				<codeExpression><![CDATA["42"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d192" x="355" y="170" width="160" height="80" style="Barcode">
+			<component kind="okapi:Code49">
+				<codeExpression><![CDATA["OKAPI CODE 49"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d162" x="0" y="290" width="515" height="20" style="Type Title">
-			<text><![CDATA[Code One, Grid Matrix and Micro QR Code]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d193" x="0" y="260" width="515" height="20" style="Type Title">
+			<text><![CDATA[US postal codes]]></text>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d163" x="0" y="310" width="160" height="20" style="Caption">
-			<text><![CDATA[Code One]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d194" x="0" y="280" width="160" height="20" style="Caption">
+			<text><![CDATA[POSTNET]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d164" x="0" y="330" width="160" height="95" style="Barcode">
-			<component kind="okapi:CodeOne">
-				<codeExpression><![CDATA["Okapi Code One"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d195" x="0" y="300" width="160" height="40" style="Barcode">
+			<component kind="okapi:POSTNET">
+				<codeExpression><![CDATA["12345"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d165" x="177" y="310" width="160" height="20" style="Caption">
-			<text><![CDATA[Grid Matrix]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d196" x="177" y="280" width="160" height="20" style="Caption">
+			<text><![CDATA[mode="Planet", text at the bottom]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d166" x="177" y="330" width="160" height="95" style="Barcode">
-			<component kind="okapi:GridMatrix">
-				<codeExpression><![CDATA["Okapi Grid Matrix"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d197" x="177" y="300" width="160" height="40" style="Barcode">
+			<component kind="okapi:POSTNET" mode="Planet" humanReadableLocation="Bottom">
+				<codeExpression><![CDATA["12345678901"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d167" x="355" y="310" width="160" height="20" style="Caption">
-			<text><![CDATA[Micro QR Code]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d198" x="355" y="280" width="160" height="20" style="Caption">
+			<text><![CDATA[USPS Intelligent Mail]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d168" x="355" y="330" width="160" height="95" style="Barcode">
-			<component kind="okapi:MicroQRCode">
-				<codeExpression><![CDATA["OKAPI 12345"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d199" x="355" y="300" width="160" height="40" style="Barcode">
+			<component kind="okapi:USPSIntelligentMail" humanReadableLocation="Bottom">
+				<codeExpression><![CDATA["01234567094987654321-01234567891"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d169" x="0" y="435" width="515" height="20" style="Type Title">
-			<text><![CDATA[MaxiCode]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d200" x="0" y="350" width="515" height="20" style="Type Title">
+			<text><![CDATA[Four-state postal codes]]></text>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d170" x="0" y="455" width="160" height="20" style="Caption">
-			<text><![CDATA[mode 4 (default)]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d201" x="0" y="370" width="160" height="20" style="Caption">
+			<text><![CDATA[Royal Mail]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d171" x="0" y="475" width="160" height="95" style="Barcode">
-			<component kind="okapi:MaxiCode">
-				<codeExpression><![CDATA["OKAPI MAXICODE"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d202" x="0" y="390" width="160" height="40" style="Barcode">
+			<component kind="okapi:RoyalMail4State">
+				<codeExpression><![CDATA["LE28HS9Z"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d172" x="177" y="455" width="160" height="20" style="Caption">
-			<text><![CDATA[mode="Mode2", primaryExpression]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d203" x="177" y="370" width="160" height="20" style="Caption">
+			<text><![CDATA[KIX Code]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d173" x="177" y="475" width="160" height="95" style="Barcode">
-			<component kind="okapi:MaxiCode" mode="Mode2">
-				<codeExpression><![CDATA["OKAPI MAXICODE"]]></codeExpression>
-				<primaryExpression><![CDATA["152382802840001"]]></primaryExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d204" x="177" y="390" width="160" height="40" style="Barcode">
+			<component kind="okapi:KIXCode">
+				<codeExpression><![CDATA["2500GG30250"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d174" x="0" y="580" width="515" height="20" style="Type Title">
-			<text><![CDATA[Payment QR codes]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d205" x="355" y="370" width="160" height="20" style="Caption">
+			<text><![CDATA[Australia Post]]></text>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d175" x="0" y="600" width="160" height="20" style="Caption">
-			<text><![CDATA[Swiss QR Code]]></text>
-		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d176" x="0" y="620" width="130" height="130" style="Barcode">
-			<component kind="okapi:SwissQRCode">
-				<codeExpression><![CDATA["SPC\n0200\n1\nCH4431999123000889012\nS\nRobert Schneider AG\nRue du Lac\n1268\n2501\nBiel\nCH\n\n\n\n\n\n\n\n199.95\nCHF\nS\nPia-Maria Rutschmann-Schnyder\nGrosse Marktgasse\n28\n9400\nRorschach\nCH\nQRR\n210000000003139471430009017\nOrder of 15 June 2020\nEPD"]]></codeExpression>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d206" x="355" y="390" width="160" height="40" style="Barcode">
+			<component kind="okapi:AustraliaPost">
+				<codeExpression><![CDATA["96184209"]]></codeExpression>
 			</component>
 		</element>
-		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d177" x="177" y="600" width="160" height="20" style="Caption">
-			<text><![CDATA[UPN QR]]></text>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d207" x="0" y="440" width="515" height="20" style="Type Title">
+			<text><![CDATA[Japan Post and Korea Post]]></text>
 		</element>
-		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d178" x="177" y="620" width="130" height="130" style="Barcode">
-			<component kind="okapi:UPNQR">
-				<codeExpression><![CDATA["UPNQR"]]></codeExpression>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d208" x="0" y="460" width="160" height="20" style="Caption">
+			<text><![CDATA[Japan Post]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d209" x="0" y="480" width="160" height="40" style="Barcode">
+			<component kind="okapi:JapanPost">
+				<codeExpression><![CDATA["15400233-16-4-205"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d210" x="177" y="460" width="160" height="20" style="Caption">
+			<text><![CDATA[Korea Post]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d211" x="177" y="480" width="160" height="50" style="Barcode">
+			<component kind="okapi:KoreaPost">
+				<codeExpression><![CDATA["123456"]]></codeExpression>
 			</component>
 		</element>
 	</summary>

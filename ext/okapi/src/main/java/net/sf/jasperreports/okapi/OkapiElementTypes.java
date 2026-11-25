@@ -29,16 +29,20 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.design.JRVerifier;
+import uk.org.okapibarcode.backend.AustraliaPost;
 import uk.org.okapibarcode.backend.AztecCode;
 import uk.org.okapibarcode.backend.AztecRune;
 import uk.org.okapibarcode.backend.ChannelCode;
 import uk.org.okapibarcode.backend.Codabar;
+import uk.org.okapibarcode.backend.CodablockF;
 import uk.org.okapibarcode.backend.Code11;
 import uk.org.okapibarcode.backend.Code128;
+import uk.org.okapibarcode.backend.Code16k;
 import uk.org.okapibarcode.backend.Code2Of5;
 import uk.org.okapibarcode.backend.Code32;
 import uk.org.okapibarcode.backend.Code3Of9;
 import uk.org.okapibarcode.backend.Code3Of9Extended;
+import uk.org.okapibarcode.backend.Code49;
 import uk.org.okapibarcode.backend.Code93;
 import uk.org.okapibarcode.backend.CodeOne;
 import uk.org.okapibarcode.backend.DataBar14;
@@ -49,21 +53,28 @@ import uk.org.okapibarcode.backend.DpdCode;
 import uk.org.okapibarcode.backend.Ean;
 import uk.org.okapibarcode.backend.GridMatrix;
 import uk.org.okapibarcode.backend.HumanReadableLocation;
+import uk.org.okapibarcode.backend.JapanPost;
+import uk.org.okapibarcode.backend.KixCode;
+import uk.org.okapibarcode.backend.KoreaPost;
 import uk.org.okapibarcode.backend.Logmars;
 import uk.org.okapibarcode.backend.MaxiCode;
 import uk.org.okapibarcode.backend.MicroQrCode;
 import uk.org.okapibarcode.backend.MsiPlessey;
 import uk.org.okapibarcode.backend.Nve18;
+import uk.org.okapibarcode.backend.Pdf417;
 import uk.org.okapibarcode.backend.Pharmacode;
 import uk.org.okapibarcode.backend.Pharmacode2Track;
 import uk.org.okapibarcode.backend.Pharmazentralnummer;
 import uk.org.okapibarcode.backend.Plessey;
+import uk.org.okapibarcode.backend.Postnet;
 import uk.org.okapibarcode.backend.QrCode;
+import uk.org.okapibarcode.backend.RoyalMail4State;
 import uk.org.okapibarcode.backend.SwissQrCode;
 import uk.org.okapibarcode.backend.Symbol;
 import uk.org.okapibarcode.backend.Telepen;
 import uk.org.okapibarcode.backend.Upc;
 import uk.org.okapibarcode.backend.UpnQr;
+import uk.org.okapibarcode.backend.UspsOneCode;
 import uk.org.okapibarcode.backend.UspsPackage;
 import uk.org.okapibarcode.graphics.TextAlignment;
 
@@ -120,6 +131,17 @@ final class OkapiElementTypes
 		register(types, new MaxiCodeType());
 		register(types, new SwissQrCodeType());
 		register(types, new UpnQrType());
+		register(types, new Pdf417Type());
+		register(types, new CodablockFType());
+		register(types, new Code16kType());
+		register(types, new Code49Type());
+		register(types, new PostnetType());
+		register(types, new UspsIntelligentMailType());
+		register(types, new KoreaPostType());
+		register(types, new RoyalMail4StateType());
+		register(types, new KixCodeType());
+		register(types, new JapanPostType());
+		register(types, new AustraliaPostType());
 		TYPES = Collections.unmodifiableMap(types);
 	}
 
@@ -2300,6 +2322,660 @@ final class OkapiElementTypes
 		{
 			// the leading field of a UPN QR form
 			return "UPNQR";
+		}
+	}
+
+	static class Pdf417Type extends OkapiElementType<PDF417Component>
+	{
+		Pdf417Type()
+		{
+			super(PDF417Component.class, Layout.LINEAR);
+			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
+					PDF417Component::getStructuredAppendPositionExpression,
+					PDF417Component::setStructuredAppendPositionExpression, Integer.class);
+			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
+					PDF417Component::getStructuredAppendTotalExpression,
+					PDF417Component::setStructuredAppendTotalExpression, Integer.class);
+			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_FILE_ID_EXPRESSION,
+					PDF417Component::getStructuredAppendFileIdExpression,
+					PDF417Component::setStructuredAppendFileIdExpression, String.class);
+			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_FILE_NAME_EXPRESSION,
+					PDF417Component::getStructuredAppendFileNameExpression,
+					PDF417Component::setStructuredAppendFileNameExpression, String.class);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		private static boolean isMicro(PDF417Component component)
+		{
+			return component.getMode() == PDF417ModeEnum.MICRO;
+		}
+
+		@Override
+		public Symbol createSymbol(PDF417Component component)
+		{
+			Pdf417 symbol = new Pdf417();
+			// the mode first: Okapi takes a variant only in the micro mode
+			if (component.getMode() != null)
+			{
+				switch (component.getMode())
+				{
+					case TRUNCATED:
+						symbol.setMode(Pdf417.Mode.TRUNCATED);
+						break;
+					case MICRO:
+						symbol.setMode(Pdf417.Mode.MICRO);
+						break;
+					case NORMAL:
+					default:
+						symbol.setMode(Pdf417.Mode.NORMAL);
+						break;
+				}
+			}
+			if (component.getDataColumns() != null)
+			{
+				symbol.setDataColumns(component.getDataColumns());
+			}
+			if (component.getRows() != null)
+			{
+				symbol.setRows(component.getRows());
+			}
+			if (component.getPreferredEccLevel() != null)
+			{
+				symbol.setPreferredEccLevel(component.getPreferredEccLevel());
+			}
+			if (component.getVariant() != null)
+			{
+				symbol.setVariant(component.getVariant());
+			}
+			if (component.getForceByteCompaction() != null)
+			{
+				symbol.setForceByteCompaction(component.getForceByteCompaction());
+			}
+			if (component.getDataType() == PDF417DataTypeEnum.HIBC)
+			{
+				symbol.setDataType(Symbol.DataType.HIBC);
+			}
+			if (component.getEciMode() != null)
+			{
+				symbol.setEciMode(component.getEciMode());
+			}
+			if (component.getReaderInit() != null)
+			{
+				symbol.setReaderInit(component.getReaderInit());
+			}
+			if (component.getStructuredAppendIncludeSegmentCount() != null)
+			{
+				symbol.setStructuredAppendIncludeSegmentCount(component.getStructuredAppendIncludeSegmentCount());
+			}
+			if (component.getStructuredAppendForced() != null)
+			{
+				symbol.setStructuredAppendForced(component.getStructuredAppendForced());
+			}
+			return symbol;
+		}
+
+		@Override
+		public void applyValues(PDF417Component component, Symbol symbol, Object[] values)
+		{
+			Pdf417 pdf417 = (Pdf417) symbol;
+			if (values[1] != null)
+			{
+				pdf417.setStructuredAppendPosition(toInt(values[1]));
+			}
+			if (values[2] != null)
+			{
+				pdf417.setStructuredAppendTotal(toInt(values[2]));
+			}
+			if (values[3] != null)
+			{
+				pdf417.setStructuredAppendFileId((String) values[3]);
+			}
+			if (values[4] != null)
+			{
+				pdf417.setStructuredAppendFileName((String) values[4]);
+			}
+		}
+
+		@Override
+		public Double getBarHeight(PDF417Component component)
+		{
+			return component.getBarHeight();
+		}
+
+		@Override
+		public int getMinBarHeight(PDF417Component component, Symbol bare)
+		{
+			// ISO/IEC 15438 and ISO/IEC 24728 minimum row heights, as Zint
+			return isMicro(component) ? 2 : 3;
+		}
+
+		@Override
+		public void verify(PDF417Component component, JRVerifier verifier)
+		{
+			boolean micro = isMicro(component);
+			// Okapi's setters take any count, and its encoder then fails every record
+			OkapiCompiler.verifyRange(verifier, component, PDF417Component.PROPERTY_DATA_COLUMNS,
+					component.getDataColumns(), 1, micro ? 4 : 30);
+			OkapiCompiler.verifyRange(verifier, component, PDF417Component.PROPERTY_ROWS,
+					component.getRows(), micro ? 4 : 3, micro ? 44 : 90);
+			// ignored by Okapi: MicroPDF417 has fixed error correction, and a variant replaces the columns and rows
+			if (micro && component.getPreferredEccLevel() != null)
+			{
+				verifier.addBrokenRule("Barcode " + PDF417Component.PROPERTY_PREFERRED_ECC_LEVEL
+						+ " is not allowed in " + PDF417Component.PROPERTY_MODE + " " + PDF417ModeEnum.MICRO.getName(), component);
+			}
+			if (component.getVariant() != null && (component.getDataColumns() != null || component.getRows() != null))
+			{
+				verifier.addBrokenRule("Barcode " + PDF417Component.PROPERTY_VARIANT + " is not allowed with "
+						+ PDF417Component.PROPERTY_DATA_COLUMNS + " or " + PDF417Component.PROPERTY_ROWS, component);
+			}
+			OkapiCompiler.verifyPositive(verifier, component, PDF417Component.PROPERTY_BAR_HEIGHT, component.getBarHeight());
+			OkapiCompiler.verifyStructuredAppend(verifier, component,
+					PDF417Component.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION, component.getStructuredAppendPositionExpression(),
+					PDF417Component.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component.getStructuredAppendTotalExpression());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(PDF417Component component)
+		{
+			// ISO/IEC 15438, and ISO/IEC 24728 for MicroPDF417
+			return isMicro(component) ? 1 : 2;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(PDF417Component component)
+		{
+			return isMicro(component) ? 1 : 2;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(PDF417Component component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class CodablockFType extends OkapiElementType<CodablockFComponent>
+	{
+		CodablockFType()
+		{
+			super(CodablockFComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(CodablockFComponent component)
+		{
+			CodablockF symbol = new CodablockF();
+			if (component.getDataType() != null)
+			{
+				switch (component.getDataType())
+				{
+					case GS1:
+						symbol.setDataType(Symbol.DataType.GS1);
+						break;
+					case HIBC:
+					default:
+						symbol.setDataType(Symbol.DataType.HIBC);
+						break;
+				}
+			}
+			return symbol;
+		}
+
+		@Override
+		public Double getBarHeight(CodablockFComponent component)
+		{
+			return component.getBarHeight();
+		}
+
+		@Override
+		public int getMinBarHeight(CodablockFComponent component, Symbol bare)
+		{
+			// AIM ISS-X-24 4.6.1: 0.55 (columns + 3) + 3 modules and at least 8, as Okapi computes it
+			// without applying it; Okapi doesn't expose the column count, and draws each row
+			// 11 modules per column plus 57 for the start, indicator, check and stop characters
+			int columns = (bare.getWidth() - 57) / 11;
+			return Math.max(8, (int) (0.55 * (columns + 3)) + 3);
+		}
+
+		@Override
+		public void verify(CodablockFComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, CodablockFComponent.PROPERTY_BAR_HEIGHT, component.getBarHeight());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(CodablockFComponent component)
+		{
+			// AIM ISS-X-24
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(CodablockFComponent component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class Code16kType extends OkapiElementType<Code16kComponent>
+	{
+		Code16kType()
+		{
+			super(Code16kComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(Code16kComponent component)
+		{
+			Code16k symbol = new Code16k();
+			if (component.getDataType() == Code16kDataTypeEnum.GS1)
+			{
+				symbol.setDataType(Symbol.DataType.GS1);
+			}
+			if (component.getReaderInit() != null)
+			{
+				symbol.setReaderInit(component.getReaderInit());
+			}
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code16kComponent component)
+		{
+			// BS EN 12323: 10 modules left, 1 right; Okapi has one value for both
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code16kComponent component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class Code49Type extends OkapiElementType<Code49Component>
+	{
+		Code49Type()
+		{
+			super(Code49Component.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(Code49Component component)
+		{
+			Code49 symbol = new Code49();
+			if (component.getDataType() == Code49DataTypeEnum.GS1)
+			{
+				symbol.setDataType(Symbol.DataType.GS1);
+			}
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code49Component component)
+		{
+			// ANSI/AIM BC6: 10 modules left, 1 right; Okapi has one value for both
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code49Component component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class PostnetType extends OkapiElementType<POSTNETComponent>
+	{
+		PostnetType()
+		{
+			super(POSTNETComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(POSTNETComponent component)
+		{
+			Postnet symbol = new Postnet();
+			if (component.getMode() == POSTNETModeEnum.PLANET)
+			{
+				symbol.setMode(Postnet.Mode.PLANET);
+			}
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(POSTNETComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, POSTNETComponent.PROPERTY_MODULE_WIDTH_RATIO,
+					component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(POSTNETComponent component)
+		{
+			// USPS DMM 300 5.7: 1/8 inch at the largest module, 0.025 inch, as Zint
+			return 5;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(POSTNETComponent component)
+		{
+			// 0.04 inch, rounded up
+			return 2;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(POSTNETComponent component)
+		{
+			return "12345";
+		}
+	}
+
+	static class UspsIntelligentMailType extends OkapiElementType<USPSIntelligentMailComponent>
+	{
+		UspsIntelligentMailType()
+		{
+			super(USPSIntelligentMailComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(USPSIntelligentMailComponent component)
+		{
+			UspsOneCode symbol = new UspsOneCode();
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			if (component.getShortHeightPercentage() != null)
+			{
+				symbol.setShortHeightPercentage(component.getShortHeightPercentage());
+			}
+			if (component.getLongHeightPercentage() != null)
+			{
+				symbol.setLongHeightPercentage(component.getLongHeightPercentage());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(USPSIntelligentMailComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, USPSIntelligentMailComponent.PROPERTY_MODULE_WIDTH_RATIO,
+					component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(USPSIntelligentMailComponent component)
+		{
+			// USPS-B-3200: 1/8 inch at the largest module, 1/39 inch, as Zint
+			return 5;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(USPSIntelligentMailComponent component)
+		{
+			// 0.026 inch, rounded up
+			return 2;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(USPSIntelligentMailComponent component)
+		{
+			return "01234567094987654321-01234567891";
+		}
+	}
+
+	static class KoreaPostType extends OkapiElementType<KoreaPostComponent>
+	{
+		KoreaPostType()
+		{
+			super(KoreaPostComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(KoreaPostComponent component)
+		{
+			KoreaPost symbol = new KoreaPost();
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(KoreaPostComponent component)
+		{
+			// no standard; TEC-IT via Zint
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(KoreaPostComponent component)
+		{
+			return "123456";
+		}
+	}
+
+	static class RoyalMail4StateType extends OkapiElementType<RoyalMail4StateComponent>
+	{
+		RoyalMail4StateType()
+		{
+			super(RoyalMail4StateComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(RoyalMail4StateComponent component)
+		{
+			return new RoyalMail4State();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(RoyalMail4StateComponent component)
+		{
+			// Royal Mail Know How: 2 mm at the largest module, 25.4/39 mm, rounded up, as Zint
+			return 4;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(RoyalMail4StateComponent component)
+		{
+			return 4;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(RoyalMail4StateComponent component)
+		{
+			return "LE28HS9Z";
+		}
+	}
+
+	static class KixCodeType extends OkapiElementType<KIXCodeComponent>
+	{
+		KixCodeType()
+		{
+			super(KIXCodeComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(KIXCodeComponent component)
+		{
+			return new KixCode();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(KIXCodeComponent component)
+		{
+			// as Royal Mail, per the KIX code brochure, as Zint
+			return 4;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(KIXCodeComponent component)
+		{
+			return 4;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(KIXCodeComponent component)
+		{
+			return "2500GG30250";
+		}
+	}
+
+	static class JapanPostType extends OkapiElementType<JapanPostComponent>
+	{
+		JapanPostType()
+		{
+			super(JapanPostComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(JapanPostComponent component)
+		{
+			return new JapanPost();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(JapanPostComponent component)
+		{
+			// Japan Post barcode manual: 2 mm at 0.6 mm, rounded up, as Zint
+			return 4;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(JapanPostComponent component)
+		{
+			return 4;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(JapanPostComponent component)
+		{
+			return "15400233-16-4-205";
+		}
+	}
+
+	static class AustraliaPostType extends OkapiElementType<AustraliaPostComponent>
+	{
+		AustraliaPostType()
+		{
+			super(AustraliaPostComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(AustraliaPostComponent component)
+		{
+			AustraliaPost symbol = new AustraliaPost();
+			if (component.getMode() != null)
+			{
+				switch (component.getMode())
+				{
+					case REPLY:
+						symbol.setMode(AustraliaPost.Mode.REPLY);
+						break;
+					case ROUTE:
+						symbol.setMode(AustraliaPost.Mode.ROUTE);
+						break;
+					case REDIRECT:
+						symbol.setMode(AustraliaPost.Mode.REDIRECT);
+						break;
+					case POST:
+					default:
+						symbol.setMode(AustraliaPost.Mode.POST);
+						break;
+				}
+			}
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(AustraliaPostComponent component)
+		{
+			// Australia Post customer barcode specification: 6 mm at 0.6 mm, as Zint
+			return 10;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(AustraliaPostComponent component)
+		{
+			// 2 mm, rounded up
+			return 4;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(AustraliaPostComponent component)
+		{
+			return "96184209";
 		}
 	}
 }

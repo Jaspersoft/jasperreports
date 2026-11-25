@@ -183,6 +183,18 @@ abstract class OkapiElementType<C extends OkapiComponent>
 	}
 
 	/**
+	 * The lowest height, in modules, of the rows that take the bar height: the layout never draws them lower,
+	 * and the image shrinks a symbol that then overflows the element.
+	 *
+	 * @param bare the symbol encoded with a bar height of 1 and no quiet zones
+	 */
+	public int getMinBarHeight(C component, Symbol bare)
+	{
+		// most types need no more than one module
+		return 1;
+	}
+
+	/**
 	 * The code drawn in the design preview when the code expression is not a literal.
 	 */
 	public abstract String getDefaultPreviewCode(C component);

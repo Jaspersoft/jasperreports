@@ -132,4 +132,41 @@
 			</component>
 		</element>
 	</title>
+	<summary height="400">
+		<element kind="component" key="pdf417" uuid="0b8e7f10-5a11-4c3e-9d22-000000000036" x="0" y="0" width="250" height="100" style="Barcode">
+			<component kind="barcode4j:PDF417" errorCorrectionLevel="2" moduleWidth="1.0">
+				<codeExpression><![CDATA["BARCODE4J PDF417"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pdf417Columns" uuid="0b8e7f10-5a11-4c3e-9d22-000000000037" x="260" y="0" width="250" height="100" style="Barcode">
+			<component kind="barcode4j:PDF417" minColumns="1">
+				<codeExpression><![CDATA["BARCODE4J PDF417"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="postnetAdd" uuid="0b8e7f10-5a11-4c3e-9d22-000000000038" x="0" y="110" width="250" height="40" style="Barcode">
+			<component kind="barcode4j:POSTNET" textPosition="bottom" checksumMode="add" moduleWidth="1.0" intercharGapWidth="1.5" shortBarHeight="4.0">
+				<codeExpression><![CDATA["12345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="postnetAuto" uuid="0b8e7f10-5a11-4c3e-9d22-000000000039" x="260" y="110" width="250" height="40" style="Barcode">
+			<component kind="barcode4j:POSTNET">
+				<codeExpression><![CDATA["12345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="royalMail" uuid="0b8e7f10-5a11-4c3e-9d22-000000000040" x="0" y="160" width="250" height="40" style="Barcode">
+			<component kind="barcode4j:RoyalMailCustomer" moduleWidth="2.0" textPosition="bottom">
+				<codeExpression><![CDATA["LE28HS9Z"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="royalMailCheck" uuid="0b8e7f10-5a11-4c3e-9d22-000000000041" x="260" y="160" width="250" height="40" style="Barcode">
+			<component kind="barcode4j:RoyalMailCustomer" checksumMode="check">
+				<codeExpression><![CDATA["LE28HS9Z9"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="uspsIntelligentMail" uuid="0b8e7f10-5a11-4c3e-9d22-000000000042" x="0" y="210" width="250" height="40" style="Barcode">
+			<component kind="barcode4j:USPSIntelligentMail">
+				<codeExpression><![CDATA["0123456709498765432101234567891"]]></codeExpression>
+			</component>
+		</element>
+	</summary>
 </jasperReport>
