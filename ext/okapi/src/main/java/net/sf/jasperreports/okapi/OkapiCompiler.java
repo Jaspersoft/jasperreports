@@ -23,6 +23,7 @@
  */
 package net.sf.jasperreports.okapi;
 
+import net.sf.jasperreports.engine.JRExpression;
 import net.sf.jasperreports.engine.JRExpressionCollector;
 import net.sf.jasperreports.engine.base.JRBaseObjectFactory;
 import net.sf.jasperreports.engine.component.Component;
@@ -140,6 +141,27 @@ class OkapiCompiler implements ComponentCompiler
 		if (value != null && !(value > 0))
 		{
 			verifier.addBrokenRule("Barcode " + property + " must be positive: " + value, barcode);
+		}
+	}
+
+	static void verifyRange(JRVerifier verifier, OkapiComponent barcode, String property, Integer value, int min, int max)
+	{
+		if (value != null && (value < min || value > max))
+		{
+			verifier.addBrokenRule("Barcode " + property + " must be from " + min + " to " + max + ": " + value, barcode);
+		}
+	}
+
+	/**
+	 * Checks that a structured append series has both the position and the total of the symbol.
+	 */
+	static void verifyStructuredAppend(JRVerifier verifier, OkapiComponent barcode,
+			String positionProperty, JRExpression positionExpression, String totalProperty, JRExpression totalExpression)
+	{
+		if ((positionExpression == null) != (totalExpression == null))
+		{
+			verifier.addBrokenRule("Barcode structured append needs both "
+					+ positionProperty + " and " + totalProperty, barcode);
 		}
 	}
 }

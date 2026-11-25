@@ -142,6 +142,18 @@ public class OkapiTest
 			"kind=\"okapi:Pharmacode\"", "kind=\"okapi:Pharmacode2Track\"",
 			"kind=\"okapi:DataBarExpanded\"", "humanReadableLocation=\"Top\"", "preferredColumns=\"3\"", "stacked=\"false\"", "barHeight=\"12.0\"",
 			"kind=\"okapi:USPSPackage\"", "humanReadableAlignment=\"Right\"",
+			"kind=\"okapi:DataMatrix\"", "forceMode=\"Square\"", "preferredSize=\"5\"", "eciMode=\"3\"",
+			"gs1SeparatorGs=\"true\"",
+			"<structuredAppendFileIdExpression><![CDATA[42]]></structuredAppendFileIdExpression>",
+			"kind=\"okapi:AztecCode\"", "mode=\"Compact\"", "preferredSize=\"3\"", "preferredEccPercentage=\"30\"",
+			"<structuredAppendMessageIdExpression><![CDATA[\"ID42\"]]></structuredAppendMessageIdExpression>",
+			"kind=\"okapi:AztecRune\"",
+			"kind=\"okapi:CodeOne\"", "preferredVersion=\"T\"",
+			"kind=\"okapi:GridMatrix\"", "preferredVersion=\"2\"", "preferredEccLevel=\"4\"",
+			"kind=\"okapi:MicroQRCode\"", "eccMode=\"M\"",
+			"kind=\"okapi:MaxiCode\"", "mode=\"Mode3\"",
+			"<primaryExpression><![CDATA[\"B1050    056999\"]]></primaryExpression>",
+			"kind=\"okapi:SwissQRCode\"", "kind=\"okapi:UPNQR\"",
 		};
 		for (String text : expected)
 		{
@@ -177,14 +189,21 @@ public class OkapiTest
 			"Barcode guardPatternExtraHeight must not be negative: -2.0",
 			"Barcode separatorHeight must be positive: 0.0",
 			"Barcode barHeight must be positive: -1.0",
+			"Barcode preferredSize must be from 1 to 30: 31",
+			"Barcode preferredVersion must be from 1 to 13: 14",
+			"Barcode preferredEccLevel must be from 1 to 5: 0",
+			"Barcode preferredSize 5 is not allowed in mode Compact",
+			"Barcode primaryExpression is required in mode Mode2",
+			"Barcode primaryExpression is not allowed in mode Mode4",
 		};
 		for (String message : expected)
 		{
 			assertTrue(messages.contains(message), "missing fault \"" + message + "\" in " + messages);
 		}
-		// a second moduleWidthRatio fault, of Code 11, and Okapi's own setter checks: the QR version,
-		// the ECI mode, the Code 11 check digit count, the Channel Code channels and the DataBar Expanded columns
-		assertEquals(messages.size(), expected.length + 1 + 5, "faults: " + messages);
+		// a second moduleWidthRatio fault, of Code 11, a second structured append fault, of Data Matrix, and
+		// Okapi's own setter checks: the QR version, the ECI mode, the Code 11 check digit count, the Channel Code
+		// channels, the DataBar Expanded columns and the Micro QR version
+		assertEquals(messages.size(), expected.length + 2 + 6, "faults: " + messages);
 	}
 
 	@Test
@@ -343,6 +362,39 @@ public class OkapiTest
 		}
 	}
 
+	@Test
+	public void matrix() throws JRException, IOException, NotFoundException
+	{
+		Map<String, JRPrintImage> images = images(fill("OkapiMatrix.jrxml"));
+
+		check(images.get("dataMatrix"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI DATA MATRIX");
+		check(images.get("dataMatrixRectangular"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI DM");
+		assertTrue(size(images.get("dataMatrixRectangular")).getHeight() < 100, "rectangular, wider than high");
+		// size 10 is 32 x 32 modules, with the 1 module quiet zones 34 modules of 2 points
+		check(images.get("dataMatrixSize"), ScaleImageEnum.CLIP, RotationEnum.NONE, "OKAPI DM");
+		assertEquals(size(images.get("dataMatrixSize")).getWidth(), 68, TOLERANCE);
+		// the decoder returns the leading FNC1, which marks GS1 data, as the GS character
+		assertEquals(decode(images.get("dataMatrixGs1")), "\u001d0109501101530003");
+		check(images.get("aztec"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI AZTEC");
+		check(images.get("aztecCompact"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI AZTEC");
+		check(images.get("aztecNormal"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI AZTEC");
+		check(images.get("swissQr"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "SPC\n0200\n1");
+		check(images.get("upnQr"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "UPNQR");
+
+		// MaxiCode keeps its shape, slightly wider than high, and fills the element width
+		assertEquals(size(images.get("maxiCode")).getWidth(), 100, TOLERANCE);
+		assertTrue(size(images.get("maxiCode")).getHeight() < 100);
+
+		// no decoder reads these, or their structured append headers: within the element
+		for (String key : new String[]{"dataMatrixAppend", "aztecAppend", "aztecRune", "codeOne", "codeOneS",
+				"gridMatrix", "microQr", "maxiCode", "maxiCodeMode2"})
+		{
+			assertEquals(images.get(key).getScaleImage(), ScaleImageEnum.RETAIN_SHAPE, key);
+			assertTrue(size(images.get(key)).getWidth() <= 100 + TOLERANCE, key);
+			assertTrue(size(images.get(key)).getHeight() <= 100 + TOLERANCE, key);
+		}
+	}
+
 	private static long fromBase32(String code)
 	{
 		String digits = "0123456789BCDFGHJKLMNPQRSTUVWXYZ";
@@ -455,7 +507,7 @@ public class OkapiTest
 				}
 			}
 		}
-		assertEquals(concrete, 27, "concrete component classes found");
+		assertEquals(concrete, 36, "concrete component classes found");
 	}
 
 	@Test
@@ -507,7 +559,7 @@ public class OkapiTest
 		assertEquals(decode(image), data, key + " data");
 	}
 
-	private static Dimension2D size(JRPrintImage image) throws JRException
+	static Dimension2D size(JRPrintImage image) throws JRException
 	{
 		return ((DimensionRenderable) image.getRenderer()).getDimension(DefaultJasperReportsContext.getInstance());
 	}

@@ -28,6 +28,7 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
+import java.awt.geom.Dimension2D;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +65,8 @@ import net.sf.jasperreports.okapi.Code128Component;
 import net.sf.jasperreports.okapi.Code39CheckDigitEnum;
 import net.sf.jasperreports.okapi.Code39Component;
 import net.sf.jasperreports.okapi.Code39ExtendedComponent;
+import net.sf.jasperreports.okapi.DataMatrixComponent;
+import net.sf.jasperreports.okapi.DataMatrixForceModeEnum;
 import net.sf.jasperreports.okapi.EANComponent;
 import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
@@ -196,9 +199,16 @@ public class OkapiConvertTest
 		UPCComponent upce = (UPCComponent) after.get("upceAdd").getComponent();
 		assertEquals(upce.getMode(), UPCModeEnum.UPCE);
 		assertEquals(upce.getModuleWidth(), 0.33 * 2.835, 1e-6);
+		DataMatrixComponent dataMatrix = (DataMatrixComponent) after.get("dataMatrix").getComponent();
+		assertEquals(dataMatrix.getRotation(), RotationEnum.RIGHT);
+		assertEquals(dataMatrix.getQuietZoneHorizontal(), 2.0);
+		assertNull(dataMatrix.getModuleWidth(), "the legacy 2D barcode fills the element whatever its module width");
+		assertNull(dataMatrix.getForceMode());
+		DataMatrixComponent dataMatrixRectangle = (DataMatrixComponent) after.get("dataMatrixRectangle").getComponent();
+		assertEquals(dataMatrixRectangle.getForceMode(), DataMatrixForceModeEnum.RECTANGULAR);
 
 		for (String key : new String[] {"ean13Auto", "ean13Check", "ean128", "qrLatin1", "code39",
-			"code39ExtendedCheck", "upcaAuto", "codabar"})
+			"code39ExtendedCheck", "upcaAuto", "codabar", "dataMatrixBounds"})
 		{
 			assertTrue(after.get(key).getComponent() instanceof BarcodeComponent, key + " left unconverted");
 		}
@@ -215,6 +225,10 @@ public class OkapiConvertTest
 		assertEquals(OkapiTest.decode(images.get("itfAuto"), 8), "0123456789");
 		assertEquals(OkapiTest.decode(images.get("upcaAdd")), "036000291452");
 		assertEquals(OkapiTest.decode(images.get("upceAdd")), "01234565");
+		assertEquals(OkapiTest.decode(images.get("dataMatrix")), "BARCODE4J DM");
+		// the decoder doesn't find the 8 x 32 symbol; zxing-cpp reads it
+		Dimension2D rectangle = OkapiTest.size(images.get("dataMatrixRectangle"));
+		assertTrue(rectangle.getWidth() > 2 * rectangle.getHeight(), "rectangular in a square element: " + rectangle);
 	}
 
 

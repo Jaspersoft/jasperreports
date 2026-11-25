@@ -116,5 +116,20 @@
 				<codeExpression><![CDATA["a0123456789b"]]></codeExpression>
 			</component>
 		</element>
+		<element kind="component" key="dataMatrix" uuid="0b8e7f10-5a11-4c3e-9d22-000000000033" x="0" y="660" width="80" height="80" style="Barcode">
+			<component kind="barcode4j:DataMatrix" orientation="right" quietZone="2.0" moduleWidth="3.0">
+				<codeExpression><![CDATA["BARCODE4J DM"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrixRectangle" uuid="0b8e7f10-5a11-4c3e-9d22-000000000034" x="90" y="660" width="80" height="80" style="Barcode">
+			<component kind="barcode4j:DataMatrix" shape="Force-Rectangle">
+				<codeExpression><![CDATA["BARCODE4J DM"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrixBounds" uuid="0b8e7f10-5a11-4c3e-9d22-000000000035" x="260" y="660" width="80" height="80" style="Barcode">
+			<component kind="barcode4j:DataMatrix" minSymbolWidth="32">
+				<codeExpression><![CDATA["BARCODE4J DM"]]></codeExpression>
+			</component>
+		</element>
 	</title>
 </jasperReport>

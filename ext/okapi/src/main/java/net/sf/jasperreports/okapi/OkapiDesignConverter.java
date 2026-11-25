@@ -101,6 +101,10 @@ class OkapiDesignConverter implements ComponentDesignConverter
 				// not a literal number: left out of the preview
 				values[i] = null;
 			}
+			if (values[i] == null && i > 0)
+			{
+				values[i] = type.getDefaultPreviewValue(typedComponent, expression.getName());
+			}
 		}
 		if (values[0] == null)
 		{

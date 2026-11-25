@@ -188,6 +188,18 @@ abstract class OkapiElementType<C extends OkapiComponent>
 	public abstract String getDefaultPreviewCode(C component);
 
 	/**
+	 * The value drawn in the design preview for an expression after the code when it is not a literal,
+	 * or null to leave it out.
+	 *
+	 * @param expressionName the name of the expression, as in {@link #getExpressions()}
+	 */
+	public Object getDefaultPreviewValue(C component, String expressionName)
+	{
+		// most types draw without their other expressions
+		return null;
+	}
+
+	/**
 	 * Checks the settings of the type that Okapi doesn't validate in its setters, at compile time.
 	 */
 	public void verify(C component, JRVerifier verifier)

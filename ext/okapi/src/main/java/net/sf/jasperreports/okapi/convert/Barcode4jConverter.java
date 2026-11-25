@@ -36,6 +36,7 @@ import org.krysalis.barcode4j.tools.UnitConv;
 import net.sf.jasperreports.barcode4j.Barcode4jComponent;
 import net.sf.jasperreports.barcode4j.BarcodeComponent;
 import net.sf.jasperreports.barcode4j.CodabarComponent;
+import net.sf.jasperreports.barcode4j.DataMatrixComponent;
 import net.sf.jasperreports.barcode4j.EAN128Component;
 import net.sf.jasperreports.barcode4j.EAN13Component;
 import net.sf.jasperreports.barcode4j.EAN8Component;
@@ -53,6 +54,7 @@ import net.sf.jasperreports.engine.type.RotationEnum;
 import net.sf.jasperreports.okapi.Code128Component;
 import net.sf.jasperreports.okapi.Code39CheckDigitEnum;
 import net.sf.jasperreports.okapi.Code39ExtendedComponent;
+import net.sf.jasperreports.okapi.DataMatrixForceModeEnum;
 import net.sf.jasperreports.okapi.EANComponent;
 import net.sf.jasperreports.okapi.EANModeEnum;
 import net.sf.jasperreports.okapi.HumanReadableLocationEnum;
@@ -70,14 +72,15 @@ import net.sf.jasperreports.okapi.UPCModeEnum;
  * elements, for use with the <code>update</code> goal of the JasperReports Maven plugin or the
  * <code>update</code> Ant task. The barcode4j extension and its libraries have to be on the classpath.
  * <p>
- * Code 128, Interleaved 2 of 5, QR Code, Code 39 with the extended character set and a checksum mode
- * other than <code>check</code>, and EAN-13, EAN-8, UPC-A and UPC-E barcodes whose checksum mode is
- * <code>add</code> are converted. Barcodes whose conversion could encode different data are left
+ * Code 128, Interleaved 2 of 5, QR Code, Data Matrix without symbol size bounds, Code 39 with the extended
+ * character set and a checksum mode other than <code>check</code>, and EAN-13, EAN-8, UPC-A and UPC-E
+ * barcodes whose checksum mode is <code>add</code> are converted. Barcodes whose conversion could encode different data are left
  * unconverted, so that their data can be reviewed first: EAN-13, EAN-8, UPC-A and UPC-E with any other
  * checksum mode, since their data may then carry a check digit, EAN-128, Code 39 with the extended
  * character set and the checksum mode <code>check</code>, and QR Code with a character encoding other
  * than UTF-8 set on the element or the report. So are barcodes whose data Okapi may reject: Codabar,
- * and Code 39 without the extended character set. Other types are left unconverted until they have an
+ * and Code 39 without the extended character set. So is Data Matrix with symbol size bounds, since barcode4j
+ * picks its size within them for each record's data. Other types are left unconverted until they have an
  * <code>okapi:*</code> element. Each of these, and each setting that has no <code>okapi:*</code>
  * equivalent, is logged as a warning.
  * <p>
@@ -163,6 +166,10 @@ public class Barcode4jConverter extends LegacyConverter
 		if (component instanceof net.sf.jasperreports.barcode4j.QRCodeComponent)
 		{
 			return qrCode((net.sf.jasperreports.barcode4j.QRCodeComponent) component, conversion);
+		}
+		if (component instanceof DataMatrixComponent)
+		{
+			return dataMatrix((DataMatrixComponent) component, conversion);
 		}
 		return conversion.notConverted(REASON_NO_ELEMENT);
 	}
@@ -325,6 +332,40 @@ public class Barcode4jConverter extends LegacyConverter
 			conversion.dropped("margin", "okapi:* quiet zones are in report units, not modules");
 		}
 		return qrCode;
+	}
+
+
+	private static OkapiComponent dataMatrix(DataMatrixComponent legacy, ElementConversion conversion)
+	{
+		if (legacy.getMinSymbolWidth() != null || legacy.getMaxSymbolWidth() != null
+			|| legacy.getMinSymbolHeight() != null || legacy.getMaxSymbolHeight() != null)
+		{
+			// barcode4j picks the smallest size within the bounds for the data of each record, while the
+			// okapi:* size is one exact size
+			return conversion.notConverted("symbol size bounds depend on the data");
+		}
+
+		net.sf.jasperreports.okapi.DataMatrixComponent dataMatrix = common(new net.sf.jasperreports.okapi.DataMatrixComponent(),
+			legacy.getCodeExpression(), legacy.getEvaluationTime(), legacy.getEvaluationGroup());
+		dataMatrix.setRotation(rotation(legacy.getOrientation()));
+		// both in report units
+		dataMatrix.setQuietZoneHorizontal(legacy.getQuietZone());
+		dataMatrix.setQuietZoneVertical(legacy.getVerticalQuietZone());
+		// barcode4j matches the shape names ignoring case
+		if ("force-square".equalsIgnoreCase(legacy.getShape()))
+		{
+			dataMatrix.setForceMode(DataMatrixForceModeEnum.SQUARE);
+		}
+		else if ("force-rectangle".equalsIgnoreCase(legacy.getShape()))
+		{
+			dataMatrix.setForceMode(DataMatrixForceModeEnum.RECTANGULAR);
+		}
+		// the legacy image stretches a 2D barcode to fill the element (RETAIN_SHAPE), so its module width has
+		// no effect, while an okapi:* module width is drawn as set
+		droppedIfSet(conversion, "moduleWidth", legacy.getModuleWidth(),
+			"the legacy barcode fills the element whatever its module width");
+		droppedIfSet(conversion, "patternExpression", legacy.getPatternExpression(), REASON_TEXT);
+		return dataMatrix;
 	}
 
 

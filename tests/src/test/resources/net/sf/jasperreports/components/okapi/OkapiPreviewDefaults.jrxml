@@ -1,6 +1,6 @@
-<jasperReport name="OkapiPreviewDefaults" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e500">
+<jasperReport name="OkapiPreviewDefaults" pageWidth="595" pageHeight="1100" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e500">
 	<parameter name="code" class="java.lang.String"/>
-	<title height="760">
+	<title height="1000">
 		<element kind="component" key="code128" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e501" x="0" y="0" width="125" height="80">
 			<component kind="okapi:Code128">
 				<codeExpression><![CDATA[$P{code}]]></codeExpression>
@@ -159,6 +159,68 @@
 		<element kind="component" key="uSPSPackage" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e532" x="390" y="630" width="125" height="80">
 			<component kind="okapi:USPSPackage">
 				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrix" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e533" x="0" y="720" width="125" height="80">
+			<component kind="okapi:DataMatrix">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztecCode" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e534" x="130" y="720" width="125" height="80">
+			<component kind="okapi:AztecCode">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztecRune" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e535" x="260" y="720" width="125" height="80">
+			<component kind="okapi:AztecRune">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codeOne" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e536" x="390" y="720" width="125" height="80">
+			<component kind="okapi:CodeOne">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codeOneS" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e537" x="0" y="810" width="125" height="80">
+			<component kind="okapi:CodeOne" preferredVersion="S">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="gridMatrix" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e538" x="130" y="810" width="125" height="80">
+			<component kind="okapi:GridMatrix">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="microQRCode" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e539" x="260" y="810" width="125" height="80">
+			<component kind="okapi:MicroQRCode">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="maxiCode" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e540" x="390" y="810" width="125" height="80">
+			<component kind="okapi:MaxiCode">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="swissQRCode" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e541" x="0" y="900" width="125" height="80">
+			<component kind="okapi:SwissQRCode">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="uPNQR" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e542" x="130" y="900" width="125" height="80">
+			<component kind="okapi:UPNQR">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="maxiCodeMode2" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e543" x="260" y="900" width="125" height="80">
+			<component kind="okapi:MaxiCode" mode="Mode2">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<primaryExpression><![CDATA[$P{code}]]></primaryExpression>
+			</component>
+		</element>
+		<element kind="component" key="maxiCodeMode3" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e544" x="390" y="900" width="125" height="80">
+			<component kind="okapi:MaxiCode" mode="Mode3">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<primaryExpression><![CDATA[$P{code}]]></primaryExpression>
 			</component>
 		</element>
 	</title>

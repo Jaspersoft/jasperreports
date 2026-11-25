@@ -9,8 +9,8 @@ Shows how barcodes can be included in reports using the Okapi barcode components
 ## <a name='okapi'>Barcodes (Okapi Barcode Components)</a>
 
 **Description / Goal** \
-How to draw Code 128, Code 39, Codabar, 2 of 5, ITF-14, EAN, UPC, GS1 DataBar, QR Code and other barcodes
-with the `okapi:*` components, which use the
+How to draw Code 128, Code 39, Codabar, 2 of 5, ITF-14, EAN, UPC, GS1 DataBar, QR Code, Data Matrix, Aztec Code,
+MaxiCode and other barcodes with the `okapi:*` components, which use the
 [Okapi Barcode](https://github.com/woo-j/OkapiBarcode) library.
 
 **Other Samples**\
@@ -88,6 +88,29 @@ DataBar Stacked rows have a fixed height, so it is sized like QR Code. Pharmacod
 Pharmacode2Track draw no human-readable text, DataBar only draws it in the `Linear` mode, and
 DataBar Expanded only when it is not stacked.
 
+The 2D types are:
+
+| Component | Encodes | Own settings |
+| --- | --- | --- |
+| `okapi:QRCode` | any text; GS1 and HIBC data | `preferredVersion`, `preferredEccLevel` (`L`, `M`, `Q`, `H`), `forceByteCompaction`, `dataType`, `eciMode`, structured append |
+| `okapi:MicroQRCode` | short text, best digits | `preferredVersion` (1 to 4), `eccMode` (`L`, `M`, `Q`) |
+| `okapi:DataMatrix` | any text; GS1 and HIBC data | `forceMode` (`Square`, `Rectangular`), `preferredSize` (1 to 30), `dataType`, `eciMode`, `readerInit`, `gs1SeparatorGs`, structured append |
+| `okapi:AztecCode` | any text; GS1 and HIBC data | `mode` (`Normal`, `Compact`, `Any`), `preferredSize` (1 to 36), `preferredEccPercentage`, `dataType`, `eciMode`, `readerInit`, structured append |
+| `okapi:AztecRune` | a number from 0 to 255 | |
+| `okapi:CodeOne` | ISO 8859-1 text; GS1 data | `preferredVersion` (`A` to `H`, `S`, `T`), `dataType` |
+| `okapi:GridMatrix` | ISO 8859-1 and GB 2312 (Chinese) text | `preferredVersion` (1 to 13), `preferredEccLevel` (1 to 5), `readerInit` |
+| `okapi:MaxiCode` | text, and in modes 2 and 3 a postal code, country and service in `primaryExpression` | `mode` (`Mode2` to `Mode6`), `eciMode`, structured append |
+| `okapi:SwissQRCode` | the data of a Swiss QR-bill | |
+| `okapi:UPNQR` | the data of a Slovenian UPN payment order | |
+
+A message split over several symbols (structured append) is described by expressions evaluated for each
+symbol: `structuredAppendPositionExpression` and `structuredAppendTotalExpression`, and for some types an
+identifier of the series, such as `structuredAppendFileIdExpression` for Data Matrix.
+`preferredSize` is the exact Data Matrix size: data that doesn't fit fails.
+
+MaxiCode has a fixed size, about 28 x 27 mm, so it has no `moduleWidth`: it fills the element, keeping its
+shape, and the element sets its printed size. The Swiss QR-bill requires its QR code to print at 46 x 46 mm.
+
 ### Running the Sample
 
 Run the commands below in the sample directory:
@@ -98,4 +121,4 @@ mvn clean compile exec:java
 
 The report is compiled, filled and exported to `target/reports`, in PDF and the other supported formats.
 Its first page shows Code 128, EAN and QR Code, its second page Code 39, Codabar, 2 of 5 and UPC,
-and its third page the other linear types.
+its third page the other linear types, and its fourth page the 2D types.

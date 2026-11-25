@@ -1,0 +1,101 @@
+<jasperReport name="OkapiMatrix" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f401">
+	<title height="760">
+		<element kind="component" key="dataMatrix" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f402" x="0" y="0" width="100" height="100">
+			<component kind="okapi:DataMatrix">
+				<codeExpression><![CDATA["OKAPI DATA MATRIX"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrixRectangular" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f403" x="103" y="0" width="100" height="100">
+			<component kind="okapi:DataMatrix" forceMode="Rectangular">
+				<codeExpression><![CDATA["OKAPI DM"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrixSize" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f404" x="206" y="0" width="100" height="100">
+			<component kind="okapi:DataMatrix" moduleWidth="2.0" preferredSize="10">
+				<codeExpression><![CDATA["OKAPI DM"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrixGs1" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f405" x="309" y="0" width="100" height="100">
+			<component kind="okapi:DataMatrix" dataType="GS1">
+				<codeExpression><![CDATA["[01]09501101530003"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataMatrixAppend" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f406" x="412" y="0" width="100" height="100">
+			<component kind="okapi:DataMatrix">
+				<codeExpression><![CDATA["OKAPI DM"]]></codeExpression>
+				<structuredAppendPositionExpression><![CDATA[1]]></structuredAppendPositionExpression>
+				<structuredAppendTotalExpression><![CDATA[2]]></structuredAppendTotalExpression>
+				<structuredAppendFileIdExpression><![CDATA[42]]></structuredAppendFileIdExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztec" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f407" x="0" y="110" width="100" height="100">
+			<component kind="okapi:AztecCode">
+				<codeExpression><![CDATA["OKAPI AZTEC"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztecCompact" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f408" x="103" y="110" width="100" height="100">
+			<component kind="okapi:AztecCode" mode="Compact">
+				<codeExpression><![CDATA["OKAPI AZTEC"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztecNormal" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f409" x="206" y="110" width="100" height="100">
+			<component kind="okapi:AztecCode" mode="Normal" preferredSize="6">
+				<codeExpression><![CDATA["OKAPI AZTEC"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztecAppend" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f410" x="309" y="110" width="100" height="100">
+			<component kind="okapi:AztecCode">
+				<codeExpression><![CDATA["OKAPI AZTEC"]]></codeExpression>
+				<structuredAppendPositionExpression><![CDATA[1]]></structuredAppendPositionExpression>
+				<structuredAppendTotalExpression><![CDATA[2]]></structuredAppendTotalExpression>
+				<structuredAppendMessageIdExpression><![CDATA["ID42"]]></structuredAppendMessageIdExpression>
+			</component>
+		</element>
+		<element kind="component" key="aztecRune" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f411" x="412" y="110" width="100" height="100">
+			<component kind="okapi:AztecRune">
+				<codeExpression><![CDATA["42"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codeOne" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f412" x="0" y="220" width="100" height="100">
+			<component kind="okapi:CodeOne">
+				<codeExpression><![CDATA["Okapi Code One"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codeOneS" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f413" x="103" y="220" width="100" height="100">
+			<component kind="okapi:CodeOne" preferredVersion="S">
+				<codeExpression><![CDATA["123456"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="gridMatrix" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f414" x="206" y="220" width="100" height="100">
+			<component kind="okapi:GridMatrix">
+				<codeExpression><![CDATA["Okapi Grid Matrix"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="microQr" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f415" x="309" y="220" width="100" height="100">
+			<component kind="okapi:MicroQRCode">
+				<codeExpression><![CDATA["12345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="maxiCode" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f416" x="412" y="220" width="100" height="100">
+			<component kind="okapi:MaxiCode">
+				<codeExpression><![CDATA["OKAPI MAXICODE"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="maxiCodeMode2" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f417" x="0" y="330" width="100" height="100">
+			<component kind="okapi:MaxiCode" mode="Mode2">
+				<codeExpression><![CDATA["OKAPI"]]></codeExpression>
+				<primaryExpression><![CDATA["152382802840001"]]></primaryExpression>
+			</component>
+		</element>
+		<element kind="component" key="swissQr" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f418" x="103" y="330" width="100" height="100">
+			<component kind="okapi:SwissQRCode">
+				<codeExpression><![CDATA["SPC\n0200\n1"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="upnQr" uuid="9f4c3d85-6a61-4c82-ad31-5d87e2c8f419" x="206" y="330" width="100" height="100">
+			<component kind="okapi:UPNQR">
+				<codeExpression><![CDATA["UPNQR"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

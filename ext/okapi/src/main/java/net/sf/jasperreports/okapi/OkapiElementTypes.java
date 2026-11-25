@@ -29,6 +29,8 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.design.JRVerifier;
+import uk.org.okapibarcode.backend.AztecCode;
+import uk.org.okapibarcode.backend.AztecRune;
 import uk.org.okapibarcode.backend.ChannelCode;
 import uk.org.okapibarcode.backend.Codabar;
 import uk.org.okapibarcode.backend.Code11;
@@ -38,13 +40,18 @@ import uk.org.okapibarcode.backend.Code32;
 import uk.org.okapibarcode.backend.Code3Of9;
 import uk.org.okapibarcode.backend.Code3Of9Extended;
 import uk.org.okapibarcode.backend.Code93;
+import uk.org.okapibarcode.backend.CodeOne;
 import uk.org.okapibarcode.backend.DataBar14;
 import uk.org.okapibarcode.backend.DataBarExpanded;
 import uk.org.okapibarcode.backend.DataBarLimited;
+import uk.org.okapibarcode.backend.DataMatrix;
 import uk.org.okapibarcode.backend.DpdCode;
 import uk.org.okapibarcode.backend.Ean;
+import uk.org.okapibarcode.backend.GridMatrix;
 import uk.org.okapibarcode.backend.HumanReadableLocation;
 import uk.org.okapibarcode.backend.Logmars;
+import uk.org.okapibarcode.backend.MaxiCode;
+import uk.org.okapibarcode.backend.MicroQrCode;
 import uk.org.okapibarcode.backend.MsiPlessey;
 import uk.org.okapibarcode.backend.Nve18;
 import uk.org.okapibarcode.backend.Pharmacode;
@@ -52,9 +59,11 @@ import uk.org.okapibarcode.backend.Pharmacode2Track;
 import uk.org.okapibarcode.backend.Pharmazentralnummer;
 import uk.org.okapibarcode.backend.Plessey;
 import uk.org.okapibarcode.backend.QrCode;
+import uk.org.okapibarcode.backend.SwissQrCode;
 import uk.org.okapibarcode.backend.Symbol;
 import uk.org.okapibarcode.backend.Telepen;
 import uk.org.okapibarcode.backend.Upc;
+import uk.org.okapibarcode.backend.UpnQr;
 import uk.org.okapibarcode.backend.UspsPackage;
 import uk.org.okapibarcode.graphics.TextAlignment;
 
@@ -102,6 +111,15 @@ final class OkapiElementTypes
 		register(types, new Pharmacode2TrackType());
 		register(types, new DataBarExpandedType());
 		register(types, new UspsPackageType());
+		register(types, new DataMatrixType());
+		register(types, new AztecCodeType());
+		register(types, new AztecRuneType());
+		register(types, new CodeOneType());
+		register(types, new GridMatrixType());
+		register(types, new MicroQrCodeType());
+		register(types, new MaxiCodeType());
+		register(types, new SwissQrCodeType());
+		register(types, new UpnQrType());
 		TYPES = Collections.unmodifiableMap(types);
 	}
 
@@ -421,13 +439,9 @@ final class OkapiElementTypes
 		@Override
 		public void verify(QRCodeComponent component, JRVerifier verifier)
 		{
-			if ((component.getStructuredAppendPositionExpression() == null)
-					!= (component.getStructuredAppendTotalExpression() == null))
-			{
-				verifier.addBrokenRule("Barcode structured append needs both "
-						+ QRCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION + " and "
-						+ QRCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component);
-			}
+			OkapiCompiler.verifyStructuredAppend(verifier, component,
+					QRCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION, component.getStructuredAppendPositionExpression(),
+					QRCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component.getStructuredAppendTotalExpression());
 		}
 
 		@Override
@@ -1600,6 +1614,692 @@ final class OkapiElementTypes
 		public String getDefaultPreviewCode(USPSPackageComponent component)
 		{
 			return "[420]52001[92]6123456789012345678901";
+		}
+	}
+
+	static class DataMatrixType extends OkapiElementType<DataMatrixComponent>
+	{
+		DataMatrixType()
+		{
+			super(DataMatrixComponent.class, Layout.MATRIX);
+			addExpression(DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
+					DataMatrixComponent::getStructuredAppendPositionExpression,
+					DataMatrixComponent::setStructuredAppendPositionExpression, Integer.class);
+			addExpression(DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
+					DataMatrixComponent::getStructuredAppendTotalExpression,
+					DataMatrixComponent::setStructuredAppendTotalExpression, Integer.class);
+			addExpression(DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_FILE_ID_EXPRESSION,
+					DataMatrixComponent::getStructuredAppendFileIdExpression,
+					DataMatrixComponent::setStructuredAppendFileIdExpression, Integer.class);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(DataMatrixComponent component)
+		{
+			DataMatrix symbol = new DataMatrix();
+			if (component.getForceMode() != null)
+			{
+				switch (component.getForceMode())
+				{
+					case SQUARE:
+						symbol.setForceMode(DataMatrix.ForceMode.SQUARE);
+						break;
+					case RECTANGULAR:
+					default:
+						symbol.setForceMode(DataMatrix.ForceMode.RECTANGULAR);
+						break;
+				}
+			}
+			if (component.getPreferredSize() != null)
+			{
+				symbol.setPreferredSize(component.getPreferredSize());
+			}
+			if (component.getDataType() != null)
+			{
+				switch (component.getDataType())
+				{
+					case GS1:
+						symbol.setDataType(Symbol.DataType.GS1);
+						break;
+					case HIBC:
+					default:
+						symbol.setDataType(Symbol.DataType.HIBC);
+						break;
+				}
+			}
+			if (component.getEciMode() != null)
+			{
+				symbol.setEciMode(component.getEciMode());
+			}
+			if (component.getReaderInit() != null)
+			{
+				symbol.setReaderInit(component.getReaderInit());
+			}
+			if (component.getGs1SeparatorGs() != null)
+			{
+				symbol.setGs1SeparatorGs(component.getGs1SeparatorGs());
+			}
+			if (component.getStructuredAppendForced() != null)
+			{
+				symbol.setStructuredAppendForced(component.getStructuredAppendForced());
+			}
+			return symbol;
+		}
+
+		@Override
+		public void applyValues(DataMatrixComponent component, Symbol symbol, Object[] values)
+		{
+			DataMatrix dataMatrix = (DataMatrix) symbol;
+			if (values[1] != null)
+			{
+				dataMatrix.setStructuredAppendPosition(toInt(values[1]));
+			}
+			if (values[2] != null)
+			{
+				dataMatrix.setStructuredAppendTotal(toInt(values[2]));
+			}
+			if (values[3] != null)
+			{
+				dataMatrix.setStructuredAppendFileId(toInt(values[3]));
+			}
+		}
+
+		@Override
+		public void verify(DataMatrixComponent component, JRVerifier verifier)
+		{
+			// Okapi's setter takes any size and its encoder ignores one outside the table
+			OkapiCompiler.verifyRange(verifier, component, DataMatrixComponent.PROPERTY_PREFERRED_SIZE,
+					component.getPreferredSize(), 1, 30);
+			OkapiCompiler.verifyStructuredAppend(verifier, component,
+					DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION, component.getStructuredAppendPositionExpression(),
+					DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component.getStructuredAppendTotalExpression());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(DataMatrixComponent component)
+		{
+			// ISO/IEC 16022
+			return 1;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(DataMatrixComponent component)
+		{
+			return 1;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(DataMatrixComponent component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class AztecCodeType extends OkapiElementType<AztecCodeComponent>
+	{
+		/** the largest compact size */
+		private static final int COMPACT_SIZES = 4;
+
+		AztecCodeType()
+		{
+			super(AztecCodeComponent.class, Layout.MATRIX);
+			addExpression(AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
+					AztecCodeComponent::getStructuredAppendPositionExpression,
+					AztecCodeComponent::setStructuredAppendPositionExpression, Integer.class);
+			addExpression(AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
+					AztecCodeComponent::getStructuredAppendTotalExpression,
+					AztecCodeComponent::setStructuredAppendTotalExpression, Integer.class);
+			addExpression(AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_MESSAGE_ID_EXPRESSION,
+					AztecCodeComponent::getStructuredAppendMessageIdExpression,
+					AztecCodeComponent::setStructuredAppendMessageIdExpression, String.class);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(AztecCodeComponent component)
+		{
+			AztecCode symbol = new AztecCode();
+			if (component.getMode() != null)
+			{
+				switch (component.getMode())
+				{
+					case NORMAL:
+						symbol.setMode(AztecCode.Mode.NORMAL);
+						break;
+					case COMPACT:
+						symbol.setMode(AztecCode.Mode.COMPACT);
+						break;
+					case ANY:
+					default:
+						symbol.setMode(AztecCode.Mode.ANY);
+						break;
+				}
+			}
+			if (component.getPreferredSize() != null)
+			{
+				symbol.setPreferredSize(component.getPreferredSize());
+			}
+			if (component.getPreferredEccPercentage() != null)
+			{
+				symbol.setPreferredEccPercentage(component.getPreferredEccPercentage());
+			}
+			if (component.getDataType() != null)
+			{
+				switch (component.getDataType())
+				{
+					case GS1:
+						symbol.setDataType(Symbol.DataType.GS1);
+						break;
+					case HIBC:
+					default:
+						symbol.setDataType(Symbol.DataType.HIBC);
+						break;
+				}
+			}
+			if (component.getEciMode() != null)
+			{
+				symbol.setEciMode(component.getEciMode());
+			}
+			if (component.getReaderInit() != null)
+			{
+				symbol.setReaderInit(component.getReaderInit());
+			}
+			if (component.getStructuredAppendForced() != null)
+			{
+				symbol.setStructuredAppendForced(component.getStructuredAppendForced());
+			}
+			return symbol;
+		}
+
+		@Override
+		public void applyValues(AztecCodeComponent component, Symbol symbol, Object[] values)
+		{
+			AztecCode aztecCode = (AztecCode) symbol;
+			if (values[1] != null)
+			{
+				aztecCode.setStructuredAppendPosition(toInt(values[1]));
+			}
+			if (values[2] != null)
+			{
+				aztecCode.setStructuredAppendTotal(toInt(values[2]));
+			}
+			if (values[3] != null)
+			{
+				aztecCode.setStructuredAppendMessageId((String) values[3]);
+			}
+		}
+
+		@Override
+		public void verify(AztecCodeComponent component, JRVerifier verifier)
+		{
+			// Okapi throws this when encoding each record, but the combination is static
+			Integer size = component.getPreferredSize();
+			AztecCodeModeEnum mode = component.getMode();
+			if (size != null
+					&& ((mode == AztecCodeModeEnum.COMPACT && size > COMPACT_SIZES)
+					|| (mode == AztecCodeModeEnum.NORMAL && size <= COMPACT_SIZES)))
+			{
+				verifier.addBrokenRule("Barcode " + AztecCodeComponent.PROPERTY_PREFERRED_SIZE + " " + size
+						+ " is not allowed in " + AztecCodeComponent.PROPERTY_MODE + " " + mode.getName(), component);
+			}
+			OkapiCompiler.verifyStructuredAppend(verifier, component,
+					AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION, component.getStructuredAppendPositionExpression(),
+					AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component.getStructuredAppendTotalExpression());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(AztecCodeComponent component)
+		{
+			// ISO/IEC 24778 needs none
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(AztecCodeComponent component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class AztecRuneType extends OkapiElementType<AztecRuneComponent>
+	{
+		AztecRuneType()
+		{
+			super(AztecRuneComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(AztecRuneComponent component)
+		{
+			return new AztecRune();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(AztecRuneComponent component)
+		{
+			// ISO/IEC 24778 Annex A needs none
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(AztecRuneComponent component)
+		{
+			return "42";
+		}
+	}
+
+	static class CodeOneType extends OkapiElementType<CodeOneComponent>
+	{
+		CodeOneType()
+		{
+			super(CodeOneComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		private static boolean isFixedHeight(CodeOneComponent component)
+		{
+			return component.getPreferredVersion() == CodeOneVersionEnum.S
+					|| component.getPreferredVersion() == CodeOneVersionEnum.T;
+		}
+
+		@Override
+		public Symbol createSymbol(CodeOneComponent component)
+		{
+			CodeOne symbol = new CodeOne();
+			if (component.getPreferredVersion() != null)
+			{
+				symbol.setPreferredVersion(CodeOne.Version.valueOf(component.getPreferredVersion().name()));
+			}
+			if (component.getDataType() == CodeOneDataTypeEnum.GS1)
+			{
+				symbol.setDataType(Symbol.DataType.GS1);
+			}
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(CodeOneComponent component)
+		{
+			// USS Code One: none for versions A to H, 1 module for S and T, as Zint
+			return isFixedHeight(component) ? 1 : 0;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(CodeOneComponent component)
+		{
+			// one value for top and bottom: USS Code One needs 1 module only below S and T
+			return isFixedHeight(component) ? 1 : 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(CodeOneComponent component)
+		{
+			// version S takes digits only
+			return component.getPreferredVersion() == CodeOneVersionEnum.S ? "123456" : "JasperReports";
+		}
+	}
+
+	static class GridMatrixType extends OkapiElementType<GridMatrixComponent>
+	{
+		GridMatrixType()
+		{
+			super(GridMatrixComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(GridMatrixComponent component)
+		{
+			GridMatrix symbol = new GridMatrix();
+			if (component.getPreferredVersion() != null)
+			{
+				symbol.setPreferredVersion(component.getPreferredVersion());
+			}
+			if (component.getPreferredEccLevel() != null)
+			{
+				symbol.setPreferredEccLevel(component.getPreferredEccLevel());
+			}
+			if (component.getReaderInit() != null)
+			{
+				symbol.setReaderInit(component.getReaderInit());
+			}
+			return symbol;
+		}
+
+		@Override
+		public void verify(GridMatrixComponent component, JRVerifier verifier)
+		{
+			// Okapi's setters take any value and its encoder ignores one outside these ranges
+			OkapiCompiler.verifyRange(verifier, component, GridMatrixComponent.PROPERTY_PREFERRED_VERSION,
+					component.getPreferredVersion(), 1, 13);
+			OkapiCompiler.verifyRange(verifier, component, GridMatrixComponent.PROPERTY_PREFERRED_ECC_LEVEL,
+					component.getPreferredEccLevel(), 1, 5);
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(GridMatrixComponent component)
+		{
+			// AIMD014, as Zint
+			return 6;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(GridMatrixComponent component)
+		{
+			return 6;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(GridMatrixComponent component)
+		{
+			return "JasperReports";
+		}
+	}
+
+	static class MicroQrCodeType extends OkapiElementType<MicroQRCodeComponent>
+	{
+		MicroQrCodeType()
+		{
+			super(MicroQRCodeComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(MicroQRCodeComponent component)
+		{
+			MicroQrCode symbol = new MicroQrCode();
+			if (component.getPreferredVersion() != null)
+			{
+				symbol.setPreferredVersion(component.getPreferredVersion());
+			}
+			if (component.getEccMode() != null)
+			{
+				switch (component.getEccMode())
+				{
+					case M:
+						symbol.setEccMode(MicroQrCode.EccMode.M);
+						break;
+					case Q:
+						symbol.setEccMode(MicroQrCode.EccMode.Q);
+						break;
+					case L:
+					default:
+						symbol.setEccMode(MicroQrCode.EccMode.L);
+						break;
+				}
+			}
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(MicroQRCodeComponent component)
+		{
+			// ISO/IEC 18004
+			return 2;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(MicroQRCodeComponent component)
+		{
+			return 2;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(MicroQRCodeComponent component)
+		{
+			return "12345";
+		}
+	}
+
+	static class MaxiCodeType extends OkapiElementType<MaxiCodeComponent>
+	{
+		/** one hexagon in Okapi units (2.46), rounded up */
+		private static final int QUIET_ZONE = 3;
+
+		MaxiCodeType()
+		{
+			super(MaxiCodeComponent.class, Layout.MATRIX);
+			addExpression(MaxiCodeComponent.PROPERTY_PRIMARY_EXPRESSION,
+					MaxiCodeComponent::getPrimaryExpression,
+					MaxiCodeComponent::setPrimaryExpression, String.class);
+			addExpression(MaxiCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
+					MaxiCodeComponent::getStructuredAppendPositionExpression,
+					MaxiCodeComponent::setStructuredAppendPositionExpression, Integer.class);
+			addExpression(MaxiCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
+					MaxiCodeComponent::getStructuredAppendTotalExpression,
+					MaxiCodeComponent::setStructuredAppendTotalExpression, Integer.class);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		private static boolean isStructuredCarrier(MaxiCodeModeEnum mode)
+		{
+			return mode == MaxiCodeModeEnum.MODE2 || mode == MaxiCodeModeEnum.MODE3;
+		}
+
+		@Override
+		public Symbol createSymbol(MaxiCodeComponent component)
+		{
+			MaxiCode symbol = new MaxiCode();
+			if (component.getMode() != null)
+			{
+				switch (component.getMode())
+				{
+					case MODE2:
+						symbol.setMode(2);
+						break;
+					case MODE3:
+						symbol.setMode(3);
+						break;
+					case MODE5:
+						symbol.setMode(5);
+						break;
+					case MODE6:
+						symbol.setMode(6);
+						break;
+					case MODE4:
+					default:
+						symbol.setMode(4);
+						break;
+				}
+			}
+			if (component.getEciMode() != null)
+			{
+				symbol.setEciMode(component.getEciMode());
+			}
+			if (component.getStructuredAppendForced() != null)
+			{
+				symbol.setStructuredAppendForced(component.getStructuredAppendForced());
+			}
+			return symbol;
+		}
+
+		@Override
+		public void applyValues(MaxiCodeComponent component, Symbol symbol, Object[] values)
+		{
+			MaxiCode maxiCode = (MaxiCode) symbol;
+			if (values[1] != null)
+			{
+				maxiCode.setPrimary((String) values[1]);
+			}
+			if (values[2] != null)
+			{
+				maxiCode.setStructuredAppendPosition(toInt(values[2]));
+			}
+			if (values[3] != null)
+			{
+				maxiCode.setStructuredAppendTotal(toInt(values[3]));
+			}
+		}
+
+		@Override
+		public void verify(MaxiCodeComponent component, JRVerifier verifier)
+		{
+			// without a primary message Okapi fails every record of modes 2 and 3; it ignores one in the other modes
+			boolean structuredCarrier = isStructuredCarrier(component.getMode());
+			if (structuredCarrier != (component.getPrimaryExpression() != null))
+			{
+				verifier.addBrokenRule("Barcode " + MaxiCodeComponent.PROPERTY_PRIMARY_EXPRESSION
+						+ (structuredCarrier ? " is required in " : " is not allowed in ")
+						+ MaxiCodeComponent.PROPERTY_MODE + " "
+						+ (component.getMode() == null ? MaxiCodeModeEnum.MODE4 : component.getMode()).getName(), component);
+			}
+			OkapiCompiler.verifyStructuredAppend(verifier, component,
+					MaxiCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION, component.getStructuredAppendPositionExpression(),
+					MaxiCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION, component.getStructuredAppendTotalExpression());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(MaxiCodeComponent component)
+		{
+			// ISO/IEC 16023: one module, a hexagon
+			return QUIET_ZONE;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(MaxiCodeComponent component)
+		{
+			return QUIET_ZONE;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(MaxiCodeComponent component)
+		{
+			return "JasperReports";
+		}
+
+		@Override
+		public Object getDefaultPreviewValue(MaxiCodeComponent component, String expressionName)
+		{
+			// Okapi draws modes 2 and 3 only with a primary message: postal code, country and service
+			if (MaxiCodeComponent.PROPERTY_PRIMARY_EXPRESSION.equals(expressionName))
+			{
+				if (component.getMode() == MaxiCodeModeEnum.MODE2)
+				{
+					return "152382802840001";
+				}
+				if (component.getMode() == MaxiCodeModeEnum.MODE3)
+				{
+					return "B1050    056999";
+				}
+			}
+			return null;
+		}
+	}
+
+	static class SwissQrCodeType extends OkapiElementType<SwissQRCodeComponent>
+	{
+		SwissQrCodeType()
+		{
+			super(SwissQRCodeComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(SwissQRCodeComponent component)
+		{
+			return new SwissQrCode();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(SwissQRCodeComponent component)
+		{
+			// ISO/IEC 18004
+			return 4;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(SwissQRCodeComponent component)
+		{
+			return 4;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(SwissQRCodeComponent component)
+		{
+			// the header of a QR-bill, version 2.0, UTF-8 coding
+			return "SPC\n0200\n1";
+		}
+	}
+
+	static class UpnQrType extends OkapiElementType<UPNQRComponent>
+	{
+		UpnQrType()
+		{
+			super(UPNQRComponent.class, Layout.MATRIX);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(UPNQRComponent component)
+		{
+			return new UpnQr();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(UPNQRComponent component)
+		{
+			// ISO/IEC 18004
+			return 4;
+		}
+
+		@Override
+		public int getDefaultQuietZoneVertical(UPNQRComponent component)
+		{
+			return 4;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(UPNQRComponent component)
+		{
+			// the leading field of a UPN QR form
+			return "UPNQR";
 		}
 	}
 }
