@@ -365,7 +365,8 @@ public class Barcode4jConverter extends LegacyConverter
 		PDF417Component pdf417 = common(new PDF417Component(), legacy.getCodeExpression(),
 			legacy.getEvaluationTime(), legacy.getEvaluationGroup());
 		pdf417.setRotation(rotation(legacy.getOrientation()));
-		// both in report units
+		// both in report units; the legacy image stretches the quiet zones with the symbol, but by little
+		// across the element width, so this keeps the size (check 5c: 143 vs 138 pt), unlike Data Matrix
 		pdf417.setQuietZoneHorizontal(legacy.getQuietZone());
 		pdf417.setQuietZoneVertical(legacy.getVerticalQuietZone());
 		pdf417.setDataColumns(minColumns);
@@ -474,9 +475,11 @@ public class Barcode4jConverter extends LegacyConverter
 		net.sf.jasperreports.okapi.DataMatrixComponent dataMatrix = common(new net.sf.jasperreports.okapi.DataMatrixComponent(),
 			legacy.getCodeExpression(), legacy.getEvaluationTime(), legacy.getEvaluationGroup());
 		dataMatrix.setRotation(rotation(legacy.getOrientation()));
-		// both in report units
-		dataMatrix.setQuietZoneHorizontal(legacy.getQuietZone());
-		dataMatrix.setQuietZoneVertical(legacy.getVerticalQuietZone());
+		// the legacy image stretches the symbol to fill the element (RETAIN_SHAPE), its quiet zones with it,
+		// so they act in modules, while okapi:* quiet zones are in report units: as the QR Code margin
+		String quietZoneReason = "the legacy barcode stretches its quiet zones with the symbol, okapi:* quiet zones are in report units";
+		droppedIfSet(conversion, "quietZone", legacy.getQuietZone(), quietZoneReason);
+		droppedIfSet(conversion, "verticalQuietZone", legacy.getVerticalQuietZone(), quietZoneReason);
 		// barcode4j matches the shape names ignoring case
 		if ("force-square".equalsIgnoreCase(legacy.getShape()))
 		{

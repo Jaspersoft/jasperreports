@@ -211,7 +211,7 @@ public class OkapiConvertTest
 		assertEquals(upce.getModuleWidth(), 0.33 * 2.835, 1e-6);
 		DataMatrixComponent dataMatrix = (DataMatrixComponent) after.get("dataMatrix").getComponent();
 		assertEquals(dataMatrix.getRotation(), RotationEnum.RIGHT);
-		assertEquals(dataMatrix.getQuietZoneHorizontal(), 2.0);
+		assertNull(dataMatrix.getQuietZoneHorizontal(), "quiet zones the legacy image stretches are dropped");
 		assertNull(dataMatrix.getModuleWidth(), "the legacy 2D barcode fills the element whatever its module width");
 		assertNull(dataMatrix.getForceMode());
 		DataMatrixComponent dataMatrixRectangle = (DataMatrixComponent) after.get("dataMatrixRectangle").getComponent();
