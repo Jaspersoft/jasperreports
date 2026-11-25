@@ -110,6 +110,13 @@
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-okapi</artifactId>
+			<version>${revision}</version>
+			<scope>runtime</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-xalan</artifactId>
 			<version>${revision}</version>
 			<scope>runtime</scope>

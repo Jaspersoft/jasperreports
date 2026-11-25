@@ -1,0 +1,125 @@
+<jasperReport name="OkapiLinear2" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d401">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<title height="760">
+		<element kind="component" key="code93" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d402" x="0" y="0" width="250" height="56" style="Barcode">
+			<component kind="okapi:Code93">
+				<codeExpression><![CDATA["OKAPI-93"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code11" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d403" x="260" y="0" width="250" height="56" style="Barcode">
+			<component kind="okapi:Code11" checkDigitCount="1">
+				<codeExpression><![CDATA["123-45"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code32" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d404" x="0" y="62" width="250" height="56" style="Barcode">
+			<component kind="okapi:Code32">
+				<codeExpression><![CDATA["12345678"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="logmars" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d405" x="260" y="62" width="250" height="56" style="Barcode">
+			<component kind="okapi:LOGMARS">
+				<codeExpression><![CDATA["LOGMARS-1"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pzn" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d406" x="0" y="124" width="250" height="56" style="Barcode">
+			<component kind="okapi:PZN">
+				<codeExpression><![CDATA["1234567"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="nve18" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d407" x="260" y="124" width="250" height="56" style="Barcode">
+			<component kind="okapi:NVE18">
+				<codeExpression><![CDATA["34012345000000001"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dpd" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d408" x="0" y="186" width="250" height="56" style="Barcode">
+			<component kind="okapi:DPDCode">
+				<codeExpression><![CDATA["%000393206219912345678101040"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="uspsPackage" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d409" x="260" y="186" width="250" height="56" style="Barcode">
+			<component kind="okapi:USPSPackage" humanReadableAlignment="Left">
+				<codeExpression><![CDATA["[420]52001[92]6123456789012345678901"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBar" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d410" x="0" y="248" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBar">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarOmni" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d411" x="260" y="248" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBar" mode="Omni">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarStacked" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d412" x="0" y="310" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBar" mode="Stacked">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarLimited" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d413" x="260" y="310" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBarLimited">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarExpanded" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d414" x="0" y="372" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBarExpanded" stacked="false">
+				<codeExpression><![CDATA["[01]98898765432106[3202]012345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarExpandedStacked" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d415" x="260" y="372" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBarExpanded">
+				<codeExpression><![CDATA["[01]98898765432106[3202]012345[15]991231"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarExpandedRows" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d416" x="0" y="434" width="250" height="56" style="Barcode">
+			<component kind="okapi:DataBarExpanded" moduleWidth="1.0" barHeight="10.0">
+				<codeExpression><![CDATA["[01]98898765432106[3202]012345[15]991231"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="channelCode" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d417" x="260" y="434" width="250" height="56" style="Barcode">
+			<component kind="okapi:ChannelCode" preferredNumberOfChannels="5">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="msiPlessey" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d418" x="0" y="496" width="250" height="56" style="Barcode">
+			<component kind="okapi:MSIPlessey" checkDigit="Mod10">
+				<codeExpression><![CDATA["1234567"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="plessey" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d419" x="260" y="496" width="250" height="56" style="Barcode">
+			<component kind="okapi:Plessey">
+				<codeExpression><![CDATA["12345ABCDEF"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="telepen" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d420" x="0" y="558" width="250" height="56" style="Barcode">
+			<component kind="okapi:Telepen">
+				<codeExpression><![CDATA["Okapi Telepen"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="telepenNumeric" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d421" x="260" y="558" width="250" height="56" style="Barcode">
+			<component kind="okapi:Telepen" mode="Numeric">
+				<codeExpression><![CDATA["1234567890"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pharmacode" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d422" x="0" y="620" width="250" height="56" style="Barcode">
+			<component kind="okapi:Pharmacode">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="pharmacode2Track" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d423" x="260" y="620" width="250" height="56" style="Barcode">
+			<component kind="okapi:Pharmacode2Track">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code93Text" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d424" x="0" y="682" width="250" height="56" style="Barcode">
+			<component kind="okapi:Code93" showCheckDigits="false" startStopDelimiter="*">
+				<codeExpression><![CDATA["OKAPI-93"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code11Text" uuid="7d2a1b63-4e4f-4a60-8b1f-3b65c0a6d425" x="260" y="682" width="250" height="56" style="Barcode">
+			<component kind="okapi:Code11" startDelimiter="[" stopDelimiter="]">
+				<codeExpression><![CDATA["123-45"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

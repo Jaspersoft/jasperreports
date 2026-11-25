@@ -1,0 +1,89 @@
+<jasperReport name="OkapiComposite" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b00">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<title height="760">
+		<element kind="component" key="code128" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b01" x="0" y="0" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="code128Ccc" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b02" x="260" y="0" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" preferredMode="CCC">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="code128Bar" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b03" x="0" y="106" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" moduleWidth="1.0" barHeight="10.0">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b04" x="260" y="106" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="EAN">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["590123412345"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="eanGuard" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b05" x="0" y="212" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="EAN" guardPatternExtraHeight="3.0">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["590123412345"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="upca" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b06" x="260" y="212" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="UPCA">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["03600029145"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="upce" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b07" x="0" y="318" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="UPCE">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0123456"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBar" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b08" x="260" y="318" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBar">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0950110153000"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarStacked" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b09" x="0" y="424" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarStacked">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0950110153000"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarOmni" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b10" x="260" y="424" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarOmni" separatorHeight="2.0">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0950110153000"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarLimited" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b11" x="0" y="530" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarLimited">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0950110153000"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarExpanded" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b12" x="260" y="530" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarExpanded">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106[3202]012345"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="dataBarExpandedStacked" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b13" x="0" y="636" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarExpandedStacked" preferredColumns="1">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106[3202]012345"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="ccb" uuid="b27e5f10-4c1d-4e8a-9f3b-7d2c6a8e5b14" x="260" y="636" width="250" height="100" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarLimited" preferredMode="CCB">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0950110153000"]]></linearContentExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

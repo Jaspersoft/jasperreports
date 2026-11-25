@@ -1,0 +1,75 @@
+<jasperReport name="OkapiFill" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c101">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<style name="Rotated" fontName="DejaVu Sans" fontSize="8.0" rotation="Right" hImageAlign="Right"/>
+	<title height="760">
+		<!-- no module width: the symbol fills the element width -->
+		<element kind="component" key="code128Fit" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c102" x="0" y="0" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code128">
+				<codeExpression><![CDATA["OKAPI-128"]]></codeExpression>
+			</component>
+		</element>
+		<!-- module width set and the symbol fits: drawn at exactly that width -->
+		<element kind="component" key="code128Set" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c103" x="260" y="0" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code128" moduleWidth="1.0" hImageAlign="Center">
+				<codeExpression><![CDATA["OKAPI-128"]]></codeExpression>
+			</component>
+		</element>
+		<!-- module width set but too wide: computed to fill the element -->
+		<element kind="component" key="code128TooWide" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c104" x="0" y="60" width="150" height="50" style="Barcode">
+			<component kind="okapi:Code128" moduleWidth="5.0">
+				<codeExpression><![CDATA["OKAPI-128"]]></codeExpression>
+			</component>
+		</element>
+		<!-- own rotation: sized against the swapped element dimensions -->
+		<element kind="component" key="code128Left" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c105" x="160" y="60" width="50" height="250" style="Barcode">
+			<component kind="okapi:Code128" rotation="Left" humanReadableLocation="Top">
+				<codeExpression><![CDATA["OKAPI-128"]]></codeExpression>
+			</component>
+		</element>
+		<!-- rotation and alignment from the style -->
+		<element kind="component" key="code128Style" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c106" x="220" y="60" width="50" height="250" style="Rotated">
+			<component kind="okapi:Code128" moduleWidth="1.0">
+				<codeExpression><![CDATA["STYLE"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code128Gs1" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c107" x="280" y="60" width="230" height="50" style="Barcode">
+			<component kind="okapi:Code128" dataType="GS1">
+				<codeExpression><![CDATA["[01]09501101530003"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean13" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c108" x="0" y="320" width="150" height="70" style="Barcode">
+			<component kind="okapi:EAN">
+				<codeExpression><![CDATA["590123412345"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="ean8" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c109" x="160" y="320" width="120" height="70" style="Barcode">
+			<component kind="okapi:EAN" mode="EAN8">
+				<codeExpression><![CDATA["1234567"]]></codeExpression>
+			</component>
+		</element>
+		<!-- no module size: fills the element -->
+		<element kind="component" key="qrFit" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c110" x="0" y="400" width="120" height="100">
+			<component kind="okapi:QRCode">
+				<codeExpression><![CDATA["Hello Okapi"]]></codeExpression>
+			</component>
+		</element>
+		<!-- module size set and fits: drawn at that size, centered -->
+		<element kind="component" key="qrSet" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c111" x="130" y="400" width="120" height="100">
+			<component kind="okapi:QRCode" moduleWidth="2.0" hImageAlign="Center" vImageAlign="Middle" preferredEccLevel="H">
+				<codeExpression><![CDATA["Hello Okapi"]]></codeExpression>
+			</component>
+		</element>
+		<!-- module size set but too large: shrunk by the image -->
+		<element kind="component" key="qrTooLarge" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c112" x="260" y="400" width="60" height="60">
+			<component kind="okapi:QRCode" moduleWidth="10.0">
+				<codeExpression><![CDATA["Hello Okapi"]]></codeExpression>
+			</component>
+		</element>
+		<!-- evaluated at the end of the report -->
+		<element kind="component" key="qrDelayed" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c113" x="330" y="400" width="100" height="100">
+			<component kind="okapi:QRCode" evaluationTime="Report" moduleWidth="2.0">
+				<codeExpression><![CDATA["Pages " + $V{PAGE_NUMBER}]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>

@@ -57,6 +57,18 @@
 			<version>${revision}</version>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<!--
+				the plugin classpath has log4j-api, which commons-logging prefers, but no log4j
+				implementation, so the log of JasperReports and of report updaters would be lost:
+				route it to the Maven console instead
+			-->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-to-slf4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -80,6 +92,8 @@
 					</ignoredUsedUndeclaredDependencies>
 					<ignoredUnusedDeclaredDependencies>
 						<dependency>net.sf.jasperreports:jasperreports-maven-plugin-bom</dependency>
+						<!-- used at run time only, by log4j-api -->
+						<dependency>org.apache.logging.log4j:log4j-to-slf4j</dependency>
 					</ignoredUnusedDeclaredDependencies>
 				</configuration>
 			</plugin>

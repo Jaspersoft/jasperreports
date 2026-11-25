@@ -9,8 +9,8 @@
 	</parent>
 	<artifactId>jasperreports-barbecue</artifactId>
 	<packaging>jar</packaging>
-	<name>JasperReports Barbecue</name>
-	<description>JasperReports Barbecue</description>
+	<name>JasperReports Barbecue (Deprecated)</name>
+	<description>JasperReports Barbecue (Deprecated)</description>
 	<url>http://jasperreports.sourceforge.net</url>
 	<scm>
 		<connection>${scmConnection}</connection>

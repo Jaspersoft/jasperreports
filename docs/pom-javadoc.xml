@@ -56,6 +56,7 @@
 		<module>../ext/jdt</module>
 		<module>../ext/json</module>
 		<module>../ext/maven</module>
+		<module>../ext/okapi</module>
 		<module>../ext/olap</module>
 		<module>../ext/pdf</module>
 		<module>../ext/servlets</module>

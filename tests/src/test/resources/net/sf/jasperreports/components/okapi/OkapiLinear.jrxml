@@ -1,0 +1,73 @@
+<jasperReport name="OkapiLinear" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c301">
+	<style name="Barcode" fontName="DejaVu Sans" fontSize="8.0"/>
+	<title height="760">
+		<element kind="component" key="code39" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c302" x="0" y="0" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code39">
+				<codeExpression><![CDATA["OKAPI-39"]]></codeExpression>
+			</component>
+		</element>
+		<!-- the mod 43 check character of OKAPI-39 is G -->
+		<element kind="component" key="code39Mod43" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c303" x="260" y="0" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code39" checkDigit="Mod43">
+				<codeExpression><![CDATA["OKAPI-39"]]></codeExpression>
+			</component>
+		</element>
+		<!-- the same data and module width, with the default and a larger wide bar ratio -->
+		<element kind="component" key="code39Ratio2" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c304" x="0" y="60" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code39" moduleWidth="1.0">
+				<codeExpression><![CDATA["OKAPI-39"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code39Ratio3" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c305" x="260" y="60" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code39" moduleWidth="1.0" moduleWidthRatio="3.0">
+				<codeExpression><![CDATA["OKAPI-39"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code39Extended" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c306" x="0" y="120" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code39Extended">
+				<codeExpression><![CDATA["Okapi 39"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="codabar" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c307" x="260" y="120" width="250" height="50" style="Barcode">
+			<component kind="okapi:Codabar" moduleWidthRatio="3.0">
+				<codeExpression><![CDATA["A0123456789B"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code2Of5Industrial" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c308" x="0" y="180" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code2Of5" mode="Industrial" moduleWidth="1.0">
+				<codeExpression><![CDATA["0123456789"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="code2Of5Leitcode" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c309" x="260" y="180" width="250" height="50" style="Barcode">
+			<component kind="okapi:Code2Of5" mode="DPLeitcode">
+				<codeExpression><![CDATA["2163100011102"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="itf" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c310" x="0" y="240" width="250" height="50" style="Barcode">
+			<component kind="okapi:Interleaved2Of5">
+				<codeExpression><![CDATA["0123456789"]]></codeExpression>
+			</component>
+		</element>
+		<!-- 9 digits and the check digit 5 -->
+		<element kind="component" key="itfMod10" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c311" x="260" y="240" width="250" height="50" style="Barcode">
+			<component kind="okapi:Interleaved2Of5" checkDigit="Mod10">
+				<codeExpression><![CDATA["123456789"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="itf14" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c312" x="0" y="300" width="250" height="60" style="Barcode">
+			<component kind="okapi:ITF14">
+				<codeExpression><![CDATA["1540014128876"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="upcA" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c313" x="260" y="300" width="250" height="60" style="Barcode">
+			<component kind="okapi:UPC">
+				<codeExpression><![CDATA["03600029145"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="upcE" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c314" x="0" y="370" width="150" height="60" style="Barcode">
+			<component kind="okapi:UPC" mode="UPCE" showCheckDigit="false" guardPatternExtraHeight="3.0">
+				<codeExpression><![CDATA["0123456"]]></codeExpression>
+			</component>
+		</element>
+	</title>
+</jasperReport>
