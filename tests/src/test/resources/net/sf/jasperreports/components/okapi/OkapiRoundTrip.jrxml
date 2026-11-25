@@ -2,7 +2,7 @@
 	<group name="g">
 		<expression><![CDATA[1]]></expression>
 	</group>
-	<title height="300">
+	<title height="730">
 		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c002" x="0" y="0" width="300" height="60">
 			<component kind="okapi:Code128" evaluationTime="Group" evaluationGroup="g" rotation="Left" hImageAlign="Center" vImageAlign="Bottom" quietZoneHorizontal="5.0" quietZoneVertical="2.0" moduleWidth="1.5" humanReadableLocation="Top" humanReadableAlignment="Justify" codeSet="AB" dataType="GS1" readerInit="true">
 				<codeExpression><![CDATA["[01]09501101530003"]]></codeExpression>
@@ -54,6 +54,91 @@
 		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c011" x="310" y="300" width="200" height="40">
 			<component kind="okapi:UPC" mode="UPCE" showCheckDigit="false" guardPatternExtraHeight="4.0">
 				<codeExpression><![CDATA["0123456"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c012" x="0" y="350" width="200" height="40">
+			<component kind="okapi:ChannelCode" preferredNumberOfChannels="4">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c013" x="310" y="350" width="200" height="40">
+			<component kind="okapi:Code11" moduleWidthRatio="2.5" checkDigitCount="1" startDelimiter="[" stopDelimiter="]">
+				<codeExpression><![CDATA["123-45"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c014" x="0" y="392" width="200" height="40">
+			<component kind="okapi:Code32">
+				<codeExpression><![CDATA["12345678"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c015" x="310" y="392" width="200" height="40">
+			<component kind="okapi:Code93" showCheckDigits="false" startStopDelimiter="*">
+				<codeExpression><![CDATA["OKAPI"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c016" x="0" y="434" width="200" height="40">
+			<component kind="okapi:DataBar" mode="Omni" separatorHeight="2.0">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c017" x="310" y="434" width="200" height="40">
+			<component kind="okapi:DataBarLimited">
+				<codeExpression><![CDATA["0950110153000"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c018" x="0" y="476" width="200" height="40">
+			<component kind="okapi:DPDCode">
+				<codeExpression><![CDATA["%000393206219912345678101040"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c019" x="310" y="476" width="200" height="40">
+			<component kind="okapi:LOGMARS" moduleWidthRatio="2.75">
+				<codeExpression><![CDATA["LOGMARS"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c020" x="0" y="518" width="200" height="40">
+			<component kind="okapi:MSIPlessey" checkDigit="Mod11Mod10" checkDigitInHumanReadableText="false" moduleWidthRatio="2.2">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c021" x="310" y="518" width="200" height="40">
+			<component kind="okapi:NVE18">
+				<codeExpression><![CDATA["34012345000000001"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c022" x="0" y="560" width="200" height="40">
+			<component kind="okapi:PZN">
+				<codeExpression><![CDATA["1234567"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c023" x="310" y="560" width="200" height="40">
+			<component kind="okapi:Plessey" checkDigitInHumanReadableText="false" moduleWidthRatio="2.6">
+				<codeExpression><![CDATA["12AB"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c024" x="0" y="602" width="200" height="40">
+			<component kind="okapi:Telepen" mode="Numeric">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c025" x="310" y="602" width="200" height="40">
+			<component kind="okapi:Pharmacode">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c026" x="0" y="644" width="200" height="40">
+			<component kind="okapi:Pharmacode2Track">
+				<codeExpression><![CDATA["1234"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c027" x="310" y="644" width="200" height="40">
+			<component kind="okapi:DataBarExpanded" humanReadableLocation="Top" preferredColumns="3" stacked="false" barHeight="12.0">
+				<codeExpression><![CDATA["[01]98898765432106"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c028" x="0" y="686" width="200" height="40">
+			<component kind="okapi:USPSPackage" humanReadableAlignment="Right">
+				<codeExpression><![CDATA["[420]52001[92]6123456789012345678901"]]></codeExpression>
 			</component>
 		</element>
 	</title>

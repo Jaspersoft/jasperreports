@@ -29,16 +29,33 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JRRuntimeException;
 import net.sf.jasperreports.engine.design.JRVerifier;
+import uk.org.okapibarcode.backend.ChannelCode;
 import uk.org.okapibarcode.backend.Codabar;
+import uk.org.okapibarcode.backend.Code11;
 import uk.org.okapibarcode.backend.Code128;
 import uk.org.okapibarcode.backend.Code2Of5;
+import uk.org.okapibarcode.backend.Code32;
 import uk.org.okapibarcode.backend.Code3Of9;
 import uk.org.okapibarcode.backend.Code3Of9Extended;
+import uk.org.okapibarcode.backend.Code93;
+import uk.org.okapibarcode.backend.DataBar14;
+import uk.org.okapibarcode.backend.DataBarExpanded;
+import uk.org.okapibarcode.backend.DataBarLimited;
+import uk.org.okapibarcode.backend.DpdCode;
 import uk.org.okapibarcode.backend.Ean;
 import uk.org.okapibarcode.backend.HumanReadableLocation;
+import uk.org.okapibarcode.backend.Logmars;
+import uk.org.okapibarcode.backend.MsiPlessey;
+import uk.org.okapibarcode.backend.Nve18;
+import uk.org.okapibarcode.backend.Pharmacode;
+import uk.org.okapibarcode.backend.Pharmacode2Track;
+import uk.org.okapibarcode.backend.Pharmazentralnummer;
+import uk.org.okapibarcode.backend.Plessey;
 import uk.org.okapibarcode.backend.QrCode;
 import uk.org.okapibarcode.backend.Symbol;
+import uk.org.okapibarcode.backend.Telepen;
 import uk.org.okapibarcode.backend.Upc;
+import uk.org.okapibarcode.backend.UspsPackage;
 import uk.org.okapibarcode.graphics.TextAlignment;
 
 
@@ -68,6 +85,23 @@ final class OkapiElementTypes
 		register(types, new Interleaved2Of5Type());
 		register(types, new Itf14Type());
 		register(types, new UpcType());
+		register(types, new ChannelCodeType());
+		register(types, new Code11Type());
+		register(types, new Code32Type());
+		register(types, new Code93Type());
+		register(types, new DataBarType());
+		register(types, new DataBarLimitedType());
+		register(types, new DpdCodeType());
+		register(types, new LogmarsType());
+		register(types, new MsiPlesseyType());
+		register(types, new Nve18Type());
+		register(types, new PznType());
+		register(types, new PlesseyType());
+		register(types, new TelepenType());
+		register(types, new PharmacodeType());
+		register(types, new Pharmacode2TrackType());
+		register(types, new DataBarExpandedType());
+		register(types, new UspsPackageType());
 		TYPES = Collections.unmodifiableMap(types);
 	}
 
@@ -121,9 +155,17 @@ final class OkapiElementTypes
 					break;
 			}
 		}
-		if (component.getHumanReadableAlignment() != null)
+		applyAlignment(component.getHumanReadableAlignment(), symbol);
+	}
+
+	/**
+	 * Applies a human-readable text alignment.
+	 */
+	static void applyAlignment(HumanReadableAlignmentEnum alignment, Symbol symbol)
+	{
+		if (alignment != null)
 		{
-			switch (component.getHumanReadableAlignment())
+			switch (alignment)
 			{
 				case LEFT:
 					symbol.setHumanReadableAlignment(TextAlignment.LEFT);
@@ -816,6 +858,748 @@ final class OkapiElementTypes
 		{
 			// the check digit is added
 			return isUpcE(component) ? "0123456" : "03600029145";
+		}
+	}
+
+	static class ChannelCodeType extends OkapiElementType<ChannelCodeComponent>
+	{
+		ChannelCodeType()
+		{
+			super(ChannelCodeComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(ChannelCodeComponent component)
+		{
+			ChannelCode symbol = new ChannelCode();
+			if (component.getPreferredNumberOfChannels() != null)
+			{
+				symbol.setPreferredNumberOfChannels(component.getPreferredNumberOfChannels());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(ChannelCodeComponent component)
+		{
+			// no standard value found; Zint sets none either
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(ChannelCodeComponent component)
+		{
+			return "1234";
+		}
+	}
+
+	static class Code11Type extends OkapiElementType<Code11Component>
+	{
+		Code11Type()
+		{
+			super(Code11Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(Code11Component component)
+		{
+			Code11 symbol = new Code11();
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			if (component.getCheckDigitCount() != null)
+			{
+				symbol.setCheckDigitCount(component.getCheckDigitCount());
+			}
+			symbol.setStartDelimiter(component.getStartDelimiter());
+			symbol.setStopDelimiter(component.getStopDelimiter());
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(Code11Component component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, Code11Component.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code11Component component)
+		{
+			// no standard value found; Zint follows ITF-14
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code11Component component)
+		{
+			return "123-45";
+		}
+	}
+
+	static class Code32Type extends OkapiElementType<Code32Component>
+	{
+		Code32Type()
+		{
+			super(Code32Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(Code32Component component)
+		{
+			Code32 symbol = new Code32();
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code32Component component)
+		{
+			// a Code 39 symbol: ISO/IEC 16388
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code32Component component)
+		{
+			// the check digit is added
+			return "12345678";
+		}
+	}
+
+	static class Code93Type extends OkapiElementType<Code93Component>
+	{
+		Code93Type()
+		{
+			super(Code93Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(Code93Component component)
+		{
+			Code93 symbol = new Code93();
+			if (component.getShowCheckDigits() != null)
+			{
+				symbol.setShowCheckDigits(component.getShowCheckDigits());
+			}
+			symbol.setStartStopDelimiter(component.getStartStopDelimiter());
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Code93Component component)
+		{
+			// ANSI/AIM BC5
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Code93Component component)
+		{
+			return "OKAPI-93";
+		}
+	}
+
+	static class DataBarType extends OkapiElementType<DataBarComponent>
+	{
+		DataBarType()
+		{
+			super(DataBarComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(DataBarComponent component)
+		{
+			DataBar14 symbol = new DataBar14();
+			if (component.getMode() != null)
+			{
+				switch (component.getMode())
+				{
+					case OMNI:
+						symbol.setMode(DataBar14.Mode.OMNI);
+						break;
+					case STACKED:
+						symbol.setMode(DataBar14.Mode.STACKED);
+						break;
+					case LINEAR:
+					default:
+						symbol.setMode(DataBar14.Mode.LINEAR);
+						break;
+				}
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void applySizes(DataBarComponent component, Symbol symbol, double modulePt, double unitsToPoints)
+		{
+			Double separatorHeight = component.getSeparatorHeight();
+			if (separatorHeight != null)
+			{
+				// Okapi needs at least one module
+				((DataBar14) symbol).setSeparatorHeight(Math.max(1, toModules(separatorHeight, modulePt, unitsToPoints)));
+			}
+		}
+
+		@Override
+		public void verify(DataBarComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, DataBarComponent.PROPERTY_SEPARATOR_HEIGHT, component.getSeparatorHeight());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(DataBarComponent component)
+		{
+			// GS1 General Specifications: DataBar needs no quiet zone
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(DataBarComponent component)
+		{
+			// the check digit is added
+			return "0950110153000";
+		}
+	}
+
+	static class DataBarLimitedType extends OkapiElementType<DataBarLimitedComponent>
+	{
+		DataBarLimitedType()
+		{
+			super(DataBarLimitedComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(DataBarLimitedComponent component)
+		{
+			DataBarLimited symbol = new DataBarLimited();
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(DataBarLimitedComponent component)
+		{
+			// GS1 General Specifications: DataBar needs no quiet zone
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(DataBarLimitedComponent component)
+		{
+			// the check digit is added
+			return "0950110153000";
+		}
+	}
+
+	static class DpdCodeType extends OkapiElementType<DPDCodeComponent>
+	{
+		DpdCodeType()
+		{
+			super(DPDCodeComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(DPDCodeComponent component)
+		{
+			DpdCode symbol = new DpdCode();
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(DPDCodeComponent component)
+		{
+			// DPD Parcel Label Specification: 5 mm at the largest module of 0.4 mm, rounded up
+			return 13;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(DPDCodeComponent component)
+		{
+			return "%000393206219912345678101040";
+		}
+	}
+
+	static class LogmarsType extends OkapiElementType<LOGMARSComponent>
+	{
+		LogmarsType()
+		{
+			super(LOGMARSComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(LOGMARSComponent component)
+		{
+			Logmars symbol = new Logmars();
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(LOGMARSComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, LOGMARSComponent.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(LOGMARSComponent component)
+		{
+			// a Code 39 symbol: ISO/IEC 16388
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(LOGMARSComponent component)
+		{
+			return "LOGMARS-1";
+		}
+	}
+
+	static class MsiPlesseyType extends OkapiElementType<MSIPlesseyComponent>
+	{
+		MsiPlesseyType()
+		{
+			super(MSIPlesseyComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(MSIPlesseyComponent component)
+		{
+			MsiPlessey symbol = new MsiPlessey();
+			if (component.getCheckDigit() != null)
+			{
+				switch (component.getCheckDigit())
+				{
+					case MOD10:
+						symbol.setCheckDigit(MsiPlessey.CheckDigit.MOD10);
+						break;
+					case MOD10_MOD10:
+						symbol.setCheckDigit(MsiPlessey.CheckDigit.MOD10_MOD10);
+						break;
+					case MOD11:
+						symbol.setCheckDigit(MsiPlessey.CheckDigit.MOD11);
+						break;
+					case MOD11_MOD10:
+						symbol.setCheckDigit(MsiPlessey.CheckDigit.MOD11_MOD10);
+						break;
+					case NONE:
+					default:
+						symbol.setCheckDigit(MsiPlessey.CheckDigit.NONE);
+						break;
+				}
+			}
+			if (component.getCheckDigitInHumanReadableText() != null)
+			{
+				symbol.setCheckDigitInHumanReadableText(component.getCheckDigitInHumanReadableText());
+			}
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(MSIPlesseyComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, MSIPlesseyComponent.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(MSIPlesseyComponent component)
+		{
+			// no standard value found; Zint uses TEC-IT's 12
+			return 12;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(MSIPlesseyComponent component)
+		{
+			return "1234567";
+		}
+	}
+
+	static class Nve18Type extends OkapiElementType<NVE18Component>
+	{
+		Nve18Type()
+		{
+			super(NVE18Component.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(NVE18Component component)
+		{
+			Nve18 symbol = new Nve18();
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(NVE18Component component)
+		{
+			// a Code 128 symbol: ISO/IEC 15417
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(NVE18Component component)
+		{
+			// the check digit is added
+			return "34012345000000001";
+		}
+	}
+
+	static class PznType extends OkapiElementType<PZNComponent>
+	{
+		PznType()
+		{
+			super(PZNComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(PZNComponent component)
+		{
+			Pharmazentralnummer symbol = new Pharmazentralnummer();
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(PZNComponent component)
+		{
+			// a Code 39 symbol: ISO/IEC 16388
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(PZNComponent component)
+		{
+			// the check digit is added
+			return "1234567";
+		}
+	}
+
+	static class PlesseyType extends OkapiElementType<PlesseyComponent>
+	{
+		PlesseyType()
+		{
+			super(PlesseyComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(PlesseyComponent component)
+		{
+			Plessey symbol = new Plessey();
+			if (component.getCheckDigitInHumanReadableText() != null)
+			{
+				symbol.setCheckDigitInHumanReadableText(component.getCheckDigitInHumanReadableText());
+			}
+			if (component.getModuleWidthRatio() != null)
+			{
+				symbol.setModuleWidthRatio(component.getModuleWidthRatio());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void verify(PlesseyComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, PlesseyComponent.PROPERTY_MODULE_WIDTH_RATIO, component.getModuleWidthRatio());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(PlesseyComponent component)
+		{
+			// no standard value found; Zint uses MSI Plessey's 12
+			return 12;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(PlesseyComponent component)
+		{
+			return "12345ABCDEF";
+		}
+	}
+
+	static class TelepenType extends OkapiElementType<TelepenComponent>
+	{
+		TelepenType()
+		{
+			super(TelepenComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		private static boolean isNumeric(TelepenComponent component)
+		{
+			return component.getMode() == TelepenModeEnum.NUMERIC;
+		}
+
+		@Override
+		public Symbol createSymbol(TelepenComponent component)
+		{
+			Telepen symbol = new Telepen(isNumeric(component) ? Telepen.Mode.NUMERIC : Telepen.Mode.NORMAL);
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(TelepenComponent component)
+		{
+			// AIM Europe USS Telepen
+			return 10;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(TelepenComponent component)
+		{
+			return isNumeric(component) ? "1234567890" : "Okapi Telepen";
+		}
+	}
+
+	static class PharmacodeType extends OkapiElementType<PharmacodeComponent>
+	{
+		PharmacodeType()
+		{
+			super(PharmacodeComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(PharmacodeComponent component)
+		{
+			return new Pharmacode();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(PharmacodeComponent component)
+		{
+			// Laetus Pharmacode Guide: 6 mm at the 1 mm narrow bar, as Zint
+			return 6;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(PharmacodeComponent component)
+		{
+			return "1234";
+		}
+	}
+
+	static class Pharmacode2TrackType extends OkapiElementType<Pharmacode2TrackComponent>
+	{
+		Pharmacode2TrackType()
+		{
+			super(Pharmacode2TrackComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return false;
+		}
+
+		@Override
+		public Symbol createSymbol(Pharmacode2TrackComponent component)
+		{
+			return new Pharmacode2Track();
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(Pharmacode2TrackComponent component)
+		{
+			// Laetus Pharmacode Guide: 6 mm at the 1 mm bar, as Zint
+			return 6;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(Pharmacode2TrackComponent component)
+		{
+			return "1234";
+		}
+	}
+
+	static class DataBarExpandedType extends OkapiElementType<DataBarExpandedComponent>
+	{
+		DataBarExpandedType()
+		{
+			super(DataBarExpandedComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		private static boolean isStacked(DataBarExpandedComponent component)
+		{
+			return component.getStacked() == null || component.getStacked();
+		}
+
+		@Override
+		public Symbol createSymbol(DataBarExpandedComponent component)
+		{
+			DataBarExpanded symbol = new DataBarExpanded();
+			symbol.setStacked(isStacked(component));
+			if (component.getPreferredColumns() != null)
+			{
+				symbol.setPreferredColumns(component.getPreferredColumns());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public Double getBarHeight(DataBarExpandedComponent component)
+		{
+			// one row when not stacked, which takes the element height as other linear codes
+			return isStacked(component) ? component.getBarHeight() : null;
+		}
+
+		@Override
+		public void verify(DataBarExpandedComponent component, JRVerifier verifier)
+		{
+			OkapiCompiler.verifyPositive(verifier, component, DataBarExpandedComponent.PROPERTY_BAR_HEIGHT, component.getBarHeight());
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(DataBarExpandedComponent component)
+		{
+			// GS1 General Specifications: DataBar needs no quiet zone
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(DataBarExpandedComponent component)
+		{
+			return "[01]98898765432106[3202]012345";
+		}
+	}
+
+	static class UspsPackageType extends OkapiElementType<USPSPackageComponent>
+	{
+		UspsPackageType()
+		{
+			super(USPSPackageComponent.class, Layout.LINEAR);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		@Override
+		public Symbol createSymbol(USPSPackageComponent component)
+		{
+			UspsPackage symbol = new UspsPackage();
+			applyAlignment(component.getHumanReadableAlignment(), symbol);
+			return symbol;
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(USPSPackageComponent component)
+		{
+			// Okapi draws the symbol with a margin of its own
+			return 0;
+		}
+
+		@Override
+		public String getDefaultPreviewCode(USPSPackageComponent component)
+		{
+			return "[420]52001[92]6123456789012345678901";
 		}
 	}
 }

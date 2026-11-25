@@ -38,7 +38,10 @@ import uk.org.okapibarcode.backend.Symbol;
  * A symbol is never drawn larger than its set size.
  * </p><p>
  * Linear codes have no bar height setting: the bars take the element height less the text
- * and the vertical quiet zones, in whole modules.
+ * and the vertical quiet zones, in whole modules. Stacked linear codes share that height between
+ * their rows, after the separators and the rows Okapi draws at a fixed height; a set row height
+ * ({@link OkapiElementType#getBarHeight}) caps it. A linear code whose rows all have a fixed
+ * height, such as DataBar Stacked, is sized in both directions, like a 2D code.
  * </p>
  *
  * @author Teodor Danciu (teodord@users.sourceforge.net)
@@ -105,27 +108,37 @@ final class OkapiLayout
 		Symbol bare = spec.createSymbol(jasperReportsContext);
 		int modulesH = bare.getWidth();
 		int modulesV = bare.getHeight();
+		// the number of rows that take the bar height: one for most linear codes, more for
+		// stacked ones, none where Okapi uses fixed row heights; the rest of the height doesn't follow it
+		int barRows = 0;
+		if (linear)
+		{
+			spec.barHeight = 2;
+			barRows = spec.createSymbol(jasperReportsContext).getHeight() - modulesV;
+		}
+		// whether the height follows the module size alone, as for 2D codes, rather than the element height
+		boolean fixedHeight = barRows == 0;
 
 		double module;
 		boolean clip;
 		if (setModule != null
 				&& (modulesH + 2 * quietModules(setQuietH, defaultQuietH, setModule)) * setModule <= width + EPSILON
-				&& (linear || (modulesV + 2 * quietModules(setQuietV, defaultQuietV, setModule)) * setModule <= height + EPSILON))
+				&& (!fixedHeight || (modulesV + 2 * quietModules(setQuietV, defaultQuietV, setModule)) * setModule <= height + EPSILON))
 		{
 			module = setModule;
 			clip = true;
 		}
-		else if (setModule != null && !linear)
+		else if (setModule != null && fixedHeight)
 		{
-			// a 2D code keeps the set size and the image shrinks it
+			// a 2D code, or a linear one of fixed height, keeps the set size and the image shrinks it
 			module = setModule;
 			clip = false;
 		}
 		else
 		{
-			// fill the element: linear codes across their width, 2D codes in both directions
+			// fill the element: linear codes across their width, 2D codes and fixed heights in both directions
 			module = fitModule(width, modulesH, setQuietH, defaultQuietH);
-			if (!linear)
+			if (fixedHeight)
 			{
 				module = Math.min(module, fitModule(height, modulesV, setQuietV, defaultQuietV));
 			}
@@ -139,12 +152,22 @@ final class OkapiLayout
 		Symbol symbol;
 		if (linear)
 		{
-			// bars take what the text and the vertical quiet zones leave, in whole modules
+			// bars take what the text, the vertical quiet zones and any fixed rows leave, in whole modules
 			int available = (int) Math.floor(height / module + EPSILON);
 			spec.barHeight = Math.max(1, available);
 			symbol = spec.createSymbol(jasperReportsContext);
-			int other = symbol.getHeight() - symbol.getBarHeight();
-			int barHeight = Math.max(1, available - other);
+			int barHeight = spec.barHeight;
+			if (barRows > 0)
+			{
+				int other = symbol.getHeight() - barRows * spec.barHeight;
+				barHeight = Math.max(1, (available - other) / barRows);
+				Double setBarHeight = toPoints(type.getBarHeight(component), unitsToPoints);
+				if (setBarHeight != null)
+				{
+					// a set row height is never exceeded, but rows get lower when the element doesn't fit them
+					barHeight = Math.min(barHeight, Math.max(1, (int) Math.round(setBarHeight / module)));
+				}
+			}
 			if (barHeight != spec.barHeight)
 			{
 				spec.barHeight = barHeight;

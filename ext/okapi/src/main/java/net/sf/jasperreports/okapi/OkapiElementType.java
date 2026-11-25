@@ -173,6 +173,16 @@ abstract class OkapiElementType<C extends OkapiComponent>
 	}
 
 	/**
+	 * The set height of the rows that take the bar height, in report units, or null when the
+	 * component sets none and the rows share the element height.
+	 */
+	public Double getBarHeight(C component)
+	{
+		// most types have no row height setting
+		return null;
+	}
+
+	/**
 	 * The code drawn in the design preview when the code expression is not a literal.
 	 */
 	public abstract String getDefaultPreviewCode(C component);

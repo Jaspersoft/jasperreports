@@ -128,6 +128,20 @@ public class OkapiTest
 			"kind=\"okapi:Interleaved2Of5\"", "checkDigit=\"Mod10\"",
 			"kind=\"okapi:ITF14\"", "moduleWidthRatio=\"2.4\"",
 			"kind=\"okapi:UPC\"", "mode=\"UPCE\"", "showCheckDigit=\"false\"", "guardPatternExtraHeight=\"4.0\"",
+			"kind=\"okapi:ChannelCode\"", "preferredNumberOfChannels=\"4\"",
+			"kind=\"okapi:Code11\"", "checkDigitCount=\"1\"", "startDelimiter=\"[\"", "stopDelimiter=\"]\"",
+			"kind=\"okapi:Code32\"",
+			"kind=\"okapi:Code93\"", "showCheckDigits=\"false\"", "startStopDelimiter=\"*\"",
+			"kind=\"okapi:DataBar\"", "mode=\"Omni\"", "separatorHeight=\"2.0\"",
+			"kind=\"okapi:DataBarLimited\"", "kind=\"okapi:DPDCode\"",
+			"kind=\"okapi:LOGMARS\"", "moduleWidthRatio=\"2.75\"",
+			"kind=\"okapi:MSIPlessey\"", "checkDigit=\"Mod11Mod10\"", "checkDigitInHumanReadableText=\"false\"",
+			"kind=\"okapi:NVE18\"", "kind=\"okapi:PZN\"",
+			"kind=\"okapi:Plessey\"", "moduleWidthRatio=\"2.6\"",
+			"kind=\"okapi:Telepen\"", "mode=\"Numeric\"",
+			"kind=\"okapi:Pharmacode\"", "kind=\"okapi:Pharmacode2Track\"",
+			"kind=\"okapi:DataBarExpanded\"", "humanReadableLocation=\"Top\"", "preferredColumns=\"3\"", "stacked=\"false\"", "barHeight=\"12.0\"",
+			"kind=\"okapi:USPSPackage\"", "humanReadableAlignment=\"Right\"",
 		};
 		for (String text : expected)
 		{
@@ -161,13 +175,16 @@ public class OkapiTest
 			"Auto evaluation time is not supported for barcodes",
 			"Barcode moduleWidthRatio must be positive: 0.0",
 			"Barcode guardPatternExtraHeight must not be negative: -2.0",
+			"Barcode separatorHeight must be positive: 0.0",
+			"Barcode barHeight must be positive: -1.0",
 		};
 		for (String message : expected)
 		{
 			assertTrue(messages.contains(message), "missing fault \"" + message + "\" in " + messages);
 		}
-		// Okapi's own setter checks: the QR version and the ECI mode
-		assertEquals(messages.size(), expected.length + 2, "faults: " + messages);
+		// a second moduleWidthRatio fault, of Code 11, and Okapi's own setter checks: the QR version,
+		// the ECI mode, the Code 11 check digit count, the Channel Code channels and the DataBar Expanded columns
+		assertEquals(messages.size(), expected.length + 1 + 5, "faults: " + messages);
 	}
 
 	@Test
@@ -281,6 +298,83 @@ public class OkapiTest
 	}
 
 	@Test
+	public void linear2() throws JRException, IOException, NotFoundException
+	{
+		Map<String, JRPrintImage> images = images(fill("OkapiLinear2.jrxml"));
+
+		// the decoder strips the two check characters
+		check(images.get("code93"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI-93");
+		check(images.get("code93Text"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "OKAPI-93");
+		// Code 39 based: the decoder reads the raw Code 39 data
+		// LOGMARS adds the mod 43 check character of LOGMARS-1, D
+		check(images.get("logmars"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "LOGMARS-1D");
+		// PZN: a leading - and the mod 11 check digit 8 (1*1 + 2*2 + ... + 7*7 = 140)
+		check(images.get("pzn"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "-12345678");
+		// Code 32 encodes the 9 digits, with the check digit 8, in base 32
+		assertEquals(fromBase32(decode(images.get("code32"))), 123456788L);
+		// Code 128 based: NVE-18 is (00) and the GS1 check digit 7, DPD the content as it is
+		check(images.get("nve18"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "00340123450000000017");
+		check(images.get("dpd"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "%000393206219912345678101040");
+		check(images.get("uspsPackage"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "42052001926123456789012345678901");
+
+		// DataBar: the decoder reads the GTIN with its check digit
+		check(images.get("dataBar"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "09501101530003");
+		check(images.get("dataBarOmni"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "09501101530003");
+		// the stacked rows have fixed heights: sized in both directions, so narrower than the element
+		check(images.get("dataBarStacked"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "09501101530003");
+		assertEquals(size(images.get("dataBarStacked")).getHeight(), 56, TOLERANCE);
+		assertTrue(size(images.get("dataBarStacked")).getWidth() < 250);
+		check(images.get("dataBarExpanded"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE,
+				"(01)98898765432106(3202)012345");
+		check(images.get("dataBarExpandedStacked"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE,
+				"(01)98898765432106(3202)012345(15)991231");
+		// two rows of the set 10 modules of 1 point and three separator rows, at the set module width
+		check(images.get("dataBarExpandedRows"), ScaleImageEnum.CLIP, RotationEnum.NONE,
+				"(01)98898765432106(3202)012345(15)991231");
+		assertEquals(size(images.get("dataBarExpandedRows")).getHeight(), 23, TOLERANCE);
+
+		// no decoder reads these: as wide as the element
+		for (String key : new String[]{"code11", "code11Text", "dataBarLimited", "channelCode", "msiPlessey",
+				"plessey", "telepen", "telepenNumeric", "pharmacode", "pharmacode2Track"})
+		{
+			assertEquals(images.get(key).getScaleImage(), ScaleImageEnum.RETAIN_SHAPE, key);
+			assertEquals(size(images.get(key)).getWidth(), 250, TOLERANCE, key);
+			assertTrue(size(images.get(key)).getHeight() <= 56 + TOLERANCE, key);
+		}
+	}
+
+	private static long fromBase32(String code)
+	{
+		String digits = "0123456789BCDFGHJKLMNPQRSTUVWXYZ";
+		long value = 0;
+		for (char c : code.toCharArray())
+		{
+			value = 32 * value + digits.indexOf(c);
+		}
+		return value;
+	}
+
+	@Test
+	public void previewDefaultCodes() throws JRException, IOException
+	{
+		// every type, and each mode with a default code of its own, previews a code computed by the report
+		JasperDesign design = load("OkapiPreviewDefaults.jrxml");
+		JasperPrint preview = new ReportConverter(DefaultJasperReportsContext.getInstance(), design, false).getJasperPrint();
+		Map<String, String> keys = new HashMap<>();
+		for (JRElement element : design.getTitle().getElements())
+		{
+			keys.put(String.valueOf(element.getUUID()), element.getKey());
+		}
+		Map<String, JRPrintImage> images = new HashMap<>();
+		collectImages(preview.getPages().get(0).getElements(), keys, images);
+		assertEquals(images.size(), design.getTitle().getElements().length);
+		for (Map.Entry<String, JRPrintImage> entry : images.entrySet())
+		{
+			assertNotNull(entry.getValue().getRenderer(), entry.getKey() + " has no preview");
+		}
+	}
+
+	@Test
 	public void designPreview() throws JRException, IOException, NotFoundException
 	{
 		JasperDesign design = load("OkapiFill.jrxml");
@@ -361,7 +455,7 @@ public class OkapiTest
 				}
 			}
 		}
-		assertEquals(concrete, 10, "concrete component classes found");
+		assertEquals(concrete, 27, "concrete component classes found");
 	}
 
 	@Test

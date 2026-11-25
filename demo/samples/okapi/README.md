@@ -9,8 +9,8 @@ Shows how barcodes can be included in reports using the Okapi barcode components
 ## <a name='okapi'>Barcodes (Okapi Barcode Components)</a>
 
 **Description / Goal** \
-How to draw Code 128, Code 39, Codabar, 2 of 5, ITF-14, EAN, UPC and QR Code barcodes with the
-`okapi:*` components, which use the
+How to draw Code 128, Code 39, Codabar, 2 of 5, ITF-14, EAN, UPC, GS1 DataBar, QR Code and other barcodes
+with the `okapi:*` components, which use the
 [Okapi Barcode](https://github.com/woo-j/OkapiBarcode) library.
 
 **Other Samples**\
@@ -63,8 +63,30 @@ The linear types in this sample are:
 | `okapi:Code2Of5` | digits | `mode` (`Matrix`, `Industrial`, `IATA`, `DataLogic`, `DPLeitcode`, `DPIdentcode`), `moduleWidthRatio` |
 | `okapi:EAN` | 12 or 7 digits, and an add-on after `+`; the check digit is added | `mode` (`EAN13`, `EAN8`), `guardPatternExtraHeight` |
 | `okapi:UPC` | 11 or 7 digits, and an add-on after `+`; the check digit is added | `mode` (`UPCA`, `UPCE`), `showCheckDigit`, `guardPatternExtraHeight` |
+| `okapi:LOGMARS` | as Code 39; a mod 43 check character is added | `moduleWidthRatio` |
+| `okapi:PZN` | up to 7 digits; the check digit is added | |
+| `okapi:Code32` | up to 8 digits; the check digit is added | |
+| `okapi:NVE18` | up to 17 digits; the (00) application identifier and the check digit are added | |
+| `okapi:DPDCode` | 27 or 28 characters | |
+| `okapi:USPSPackage` | GS1 data, digits with the application identifiers in square brackets, of even length | `humanReadableAlignment` only; the banner and the number are always drawn |
+| `okapi:Code93` | all 128 ASCII characters; the two check characters are added | `showCheckDigits`, `startStopDelimiter` |
+| `okapi:Code11` | digits and `-`; the check digits are added | `moduleWidthRatio`, `checkDigitCount` (1, 2), `startDelimiter`, `stopDelimiter` |
+| `okapi:Telepen` | ASCII text, or digits | `mode` (`Normal`, `Numeric`) |
+| `okapi:Plessey` | hexadecimal digits; the check digits are added | `checkDigitInHumanReadableText`, `moduleWidthRatio` |
+| `okapi:MSIPlessey` | digits | `checkDigit` (`None`, `Mod10`, `Mod10Mod10`, `Mod11`, `Mod11Mod10`), `checkDigitInHumanReadableText`, `moduleWidthRatio` |
+| `okapi:ChannelCode` | up to 7 digits | `preferredNumberOfChannels` (3 to 8) |
+| `okapi:DataBar` | a GTIN of up to 13 digits; the check digit is added | `mode` (`Linear`, `Omni`, `Stacked`), `separatorHeight` |
+| `okapi:DataBarLimited` | a GTIN of up to 13 digits, 13 digits starting with 0 or 1; the check digit is added | |
+| `okapi:DataBarExpanded` | GS1 data, with the application identifiers in square brackets | `stacked`, `preferredColumns`, `barHeight` |
+| `okapi:Pharmacode` | a number from 3 to 131070 | |
+| `okapi:Pharmacode2Track` | a number from 4 to 64570080 | |
 
 `moduleWidthRatio` is the width of the wide bars as a multiple of the narrow ones.
+DataBar and DataBar Expanded can be stacked in rows. The stacked DataBar Expanded rows share the
+element height, unless `barHeight`, the height of a row in report units, is set.
+DataBar Stacked rows have a fixed height, so it is sized like QR Code. Pharmacode and
+Pharmacode2Track draw no human-readable text, DataBar only draws it in the `Linear` mode, and
+DataBar Expanded only when it is not stacked.
 
 ### Running the Sample
 
@@ -75,4 +97,5 @@ mvn clean compile exec:java
 ```
 
 The report is compiled, filled and exported to `target/reports`, in PDF and the other supported formats.
-Its first page shows Code 128, EAN and QR Code, and its second page the other linear types.
+Its first page shows Code 128, EAN and QR Code, its second page Code 39, Codabar, 2 of 5 and UPC,
+and its third page the other linear types.
