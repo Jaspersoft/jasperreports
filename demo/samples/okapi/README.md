@@ -158,6 +158,16 @@ mvn clean compile exec:java
 ```
 
 The report is compiled, filled and exported to `target/reports`, in PDF and the other supported formats.
-Its first page shows Code 128, EAN and QR Code, its second page Code 39, Codabar, 2 of 5 and UPC,
-its third page the other linear types, its fourth page the 2D types, and its fifth page the stacked and
-postal types.
+The report shows every barcode type, in six sections: general-purpose linear barcodes, retail and GS1
+barcodes, industry-specific linear barcodes, stacked barcodes, 2D barcodes and postal barcodes. Each section
+is the header of a report group with no expression, so it prints once; every group but the first starts on
+a new page. The header holds a band with the section title, then for each type a band with its title, a
+note and the first row of examples, and a band for each further row, so that a type can continue on the
+next page.
+
+Each type is shown with the default settings, then with each setting it supports. The settings every
+type has are combined in a few more barcodes, to keep the report short: one with the human-readable text
+moved and aligned in another font, one without text, one with quiet zones and element colours, two aligned
+(with a `moduleWidth` that leaves free space in the element, or in the space a fixed-shape barcode leaves),
+one rotated by its `rotation` setting and one rotated by its style. The caption above each barcode lists
+the settings that differ from the defaults.
