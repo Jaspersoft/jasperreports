@@ -134,6 +134,21 @@ row height. Code 16K, Code 49, Royal Mail, KIX, Japan Post and Australia Post ha
 `moduleWidth`: they fill the element, keeping their shape. POSTNET and USPS Intelligent Mail draw no
 human-readable text unless `humanReadableLocation` is set.
 
+`okapi:Composite` draws a GS1 Composite barcode: a 2D component above a linear component. The code
+expression gives the 2D component's GS1 data and `linearContentExpression` the linear component's; when
+either is null, no barcode is drawn.
+
+| Setting | Values |
+| --- | --- |
+| `symbology` | the linear component: `Code128` (GS1-128, the default), `EAN`, `UPCA`, `UPCE`, `DataBar`, `DataBarStacked`, `DataBarOmni`, `DataBarLimited`, `DataBarExpanded`, `DataBarExpandedStacked` |
+| `preferredMode` | the smallest 2D component: `CCA` (the default), `CCB`, or `CCC` with `Code128` only; a larger one is used when the data doesn't fit |
+| `barHeight` | the height of the linear bars in report units; when not set, they take the height the 2D component leaves |
+| `separatorHeight` | not with `EAN`, `UPCA` and `UPCE` |
+| `guardPatternExtraHeight` | with `EAN`, `UPCA` and `UPCE` only |
+| `preferredColumns` | with `DataBarExpandedStacked` only, 1 to 10 |
+
+The text is the linear component's, and the stacked DataBar variants draw none.
+
 ### Running the Sample
 
 Run the commands below in the sample directory:

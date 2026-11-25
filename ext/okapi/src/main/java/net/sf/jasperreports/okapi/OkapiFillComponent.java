@@ -83,8 +83,9 @@ class OkapiFillComponent extends BaseFillComponent
 
 	protected void evaluateBarcode(byte evaluation) throws JRException
 	{
-		Object[] values = evaluateValues(OkapiElementTypes.getType(component), evaluation);
-		layout = values[0] == null
+		OkapiElementType<?> type = OkapiElementTypes.getType(component);
+		Object[] values = evaluateValues(type, evaluation);
+		layout = isMissingRequiredValue(type, values)
 				? null
 				: OkapiImageFactory.createImage(fillContext.getFiller().getJasperReportsContext(),
 						fillContext.getComponentElement(), values,
@@ -103,6 +104,22 @@ class OkapiFillComponent extends BaseFillComponent
 			values[i] = toValue(fillContext.evaluate(expression.get(typedComponent), evaluation), expression.getValueClass());
 		}
 		return values;
+	}
+
+	/**
+	 * Whether the value of a required expression, the code among them, is null: then no barcode is drawn.
+	 */
+	private static boolean isMissingRequiredValue(OkapiElementType<?> type, Object[] values)
+	{
+		List<? extends ExpressionProperty<?>> expressions = type.getExpressions();
+		for (int i = 0; i < values.length; i++)
+		{
+			if (values[i] == null && expressions.get(i).isRequired())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	static Object toValue(Object value, Class<?> valueClass)

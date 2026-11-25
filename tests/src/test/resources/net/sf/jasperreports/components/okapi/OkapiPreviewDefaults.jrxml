@@ -1,6 +1,6 @@
-<jasperReport name="OkapiPreviewDefaults" pageWidth="595" pageHeight="1400" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e500">
+<jasperReport name="OkapiPreviewDefaults" pageWidth="595" pageHeight="1610" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e500">
 	<parameter name="code" class="java.lang.String"/>
-	<title height="1300">
+	<title height="1530">
 		<element kind="component" key="code128" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e501" x="0" y="0" width="125" height="80">
 			<component kind="okapi:Code128">
 				<codeExpression><![CDATA[$P{code}]]></codeExpression>
@@ -281,6 +281,66 @@
 		<element kind="component" key="australiaPost" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e556" x="390" y="1170" width="125" height="80">
 			<component kind="okapi:AustraliaPost">
 				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeCode128" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e557" x="0" y="1260" width="125" height="80">
+			<component kind="okapi:Composite" symbology="Code128">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeEAN" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e558" x="130" y="1260" width="125" height="80">
+			<component kind="okapi:Composite" symbology="EAN">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeUPCA" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e559" x="260" y="1260" width="125" height="80">
+			<component kind="okapi:Composite" symbology="UPCA">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeUPCE" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e560" x="390" y="1260" width="125" height="80">
+			<component kind="okapi:Composite" symbology="UPCE">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeDataBar" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e561" x="0" y="1350" width="125" height="80">
+			<component kind="okapi:Composite" symbology="DataBar">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeDataBarStacked" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e562" x="130" y="1350" width="125" height="80">
+			<component kind="okapi:Composite" symbology="DataBarStacked">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeDataBarOmni" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e563" x="260" y="1350" width="125" height="80">
+			<component kind="okapi:Composite" symbology="DataBarOmni">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeDataBarLimited" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e564" x="390" y="1350" width="125" height="80">
+			<component kind="okapi:Composite" symbology="DataBarLimited">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeDataBarExpanded" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e565" x="0" y="1440" width="125" height="80">
+			<component kind="okapi:Composite" symbology="DataBarExpanded">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="component" key="compositeDataBarExpandedStacked" uuid="8e3b2c74-5f50-4b71-9c20-4c76d1b7e566" x="130" y="1440" width="125" height="80">
+			<component kind="okapi:Composite" symbology="DataBarExpandedStacked">
+				<codeExpression><![CDATA[$P{code}]]></codeExpression>
+				<linearContentExpression><![CDATA[$P{code}]]></linearContentExpression>
 			</component>
 		</element>
 	</title>

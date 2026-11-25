@@ -586,7 +586,7 @@ moduleWidth="1" hImageAlign="Center"]]></text>
 			</element>
 		</band>
 	</detail>
-	<summary height="560">
+	<summary height="755">
 		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d179" x="0" y="0" width="515" height="20" style="Type Title">
 			<text><![CDATA[PDF417]]></text>
 		</element>
@@ -712,6 +712,63 @@ moduleWidth="1" hImageAlign="Center"]]></text>
 		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d211" x="177" y="480" width="160" height="50" style="Barcode">
 			<component kind="okapi:KoreaPost">
 				<codeExpression><![CDATA["123456"]]></codeExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d212" x="0" y="540" width="515" height="20" style="Type Title">
+			<text><![CDATA[GS1 Composite]]></text>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d213" x="0" y="560" width="160" height="20" style="Caption">
+			<text><![CDATA[GS1-128 with CC-A]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d214" x="0" y="580" width="160" height="75" style="Barcode">
+			<component kind="okapi:Composite">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d215" x="177" y="560" width="160" height="20" style="Caption">
+			<text><![CDATA[EAN-13 with CC-A]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d216" x="177" y="580" width="160" height="75" style="Barcode">
+			<component kind="okapi:Composite" symbology="EAN">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["590123412345"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d217" x="355" y="560" width="160" height="20" style="Caption">
+			<text><![CDATA[DataBar Expanded Stacked]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d218" x="355" y="580" width="160" height="75" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarExpandedStacked">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106[3202]012345"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d219" x="0" y="660" width="160" height="20" style="Caption">
+			<text><![CDATA[UPC-A with CC-A]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d220" x="0" y="680" width="160" height="75" style="Barcode">
+			<component kind="okapi:Composite" symbology="UPCA">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["03600029145"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d221" x="177" y="660" width="160" height="20" style="Caption">
+			<text><![CDATA[DataBar Limited with CC-B]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d222" x="177" y="680" width="160" height="75" style="Barcode">
+			<component kind="okapi:Composite" symbology="DataBarLimited" preferredMode="CCB">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["0950110153000"]]></linearContentExpression>
+			</component>
+		</element>
+		<element kind="staticText" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d223" x="355" y="660" width="160" height="20" style="Caption">
+			<text><![CDATA[GS1-128 with CC-C]]></text>
+		</element>
+		<element kind="component" uuid="b6c0d9a2-5e7f-4c11-8a3b-0f2e61c4d224" x="355" y="680" width="160" height="75" style="Barcode">
+			<component kind="okapi:Composite" preferredMode="CCC">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106"]]></linearContentExpression>
 			</component>
 		</element>
 	</summary>

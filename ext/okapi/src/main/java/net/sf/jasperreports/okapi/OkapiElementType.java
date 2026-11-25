@@ -68,13 +68,16 @@ abstract class OkapiElementType<C extends OkapiComponent>
 		private final Function<C, JRExpression> getter;
 		private final BiConsumer<C, JRExpression> setter;
 		private final Class<?> valueClass;
+		private final boolean required;
 
-		ExpressionProperty(String name, Function<C, JRExpression> getter, BiConsumer<C, JRExpression> setter, Class<?> valueClass)
+		ExpressionProperty(String name, Function<C, JRExpression> getter, BiConsumer<C, JRExpression> setter,
+				Class<?> valueClass, boolean required)
 		{
 			this.name = name;
 			this.getter = getter;
 			this.setter = setter;
 			this.valueClass = valueClass;
+			this.required = required;
 		}
 
 		public String getName()
@@ -99,6 +102,14 @@ abstract class OkapiElementType<C extends OkapiComponent>
 		{
 			return valueClass;
 		}
+
+		/**
+		 * Whether the barcode needs a value: when the value is null, no barcode is drawn.
+		 */
+		public boolean isRequired()
+		{
+			return required;
+		}
 	}
 
 	private final Class<C> componentClass;
@@ -110,12 +121,18 @@ abstract class OkapiElementType<C extends OkapiComponent>
 		this.componentClass = componentClass;
 		this.layout = layout;
 		addExpression(OkapiComponent.PROPERTY_CODE_EXPRESSION,
-				OkapiComponent::getCodeExpression, OkapiComponent::setCodeExpression, String.class);
+				OkapiComponent::getCodeExpression, OkapiComponent::setCodeExpression, String.class, true);
 	}
 
-	protected final void addExpression(String name, Function<C, JRExpression> getter, BiConsumer<C, JRExpression> setter, Class<?> valueClass)
+	/**
+	 * Adds an expression after the code expression.
+	 *
+	 * @param required whether the barcode needs a value, see {@link ExpressionProperty#isRequired()}
+	 */
+	protected final void addExpression(String name, Function<C, JRExpression> getter, BiConsumer<C, JRExpression> setter,
+			Class<?> valueClass, boolean required)
 	{
-		expressions.add(new ExpressionProperty<>(name, getter, setter, valueClass));
+		expressions.add(new ExpressionProperty<>(name, getter, setter, valueClass, required));
 	}
 
 	public Class<C> getComponentClass()

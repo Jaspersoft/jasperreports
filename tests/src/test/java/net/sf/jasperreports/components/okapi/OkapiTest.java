@@ -164,6 +164,9 @@ public class OkapiTest
 			"kind=\"okapi:USPSIntelligentMail\"", "shortHeightPercentage=\"0.3\"", "longHeightPercentage=\"0.6\"",
 			"kind=\"okapi:KoreaPost\"", "kind=\"okapi:RoyalMail4State\"", "kind=\"okapi:KIXCode\"",
 			"kind=\"okapi:JapanPost\"", "kind=\"okapi:AustraliaPost\"", "mode=\"Redirect\"",
+			"kind=\"okapi:Composite\"", "symbology=\"DataBarExpandedStacked\"", "preferredMode=\"CCB\"", "barHeight=\"8.0\"",
+			"separatorHeight=\"1.5\"", "guardPatternExtraHeight=\"2.5\"", "preferredColumns=\"4\"",
+			"<linearContentExpression><![CDATA[\"[01]98898765432106\"]]></linearContentExpression>",
 		};
 		for (String text : expected)
 		{
@@ -209,6 +212,11 @@ public class OkapiTest
 			"Barcode preferredEccLevel is not allowed in mode Micro",
 			"Barcode variant is not allowed with dataColumns or rows",
 			"Barcode barHeight must be positive: 0.0",
+			"Barcode linearContentExpression is null",
+			"Barcode preferredMode CCC is not allowed with symbology EAN",
+			"Barcode separatorHeight is not allowed with symbology UPCA",
+			"Barcode guardPatternExtraHeight is not allowed with symbology Code128",
+			"Barcode preferredColumns is not allowed with symbology DataBarExpanded",
 		};
 		for (String message : expected)
 		{
@@ -458,6 +466,42 @@ public class OkapiTest
 		}
 	}
 
+	@Test
+	public void composite() throws JRException, IOException, NotFoundException
+	{
+		Map<String, JRPrintImage> images = images(fill("OkapiComposite.jrxml"));
+		assertEquals(images.size(), 14);
+
+		// the decoder reads the linear component only; the CC-A and CC-B 2D components are not PDF417 symbols
+		check(images.get("ean"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "5901234123457");
+		check(images.get("eanGuard"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "5901234123457");
+		check(images.get("upca"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "036000291452");
+		check(images.get("upce"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "01234565");
+		check(images.get("dataBarExpanded"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE, "(01)98898765432106(3202)012345");
+		check(images.get("dataBarExpandedStacked"), ScaleImageEnum.RETAIN_SHAPE, RotationEnum.NONE,
+				"(01)98898765432106(3202)012345");
+		assertTrue(decode(images.get("code128")).contains("0198898765432106"));
+		assertTrue(decode(images.get("code128Bar")).contains("0198898765432106"));
+
+		// a set module width and bar height that fit: drawn at them, lower than the element
+		assertEquals(images.get("code128Bar").getScaleImage(), ScaleImageEnum.CLIP);
+		assertTrue(size(images.get("code128Bar")).getHeight() < 50);
+
+		// no decoder reads the others: the DataBar linkage flag, DataBar Limited and Stacked, and CC-C (read as PDF417)
+		for (String key : new String[]{"code128", "code128Ccc", "ean", "eanGuard", "upca", "upce", "dataBar",
+				"dataBarOmni", "dataBarLimited", "dataBarExpanded", "dataBarExpandedStacked", "ccb"})
+		{
+			// across the element width, the bars taking the height the 2D component leaves, in whole modules
+			assertEquals(images.get(key).getScaleImage(), ScaleImageEnum.RETAIN_SHAPE, key);
+			assertEquals(size(images.get(key)).getWidth(), 250, TOLERANCE, key);
+			assertTrue(size(images.get(key)).getHeight() <= 100 + TOLERANCE, key);
+		}
+		// DataBar Stacked rows have a fixed height: sized in both directions, like a 2D code
+		assertEquals(images.get("dataBarStacked").getScaleImage(), ScaleImageEnum.RETAIN_SHAPE);
+		assertEquals(size(images.get("dataBarStacked")).getHeight(), 100, TOLERANCE);
+		assertTrue(size(images.get("dataBarStacked")).getWidth() <= 250 + TOLERANCE);
+	}
+
 	private static long fromBase32(String code)
 	{
 		String digits = "0123456789BCDFGHJKLMNPQRSTUVWXYZ";
@@ -570,7 +614,7 @@ public class OkapiTest
 				}
 			}
 		}
-		assertEquals(concrete, 47, "concrete component classes found");
+		assertEquals(concrete, 48, "concrete component classes found");
 	}
 
 	@Test

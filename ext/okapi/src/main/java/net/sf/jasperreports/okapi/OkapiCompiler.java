@@ -115,6 +115,15 @@ class OkapiCompiler implements ComponentCompiler
 					((OkapiSizedComponent) barcode).getModuleWidth());
 		}
 		OkapiElementType<OkapiComponent> type = OkapiElementTypes.getType(barcode);
+		for (ExpressionProperty<OkapiComponent> expression : type.getExpressions())
+		{
+			// the code expression is checked above
+			if (expression.isRequired() && expression.get(barcode) == null
+					&& !OkapiComponent.PROPERTY_CODE_EXPRESSION.equals(expression.getName()))
+			{
+				verifier.addBrokenRule("Barcode " + expression.getName() + " is null", barcode);
+			}
+		}
 		type.verify(barcode, verifier);
 
 		// Okapi validates the static settings in its setters

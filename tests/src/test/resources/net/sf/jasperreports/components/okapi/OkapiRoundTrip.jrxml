@@ -265,5 +265,11 @@
 				<codeExpression><![CDATA["UPNQR"]]></codeExpression>
 			</component>
 		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c110" x="310" y="400" width="200" height="90">
+			<component kind="okapi:Composite" symbology="DataBarExpandedStacked" preferredMode="CCB" barHeight="8.0" separatorHeight="1.5" guardPatternExtraHeight="2.5" preferredColumns="4">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA["[01]98898765432106"]]></linearContentExpression>
+			</component>
+		</element>
 	</summary>
 </jasperReport>

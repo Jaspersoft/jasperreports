@@ -11,5 +11,11 @@
 				<codeExpression><![CDATA[null]]></codeExpression>
 			</component>
 		</element>
+		<element kind="component" uuid="6c1f0a52-3d3e-4f5c-9a0e-2a54b9f1c304" x="0" y="150" width="200" height="60" style="Barcode">
+			<component kind="okapi:Composite">
+				<codeExpression><![CDATA["[21]A12345678"]]></codeExpression>
+				<linearContentExpression><![CDATA[null]]></linearContentExpression>
+			</component>
+		</element>
 	</title>
 </jasperReport>

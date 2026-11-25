@@ -45,6 +45,7 @@ import uk.org.okapibarcode.backend.Code3Of9Extended;
 import uk.org.okapibarcode.backend.Code49;
 import uk.org.okapibarcode.backend.Code93;
 import uk.org.okapibarcode.backend.CodeOne;
+import uk.org.okapibarcode.backend.Composite;
 import uk.org.okapibarcode.backend.DataBar14;
 import uk.org.okapibarcode.backend.DataBarExpanded;
 import uk.org.okapibarcode.backend.DataBarLimited;
@@ -142,6 +143,7 @@ final class OkapiElementTypes
 		register(types, new KixCodeType());
 		register(types, new JapanPostType());
 		register(types, new AustraliaPostType());
+		register(types, new CompositeType());
 		TYPES = Collections.unmodifiableMap(types);
 	}
 
@@ -370,13 +372,13 @@ final class OkapiElementTypes
 			super(QRCodeComponent.class, Layout.MATRIX);
 			addExpression(QRCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
 					QRCodeComponent::getStructuredAppendPositionExpression,
-					QRCodeComponent::setStructuredAppendPositionExpression, Integer.class);
+					QRCodeComponent::setStructuredAppendPositionExpression, Integer.class, false);
 			addExpression(QRCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
 					QRCodeComponent::getStructuredAppendTotalExpression,
-					QRCodeComponent::setStructuredAppendTotalExpression, Integer.class);
+					QRCodeComponent::setStructuredAppendTotalExpression, Integer.class, false);
 			addExpression(QRCodeComponent.PROPERTY_STRUCTURED_APPEND_PARITY_EXPRESSION,
 					QRCodeComponent::getStructuredAppendParityExpression,
-					QRCodeComponent::setStructuredAppendParityExpression, Integer.class);
+					QRCodeComponent::setStructuredAppendParityExpression, Integer.class, false);
 		}
 
 		@Override
@@ -1646,13 +1648,13 @@ final class OkapiElementTypes
 			super(DataMatrixComponent.class, Layout.MATRIX);
 			addExpression(DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
 					DataMatrixComponent::getStructuredAppendPositionExpression,
-					DataMatrixComponent::setStructuredAppendPositionExpression, Integer.class);
+					DataMatrixComponent::setStructuredAppendPositionExpression, Integer.class, false);
 			addExpression(DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
 					DataMatrixComponent::getStructuredAppendTotalExpression,
-					DataMatrixComponent::setStructuredAppendTotalExpression, Integer.class);
+					DataMatrixComponent::setStructuredAppendTotalExpression, Integer.class, false);
 			addExpression(DataMatrixComponent.PROPERTY_STRUCTURED_APPEND_FILE_ID_EXPRESSION,
 					DataMatrixComponent::getStructuredAppendFileIdExpression,
-					DataMatrixComponent::setStructuredAppendFileIdExpression, Integer.class);
+					DataMatrixComponent::setStructuredAppendFileIdExpression, Integer.class, false);
 		}
 
 		@Override
@@ -1773,13 +1775,13 @@ final class OkapiElementTypes
 			super(AztecCodeComponent.class, Layout.MATRIX);
 			addExpression(AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
 					AztecCodeComponent::getStructuredAppendPositionExpression,
-					AztecCodeComponent::setStructuredAppendPositionExpression, Integer.class);
+					AztecCodeComponent::setStructuredAppendPositionExpression, Integer.class, false);
 			addExpression(AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
 					AztecCodeComponent::getStructuredAppendTotalExpression,
-					AztecCodeComponent::setStructuredAppendTotalExpression, Integer.class);
+					AztecCodeComponent::setStructuredAppendTotalExpression, Integer.class, false);
 			addExpression(AztecCodeComponent.PROPERTY_STRUCTURED_APPEND_MESSAGE_ID_EXPRESSION,
 					AztecCodeComponent::getStructuredAppendMessageIdExpression,
-					AztecCodeComponent::setStructuredAppendMessageIdExpression, String.class);
+					AztecCodeComponent::setStructuredAppendMessageIdExpression, String.class, false);
 		}
 
 		@Override
@@ -2115,13 +2117,13 @@ final class OkapiElementTypes
 			super(MaxiCodeComponent.class, Layout.MATRIX);
 			addExpression(MaxiCodeComponent.PROPERTY_PRIMARY_EXPRESSION,
 					MaxiCodeComponent::getPrimaryExpression,
-					MaxiCodeComponent::setPrimaryExpression, String.class);
+					MaxiCodeComponent::setPrimaryExpression, String.class, false);
 			addExpression(MaxiCodeComponent.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
 					MaxiCodeComponent::getStructuredAppendPositionExpression,
-					MaxiCodeComponent::setStructuredAppendPositionExpression, Integer.class);
+					MaxiCodeComponent::setStructuredAppendPositionExpression, Integer.class, false);
 			addExpression(MaxiCodeComponent.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
 					MaxiCodeComponent::getStructuredAppendTotalExpression,
-					MaxiCodeComponent::setStructuredAppendTotalExpression, Integer.class);
+					MaxiCodeComponent::setStructuredAppendTotalExpression, Integer.class, false);
 		}
 
 		@Override
@@ -2332,16 +2334,16 @@ final class OkapiElementTypes
 			super(PDF417Component.class, Layout.LINEAR);
 			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_POSITION_EXPRESSION,
 					PDF417Component::getStructuredAppendPositionExpression,
-					PDF417Component::setStructuredAppendPositionExpression, Integer.class);
+					PDF417Component::setStructuredAppendPositionExpression, Integer.class, false);
 			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_TOTAL_EXPRESSION,
 					PDF417Component::getStructuredAppendTotalExpression,
-					PDF417Component::setStructuredAppendTotalExpression, Integer.class);
+					PDF417Component::setStructuredAppendTotalExpression, Integer.class, false);
 			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_FILE_ID_EXPRESSION,
 					PDF417Component::getStructuredAppendFileIdExpression,
-					PDF417Component::setStructuredAppendFileIdExpression, String.class);
+					PDF417Component::setStructuredAppendFileIdExpression, String.class, false);
 			addExpression(PDF417Component.PROPERTY_STRUCTURED_APPEND_FILE_NAME_EXPRESSION,
 					PDF417Component::getStructuredAppendFileNameExpression,
-					PDF417Component::setStructuredAppendFileNameExpression, String.class);
+					PDF417Component::setStructuredAppendFileNameExpression, String.class, false);
 		}
 
 		@Override
@@ -2976,6 +2978,231 @@ final class OkapiElementTypes
 		public String getDefaultPreviewCode(AustraliaPostComponent component)
 		{
 			return "96184209";
+		}
+	}
+
+	static class CompositeType extends OkapiElementType<CompositeComponent>
+	{
+		CompositeType()
+		{
+			super(CompositeComponent.class, Layout.LINEAR);
+			addExpression(CompositeComponent.PROPERTY_LINEAR_CONTENT_EXPRESSION,
+					CompositeComponent::getLinearContentExpression,
+					CompositeComponent::setLinearContentExpression, String.class, true);
+		}
+
+		@Override
+		public boolean hasText()
+		{
+			return true;
+		}
+
+		private static CompositeSymbologyEnum getSymbology(CompositeComponent component)
+		{
+			return component.getSymbology() == null ? CompositeSymbologyEnum.CODE128 : component.getSymbology();
+		}
+
+		private static boolean isEanUpc(CompositeSymbologyEnum symbology)
+		{
+			return symbology == CompositeSymbologyEnum.EAN
+					|| symbology == CompositeSymbologyEnum.UPCA
+					|| symbology == CompositeSymbologyEnum.UPCE;
+		}
+
+		@Override
+		public Symbol createSymbol(CompositeComponent component)
+		{
+			Composite symbol = new Composite();
+			switch (getSymbology(component))
+			{
+				case UPCA:
+					symbol.setSymbology(Composite.LinearEncoding.UPCA);
+					break;
+				case UPCE:
+					symbol.setSymbology(Composite.LinearEncoding.UPCE);
+					break;
+				case EAN:
+					symbol.setSymbology(Composite.LinearEncoding.EAN);
+					break;
+				case DATABAR:
+					symbol.setSymbology(Composite.LinearEncoding.DATABAR_14);
+					break;
+				case DATABAR_STACKED:
+					symbol.setSymbology(Composite.LinearEncoding.DATABAR_14_STACK);
+					break;
+				case DATABAR_OMNI:
+					symbol.setSymbology(Composite.LinearEncoding.DATABAR_14_STACK_OMNI);
+					break;
+				case DATABAR_LIMITED:
+					symbol.setSymbology(Composite.LinearEncoding.DATABAR_LIMITED);
+					break;
+				case DATABAR_EXPANDED:
+					symbol.setSymbology(Composite.LinearEncoding.DATABAR_EXPANDED);
+					break;
+				case DATABAR_EXPANDED_STACKED:
+					symbol.setSymbology(Composite.LinearEncoding.DATABAR_EXPANDED_STACK);
+					break;
+				case CODE128:
+				default:
+					symbol.setSymbology(Composite.LinearEncoding.CODE_128);
+					break;
+			}
+			if (component.getPreferredMode() != null)
+			{
+				switch (component.getPreferredMode())
+				{
+					case CC_B:
+						symbol.setPreferredMode(Composite.CompositeMode.CC_B);
+						break;
+					case CC_C:
+						symbol.setPreferredMode(Composite.CompositeMode.CC_C);
+						break;
+					case CC_A:
+					default:
+						symbol.setPreferredMode(Composite.CompositeMode.CC_A);
+						break;
+				}
+			}
+			if (component.getPreferredColumns() != null)
+			{
+				symbol.setPreferredColumns(component.getPreferredColumns());
+			}
+			applyText(component, symbol);
+			return symbol;
+		}
+
+		@Override
+		public void applyValues(CompositeComponent component, Symbol symbol, Object[] values)
+		{
+			// required, so never null here
+			((Composite) symbol).setLinearContent((String) values[1]);
+		}
+
+		@Override
+		public Double getBarHeight(CompositeComponent component)
+		{
+			return component.getBarHeight();
+		}
+
+		@Override
+		public void applySizes(CompositeComponent component, Symbol symbol, double modulePt, double unitsToPoints)
+		{
+			Composite composite = (Composite) symbol;
+			Double separatorHeight = component.getSeparatorHeight();
+			if (separatorHeight != null)
+			{
+				// Okapi needs at least one module
+				composite.setSeparatorHeight(Math.max(1, toModules(separatorHeight, modulePt, unitsToPoints)));
+			}
+			Double extraHeight = component.getGuardPatternExtraHeight();
+			if (extraHeight != null)
+			{
+				composite.setGuardPatternExtraHeight(toModules(extraHeight, modulePt, unitsToPoints));
+			}
+		}
+
+		@Override
+		public void verify(CompositeComponent component, JRVerifier verifier)
+		{
+			CompositeSymbologyEnum symbology = getSymbology(component);
+			// Okapi fails every record with these
+			if (component.getPreferredMode() == CompositeModeEnum.CC_C && symbology != CompositeSymbologyEnum.CODE128)
+			{
+				addNotAllowed(verifier, component, CompositeComponent.PROPERTY_PREFERRED_MODE + " "
+						+ CompositeModeEnum.CC_C.getName(), symbology);
+			}
+			if (component.getSeparatorHeight() != null && isEanUpc(symbology))
+			{
+				addNotAllowed(verifier, component, CompositeComponent.PROPERTY_SEPARATOR_HEIGHT, symbology);
+			}
+			// Okapi ignores these
+			if (component.getGuardPatternExtraHeight() != null && !isEanUpc(symbology))
+			{
+				addNotAllowed(verifier, component, CompositeComponent.PROPERTY_GUARD_PATTERN_EXTRA_HEIGHT, symbology);
+			}
+			if (component.getPreferredColumns() != null && symbology != CompositeSymbologyEnum.DATABAR_EXPANDED_STACKED)
+			{
+				addNotAllowed(verifier, component, CompositeComponent.PROPERTY_PREFERRED_COLUMNS, symbology);
+			}
+			OkapiCompiler.verifyPositive(verifier, component, CompositeComponent.PROPERTY_BAR_HEIGHT, component.getBarHeight());
+			OkapiCompiler.verifyPositive(verifier, component, CompositeComponent.PROPERTY_SEPARATOR_HEIGHT,
+					component.getSeparatorHeight());
+			OkapiCompiler.verifyNotNegative(verifier, component, CompositeComponent.PROPERTY_GUARD_PATTERN_EXTRA_HEIGHT,
+					component.getGuardPatternExtraHeight());
+		}
+
+		private static void addNotAllowed(JRVerifier verifier, CompositeComponent component, String setting,
+				CompositeSymbologyEnum symbology)
+		{
+			verifier.addBrokenRule("Barcode " + setting + " is not allowed with "
+					+ CompositeComponent.PROPERTY_SYMBOLOGY + " " + symbology.getName(), component);
+		}
+
+		@Override
+		public int getDefaultQuietZoneHorizontal(CompositeComponent component)
+		{
+			// those of the linear component, as for the stand-alone types, but for the DataBar ones Zint widens;
+			// the 2D component needs none above or below
+			switch (getSymbology(component))
+			{
+				case UPCA:
+				case UPCE:
+					// GS1 General Specifications, as UpcType
+					return 9;
+				case EAN:
+					// GS1 General Specifications, EAN-13, as EanType; EAN-8 needs 7, but the variant follows the data
+					return 11;
+				case CODE128:
+					// ISO/IEC 15417
+					return 10;
+				case DATABAR:
+				case DATABAR_STACKED:
+				case DATABAR_OMNI:
+				case DATABAR_LIMITED:
+					// 1 module beside the 2D component on one side, as Zint; Okapi has one value for both sides
+					return 1;
+				default:
+					// GS1 General Specifications: DataBar needs no quiet zone
+					return 0;
+			}
+		}
+
+		@Override
+		public String getDefaultPreviewCode(CompositeComponent component)
+		{
+			// the 2D component
+			return "[21]A12345678";
+		}
+
+		@Override
+		public Object getDefaultPreviewValue(CompositeComponent component, String expressionName)
+		{
+			// Okapi draws no composite without its linear component
+			if (CompositeComponent.PROPERTY_LINEAR_CONTENT_EXPRESSION.equals(expressionName))
+			{
+				switch (getSymbology(component))
+				{
+					case UPCA:
+						return "03600029145";
+					case UPCE:
+						return "0123456";
+					case EAN:
+						return "590123412345";
+					case DATABAR:
+					case DATABAR_STACKED:
+					case DATABAR_OMNI:
+					case DATABAR_LIMITED:
+						// the check digit is added
+						return "0950110153000";
+					case DATABAR_EXPANDED:
+					case DATABAR_EXPANDED_STACKED:
+						return "[01]98898765432106[3202]012345";
+					case CODE128:
+					default:
+						return "[01]98898765432106";
+				}
+			}
+			return null;
 		}
 	}
 }
