@@ -45,7 +45,10 @@ public class JEditorPaneHtmlMarkupProcessor extends HtmlEditorKitMarkupProcessor
 	@Override
 	public Document getDocument(String srcText)
 	{
-		JEditorPane editorPane = new JEditorPane("text/html", srcText);
+		JEditorPane editorPane = new JEditorPane();
+		// the default HTMLEditorKit is not safe for concurrent parsing
+		editorPane.setEditorKit(new PooledDtdHtmlEditorKit());
+		editorPane.setText(srcText);
 		editorPane.setEditable(false);
 		return editorPane.getDocument();
 	}
