@@ -672,8 +672,11 @@ public class JRXlsExporter extends JRXlsAbstractExporter<XlsReportConfiguration,
 			{
 				Biff8EncryptionKey.setCurrentUserPassword(encryptionPassword);
 			}
-			workbook.write(os);
-			Biff8EncryptionKey.setCurrentUserPassword(null);
+			try {
+				workbook.write(os);
+			} finally {
+				Biff8EncryptionKey.setCurrentUserPassword(null);
+			}
 		}
 		catch (IOException e)
 		{
