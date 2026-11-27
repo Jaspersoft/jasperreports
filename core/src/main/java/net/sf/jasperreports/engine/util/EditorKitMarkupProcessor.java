@@ -55,6 +55,14 @@ public abstract class EditorKitMarkupProcessor implements MarkupProcessor
 	 */
 	protected Document getDocument(String srcText)
 	{
+		return SwingUtil.runOnEventDispatchThread(() -> createDocument(srcText));
+	}
+
+	/**
+	 *
+	 */
+	private Document createDocument(String srcText)
+	{
 		EditorKit kit = getEditorKit();
 		Document document = kit.createDefaultDocument();
 		try
